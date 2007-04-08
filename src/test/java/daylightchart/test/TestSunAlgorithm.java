@@ -38,7 +38,7 @@ public class TestSunAlgorithm
     throws ParserException
   {
 
-    final String strLoc = "Aberdeen;UK;Europe/London;+5710-00204;-0507";
+    final String strLoc = "Aberdeen;UK;Europe/London;+5710-00204/";
     final double riseset[] = calcRiseSet(new LocalDate(2001, 12, 2), $Parser
       .parseLocation(strLoc));
 
@@ -60,7 +60,7 @@ public class TestSunAlgorithm
     throws ParserException
   {
 
-    final String strLoc = "Bakersfield, CA;USA;America/Los_Angeles;+3523-11901;+1336";
+    final String strLoc = "Bakersfield, CA;USA;America/Los_Angeles;+3523-11901/";
     final double riseset[] = calcRiseSet(new LocalDate(2003, 6, 24), $Parser
       .parseLocation(strLoc));
 
@@ -82,7 +82,7 @@ public class TestSunAlgorithm
     throws ParserException
   {
 
-    final String strLoc = "Geneva;Switzerland;Europe/Zurich;+4612+00609;+0014";
+    final String strLoc = "Geneva;Switzerland;Europe/Zurich;+4612+00609/";
     final double riseset[] = calcRiseSet(new LocalDate(2001, 11, 28), $Parser
       .parseLocation(strLoc));
 
@@ -104,7 +104,7 @@ public class TestSunAlgorithm
     throws ParserException
   {
 
-    final String strLoc = "Nairobi;Kenya;Africa/Nairobi;-0117+03649;+0003";
+    final String strLoc = "Nairobi;Kenya;Africa/Nairobi;-0117+03649/";
     final double riseset[] = calcRiseSet(new LocalDate(2003, 6, 24), $Parser
       .parseLocation(strLoc));
 
@@ -127,7 +127,7 @@ public class TestSunAlgorithm
     throws ParserException
   {
 
-    final String strLoc = "Sydney;Australia;Australia/Sydney;-3352+15113;+1237";
+    final String strLoc = "Sydney;Australia;Australia/Sydney;-3352+15113/";
     final double riseset[] = calcRiseSet(new LocalDate(2001, 12, 2), $Parser
       .parseLocation(strLoc));
 

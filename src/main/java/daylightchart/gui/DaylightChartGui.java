@@ -30,10 +30,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import org.jfree.chart.ChartPanel;
-import org.jfree.chart.JFreeChart;
 import org.jfree.chart.editor.ChartEditor;
-import org.jfree.chart.editor.ChartEditorManager;
-import org.jfree.chart.plot.XYPlot;
 
 import daylightchart.Version;
 import daylightchart.chart.DaylightChart;
@@ -72,10 +69,7 @@ public final class DaylightChartGui
       }
     });
 
-    final MenuBar menu = new MenuBar();
-    menu.add(createFileMenu());
-    menu.add(createOptionsMenu());
-    setMenuBar(menu);
+    setMenuBar(createMenuBar());
 
     final Font font = new Font("Sans-serif", Font.PLAIN, 11); //$NON-NLS-1$
 
@@ -139,16 +133,31 @@ public final class DaylightChartGui
     });
     menuFile.add(loadLocations);
     menuFile.addSeparator();
-    final MenuItem about = new MenuItem(Messages
-      .getString("DaylightChartGui.Menu.Help.About")); //$NON-NLS-1$
-    about.addActionListener(new ActionListener()
+    final MenuItem saveImage = new MenuItem("Save Chart");
+    saveImage.addActionListener(new ActionListener()
     {
       public void actionPerformed(final ActionEvent actionevent)
       {
-        JOptionPane.showMessageDialog(DaylightChartGui.this, Version.about());
+        try
+        {
+          chartPanel.doSaveAs();
+        }
+        catch (final IOException e)
+        {
+          e.printStackTrace();
+        }
       }
     });
-    menuFile.add(about);
+    menuFile.add(saveImage);
+    final MenuItem print = new MenuItem("Print Chart");
+    print.addActionListener(new ActionListener()
+    {
+      public void actionPerformed(final ActionEvent actionevent)
+      {
+        chartPanel.createChartPrintJob();
+      }
+    });
+    menuFile.add(print);
     menuFile.addSeparator();
     final MenuItem exit = new MenuItem(Messages
       .getString("DaylightChartGui.Menu.File.Exit")); //$NON-NLS-1$
@@ -161,6 +170,33 @@ public final class DaylightChartGui
     });
     menuFile.add(exit);
     return menuFile;
+  }
+
+  private Menu createHelpMenu()
+  {
+    final Menu menuHelp = new Menu("Help");
+
+    final MenuItem about = new MenuItem(Messages
+      .getString("DaylightChartGui.Menu.Help.About")); //$NON-NLS-1$
+    about.addActionListener(new ActionListener()
+    {
+      public void actionPerformed(final ActionEvent actionevent)
+      {
+        JOptionPane.showMessageDialog(DaylightChartGui.this, Version.about());
+      }
+    });
+    menuHelp.add(about);
+
+    return menuHelp;
+  }
+
+  private MenuBar createMenuBar()
+  {
+    final MenuBar menu = new MenuBar();
+    menu.add(createFileMenu());
+    menu.add(createOptionsMenu());
+    menu.add(createHelpMenu());
+    return menu;
   }
 
   private Menu createOptionsMenu()
