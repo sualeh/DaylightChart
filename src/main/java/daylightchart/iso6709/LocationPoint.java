@@ -40,6 +40,7 @@ public final class LocationPoint
 
   private final Latitude latitude;
   private final Longitude longitude;
+  private final double altitude;
 
   /**
    * Constructor.
@@ -55,19 +56,42 @@ public final class LocationPoint
     }
     this.latitude = latitude;
     this.longitude = longitude;
+    altitude = 0;
+  }
+
+  /**
+   * Constructor.
+   * 
+   * @param latitude
+   * @param longitude
+   * @param altitude
+   */
+  public LocationPoint(final Latitude latitude,
+                       final Longitude longitude,
+                       final double altitude)
+  {
+    if (latitude == null || longitude == null)
+    {
+      throw new IllegalArgumentException("Both latitude and longitude need to be specified");
+    }
+    this.latitude = latitude;
+    this.longitude = longitude;
+    this.altitude = altitude;
   }
 
   /**
    * Copy constructor. Copies the value of a provided coordinates.
    * 
-   * @param coordinates
+   * @param locationPoint
    *        Location to copy the value from.
    * @throws NullPointerException
    *         If the argument is null
    */
-  public LocationPoint(final LocationPoint coordinates)
+  public LocationPoint(final LocationPoint locationPoint)
   {
-    this(coordinates.latitude, coordinates.longitude);
+    this(locationPoint.latitude,
+         locationPoint.longitude,
+         locationPoint.altitude);
   }
 
   /**
@@ -101,6 +125,11 @@ public final class LocationPoint
       return false;
     }
     final LocationPoint other = (LocationPoint) obj;
+    if (Double.doubleToLongBits(altitude) != Double
+      .doubleToLongBits(other.altitude))
+    {
+      return false;
+    }
     if (latitude == null)
     {
       if (other.latitude != null)
@@ -124,6 +153,16 @@ public final class LocationPoint
       return false;
     }
     return true;
+  }
+
+  /**
+   * Altitude for this location, in meters.
+   * 
+   * @return the altitude
+   */
+  public double getAltitude()
+  {
+    return altitude;
   }
 
   /**
@@ -156,6 +195,9 @@ public final class LocationPoint
   {
     final int prime = 31;
     int result = super.hashCode();
+    long temp;
+    temp = Double.doubleToLongBits(altitude);
+    result = prime * result + (int) (temp ^ temp >>> 32);
     result = prime * result + (latitude == null? 0: latitude.hashCode());
     result = prime * result + (longitude == null? 0: longitude.hashCode());
     return result;

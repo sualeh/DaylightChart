@@ -150,6 +150,126 @@ public class TestLocationPoint
 
   }
 
+  @Test
+  public void coordinates_g()
+    throws ParserException
+  {
+
+    final String coordinatesString = "+40-075+350/";
+    final LocationPoint coordinates = LocationPointParser
+      .parseLocationPoint(coordinatesString);
+
+    assertEquals(40, coordinates.getLatitude().getField(Angle.Field.DEGREES));
+    assertEquals(0, coordinates.getLatitude().getField(Angle.Field.MINUTES));
+    assertEquals(0, coordinates.getLatitude().getField(Angle.Field.SECONDS));
+
+    assertEquals(-75, coordinates.getLongitude().getField(Angle.Field.DEGREES));
+    assertEquals(0, coordinates.getLongitude().getField(Angle.Field.MINUTES));
+    assertEquals(0, coordinates.getLongitude().getField(Angle.Field.SECONDS));
+
+    assertEquals(350D, coordinates.getAltitude());
+  }
+
+  @Test
+  public void coordinates_h()
+    throws ParserException
+  {
+
+    final String coordinatesString = "+40.20361-075.00417+350.517/";
+    final LocationPoint coordinates = LocationPointParser
+      .parseLocationPoint(coordinatesString);
+
+    assertEquals(40, coordinates.getLatitude().getField(Angle.Field.DEGREES));
+    assertEquals(12, coordinates.getLatitude().getField(Angle.Field.MINUTES));
+    assertEquals(13, coordinates.getLatitude().getField(Angle.Field.SECONDS));
+
+    assertEquals(-75, coordinates.getLongitude().getField(Angle.Field.DEGREES));
+    assertEquals(0, coordinates.getLongitude().getField(Angle.Field.MINUTES));
+    assertEquals(-15, coordinates.getLongitude().getField(Angle.Field.SECONDS));
+
+    assertEquals(350.517, coordinates.getAltitude());
+  }
+
+  @Test
+  public void coordinates_j()
+    throws ParserException
+  {
+
+    final String coordinatesString = "+4012-07500-169.2/";
+    final LocationPoint coordinates = LocationPointParser
+      .parseLocationPoint(coordinatesString);
+
+    assertEquals(40, coordinates.getLatitude().getField(Angle.Field.DEGREES));
+    assertEquals(12, coordinates.getLatitude().getField(Angle.Field.MINUTES));
+    assertEquals(0, coordinates.getLatitude().getField(Angle.Field.SECONDS));
+
+    assertEquals(-75, coordinates.getLongitude().getField(Angle.Field.DEGREES));
+    assertEquals(0, coordinates.getLongitude().getField(Angle.Field.MINUTES));
+    assertEquals(0, coordinates.getLongitude().getField(Angle.Field.SECONDS));
+
+    assertEquals(-169.2, coordinates.getAltitude());
+  }
+
+  @Test
+  public void coordinates_k()
+    throws ParserException
+  {
+
+    final String coordinatesString = "+4012.22-07500.25-169.2/";
+    final LocationPoint coordinates = LocationPointParser
+      .parseLocationPoint(coordinatesString);
+
+    assertEquals(40, coordinates.getLatitude().getField(Angle.Field.DEGREES));
+    assertEquals(12, coordinates.getLatitude().getField(Angle.Field.MINUTES));
+    assertEquals(13, coordinates.getLatitude().getField(Angle.Field.SECONDS));
+
+    assertEquals(-75, coordinates.getLongitude().getField(Angle.Field.DEGREES));
+    assertEquals(0, coordinates.getLongitude().getField(Angle.Field.MINUTES));
+    assertEquals(-15, coordinates.getLongitude().getField(Angle.Field.SECONDS));
+
+    assertEquals(-169.2, coordinates.getAltitude());
+  }
+
+  @Test
+  public void coordinates_m()
+    throws ParserException
+  {
+
+    final String coordinatesString = "+401213-0750015+2.79/";
+    final LocationPoint coordinates = LocationPointParser
+      .parseLocationPoint(coordinatesString);
+
+    assertEquals(40, coordinates.getLatitude().getField(Angle.Field.DEGREES));
+    assertEquals(12, coordinates.getLatitude().getField(Angle.Field.MINUTES));
+    assertEquals(13, coordinates.getLatitude().getField(Angle.Field.SECONDS));
+
+    assertEquals(-75, coordinates.getLongitude().getField(Angle.Field.DEGREES));
+    assertEquals(0, coordinates.getLongitude().getField(Angle.Field.MINUTES));
+    assertEquals(-15, coordinates.getLongitude().getField(Angle.Field.SECONDS));
+
+    assertEquals(2.79, coordinates.getAltitude());
+  }
+
+  @Test
+  public void coordinates_n()
+    throws ParserException
+  {
+
+    final String coordinatesString = "+401213.1-0750015.1+2.79/";
+    final LocationPoint coordinates = LocationPointParser
+      .parseLocationPoint(coordinatesString);
+
+    assertEquals(40, coordinates.getLatitude().getField(Angle.Field.DEGREES));
+    assertEquals(12, coordinates.getLatitude().getField(Angle.Field.MINUTES));
+    assertEquals(13, coordinates.getLatitude().getField(Angle.Field.SECONDS));
+
+    assertEquals(-75, coordinates.getLongitude().getField(Angle.Field.DEGREES));
+    assertEquals(0, coordinates.getLongitude().getField(Angle.Field.MINUTES));
+    assertEquals(-15, coordinates.getLongitude().getField(Angle.Field.SECONDS));
+
+    assertEquals(2.79, coordinates.getAltitude());
+  }
+
   @Test(expected = ParserException.class)
   @Ignore
   public void badCoordinates1()

@@ -34,13 +34,28 @@ locationPoint
   {
     Latitude latitude;
     Longitude longitude;
+    double altitude = 0;
   }
   :
   latitude = latitude
   longitude = longitude
+  (altitude = altitude)?
   SLASH
   {
-    locationPoint = new LocationPoint(latitude, longitude);
+    locationPoint = new LocationPoint(latitude, longitude, altitude);
+  }
+  ;
+
+altitude
+  returns [double altitude = 0]
+  {
+    int sign = 1;
+  }
+  :
+  (PLUS | MINUS { sign = -1; })
+  altitude = realNumber
+  {
+    altitude = sign * altitude;
   }
   ;
 
@@ -178,16 +193,8 @@ realNumber
     int decimalDigits = 1;
   }
   :
-    (
-    digit: DIGIT
-    {
-      int intDigit = Integer.parseInt(digit.getText());
-      if (!(intDigit == 0 && number == 0)) { // Ignore leading zeros
-        number = number * Math.pow(10, digits) + intDigit;
-        digits++;
-      }
-    }
-    )+
+  number = integerNumber
+  (
     DECIMAL_POINT
     (
     decimalDigit: DIGIT
@@ -196,6 +203,18 @@ realNumber
       decimalDigits++;
     }
     )+
+  )?
+  ;
+
+integerNumber
+  returns [int number = 0]
+  :
+  (
+  digit: DIGIT
+  {
+    number = number * 10 + Integer.parseInt(digit.getText());
+  }
+  )+
   ;
 
 class AntlrLocationPointLexer extends Lexer;
