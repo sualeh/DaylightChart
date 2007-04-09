@@ -122,11 +122,23 @@ latitude
   }
   :
   (PLUS | MINUS { sign = -1; })
-  (degrees = twoDigitInteger)
-  (minutesAndSeconds = minutesAndSeconds)?
-  {
-    latitude = new Latitude(Angle.fromDegrees(sign * (degrees + minutesAndSeconds)));
-  }
+  (
+    (DIGIT DIGIT DECIMAL_POINT DIGIT) =>
+    (
+      degrees = realNumber
+      {
+        latitude = new Latitude(Angle.fromDegrees(sign * degrees));
+      }
+    )
+    |
+    (
+      degrees = twoDigitInteger
+      (minutesAndSeconds = minutesAndSeconds)?
+      {
+        latitude = new Latitude(Angle.fromDegrees(sign * (degrees + minutesAndSeconds)));
+      }
+    )
+  )
   ;
 
 longitude
@@ -138,25 +150,64 @@ longitude
   }
   :
   (PLUS | MINUS { sign = -1; })
-  (degrees = threeDigitInteger)
-  (minutesAndSeconds = minutesAndSeconds)?
-  {
-    longitude = new Longitude(Angle.fromDegrees(sign * (degrees + minutesAndSeconds)));
-  }
+  (
+    (DIGIT DIGIT DIGIT DECIMAL_POINT DIGIT) =>
+    (
+      degrees = realNumber
+      {
+        longitude = new Longitude(Angle.fromDegrees(sign * degrees));
+      }
+    )
+    |
+    (
+      degrees = threeDigitInteger
+      (minutesAndSeconds = minutesAndSeconds)?
+      {
+        longitude = new Longitude(Angle.fromDegrees(sign * (degrees + minutesAndSeconds)));
+      }
+    )
+  )
   ;
 
 minutesAndSeconds
   returns [double value = 0D]
   {
-    int minutes = 0;
-    int seconds = 0;
+    double minutes = 0;
+    double seconds = 0;
   }
   :
-  (minutes = twoDigitInteger)
-  (seconds = twoDigitInteger)?
-  {
-    value = (double) minutes / 60D + (double) seconds / 3600D;
-  }
+    (DIGIT DIGIT DECIMAL_POINT DIGIT) =>
+    (
+    minutes = realNumber
+    {
+      value = value + minutes / 60D;
+    }
+    )
+    |
+    (
+      (
+      minutes = twoDigitInteger
+      {
+        value = value + minutes / 60D;
+      }
+      )
+      (
+        (DIGIT DIGIT DECIMAL_POINT DIGIT) =>
+        (
+        seconds = realNumber
+        {
+          value = value + seconds / 3600D;
+        }
+        )
+        |
+        (
+        seconds = twoDigitInteger
+        {
+          value = value + seconds / 3600D;
+        }
+        )?
+      )
+    )
   ;
 
 twoDigitInteger
@@ -187,6 +238,33 @@ threeDigitInteger
     {
       number = number + Integer.parseInt(units.getText());
     }
+  ;
+
+realNumber
+  returns [double number = 0D]
+  {
+    int digits = 0;
+    int decimalDigits = 1;
+  }
+  :
+    (
+    digit: DIGIT
+    {
+      int intDigit = Integer.parseInt(digit.getText());
+      if (!(intDigit == 0 && number == 0)) { // Ignore leading zeros
+        number = number * Math.pow(10, digits) + intDigit;
+        digits++;
+      }
+    }
+    )+
+    DECIMAL_POINT
+    (
+    decimalDigit: DIGIT
+    {
+      number = number + Math.pow(10, -decimalDigits) * Integer.parseInt(decimalDigit.getText());
+      decimalDigits++;
+    }
+    )+
   ;
 
 class LocationLexer extends Lexer;
@@ -220,6 +298,10 @@ MINUS
 
 DIGIT
   : '0'..'9'
+  ;
+
+DECIMAL_POINT
+  : '.'
   ;
 
 SLASH
