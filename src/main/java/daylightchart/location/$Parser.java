@@ -104,7 +104,7 @@ public class $Parser
 
   private static LocationParser constructLocationParser(final String text)
   {
-    final StringReader reader = new StringReader(text + "\n");
+    final StringReader reader = new StringReader(text);
     return constructLocationParser(reader);
   }
 

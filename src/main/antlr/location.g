@@ -1,24 +1,24 @@
 header {
-/* 
-  * 
+/*
+  *
   * Daylight Chart
   * http://sourceforge.net/projects/daylightchart
   * Copyright (c) 2007, Sualeh Fatehi.
-  * 
+  *
   * This program is free software; you can redistribute it and/or
   * modify it under the terms of the GNU General Public License
   * as published by the Free Software Foundation; either version 2
   * of the License, or (at your option) any later version.
-  * 
+  *
   * This program is distributed in the hope that it will be useful,
   * but WITHOUT ANY WARRANTY; without even the implied warranty of
   * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
   * GNU General Public License for more details.
-  * 
+  *
   * You should have received a copy of the GNU General Public License
   * along with this program; if not, write to the Free Software
   * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-  * 
+  *
   */
 package daylightchart.location.parser;
 
@@ -39,8 +39,9 @@ locations
   location = location
   {
     locations.add(location);
-  }  
+  }
   )+
+  EOF
   ;
 
 location
@@ -56,7 +57,6 @@ location
   country = country
   timeZone = timeZone
   coordinates = coordinates
-  NEWLINE
   {
     location = new Location(
       city,
@@ -68,26 +68,32 @@ location
   ;
 
 city
-  returns [String text = ""]
+  returns [String value = ""]
   :
-  text = text_field
+  text: TEXT
+  {
+    value = text.getText();
+  }
   ;
 
 country
-  returns [String text = ""]
+  returns [String value = ""]
   :
-  text = text_field
+  text: TEXT
+  {
+    value = text.getText();
+  }
   ;
 
 timeZone
   returns [TimeZone timeZone = null]
   {
-    String text = "";
+    String value = "";
   }
   :
-  text = text_field
+  text: TEXT
   {
-    timeZone = TimeZone.getTimeZone(text);
+    timeZone = TimeZone.getTimeZone(text.getText());
   }
   ;
 
@@ -102,13 +108,10 @@ coordinates
   longitude = longitude
   SLASH
   {
-    coordinates = new Coordinates(
-      latitude,
-      longitude
-    );
+    coordinates = new Coordinates(latitude, longitude);
   }
   ;
-  
+
 latitude
   returns [Latitude latitude = null]
   {
@@ -128,9 +131,7 @@ latitude
   }
   minutes = minutes
   {
-    // Final calculation, and return
-    degrees = sign * (degrees + minutes);
-    latitude = new Latitude(Angle.fromDegrees(degrees));
+    latitude = new Latitude(Angle.fromDegrees(sign * (degrees + minutes)));
   }
   ;
 
@@ -157,9 +158,7 @@ longitude
   }
   minutes = minutes
   {
-    // Final calculation, and return
-    degrees = sign * (degrees + minutes);
-    longitude = new Longitude(Angle.fromDegrees(degrees));
+    longitude = new Longitude(Angle.fromDegrees(sign * (degrees + minutes)));
   }
   ;
 
@@ -177,53 +176,25 @@ minutes
     }
   ;
 
-text_field
-  returns [String value = ""]
-  :
-  (
-    word: WORD
-    {
-      value = value + word.getText();
-    }
-  (
-    comma: COMMA
-    {
-      value = value + comma.getText();
-    }
-    |
-    minus: MINUS
-    {
-      value = value + minus.getText();
-    }
-    |
-    underscore: UNDERSCORE
-    {
-      value = value + underscore.getText();
-    }
-    |
-    slash: SLASH
-    {
-      value = value + slash.getText();
-    }
-    |
-    space: SPACE
-    {
-      value = value + space.getText();
-    }
-  )*
-  )+
-  SEPARATOR
-  ;
-
 class LocationLexer extends Lexer;
 
 options {
-  k=2; // Needed for newline
-  charVocabulary='\u0000'..'\u007F'; // Allow ASCII
+  k = 2; // Lookahead 2, needed for processing newlines
+  charVocabulary = '\u0000'..'\u007F'; // Allow ASCII
 }
 
-SEPARATOR
-  : ';'
+TEXT
+  : (~(';'|'\r'|'\n'|'0'..'9'))+ ';'!
+  ;
+
+NEWLINE
+  : ('\r''\n') => '\r''\n' // Windows
+  | '\r'                   // Macintosh
+  | '\n'                   // UNIX
+  {
+    newline();
+    $setType(Token.SKIP);
+  }
   ;
 
 PLUS
@@ -235,32 +206,9 @@ MINUS
   ;
 
 DIGIT
-  : ('0'..'9')
-  ;
-
-NEWLINE
-  : ( '\r' '\n' | '\n' | '\r' )
+  : '0'..'9'
   ;
 
 SLASH
   : '/'
-  ;
-
-UNDERSCORE
-  :
-  '_'
-  ;
-
-SPACE
-  :
-  ' '
-  ;
-
-COMMA
-  :
-  ','
-  ;
-
-WORD
-  : (('A'..'Z') | ('a'..'z'))+
   ;
