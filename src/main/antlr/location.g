@@ -40,6 +40,7 @@ locations
   {
     locations.add(location);
   }
+  NEWLINE
   )+
   EOF
   ;

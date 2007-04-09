@@ -24,6 +24,10 @@ package daylightchart.test;
 
 import static org.junit.Assert.assertEquals;
 
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.List;
+
 import org.junit.Test;
 
 import daylightchart.location.$Formatter;
@@ -49,4 +53,15 @@ public class TestLocation
 
   }
 
+  @Test
+  public void locations()
+    throws ParserException
+  {
+    final InputStream dataStream = this.getClass().getClassLoader()
+      .getResourceAsStream("locations.data");
+    final InputStreamReader reader = new InputStreamReader(dataStream);
+    List<Location> locations = $Parser.parseLocations(reader);
+    assertEquals(99, locations.size());
+  }
+  
 }
