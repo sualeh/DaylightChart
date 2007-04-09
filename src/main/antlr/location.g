@@ -117,19 +117,15 @@ latitude
   returns [Latitude latitude = null]
   {
     int sign = 1;
-    int degrees = 0;
-    int minutes = 0;
-    int seconds = 0;
+    double degrees = 0;
+    double fractionaldegrees = 0;
   }
   :
   (PLUS | MINUS { sign = -1; })
-  (degrees = two_digit_integer)
-  (minutes = two_digit_integer)?
-  (seconds = two_digit_integer)?
+  (degrees = twoDigitInteger)
+  (fractionaldegrees = fractionaldegrees)?
   {
-    double latitudeDegrees = (double) sign *
-      ((double) degrees + (double) minutes / 60D + (double) seconds / 3600D);
-    latitude = new Latitude(Angle.fromDegrees(latitudeDegrees));
+    latitude = new Latitude(Angle.fromDegrees(sign * (degrees + fractionaldegrees)));
   }
   ;
 
@@ -137,23 +133,33 @@ longitude
   returns [Longitude longitude = null]
   {
     int sign = 1;
-    int degrees = 0;
+    double degrees = 0;
+    double fractionaldegrees = 0;
+  }
+  :
+  (PLUS | MINUS { sign = -1; })
+  (degrees = threeDigitInteger)
+  (fractionaldegrees = fractionaldegrees)?
+  {
+    longitude = new Longitude(Angle.fromDegrees(sign * (degrees + fractionaldegrees)));
+  }
+  ;
+
+fractionaldegrees
+  returns [double value = 0D]
+  {
     int minutes = 0;
     int seconds = 0;
   }
   :
-  (PLUS | MINUS { sign = -1; })
-  (degrees = three_digit_integer)
-  (minutes = two_digit_integer)?
-  (seconds = two_digit_integer)?
+  (minutes = twoDigitInteger)
+  (seconds = twoDigitInteger)?
   {
-    double longitudeDegrees = (double) sign *
-      ((double) degrees + (double) minutes / 60D + (double) seconds / 3600D);
-    longitude = new Longitude(Angle.fromDegrees(longitudeDegrees));
+    value = (double) minutes / 60D + (double) seconds / 3600D;
   }
   ;
 
-two_digit_integer
+twoDigitInteger
   returns [int number = 0]
   :
     tens: DIGIT
@@ -166,7 +172,7 @@ two_digit_integer
     }
   ;
 
-three_digit_integer
+threeDigitInteger
   returns [int number = 0]
   :
     hundreds: DIGIT
@@ -186,7 +192,7 @@ three_digit_integer
 class LocationLexer extends Lexer;
 
 options {
-  k = 5; // Lookahead, needed for processing newlines and coordinates
+  k = 2; // Lookahead, needed for processing newlines
   charVocabulary = '\u0000'..'\u007F'; // Allow ASCII
 }
 
