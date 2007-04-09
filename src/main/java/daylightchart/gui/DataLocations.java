@@ -35,8 +35,8 @@ import java.util.Comparator;
 import java.util.List;
 
 import daylightchart.iso6709.Latitude;
-import daylightchart.location.$Formatter;
-import daylightchart.location.$Parser;
+import daylightchart.location.LocationFormatter;
+import daylightchart.location.LocationParser;
 import daylightchart.location.Location;
 import daylightchart.location.ParserException;
 
@@ -66,7 +66,7 @@ public final class DataLocations
         throw new IllegalStateException("Cannot read data from internal database");
       }
       final InputStreamReader reader = new InputStreamReader(dataStream);
-      locations = $Parser.parseLocations(reader);
+      locations = LocationParser.parseLocations(reader);
     }
     catch (final ParserException e)
     {
@@ -93,7 +93,7 @@ public final class DataLocations
     }
 
     final FileReader reader = new FileReader(dataFile);
-    locations = $Parser.parseLocations(reader);
+    locations = LocationParser.parseLocations(reader);
   }
 
   /**
@@ -148,7 +148,7 @@ public final class DataLocations
     throws IOException
   {
     final BufferedWriter writer = new BufferedWriter(new FileWriter(dataFile));
-    $Formatter.formatLocations(locations, writer);
+    LocationFormatter.formatLocations(locations, writer);
   }
 
 }

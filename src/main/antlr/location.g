@@ -29,7 +29,7 @@ import daylightchart.iso6709.parser.*;
 
 }
 
-class LocationParser extends Parser;
+class AntlrLocationParser extends Parser;
 
 locations
   returns [List<Location> locations = new ArrayList<Location>()]
@@ -115,7 +115,7 @@ locationPoint
   }
   ;
 
-class LocationLexer extends Lexer;
+class AntlrLocationLexer extends Lexer;
 
 options {
   k = 2; // Lookahead, needed for processing newlines

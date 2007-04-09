@@ -39,7 +39,7 @@ public class TestLocationPoint
 {
 
   @Test
-  public void coordinates_a()
+  public void locationPoint_a()
     throws ParserException
   {
 
@@ -57,7 +57,7 @@ public class TestLocationPoint
   }
 
   @Test
-  public void coordinates_b()
+  public void locationPoint_b()
     throws ParserException
   {
 
@@ -75,7 +75,7 @@ public class TestLocationPoint
   }
 
   @Test
-  public void coordinates_c()
+  public void locationPoint_c()
     throws ParserException
   {
 
@@ -94,7 +94,7 @@ public class TestLocationPoint
   }
 
   @Test
-  public void coordinates_d()
+  public void locationPoint_d()
     throws ParserException
   {
 
@@ -113,7 +113,7 @@ public class TestLocationPoint
   }
 
   @Test
-  public void coordinates_e()
+  public void locationPoint_e()
     throws ParserException
   {
 
@@ -132,7 +132,7 @@ public class TestLocationPoint
   }
 
   @Test
-  public void coordinates_f()
+  public void locationPoint_f()
     throws ParserException
   {
 
@@ -151,7 +151,7 @@ public class TestLocationPoint
   }
 
   @Test
-  public void coordinates_g()
+  public void locationPoint_g()
     throws ParserException
   {
 
@@ -171,7 +171,7 @@ public class TestLocationPoint
   }
 
   @Test
-  public void coordinates_h()
+  public void locationPoint_h()
     throws ParserException
   {
 
@@ -191,7 +191,7 @@ public class TestLocationPoint
   }
 
   @Test
-  public void coordinates_j()
+  public void locationPoint_j()
     throws ParserException
   {
 
@@ -211,7 +211,7 @@ public class TestLocationPoint
   }
 
   @Test
-  public void coordinates_k()
+  public void locationPoint_k()
     throws ParserException
   {
 
@@ -231,7 +231,7 @@ public class TestLocationPoint
   }
 
   @Test
-  public void coordinates_m()
+  public void locationPoint_m()
     throws ParserException
   {
 
@@ -251,7 +251,7 @@ public class TestLocationPoint
   }
 
   @Test
-  public void coordinates_n()
+  public void locationPoint_n()
     throws ParserException
   {
 
@@ -272,7 +272,7 @@ public class TestLocationPoint
 
   @Test(expected = ParserException.class)
   @Ignore
-  public void badCoordinates1()
+  public void badLocationPoint_1()
     throws ParserException
   {
     LocationPointParser.parseLocationPoint("+40/");
@@ -280,7 +280,7 @@ public class TestLocationPoint
 
   @Test(expected = ParserException.class)
   @Ignore
-  public void badCoordinates2()
+  public void badLocationPoint_2()
     throws ParserException
   {
     LocationPointParser.parseLocationPoint("4000/");
@@ -288,7 +288,7 @@ public class TestLocationPoint
 
   @Test(expected = ParserException.class)
   @Ignore
-  public void badCoordinates3()
+  public void badLocationPoint_3()
     throws ParserException
   {
     LocationPointParser.parseLocationPoint("+40121300-075001500/");
@@ -296,7 +296,7 @@ public class TestLocationPoint
 
   @Test(expected = ParserException.class)
   @Ignore
-  public void badCoordinates4()
+  public void badLocationPoint_4()
     throws ParserException
   {
     LocationPointParser.parseLocationPoint("+40121-075001/");

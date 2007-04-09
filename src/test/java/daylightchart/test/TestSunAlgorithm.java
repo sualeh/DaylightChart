@@ -29,7 +29,7 @@ import org.junit.Test;
 
 import daylightchart.astronomical.SunAlgorithm;
 import daylightchart.astronomical.SunAlgorithmFactory;
-import daylightchart.location.$Parser;
+import daylightchart.location.LocationParser;
 import daylightchart.location.Location;
 import daylightchart.location.ParserException;
 
@@ -60,7 +60,7 @@ public class TestSunAlgorithm
   {
 
     final String strLoc = "Aberdeen;UK;Europe/London;+5710-00204/";
-    final double riseset[] = calcRiseSet(new LocalDate(2001, 12, 2), $Parser
+    final double riseset[] = calcRiseSet(new LocalDate(2001, 12, 2), LocationParser
       .parseLocation(strLoc));
 
     assertEquals(8 + 24 * ONE_MINUTE, riseset[SunAlgorithm.RISE], DELTA);
@@ -82,7 +82,7 @@ public class TestSunAlgorithm
   {
 
     final String strLoc = "Bakersfield, CA;USA;America/Los_Angeles;+3523-11901/";
-    final double riseset[] = calcRiseSet(new LocalDate(2003, 6, 24), $Parser
+    final double riseset[] = calcRiseSet(new LocalDate(2003, 6, 24), LocationParser
       .parseLocation(strLoc));
 
     assertEquals(4 + 42 * ONE_MINUTE, riseset[SunAlgorithm.RISE], DELTA);
@@ -104,7 +104,7 @@ public class TestSunAlgorithm
   {
 
     final String strLoc = "Geneva;Switzerland;Europe/Zurich;+4612+00609/";
-    final double riseset[] = calcRiseSet(new LocalDate(2001, 11, 28), $Parser
+    final double riseset[] = calcRiseSet(new LocalDate(2001, 11, 28), LocationParser
       .parseLocation(strLoc));
 
     assertEquals(7 + 54 * ONE_MINUTE, riseset[SunAlgorithm.RISE], DELTA);
@@ -126,7 +126,7 @@ public class TestSunAlgorithm
   {
 
     final String strLoc = "Nairobi;Kenya;Africa/Nairobi;-0117+03649/";
-    final double riseset[] = calcRiseSet(new LocalDate(2003, 6, 24), $Parser
+    final double riseset[] = calcRiseSet(new LocalDate(2003, 6, 24), LocationParser
       .parseLocation(strLoc));
 
     assertEquals(6 + 33 * ONE_MINUTE, riseset[SunAlgorithm.RISE], DELTA);
@@ -149,7 +149,7 @@ public class TestSunAlgorithm
   {
 
     final String strLoc = "Sydney;Australia;Australia/Sydney;-3352+15113/";
-    final double riseset[] = calcRiseSet(new LocalDate(2001, 12, 2), $Parser
+    final double riseset[] = calcRiseSet(new LocalDate(2001, 12, 2), LocationParser
       .parseLocation(strLoc));
 
     assertEquals(4 + 37 * ONE_MINUTE, riseset[SunAlgorithm.RISE], DELTA);

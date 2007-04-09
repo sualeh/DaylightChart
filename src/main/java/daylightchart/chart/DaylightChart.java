@@ -50,7 +50,7 @@ import org.jfree.ui.RectangleInsets;
 import org.jfree.ui.TextAnchor;
 import org.joda.time.LocalDateTime;
 
-import daylightchart.location.$Formatter;
+import daylightchart.location.LocationFormatter;
 import daylightchart.location.Location;
 
 /**
@@ -175,7 +175,7 @@ public class DaylightChart
     setTitle(title);
 
     clearSubtitles();
-    title = new TextTitle($Formatter.printLocationDetails(riseSetData
+    title = new TextTitle(LocationFormatter.printLocationDetails(riseSetData
       .getLocation()), new Font("SansSerif", Font.PLAIN, 12)); //$NON-NLS-1$
     addSubtitle(title);
 

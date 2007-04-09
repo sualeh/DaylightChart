@@ -95,7 +95,7 @@ public final class DaylightChartGui
     dataLocations = new DataLocations();
     dataLocations.sortLocations(locationsSortOrder);
 
-    chartEditor = $ChartGuiUtils.getChartEditor();
+    chartEditor = ChartGuiUtility.getChartEditor();
 
     listBox = new JList();
     listBox.setFont(font);

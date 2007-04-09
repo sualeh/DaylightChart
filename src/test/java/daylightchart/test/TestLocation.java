@@ -30,8 +30,8 @@ import java.util.List;
 
 import org.junit.Test;
 
-import daylightchart.location.$Formatter;
-import daylightchart.location.$Parser;
+import daylightchart.location.LocationFormatter;
+import daylightchart.location.LocationParser;
 import daylightchart.location.Location;
 import daylightchart.location.ParserException;
 
@@ -47,9 +47,9 @@ public class TestLocation
   {
 
     final String locationString = "Aberdeen;UK;Europe/London;+571000-0020400/";
-    final Location location = $Parser.parseLocation(locationString);
+    final Location location = LocationParser.parseLocation(locationString);
 
-    assertEquals(locationString, $Formatter.formatLocation(location));
+    assertEquals(locationString, LocationFormatter.formatLocation(location));
 
   }
 
@@ -60,7 +60,7 @@ public class TestLocation
     final InputStream dataStream = this.getClass().getClassLoader()
       .getResourceAsStream("locations.data");
     final InputStreamReader reader = new InputStreamReader(dataStream);
-    List<Location> locations = $Parser.parseLocations(reader);
+    List<Location> locations = LocationParser.parseLocations(reader);
     assertEquals(99, locations.size());
   }
 
