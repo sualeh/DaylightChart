@@ -35,10 +35,10 @@ public class $Formatter
 {
 
   /**
-   * Formats the latitude as an ISO 6709 string.
+   * Formats the latitude as an ISO 6709:1983 string.
    * 
-   * @param latitude
-   *        Latitude to format
+   * @param coordinates
+   *        Coordinates to format
    * @return Formatted string
    */
   public final static String formatIso6709Coordinates(final Coordinates coordinates)
@@ -70,10 +70,12 @@ public class $Formatter
   }
 
   /**
-   * Writes location data out to a file.
+   * Writes location data out to a file. *
    * 
-   * @param dataFile
-   *        File to write to.
+   * @param locations
+   *        Locations to write.
+   * @param writer
+   *        Writer to write to.
    * @throws IOException
    *         On an exception.
    */
@@ -116,8 +118,11 @@ public class $Formatter
   {
     final int angleSign = angle.getRadians() < 0? -1: 1;
     final int quantity = angleSign
-                         * (Math.abs(angle.getField(Angle.Field.DEGREES)) * 100 + Math
-                           .abs(angle.getField(Angle.Field.MINUTES)));
+                         * (Math.abs(angle.getField(Angle.Field.DEGREES))
+                            * 10000
+                            + Math.abs(angle.getField(Angle.Field.MINUTES))
+                            * 100 + Math.abs(angle
+                           .getField(Angle.Field.SECONDS)));
     return padInt(quantity, fieldlength);
   }
 

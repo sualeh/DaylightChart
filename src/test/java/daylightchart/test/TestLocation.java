@@ -28,10 +28,13 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.List;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import daylightchart.location.$Formatter;
 import daylightchart.location.$Parser;
+import daylightchart.location.Angle;
+import daylightchart.location.Coordinates;
 import daylightchart.location.Location;
 import daylightchart.location.ParserException;
 
@@ -46,10 +49,10 @@ public class TestLocation
     throws ParserException
   {
 
-    final String strLoc = "Aberdeen;UK;Europe/London;+5710-00204/";
-    final Location location = $Parser.parseLocation(strLoc);
+    final String locationString = "Aberdeen;UK;Europe/London;+5710-00204/";
+    final Location location = $Parser.parseLocation(locationString);
 
-    assertEquals(strLoc, $Formatter.formatLocation(location));
+    assertEquals(locationString, $Formatter.formatLocation(location));
 
   }
 
@@ -63,5 +66,90 @@ public class TestLocation
     List<Location> locations = $Parser.parseLocations(reader);
     assertEquals(99, locations.size());
   }
-  
+
+  @Test
+  public void coordinates1()
+    throws ParserException
+  {
+
+    final String coordinatesString = "+40-075/";
+    final Coordinates coordinates = $Parser.parseCoordinates(coordinatesString);
+
+    assertEquals(40, coordinates.getLatitude().getField(Angle.Field.DEGREES));
+    assertEquals(0, coordinates.getLatitude().getField(Angle.Field.MINUTES));
+    assertEquals(0, coordinates.getLatitude().getField(Angle.Field.SECONDS));
+
+    assertEquals(-75, coordinates.getLongitude().getField(Angle.Field.DEGREES));
+    assertEquals(0, coordinates.getLongitude().getField(Angle.Field.MINUTES));
+    assertEquals(0, coordinates.getLongitude().getField(Angle.Field.SECONDS));
+  }
+
+  @Test
+  public void coordinates2()
+    throws ParserException
+  {
+
+    final String coordinatesString = "+4012-07500/";
+    final Coordinates coordinates = $Parser.parseCoordinates(coordinatesString);
+
+    assertEquals(40, coordinates.getLatitude().getField(Angle.Field.DEGREES));
+    assertEquals(12, coordinates.getLatitude().getField(Angle.Field.MINUTES));
+    assertEquals(0, coordinates.getLatitude().getField(Angle.Field.SECONDS));
+
+    assertEquals(-75, coordinates.getLongitude().getField(Angle.Field.DEGREES));
+    assertEquals(0, coordinates.getLongitude().getField(Angle.Field.MINUTES));
+    assertEquals(0, coordinates.getLongitude().getField(Angle.Field.SECONDS));
+
+  }
+
+  @Test
+  public void coordinates3()
+    throws ParserException
+  {
+
+    final String coordinatesString = "+401213-0750015/";
+    final Coordinates coordinates = $Parser.parseCoordinates(coordinatesString);
+
+    assertEquals(40, coordinates.getLatitude().getField(Angle.Field.DEGREES));
+    assertEquals(12, coordinates.getLatitude().getField(Angle.Field.MINUTES));
+    assertEquals(13, coordinates.getLatitude().getField(Angle.Field.SECONDS));
+
+    assertEquals(-75, coordinates.getLongitude().getField(Angle.Field.DEGREES));
+    assertEquals(0, coordinates.getLongitude().getField(Angle.Field.MINUTES));
+    assertEquals(-15, coordinates.getLongitude().getField(Angle.Field.SECONDS));
+
+  }
+
+  @Test(expected = ParserException.class)
+  @Ignore
+  public void badCoordinates1()
+    throws ParserException
+  {
+    $Parser.parseCoordinates("+40/");
+  }
+
+  @Test(expected = ParserException.class)
+  @Ignore
+  public void badCoordinates2()
+    throws ParserException
+  {
+    $Parser.parseCoordinates("4000/");
+  }
+
+  @Test(expected = ParserException.class)
+  @Ignore
+  public void badCoordinates3()
+    throws ParserException
+  {
+    $Parser.parseCoordinates("+40121300-075001500/");
+  }
+
+  @Test(expected = ParserException.class)
+  @Ignore
+  public void badCoordinates4()
+    throws ParserException
+  {
+    $Parser.parseCoordinates("+40121-075001/");
+  }
+
 }

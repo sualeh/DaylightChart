@@ -118,14 +118,14 @@ latitude
   {
     int sign = 1;
     double degrees = 0;
-    double fractionaldegrees = 0;
+    double minutesAndSeconds = 0;
   }
   :
   (PLUS | MINUS { sign = -1; })
   (degrees = twoDigitInteger)
-  (fractionaldegrees = fractionaldegrees)?
+  (minutesAndSeconds = minutesAndSeconds)?
   {
-    latitude = new Latitude(Angle.fromDegrees(sign * (degrees + fractionaldegrees)));
+    latitude = new Latitude(Angle.fromDegrees(sign * (degrees + minutesAndSeconds)));
   }
   ;
 
@@ -134,18 +134,18 @@ longitude
   {
     int sign = 1;
     double degrees = 0;
-    double fractionaldegrees = 0;
+    double minutesAndSeconds = 0;
   }
   :
   (PLUS | MINUS { sign = -1; })
   (degrees = threeDigitInteger)
-  (fractionaldegrees = fractionaldegrees)?
+  (minutesAndSeconds = minutesAndSeconds)?
   {
-    longitude = new Longitude(Angle.fromDegrees(sign * (degrees + fractionaldegrees)));
+    longitude = new Longitude(Angle.fromDegrees(sign * (degrees + minutesAndSeconds)));
   }
   ;
 
-fractionaldegrees
+minutesAndSeconds
   returns [double value = 0D]
   {
     int minutes = 0;

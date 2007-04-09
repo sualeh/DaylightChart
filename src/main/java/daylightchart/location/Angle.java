@@ -211,7 +211,8 @@ public class Angle
     intMinutes = (int) Math.round((absDegrees - Math.floor(absDegrees)) * 60D);
 
     // calculate absolute integer seconds
-    intSeconds = 0; // NOT CALCULATED!
+    intSeconds = (int) Math
+      .round((absDegrees - Math.floor(absDegrees) - intMinutes / 60D) * 3600D);
 
     // adjust values
     if (intMinutes == 60)
@@ -305,7 +306,8 @@ public class Angle
     final StringBuffer representation = new StringBuffer();
     final String direction = getDirection();
     representation.append(Math.abs(getField(Field.DEGREES))).append("°")
-      .append(" ").append(Math.abs(getField(Field.MINUTES))).append("'");
+      .append(" ").append(Math.abs(getField(Field.MINUTES))).append("'")
+      .append(" ").append(Math.abs(getField(Field.SECONDS))).append("\"");
     if (direction == null)
     {
       if (radians < 0)
