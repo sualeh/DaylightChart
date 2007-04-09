@@ -43,8 +43,8 @@ public class $Formatter
    */
   public final static String formatIso6709Coordinates(final Coordinates coordinates)
   {
-    return format(coordinates.getLatitude(), 5)
-           + format(coordinates.getLongitude(), 6) + "/";
+    return format(coordinates.getLatitude(), 7)
+           + format(coordinates.getLongitude(), 8) + "/";
   }
 
   /**

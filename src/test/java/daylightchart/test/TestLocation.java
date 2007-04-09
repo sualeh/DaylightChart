@@ -49,7 +49,7 @@ public class TestLocation
     throws ParserException
   {
 
-    final String locationString = "Aberdeen;UK;Europe/London;+5710-00204/";
+    final String locationString = "Aberdeen;UK;Europe/London;+571000-0020400/";
     final Location location = $Parser.parseLocation(locationString);
 
     assertEquals(locationString, $Formatter.formatLocation(location));
