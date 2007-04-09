@@ -1,5 +1,23 @@
-/*
- * Copyright (c) 2004-2007 Sualeh Fatehi. All Rights Reserved.
+/* 
+ * 
+ * Daylight Chart
+ * http://sourceforge.net/projects/daylightchart
+ * Copyright (c) 2007, Sualeh Fatehi.
+ * 
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ * 
  */
 package daylightchart.location;
 
@@ -68,22 +86,43 @@ public final class Coordinates
    * @see java.lang.Object#equals(java.lang.Object)
    */
   @Override
-  public boolean equals(Object obj)
+  public boolean equals(final Object obj)
   {
-    if (this == obj) return true;
-    if (!super.equals(obj)) return false;
-    if (!(obj instanceof Coordinates)) return false;
+    if (this == obj)
+    {
+      return true;
+    }
+    if (!super.equals(obj))
+    {
+      return false;
+    }
+    if (!(obj instanceof Coordinates))
+    {
+      return false;
+    }
     final Coordinates other = (Coordinates) obj;
     if (latitude == null)
     {
-      if (other.latitude != null) return false;
+      if (other.latitude != null)
+      {
+        return false;
+      }
     }
-    else if (!latitude.equals(other.latitude)) return false;
+    else if (!latitude.equals(other.latitude))
+    {
+      return false;
+    }
     if (longitude == null)
     {
-      if (other.longitude != null) return false;
+      if (other.longitude != null)
+      {
+        return false;
+      }
     }
-    else if (!longitude.equals(other.longitude)) return false;
+    else if (!longitude.equals(other.longitude))
+    {
+      return false;
+    }
     return true;
   }
 
@@ -117,8 +156,8 @@ public final class Coordinates
   {
     final int prime = 31;
     int result = super.hashCode();
-    result = prime * result + ((latitude == null)? 0: latitude.hashCode());
-    result = prime * result + ((longitude == null)? 0: longitude.hashCode());
+    result = prime * result + (latitude == null? 0: latitude.hashCode());
+    result = prime * result + (longitude == null? 0: longitude.hashCode());
     return result;
   }
 

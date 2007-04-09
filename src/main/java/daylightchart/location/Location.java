@@ -1,5 +1,23 @@
-/*
- * Copyright (c) 2004-2007 Sualeh Fatehi. All Rights Reserved.
+/* 
+ * 
+ * Daylight Chart
+ * http://sourceforge.net/projects/daylightchart
+ * Copyright (c) 2007, Sualeh Fatehi.
+ * 
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ * 
  */
 package daylightchart.location;
 
@@ -89,32 +107,65 @@ public final class Location
    * @see java.lang.Object#equals(java.lang.Object)
    */
   @Override
-  public boolean equals(Object obj)
+  public boolean equals(final Object obj)
   {
-    if (this == obj) return true;
-    if (obj == null) return false;
-    if (!(obj instanceof Location)) return false;
+    if (this == obj)
+    {
+      return true;
+    }
+    if (obj == null)
+    {
+      return false;
+    }
+    if (!(obj instanceof Location))
+    {
+      return false;
+    }
     final Location other = (Location) obj;
     if (city == null)
     {
-      if (other.city != null) return false;
+      if (other.city != null)
+      {
+        return false;
+      }
     }
-    else if (!city.equals(other.city)) return false;
+    else if (!city.equals(other.city))
+    {
+      return false;
+    }
     if (coordinates == null)
     {
-      if (other.coordinates != null) return false;
+      if (other.coordinates != null)
+      {
+        return false;
+      }
     }
-    else if (!coordinates.equals(other.coordinates)) return false;
+    else if (!coordinates.equals(other.coordinates))
+    {
+      return false;
+    }
     if (country == null)
     {
-      if (other.country != null) return false;
+      if (other.country != null)
+      {
+        return false;
+      }
     }
-    else if (!country.equals(other.country)) return false;
+    else if (!country.equals(other.country))
+    {
+      return false;
+    }
     if (tzId == null)
     {
-      if (other.tzId != null) return false;
+      if (other.tzId != null)
+      {
+        return false;
+      }
     }
-    else if (!tzId.equals(other.tzId)) return false;
+    else if (!tzId.equals(other.tzId))
+    {
+      return false;
+    }
     return true;
   }
 
@@ -168,11 +219,10 @@ public final class Location
   {
     final int prime = 31;
     int result = 1;
-    result = prime * result + ((city == null)? 0: city.hashCode());
-    result = prime * result
-             + ((coordinates == null)? 0: coordinates.hashCode());
-    result = prime * result + ((country == null)? 0: country.hashCode());
-    result = prime * result + ((tzId == null)? 0: tzId.hashCode());
+    result = prime * result + (city == null? 0: city.hashCode());
+    result = prime * result + (coordinates == null? 0: coordinates.hashCode());
+    result = prime * result + (country == null? 0: country.hashCode());
+    result = prime * result + (tzId == null? 0: tzId.hashCode());
     return result;
   }
 

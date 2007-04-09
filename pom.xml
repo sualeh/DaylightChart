@@ -3,7 +3,7 @@
   <groupId>daylightchart</groupId>
   <artifactId>daylightchart</artifactId>
   <packaging>jar</packaging>
-  <version>0.6</version>
+  <version>0.7</version>
   <name>Daylight Chart</name>
   <description>Daylight Chart generates images of sunrise and sunset times at any location.</description>
   <inceptionYear>2007</inceptionYear>
