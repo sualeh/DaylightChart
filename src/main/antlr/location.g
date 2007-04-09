@@ -117,22 +117,19 @@ latitude
   returns [Latitude latitude = null]
   {
     int sign = 1;
-    double degrees = 0D;
-    double minutes = 0D;
+    int degrees = 0;
+    int minutes = 0;
+    int seconds = 0;
   }
   :
-  (PLUS | MINUS { sign = -1; } )
-  tens: DIGIT
+  (PLUS | MINUS { sign = -1; })
+  (degrees = two_digit_integer)
+  (minutes = two_digit_integer)?
+  (seconds = two_digit_integer)?
   {
-    degrees = degrees + 10 * Integer.parseInt(tens.getText());
-  }
-  units: DIGIT
-  {
-    degrees = degrees + Integer.parseInt(units.getText());
-  }
-  minutes = minutes
-  {
-    latitude = new Latitude(Angle.fromDegrees(sign * (degrees + minutes)));
+    double latitudeDegrees = (double) sign *
+      ((double) degrees + (double) minutes / 60D + (double) seconds / 3600D);
+    latitude = new Latitude(Angle.fromDegrees(latitudeDegrees));
   }
   ;
 
@@ -140,47 +137,56 @@ longitude
   returns [Longitude longitude = null]
   {
     int sign = 1;
-    double degrees = 0D;
-    double minutes = 0D;
+    int degrees = 0;
+    int minutes = 0;
+    int seconds = 0;
   }
   :
-  (PLUS | MINUS { sign = -1; } )
-  hundreds: DIGIT
+  (PLUS | MINUS { sign = -1; })
+  (degrees = three_digit_integer)
+  (minutes = two_digit_integer)?
+  (seconds = two_digit_integer)?
   {
-    degrees = degrees + 100 * Integer.parseInt(hundreds.getText());
-  }
-  tens: DIGIT
-  {
-    degrees = degrees + 10 * Integer.parseInt(tens.getText());
-  }
-  units: DIGIT
-  {
-    degrees = degrees + Integer.parseInt(units.getText());
-  }
-  minutes = minutes
-  {
-    longitude = new Longitude(Angle.fromDegrees(sign * (degrees + minutes)));
+    double longitudeDegrees = (double) sign *
+      ((double) degrees + (double) minutes / 60D + (double) seconds / 3600D);
+    longitude = new Longitude(Angle.fromDegrees(longitudeDegrees));
   }
   ;
 
-minutes
-  returns [double minutes = 0D]
+two_digit_integer
+  returns [int number = 0]
   :
     tens: DIGIT
     {
-      minutes = minutes + 10 * Integer.parseInt(tens.getText());
+      number = number + 10 * Integer.parseInt(tens.getText());
     }
     units: DIGIT
     {
-      minutes = minutes + Integer.parseInt(units.getText());
-      minutes = minutes / 60D;
+      number = number + Integer.parseInt(units.getText());
+    }
+  ;
+
+three_digit_integer
+  returns [int number = 0]
+  :
+    hundreds: DIGIT
+    {
+      number = number + 100 * Integer.parseInt(hundreds.getText());
+    }
+    tens: DIGIT
+    {
+      number = number + 10 * Integer.parseInt(tens.getText());
+    }
+    units: DIGIT
+    {
+      number = number + Integer.parseInt(units.getText());
     }
   ;
 
 class LocationLexer extends Lexer;
 
 options {
-  k = 2; // Lookahead 2, needed for processing newlines
+  k = 5; // Lookahead, needed for processing newlines and coordinates
   charVocabulary = '\u0000'..'\u007F'; // Allow ASCII
 }
 
