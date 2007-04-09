@@ -26,11 +26,11 @@ import org.jfree.chart.editor.ChartEditor;
 import org.jfree.chart.editor.ChartEditorManager;
 
 import daylightchart.chart.DaylightChart;
-import daylightchart.location.Angle;
-import daylightchart.location.Coordinates;
-import daylightchart.location.Latitude;
+import daylightchart.iso6709.Angle;
+import daylightchart.iso6709.LocationPoint;
+import daylightchart.iso6709.Latitude;
+import daylightchart.iso6709.Longitude;
 import daylightchart.location.Location;
-import daylightchart.location.Longitude;
 
 /**
  * GUI Utilties.
@@ -46,8 +46,8 @@ public class $ChartGuiUtils
   public final static ChartEditor getChartEditor()
   {
     // Create a fake chart
-    final Coordinates coordinates = new Coordinates(new Latitude(new Angle()),
-                                                    new Longitude(new Angle()));
+    final LocationPoint coordinates = new LocationPoint(new Latitude(new Angle()),
+                                                        new Longitude(new Angle()));
     final Location location = new Location("", "", "", coordinates);
     final DaylightChart chart = new DaylightChart(location, 2007, null);
 

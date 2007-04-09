@@ -35,19 +35,6 @@ public class $Formatter
 {
 
   /**
-   * Formats the latitude as an ISO 6709:1983 string.
-   * 
-   * @param coordinates
-   *        Coordinates to format
-   * @return Formatted string
-   */
-  public final static String formatIso6709Coordinates(final Coordinates coordinates)
-  {
-    return format(coordinates.getLatitude(), 7)
-           + format(coordinates.getLongitude(), 8) + "/";
-  }
-
-  /**
    * Formats location to a string, in a parseable way.
    * 
    * @param location
@@ -56,8 +43,8 @@ public class $Formatter
    */
   public final static String formatLocation(final Location location)
   {
-    final String corordinatesString = formatIso6709Coordinates(location
-      .getCoordinates());
+    final String corordinatesString = daylightchart.iso6709.LocationPointFormatter
+      .formatIso6709Coordinates(location.getCoordinates());
     final String tzId = location.getTimeZone().getID();
 
     final String city = location.getCity();
@@ -107,56 +94,6 @@ public class $Formatter
                              .toString() + ", "
                            + location.getTimeZone().getDisplayName();
     return details;
-  }
-
-  /**
-   * Formats to a string, in a parseable way.
-   * 
-   * @return Formated string.
-   */
-  private final static String format(final Angle angle, final int fieldlength)
-  {
-    final int angleSign = angle.getRadians() < 0? -1: 1;
-    final int quantity = angleSign
-                         * (Math.abs(angle.getField(Angle.Field.DEGREES))
-                            * 10000
-                            + Math.abs(angle.getField(Angle.Field.MINUTES))
-                            * 100 + Math.abs(angle
-                           .getField(Angle.Field.SECONDS)));
-    return padInt(quantity, fieldlength);
-  }
-
-  /**
-   * Pads a string with a pad character. Includes the sign before the
-   * integer.
-   * 
-   * @param quantity
-   *        Integer quantity to pad.
-   * @param width
-   *        Width of the padding.
-   * @return Padded string to length "width", with the sign preceeding
-   *         the integer.
-   */
-  private final static String padInt(final int quantity, final int width)
-  {
-    final StringBuffer paddedString = new StringBuffer();
-
-    paddedString.append(Math.abs(quantity));
-    while (paddedString.length() < width - 1)
-    {
-      paddedString.insert(0, '0');
-    }
-
-    if (quantity < 0)
-    {
-      paddedString.insert(0, "-");
-    }
-    else
-    {
-      paddedString.insert(0, "+");
-    }
-
-    return new String(paddedString);
   }
 
   private $Formatter()

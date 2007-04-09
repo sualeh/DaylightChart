@@ -34,9 +34,9 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import daylightchart.iso6709.Latitude;
 import daylightchart.location.$Formatter;
 import daylightchart.location.$Parser;
-import daylightchart.location.Latitude;
 import daylightchart.location.Location;
 import daylightchart.location.ParserException;
 

@@ -26,9 +26,9 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import daylightchart.location.Angle;
-import daylightchart.location.Latitude;
-import daylightchart.location.Longitude;
+import daylightchart.iso6709.Angle;
+import daylightchart.iso6709.Latitude;
+import daylightchart.iso6709.Longitude;
 
 /**
  * Location tests.

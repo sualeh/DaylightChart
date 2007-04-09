@@ -24,6 +24,8 @@ package daylightchart.location.parser;
 
 import java.util.*;
 import daylightchart.location.*;
+import daylightchart.iso6709.*;
+import daylightchart.iso6709.parser.*;
 
 }
 
@@ -51,19 +53,22 @@ location
     String city;
     String country;
     TimeZone timeZone;
-    Coordinates coordinates;
+    LocationPoint locationPoint;
   }
   :
   city = city
+  FIELD_SEPARATOR
   country = country
+  FIELD_SEPARATOR
   timeZone = timeZone
-  coordinates = coordinates
+  FIELD_SEPARATOR
+  locationPoint = locationPoint
   {
     location = new Location(
       city,
       country,
       timeZone.getID(),
-      coordinates
+      locationPoint
     );
   }
   ;
@@ -71,7 +76,7 @@ location
 city
   returns [String value = ""]
   :
-  text: TEXT
+  text: TEXT_FIELD
   {
     value = text.getText();
   }
@@ -80,7 +85,7 @@ city
 country
   returns [String value = ""]
   :
-  text: TEXT
+  text: TEXT_FIELD
   {
     value = text.getText();
   }
@@ -88,183 +93,26 @@ country
 
 timeZone
   returns [TimeZone timeZone = null]
-  {
-    String value = "";
-  }
   :
-  text: TEXT
+  text: TEXT_FIELD
   {
     timeZone = TimeZone.getTimeZone(text.getText());
   }
   ;
 
-coordinates
-  returns [Coordinates coordinates = null]
+locationPoint
+  returns [LocationPoint locationPoint = null]
+  :
+  text: TEXT_FIELD
   {
-    Latitude latitude;
-    Longitude longitude;
+    try {
+      locationPoint = LocationPointParser.parseLocationPoint(text.getText());
+    }
+    catch (daylightchart.iso6709.ParserException e)
+    {
+      throw new RecognitionException(e.getMessage());
+    }
   }
-  :
-  latitude = latitude
-  longitude = longitude
-  SLASH
-  {
-    coordinates = new Coordinates(latitude, longitude);
-  }
-  ;
-
-latitude
-  returns [Latitude latitude = null]
-  {
-    int sign = 1;
-    double degrees = 0;
-    double minutesAndSeconds = 0;
-  }
-  :
-  (PLUS | MINUS { sign = -1; })
-  (
-    (DIGIT DIGIT DECIMAL_POINT DIGIT) =>
-    (
-      degrees = realNumber
-      {
-        latitude = new Latitude(Angle.fromDegrees(sign * degrees));
-      }
-    )
-    |
-    (
-      degrees = twoDigitInteger
-      (minutesAndSeconds = minutesAndSeconds)?
-      {
-        latitude = new Latitude(Angle.fromDegrees(sign * (degrees + minutesAndSeconds)));
-      }
-    )
-  )
-  ;
-
-longitude
-  returns [Longitude longitude = null]
-  {
-    int sign = 1;
-    double degrees = 0;
-    double minutesAndSeconds = 0;
-  }
-  :
-  (PLUS | MINUS { sign = -1; })
-  (
-    (DIGIT DIGIT DIGIT DECIMAL_POINT DIGIT) =>
-    (
-      degrees = realNumber
-      {
-        longitude = new Longitude(Angle.fromDegrees(sign * degrees));
-      }
-    )
-    |
-    (
-      degrees = threeDigitInteger
-      (minutesAndSeconds = minutesAndSeconds)?
-      {
-        longitude = new Longitude(Angle.fromDegrees(sign * (degrees + minutesAndSeconds)));
-      }
-    )
-  )
-  ;
-
-minutesAndSeconds
-  returns [double value = 0D]
-  {
-    double minutes = 0;
-    double seconds = 0;
-  }
-  :
-    (DIGIT DIGIT DECIMAL_POINT DIGIT) =>
-    (
-    minutes = realNumber
-    {
-      value = value + minutes / 60D;
-    }
-    )
-    |
-    (
-      (
-      minutes = twoDigitInteger
-      {
-        value = value + minutes / 60D;
-      }
-      )
-      (
-        (DIGIT DIGIT DECIMAL_POINT DIGIT) =>
-        (
-        seconds = realNumber
-        {
-          value = value + seconds / 3600D;
-        }
-        )
-        |
-        (
-        seconds = twoDigitInteger
-        {
-          value = value + seconds / 3600D;
-        }
-        )?
-      )
-    )
-  ;
-
-twoDigitInteger
-  returns [int number = 0]
-  :
-    tens: DIGIT
-    {
-      number = number + 10 * Integer.parseInt(tens.getText());
-    }
-    units: DIGIT
-    {
-      number = number + Integer.parseInt(units.getText());
-    }
-  ;
-
-threeDigitInteger
-  returns [int number = 0]
-  :
-    hundreds: DIGIT
-    {
-      number = number + 100 * Integer.parseInt(hundreds.getText());
-    }
-    tens: DIGIT
-    {
-      number = number + 10 * Integer.parseInt(tens.getText());
-    }
-    units: DIGIT
-    {
-      number = number + Integer.parseInt(units.getText());
-    }
-  ;
-
-realNumber
-  returns [double number = 0D]
-  {
-    int digits = 0;
-    int decimalDigits = 1;
-  }
-  :
-    (
-    digit: DIGIT
-    {
-      int intDigit = Integer.parseInt(digit.getText());
-      if (!(intDigit == 0 && number == 0)) { // Ignore leading zeros
-        number = number * Math.pow(10, digits) + intDigit;
-        digits++;
-      }
-    }
-    )+
-    DECIMAL_POINT
-    (
-    decimalDigit: DIGIT
-    {
-      number = number + Math.pow(10, -decimalDigits) * Integer.parseInt(decimalDigit.getText());
-      decimalDigits++;
-    }
-    )+
   ;
 
 class LocationLexer extends Lexer;
@@ -274,8 +122,12 @@ options {
   charVocabulary = '\u0000'..'\u007F'; // Allow ASCII
 }
 
-TEXT
-  : (~(';'|'\r'|'\n'|'0'..'9'))+ ';'!
+TEXT_FIELD
+  : (~(';' | '\r' | '\n'))+
+  ;
+
+FIELD_SEPARATOR
+  : ';'
   ;
 
 NEWLINE
@@ -286,24 +138,4 @@ NEWLINE
     newline();
     $setType(Token.SKIP);
   }
-  ;
-
-PLUS
-  : '+'
-  ;
-
-MINUS
-  : '-'
-  ;
-
-DIGIT
-  : '0'..'9'
-  ;
-
-DECIMAL_POINT
-  : '.'
-  ;
-
-SLASH
-  : '/'
   ;

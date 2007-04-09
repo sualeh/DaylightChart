@@ -38,34 +38,6 @@ import daylightchart.location.parser.LocationParser;
  */
 public class $Parser
 {
-  
-  /**
-   * Parses a string representation of the coordinates.
-   * 
-   * @param representation
-   *        String representation of the coordinates
-   * @return Coordinates
-   * @throws ParserException
-   */
-  public final static Coordinates parseCoordinates(final String representation)
-    throws ParserException
-  {
-    final LocationParser parser = constructLocationParser(representation);
-    Coordinates coordinates;
-    try
-    {
-      coordinates = parser.coordinates();
-    }
-    catch (final RecognitionException e)
-    {
-      throw new ParserException(e);
-    }
-    catch (final TokenStreamException e)
-    {
-      throw new ParserException(e);
-    }
-    return coordinates;
-  }
 
   /**
    * Parses a string representation of the location.
