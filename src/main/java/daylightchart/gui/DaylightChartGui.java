@@ -23,6 +23,7 @@ package daylightchart.gui;
 
 
 import java.awt.CheckboxMenuItem;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Menu;
@@ -38,6 +39,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Vector;
 
+import javax.swing.BorderFactory;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JList;
@@ -116,6 +118,8 @@ public final class DaylightChartGui
     });
 
     chartPanel = new ChartPanel(null);
+    chartPanel.setBackground(Color.WHITE);
+    chartPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
     chartPanel.setPreferredSize(new Dimension(700, 500));
 
     final JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,

@@ -89,8 +89,7 @@ public class DaylightChart
     super(new XYPlot());
     // Calculate rise and set timings for the whole year
     riseSetData = RiseSetFactory.createRiseSetYear(location, year);
-    createChart();
-    setTitle(riseSetData.getLocation().toString());
+    createChart();    
   }
 
   /**
@@ -104,6 +103,7 @@ public class DaylightChart
     if (chartEditor != null)
     {
       chartEditor.updateChart(this);
+      setTitle(riseSetData.getLocation().toString());
     }
   }
 
