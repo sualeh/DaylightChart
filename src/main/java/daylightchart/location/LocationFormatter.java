@@ -43,7 +43,7 @@ public class LocationFormatter
    */
   public final static String formatLocation(final Location location)
   {
-    final String corordinatesString = daylightchart.iso6709.LocationPointFormatter
+    final String corordinatesString = daylightchart.iso6709.PointLocationFormatter
       .formatIso6709Coordinates(location.getCoordinates());
     final String tzId = location.getTimeZone().getID();
 

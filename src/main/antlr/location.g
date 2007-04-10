@@ -30,6 +30,10 @@ import daylightchart.iso6709.parser.*;
 }
 
 class AntlrLocationParser extends Parser;
+options
+{
+  defaultErrorHandler = false;
+}
 
 locations
   returns [List<Location> locations = new ArrayList<Location>()]
@@ -53,7 +57,7 @@ location
     String city;
     String country;
     TimeZone timeZone;
-    LocationPoint locationPoint;
+    PointLocation pointLocation;
   }
   :
   city = city
@@ -62,13 +66,13 @@ location
   FIELD_SEPARATOR
   timeZone = timeZone
   FIELD_SEPARATOR
-  locationPoint = locationPoint
+  pointLocation = pointLocation
   {
     location = new Location(
       city,
       country,
       timeZone.getID(),
-      locationPoint
+      pointLocation
     );
   }
   ;
@@ -100,13 +104,13 @@ timeZone
   }
   ;
 
-locationPoint
-  returns [LocationPoint locationPoint = null]
+pointLocation
+  returns [PointLocation pointLocation = null]
   :
   text: TEXT_FIELD
   {
     try {
-      locationPoint = LocationPointParser.parseLocationPoint(text.getText());
+      pointLocation = PointLocationParser.parsePointLocation(text.getText());
     }
     catch (daylightchart.iso6709.ParserException e)
     {

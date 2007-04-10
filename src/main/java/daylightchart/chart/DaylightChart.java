@@ -71,6 +71,7 @@ public class DaylightChart
    * 
    * @param location
    * @param year
+   * @param chartEditor
    */
   public DaylightChart(final Location location,
                        final int year,

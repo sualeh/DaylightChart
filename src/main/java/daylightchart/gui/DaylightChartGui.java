@@ -151,7 +151,8 @@ public final class DaylightChartGui
     });
     menuFile.add(loadLocations);
     menuFile.addSeparator();
-    final MenuItem saveImage = new MenuItem(Messages.getString("DaylightChartGui.Menu.File.SaveChart")); //$NON-NLS-1$
+    final MenuItem saveImage = new MenuItem(Messages
+      .getString("DaylightChartGui.Menu.File.SaveChart")); //$NON-NLS-1$
     saveImage.addActionListener(new ActionListener()
     {
       public void actionPerformed(final ActionEvent actionevent)
@@ -167,7 +168,8 @@ public final class DaylightChartGui
       }
     });
     menuFile.add(saveImage);
-    final MenuItem print = new MenuItem(Messages.getString("DaylightChartGui.Menu.File.PrintChart")); //$NON-NLS-1$
+    final MenuItem print = new MenuItem(Messages
+      .getString("DaylightChartGui.Menu.File.PrintChart")); //$NON-NLS-1$
     print.addActionListener(new ActionListener()
     {
       public void actionPerformed(final ActionEvent actionevent)
@@ -192,7 +194,8 @@ public final class DaylightChartGui
 
   private Menu createHelpMenu()
   {
-    final Menu menuHelp = new Menu(Messages.getString("DaylightChartGui.Menu.Help")); //$NON-NLS-1$
+    final Menu menuHelp = new Menu(Messages
+      .getString("DaylightChartGui.Menu.Help")); //$NON-NLS-1$
 
     final MenuItem about = new MenuItem(Messages
       .getString("DaylightChartGui.Menu.Help.About")); //$NON-NLS-1$
@@ -230,16 +233,17 @@ public final class DaylightChartGui
       .getString("DaylightChartGui.Menu.Options.SortByLatitude"), //$NON-NLS-1$
                                                                  false);
 
-    final MenuItem chartOptions = new MenuItem(Messages.getString("DaylightChartGui.Menu.Options.ChartOptions")); //$NON-NLS-1$
+    final MenuItem chartOptions = new MenuItem(Messages
+      .getString("DaylightChartGui.Menu.Options.ChartOptions")); //$NON-NLS-1$
     chartOptions.addActionListener(new ActionListener()
     {
       public void actionPerformed(final ActionEvent actionevent)
       {
-        JOptionPane.showConfirmDialog(DaylightChartGui.this,
-                                      chartEditor,
-                                      Messages.getString("DaylightChartGui.Menu.Options.ChartOptions"), //$NON-NLS-1$
-                                      JOptionPane.OK_CANCEL_OPTION,
-                                      JOptionPane.PLAIN_MESSAGE);
+        JOptionPane
+          .showConfirmDialog(DaylightChartGui.this, chartEditor, Messages
+            .getString("DaylightChartGui.Menu.Options.ChartOptions"), //$NON-NLS-1$
+                             JOptionPane.OK_CANCEL_OPTION,
+                             JOptionPane.PLAIN_MESSAGE);
       }
     });
 

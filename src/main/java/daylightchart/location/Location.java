@@ -26,7 +26,7 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.TimeZone;
 
-import daylightchart.iso6709.LocationPoint;
+import daylightchart.iso6709.PointLocation;
 
 /**
  * <p>
@@ -48,7 +48,7 @@ public final class Location
   private static final long serialVersionUID = 7929385835483597186L;
 
   private final String city, country;
-  private final LocationPoint coordinates;
+  private final PointLocation coordinates;
   private final String tzId;
 
   /**
@@ -75,7 +75,7 @@ public final class Location
   public Location(final String city,
                   final String country,
                   final String tzId,
-                  final LocationPoint coordinates)
+                  final PointLocation coordinates)
   {
 
     this.city = city;
@@ -186,7 +186,7 @@ public final class Location
    * 
    * @return Coordinates
    */
-  public LocationPoint getCoordinates()
+  public PointLocation getCoordinates()
   {
     return coordinates;
   }
