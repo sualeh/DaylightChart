@@ -53,6 +53,8 @@ public class TestPointLocation
     assertEquals(-75, coordinates.getLongitude().getField(Angle.Field.DEGREES));
     assertEquals(0, coordinates.getLongitude().getField(Angle.Field.MINUTES));
     assertEquals(0, coordinates.getLongitude().getField(Angle.Field.SECONDS));
+    
+    assertEquals(0D, coordinates.getAltitude());
   }
 
   @Test
@@ -71,6 +73,8 @@ public class TestPointLocation
     assertEquals(-75, coordinates.getLongitude().getField(Angle.Field.DEGREES));
     assertEquals(0, coordinates.getLongitude().getField(Angle.Field.MINUTES));
     assertEquals(-15, coordinates.getLongitude().getField(Angle.Field.SECONDS));
+    
+    assertEquals(0D, coordinates.getAltitude());
   }
 
   @Test
@@ -90,6 +94,7 @@ public class TestPointLocation
     assertEquals(0, coordinates.getLongitude().getField(Angle.Field.MINUTES));
     assertEquals(0, coordinates.getLongitude().getField(Angle.Field.SECONDS));
 
+    assertEquals(0D, coordinates.getAltitude());
   }
 
   @Test
@@ -109,6 +114,7 @@ public class TestPointLocation
     assertEquals(0, coordinates.getLongitude().getField(Angle.Field.MINUTES));
     assertEquals(-15, coordinates.getLongitude().getField(Angle.Field.SECONDS));
 
+    assertEquals(0D, coordinates.getAltitude());
   }
 
   @Test
@@ -128,6 +134,7 @@ public class TestPointLocation
     assertEquals(0, coordinates.getLongitude().getField(Angle.Field.MINUTES));
     assertEquals(-15, coordinates.getLongitude().getField(Angle.Field.SECONDS));
 
+    assertEquals(0D, coordinates.getAltitude());
   }
 
   @Test
@@ -147,6 +154,7 @@ public class TestPointLocation
     assertEquals(0, coordinates.getLongitude().getField(Angle.Field.MINUTES));
     assertEquals(-15, coordinates.getLongitude().getField(Angle.Field.SECONDS));
 
+    assertEquals(0D, coordinates.getAltitude());
   }
 
   @Test

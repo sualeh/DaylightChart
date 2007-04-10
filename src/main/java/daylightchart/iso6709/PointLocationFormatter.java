@@ -23,7 +23,7 @@ package daylightchart.iso6709;
 
 
 /**
- * Formats objects to strings.
+ * Formats point locations to strings.
  * 
  * @author Sualeh Fatehi
  */
@@ -31,16 +31,21 @@ public class PointLocationFormatter
 {
 
   /**
-   * Formats the latitude as an ISO 6709:1983 string.
+   * Formats a point location as an ISO 6709:1983 string.
    * 
-   * @param coordinates
+   * @param pointLocation
    *        Coordinates to format
    * @return Formatted string
    */
-  public final static String formatIso6709Coordinates(final PointLocation coordinates)
+  public final static String formatIso6709PointLocation(final PointLocation pointLocation)
   {
-    return format(coordinates.getLatitude(), 7)
-           + format(coordinates.getLongitude(), 8) + "/";
+    String string = format(pointLocation.getLatitude(), 7)
+                    + format(pointLocation.getLongitude(), 8);
+    if (pointLocation.getAltitude() != 0)
+    {
+      string = string + pointLocation.getAltitude();
+    }
+    return string + "/";
   }
 
   /**

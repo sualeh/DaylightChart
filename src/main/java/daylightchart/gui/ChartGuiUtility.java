@@ -51,7 +51,7 @@ public class ChartGuiUtility
     final PointLocation coordinates = new PointLocation(new Latitude(new Angle()),
                                                         new Longitude(new Angle()));
     final Location location = new Location("", "", "", coordinates);
-    final DaylightChart chart = new DaylightChart(location, 2007, null);
+    final DaylightChart chart = new DaylightChart(location);
 
     final ChartEditor chartEditor = ChartEditorManager.getChartEditor(chart);
 

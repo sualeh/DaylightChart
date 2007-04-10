@@ -23,10 +23,7 @@ package daylightchart.iso6709;
 
 
 /**
- * Represents a longitude in degrees or radians. The string
- * representation for longitude is comaptible with the format defined in
- * ISO 6709:1983, "Standard representation of latitude, longitude and
- * altitude for geographic point locations".
+ * Represents a longitude in degrees or radians.
  * 
  * @author Sualeh Fatehi
  */

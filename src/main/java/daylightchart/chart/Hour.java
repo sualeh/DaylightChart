@@ -48,21 +48,10 @@ public final class Hour
 
   private static final long serialVersionUID = 6973647622518973008L;
 
-  /**
-   * Internal storage for hour.
-   */
   private double hour;
-
-  /**
-   * Internal storage for daylight savings time option. Contols the
-   * output of the time format.
-   */
+  /** Adjusts the output of the time format for daylight savings time. */
   private boolean inDaylightSavings;
-
-  /**
-   * Internal storage for 24 hour time format option. Contols the output
-   * of the time format.
-   */
+  /** Contols the output of the time format to 12 hour or 24 hour clock. */
   private boolean time24;
 
   /**
@@ -121,13 +110,15 @@ public final class Hour
   public int compareTo(final Hour hour)
   {
     int comparison;
-
     comparison = getField(Field.HOURS) - hour.getField(Field.HOURS);
     if (comparison == 0)
     {
       comparison = getField(Field.MINUTES) - hour.getField(Field.MINUTES);
     }
-
+    if (comparison == 0)
+    {
+      comparison = getField(Field.SECONDS) - hour.getField(Field.SECONDS);
+    }
     return comparison;
   }
 
@@ -176,44 +167,45 @@ public final class Hour
    *        retrieved.
    * @return Value of the hour field.
    */
-  public int getField(final Field field)
+  public final int getField(final Field field)
   {
-    final double hour;
-    int hours;
-    int minutes;
-    final int seconds;
-    int returnField = 0;
+    final double absHours;
+    int intHours, intMinutes, intSeconds;
+    final int returnField;
+    final int sign = hour < 0? -1: 1;
 
-    hour = getHour();
+    // Calculate absolute integer degrees
+    absHours = Math.abs(hour);
+    intHours = (int) Math.floor(absHours);
+    intSeconds = (int) Math.round((absHours - intHours) * 3600D);
 
-    // calculate integer hours
-    hours = (int) Math.floor(hour);
+    // Calculate absolute integer minutes
+    intMinutes = intSeconds / 60; // Integer arithmetic
 
-    // calculate integer minutes
-    minutes = (int) Math.round((hour - Math.floor(hour)) * 60D);
+    // Calculate absolute integer seconds
+    intSeconds = intSeconds % 60;
 
-    // calculate integer seconds
-    seconds = 0; // NOT CALCULATED!
-
-    // adjust values
-    if (minutes == 60)
-    {
-      minutes = 0;
-      hours++;
-    }
+    // correct sign
+    intHours *= sign;
+    intMinutes *= sign;
+    intSeconds *= sign;
 
     // decide which field to return
     if (field == Field.HOURS)
     {
-      returnField = hours;
+      returnField = intHours;
     }
     else if (field == Field.MINUTES)
     {
-      returnField = minutes;
+      returnField = intMinutes;
     }
     else if (field == Field.SECONDS)
     {
-      returnField = seconds;
+      returnField = intSeconds;
+    }
+    else
+    {
+      throw new IllegalArgumentException("Unknown field: " + field);
     }
 
     return returnField;

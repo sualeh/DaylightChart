@@ -26,6 +26,8 @@ import java.io.IOException;
 import java.io.Writer;
 import java.util.List;
 
+import daylightchart.iso6709.PointLocationFormatter;
+
 /**
  * Formats objects to strings.
  * 
@@ -43,8 +45,8 @@ public class LocationFormatter
    */
   public final static String formatLocation(final Location location)
   {
-    final String corordinatesString = daylightchart.iso6709.PointLocationFormatter
-      .formatIso6709Coordinates(location.getCoordinates());
+    final String corordinatesString = PointLocationFormatter
+      .formatIso6709PointLocation(location.getCoordinates());
     final String tzId = location.getTimeZone().getID();
 
     final String city = location.getCity();

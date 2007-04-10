@@ -104,7 +104,7 @@ public class Angle
    */
   public Angle()
   {
-    // radians will be set to 0 by default
+    // Radians will be set to 0 by default
   }
 
   /**
@@ -132,6 +132,10 @@ public class Angle
     if (comparison == 0)
     {
       comparison = getField(Field.MINUTES) - angle.getField(Field.MINUTES);
+    }
+    if (comparison == 0)
+    {
+      comparison = getField(Field.SECONDS) - angle.getField(Field.SECONDS);
     }
     return comparison;
   }
@@ -202,24 +206,16 @@ public class Angle
     final int returnField;
     final int sign = radians < 0? -1: 1;
 
+    // Calculate absolute integer degrees
     absDegrees = Math.abs(getDegrees());
-
-    // calculate absolute integer degrees
     intDegrees = (int) Math.floor(absDegrees);
+    intSeconds = (int) Math.round((absDegrees - intDegrees) * 3600D);
 
-    // calculate absolute integer minutes
-    intMinutes = (int) Math.round((absDegrees - Math.floor(absDegrees)) * 60D);
+    // Calculate absolute integer minutes
+    intMinutes = intSeconds / 60; // Integer arithmetic
 
-    // calculate absolute integer seconds
-    intSeconds = (int) Math
-      .round((absDegrees - Math.floor(absDegrees) - intMinutes / 60D) * 3600D);
-
-    // adjust values
-    if (intMinutes == 60)
-    {
-      intMinutes = 0;
-      intDegrees++;
-    }
+    // Calculate absolute integer seconds
+    intSeconds = intSeconds % 60;
 
     // correct sign
     intDegrees *= sign;
@@ -305,9 +301,17 @@ public class Angle
   {
     final StringBuffer representation = new StringBuffer();
     final String direction = getDirection();
-    representation.append(Math.abs(getField(Field.DEGREES))).append("°")
-      .append(" ").append(Math.abs(getField(Field.MINUTES))).append("'")
-      .append(" ").append(Math.abs(getField(Field.SECONDS))).append("\"");
+
+    int absIntDegrees = Math.abs(getField(Field.DEGREES));
+    int absIntMinutes = Math.abs(getField(Field.MINUTES));
+    int absIntSeconds = Math.abs(getField(Field.SECONDS));
+
+    representation.append(absIntDegrees).append("°").append(" ").append(Math
+      .abs(getField(Field.MINUTES))).append("'");
+    if (absIntSeconds > 0)
+    {
+      representation.append(" ").append(absIntSeconds).append("\"");
+    }
     if (direction == null)
     {
       if (radians < 0)
@@ -319,7 +323,9 @@ public class Angle
     {
       representation.append(" ").append(direction);
     }
+
     return new String(representation);
+
   }
 
   /**

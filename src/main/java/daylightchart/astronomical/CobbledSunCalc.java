@@ -36,8 +36,7 @@ package daylightchart.astronomical;
  * <p>
  * This is a reasonably accurate and very robust procedure for sunrise
  * that will handle unusual cases, such as the one day in the year in
- * arctic latitudes that the sun rises, but does not set. It is,
- * however, very computationally-intensive.
+ * arctic latitudes that the sun rises, but does not set.
  * </p>
  * 
  * @author Sualeh Fatehi
@@ -46,7 +45,6 @@ final class CobbledSunCalc
   implements SunAlgorithm
 {
 
-  /** Multiplier to convert from degrees to radians. */
   private static final double DEGREESTORADIANS = Math.PI / 180D;
 
   /**

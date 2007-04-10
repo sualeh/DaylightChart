@@ -25,10 +25,10 @@ package daylightchart.iso6709;
 import java.io.Serializable;
 
 /**
- * Coordinates (latitude and longitude) for a location. The latitude and
- * longitude in the format defined in ISO 6709:1983, "Standard
- * representation of latitude, longitude and altitude for geographic
- * point locations".
+ * Coordinates (latitude, longitude and altitude) for a location. The
+ * latitude, longitude and altitude can be parsed from and formatted to
+ * the format defined in ISO 6709:1983, "Standard representation of
+ * latitude, longitude and altitude for geographic point locations".
  * 
  * @author Sualeh Fatehi
  */
@@ -50,13 +50,7 @@ public final class PointLocation
    */
   public PointLocation(final Latitude latitude, final Longitude longitude)
   {
-    if (latitude == null || longitude == null)
-    {
-      throw new IllegalArgumentException("Both latitude and longitude need to be specified");
-    }
-    this.latitude = latitude;
-    this.longitude = longitude;
-    altitude = 0;
+    this(latitude, longitude, 0);
   }
 
   /**
@@ -99,9 +93,19 @@ public final class PointLocation
    * 
    * @see java.lang.Comparable#compareTo(java.lang.Object)
    */
-  public int compareTo(final PointLocation coordinates)
+  public int compareTo(final PointLocation pointLocation)
   {
-    return toString().compareTo(coordinates.toString());
+    int comparison;
+    comparison = (int) Math.signum(altitude - pointLocation.altitude);
+    if (comparison == 0)
+    {
+      comparison = latitude.compareTo(pointLocation.latitude);
+    }
+    if (comparison == 0)
+    {
+      comparison = longitude.compareTo(pointLocation.longitude);
+    }
+    return comparison;
   }
 
   /**
@@ -201,6 +205,22 @@ public final class PointLocation
     result = prime * result + (latitude == null? 0: latitude.hashCode());
     result = prime * result + (longitude == null? 0: longitude.hashCode());
     return result;
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see java.lang.Object#toString()
+   */
+  @Override
+  public String toString()
+  {
+    String string = latitude.toString() + " - " + longitude.toString();
+    if (altitude != 0)
+    {
+      string = string + ": " + altitude;
+    }
+    return string;
   }
 
 }

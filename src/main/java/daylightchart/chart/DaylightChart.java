@@ -26,6 +26,7 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import org.jfree.chart.JFreeChart;
@@ -71,21 +72,39 @@ public class DaylightChart
    * 
    * @param location
    * @param year
-   * @param chartEditor
    */
-  public DaylightChart(final Location location,
-                       final int year,
-                       final ChartEditor chartEditor)
+  public DaylightChart(final Location location)
+  {
+    this(location, Calendar.getInstance().get(Calendar.YEAR));
+  }
+
+  /**
+   * Instantiate the chart for a given location, and given year.
+   * 
+   * @param location
+   * @param year
+   */
+  public DaylightChart(final Location location, final int year)
   {
     super(new XYPlot());
     // Calculate rise and set timings for the whole year
     riseSetData = RiseSetFactory.createRiseSetYear(location, year);
     createChart();
+    setTitle(riseSetData.getLocation().toString());
+  }
+
+  /**
+   * Updates a chart from an editor.
+   * 
+   * @param chartEditor
+   *        Chart editor.
+   */
+  public void updateChart(final ChartEditor chartEditor)
+  {
     if (chartEditor != null)
     {
       chartEditor.updateChart(this);
     }
-    setTitle(riseSetData.getLocation().toString());
   }
 
   /**

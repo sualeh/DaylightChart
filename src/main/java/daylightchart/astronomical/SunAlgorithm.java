@@ -30,10 +30,10 @@ package daylightchart.astronomical;
  * </p>
  * 
  * <pre>
- *       -0° 50'    Sunrise/ Sunset
- *       -6°        Civil Twilight (default twilight)
- *      -12°        Nautical Twilight
- *      -18°        Astronomical Twilight
+ *  -0° 50'    Sunrise/ Sunset
+ *  -6°        Civil Twilight (default twilight)
+ * -12°        Nautical Twilight
+ * -18°        Astronomical Twilight
  * </pre>
  * 
  * <p>
