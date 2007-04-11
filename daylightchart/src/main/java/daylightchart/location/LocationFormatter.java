@@ -27,7 +27,7 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.util.List;
 
-import org.iso6709.parser.PointLocationFormatter;
+import org.pointlocation6709.parser.PointLocationFormatter;
 
 /**
  * Formats objects to strings.

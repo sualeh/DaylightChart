@@ -11,6 +11,6 @@
 	<classpathentry kind="var" path="M2_REPO/jfree/jfreechart/1.0.4/jfreechart-1.0.4.jar" sourcepath="/JFreeHome/jfreechart-1.0.4/source"/>
 	<classpathentry kind="var" path="M2_REPO/junit/junit/4.2/junit-4.2.jar"/>
 	<classpathentry kind="var" path="M2_REPO/joda-time/joda-time/1.4/joda-time-1.4.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/Daylight Chart - ISO 6709"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/Point Location 6709"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

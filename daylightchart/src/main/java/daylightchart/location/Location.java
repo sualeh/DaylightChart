@@ -26,7 +26,7 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.TimeZone;
 
-import org.iso6709.PointLocation;
+import org.pointlocation6709.PointLocation;
 
 /**
  * A location object has all the information required to define a

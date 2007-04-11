@@ -17,8 +17,8 @@
   </licenses>
   <dependencies>
     <dependency>
-      <groupId>iso6709</groupId>
-      <artifactId>iso6709</artifactId>
+      <groupId>pointlocation6709</groupId>
+      <artifactId>pointlocation6709</artifactId>
       <version>0.7</version>
     </dependency>
     <dependency>

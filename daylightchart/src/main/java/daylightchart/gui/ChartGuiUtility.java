@@ -22,10 +22,10 @@
 package daylightchart.gui;
 
 
-import org.iso6709.Angle;
-import org.iso6709.Latitude;
-import org.iso6709.Longitude;
-import org.iso6709.PointLocation;
+import org.pointlocation6709.Angle;
+import org.pointlocation6709.Latitude;
+import org.pointlocation6709.Longitude;
+import org.pointlocation6709.PointLocation;
 import org.jfree.chart.editor.ChartEditor;
 import org.jfree.chart.editor.ChartEditorManager;
 

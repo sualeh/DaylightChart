@@ -24,8 +24,8 @@ package daylightchart.location.parser;
 
 import java.util.*;
 import daylightchart.location.*;
-import org.iso6709.*;
-import org.iso6709.parser.*;
+import org.pointlocation6709.*;
+import org.pointlocation6709.parser.*;
 
 }
 
@@ -112,7 +112,7 @@ pointLocation
     try {
       pointLocation = PointLocationParser.parsePointLocation(text.getText());
     }
-    catch (org.iso6709.ParserException e)
+    catch (org.pointlocation6709.parser.ParserException e)
     {
       throw new RecognitionException(e.getMessage());
     }
