@@ -23,7 +23,7 @@ package org.pointlocation6709.parser;
 
 
 /**
- * Parser exception
+ * Parser exception.
  * 
  * @author Sualeh Fatehi
  */

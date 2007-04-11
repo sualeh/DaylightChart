@@ -46,7 +46,7 @@ public final class PointLocationParser
    * @return Point location
    * @throws ParserException
    */
-  public static final PointLocation parsePointLocation(final String representation)
+  public static PointLocation parsePointLocation(final String representation)
     throws ParserException
   {
     final AntlrPointLocationParser parser = constructPointLocationParser(representation);

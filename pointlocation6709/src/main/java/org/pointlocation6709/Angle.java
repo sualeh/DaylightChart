@@ -202,7 +202,9 @@ public class Angle
   public final int getField(final Field field)
   {
     final double absDegrees;
-    int intDegrees, intMinutes, intSeconds;
+    int intDegrees;
+    int intMinutes;
+    int intSeconds;
     final int returnField;
     final int sign = radians < 0? -1: 1;
 

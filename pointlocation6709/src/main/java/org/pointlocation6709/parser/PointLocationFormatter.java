@@ -40,7 +40,7 @@ public final class PointLocationFormatter
    *        Point location to format
    * @return Formatted string
    */
-  public static final String formatIso6709PointLocation(final PointLocation pointLocation)
+  public static String formatIso6709PointLocation(final PointLocation pointLocation)
   {
     String string = format(pointLocation.getLatitude(), 7)
                     + format(pointLocation.getLongitude(), 8);
@@ -56,7 +56,7 @@ public final class PointLocationFormatter
    * 
    * @return Formated string.
    */
-  private static final String format(final Angle angle, final int fieldlength)
+  private static String format(final Angle angle, final int fieldlength)
   {
     final int angleSign = angle.getRadians() < 0? -1: 1;
     final int quantity = angleSign
@@ -79,7 +79,7 @@ public final class PointLocationFormatter
    * @return Padded string to length "width", with the sign preceeding
    *         the integer.
    */
-  private static final String padInt(final int quantity, final int width)
+  private static String padInt(final int quantity, final int width)
   {
     final StringBuffer paddedString = new StringBuffer();
 

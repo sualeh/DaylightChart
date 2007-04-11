@@ -36,7 +36,7 @@ import org.pointlocation6709.parser.PointLocationParser;
  * 
  * @author Sualeh Fatehi
  */
-public class Main
+public final class Main
 {
 
   /**
@@ -47,7 +47,7 @@ public class Main
    * @throws IOException
    *         On an i/o error.
    */
-  public final static void main(final String[] args)
+  public static void main(final String[] args)
     throws IOException
   {
     System.out.println("Starting ISO 6709:1983 location point tester. "
@@ -74,6 +74,10 @@ public class Main
       }
     }
     System.out.println("Done. " + new Date());
+  }
+
+  private Main()
+  {
   }
 
 }
