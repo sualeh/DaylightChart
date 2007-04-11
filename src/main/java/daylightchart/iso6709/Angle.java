@@ -213,11 +213,12 @@ public class Angle
 
     // Calculate absolute integer minutes
     intMinutes = intSeconds / 60; // Integer arithmetic
-    if (intMinutes == 60) {
+    if (intMinutes == 60)
+    {
       intMinutes = 0;
       intDegrees++;
     }
-    
+
     // Calculate absolute integer seconds
     intSeconds = intSeconds % 60;
 
@@ -306,9 +307,9 @@ public class Angle
     final StringBuffer representation = new StringBuffer();
     final String direction = getDirection();
 
-    int absIntDegrees = Math.abs(getField(Field.DEGREES));
-    int absIntMinutes = Math.abs(getField(Field.MINUTES));
-    int absIntSeconds = Math.abs(getField(Field.SECONDS));
+    final int absIntDegrees = Math.abs(getField(Field.DEGREES));
+    final int absIntMinutes = Math.abs(getField(Field.MINUTES));
+    final int absIntSeconds = Math.abs(getField(Field.SECONDS));
 
     representation.append(absIntDegrees).append("°").append(" ").append(Math
       .abs(getField(Field.MINUTES))).append("'");

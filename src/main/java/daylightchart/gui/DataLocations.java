@@ -62,8 +62,8 @@ public final class DataLocations
 
     Reader reader = null;
 
-    UserPreferences userPreferences = new UserPreferences();
-    String locationsString = userPreferences.getLocations();
+    final UserPreferences userPreferences = new UserPreferences();
+    final String locationsString = userPreferences.getLocations();
     if (locationsString != null)
     {
       reader = new StringReader(locationsString);
@@ -111,8 +111,8 @@ public final class DataLocations
     locations = LocationParser.parseLocations(reader);
 
     // Save locations to user preferences
-    String locationsString = LocationFormatter.formatLocations(locations);
-    UserPreferences userPreferences = new UserPreferences();
+    final String locationsString = LocationFormatter.formatLocations(locations);
+    final UserPreferences userPreferences = new UserPreferences();
     userPreferences.setLocations(locationsString);
 
   }

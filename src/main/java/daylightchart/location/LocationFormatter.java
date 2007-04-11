@@ -60,6 +60,27 @@ public class LocationFormatter
   }
 
   /**
+   * Formats a list of locations to a string.
+   * 
+   * @param locations
+   *        Locations to format
+   * @return String
+   */
+  public static String formatLocations(final List<Location> locations)
+  {
+    final StringWriter writer = new StringWriter();
+    try
+    {
+      formatLocations(locations, writer);
+    }
+    catch (final IOException e)
+    {
+      // Ignore
+    }
+    return writer.toString();
+  }
+
+  /**
    * Writes location data out to a file. *
    * 
    * @param locations
@@ -80,27 +101,6 @@ public class LocationFormatter
     }
     writer.flush();
     writer.close();
-  }
-
-  /**
-   * Formats a list of locations to a string.
-   * 
-   * @param locations
-   *        Locations to format
-   * @return String
-   */
-  public static String formatLocations(final List<Location> locations)
-  {
-    StringWriter writer = new StringWriter();
-    try
-    {
-      formatLocations(locations, writer);
-    }
-    catch (IOException e)
-    {
-      // Ignore
-    }
-    return writer.toString();
   }
 
   /**

@@ -11,7 +11,12 @@ public class UserPreferences
   {
     locations("daylightchart.locations");
 
-    private String key;
+    private final String key;
+
+    private PreferenceKeys(final String key)
+    {
+      this.key = key;
+    }
 
     /**
      * @return the key
@@ -21,25 +26,15 @@ public class UserPreferences
       return key;
     }
 
-    private PreferenceKeys(String key)
-    {
-      this.key = key;
-    }
+  }
 
+  public static void main(final String[] args)
+  {
+    new UserPreferences().clear();
   }
 
   private final Preferences preferences = Preferences.userNodeForPackage(this
     .getClass());
-
-  public String getLocations()
-  {
-    return preferences.get(PreferenceKeys.locations.getKey(), null);
-  }
-
-  public void setLocations(String locations)
-  {
-    preferences.put(PreferenceKeys.locations.getKey(), locations);
-  }
 
   public void clear()
   {
@@ -47,14 +42,19 @@ public class UserPreferences
     {
       preferences.clear();
     }
-    catch (BackingStoreException e)
+    catch (final BackingStoreException e)
     {
       e.printStackTrace();
     }
   }
 
-  public static void main(String[] args)
+  public String getLocations()
   {
-    new UserPreferences().clear();
+    return preferences.get(PreferenceKeys.locations.getKey(), null);
+  }
+
+  public void setLocations(final String locations)
+  {
+    preferences.put(PreferenceKeys.locations.getKey(), locations);
   }
 }

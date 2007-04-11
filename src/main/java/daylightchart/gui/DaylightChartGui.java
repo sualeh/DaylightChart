@@ -111,7 +111,7 @@ public final class DaylightChartGui
           listBox.setSelectedIndex(0);
           location = (Location) listBox.getSelectedValue();
         }
-        DaylightChart daylightChart = new DaylightChart(location);
+        final DaylightChart daylightChart = new DaylightChart(location);
         daylightChart.updateChart(chartEditor);
         chartPanel.setChart(daylightChart);
       }
