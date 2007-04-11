@@ -6,9 +6,9 @@
     <artifactId>daylightchart-all</artifactId>
     <version>0.7</version>
   </parent>
-  <groupId>iso6709</groupId>
-  <artifactId>iso6709</artifactId>
-  <name>ISO 6709</name>
+  <groupId>pointlocation6709</groupId>
+  <artifactId>pointlocation6709</artifactId>
+  <name>Point Location 6709</name>
   <description>Support for ISO 6709:1983.</description>
   <licenses>
     <license>
@@ -22,7 +22,7 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-antlr-plugin</artifactId>
         <configuration>
-          <grammars>ISO6709PointLocation.g</grammars>
+          <grammars>PointLocation6709.g</grammars>
         </configuration>
         <executions>
           <execution>
@@ -39,7 +39,7 @@
           <archive>
             <index>true</index>
             <manifest>
-              <mainClass>org.iso6709.Main</mainClass>
+              <mainClass>org.pointlocation6709.Main</mainClass>
               <addClasspath>true</addClasspath>
             </manifest>
             <manifestEntries>

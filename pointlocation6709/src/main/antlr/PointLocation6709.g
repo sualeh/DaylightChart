@@ -20,10 +20,10 @@ header {
   * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
   *
   */
-package org.iso6709.parser;
+package org.pointlocation6709.parser;
 
 import java.util.*;
-import org.iso6709.*;
+import org.pointlocation6709.*;
 
 }
 

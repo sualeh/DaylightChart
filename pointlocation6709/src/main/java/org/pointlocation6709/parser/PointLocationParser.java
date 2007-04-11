@@ -19,13 +19,13 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * 
  */
-package org.iso6709.parser;
+package org.pointlocation6709.parser;
 
 
 import java.io.Reader;
 import java.io.StringReader;
 
-import org.iso6709.PointLocation;
+import org.pointlocation6709.PointLocation;
 
 import antlr.RecognitionException;
 import antlr.TokenStreamException;

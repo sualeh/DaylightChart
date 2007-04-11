@@ -19,7 +19,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * 
  */
-package org.iso6709;
+package org.pointlocation6709;
 
 
 import java.io.BufferedReader;
@@ -27,9 +27,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Date;
 
-import org.iso6709.parser.ParserException;
-import org.iso6709.parser.PointLocationFormatter;
-import org.iso6709.parser.PointLocationParser;
+import org.pointlocation6709.parser.ParserException;
+import org.pointlocation6709.parser.PointLocationFormatter;
+import org.pointlocation6709.parser.PointLocationParser;
 
 /**
  * Main.
@@ -47,7 +47,7 @@ public class Main
    * @throws IOException
    *         On an i/o error.
    */
-  public static void main(final String[] args)
+  public final static void main(final String[] args)
     throws IOException
   {
     System.out.println("Starting ISO 6709:1983 location point tester. "

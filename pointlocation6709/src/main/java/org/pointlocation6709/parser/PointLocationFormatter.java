@@ -19,10 +19,10 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * 
  */
-package org.iso6709.parser;
+package org.pointlocation6709.parser;
 
-import org.iso6709.Angle;
-import org.iso6709.PointLocation;
+import org.pointlocation6709.Angle;
+import org.pointlocation6709.PointLocation;
 
 
 /**

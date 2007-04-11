@@ -19,60 +19,43 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * 
  */
-package org.iso6709.parser;
+package org.pointlocation6709;
 
 
 /**
- * Parser exception
+ * Represents a latitude in degrees or radians.
  * 
  * @author Sualeh Fatehi
  */
-public class ParserException
-  extends Exception
+public final class Latitude
+  extends Angle
 {
 
-  private static final long serialVersionUID = -8091140656979529951L;
+  private static final long serialVersionUID = -1048509855080052523L;
 
   /**
-   * Constructor.
+   * Copy constructor. Copies the value of a provided angle.
+   * 
+   * @param angle
+   *        Angle to copy the value from.
    */
-  public ParserException()
+  public Latitude(final Angle angle)
   {
+    super(angle);
+    validateDegreesRange(90);
   }
 
-  /**
-   * Constructor.
-   * 
-   * @param message
-   *        Exception message
-   */
-  public ParserException(final String message)
+  @Override
+  protected String getDirection()
   {
-    super(message);
-  }
-
-  /**
-   * Constructor.
-   * 
-   * @param message
-   *        Exception message
-   * @param cause
-   *        Exception cause
-   */
-  public ParserException(final String message, final Throwable cause)
-  {
-    super(message, cause);
-  }
-
-  /**
-   * Constructor.
-   * 
-   * @param cause
-   *        Exception cause
-   */
-  public ParserException(final Throwable cause)
-  {
-    super(cause);
+    if (getRadians() < 0)
+    {
+      return "S";
+    }
+    else
+    {
+      return "N";
+    }
   }
 
 }

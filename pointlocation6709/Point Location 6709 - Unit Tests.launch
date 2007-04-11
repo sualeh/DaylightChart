@@ -1,25 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <launchConfiguration type="org.eclipse.jdt.junit.launchconfig">
 <booleanAttribute key="org.eclipse.jdt.junit.KEEPRUNNING_ATTR" value="false"/>
-<booleanAttribute key="org.eclipse.jdt.launching.DEFAULT_CLASSPATH" value="false"/>
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value=""/>
 <stringAttribute key="org.eclipse.jdt.junit.TESTNAME" value=""/>
-<listAttribute key="org.eclipse.jdt.launching.CLASSPATH">
-<listEntry value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#13;&#10;&lt;runtimeClasspathEntry containerPath=&quot;org.eclipse.jdt.launching.JRE_CONTAINER&quot; javaProject=&quot;Daylight Chart&quot; path=&quot;1&quot; type=&quot;4&quot;/&gt;&#13;&#10;"/>
-<listEntry value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#13;&#10;&lt;runtimeClasspathEntry path=&quot;3&quot; projectName=&quot;Daylight Chart - ISO 6709&quot; type=&quot;1&quot;/&gt;&#13;&#10;"/>
-</listAttribute>
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
 <listEntry value="4"/>
 </listAttribute>
-<stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="Daylight Chart"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="Point Location 6709"/>
 <listAttribute key="org.eclipse.debug.ui.favoriteGroups">
 <listEntry value="org.eclipse.debug.ui.launchGroup.run"/>
 <listEntry value="org.eclipse.debug.ui.launchGroup.debug"/>
 </listAttribute>
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
-<listEntry value="/Daylight Chart"/>
+<listEntry value="/Point Location 6709"/>
 </listAttribute>
-<stringAttribute key="org.eclipse.jdt.junit.CONTAINER" value="=Daylight Chart/src\/test\/java"/>
+<stringAttribute key="org.eclipse.jdt.junit.CONTAINER" value="=Point Location 6709/src\/test\/java"/>
 <booleanAttribute key="org.eclipse.debug.core.appendEnvironmentVariables" value="true"/>
 <stringAttribute key="org.eclipse.jdt.junit.TEST_KIND" value="org.eclipse.jdt.junit.loader.junit4"/>
 </launchConfiguration>

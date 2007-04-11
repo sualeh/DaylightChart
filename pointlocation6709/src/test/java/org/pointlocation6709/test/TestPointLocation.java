@@ -19,16 +19,16 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * 
  */
-package org.iso6709.test;
+package org.pointlocation6709.test;
 
 
 import static org.junit.Assert.assertEquals;
 
-import org.iso6709.Angle;
-import org.iso6709.PointLocation;
-import org.iso6709.parser.ParserException;
-import org.iso6709.parser.PointLocationParser;
 import org.junit.Test;
+import org.pointlocation6709.Angle;
+import org.pointlocation6709.PointLocation;
+import org.pointlocation6709.parser.ParserException;
+import org.pointlocation6709.parser.PointLocationParser;
 
 
 /**
