@@ -76,16 +76,16 @@ public final class PointLocation
   /**
    * Copy constructor. Copies the value of a provided coordinates.
    * 
-   * @param locationPoint
+   * @param pointLocation
    *        Location to copy the value from.
    * @throws NullPointerException
    *         If the argument is null
    */
-  public PointLocation(final PointLocation locationPoint)
+  public PointLocation(final PointLocation pointLocation)
   {
-    this(locationPoint.latitude,
-         locationPoint.longitude,
-         locationPoint.altitude);
+    this(pointLocation.latitude,
+         pointLocation.longitude,
+         pointLocation.altitude);
   }
 
   /**

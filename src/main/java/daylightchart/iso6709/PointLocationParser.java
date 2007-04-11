@@ -50,10 +50,10 @@ public class PointLocationParser
     throws ParserException
   {
     final AntlrPointLocationParser parser = constructPointLocationParser(representation);
-    PointLocation coordinates;
+    PointLocation pointLocation;
     try
     {
-      coordinates = parser.locationPoint();
+      pointLocation = parser.locationPoint();
     }
     catch (final RecognitionException e)
     {
@@ -63,7 +63,7 @@ public class PointLocationParser
     {
       throw new ParserException(e);
     }
-    return coordinates;
+    return pointLocation;
   }
 
   private static AntlrPointLocationParser constructPointLocationParser(final Reader reader)

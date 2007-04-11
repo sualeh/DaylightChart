@@ -48,9 +48,9 @@ public class ChartGuiUtility
   public final static ChartEditor getChartEditor()
   {
     // Create a fake chart
-    final PointLocation coordinates = new PointLocation(new Latitude(new Angle()),
+    final PointLocation pointLocation = new PointLocation(new Latitude(new Angle()),
                                                         new Longitude(new Angle()));
-    final Location location = new Location("", "", "", coordinates);
+    final Location location = new Location("", "", "", pointLocation);
     final DaylightChart chart = new DaylightChart(location);
 
     final ChartEditor chartEditor = ChartEditorManager.getChartEditor(chart);

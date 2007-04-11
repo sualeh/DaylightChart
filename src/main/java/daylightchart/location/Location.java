@@ -48,7 +48,7 @@ public final class Location
   private static final long serialVersionUID = 7929385835483597186L;
 
   private final String city, country;
-  private final PointLocation coordinates;
+  private final PointLocation pointLocation;
   private final String tzId;
 
   /**
@@ -61,7 +61,7 @@ public final class Location
    */
   public Location(final Location location)
   {
-    this(location.city, location.country, location.tzId, location.coordinates);
+    this(location.city, location.country, location.tzId, location.pointLocation);
   }
 
   /**
@@ -69,13 +69,13 @@ public final class Location
    * 
    * @param city
    * @param country
-   * @param coordinates
+   * @param pointLocation
    * @param tzId
    */
   public Location(final String city,
                   final String country,
                   final String tzId,
-                  final PointLocation coordinates)
+                  final PointLocation pointLocation)
   {
 
     this.city = city;
@@ -83,11 +83,11 @@ public final class Location
 
     this.tzId = tzId;
 
-    if (coordinates == null)
+    if (pointLocation == null)
     {
       throw new IllegalArgumentException("Both latitude and longitude need to be specified");
     }
-    this.coordinates = coordinates;
+    this.pointLocation = pointLocation;
 
     // Now that all fields are set, validate
     validateTimeZone();
@@ -135,14 +135,14 @@ public final class Location
     {
       return false;
     }
-    if (coordinates == null)
+    if (pointLocation == null)
     {
-      if (other.coordinates != null)
+      if (other.pointLocation != null)
       {
         return false;
       }
     }
-    else if (!coordinates.equals(other.coordinates))
+    else if (!pointLocation.equals(other.pointLocation))
     {
       return false;
     }
@@ -188,7 +188,7 @@ public final class Location
    */
   public PointLocation getCoordinates()
   {
-    return coordinates;
+    return pointLocation;
   }
 
   /**
@@ -222,7 +222,7 @@ public final class Location
     final int prime = 31;
     int result = 1;
     result = prime * result + (city == null? 0: city.hashCode());
-    result = prime * result + (coordinates == null? 0: coordinates.hashCode());
+    result = prime * result + (pointLocation == null? 0: pointLocation.hashCode());
     result = prime * result + (country == null? 0: country.hashCode());
     result = prime * result + (tzId == null? 0: tzId.hashCode());
     return result;
