@@ -34,7 +34,7 @@ public class PointLocationFormatter
    * Formats a point location as an ISO 6709:1983 string.
    * 
    * @param pointLocation
-   *        Coordinates to format
+   *        Point location to format
    * @return Formatted string
    */
   public final static String formatIso6709PointLocation(final PointLocation pointLocation)

@@ -47,7 +47,7 @@ public class LocationFormatter
   public final static String formatLocation(final Location location)
   {
     final String corordinatesString = PointLocationFormatter
-      .formatIso6709PointLocation(location.getCoordinates());
+      .formatIso6709PointLocation(location.getPointLocation());
     final String tzId = location.getTimeZone().getID();
 
     final String city = location.getCity();
@@ -112,10 +112,7 @@ public class LocationFormatter
    */
   public final static String printLocationDetails(final Location location)
   {
-    final String details = location.getCoordinates().getLatitude().toString()
-                           + " - "
-                           + location.getCoordinates().getLongitude()
-                             .toString() + ", "
+    final String details = location.getPointLocation().toString() + ", "
                            + location.getTimeZone().getDisplayName();
     return details;
   }

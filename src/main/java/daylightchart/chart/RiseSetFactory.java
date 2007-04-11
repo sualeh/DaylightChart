@@ -92,9 +92,9 @@ public class RiseSetFactory
                                     final Location location,
                                     final LocalDate date)
   {
-    sunAlgorithm.setLatitude(location.getCoordinates().getLatitude()
+    sunAlgorithm.setLatitude(location.getPointLocation().getLatitude()
       .getDegrees());
-    sunAlgorithm.setLongitude(location.getCoordinates().getLongitude()
+    sunAlgorithm.setLongitude(location.getPointLocation().getLongitude()
       .getDegrees());
     sunAlgorithm
       .setTimeZoneOffset(location.getTimeZone().getRawOffset() / 1000.0 / 60.0 / 60.0);

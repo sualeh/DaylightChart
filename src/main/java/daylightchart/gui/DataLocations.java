@@ -147,8 +147,8 @@ public final class DataLocations
 
         public int compare(final Location location1, final Location location2)
         {
-          final Latitude latitude1 = location1.getCoordinates().getLatitude();
-          final Latitude latitude2 = location2.getCoordinates().getLatitude();
+          final Latitude latitude1 = location1.getPointLocation().getLatitude();
+          final Latitude latitude2 = location2.getPointLocation().getLatitude();
           return (int) Math.signum(latitude2.getRadians()
                                    - latitude1.getRadians());
         }

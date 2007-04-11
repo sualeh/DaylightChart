@@ -29,15 +29,9 @@ import java.util.TimeZone;
 import daylightchart.iso6709.PointLocation;
 
 /**
- * <p>
- * Represents a location. The Location class has all the information
- * required to define a location, such as the name of the city and the
- * country, the cordinates, and the time zone.
- * </p>
- * This is an example of the string representation of a location:
- * "Aberdeen;UK;Europe/London;+5710-00204/". The city and country appear
- * first, separated by ;. Next, there is a time zone id, and last the
- * corordinates.
+ * A location object has all the information required to define a
+ * location, such as the name of the city and the country, the
+ * point location, and the time zone.
  * 
  * @author Sualeh Fatehi
  */
@@ -182,11 +176,11 @@ public final class Location
   }
 
   /**
-   * Coordinates
+   * Point location
    * 
-   * @return Coordinates
+   * @return Point location
    */
-  public PointLocation getCoordinates()
+  public PointLocation getPointLocation()
   {
     return pointLocation;
   }
@@ -222,7 +216,8 @@ public final class Location
     final int prime = 31;
     int result = 1;
     result = prime * result + (city == null? 0: city.hashCode());
-    result = prime * result + (pointLocation == null? 0: pointLocation.hashCode());
+    result = prime * result
+             + (pointLocation == null? 0: pointLocation.hashCode());
     result = prime * result + (country == null? 0: country.hashCode());
     result = prime * result + (tzId == null? 0: tzId.hashCode());
     return result;
@@ -259,7 +254,7 @@ public final class Location
     }
     final int rawOffset = timeZone.getRawOffset();
     final double tzOffsetHours = rawOffset / (1000D * 60D * 60D);
-    final double longitiudeTzOffsetHours = getCoordinates().getLongitude()
+    final double longitiudeTzOffsetHours = getPointLocation().getLongitude()
       .getDegrees() / 15D;
     boolean longitudeInTz = Math.abs(longitiudeTzOffsetHours - tzOffsetHours) <= 0.5;
     if (!longitudeInTz)

@@ -74,7 +74,7 @@ public final class PointLocation
   }
 
   /**
-   * Copy constructor. Copies the value of a provided coordinates.
+   * Copy constructor. Copies the value of a provided point location.
    * 
    * @param pointLocation
    *        Location to copy the value from.

@@ -159,9 +159,9 @@ public class TestSunAlgorithm
 
   private double[] calcRiseSet(final LocalDate date, final Location location)
   {
-    mSunAlgorithm.setLatitude(location.getCoordinates().getLatitude()
+    mSunAlgorithm.setLatitude(location.getPointLocation().getLatitude()
       .getDegrees());
-    mSunAlgorithm.setLongitude(location.getCoordinates().getLongitude()
+    mSunAlgorithm.setLongitude(location.getPointLocation().getLongitude()
       .getDegrees());
     mSunAlgorithm.setTimeZoneOffset(location.getTimeZone().getRawOffset()
                                     / (1000.0 * 60.0 * 60.0));

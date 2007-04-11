@@ -39,11 +39,11 @@ public class PointLocationParser
 {
 
   /**
-   * Parses a string representation of the coordinates.
+   * Parses a string representation of the point location.
    * 
    * @param representation
-   *        String representation of the coordinates
-   * @return Coordinates
+   *        String representation of the point location
+   * @return Point location
    * @throws ParserException
    */
   public final static PointLocation parsePointLocation(final String representation)
