@@ -213,7 +213,11 @@ public class Angle
 
     // Calculate absolute integer minutes
     intMinutes = intSeconds / 60; // Integer arithmetic
-
+    if (intMinutes == 60) {
+      intMinutes = 0;
+      intDegrees++;
+    }
+    
     // Calculate absolute integer seconds
     intSeconds = intSeconds % 60;
 

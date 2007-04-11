@@ -71,7 +71,6 @@ public class DaylightChart
    * Instantiate the chart for a given location, and given year.
    * 
    * @param location
-   * @param year
    */
   public DaylightChart(final Location location)
   {

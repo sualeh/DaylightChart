@@ -23,6 +23,7 @@ package daylightchart.location;
 
 
 import java.io.IOException;
+import java.io.StringWriter;
 import java.io.Writer;
 import java.util.List;
 
@@ -79,6 +80,27 @@ public class LocationFormatter
     }
     writer.flush();
     writer.close();
+  }
+
+  /**
+   * Formats a list of locations to a string.
+   * 
+   * @param locations
+   *        Locations to format
+   * @return String
+   */
+  public static String formatLocations(final List<Location> locations)
+  {
+    StringWriter writer = new StringWriter();
+    try
+    {
+      formatLocations(locations, writer);
+    }
+    catch (IOException e)
+    {
+      // Ignore
+    }
+    return writer.toString();
   }
 
   /**

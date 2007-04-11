@@ -181,6 +181,10 @@ public final class Hour
 
     // Calculate absolute integer minutes
     intMinutes = intSeconds / 60; // Integer arithmetic
+    if (intMinutes == 60) {
+      intMinutes = 0;
+      intHours++;
+    }
 
     // Calculate absolute integer seconds
     intSeconds = intSeconds % 60;

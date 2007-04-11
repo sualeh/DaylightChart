@@ -29,15 +29,17 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
 import daylightchart.iso6709.Latitude;
+import daylightchart.location.Location;
 import daylightchart.location.LocationFormatter;
 import daylightchart.location.LocationParser;
-import daylightchart.location.Location;
 import daylightchart.location.ParserException;
 
 /**
@@ -57,7 +59,16 @@ public final class DataLocations
    */
   public DataLocations()
   {
-    try
+
+    Reader reader = null;
+
+    UserPreferences userPreferences = new UserPreferences();
+    String locationsString = userPreferences.getLocations();
+    if (locationsString != null)
+    {
+      reader = new StringReader(locationsString);
+    }
+    else
     {
       final InputStream dataStream = this.getClass().getClassLoader()
         .getResourceAsStream("locations.data");
@@ -65,7 +76,10 @@ public final class DataLocations
       {
         throw new IllegalStateException("Cannot read data from internal database");
       }
-      final InputStreamReader reader = new InputStreamReader(dataStream);
+      reader = new InputStreamReader(dataStream);
+    }
+    try
+    {
       locations = LocationParser.parseLocations(reader);
     }
     catch (final ParserException e)
@@ -73,6 +87,7 @@ public final class DataLocations
       throw new IllegalStateException("Cannot read data from internal database",
                                       e);
     }
+
   }
 
   /**
@@ -94,6 +109,12 @@ public final class DataLocations
 
     final FileReader reader = new FileReader(dataFile);
     locations = LocationParser.parseLocations(reader);
+
+    // Save locations to user preferences
+    String locationsString = LocationFormatter.formatLocations(locations);
+    UserPreferences userPreferences = new UserPreferences();
+    userPreferences.setLocations(locationsString);
+
   }
 
   /**
