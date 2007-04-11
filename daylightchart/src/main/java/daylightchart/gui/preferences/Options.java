@@ -24,6 +24,7 @@ public abstract class Options
   {
     // Create new dummy chart, and copy options
     final JFreeChart chart = new JFreeChart(new XYPlot());
+    chart.setTitle("");
     updateChart(chart);
     return ChartEditorManager.getChartEditor(chart);
   }

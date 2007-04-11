@@ -50,11 +50,13 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
 import org.jfree.chart.editor.ChartEditor;
 
 import daylightchart.Version;
 import daylightchart.chart.DaylightChart;
 import daylightchart.gui.preferences.ChartOptions;
+import daylightchart.gui.preferences.UserPreferences;
 import daylightchart.location.Location;
 
 /**
@@ -98,8 +100,8 @@ public final class DaylightChartGui
     dataLocations = new DataLocations();
     dataLocations.sortLocations(locationsSortOrder);
 
-    chartOptions = ChartGuiUtility.getDefaultDaylightChartOptions();
-
+    chartOptions = new UserPreferences().getChartOptions();
+    
     listBox = new JList();
     listBox.setFont(font);
     listBox.addListSelectionListener(new ListSelectionListener()
@@ -112,9 +114,9 @@ public final class DaylightChartGui
           listBox.setSelectedIndex(0);
           location = (Location) listBox.getSelectedValue();
         }
-        final DaylightChart daylightChart = new DaylightChart(location);
-        daylightChart.updateChart(chartOptions);
-        chartPanel.setChart(daylightChart);
+        final DaylightChart chart = new DaylightChart(location);
+        chartOptions.updateChart(chart);
+        chartPanel.setChart(chart);
       }
     });
 
@@ -246,11 +248,22 @@ public final class DaylightChartGui
     {
       public void actionPerformed(final ActionEvent actionevent)
       {
-        JOptionPane
-          .showConfirmDialog(DaylightChartGui.this, chartOptions.getChartEditor(), Messages
+        ChartEditor chartEditor = chartOptions.getChartEditor();
+        int confirmValue = JOptionPane
+          .showConfirmDialog(DaylightChartGui.this, chartEditor, Messages
             .getString("DaylightChartGui.Menu.Options.ChartOptions"), //$NON-NLS-1$
                              JOptionPane.OK_CANCEL_OPTION,
                              JOptionPane.PLAIN_MESSAGE);
+        if (confirmValue == JOptionPane.OK_OPTION)
+        {
+          // Get chart options from the editor
+          chartOptions.copyFromChartEditor(chartEditor);
+          // Save preferences
+          new UserPreferences().setChartOptions(chartOptions);
+          // Also apply changes to the current chart
+          DaylightChart chart = (DaylightChart) chartPanel.getChart();
+          chartOptions.updateChart(chart);
+        }
       }
     });
 

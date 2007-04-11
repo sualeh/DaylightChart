@@ -21,7 +21,7 @@ public class PlotOptions
 
   private Paint backgroundPaint;
   private Paint outlinePaint;
-  private Stroke outlineStroke;
+  private transient Stroke outlineStroke;
   private RectangleInsets insets;
   //
   private final AxisOptions domainAxisOptions;

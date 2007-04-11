@@ -10,6 +10,14 @@ import java.io.ObjectOutputStream;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
+import org.pointlocation6709.Angle;
+import org.pointlocation6709.Latitude;
+import org.pointlocation6709.Longitude;
+import org.pointlocation6709.PointLocation;
+
+import daylightchart.chart.DaylightChart;
+import daylightchart.location.Location;
+
 /**
  * User preferences for the GUI.
  * 
@@ -86,7 +94,7 @@ public class UserPreferences
     }
     catch (final Exception e)
     {
-      chartOptions = new ChartOptions();
+      chartOptions = getDefaultDaylightChartOptions();
     }
     return chartOptions;
   }
@@ -111,6 +119,7 @@ public class UserPreferences
     }
     catch (final Exception e)
     {
+      e.printStackTrace();
       bytes = new byte[0];
     }
     preferences.putByteArray(PreferenceKeys.chartOptions.getKey(), bytes);
@@ -149,6 +158,26 @@ public class UserPreferences
     {
       e.printStackTrace();
     }
+  }
+
+  /**
+   * Creates a chart options instance.
+   * 
+   * @return Chart options
+   */
+  private final static ChartOptions getDefaultDaylightChartOptions()
+  {
+    // Create a fake chart
+    final PointLocation pointLocation = new PointLocation(new Latitude(new Angle()),
+                                                        new Longitude(new Angle()));
+    final Location location = new Location("", "", "", pointLocation);
+    final DaylightChart chart = new DaylightChart(location);
+    chart.setTitle("");
+  
+    final ChartOptions chartOptions = new ChartOptions();
+    chartOptions.copyFromChart(chart);
+    
+    return chartOptions;
   }
 
 }

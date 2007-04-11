@@ -68,9 +68,12 @@ public class TitleOptions
   public void updateChart(final JFreeChart chart)
   {
     final TextTitle title = chart.getTitle();
-    title.setFont(titleFont);
-    title.setPaint(titlePaint);
-    title.setText(titleText);
+    if (title != null)
+    {
+      title.setFont(titleFont);
+      title.setPaint(titlePaint);
+      title.setText(titleText);
+    }
   }
 
 }

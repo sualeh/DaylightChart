@@ -34,7 +34,6 @@ import org.jfree.chart.axis.AxisLocation;
 import org.jfree.chart.axis.DateAxis;
 import org.jfree.chart.axis.DateTickMarkPosition;
 import org.jfree.chart.axis.DateTickUnit;
-import org.jfree.chart.editor.ChartEditor;
 import org.jfree.chart.plot.IntervalMarker;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYDifferenceRenderer;
@@ -52,8 +51,9 @@ import org.jfree.ui.TextAnchor;
 import org.joda.time.LocalDateTime;
 
 import daylightchart.gui.preferences.ChartOptions;
-import daylightchart.location.LocationFormatter;
+import daylightchart.gui.preferences.ChartOptionsListener;
 import daylightchart.location.Location;
+import daylightchart.location.LocationFormatter;
 
 /**
  * Produces a chart of daylight times for any location.
@@ -62,6 +62,7 @@ import daylightchart.location.Location;
  */
 public class DaylightChart
   extends JFreeChart
+  implements ChartOptionsListener
 {
 
   private static final long serialVersionUID = 1223227216177061127L;
@@ -93,18 +94,30 @@ public class DaylightChart
   }
 
   /**
-   * Updates a chart from an editor.
+   * {@inheritDoc}
    * 
-   * @param chartOptions
-   *        Chart options.
+   * @see daylightchart.gui.preferences.ChartOptionsListener#beforeSettingChartOptions()
    */
-  public void updateChart(final ChartOptions chartOptions)
+  public void beforeSettingChartOptions()
   {
-    if (chartOptions != null)
-    {
-      chartOptions.updateChart(this);
-      setTitle(riseSetData.getLocation().toString());
-    }
+    // No-op
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see daylightchart.gui.preferences.ChartOptionsListener#afterSettingChartOptions()
+   */
+  public void afterSettingChartOptions()
+  {
+    // Fix title and subtitles
+    setTitle(riseSetData.getLocation().toString());
+    TextTitle title = getTitle();
+    Font subtitleFont = title.getFont();
+    subtitleFont = subtitleFont.deriveFont(Font.PLAIN);
+    TextTitle subtitle = (TextTitle) getSubtitle(0);
+    subtitle.setFont(subtitleFont);
+    subtitle.setPaint(title.getPaint());
   }
 
   /**

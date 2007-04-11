@@ -68,11 +68,21 @@ public class ChartOptions
 
   public void updateChart(final JFreeChart chart)
   {
+    if (chart instanceof ChartOptionsListener)
+    {
+      ((ChartOptionsListener) chart).beforeSettingChartOptions();
+    }
+    //
     chart.setAntiAlias(antiAlias);
     chart.setBackgroundPaint(backgroundPaint);
     //
     plotOptions.updateChart(chart);
     titleOptions.updateChart(chart);
+    //
+    if (chart instanceof ChartOptionsListener)
+    {
+      ((ChartOptionsListener) chart).afterSettingChartOptions();
+    }
   }
 
 }
