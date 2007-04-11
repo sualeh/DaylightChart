@@ -26,10 +26,9 @@ import org.pointlocation6709.Angle;
 import org.pointlocation6709.Latitude;
 import org.pointlocation6709.Longitude;
 import org.pointlocation6709.PointLocation;
-import org.jfree.chart.editor.ChartEditor;
-import org.jfree.chart.editor.ChartEditorManager;
 
 import daylightchart.chart.DaylightChart;
+import daylightchart.gui.preferences.ChartOptions;
 import daylightchart.location.Location;
 
 /**
@@ -41,11 +40,11 @@ public class ChartGuiUtility
 {
 
   /**
-   * Creates a chart editor instance.
+   * Creates a chart options instance.
    * 
-   * @return Chart editor
+   * @return Chart options
    */
-  public final static ChartEditor getChartEditor()
+  public final static ChartOptions getDefaultDaylightChartOptions()
   {
     // Create a fake chart
     final PointLocation pointLocation = new PointLocation(new Latitude(new Angle()),
@@ -53,9 +52,10 @@ public class ChartGuiUtility
     final Location location = new Location("", "", "", pointLocation);
     final DaylightChart chart = new DaylightChart(location);
 
-    final ChartEditor chartEditor = ChartEditorManager.getChartEditor(chart);
-
-    return chartEditor;
+    final ChartOptions chartOptions = new ChartOptions();
+    chartOptions.copyFromChart(chart);
+    
+    return chartOptions;
   }
 
   private ChartGuiUtility()

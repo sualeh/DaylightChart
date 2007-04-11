@@ -38,6 +38,7 @@ import java.util.List;
 
 import org.pointlocation6709.Latitude;
 
+import daylightchart.gui.preferences.UserPreferences;
 import daylightchart.location.Location;
 import daylightchart.location.LocationFormatter;
 import daylightchart.location.LocationParser;

@@ -51,6 +51,7 @@ import org.jfree.ui.RectangleInsets;
 import org.jfree.ui.TextAnchor;
 import org.joda.time.LocalDateTime;
 
+import daylightchart.gui.preferences.ChartOptions;
 import daylightchart.location.LocationFormatter;
 import daylightchart.location.Location;
 
@@ -94,14 +95,14 @@ public class DaylightChart
   /**
    * Updates a chart from an editor.
    * 
-   * @param chartEditor
-   *        Chart editor.
+   * @param chartOptions
+   *        Chart options.
    */
-  public void updateChart(final ChartEditor chartEditor)
+  public void updateChart(final ChartOptions chartOptions)
   {
-    if (chartEditor != null)
+    if (chartOptions != null)
     {
-      chartEditor.updateChart(this);
+      chartOptions.updateChart(this);
       setTitle(riseSetData.getLocation().toString());
     }
   }

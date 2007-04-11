@@ -54,6 +54,7 @@ import org.jfree.chart.editor.ChartEditor;
 
 import daylightchart.Version;
 import daylightchart.chart.DaylightChart;
+import daylightchart.gui.preferences.ChartOptions;
 import daylightchart.location.Location;
 
 /**
@@ -71,7 +72,7 @@ public final class DaylightChartGui
   private LocationsSortOrder locationsSortOrder;
   private final JList listBox;
   private final ChartPanel chartPanel;
-  private final ChartEditor chartEditor;
+  private final ChartOptions chartOptions;
   private File lastSelectedDirectory = new File("."); //$NON-NLS-1$
 
   /**
@@ -97,7 +98,7 @@ public final class DaylightChartGui
     dataLocations = new DataLocations();
     dataLocations.sortLocations(locationsSortOrder);
 
-    chartEditor = ChartGuiUtility.getChartEditor();
+    chartOptions = ChartGuiUtility.getDefaultDaylightChartOptions();
 
     listBox = new JList();
     listBox.setFont(font);
@@ -112,7 +113,7 @@ public final class DaylightChartGui
           location = (Location) listBox.getSelectedValue();
         }
         final DaylightChart daylightChart = new DaylightChart(location);
-        daylightChart.updateChart(chartEditor);
+        daylightChart.updateChart(chartOptions);
         chartPanel.setChart(daylightChart);
       }
     });
@@ -239,14 +240,14 @@ public final class DaylightChartGui
       .getString("DaylightChartGui.Menu.Options.SortByLatitude"), //$NON-NLS-1$
                                                                  false);
 
-    final MenuItem chartOptions = new MenuItem(Messages
+    final MenuItem chartOptionsMenuItem = new MenuItem(Messages
       .getString("DaylightChartGui.Menu.Options.ChartOptions")); //$NON-NLS-1$
-    chartOptions.addActionListener(new ActionListener()
+    chartOptionsMenuItem.addActionListener(new ActionListener()
     {
       public void actionPerformed(final ActionEvent actionevent)
       {
         JOptionPane
-          .showConfirmDialog(DaylightChartGui.this, chartEditor, Messages
+          .showConfirmDialog(DaylightChartGui.this, chartOptions.getChartEditor(), Messages
             .getString("DaylightChartGui.Menu.Options.ChartOptions"), //$NON-NLS-1$
                              JOptionPane.OK_CANCEL_OPTION,
                              JOptionPane.PLAIN_MESSAGE);
@@ -256,7 +257,7 @@ public final class DaylightChartGui
     menuOptions.add(sortByName);
     menuOptions.add(sortByLatitude);
     menuOptions.addSeparator();
-    menuOptions.add(chartOptions);
+    menuOptions.add(chartOptionsMenuItem);
 
     sortByName.addItemListener(new ItemListener()
     {
