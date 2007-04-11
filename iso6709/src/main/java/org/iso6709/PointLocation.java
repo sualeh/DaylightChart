@@ -46,7 +46,9 @@ public final class PointLocation
    * Constructor.
    * 
    * @param latitude
+   *        Latitude
    * @param longitude
+   *        Longitude
    */
   public PointLocation(final Latitude latitude, final Longitude longitude)
   {
@@ -57,8 +59,11 @@ public final class PointLocation
    * Constructor.
    * 
    * @param latitude
+   *        Latitude
    * @param longitude
+   *        Longitude
    * @param altitude
+   *        Altitude
    */
   public PointLocation(final Latitude latitude,
                        final Longitude longitude,
@@ -78,8 +83,6 @@ public final class PointLocation
    * 
    * @param pointLocation
    *        Location to copy the value from.
-   * @throws NullPointerException
-   *         If the argument is null
    */
   public PointLocation(final PointLocation pointLocation)
   {

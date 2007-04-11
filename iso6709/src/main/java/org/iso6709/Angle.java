@@ -92,7 +92,7 @@ public class Angle
     double result = Math.IEEEremainder(numerator, denominator);
     if (result < 0)
     {
-      result += denominator;
+      result = result + denominator;
     }
     return result;
   }
@@ -223,9 +223,9 @@ public class Angle
     intSeconds = intSeconds % 60;
 
     // correct sign
-    intDegrees *= sign;
-    intMinutes *= sign;
-    intSeconds *= sign;
+    intDegrees = intDegrees * sign;
+    intMinutes = intMinutes * sign;
+    intSeconds = intSeconds * sign;
 
     // decide which field to return
     if (field == Field.DEGREES)

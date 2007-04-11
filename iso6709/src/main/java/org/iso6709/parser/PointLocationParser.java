@@ -25,10 +25,7 @@ package org.iso6709.parser;
 import java.io.Reader;
 import java.io.StringReader;
 
-import org.iso6709.ParserException;
 import org.iso6709.PointLocation;
-import org.iso6709.parser.AntlrPointLocationLexer;
-import org.iso6709.parser.AntlrPointLocationParser;
 
 import antlr.RecognitionException;
 import antlr.TokenStreamException;
@@ -38,7 +35,7 @@ import antlr.TokenStreamException;
  * 
  * @author Sualeh Fatehi
  */
-public class PointLocationParser
+public final class PointLocationParser
 {
 
   /**
@@ -49,7 +46,7 @@ public class PointLocationParser
    * @return Point location
    * @throws ParserException
    */
-  public final static PointLocation parsePointLocation(final String representation)
+  public static final PointLocation parsePointLocation(final String representation)
     throws ParserException
   {
     final AntlrPointLocationParser parser = constructPointLocationParser(representation);

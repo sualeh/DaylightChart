@@ -19,19 +19,18 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * 
  */
-package org.iso6709;
+package org.iso6709.parser;
 
 
 /**
+ * Parser exception
+ * 
  * @author Sualeh Fatehi
  */
 public class ParserException
   extends Exception
 {
 
-  /**
-   * 
-   */
   private static final long serialVersionUID = -8091140656979529951L;
 
   /**
@@ -45,6 +44,7 @@ public class ParserException
    * Constructor.
    * 
    * @param message
+   *        Exception message
    */
   public ParserException(final String message)
   {
@@ -55,7 +55,9 @@ public class ParserException
    * Constructor.
    * 
    * @param message
+   *        Exception message
    * @param cause
+   *        Exception cause
    */
   public ParserException(final String message, final Throwable cause)
   {
@@ -66,6 +68,7 @@ public class ParserException
    * Constructor.
    * 
    * @param cause
+   *        Exception cause
    */
   public ParserException(final Throwable cause)
   {

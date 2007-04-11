@@ -25,8 +25,8 @@ package org.iso6709.test;
 import static org.junit.Assert.assertEquals;
 
 import org.iso6709.Angle;
-import org.iso6709.ParserException;
 import org.iso6709.PointLocation;
+import org.iso6709.parser.ParserException;
 import org.iso6709.parser.PointLocationParser;
 import org.junit.Test;
 

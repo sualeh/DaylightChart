@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Date;
 
+import org.iso6709.parser.ParserException;
 import org.iso6709.parser.PointLocationFormatter;
 import org.iso6709.parser.PointLocationParser;
 
@@ -43,38 +44,34 @@ public class Main
    * 
    * @param args
    *        Arguments
+   * @throws IOException
+   *         On an i/o error.
    */
   public static void main(final String[] args)
+    throws IOException
   {
     System.out.println("Starting ISO 6709:1983 location point tester. "
                        + new Date());
     System.out.println("Enter a blank line to quit.");
-    try
+    final BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+    String inputLine = "starter";
+    while (inputLine != null && inputLine.trim().length() > 0)
     {
-      final BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-      String inputLine = "starter";
-      while (inputLine != null && inputLine.trim().length() > 0)
+      try
       {
-        try
-        {
-          System.out.print("Enter an ISO 6709:1983 location point: ");
-          inputLine = in.readLine();
-          // Parse and print location point
-          final PointLocation pointLocation = PointLocationParser
-            .parsePointLocation(inputLine);
-          System.out.println(pointLocation);
-          System.out.println(PointLocationFormatter
-            .formatIso6709PointLocation(pointLocation));
-        }
-        catch (final ParserException e)
-        {
-          System.err.println(e.getMessage());
-        }
+        System.out.print("Enter an ISO 6709:1983 location point: ");
+        inputLine = in.readLine();
+        // Parse and print location point
+        final PointLocation pointLocation = PointLocationParser
+          .parsePointLocation(inputLine);
+        System.out.println(pointLocation);
+        System.out.println(PointLocationFormatter
+          .formatIso6709PointLocation(pointLocation));
       }
-    }
-    catch (final IOException e)
-    {
-      // Ignore
+      catch (final ParserException e)
+      {
+        System.err.println(e.getMessage());
+      }
     }
     System.out.println("Done. " + new Date());
   }
