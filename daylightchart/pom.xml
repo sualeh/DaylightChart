@@ -1,11 +1,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>iso6709</groupId>
-  <artifactId>iso6709</artifactId>
+  <groupId>daylightchart</groupId>
+  <artifactId>daylightchart</artifactId>
   <packaging>jar</packaging>
   <version>0.7</version>
-  <name>Daylight Chart - ISO 6709</name>
-  <description>Support for ISO 6709:1983.</description>
+  <name>Daylight Chart</name>
+  <description>Daylight Chart generates images of sunrise and sunset times at any location.</description>
   <inceptionYear>2007</inceptionYear>
   <developers>
     <developer>
@@ -24,10 +24,25 @@
   </organization>
   <dependencies>
     <dependency>
+      <groupId>iso6709</groupId>
+      <artifactId>iso6709</artifactId>
+      <version>0.7</version>
+    </dependency>
+    <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>4.2</version>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>joda-time</groupId>
+      <artifactId>joda-time</artifactId>
+      <version>1.4</version>
+    </dependency>
+    <dependency>
+      <groupId>jfree</groupId>
+      <artifactId>jfreechart</artifactId>
+      <version>1.0.4</version>
     </dependency>
     <dependency>
       <groupId>antlr</groupId>
@@ -49,7 +64,7 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-antlr-plugin</artifactId>
         <configuration>
-          <grammars>ISO6709PointLocation.g</grammars>
+          <grammars>location.g</grammars>
         </configuration>
         <executions>
           <execution>
@@ -66,7 +81,7 @@
           <archive>
             <index>true</index>
             <manifest>
-              <mainClass>org.iso6709.Main</mainClass>
+              <mainClass>daylightchart.Main</mainClass>
               <addClasspath>true</addClasspath>
             </manifest>
             <manifestEntries>

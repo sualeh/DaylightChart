@@ -1,0 +1,13 @@
+<projectDescription>
+  <name>Daylight Chart</name>
+  <comment>Daylight Chart generates images of sunrise and sunset times at any location.</comment>
+  <projects/>
+  <buildSpec>
+    <buildCommand>
+      <name>org.eclipse.jdt.core.javabuilder</name>
+    </buildCommand>
+  </buildSpec>
+  <natures>
+    <nature>org.eclipse.jdt.core.javanature</nature>
+  </natures>
+</projectDescription>

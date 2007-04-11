@@ -1,0 +1,708 @@
+/* 
+ * 
+ * Daylight Chart
+ * http://sourceforge.net/projects/daylightchart
+ * Copyright (c) 2007, Sualeh Fatehi.
+ * 
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ * 
+ */
+package daylightchart.astronomical;
+
+
+/**
+ * <p>
+ * Computes the times of sunrise and sunset for a specified date and
+ * location. Also finds the sun's co-ordinates and ephemeris for a given
+ * hour.
+ * </p>
+ * <p>
+ * Algorithms from "Astronomy on the Personal Computer" by Oliver
+ * Montenbruck and Thomas Pfleger. Springer Verlag 1994. ISBN
+ * 3-540-57700-9.
+ * </p>
+ * <p>
+ * This is a reasonably accurate and very robust procedure for sunrise
+ * that will handle unusual cases, such as the one day in the year in
+ * arctic latitudes that the sun rises, but does not set.
+ * </p>
+ * 
+ * @author Sualeh Fatehi
+ */
+final class CobbledSunCalc
+  implements SunAlgorithm
+{
+
+  private static final double DEGREESTORADIANS = Math.PI / 180D;
+
+  /**
+   * Cosine of an angle expressed in degrees.
+   * 
+   * @param degrees
+   *        Degrees.
+   * @return Cosine of the angle.
+   */
+  private static double cos(final double degrees)
+  {
+    return Math.cos(degrees * DEGREESTORADIANS);
+  }
+
+  /**
+   * Rounds towards zero.
+   * 
+   * @param number
+   *        Value to round.
+   * @return Value rounded towards zero (returned as double).
+   */
+  private static double frac(final double number)
+  {
+    double result;
+
+    result = number - trunc(number);
+    if (result < 0.0)
+    {
+      result += 1.0;
+    }
+
+    return result;
+  }
+
+  /**
+   * Checks if an event is in the valid range.
+   * 
+   * @param eventOccurence
+   *        The event to check.
+   * @return Boolean for valid.
+   */
+  private static boolean isEvent(final double eventOccurence)
+  {
+    return eventOccurence != ABOVE_HORIZON && eventOccurence != BELOW_HORIZON;
+  }
+
+  /**
+   * Modulus function that always returns a positive value. For example,
+   * mod(-3, 24) is 21.
+   * 
+   * @param numerator
+   *        Numerator.
+   * @param denominator
+   *        Denominator.
+   * @return Modulus of the numerator and denominator.
+   */
+  private static double mod(final double numerator, final double denominator)
+  {
+    double result;
+
+    result = Math.IEEEremainder(numerator, denominator);
+    if (result < 0)
+    {
+      result += denominator;
+    }
+
+    return result;
+  }
+
+  /**
+   * Angle to convert to within a range of 0 to 360 degrees. Modulus
+   * function that always returns a positive value.
+   * 
+   * @param angle
+   *        Angle to convert.
+   * @return Angle within a range of 0 to 360 degrees.
+   */
+  private static double range360(final double angle)
+  {
+    return mod(angle, 360D);
+  }
+
+  /**
+   * Sine of an angle expressed in degrees.
+   * 
+   * @param degrees
+   *        Degrees.
+   * @return Sine of the angle.
+   */
+  private static double sin(final double degrees)
+  {
+    return Math.sin(degrees * DEGREESTORADIANS);
+  }
+
+  /**
+   * Tangent of an angle expressed in degrees.
+   * 
+   * @param degrees
+   *        Degrees.
+   * @return Tangent of the angle.
+   */
+  private static double tan(final double degrees)
+  {
+    return Math.tan(degrees * DEGREESTORADIANS);
+  }
+
+  /**
+   * Returns the integer nearest to zero. (This behaves differently than
+   * Math.floor() for negative values.)
+   * 
+   * @param number
+   *        The number to convert
+   * @return Integer number nearest zero (returned as double).
+   */
+  private static int trunc(final double number)
+  {
+    int result = (int) Math.floor(Math.abs(number));
+    if (number < 0.0)
+    {
+      result = -result;
+    }
+    return result;
+  }
+
+  /** Day, 1 to 31. */
+  private int day;
+  /** Month, 1 to 12. */
+  private int month;
+  /** Four digit year. */
+  private int year;
+
+  /** Latitude in degrees, North positive. */
+  private double latitude;
+  /** Longitude in degrees, East positive. */
+  private double longitude;
+
+  /** Timezone offset from GMT, in hours. */
+  private double timezoneOffset;
+
+  /**
+   * <p>
+   * Computes the time of sunrise and sunset for this date. This uses an
+   * exhaustive search algorithm described in "Astronomy on the Personal
+   * Computer" by Montenbruck and Pfleger. Consequently, it is rather
+   * slow.
+   * </p>
+   * <p>
+   * This interpolation-based method finds the times when the quadratic
+   * crosses the X axis - has zero altitude - and these times are
+   * candidates for a rising or setting event. This system can also deal
+   * with the situation when the rising and setting occur within the
+   * hour - the quadratic then has two zeros. Finally, if the two zeros
+   * are the same, then there must be a 'grazing' event in that
+   * interval, and the algorithm can detect the event.
+   * </p>
+   * The steps in the procedure are:
+   * <ol>
+   * <li>Calculate the sine of the altitude (corrected for refraction,
+   * parallax and the limb radius). Using the sine of the altitude saves
+   * some calculation and means that the values will always be within
+   * the range +1 to -1.</li>
+   * <li>Save sign of the altitude at 0h</li>
+   * <li>Take the values of the sine of the altitude for each set of
+   * three consecutive hours, correct for the refraction, parallax and
+   * fit a quadratic curve through these three points.</li>
+   * <li>Calculate the 'discriminant' for the quadratic, and classify
+   * as:</li>
+   * <ul>
+   * <li>No roots within the 2 hour interval - move onto the next 2
+   * hour range and start from step 1</li>
+   * <li>Two roots, one root within the interval - classify as rising
+   * or setting event and appropriate flag</li>
+   * <ul>
+   * <li>If two flags set, i.e. rising and setting events both found,
+   * go to step 5</li>
+   * <li>If one flag set, then return to step 1 for next two hour
+   * interval, to search for remaining event</li>
+   * </ul>
+   * <li>Two roots, both within the interval - set the rising and
+   * setting flags and go to step 5</li>
+   * <li>One root (i.e. both roots same) within interval - set both
+   * rising and setting flags and go to step 5.
+   * </ul>
+   * <li>If neither rise nor set flag is set, then warn user that
+   * object is 'always above' or 'always below' horizon depending on the
+   * sign of the altitude in step 2, and move onto next object or quit.
+   * </ol>
+   * 
+   * @param horizon
+   *        The adopted true altitude of the horizon in degrees. Use one
+   *        of the following values. <br>
+   *        &#8729; SUNRISE_SUNSET <br>
+   *        &#8729; CIVIL_TWILIGHT <br>
+   *        &#8729; NAUTICAL_TWILIGHT <br>
+   *        &#8729; ASTRONOMICAL_TWILIGHT
+   * @return Array for sunrise and sunset times. Use RISE and SET as
+   *         indices into this array.
+   * @see <a
+   *      href="http://www.merrymeet.com/minow/sunclock/Sun.java">Sun.java</a>
+   * @see <a
+   *      href="http://www.btinternet.com/~kburnett/kepler/moonrise.html">Moon
+   *      and Sun rise and set for any latitude</a>
+   */
+  public double[] calcRiseSet(final double horizon)
+  {
+
+    final double sinHorizon;
+    double timeRise;
+    double timeSet;
+    double hour;
+    double YMinus;
+    double YThis;
+    double YPlus;
+    double XExtreme;
+    double YExtreme;
+    double A, B, C;
+    double discriminant;
+    double root1;
+    double root2;
+    int numroots;
+    double DX;
+
+    sinHorizon = sin(horizon);
+
+    YMinus = sin(calcSolarEphemeris(0.0)[ALTITUDE]) - sinHorizon;
+
+    if (YMinus > 0.0)
+    {
+      timeRise = ABOVE_HORIZON;
+      timeSet = ABOVE_HORIZON;
+    }
+    else
+    {
+      timeRise = BELOW_HORIZON;
+      timeSet = BELOW_HORIZON;
+    } // end if
+
+    for (hour = 1.0; hour <= 24.0; hour += 2.0, YMinus = YPlus)
+    {
+
+      YThis = sin(calcSolarEphemeris(hour)[ALTITUDE]) - sinHorizon;
+
+      YPlus = sin(calcSolarEphemeris(hour + 1.0)[ALTITUDE]) - sinHorizon;
+
+      /*
+       * Quadratic interpolation through the three points: [-1, YMinus],
+       * [0, YThis], [+1, yNext] (These must not lie on a straight
+       * line.)
+       */
+      root1 = 0.0;
+      root2 = 0.0;
+      numroots = 0;
+      A = 0.5 * (YMinus + YPlus) - YThis;
+      B = 0.5 * (YPlus - YMinus);
+      C = YThis;
+      XExtreme = -B / (2D * A);
+      YExtreme = (A * XExtreme + B) * XExtreme + C;
+      discriminant = B * B - 4D * A * C;
+      if (discriminant >= 0.0)
+      { /* intersects x-axis? */
+        DX = 0.5 * Math.sqrt(discriminant) / Math.abs(A);
+        root1 = XExtreme - DX;
+        root2 = XExtreme + DX;
+        if (Math.abs(root1) <= +1.0)
+        {
+          numroots++;
+        }
+        if (Math.abs(root2) <= +1.0)
+        {
+          numroots++;
+        }
+        if (root1 < -1.0)
+        {
+          root1 = root2;
+        }
+      }
+
+      /*
+       * Quadratic interpolation result: numroots Number of roots found
+       * (0, 1, or 2). If numroots == 0, there is no event in this
+       * range. root1 First root. (numroots >= 1) root2 Second root.
+       * (numroots == 2) YMinus Y-value at interpolation start. If < 0,
+       * root1 is a rise event. YExtreme Maximum value of y (numroots ==
+       * 2) - this determines whether a 2-root event is a rise-set or a
+       * set-rise.
+       */
+      switch (numroots)
+      {
+        case 0: /* No root at this hour */
+          break;
+
+        case 1: /* Found either a rise or a set */
+          if (YMinus < 0.0)
+          {
+            timeRise = hour + root1;
+          }
+          else
+          {
+            timeSet = hour + root1;
+          }
+          break;
+
+        case 2: /* Found both a rise and a set */
+          if (YExtreme < 0.0)
+          {
+            timeRise = hour + root2;
+            timeSet = hour + root1;
+          }
+          else
+          {
+            timeRise = hour + root1;
+            timeSet = hour + root2;
+          }
+          break;
+
+        default:
+          break;
+      }
+
+      // exit condition
+      if (isEvent(timeRise) && isEvent(timeSet))
+      {
+        break;
+      }
+
+    }
+
+    if (isEvent(timeRise))
+    {
+      timeRise = mod(timeRise, 24.0);
+    }
+    if (isEvent(timeSet))
+    {
+      timeSet = mod(timeSet, 24.0);
+    }
+
+    return new double[] {
+        timeRise, timeSet
+    };
+  }
+
+  /**
+   * Calculate solar ephemeris.
+   * 
+   * @param hour
+   *        Hour past midnight (for the current day).
+   * @return Solar ephemerides, as an array. Use one of the following
+   *         values to index elements of the array. <br>
+   *         &#8729; DECLINATION <br>
+   *         &#8729; RIGHTASCENSION <br>
+   *         &#8729; HOURANGLE <br>
+   *         &#8729; AZIMUTH <br>
+   *         &#8729; ALTITUDE <br>
+   *         &#8729; EQUATIONOFTIME
+   *         </p>
+   *         See also: <a
+   *         href="http://www.srrb.noaa.gov/highlights/sunrise/program.txt">
+   *         NOAA calculations </a>
+   */
+  public double[] calcSolarEphemeris(final double hour)
+  {
+
+    final double J2000_OFFSET = 2451545.5;
+
+    final double JD;
+    final double J2000;
+    final double t;
+    final double t0;
+    final double UT;
+    final double GMST;
+    final double LMST;
+    final double L;
+    final double g;
+    final double C;
+    final double q;
+    final double alpha;
+    final double e;
+    final double EqT;
+    double declination;
+    double RA;
+    final double tau;
+    double altitude;
+    double azimuth;
+    final double[] epherimides = new double[6];
+
+    // Universal Time
+    UT = hour - timezoneOffset;
+    // Julian Day Number
+    final int monthx = (month - 14) / 12; // Relies on integer math
+    JD = 1461 * (year + 4800 + monthx) / 4 + 367 * (month - 2 - 12 * monthx)
+         / 12 - 3 * (year + 4900 + monthx) / 100 / 4 + day - 32075;
+    // Julian Day 2000.00
+    J2000 = JD - J2000_OFFSET;
+    // Number of Julian Centuries since J2000.0
+    t = (J2000 + UT / 24D) / 36525D;
+    t0 = J2000 / 36525D;
+
+    // Greenwich Mean Sidereal Time (GMST)
+    GMST = 6.697374558 + 1.0027379093 * UT
+           + (8640184.812866 + (0.093104 - 6.2E-6 * t0) * t0) * t0 / 3600D;
+    // Local Mean Sidereal Time (LMST)
+    LMST = 24D * frac((GMST + longitude / 15D) / 24D);
+
+    // Geometric Mean Anomaly of the Sun (degrees)
+    g = range360(357.52910 + (35999.05030 - (0.0001559 + 0.00000048 * t) * t)
+                 * t);
+
+    // Geometric Mean Longitude of the Sun corrected for aberration
+    // (degrees)
+    q = range360(280.46645 + (36000.76983 + 0.0003032 * t) * t);
+
+    // Equation of Center for the Sun
+    C = (1.914602 - (0.004817 - 0.000014 * t) * t) * sin(g)
+        + (0.019993 - 0.000101 * t) * sin(2D * g) + 0.000289 * sin(3D * g);
+
+    // Sun's Geocentric Apparent Ecliptic Longitude adjusted for
+    // aberration (degrees)
+    L = q + C;
+
+    alpha = L - 2.466 * sin(2D * L) + 0.053 * sin(4D * L);
+
+    /* Mean Obliquity of the Ecliptic (epsilon) (degrees) */
+    e = 23.0 + (26.0 + (21.448 - t * (46.8150 + t * (0.00059 - t * 0.001813))) / 60.0) / 60.0;
+
+    /*
+     * Declination is one element of the astronomical coordinate system,
+     * and can be thought of as latitude on the earth projected onto the
+     * sky. It is usually denoted by the lower-case Greek letter delta
+     * and is measured north (+) and south (-) of the celestial equator
+     * in degrees, minutes, and seconds of arc. The celestial equator is
+     * defined as being at declination zero degrees; the north and south
+     * celestial poles are defined as being at +90 and -90 degrees,
+     * respectively.
+     */
+    // Declination (theta) (degrees)
+    declination = Math.atan(tan(e) * sin(alpha));
+    declination /= DEGREESTORADIANS; // convert radians to degrees
+    epherimides[DECLINATION] = declination;
+
+    /*
+     * Right ascension is one element of the astronomical coordinate
+     * system, and can be though of as longitude on the earth projected
+     * onto the sky. It is usually denoted by the lower-case Greek
+     * letter alpha and is measured eastward in hours, minutes, and
+     * seconds of time from the vernal equinox. There are 24 hours of
+     * right ascension, though the 24-hour line is always taken as 0
+     * hours. More rarely, one sometimes sees right ascension in
+     * degrees, in which case there are 360 degrees of right ascension
+     * to make a complete circuit of the sky.
+     */
+    // Right Ascension (hours)
+    // ra is always in the same quadrant as ecliptic longitude, so we
+    // use atan2
+    RA = Math.atan2(cos(e) * sin(L), cos(L));
+    RA /= DEGREESTORADIANS; // convert radians to degrees
+    RA = range360(RA) / 15D; // convert degrees to hours
+    epherimides[RIGHTASCENSION] = RA;
+
+    /*
+     * Hour angle is the sidereal time that has elapsed since the object
+     * was on the meridian (hour angle west, positive) or until it will
+     * again be on the meridian (hour angle east, negative).
+     */
+    // Hour Angle (degrees)
+    tau = 15D * (LMST - RA);
+    epherimides[HOURANGLE] = tau;
+
+    /*
+     * Altitude is the angular distance from the observer's horizon,
+     * usually taken to be that horizon that is unobstructed by natural
+     * or artificial features (such as mountains or buildings), measured
+     * directly up from the horizon toward the zenith; positive numbers
+     * indicate values of altitude above the horizon, and negative
+     * numbers indicate below the horizon. Negative numbers are usually
+     * used in terms of how far below the horizon the sun is situated at
+     * a given time (for example, the boundary between civil twilight
+     * and nautical twilight is when the sun is at altitude -6 degrees).
+     */
+    // Altitude, or elevation (degrees)
+    altitude = Math.asin(sin(latitude) * sin(declination) + cos(latitude)
+                         * cos(declination) * cos(tau));
+    altitude /= DEGREESTORADIANS; // convert radians to degrees
+    epherimides[ALTITUDE] = altitude;
+
+    /*
+     * Azimuth is the angular distance measured clockwise around the
+     * observer's horizon in units of degrees; astronomers usually take
+     * north to be 0 degrees, east to be 90 degrees, south to be 180
+     * degrees, and west to be 270 degrees.
+     */
+    // Azimuth (degrees)
+    azimuth = Math.acos((sin(altitude) * sin(latitude) - sin(declination))
+                        / (cos(altitude) * cos(latitude)));
+    azimuth /= DEGREESTORADIANS; // convert radians to degrees
+    if (azimuth * tau < 0)
+    {
+      azimuth *= -1;
+    }
+    epherimides[AZIMUTH] = azimuth;
+
+    /*
+     * Equation of time is the correction, in minutes and seconds, to be
+     * applied to local time apparent time (sundial time) for deriving
+     * Local Mean Time (LMT), or Local Solar Time (LST).
+     */
+    // Equation of Time (minutes)
+    EqT = (q / 15D - RA) * 60D;
+    epherimides[EQUATIONOFTIME] = EqT;
+
+    // The Sun's ecliptic latitude, b, can be approximated by
+    // b = 0.
+    //
+    // The distance of the Sun from the Earth, R, in astronomical units
+    // (AU),
+    // can be approximated by
+    // R = 1.00014 - 0.01671 cos g - 0.00014 cos 2g
+    //
+    // The angular semidiameter of the Sun, SD, in degrees, is simply
+    // SD = 0.2666 / R
+
+    return epherimides;
+  }
+
+  /**
+   * Day, 1 to 31.
+   * 
+   * @param day
+   *        Day.
+   */
+  public void setDay(final int day)
+  {
+    if (day < 1 || day > 31)
+    {
+      throw new IllegalArgumentException("Day out of range: " + day);
+    }
+    this.day = day;
+  }
+
+  /**
+   * Latitude in degrees, North positive.
+   * 
+   * @param latitude
+   *        Latitude.
+   */
+  public void setLatitude(final double latitude)
+  {
+    if (Math.abs(latitude) > 90)
+    {
+      throw new IllegalArgumentException("Out of range: " + latitude);
+    }
+    this.latitude = latitude;
+  }
+
+  /**
+   * Longitude in degrees, East positive.
+   * 
+   * @param longitude
+   *        Longitude.
+   */
+  public void setLongitude(final double longitude)
+  {
+    if (Math.abs(longitude) > 180)
+    {
+      throw new IllegalArgumentException("Out of range: " + longitude);
+    }
+    this.longitude = longitude;
+  }
+
+  /**
+   * Month, 1 to 12.
+   * 
+   * @param month
+   *        Month.
+   */
+  public void setMonth(final int month)
+  {
+    if (month < 1 || month > 12)
+    {
+      throw new IllegalArgumentException("Out of range: " + month);
+    }
+    this.month = month;
+  }
+
+  /**
+   * Time zone offset from GMT, in hours.
+   * 
+   * @param timeZoneOffset
+   *        Time zone offset.
+   */
+  public void setTimeZoneOffset(final double timeZoneOffset)
+  {
+    if (Math.abs(timeZoneOffset) > 13)
+    {
+      throw new IllegalArgumentException("Out of range: " + timeZoneOffset);
+    }
+    timezoneOffset = timeZoneOffset;
+  }
+
+  /**
+   * Four digit year.
+   * 
+   * @param year
+   *        Year.
+   */
+  public void setYear(final int year)
+  {
+    if (year < 1500 || year > 3000)
+    {
+      throw new IllegalArgumentException("Out of range: " + year);
+    }
+    this.year = year;
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see java.lang.Object#toString()
+   */
+  @Override
+  public String toString()
+  {
+
+    String value;
+    double riseset[];
+
+    riseset = calcRiseSet(SUNRISE_SUNSET);
+
+    value = "latitude=" + latitude + ";" + "longitude=" + longitude + ";"
+            + "timezone=" + timezoneOffset + ";" + "date=" + year + "." + month
+            + "." + day + ";" + "rise=" + fmt60(riseset[RISE]) + ";" + "set="
+            + fmt60(riseset[SET]) + ";" + "";
+
+    return value;
+
+  }
+
+  private String fmt60(double number)
+  {
+    String fmt60 = "";
+
+    if (number < 0)
+    {
+      fmt60 += "-";
+    }
+
+    /* degrees or hours */
+    number = Math.abs(number);
+    fmt60 += trunc(number);
+
+    /* minutes */
+    number = frac(number) * 60;
+    fmt60 += "," + trunc(number);
+
+    /* seconds */
+    number = frac(number) * 60;
+    fmt60 += "," + number;
+
+    return fmt60;
+  }
+
+}
