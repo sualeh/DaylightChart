@@ -28,7 +28,6 @@ import org.pointlocation6709.PointLocation;
 import org.pointlocation6709.parser.ParserException;
 import org.pointlocation6709.parser.PointLocationParser;
 
-
 /**
  * Location tests.
  */
@@ -51,7 +50,7 @@ public class TestPointLocation
     assertEquals(-75, coordinates.getLongitude().getField(Angle.Field.DEGREES));
     assertEquals(0, coordinates.getLongitude().getField(Angle.Field.MINUTES));
     assertEquals(0, coordinates.getLongitude().getField(Angle.Field.SECONDS));
-    
+
     assertEquals(0D, coordinates.getAltitude());
   }
 
@@ -71,7 +70,7 @@ public class TestPointLocation
     assertEquals(-75, coordinates.getLongitude().getField(Angle.Field.DEGREES));
     assertEquals(0, coordinates.getLongitude().getField(Angle.Field.MINUTES));
     assertEquals(-15, coordinates.getLongitude().getField(Angle.Field.SECONDS));
-    
+
     assertEquals(0D, coordinates.getAltitude());
   }
 
@@ -273,6 +272,46 @@ public class TestPointLocation
     assertEquals(-15, coordinates.getLongitude().getField(Angle.Field.SECONDS));
 
     assertEquals(2.79, coordinates.getAltitude());
+  }
+
+  @Test(expected = ParserException.class)
+  public void invalidPointLocation_1()
+    throws ParserException
+  {
+
+    final String coordinatesString = "+4060-07560/";
+    final PointLocation coordinates = PointLocationParser
+      .parsePointLocation(coordinatesString);
+  }
+
+  @Test(expected = ParserException.class)
+  public void invalidPointLocation_2()
+    throws ParserException
+  {
+
+    final String coordinatesString = "+4060.22-07560.25/";
+    final PointLocation coordinates = PointLocationParser
+      .parsePointLocation(coordinatesString);
+  }
+
+  @Test(expected = ParserException.class)
+  public void invalidPointLocation_3()
+    throws ParserException
+  {
+
+    final String coordinatesString = "+401260-0750060/";
+    final PointLocation coordinates = PointLocationParser
+      .parsePointLocation(coordinatesString);
+  }
+
+  @Test(expected = ParserException.class)
+  public void invalidPointLocation_4()
+    throws ParserException
+  {
+
+    final String coordinatesString = "+401260.22-0750060.22/";
+    final PointLocation coordinates = PointLocationParser
+      .parsePointLocation(coordinatesString);
   }
 
   @Test(expected = ParserException.class)
