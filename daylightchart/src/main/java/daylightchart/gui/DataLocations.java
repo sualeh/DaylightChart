@@ -38,11 +38,11 @@ import java.util.List;
 
 import org.pointlocation6709.Latitude;
 
-import daylightchart.gui.preferences.UserPreferences;
-import daylightchart.location.Location;
-import daylightchart.location.LocationFormatter;
-import daylightchart.location.LocationParser;
-import daylightchart.location.ParserException;
+import daylightchart.chart.Location;
+import daylightchart.gui.options.UserPreferences;
+import daylightchart.locationparser.LocationFormatter;
+import daylightchart.locationparser.LocationParser;
+import daylightchart.locationparser.ParserException;
 
 /**
  * In-memory database of locations.

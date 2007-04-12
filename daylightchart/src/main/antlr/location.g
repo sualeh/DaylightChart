@@ -20,10 +20,10 @@ header {
   * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
   *
   */
-package daylightchart.location.parser;
+package daylightchart.locationparser;
 
 import java.util.*;
-import daylightchart.location.*;
+import daylightchart.chart.*;
 import org.pointlocation6709.*;
 import org.pointlocation6709.parser.*;
 

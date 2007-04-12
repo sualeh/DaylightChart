@@ -31,7 +31,6 @@ import org.joda.time.LocalTime;
 
 import daylightchart.astronomical.SunAlgorithm;
 import daylightchart.astronomical.SunAlgorithmFactory;
-import daylightchart.location.Location;
 
 /**
  * Calculator for sunrise and sunset times for a year.

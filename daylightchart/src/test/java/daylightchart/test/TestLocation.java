@@ -30,10 +30,10 @@ import java.util.List;
 
 import org.junit.Test;
 
-import daylightchart.location.LocationFormatter;
-import daylightchart.location.LocationParser;
-import daylightchart.location.Location;
-import daylightchart.location.ParserException;
+import daylightchart.chart.Location;
+import daylightchart.locationparser.LocationFormatter;
+import daylightchart.locationparser.LocationParser;
+import daylightchart.locationparser.ParserException;
 
 /**
  * Location tests.

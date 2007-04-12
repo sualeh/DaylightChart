@@ -29,9 +29,9 @@ import org.junit.Test;
 
 import daylightchart.astronomical.SunAlgorithm;
 import daylightchart.astronomical.SunAlgorithmFactory;
-import daylightchart.location.LocationParser;
-import daylightchart.location.Location;
-import daylightchart.location.ParserException;
+import daylightchart.chart.Location;
+import daylightchart.locationparser.LocationParser;
+import daylightchart.locationparser.ParserException;
 
 /**
  * Location tests.

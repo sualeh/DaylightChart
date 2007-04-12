@@ -29,7 +29,6 @@ import org.joda.time.LocalDateTime;
 import org.joda.time.LocalTime;
 import org.joda.time.MutableDateTime;
 
-import daylightchart.location.Location;
 
 /**
  * Sunrise and sunset at a given location, and a given date.

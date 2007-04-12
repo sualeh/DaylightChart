@@ -54,10 +54,9 @@ import org.jfree.ui.RectangleInsets;
 import org.jfree.ui.TextAnchor;
 import org.joda.time.LocalDateTime;
 
-import daylightchart.gui.preferences.ChartOptions;
-import daylightchart.gui.preferences.ChartOptionsListener;
-import daylightchart.location.Location;
-import daylightchart.location.LocationFormatter;
+import daylightchart.gui.options.ChartOptions;
+import daylightchart.gui.options.ChartOptionsListener;
+import daylightchart.locationparser.LocationFormatter;
 
 /**
  * Produces a chart of daylight times for any location.
@@ -104,7 +103,7 @@ public class DaylightChart
   /**
    * {@inheritDoc}
    * 
-   * @see daylightchart.gui.preferences.ChartOptionsListener#afterSettingChartOptions()
+   * @see daylightchart.gui.options.ChartOptionsListener#afterSettingChartOptions()
    */
   public void afterSettingChartOptions(final ChartOptions chartOptions)
   {
@@ -133,7 +132,7 @@ public class DaylightChart
   /**
    * {@inheritDoc}
    * 
-   * @see daylightchart.gui.preferences.ChartOptionsListener#beforeSettingChartOptions()
+   * @see daylightchart.gui.options.ChartOptionsListener#beforeSettingChartOptions()
    */
   public void beforeSettingChartOptions(final ChartOptions chartOptions)
   {
