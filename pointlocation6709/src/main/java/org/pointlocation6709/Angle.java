@@ -45,6 +45,25 @@ public class Angle
   private static final long serialVersionUID = -6330836471692225095L;
 
   /**
+   * Static contruction method, contructs an angle from the degrees,
+   * minutes, and seconds values provided.
+   * 
+   * @param degrees
+   *        Value of the angle in degrees.
+   * @param minutes
+   *        Value of the angle in minutes.
+   * @param seconds
+   *        Value of the angle in seconds.
+   * @return A new Angle.
+   */
+  public static Angle fromDegrees(final int degrees,
+                                  final int minutes,
+                                  final int seconds)
+  {
+    return fromDegrees(degrees + minutes / 60D + seconds / 3600D);
+  }
+
+  /**
    * Static contruction method, contructs an angle from the degree value
    * provided.
    * 
@@ -54,9 +73,7 @@ public class Angle
    */
   public static Angle fromDegrees(final double degrees)
   {
-    final Angle angle = new Angle();
-    angle.setRadians(degrees * Math.PI / 180D);
-    return angle;
+    return fromRadians(degrees * Math.PI / 180D);
   }
 
   /**
@@ -69,10 +86,7 @@ public class Angle
    */
   public static Angle fromRadians(final double radians)
   {
-    final Angle angle = new Angle();
-    angle.setRadians(radians);
-    return angle;
-
+    return new Angle(radians);
   }
 
   /**
@@ -95,14 +109,14 @@ public class Angle
     return result;
   }
 
-  private double radians;
+  private final double radians;
 
   /**
    * Default constructor. Initializes the angle to a value of 0.
    */
-  public Angle()
+  private Angle(final double radians)
   {
-    // Radians will be set to 0 by default
+    this.radians = radians;
   }
 
   /**
@@ -117,7 +131,7 @@ public class Angle
     {
       throw new IllegalArgumentException("Null argument");
     }
-    setRadians(angle.getRadians());
+    this.radians = angle.radians;
   }
 
   /**
@@ -356,18 +370,6 @@ public class Angle
       throw new IllegalArgumentException("Validation error: " + radians
                                          + " radians");
     }
-  }
-
-  /**
-   * Sets value of the angle in radians.
-   * 
-   * @param radians
-   *        Radians value.
-   * @see #getRadians
-   */
-  private void setRadians(final double radians)
-  {
-    this.radians = radians;
   }
 
 }

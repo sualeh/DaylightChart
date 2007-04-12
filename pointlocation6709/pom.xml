@@ -49,7 +49,6 @@
           </archive>
         </configuration>
       </plugin>
-      <!--
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-assembly-plugin</artifactId>
@@ -61,14 +60,26 @@
               <goal>assembly</goal>
             </goals>
             <configuration>
+              <archive>
+                <index>true</index>
+                <manifest>
+                  <mainClass>org.pointlocation6709.Main</mainClass>
+                  <addClasspath>true</addClasspath>
+                </manifest>
+                <manifestEntries>
+                  <Project>${project.name}, ${project.version}</Project>
+                  <Author>Sualeh Fatehi, sualeh@hotmail.com</Author>
+                </manifestEntries>
+              </archive>
               <descriptorRefs>
+                <descriptorRef>src</descriptorRef>
+                <descriptorRef>bin</descriptorRef>
                 <descriptorRef>jar-with-dependencies</descriptorRef>
               </descriptorRefs>
             </configuration>
           </execution>
         </executions>
       </plugin>
-      -->
     </plugins>
   </build>
 </project>
