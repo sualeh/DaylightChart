@@ -48,9 +48,12 @@ public final class Main
   public static void main(final String[] args)
     throws IOException
   {
-    System.out.println("Starting ISO 6709:1983 location point tester. "
-                       + new Date());
+
+    System.out.println(Version.about());
+    System.out.println("ISO 6709:1983 point location tester. ");
+    System.out.println("Starting. " + new Date());
     System.out.println("Enter a blank line to quit.");
+
     final BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
     String inputLine = "starter";
     while (inputLine != null && inputLine.trim().length() > 0)
@@ -72,6 +75,7 @@ public final class Main
       }
     }
     System.out.println("Done. " + new Date());
+    
   }
 
   private Main()
