@@ -45,25 +45,6 @@ public class Angle
   private static final long serialVersionUID = -6330836471692225095L;
 
   /**
-   * Static contruction method, contructs an angle from the degrees,
-   * minutes, and seconds values provided.
-   * 
-   * @param degrees
-   *        Value of the angle in degrees.
-   * @param minutes
-   *        Value of the angle in minutes.
-   * @param seconds
-   *        Value of the angle in seconds.
-   * @return A new Angle.
-   */
-  public static Angle fromDegrees(final int degrees,
-                                  final int minutes,
-                                  final int seconds)
-  {
-    return fromDegrees(degrees + minutes / 60D + seconds / 3600D);
-  }
-
-  /**
    * Static contruction method, contructs an angle from the degree value
    * provided.
    * 
@@ -110,6 +91,7 @@ public class Angle
   }
 
   private final double radians;
+  private final int[] sexagesimalDegreeParts;
 
   /**
    * Default constructor. Initializes the angle to a value of 0.
@@ -117,6 +99,7 @@ public class Angle
   private Angle(final double radians)
   {
     this.radians = radians;
+    this.sexagesimalDegreeParts = Utility.sexagesimalSplit(getDegrees());
   }
 
   /**
@@ -127,11 +110,7 @@ public class Angle
    */
   public Angle(final Angle angle)
   {
-    if (angle == null)
-    {
-      throw new IllegalArgumentException("Null argument");
-    }
-    this.radians = angle.radians;
+    this(angle.radians);
   }
 
   /**
@@ -202,9 +181,13 @@ public class Angle
   }
 
   /**
+   * <p>
    * Gets an angle field - such as degrees, minutes, or seconds. Signs
-   * will be consistent. <p/> Throws IllegalArgumentException if field
-   * is not a valid value.
+   * will be consistent.
+   * </p>
+   * <p>
+   * Throws NullPointerException if field is not provided.
+   * </p>
    * 
    * @param field
    *        One of the field constants specifying the field to be
@@ -213,60 +196,13 @@ public class Angle
    */
   public final int getField(final Field field)
   {
-    final double absDegrees;
-    int intDegrees;
-    int intMinutes;
-    int intSeconds;
-    final int returnField;
-    final int sign = radians < 0? -1: 1;
-
-    // Calculate absolute integer degrees
-    absDegrees = Math.abs(getDegrees());
-    intDegrees = (int) Math.floor(absDegrees);
-    intSeconds = (int) Math.round((absDegrees - intDegrees) * 3600D);
-
-    // Calculate absolute integer minutes
-    intMinutes = intSeconds / 60; // Integer arithmetic
-    if (intMinutes == 60)
-    {
-      intMinutes = 0;
-      intDegrees++;
-    }
-
-    // Calculate absolute integer seconds
-    intSeconds = intSeconds % 60;
-
-    // correct sign
-    intDegrees = intDegrees * sign;
-    intMinutes = intMinutes * sign;
-    intSeconds = intSeconds * sign;
-
-    // decide which field to return
-    if (field == Field.DEGREES)
-    {
-      returnField = intDegrees;
-    }
-    else if (field == Field.MINUTES)
-    {
-      returnField = intMinutes;
-    }
-    else if (field == Field.SECONDS)
-    {
-      returnField = intSeconds;
-    }
-    else
-    {
-      throw new IllegalArgumentException("Unknown field: " + field);
-    }
-
-    return returnField;
+    return sexagesimalDegreeParts[field.ordinal()];
   }
 
   /**
    * Radians value of the angle.
    * 
    * @return Value in radians.
-   * @see #setRadians
    */
   public final double getRadians()
   {

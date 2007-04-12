@@ -124,38 +124,50 @@ minutesAndSeconds
     double seconds = 0;
   }
   :
-    (DIGIT DIGIT DECIMAL_POINT DIGIT) =>
+  (DIGIT DIGIT DECIMAL_POINT DIGIT) =>
+  (
+  minutes = realNumber
+  {
+    if (minutes >= 60D) {
+      throw new antlr.RecognitionException("Minutes cannot be 60 or greater");
+    }
+    value = value + minutes / 60D;
+  }
+  )
+  |
+  (
     (
-    minutes = realNumber
+    minutes = twoDigitInteger
     {
+	    if (minutes >= 60D) {
+	      throw new antlr.RecognitionException("Minutes cannot be 60 or greater");
+	    }    
       value = value + minutes / 60D;
     }
     )
-    |
     (
+      (DIGIT DIGIT DECIMAL_POINT DIGIT) =>
       (
-      minutes = twoDigitInteger
+      seconds = realNumber
       {
-        value = value + minutes / 60D;
+		    if (seconds >= 60D) {
+		      throw new antlr.RecognitionException("Seconds cannot be 60 or greater");
+		    }      
+        value = value + seconds / 3600D;
       }
       )
+      |
       (
-        (DIGIT DIGIT DECIMAL_POINT DIGIT) =>
-        (
-        seconds = realNumber
-        {
-          value = value + seconds / 3600D;
-        }
-        )
-        |
-        (
-        seconds = twoDigitInteger
-        {
-          value = value + seconds / 3600D;
-        }
-        )?
-      )
+      seconds = twoDigitInteger
+      {
+		    if (seconds >= 60D) {
+		      throw new antlr.RecognitionException("Seconds cannot be 60 or greater");
+		    }            
+        value = value + seconds / 3600D;
+      }
+      )?
     )
+  )
   ;
 
 twoDigitInteger
