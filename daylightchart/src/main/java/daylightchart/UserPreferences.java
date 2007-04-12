@@ -24,7 +24,7 @@ import daylightchart.gui.options.ChartOptions;
  * 
  * @author Sualeh Fatehi
  */
-public class UserPreferences
+public final class UserPreferences
 {
 
   private enum PreferenceKeys
@@ -50,32 +50,14 @@ public class UserPreferences
   }
 
   /**
-   * Main method. Clears all user preferences.
+   * Main method. Lists all user preferences.
    * 
    * @param args
    *        Command line arguments
    */
   public static void main(final String[] args)
   {
-
-    String command = "list";
-    if (args.length > 0)
-    {
-      command = args[0];
-    }
-    if ("clear".equals(command))
-    {
-      new UserPreferences().clear();
-    }
-    else if ("list".equals(command))
-    {
-      new UserPreferences().listAllPreferences();
-    }
-    else
-    {
-      new UserPreferences().listAllPreferences();
-    }
-
+    new UserPreferences().listAllPreferences();
   }
 
   /**
@@ -83,7 +65,7 @@ public class UserPreferences
    * 
    * @return Chart options
    */
-  private final static ChartOptions getDefaultDaylightChartOptions()
+  private static ChartOptions getDefaultDaylightChartOptions()
   {
     // Create a fake chart
     final PointLocation pointLocation = new PointLocation(new Latitude(new Angle()),
@@ -101,6 +83,9 @@ public class UserPreferences
   private final Preferences preferences = Preferences.userNodeForPackage(this
     .getClass());
 
+  /**
+   * Clears all user preferences.
+   */
   public void clear()
   {
     try
@@ -113,6 +98,11 @@ public class UserPreferences
     }
   }
 
+  /**
+   * Gets the chart options for the current user.
+   * 
+   * @return Chart options
+   */
   public ChartOptions getChartOptions()
   {
     ChartOptions chartOptions = null;
@@ -125,18 +115,33 @@ public class UserPreferences
       chartOptions = (ChartOptions) in.readObject();
       in.close();
     }
-    catch (final Exception e)
+    catch (final ClassNotFoundException e)
+    {
+      throw new ClassCastException(e.getMessage());
+    }
+    catch (final IOException e)
     {
       chartOptions = getDefaultDaylightChartOptions();
     }
     return chartOptions;
   }
 
+  /**
+   * Gets the locations for the current user.
+   * 
+   * @return Locations
+   */
   public String getLocations()
   {
     return preferences.get(PreferenceKeys.locations.getKey(), null);
   }
 
+  /**
+   * Sets the chart options for the current user.
+   * 
+   * @param chartOptions
+   *        Chart options
+   */
   public void setChartOptions(final ChartOptions chartOptions)
   {
     byte[] bytes;
@@ -158,6 +163,12 @@ public class UserPreferences
     preferences.putByteArray(PreferenceKeys.chartOptions.getKey(), bytes);
   }
 
+  /**
+   * Sets the locations for the current user.
+   * 
+   * @param locations
+   *        Locations
+   */
   public void setLocations(final String locations)
   {
     preferences.put(PreferenceKeys.locations.getKey(), locations);

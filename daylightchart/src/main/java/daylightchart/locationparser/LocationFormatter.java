@@ -36,7 +36,7 @@ import daylightchart.chart.Location;
  * 
  * @author Sualeh Fatehi
  */
-public class LocationFormatter
+public final class LocationFormatter
 {
 
   /**
@@ -46,7 +46,7 @@ public class LocationFormatter
    *        Location to format
    * @return Formated string.
    */
-  public final static String formatLocation(final Location location)
+  public static String formatLocation(final Location location)
   {
     final String corordinatesString = PointLocationFormatter
       .formatIso6709PointLocation(location.getPointLocation());
@@ -112,7 +112,7 @@ public class LocationFormatter
    *        Location
    * @return Details for this location.
    */
-  public final static String printLocationDetails(final Location location)
+  public static String printLocationDetails(final Location location)
   {
     final String details = location.getPointLocation().toString() + ", "
                            + location.getTimeZone().getDisplayName();

@@ -27,7 +27,7 @@ package daylightchart.astronomical;
  * 
  * @author Sualeh Fatehi
  */
-public class SunAlgorithmFactory
+public final class SunAlgorithmFactory
 {
 
   /**

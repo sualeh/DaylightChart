@@ -35,7 +35,7 @@ import daylightchart.chart.Location;
  * 
  * @author Sualeh Fatehi
  */
-public class LocationParser
+public final class LocationParser
 {
 
   /**
@@ -45,8 +45,9 @@ public class LocationParser
    *        String representation of the location
    * @return Location
    * @throws ParserException
+   *         On a parse exception
    */
-  public final static Location parseLocation(final String representation)
+  public static Location parseLocation(final String representation)
     throws ParserException
   {
     final AntlrLocationParser parser = constructLocationParser(representation);
@@ -73,6 +74,7 @@ public class LocationParser
    *        Reader
    * @return List of locations
    * @throws ParserException
+   *         On a parse exception
    */
   public static List<Location> parseLocations(final Reader reader)
     throws ParserException

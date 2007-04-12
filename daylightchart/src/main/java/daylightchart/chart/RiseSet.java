@@ -80,7 +80,7 @@ public class RiseSet
   }
 
   /**
-   * Date
+   * Date.
    * 
    * @return Date
    */
@@ -90,7 +90,7 @@ public class RiseSet
   }
 
   /**
-   * Location
+   * Location.
    * 
    * @return Location
    */
@@ -100,7 +100,7 @@ public class RiseSet
   }
 
   /**
-   * Sunrise time
+   * Sunrise time.
    * 
    * @return Sunrise time
    */
@@ -110,7 +110,7 @@ public class RiseSet
   }
 
   /**
-   * Sunset time
+   * Sunset time.
    * 
    * @return Sunset time
    */

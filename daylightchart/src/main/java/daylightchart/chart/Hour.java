@@ -197,9 +197,9 @@ public final class Hour
     intSeconds = intSeconds % 60;
 
     // correct sign
-    intHours *= sign;
-    intMinutes *= sign;
-    intSeconds *= sign;
+    intHours = intHours * sign;
+    intMinutes = intMinutes * sign;
+    intSeconds = intSeconds * sign;
 
     // decide which field to return
     if (field == Field.HOURS)
@@ -322,7 +322,7 @@ public final class Hour
       if (hours >= 12)
       {
         isPM = true;
-        hours -= 12;
+        hours = hours - 12;
       } // end if
       if (hours == 0)
       {
@@ -351,7 +351,7 @@ public final class Hour
     dayHour = hour % 24D;
     if (dayHour < 0)
     {
-      dayHour += hour;
+      dayHour = dayHour + hour;
     }
     this.hour = dayHour;
   }

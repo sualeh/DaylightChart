@@ -23,6 +23,8 @@ package daylightchart.locationparser;
 
 
 /**
+ * Parser exception.
+ * 
  * @author Sualeh Fatehi
  */
 public class ParserException
@@ -45,6 +47,7 @@ public class ParserException
    * Constructor.
    * 
    * @param message
+   *        Message
    */
   public ParserException(final String message)
   {
@@ -55,7 +58,9 @@ public class ParserException
    * Constructor.
    * 
    * @param message
+   *        Message
    * @param cause
+   *        Cause
    */
   public ParserException(final String message, final Throwable cause)
   {
@@ -66,6 +71,7 @@ public class ParserException
    * Constructor.
    * 
    * @param cause
+   *        Cause
    */
   public ParserException(final Throwable cause)
   {

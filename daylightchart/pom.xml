@@ -65,7 +65,6 @@
           </archive>
         </configuration>
       </plugin>
-      <!--
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-assembly-plugin</artifactId>
@@ -78,13 +77,14 @@
             </goals>
             <configuration>
               <descriptorRefs>
-                <descriptorRef>jar-with-dependencies</descriptorRef>
+                <descriptorRef>src</descriptorRef>
+                <descriptorRef>bin</descriptorRef>
+                <!-- <descriptorRef>jar-with-dependencies</descriptorRef> -->
               </descriptorRefs>
             </configuration>
           </execution>
         </executions>
       </plugin>
-      -->
     </plugins>
   </build>
 </project>

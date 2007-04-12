@@ -138,11 +138,7 @@ public final class DataLocations
   public void sortLocations(final LocationsSortOrder sortOrder)
   {
     Comparator<Location> comparator = null;
-    if (sortOrder == LocationsSortOrder.BY_NAME)
-    {
-      // Do nothing special
-    }
-    else if (sortOrder == LocationsSortOrder.BY_LATITUDE)
+    if (sortOrder == LocationsSortOrder.BY_LATITUDE)
     {
       comparator = new Comparator<Location>()
       {
@@ -156,6 +152,10 @@ public final class DataLocations
         }
       };
     }
+    // else if (sortOrder == LocationsSortOrder.BY_NAME)
+    // {
+    // // Do nothing special
+    // }
     Collections.sort(locations, comparator);
   }
 

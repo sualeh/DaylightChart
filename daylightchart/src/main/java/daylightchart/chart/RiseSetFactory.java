@@ -37,7 +37,7 @@ import daylightchart.astronomical.SunAlgorithmFactory;
  * 
  * @author Sualeh Fatehi
  */
-public class RiseSetFactory
+public final class RiseSetFactory
 {
 
   /**

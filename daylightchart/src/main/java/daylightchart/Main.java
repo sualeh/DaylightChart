@@ -29,20 +29,23 @@ import daylightchart.gui.DaylightChartGui;
  * 
  * @author Sualeh Fatehi
  */
-public class Main
+public final class Main
 {
 
   /**
    * Main window.
    * 
    * @param args
-   *        Arguments
-   * @throws Exception
+   *        Arguments 
    */
   public static void main(final String[] args)
-    throws Exception
   {
     new DaylightChartGui().setVisible(true);
+  }
+
+  private Main()
+  {
+    // No-op
   }
 
 }

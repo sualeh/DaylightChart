@@ -41,7 +41,8 @@ public final class Location
 
   private static final long serialVersionUID = 7929385835483597186L;
 
-  private final String city, country;
+  private final String city;
+  private final String country;
   private final PointLocation pointLocation;
   private final String tzId;
 
@@ -50,8 +51,6 @@ public final class Location
    * 
    * @param location
    *        Location to copy the value from.
-   * @throws NullPointerException
-   *         If the argument is null
    */
   public Location(final Location location)
   {
@@ -62,9 +61,13 @@ public final class Location
    * Constructor.
    * 
    * @param city
+   *        City
    * @param country
+   *        Country
    * @param pointLocation
+   *        Point location
    * @param tzId
+   *        Timezone id
    */
   public Location(final String city,
                   final String country,
@@ -186,7 +189,7 @@ public final class Location
   }
 
   /**
-   * Point location
+   * Point location.
    * 
    * @return Point location
    */
