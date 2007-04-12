@@ -52,11 +52,11 @@ import javax.swing.event.ListSelectionListener;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.editor.ChartEditor;
 
+import daylightchart.UserPreferences;
 import daylightchart.Version;
 import daylightchart.chart.DaylightChart;
 import daylightchart.chart.Location;
 import daylightchart.gui.options.ChartOptions;
-import daylightchart.gui.options.UserPreferences;
 
 /**
  * Provides an GUI for daylight charts.
