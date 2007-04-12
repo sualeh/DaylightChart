@@ -98,7 +98,9 @@ public final class DataLocations
    * @param dataFile
    *        Data file.
    * @throws ParserException
+   *         On an exception
    * @throws IOException
+   *         On an exception
    */
   public DataLocations(final File dataFile)
     throws IOException, ParserException

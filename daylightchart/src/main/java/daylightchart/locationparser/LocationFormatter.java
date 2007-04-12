@@ -96,10 +96,10 @@ public final class LocationFormatter
                                      final Writer writer)
     throws IOException
   {
-    final String LINE_BREAK = System.getProperty("line.separator", "\n");
+    final String line_separator = System.getProperty("line.separator", "\n");
     for (final Location location: locations)
     {
-      writer.write(formatLocation(location) + LINE_BREAK);
+      writer.write(formatLocation(location) + line_separator);
     }
     writer.flush();
     writer.close();
