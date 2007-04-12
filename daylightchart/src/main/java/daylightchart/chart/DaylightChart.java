@@ -25,9 +25,12 @@ package daylightchart.chart;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Stroke;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+
+import javax.swing.Renderer;
 
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.AxisLocation;
@@ -50,7 +53,6 @@ import org.jfree.ui.RectangleInsets;
 import org.jfree.ui.TextAnchor;
 import org.joda.time.LocalDateTime;
 
-import daylightchart.gui.preferences.ChartOptions;
 import daylightchart.gui.preferences.ChartOptionsListener;
 import daylightchart.location.Location;
 import daylightchart.location.LocationFormatter;
@@ -66,6 +68,10 @@ public class DaylightChart
 {
 
   private static final long serialVersionUID = 1223227216177061127L;
+
+  private static final Color daylightColor = new Color(0xFF, 0xFF, 0x40, 190);
+  private static final Color nightColor = new Color(75, 11, 91, 190);
+  private static final Stroke outlineStroke = new BasicStroke(0.2f);
 
   private final RiseSetYear riseSetData;
 
@@ -96,6 +102,23 @@ public class DaylightChart
   /**
    * {@inheritDoc}
    * 
+   * @see daylightchart.gui.preferences.ChartOptionsListener#afterSettingChartOptions()
+   */
+  public void afterSettingChartOptions()
+  {
+    // Fix title and subtitles
+    setTitle(riseSetData.getLocation().toString());
+    final TextTitle title = getTitle();
+    Font subtitleFont = title.getFont();
+    subtitleFont = subtitleFont.deriveFont(Font.PLAIN);
+    final TextTitle subtitle = (TextTitle) getSubtitle(0);
+    subtitle.setFont(subtitleFont);
+    subtitle.setPaint(title.getPaint());
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
    * @see daylightchart.gui.preferences.ChartOptionsListener#beforeSettingChartOptions()
    */
   public void beforeSettingChartOptions()
@@ -104,37 +127,83 @@ public class DaylightChart
   }
 
   /**
-   * {@inheritDoc}
-   * 
-   * @see daylightchart.gui.preferences.ChartOptionsListener#afterSettingChartOptions()
-   */
-  public void afterSettingChartOptions()
-  {
-    // Fix title and subtitles
-    setTitle(riseSetData.getLocation().toString());
-    TextTitle title = getTitle();
-    Font subtitleFont = title.getFont();
-    subtitleFont = subtitleFont.deriveFont(Font.PLAIN);
-    TextTitle subtitle = (TextTitle) getSubtitle(0);
-    subtitle.setFont(subtitleFont);
-    subtitle.setPaint(title.getPaint());
-  }
-
-  /**
    * Creates the daylight chart.
    */
   private void createChart()
   {
-
-    final Color daylightColor = new Color(0xFF, 0xFF, 0x40, 190);
-    final Color nightColor = new Color(75, 11, 91, 190);
-    final BasicStroke outlineStroke = new BasicStroke(0.2f);
-
-    final XYPlot plot = (XYPlot) getPlot();
+    final XYPlot plot = getXYPlot();
 
     plot.setBackgroundPaint(nightColor);
     plot.setAxisOffset(new RectangleInsets(5.0, 5.0, 5.0, 5.0));
 
+    createMonthsAxis(plot);
+    createHoursAxis(plot);
+
+    // Create a marker region for daylight savings time
+    if (riseSetData.usesDaylightTime())
+    {
+      createDSTMarker(plot);
+    }
+
+    plot.setDataset(0, createTimeSeries());
+    plot.setRenderer(0, createDifferenceRenderer());
+
+    riseSetData.setUsesDaylightTime(false);
+    plot.setDataset(1, createTimeSeries());
+    plot.setRenderer(1, createOutlineRenderer());
+
+    createTitles();
+
+    setBackgroundPaint(Color.WHITE);
+  }
+
+  private XYItemRenderer createDifferenceRenderer()
+  {
+    XYItemRenderer renderer;
+    renderer = new XYDifferenceRenderer(daylightColor, daylightColor, false);
+    renderer.setStroke(outlineStroke);
+    renderer.setSeriesPaint(0, Color.WHITE);
+    renderer.setSeriesPaint(1, Color.WHITE);
+    return renderer;
+  }
+
+  private void createDSTMarker(final XYPlot plot)
+  {
+    final long intervalStart = new Day(riseSetData.getDstStartDate())
+      .getFirstMillisecond();
+    final long intervalEnd = new Day(riseSetData.getDstEndDate())
+      .getFirstMillisecond();
+    final IntervalMarker daylightTimeMarker = new IntervalMarker(intervalStart,
+                                                                 intervalEnd,
+                                                                 nightColor,
+                                                                 new BasicStroke(0.0f),
+                                                                 null,
+                                                                 null,
+                                                                 0.4f);
+    daylightTimeMarker.setLabel(Messages
+      .getString("DaylightChart.Label.Marker")); //$NON-NLS-1$
+    daylightTimeMarker.setLabelPaint(Color.WHITE);
+    daylightTimeMarker.setLabelAnchor(RectangleAnchor.BOTTOM_RIGHT);
+    daylightTimeMarker.setLabelFont(new Font("SansSerif", Font.BOLD, 12)); //$NON-NLS-1$
+    daylightTimeMarker.setLabelTextAnchor(TextAnchor.BASELINE_RIGHT);
+    //
+    plot.addDomainMarker(daylightTimeMarker, Layer.BACKGROUND);
+  }
+
+  private void createHoursAxis(final XYPlot plot)
+  {
+    final DateAxis hoursAxis = new DateAxis();
+    hoursAxis.setInverted(true);
+    hoursAxis.setLowerMargin(0.0);
+    hoursAxis.setUpperMargin(0.0);
+    // Fix the axis range for all the hours in the day
+    hoursAxis.setRange(new Date(70, 0, 1), new Date(70, 0, 2));
+    //
+    plot.setRangeAxis(hoursAxis);
+  }
+
+  private void createMonthsAxis(final XYPlot plot)
+  {
     final DateAxis monthsAxis = new DateAxis();
     monthsAxis.setTickMarkPosition(DateTickMarkPosition.START);
     monthsAxis.setLowerMargin(0.02);
@@ -144,75 +213,16 @@ public class DaylightChart
     //
     plot.setDomainAxis(monthsAxis);
     plot.setDomainAxisLocation(AxisLocation.TOP_OR_LEFT);
+  }
 
-    final DateAxis hoursAxis = new DateAxis();
-    hoursAxis.setInverted(true);
-    hoursAxis.setLowerMargin(0.0);
-    hoursAxis.setUpperMargin(0.0);
-    // Fix the axis range for all the hours in the day
-    hoursAxis.setRange(new Date(70, 0, 1), new Date(70, 0, 2));
-    //
-    plot.setRangeAxis(hoursAxis);
-
-    TimeSeriesCollection timeSeries;
+  private XYItemRenderer createOutlineRenderer()
+  {
     XYItemRenderer renderer;
-
-    timeSeries = createTimeSeries();
-    renderer = new XYDifferenceRenderer(daylightColor, daylightColor, false);
-    renderer.setStroke(outlineStroke);
-    renderer.setSeriesPaint(0, Color.WHITE);
-    renderer.setSeriesPaint(1, Color.WHITE);
-    //    
-    plot.setDataset(0, timeSeries);
-    plot.setRenderer(0, renderer);
-
-    // Create a marker region for daylight savings time
-    if (riseSetData.usesDaylightTime())
-    {
-      final long intervalStart = new Day(riseSetData.getDstStartDate())
-        .getFirstMillisecond();
-      final long intervalEnd = new Day(riseSetData.getDstEndDate())
-        .getFirstMillisecond();
-      final IntervalMarker daylightTimeMarker = new IntervalMarker(intervalStart,
-                                                                   intervalEnd,
-                                                                   nightColor,
-                                                                   new BasicStroke(0.0f),
-                                                                   null,
-                                                                   null,
-                                                                   0.4f);
-      daylightTimeMarker.setLabel(Messages
-        .getString("DaylightChart.Label.Marker")); //$NON-NLS-1$
-      daylightTimeMarker.setLabelPaint(Color.WHITE);
-      daylightTimeMarker.setLabelAnchor(RectangleAnchor.BOTTOM_RIGHT);
-      daylightTimeMarker.setLabelFont(new Font("SansSerif", Font.BOLD, 12)); //$NON-NLS-1$
-      daylightTimeMarker.setLabelTextAnchor(TextAnchor.BASELINE_RIGHT);
-      //
-      plot.addDomainMarker(daylightTimeMarker, Layer.BACKGROUND);
-    }
-
-    riseSetData.setUsesDaylightTime(false);
     renderer = new XYLineAndShapeRenderer(true, false);
     renderer.setStroke(outlineStroke);
     renderer.setSeriesPaint(0, Color.WHITE);
     renderer.setSeriesPaint(1, Color.WHITE);
-    //
-    plot.setDataset(1, timeSeries);
-    plot.setRenderer(1, renderer);
-
-    TextTitle title;
-
-    title = new TextTitle(riseSetData.getLocation().toString(),
-                          new Font("SansSerif", //$NON-NLS-1$
-                                   Font.BOLD,
-                                   14));
-    setTitle(title);
-
-    clearSubtitles();
-    title = new TextTitle(LocationFormatter.printLocationDetails(riseSetData
-      .getLocation()), new Font("SansSerif", Font.PLAIN, 12)); //$NON-NLS-1$
-    addSubtitle(title);
-
-    setBackgroundPaint(Color.WHITE);
+    return renderer;
   }
 
   /**
@@ -239,6 +249,22 @@ public class DaylightChart
     timeseries.addSeries(sunriseSeries);
     timeseries.addSeries(sunsetSeries);
     return timeseries;
+  }
+
+  private void createTitles()
+  {
+    TextTitle title;
+
+    title = new TextTitle(riseSetData.getLocation().toString(),
+                          new Font("SansSerif", //$NON-NLS-1$
+                                   Font.BOLD,
+                                   14));
+    setTitle(title);
+
+    clearSubtitles();
+    title = new TextTitle(LocationFormatter.printLocationDetails(riseSetData
+      .getLocation()), new Font("SansSerif", Font.PLAIN, 12)); //$NON-NLS-1$
+    addSubtitle(title);
   }
 
   /**

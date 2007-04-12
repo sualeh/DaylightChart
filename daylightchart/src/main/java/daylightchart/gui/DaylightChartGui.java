@@ -50,7 +50,6 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import org.jfree.chart.ChartPanel;
-import org.jfree.chart.JFreeChart;
 import org.jfree.chart.editor.ChartEditor;
 
 import daylightchart.Version;
@@ -101,7 +100,7 @@ public final class DaylightChartGui
     dataLocations.sortLocations(locationsSortOrder);
 
     chartOptions = new UserPreferences().getChartOptions();
-    
+
     listBox = new JList();
     listBox.setFont(font);
     listBox.addListSelectionListener(new ListSelectionListener()
@@ -244,6 +243,36 @@ public final class DaylightChartGui
 
     final MenuItem chartOptionsMenuItem = new MenuItem(Messages
       .getString("DaylightChartGui.Menu.Options.ChartOptions")); //$NON-NLS-1$
+
+    final MenuItem resetAll = new MenuItem("Reset All");
+
+    menuOptions.add(sortByName);
+    menuOptions.add(sortByLatitude);
+    menuOptions.addSeparator();
+    menuOptions.add(chartOptionsMenuItem);
+    menuOptions.addSeparator();
+    menuOptions.add(resetAll);
+
+    sortByName.addItemListener(new ItemListener()
+    {
+      public void itemStateChanged(final ItemEvent itemEvent)
+      {
+        locationsSortOrder = LocationsSortOrder.BY_NAME;
+        sortByLatitude.setState(!sortByName.getState());
+        refreshView();
+      }
+    });
+
+    sortByLatitude.addItemListener(new ItemListener()
+    {
+      public void itemStateChanged(final ItemEvent itemEvent)
+      {
+        locationsSortOrder = LocationsSortOrder.BY_LATITUDE;
+        sortByName.setState(!sortByLatitude.getState());
+        refreshView();
+      }
+    });
+
     chartOptionsMenuItem.addActionListener(new ActionListener()
     {
       public void actionPerformed(final ActionEvent actionevent)
@@ -267,28 +296,16 @@ public final class DaylightChartGui
       }
     });
 
-    menuOptions.add(sortByName);
-    menuOptions.add(sortByLatitude);
-    menuOptions.addSeparator();
-    menuOptions.add(chartOptionsMenuItem);
-
-    sortByName.addItemListener(new ItemListener()
+    resetAll.addActionListener(new ActionListener()
     {
-      public void itemStateChanged(final ItemEvent itemEvent)
+      public void actionPerformed(final ActionEvent actionevent)
       {
-        locationsSortOrder = LocationsSortOrder.BY_NAME;
-        sortByLatitude.setState(!sortByName.getState());
-        refreshView();
-      }
-    });
-
-    sortByLatitude.addItemListener(new ItemListener()
-    {
-      public void itemStateChanged(final ItemEvent itemEvent)
-      {
-        locationsSortOrder = LocationsSortOrder.BY_LATITUDE;
-        sortByName.setState(!sortByLatitude.getState());
-        refreshView();
+        new UserPreferences().clear();
+        JOptionPane
+          .showMessageDialog(DaylightChartGui.this,
+                             "Please close the main window for the settings to take effect.",
+                             "Reset All",
+                             JOptionPane.INFORMATION_MESSAGE);
       }
     });
 

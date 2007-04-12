@@ -219,13 +219,13 @@ public class AxisOptions
     label = axis.getLabel();
     labelFont = axis.getLabelFont();
     labelPaint = axis.getLabelPaint();
+    labelInsets = axis.getLabelInsets();
     //
     tickMarksVisible = axis.isTickMarksVisible();
     tickLabelsVisible = axis.isTickLabelsVisible();
     tickLabelFont = axis.getTickLabelFont();
     tickLabelPaint = axis.getTickLabelPaint();
-    tickLabelInsets = axis.getTickLabelInsets();
-    labelInsets = axis.getLabelInsets();
+    tickLabelInsets = axis.getTickLabelInsets();    
   }
 
   /**
@@ -240,13 +240,13 @@ public class AxisOptions
     axis.setLabel(label);
     axis.setLabelFont(labelFont);
     axis.setLabelPaint(labelPaint);
+    axis.setLabelInsets(labelInsets);
     //
     axis.setTickMarksVisible(tickMarksVisible);
     axis.setTickLabelsVisible(tickLabelsVisible);
     axis.setTickLabelFont(tickLabelFont);
     axis.setTickLabelPaint(tickLabelPaint);
     axis.setTickLabelInsets(tickLabelInsets);
-    axis.setLabelInsets(labelInsets);
   }
 
 }

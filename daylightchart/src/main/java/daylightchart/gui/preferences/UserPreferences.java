@@ -130,7 +130,7 @@ public class UserPreferences
     preferences.put(PreferenceKeys.locations.getKey(), locations);
   }
 
-  void clear()
+  public void clear()
   {
     try
     {
@@ -140,7 +140,6 @@ public class UserPreferences
     {
       e.printStackTrace();
     }
-    System.out.println("User preferences cleared.");
   }
 
   void listAllPreferences()
