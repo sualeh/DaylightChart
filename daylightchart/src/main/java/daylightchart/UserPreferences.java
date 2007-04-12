@@ -68,8 +68,8 @@ public final class UserPreferences
   private static ChartOptions getDefaultDaylightChartOptions()
   {
     // Create a fake chart
-    final PointLocation pointLocation = new PointLocation(new Latitude(new Angle()),
-                                                          new Longitude(new Angle()));
+    final PointLocation pointLocation = new PointLocation(new Latitude(Angle.fromDegrees(0)),
+                                                          new Longitude(Angle.fromDegrees(0)));
     final Location location = new Location("", "", "", pointLocation);
     final DaylightChart chart = new DaylightChart(location);
     chart.setTitle("");
