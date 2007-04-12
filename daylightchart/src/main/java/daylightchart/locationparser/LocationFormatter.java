@@ -96,6 +96,11 @@ public final class LocationFormatter
                                      final Writer writer)
     throws IOException
   {
+    if (locations == null || writer == null)
+    {
+      return;
+    }
+    
     final String line_separator = System.getProperty("line.separator", "\n");
     for (final Location location: locations)
     {

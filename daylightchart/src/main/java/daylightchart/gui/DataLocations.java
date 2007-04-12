@@ -30,7 +30,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -62,27 +61,20 @@ public final class DataLocations
   public DataLocations()
   {
 
-    Reader reader = null;
-
-    final UserPreferences userPreferences = new UserPreferences();
-    final String locationsString = userPreferences.getLocations();
-    if (locationsString != null)
-    {
-      reader = new StringReader(locationsString);
-    }
-    else
-    {
-      final InputStream dataStream = this.getClass().getClassLoader()
-        .getResourceAsStream("locations.data");
-      if (dataStream == null)
-      {
-        throw new IllegalStateException("Cannot read data from internal database");
-      }
-      reader = new InputStreamReader(dataStream);
-    }
+    locations = new UserPreferences().getLocations();
     try
     {
-      locations = LocationParser.parseLocations(reader);
+      if (locations.size() == 0)
+      {
+        final InputStream dataStream = this.getClass().getClassLoader()
+          .getResourceAsStream("locations.data");
+        if (dataStream == null)
+        {
+          throw new IllegalStateException("Cannot read data from internal database");
+        }
+        Reader reader = new InputStreamReader(dataStream);
+        locations = LocationParser.parseLocations(reader);
+      }
     }
     catch (final ParserException e)
     {
@@ -115,10 +107,7 @@ public final class DataLocations
     locations = LocationParser.parseLocations(reader);
 
     // Save locations to user preferences
-    final String locationsString = LocationFormatter.formatLocations(locations);
-    final UserPreferences userPreferences = new UserPreferences();
-    userPreferences.setLocations(locationsString);
-
+    new UserPreferences().setLocations(locations);
   }
 
   /**

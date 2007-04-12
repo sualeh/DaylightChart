@@ -24,6 +24,7 @@ package daylightchart.locationparser;
 
 import java.io.Reader;
 import java.io.StringReader;
+import java.util.ArrayList;
 import java.util.List;
 
 import antlr.RecognitionException;
@@ -79,6 +80,11 @@ public final class LocationParser
   public static List<Location> parseLocations(final Reader reader)
     throws ParserException
   {
+    if (reader == null)
+    {
+      return new ArrayList<Location>();
+    }
+
     final AntlrLocationParser parser = constructLocationParser(reader);
     List<Location> locations;
     try
@@ -94,6 +100,25 @@ public final class LocationParser
       throw new ParserException(e);
     }
     return locations;
+  }
+
+  /**
+   * Reads locations from a reader.
+   * 
+   * @param locationsString
+   *        Locations string
+   * @return List of locations
+   * @throws ParserException
+   *         On a parse exception
+   */
+  public static List<Location> parseLocations(final String locationsString)
+    throws ParserException
+  {
+    if (locationsString == null)
+    {
+      return new ArrayList<Location>();
+    }
+    return parseLocations(new StringReader(locationsString));
   }
 
   private static AntlrLocationParser constructLocationParser(final Reader reader)

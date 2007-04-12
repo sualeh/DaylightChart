@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
@@ -18,6 +20,9 @@ import org.pointlocation6709.PointLocation;
 import daylightchart.chart.DaylightChart;
 import daylightchart.chart.Location;
 import daylightchart.gui.options.ChartOptions;
+import daylightchart.locationparser.LocationFormatter;
+import daylightchart.locationparser.LocationParser;
+import daylightchart.locationparser.ParserException;
 
 /**
  * User preferences for the GUI.
@@ -27,27 +32,8 @@ import daylightchart.gui.options.ChartOptions;
 public final class UserPreferences
 {
 
-  private enum PreferenceKeys
-  {
-    locations("daylightchart.locations"), chartOptions(
-      "daylightchart.chartOptions");
-
-    private final String key;
-
-    private PreferenceKeys(final String key)
-    {
-      this.key = key;
-    }
-
-    /**
-     * @return the key
-     */
-    public String getKey()
-    {
-      return key;
-    }
-
-  }
+  private static final String keyLocations = "daylightchart.locations";
+  private static final String keyChartOptions = "daylightchart.chartOptions";
 
   /**
    * Main method. Lists all user preferences.
@@ -67,9 +53,8 @@ public final class UserPreferences
    */
   private static ChartOptions getDefaultDaylightChartOptions()
   {
-    // Create a fake chart
-    final PointLocation pointLocation = new PointLocation(new Latitude(Angle.fromDegrees(0)),
-                                                          new Longitude(Angle.fromDegrees(0)));
+    final PointLocation pointLocation = new PointLocation(new Latitude(Angle
+      .fromDegrees(0)), new Longitude(Angle.fromDegrees(0)));
     final Location location = new Location("", "", "", pointLocation);
     final DaylightChart chart = new DaylightChart(location);
     chart.setTitle("");
@@ -106,8 +91,7 @@ public final class UserPreferences
   public ChartOptions getChartOptions()
   {
     ChartOptions chartOptions = null;
-    final byte[] bytes = preferences.getByteArray(PreferenceKeys.chartOptions
-      .getKey(), new byte[0]);
+    final byte[] bytes = preferences.getByteArray(keyChartOptions, new byte[0]);
     try
     {
       // Deserialize from a byte array
@@ -131,9 +115,17 @@ public final class UserPreferences
    * 
    * @return Locations
    */
-  public String getLocations()
+  public List<Location> getLocations()
   {
-    return preferences.get(PreferenceKeys.locations.getKey(), null);
+    String locationsString = preferences.get(keyLocations, null);
+    try
+    {
+      return LocationParser.parseLocations(locationsString);
+    }
+    catch (ParserException e)
+    {
+      return new ArrayList<Location>();
+    }
   }
 
   /**
@@ -160,7 +152,7 @@ public final class UserPreferences
       e.printStackTrace();
       bytes = new byte[0];
     }
-    preferences.putByteArray(PreferenceKeys.chartOptions.getKey(), bytes);
+    preferences.putByteArray(keyChartOptions, bytes);
   }
 
   /**
@@ -169,9 +161,10 @@ public final class UserPreferences
    * @param locations
    *        Locations
    */
-  public void setLocations(final String locations)
+  public void setLocations(final List<Location> locations)
   {
-    preferences.put(PreferenceKeys.locations.getKey(), locations);
+    final String locationsString = LocationFormatter.formatLocations(locations);
+    preferences.put(keyLocations, locationsString);
   }
 
   void listAllPreferences()
