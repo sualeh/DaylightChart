@@ -38,6 +38,7 @@ public class PlotOptions
     rangeAxisOptions = new AxisOptions();
   }
 
+  @Override
   public void copyFromChart(final JFreeChart chart)
   {
     final Plot plot = chart.getPlot();
@@ -131,6 +132,7 @@ public class PlotOptions
     this.outlineStroke = outlineStroke;
   }
 
+  @Override
   public void updateChart(final JFreeChart chart)
   {
     final Plot plot = chart.getPlot();

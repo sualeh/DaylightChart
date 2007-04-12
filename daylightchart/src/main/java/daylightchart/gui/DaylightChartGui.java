@@ -277,8 +277,8 @@ public final class DaylightChartGui
     {
       public void actionPerformed(final ActionEvent actionevent)
       {
-        ChartEditor chartEditor = chartOptions.getChartEditor();
-        int confirmValue = JOptionPane
+        final ChartEditor chartEditor = chartOptions.getChartEditor();
+        final int confirmValue = JOptionPane
           .showConfirmDialog(DaylightChartGui.this, chartEditor, Messages
             .getString("DaylightChartGui.Menu.Options.ChartOptions"), //$NON-NLS-1$
                              JOptionPane.OK_CANCEL_OPTION,
@@ -290,7 +290,7 @@ public final class DaylightChartGui
           // Save preferences
           new UserPreferences().setChartOptions(chartOptions);
           // Also apply changes to the current chart
-          DaylightChart chart = (DaylightChart) chartPanel.getChart();
+          final DaylightChart chart = (DaylightChart) chartPanel.getChart();
           chartOptions.updateChart(chart);
         }
       }

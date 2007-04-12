@@ -19,7 +19,7 @@ public abstract class Options
   {
     final JFreeChart chart = new JFreeChart(new XYPlot());
     chart.setTitle("");
-    XYPlot plot = chart.getXYPlot();
+    final XYPlot plot = chart.getXYPlot();
     plot.setDomainAxis(new DateAxis());
     plot.setRangeAxis(new DateAxis());
     return chart;

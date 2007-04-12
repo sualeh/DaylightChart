@@ -30,8 +30,8 @@ import org.pointlocation6709.PointLocation;
 
 /**
  * A location object has all the information required to define a
- * location, such as the name of the city and the country, the
- * point location, and the time zone.
+ * location, such as the name of the city and the country, the point
+ * location, and the time zone.
  * 
  * @author Sualeh Fatehi
  */
@@ -176,16 +176,6 @@ public final class Location
   }
 
   /**
-   * Point location
-   * 
-   * @return Point location
-   */
-  public PointLocation getPointLocation()
-  {
-    return pointLocation;
-  }
-
-  /**
    * Country.
    * 
    * @return Country.
@@ -193,6 +183,16 @@ public final class Location
   public String getCountry()
   {
     return country;
+  }
+
+  /**
+   * Point location
+   * 
+   * @return Point location
+   */
+  public PointLocation getPointLocation()
+  {
+    return pointLocation;
   }
 
   /**

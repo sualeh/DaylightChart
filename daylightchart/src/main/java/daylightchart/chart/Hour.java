@@ -180,10 +180,11 @@ public final class Hour
     intSeconds = (int) Math.round((absHours - intHours) * 3600D);
 
     // Adjust for DST
-    if (inDaylightSavings) {
+    if (inDaylightSavings)
+    {
       intHours = intHours + 1;
     }
-    
+
     // Calculate absolute integer minutes
     intMinutes = intSeconds / 60; // Integer arithmetic
     if (intMinutes == 60)

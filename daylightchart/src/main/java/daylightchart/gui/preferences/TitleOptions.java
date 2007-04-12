@@ -27,6 +27,7 @@ public class TitleOptions
     titleText = "";
   }
 
+  @Override
   public void copyFromChart(final JFreeChart chart)
   {
     final TextTitle title = chart.getTitle();
@@ -65,6 +66,7 @@ public class TitleOptions
     this.titleText = titleText;
   }
 
+  @Override
   public void updateChart(final JFreeChart chart)
   {
     final TextTitle title = chart.getTitle();

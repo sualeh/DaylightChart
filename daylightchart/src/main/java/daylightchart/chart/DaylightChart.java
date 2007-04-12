@@ -27,10 +27,11 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Stroke;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
-
-import javax.swing.Renderer;
+import java.util.List;
 
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.AxisLocation;
@@ -53,6 +54,7 @@ import org.jfree.ui.RectangleInsets;
 import org.jfree.ui.TextAnchor;
 import org.joda.time.LocalDateTime;
 
+import daylightchart.gui.preferences.ChartOptions;
 import daylightchart.gui.preferences.ChartOptionsListener;
 import daylightchart.location.Location;
 import daylightchart.location.LocationFormatter;
@@ -104,7 +106,7 @@ public class DaylightChart
    * 
    * @see daylightchart.gui.preferences.ChartOptionsListener#afterSettingChartOptions()
    */
-  public void afterSettingChartOptions()
+  public void afterSettingChartOptions(final ChartOptions chartOptions)
   {
     // Fix title and subtitles
     setTitle(riseSetData.getLocation().toString());
@@ -114,6 +116,18 @@ public class DaylightChart
     final TextTitle subtitle = (TextTitle) getSubtitle(0);
     subtitle.setFont(subtitleFont);
     subtitle.setPaint(title.getPaint());
+    // Fix font on the domain marker
+    final Collection<IntervalMarker> domainMarkers = getXYPlot()
+      .getDomainMarkers(Layer.BACKGROUND);
+    if (domainMarkers != null && domainMarkers.size() > 0)
+    {
+      final List<IntervalMarker> domainMarkersList = new ArrayList<IntervalMarker>();
+      domainMarkersList.addAll(domainMarkers);
+      final IntervalMarker dstMarker = domainMarkersList.get(0);
+      final Font labelFont = chartOptions.getPlotOptions()
+        .getDomainAxisOptions().getLabelFont();
+      dstMarker.setLabelFont(labelFont);
+    }
   }
 
   /**
@@ -121,7 +135,7 @@ public class DaylightChart
    * 
    * @see daylightchart.gui.preferences.ChartOptionsListener#beforeSettingChartOptions()
    */
-  public void beforeSettingChartOptions()
+  public void beforeSettingChartOptions(final ChartOptions chartOptions)
   {
     // No-op
   }
@@ -173,21 +187,20 @@ public class DaylightChart
       .getFirstMillisecond();
     final long intervalEnd = new Day(riseSetData.getDstEndDate())
       .getFirstMillisecond();
-    final IntervalMarker daylightTimeMarker = new IntervalMarker(intervalStart,
-                                                                 intervalEnd,
-                                                                 nightColor,
-                                                                 new BasicStroke(0.0f),
-                                                                 null,
-                                                                 null,
-                                                                 0.4f);
-    daylightTimeMarker.setLabel(Messages
-      .getString("DaylightChart.Label.Marker")); //$NON-NLS-1$
-    daylightTimeMarker.setLabelPaint(Color.WHITE);
-    daylightTimeMarker.setLabelAnchor(RectangleAnchor.BOTTOM_RIGHT);
-    daylightTimeMarker.setLabelFont(new Font("SansSerif", Font.BOLD, 12)); //$NON-NLS-1$
-    daylightTimeMarker.setLabelTextAnchor(TextAnchor.BASELINE_RIGHT);
+    final IntervalMarker dstMarker = new IntervalMarker(intervalStart,
+                                                        intervalEnd,
+                                                        nightColor,
+                                                        new BasicStroke(0.0f),
+                                                        null,
+                                                        null,
+                                                        0.4f);
+    dstMarker.setLabel(Messages.getString("DaylightChart.Label.Marker")); //$NON-NLS-1$
+    dstMarker.setLabelPaint(Color.WHITE);
+    dstMarker.setLabelAnchor(RectangleAnchor.BOTTOM_RIGHT);
+    dstMarker.setLabelFont(new Font("SansSerif", Font.BOLD, 12)); //$NON-NLS-1$
+    dstMarker.setLabelTextAnchor(TextAnchor.BASELINE_RIGHT);
     //
-    plot.addDomainMarker(daylightTimeMarker, Layer.BACKGROUND);
+    plot.addDomainMarker(dstMarker, Layer.BACKGROUND);
   }
 
   private void createHoursAxis(final XYPlot plot)

@@ -42,6 +42,7 @@ public class AxisOptions
     tickMarksVisible = true;
   }
 
+  @Override
   public void copyFromChart(final JFreeChart chart)
   {
     // We do not know which axis to work from
@@ -201,6 +202,7 @@ public class AxisOptions
     this.tickMarksVisible = tickMarksVisible;
   }
 
+  @Override
   public void updateChart(final JFreeChart chart)
   {
     // We do not know which axis to update
@@ -225,7 +227,7 @@ public class AxisOptions
     tickLabelsVisible = axis.isTickLabelsVisible();
     tickLabelFont = axis.getTickLabelFont();
     tickLabelPaint = axis.getTickLabelPaint();
-    tickLabelInsets = axis.getTickLabelInsets();    
+    tickLabelInsets = axis.getTickLabelInsets();
   }
 
   /**

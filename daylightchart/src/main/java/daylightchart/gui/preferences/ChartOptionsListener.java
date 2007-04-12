@@ -4,8 +4,8 @@ package daylightchart.gui.preferences;
 public interface ChartOptionsListener
 {
 
-  void beforeSettingChartOptions();
+  void afterSettingChartOptions(ChartOptions chartOptions);
 
-  void afterSettingChartOptions();
+  void beforeSettingChartOptions(ChartOptions chartOptions);
 
 }

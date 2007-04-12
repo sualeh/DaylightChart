@@ -77,8 +77,40 @@ public class UserPreferences
 
   }
 
+  /**
+   * Creates a chart options instance.
+   * 
+   * @return Chart options
+   */
+  private final static ChartOptions getDefaultDaylightChartOptions()
+  {
+    // Create a fake chart
+    final PointLocation pointLocation = new PointLocation(new Latitude(new Angle()),
+                                                          new Longitude(new Angle()));
+    final Location location = new Location("", "", "", pointLocation);
+    final DaylightChart chart = new DaylightChart(location);
+    chart.setTitle("");
+
+    final ChartOptions chartOptions = new ChartOptions();
+    chartOptions.copyFromChart(chart);
+
+    return chartOptions;
+  }
+
   private final Preferences preferences = Preferences.userNodeForPackage(this
     .getClass());
+
+  public void clear()
+  {
+    try
+    {
+      preferences.clear();
+    }
+    catch (final BackingStoreException e)
+    {
+      e.printStackTrace();
+    }
+  }
 
   public ChartOptions getChartOptions()
   {
@@ -130,18 +162,6 @@ public class UserPreferences
     preferences.put(PreferenceKeys.locations.getKey(), locations);
   }
 
-  public void clear()
-  {
-    try
-    {
-      preferences.clear();
-    }
-    catch (final BackingStoreException e)
-    {
-      e.printStackTrace();
-    }
-  }
-
   void listAllPreferences()
   {
     System.out.println("User preferences:");
@@ -157,26 +177,6 @@ public class UserPreferences
     {
       e.printStackTrace();
     }
-  }
-
-  /**
-   * Creates a chart options instance.
-   * 
-   * @return Chart options
-   */
-  private final static ChartOptions getDefaultDaylightChartOptions()
-  {
-    // Create a fake chart
-    final PointLocation pointLocation = new PointLocation(new Latitude(new Angle()),
-                                                        new Longitude(new Angle()));
-    final Location location = new Location("", "", "", pointLocation);
-    final DaylightChart chart = new DaylightChart(location);
-    chart.setTitle("");
-  
-    final ChartOptions chartOptions = new ChartOptions();
-    chartOptions.copyFromChart(chart);
-    
-    return chartOptions;
   }
 
 }

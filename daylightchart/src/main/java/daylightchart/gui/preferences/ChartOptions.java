@@ -27,6 +27,7 @@ public class ChartOptions
     titleOptions = new TitleOptions();
   }
 
+  @Override
   public void copyFromChart(final JFreeChart chart)
   {
     antiAlias = chart.getAntiAlias();
@@ -66,11 +67,12 @@ public class ChartOptions
     this.backgroundPaint = backgroundPaint;
   }
 
+  @Override
   public void updateChart(final JFreeChart chart)
   {
     if (chart instanceof ChartOptionsListener)
     {
-      ((ChartOptionsListener) chart).beforeSettingChartOptions();
+      ((ChartOptionsListener) chart).beforeSettingChartOptions(this);
     }
     //
     chart.setAntiAlias(antiAlias);
@@ -81,7 +83,7 @@ public class ChartOptions
     //
     if (chart instanceof ChartOptionsListener)
     {
-      ((ChartOptionsListener) chart).afterSettingChartOptions();
+      ((ChartOptionsListener) chart).afterSettingChartOptions(this);
     }
   }
 
