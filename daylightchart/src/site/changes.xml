@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<document>
+  <properties>
+    <title>Daylight Chart</title>
+    <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
+  </properties>
+  <body>
+    <release version="1.0" date="2007-04-29">
+      <action dev="Sualeh Fatehi" type="add">
+        Added new project.
+      </action>
+    </release>
+  </body>
+</document>
