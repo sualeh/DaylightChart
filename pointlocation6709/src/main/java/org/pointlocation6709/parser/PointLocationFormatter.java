@@ -42,9 +42,11 @@ public final class PointLocationFormatter
   {
     String string = format(pointLocation.getLatitude(), 7)
                     + format(pointLocation.getLongitude(), 8);
-    if (pointLocation.getAltitude() != 0)
+    double altitude = pointLocation.getAltitude();
+    if (altitude != 0)
     {
-      string = string + pointLocation.getAltitude();
+      String sign = altitude < 0? "-": "+";
+      string = string + sign + Math.abs(altitude);
     }
     return string + "/";
   }
