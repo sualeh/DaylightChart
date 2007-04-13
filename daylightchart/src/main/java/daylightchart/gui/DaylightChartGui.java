@@ -38,6 +38,8 @@ import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFileChooser;
@@ -68,7 +70,9 @@ public final class DaylightChartGui
 {
 
   private final static long serialVersionUID = 3760840181833283637L;
-
+  private static final Logger LOGGER = Logger.getLogger(DaylightChartGui.class
+                                                        .getName());
+  
   private DataLocations dataLocations;
   private LocationsSortOrder locationsSortOrder;
   private final JList listBox;
@@ -171,7 +175,7 @@ public final class DaylightChartGui
         }
         catch (final IOException e)
         {
-          e.printStackTrace();
+          LOGGER.log(Level.WARNING, "Could not save chart", e);
         }
       }
     });
@@ -352,7 +356,7 @@ public final class DaylightChartGui
     }
     catch (final Exception e)
     {
-      e.printStackTrace();
+      LOGGER.log(Level.WARNING, "Could not read file", e);
       JOptionPane
         .showMessageDialog(this,
                            selectedFile
@@ -387,7 +391,7 @@ public final class DaylightChartGui
       }
       catch (final Exception e)
       {
-        e.printStackTrace();
+        LOGGER.log(Level.WARNING, "Could not save file", e);
         JOptionPane.showMessageDialog(this, Messages
           .getString("DaylightChartGui.Error.CannotSaveFile") + "\n" //$NON-NLS-1$ //$NON-NLS-2$
                                             + selectedFile, Messages
@@ -434,7 +438,7 @@ public final class DaylightChartGui
         }
         catch (final IOException e)
         {
-          e.printStackTrace();
+          LOGGER.log(Level.WARNING, "Could not save file", e);
           selectedFile = null;
         }
       }

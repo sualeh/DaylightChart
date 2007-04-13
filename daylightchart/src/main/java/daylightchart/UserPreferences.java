@@ -9,6 +9,8 @@ import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
@@ -32,6 +34,9 @@ import daylightchart.locationparser.ParserException;
 public final class UserPreferences
 {
 
+  private static final Logger LOGGER = Logger.getLogger(UserPreferences.class
+                                                        .getName());
+  
   private static final String keyLocations = "daylightchart.locations";
   private static final String keyChartOptions = "daylightchart.chartOptions";
 
@@ -79,7 +84,7 @@ public final class UserPreferences
     }
     catch (final BackingStoreException e)
     {
-      e.printStackTrace();
+      LOGGER.log(Level.WARNING, "Could clear preferences", e);
     }
   }
 
@@ -105,6 +110,7 @@ public final class UserPreferences
     }
     catch (final IOException e)
     {
+      LOGGER.log(Level.WARNING, "Could get chart options", e);
       chartOptions = getDefaultDaylightChartOptions();
     }
     return chartOptions;
@@ -124,6 +130,7 @@ public final class UserPreferences
     }
     catch (ParserException e)
     {
+      LOGGER.log(Level.WARNING, "Could get locations", e);
       return new ArrayList<Location>();
     }
   }
@@ -149,7 +156,7 @@ public final class UserPreferences
     }
     catch (final Exception e)
     {
-      e.printStackTrace();
+      LOGGER.log(Level.WARNING, "Could set chart options", e);
       bytes = new byte[0];
     }
     preferences.putByteArray(keyChartOptions, bytes);
@@ -176,11 +183,11 @@ public final class UserPreferences
     }
     catch (final IOException e)
     {
-      e.printStackTrace();
+      LOGGER.log(Level.WARNING, "Could list preferences", e);
     }
     catch (final BackingStoreException e)
     {
-      e.printStackTrace();
+      LOGGER.log(Level.WARNING, "Could list preferences", e);
     }
   }
 

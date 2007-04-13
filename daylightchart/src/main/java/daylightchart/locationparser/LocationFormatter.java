@@ -49,7 +49,7 @@ public final class LocationFormatter
   public static String formatLocation(final Location location)
   {
     final String corordinatesString = PointLocationFormatter
-      .formatIso6709PointLocation(location.getPointLocation());
+      .formatIso6709(location.getPointLocation());
     final String tzId = location.getTimeZone().getID();
 
     final String city = location.getCity();
