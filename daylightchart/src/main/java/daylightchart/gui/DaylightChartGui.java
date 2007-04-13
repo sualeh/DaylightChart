@@ -71,8 +71,8 @@ public final class DaylightChartGui
 
   private final static long serialVersionUID = 3760840181833283637L;
   private static final Logger LOGGER = Logger.getLogger(DaylightChartGui.class
-                                                        .getName());
-  
+    .getName());
+
   private DataLocations dataLocations;
   private LocationsSortOrder locationsSortOrder;
   private final JList listBox;
@@ -175,7 +175,8 @@ public final class DaylightChartGui
         }
         catch (final IOException e)
         {
-          LOGGER.log(Level.WARNING, "Could not save chart", e);
+          LOGGER.log(Level.WARNING, Messages
+            .getString("DaylightChartGui.Error.SaveChart"), e); //$NON-NLS-1$
         }
       }
     });
@@ -248,7 +249,8 @@ public final class DaylightChartGui
     final MenuItem chartOptionsMenuItem = new MenuItem(Messages
       .getString("DaylightChartGui.Menu.Options.ChartOptions")); //$NON-NLS-1$
 
-    final MenuItem resetAll = new MenuItem("Reset All");
+    final MenuItem resetAll = new MenuItem(Messages
+      .getString("DaylightChartGui.Menu.Options.ResetAll")); //$NON-NLS-1$
 
     menuOptions.add(sortByName);
     menuOptions.add(sortByLatitude);
@@ -306,9 +308,10 @@ public final class DaylightChartGui
       {
         new UserPreferences().clear();
         JOptionPane
-          .showMessageDialog(DaylightChartGui.this,
-                             "Please close the main window for the settings to take effect.",
-                             "Reset All",
+          .showMessageDialog(DaylightChartGui.this, Messages
+            .getString("DaylightChartGui.Message.ResetAll"), //$NON-NLS-1$
+                             Messages
+                               .getString("DaylightChartGui.Menu.Options.ResetAll"), //$NON-NLS-1$
                              JOptionPane.INFORMATION_MESSAGE);
       }
     });
@@ -356,7 +359,8 @@ public final class DaylightChartGui
     }
     catch (final Exception e)
     {
-      LOGGER.log(Level.WARNING, "Could not read file", e);
+      LOGGER.log(Level.WARNING, Messages
+        .getString("DaylightChartGui.Error.ReadFile"), e); //$NON-NLS-1$
       JOptionPane
         .showMessageDialog(this,
                            selectedFile
@@ -391,7 +395,8 @@ public final class DaylightChartGui
       }
       catch (final Exception e)
       {
-        LOGGER.log(Level.WARNING, "Could not save file", e);
+        LOGGER.log(Level.WARNING, Messages
+          .getString("DaylightChartGui.Error.SaveFile"), e); //$NON-NLS-1$
         JOptionPane.showMessageDialog(this, Messages
           .getString("DaylightChartGui.Error.CannotSaveFile") + "\n" //$NON-NLS-1$ //$NON-NLS-2$
                                             + selectedFile, Messages
@@ -438,7 +443,8 @@ public final class DaylightChartGui
         }
         catch (final IOException e)
         {
-          LOGGER.log(Level.WARNING, "Could not save file", e);
+          LOGGER.log(Level.WARNING, Messages
+            .getString("DaylightChartGui.Error.SaveFile"), e); //$NON-NLS-1$
           selectedFile = null;
         }
       }
