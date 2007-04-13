@@ -19,9 +19,9 @@
  */
 package org.pointlocation6709.parser;
 
+
 import org.pointlocation6709.Angle;
 import org.pointlocation6709.PointLocation;
-
 
 /**
  * Formats point locations to strings.
@@ -38,7 +38,7 @@ public final class PointLocationFormatter
    *        Point location to format
    * @return Formatted string
    */
-  public static String formatIso6709PointLocation(final PointLocation pointLocation)
+  public static String formatIso6709(final PointLocation pointLocation)
   {
     String string = format(pointLocation.getLatitude(), 7)
                     + format(pointLocation.getLongitude(), 8);
@@ -101,6 +101,7 @@ public final class PointLocationFormatter
 
   private PointLocationFormatter()
   {
+    // Prevent instantiation
   }
 
 }

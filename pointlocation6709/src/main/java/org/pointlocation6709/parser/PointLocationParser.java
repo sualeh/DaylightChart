@@ -79,6 +79,6 @@ public final class PointLocationParser
 
   private PointLocationParser()
   {
+    // Prevent instantiation
   }
-
 }

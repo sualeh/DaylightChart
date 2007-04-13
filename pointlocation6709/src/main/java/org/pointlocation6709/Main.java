@@ -50,9 +50,10 @@ public final class Main
   {
 
     System.out.println(Version.about());
-    System.out.println("ISO 6709:1983 point location tester. ");
-    System.out.println("Starting. " + new Date());
+    System.out.println("ISO 6709:1983 geographic point location tester. ");
+    System.out.println("For example, enter: +401213-0750015/");
     System.out.println("Enter a blank line to quit.");
+    System.out.println("Starting. " + new Date());
 
     final BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
     String inputLine = "starter";
@@ -60,14 +61,13 @@ public final class Main
     {
       try
       {
-        System.out.print("Enter an ISO 6709:1983 location point: ");
+        System.out.print("Enter an ISO 6709:1983 geographic point location: ");
         inputLine = in.readLine();
         // Parse and print location point
         final PointLocation pointLocation = PointLocationParser
           .parsePointLocation(inputLine);
         System.out.println(pointLocation);
-        System.out.println(PointLocationFormatter
-          .formatIso6709PointLocation(pointLocation));
+        System.out.println(PointLocationFormatter.formatIso6709(pointLocation));
       }
       catch (final ParserException e)
       {
@@ -75,11 +75,12 @@ public final class Main
       }
     }
     System.out.println("Done. " + new Date());
-    
+
   }
 
   private Main()
   {
+    // Prevent instantiation
   }
 
 }

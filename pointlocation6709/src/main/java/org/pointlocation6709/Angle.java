@@ -31,6 +31,7 @@ import java.io.Serializable;
 public class Angle
   implements Serializable, Comparable<Angle>
 {
+
   /** Angle fields. */
   public enum Field
   {
@@ -91,16 +92,7 @@ public class Angle
   }
 
   private final double radians;
-  private final int[] sexagesimalDegreeParts;
-
-  /**
-   * Default constructor. Initializes the angle to a value of 0.
-   */
-  private Angle(final double radians)
-  {
-    this.radians = radians;
-    this.sexagesimalDegreeParts = Utility.sexagesimalSplit(getDegrees());
-  }
+  private transient int[] sexagesimalDegreeParts;
 
   /**
    * Copy constructor. Copies the value of a provided angle.
@@ -111,6 +103,14 @@ public class Angle
   public Angle(final Angle angle)
   {
     this(angle.radians);
+  }
+
+  /**
+   * Default constructor. Initializes the angle to a value of 0.
+   */
+  private Angle(final double radians)
+  {
+    this.radians = radians;
   }
 
   /**
@@ -196,6 +196,10 @@ public class Angle
    */
   public final int getField(final Field field)
   {
+    if (sexagesimalDegreeParts == null)
+    {
+      sexagesimalDegreeParts = Utility.sexagesimalSplit(getDegrees());
+    }
     return sexagesimalDegreeParts[field.ordinal()];
   }
 
