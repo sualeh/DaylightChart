@@ -103,7 +103,7 @@ public class DaylightChart
   /**
    * {@inheritDoc}
    * 
-   * @see daylightchart.gui.options.ChartOptionsListener#afterSettingChartOptions()
+   * @see daylightchart.gui.options.ChartOptionsListener#afterSettingChartOptions(ChartOptions)
    */
   public void afterSettingChartOptions(final ChartOptions chartOptions)
   {
@@ -132,7 +132,7 @@ public class DaylightChart
   /**
    * {@inheritDoc}
    * 
-   * @see daylightchart.gui.options.ChartOptionsListener#beforeSettingChartOptions()
+   * @see daylightchart.gui.options.ChartOptionsListener#beforeSettingChartOptions(ChartOptions)
    */
   public void beforeSettingChartOptions(final ChartOptions chartOptions)
   {
