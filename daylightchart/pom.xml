@@ -19,7 +19,7 @@
     <dependency>
       <groupId>pointlocation6709</groupId>
       <artifactId>pointlocation6709</artifactId>
-      <version>0.7</version>
+      <version>1.0</version>
     </dependency>
     <dependency>
       <groupId>joda-time</groupId>
