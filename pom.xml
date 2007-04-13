@@ -4,8 +4,8 @@
   <groupId>daylightchart</groupId>
   <artifactId>daylightchart-all</artifactId>
   <packaging>pom</packaging>
-  <version>0.7</version>
-  <name>Daylight Chart</name>
+  <version>1.0</version>
+  <name>Daylight Chart [All]</name>
   <description>Daylight Chart generates images of sunrise and sunset times at any location.</description>
   <url>http://sourceforge.net/projects/daylightchart</url>
   <inceptionYear>2007</inceptionYear>

@@ -24,6 +24,8 @@ package daylightchart.chart;
 
 import java.io.Serializable;
 
+import org.pointlocation6709.Utility;
+
 /**
  * Represents an hour. An Hour can be converted to a string in standard
  * format, and in 24 hour time format. This object also adjusts the time
@@ -48,7 +50,8 @@ public final class Hour
 
   private static final long serialVersionUID = 6973647622518973008L;
 
-  private double hour;
+  private final double hour;
+  private final int[] sexagesimalHourParts;
   /** Adjusts the output of the time format for daylight savings time. */
   private boolean inDaylightSavings;
   /** Contols the output of the time format to 12 hour or 24 hour clock. */
@@ -62,7 +65,7 @@ public final class Hour
    */
   public Hour(final double hour)
   {
-    setHour(hour);
+    this(hour, false, false);
   }
 
   /**
@@ -73,33 +76,23 @@ public final class Hour
    */
   public Hour(final Hour hour)
   {
-    if (hour == null)
-    {
-      throw new IllegalArgumentException("Null argument");
-    }
-
-    setHour(hour.hour);
-    time24 = hour.time24;
-    inDaylightSavings = hour.inDaylightSavings;
+    this(hour.hour, hour.inDaylightSavings, hour.time24);
   }
 
-  /**
-   * Constructor for the hour, given the value of the hour, and output
-   * specifications.
-   * 
-   * @param hours
-   *        The value of the hours.
-   * @param minutes
-   *        The value of the minutes.
-   */
-  public Hour(final int hours, final int minutes)
+  private Hour(double hour, boolean inDaylightSavings, boolean time24)
   {
-    // check range of minutes
-    if (minutes < 0 || minutes > 60)
+    double dayHour;
+
+    dayHour = hour % 24D;
+    if (dayHour < 0)
     {
-      throw new IllegalArgumentException("Minutes out of range.");
+      dayHour = dayHour + hour;
     }
-    setHour(hours + minutes / 60D);
+    this.hour = dayHour;
+
+    this.sexagesimalHourParts = Utility.sexagesimalSplit(hour);
+    this.inDaylightSavings = inDaylightSavings;
+    this.time24 = time24;
   }
 
   /**
@@ -169,57 +162,15 @@ public final class Hour
    */
   public final int getField(final Field field)
   {
-    final double absHours;
-    int intHours, intMinutes, intSeconds;
-    final int returnField;
-    final int sign = hour < 0? -1: 1;
-
-    // Calculate absolute integer degrees
-    absHours = Math.abs(hour);
-    intHours = (int) Math.floor(absHours);
-    intSeconds = (int) Math.round((absHours - intHours) * 3600D);
+    int fieldValue = sexagesimalHourParts[field.ordinal()];
 
     // Adjust for DST
-    if (inDaylightSavings)
+    if (inDaylightSavings && field == Field.HOURS)
     {
-      intHours = intHours + 1;
+      fieldValue = fieldValue + 1;
     }
 
-    // Calculate absolute integer minutes
-    intMinutes = intSeconds / 60; // Integer arithmetic
-    if (intMinutes == 60)
-    {
-      intMinutes = 0;
-      intHours++;
-    }
-
-    // Calculate absolute integer seconds
-    intSeconds = intSeconds % 60;
-
-    // correct sign
-    intHours = intHours * sign;
-    intMinutes = intMinutes * sign;
-    intSeconds = intSeconds * sign;
-
-    // decide which field to return
-    if (field == Field.HOURS)
-    {
-      returnField = intHours;
-    }
-    else if (field == Field.MINUTES)
-    {
-      returnField = intMinutes;
-    }
-    else if (field == Field.SECONDS)
-    {
-      returnField = intSeconds;
-    }
-    else
-    {
-      throw new IllegalArgumentException("Unknown field: " + field);
-    }
-
-    return returnField;
+    return fieldValue;
   }
 
   /**
@@ -336,24 +287,6 @@ public final class Hour
       .append(minutes > 9? "": "0").append(minutes).append(modifier);
 
     return new String(representation);
-  }
-
-  /**
-   * Sets the hour. Converts to be within the 24 hour range.
-   * 
-   * @param hour
-   *        Hour to set.
-   */
-  private void setHour(final double hour)
-  {
-    double dayHour;
-
-    dayHour = hour % 24D;
-    if (dayHour < 0)
-    {
-      dayHour = dayHour + hour;
-    }
-    this.hour = dayHour;
   }
 
 }
