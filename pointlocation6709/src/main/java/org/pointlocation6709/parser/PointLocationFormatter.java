@@ -21,6 +21,8 @@ package org.pointlocation6709.parser;
 
 
 import org.pointlocation6709.Angle;
+import org.pointlocation6709.Latitude;
+import org.pointlocation6709.Longitude;
 import org.pointlocation6709.PointLocation;
 
 /**
@@ -40,32 +42,94 @@ public final class PointLocationFormatter
    */
   public static String formatIso6709(final PointLocation pointLocation)
   {
-    String string = format(pointLocation.getLatitude(), 7)
-                    + format(pointLocation.getLongitude(), 8);
-    double altitude = pointLocation.getAltitude();
+    final Latitude latitude = pointLocation.getLatitude();
+    final Longitude longitude = pointLocation.getLongitude();
+    String string = formatIntegerDegreesString(latitude)
+                    + formatSexagesimalMinutesString(latitude)
+                    + formatIntegerDegreesString(longitude)
+                    + formatSexagesimalMinutesString(longitude);
+    final double altitude = pointLocation.getAltitude();
     if (altitude != 0)
     {
-      String sign = altitude < 0? "-": "+";
-      string = string + sign + Math.abs(altitude);
+      string = string + formatDoubleWithSign(altitude);
     }
     return string + "/";
   }
 
   /**
-   * Formats to a string, in a parseable way.
+   * Formats a point location as an ISO 6709:1983 string, using
+   * decimals.
    * 
-   * @return Formated string.
+   * @param pointLocation
+   *        Point location to format
+   * @return Formatted string
    */
-  private static String format(final Angle angle, final int fieldlength)
+  public static String formatIso6709WithDecimals(final PointLocation pointLocation)
   {
-    final int angleSign = angle.getRadians() < 0? -1: 1;
-    final int quantity = angleSign
-                         * (Math.abs(angle.getField(Angle.Field.DEGREES))
-                            * 10000
-                            + Math.abs(angle.getField(Angle.Field.MINUTES))
-                            * 100 + Math.abs(angle
-                           .getField(Angle.Field.SECONDS)));
-    return padInt(quantity, fieldlength);
+    final Latitude latitude = pointLocation.getLatitude();
+    final Longitude longitude = pointLocation.getLongitude();
+    String string = formatIntegerDegreesString(latitude)
+                    + formatDecimalMinutesString(latitude)
+                    + formatIntegerDegreesString(longitude)
+                    + formatDecimalMinutesString(longitude);
+    final double altitude = pointLocation.getAltitude();
+    if (altitude != 0)
+    {
+      string = string + formatDoubleWithSign(altitude);
+    }
+    return string + "/";
+  }
+
+  private static String formatDecimalMinutesString(final Angle angle)
+  {
+    final int intDegrees = Math.abs(angle.getField(Angle.Field.DEGREES));
+    final double absMinutes = Math.abs(angle.getDegrees()) - intDegrees;
+
+    return String.valueOf(absMinutes);
+  }
+
+  private static String formatDoubleWithSign(final double value)
+  {
+    final String sign = value < 0? "-": "+";
+    return sign + Math.abs(value);
+  }
+
+  private static String formatIntegerDegreesString(final Angle angle)
+  {
+    String sign = angle.getRadians() < 0? "-": "+";
+    final int intDegrees = Math.abs(angle.getField(Angle.Field.DEGREES));
+
+    final int fieldlength;
+    if (angle instanceof Latitude)
+    {
+      fieldlength = 2;
+    }
+    else if (angle instanceof Longitude)
+    {
+      // According to the ISO6709:1983 standard,
+      // the 180th meridian is negative
+      if (intDegrees == 180)
+      {
+        sign = "-";
+      }
+      fieldlength = 3;
+    }
+    else
+    {
+      fieldlength = 0;
+    }
+
+    final String degrees = padInt(intDegrees, fieldlength);
+
+    return sign + degrees;
+  }
+
+  private static String formatSexagesimalMinutesString(final Angle angle)
+  {
+    final int absMinutes = Math.abs(angle.getField(Angle.Field.MINUTES));
+    final int absSeconds = Math.abs(angle.getField(Angle.Field.SECONDS));
+
+    return padInt(absMinutes, 2) + padInt(absSeconds, 2);
   }
 
   /**
@@ -83,19 +147,10 @@ public final class PointLocationFormatter
   {
     final StringBuffer paddedString = new StringBuffer();
 
-    paddedString.append(Math.abs(quantity));
-    while (paddedString.length() < width - 1)
+    paddedString.append(quantity);
+    while (paddedString.length() < width)
     {
       paddedString.insert(0, '0');
-    }
-
-    if (quantity < 0)
-    {
-      paddedString.insert(0, "-");
-    }
-    else
-    {
-      paddedString.insert(0, "+");
     }
 
     return new String(paddedString);
