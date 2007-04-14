@@ -20,6 +20,8 @@
 package org.pointlocation6709.parser;
 
 
+import java.text.NumberFormat;
+
 import org.pointlocation6709.Angle;
 import org.pointlocation6709.Latitude;
 import org.pointlocation6709.Longitude;
@@ -84,14 +86,13 @@ public final class PointLocationFormatter
   {
     final int intDegrees = Math.abs(angle.getField(Angle.Field.DEGREES));
     final double absMinutes = Math.abs(angle.getDegrees()) - intDegrees;
-
-    return String.valueOf(absMinutes);
+    return getNumberFormat(0).format(absMinutes);
   }
 
   private static String formatDoubleWithSign(final double value)
   {
     final String sign = value < 0? "-": "+";
-    return sign + Math.abs(value);
+    return sign + getNumberFormat(1).format(Math.abs(value));
   }
 
   private static String formatIntegerDegreesString(final Angle angle)
@@ -119,7 +120,7 @@ public final class PointLocationFormatter
       fieldlength = 0;
     }
 
-    final String degrees = padInt(intDegrees, fieldlength);
+    final String degrees = getIntegerFormat(fieldlength).format(intDegrees);
 
     return sign + degrees;
   }
@@ -129,31 +130,24 @@ public final class PointLocationFormatter
     final int absMinutes = Math.abs(angle.getField(Angle.Field.MINUTES));
     final int absSeconds = Math.abs(angle.getField(Angle.Field.SECONDS));
 
-    return padInt(absMinutes, 2) + padInt(absSeconds, 2);
+    NumberFormat integerFormat = getIntegerFormat(2);
+    return integerFormat.format(absMinutes) + integerFormat.format(absSeconds);
   }
 
-  /**
-   * Pads a string with a pad character. Includes the sign before the
-   * integer.
-   * 
-   * @param quantity
-   *        Integer quantity to pad.
-   * @param width
-   *        Width of the padding.
-   * @return Padded string to length "width", with the sign preceeding
-   *         the integer.
-   */
-  private static String padInt(final int quantity, final int width)
+  private static NumberFormat getNumberFormat(final int integerDigits)
   {
-    final StringBuffer paddedString = new StringBuffer();
+    final NumberFormat numberFormat = NumberFormat.getInstance();
+    numberFormat.setMinimumIntegerDigits(integerDigits);
+    numberFormat.setMinimumFractionDigits(1);
+    numberFormat.setMaximumFractionDigits(5);
+    return numberFormat;
+  }
 
-    paddedString.append(quantity);
-    while (paddedString.length() < width)
-    {
-      paddedString.insert(0, '0');
-    }
-
-    return new String(paddedString);
+  private static NumberFormat getIntegerFormat(final int integerDigits)
+  {
+    final NumberFormat numberFormat = NumberFormat.getIntegerInstance();
+    numberFormat.setMinimumIntegerDigits(integerDigits);
+    return numberFormat;
   }
 
   private PointLocationFormatter()
