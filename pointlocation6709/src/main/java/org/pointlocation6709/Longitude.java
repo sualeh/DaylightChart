@@ -40,7 +40,15 @@ public final class Longitude
   public Longitude(final Angle angle)
   {
     super(angle);
-    validateDegreesRange(180);
+
+    // Validate the range
+    final double degrees = getDegrees();
+    // According to the ISO6709:1983 standard,
+    // the 180th meridian is negative
+    if (degrees >= 180 || degrees < -180)
+    {
+      throw new IllegalArgumentException(degrees + DEGREES + " is out of range");
+    }
   }
 
   @Override

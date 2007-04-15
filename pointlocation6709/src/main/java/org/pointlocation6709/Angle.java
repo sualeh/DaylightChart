@@ -32,6 +32,8 @@ public class Angle
   implements Serializable, Comparable<Angle>
 {
 
+  protected static final char DEGREES = '\u00B0';
+
   /** Angle fields. */
   public enum Field
   {
@@ -265,11 +267,11 @@ public class Angle
     final int absIntMinutes = Math.abs(getField(Field.MINUTES));
     final int absIntSeconds = Math.abs(getField(Field.SECONDS));
 
-    representation.append(absIntDegrees).append("°").append(" ").append(Math
-      .abs(absIntMinutes)).append("'");
+    representation.append(absIntDegrees).append(DEGREES).append(" ")
+      .append(Math.abs(absIntMinutes)).append("'");
     if (absIntSeconds > 0)
     {
-      representation.append(" ").append(absIntSeconds).append("\"");
+      representation.append(" ").append(absIntSeconds).append('"');
     }
     if (direction == null)
     {
@@ -295,21 +297,6 @@ public class Angle
   protected String getDirection()
   {
     return null;
-  }
-
-  /**
-   * Validates the angle.
-   * 
-   * @param degreesRange
-   *        The +/- range to validate.
-   */
-  protected final void validateDegreesRange(final int degreesRange)
-  {
-    if (Math.abs(getDegrees()) > degreesRange)
-    {
-      throw new IllegalArgumentException("Validation error: " + radians
-                                         + " radians");
-    }
   }
 
 }

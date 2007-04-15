@@ -447,4 +447,98 @@ public class TestPointLocation
     PointLocationParser.parsePointLocation("+40121-075001/");
   }
 
+  @Test
+  public void pointLocationBoundary_1()
+    throws ParserException
+  {
+
+    final String pointLocationString = "+40-180/";
+    final PointLocation pointLocation = PointLocationParser
+      .parsePointLocation(pointLocationString);
+    final String formattedPointLocationString1 = PointLocationFormatter
+      .formatIso6709(pointLocation);
+    final String formattedPointLocationString2 = PointLocationFormatter
+      .formatIso6709WithDecimals(pointLocation);
+
+    assertEquals(40, pointLocation.getLatitude().getField(Angle.Field.DEGREES));
+    assertEquals(0, pointLocation.getLatitude().getField(Angle.Field.MINUTES));
+    assertEquals(0, pointLocation.getLatitude().getField(Angle.Field.SECONDS));
+
+    assertEquals(-180, pointLocation.getLongitude()
+      .getField(Angle.Field.DEGREES));
+    assertEquals(0, pointLocation.getLongitude().getField(Angle.Field.MINUTES));
+    assertEquals(0, pointLocation.getLongitude().getField(Angle.Field.SECONDS));
+
+    assertEquals(0D, pointLocation.getAltitude());
+
+    assertEquals("+400000-1800000/", formattedPointLocationString1);
+    assertEquals("+40.0-180.0/", formattedPointLocationString2);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void pointLocationBoundary_2()
+    throws ParserException
+  {
+
+    final String pointLocationString = "+40+180/";
+    final PointLocation pointLocation = PointLocationParser
+      .parsePointLocation(pointLocationString);
+  }
+  
+  @Test
+  public void pointLocationBoundary_3()
+    throws ParserException
+  {
+
+    final String pointLocationString = "+90-075/";
+    final PointLocation pointLocation = PointLocationParser
+      .parsePointLocation(pointLocationString);
+    final String formattedPointLocationString1 = PointLocationFormatter
+      .formatIso6709(pointLocation);
+    final String formattedPointLocationString2 = PointLocationFormatter
+      .formatIso6709WithDecimals(pointLocation);
+
+    assertEquals(90, pointLocation.getLatitude().getField(Angle.Field.DEGREES));
+    assertEquals(0, pointLocation.getLatitude().getField(Angle.Field.MINUTES));
+    assertEquals(0, pointLocation.getLatitude().getField(Angle.Field.SECONDS));
+
+    assertEquals(-75, pointLocation.getLongitude()
+      .getField(Angle.Field.DEGREES));
+    assertEquals(0, pointLocation.getLongitude().getField(Angle.Field.MINUTES));
+    assertEquals(0, pointLocation.getLongitude().getField(Angle.Field.SECONDS));
+
+    assertEquals(0D, pointLocation.getAltitude());
+
+    assertEquals("+900000-0750000/", formattedPointLocationString1);
+    assertEquals("+90.0-075.0/", formattedPointLocationString2);
+  }
+  
+  @Test
+  public void pointLocationBoundary_4()
+    throws ParserException
+  {
+
+    final String pointLocationString = "-90-075/";
+    final PointLocation pointLocation = PointLocationParser
+      .parsePointLocation(pointLocationString);
+    final String formattedPointLocationString1 = PointLocationFormatter
+      .formatIso6709(pointLocation);
+    final String formattedPointLocationString2 = PointLocationFormatter
+      .formatIso6709WithDecimals(pointLocation);
+
+    assertEquals(-90, pointLocation.getLatitude().getField(Angle.Field.DEGREES));
+    assertEquals(0, pointLocation.getLatitude().getField(Angle.Field.MINUTES));
+    assertEquals(0, pointLocation.getLatitude().getField(Angle.Field.SECONDS));
+
+    assertEquals(-75, pointLocation.getLongitude()
+      .getField(Angle.Field.DEGREES));
+    assertEquals(0, pointLocation.getLongitude().getField(Angle.Field.MINUTES));
+    assertEquals(0, pointLocation.getLongitude().getField(Angle.Field.SECONDS));
+
+    assertEquals(0D, pointLocation.getAltitude());
+
+    assertEquals("-900000-0750000/", formattedPointLocationString1);
+    assertEquals("-90.0-075.0/", formattedPointLocationString2);
+  }
+  
 }
