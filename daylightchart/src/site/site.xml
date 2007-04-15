@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<project name="DaylightChart">
+<project name="Daylight Chart">
   <bannerLeft>
     <name>SourceForge</name>
     <src>
@@ -25,11 +25,11 @@
         name="About Daylight Chart"
         href="index.html" />
       <item
+        name="About Point Location 6709"
+        href="http://daylightchart.sourceforge.net/pointlocation6709/index.html" />
+      <item
         name="Readme"
         href="readme.html" />
-      <item
-        name="FAQS"
-        href="faq.html" />
       <item
         name="Donations"
         href="http://sourceforge.net/donate/index.php?group_id=193171" />
