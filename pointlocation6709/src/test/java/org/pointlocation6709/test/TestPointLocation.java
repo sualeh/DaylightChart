@@ -59,7 +59,7 @@ public class TestPointLocation
 
     assertEquals(0D, pointLocation.getAltitude());
 
-    assertEquals("+40-075/", formattedPointLocationString1);
+    assertEquals("+400000-0750000/", formattedPointLocationString1);
     assertEquals("+40.0-075.0/", formattedPointLocationString2);
   }
 
@@ -116,7 +116,7 @@ public class TestPointLocation
 
     assertEquals(0D, pointLocation.getAltitude());
 
-    assertEquals("+4012-075/", formattedPointLocationString1);
+    assertEquals("+401200-0750000/", formattedPointLocationString1);
     assertEquals("+40.2-075.0/", formattedPointLocationString2);
   }
 
@@ -231,7 +231,7 @@ public class TestPointLocation
 
     assertEquals(350D, pointLocation.getAltitude());
 
-    assertEquals("+40-075+350.0/", formattedPointLocationString1);
+    assertEquals("+400000-0750000+350.0/", formattedPointLocationString1);
     assertEquals("+40.0-075.0+350.0/", formattedPointLocationString2);
   }
 
@@ -288,7 +288,7 @@ public class TestPointLocation
 
     assertEquals(-169.2, pointLocation.getAltitude());
 
-    assertEquals("+4012-075-169.2/", formattedPointLocationString1);
+    assertEquals("+401200-0750000-169.2/", formattedPointLocationString1);
     assertEquals("+40.2-075.0-169.2/", formattedPointLocationString2);
   }
 
@@ -385,7 +385,8 @@ public class TestPointLocation
   {
 
     final String pointLocationString = "+4060-07560/";
-    PointLocationParser.parsePointLocation(pointLocationString);
+    final PointLocation pointLocation = PointLocationParser
+      .parsePointLocation(pointLocationString);
   }
 
   @Test(expected = ParserException.class)
@@ -394,7 +395,8 @@ public class TestPointLocation
   {
 
     final String pointLocationString = "+4060.22-07560.25/";
-    PointLocationParser.parsePointLocation(pointLocationString);
+    final PointLocation pointLocation = PointLocationParser
+      .parsePointLocation(pointLocationString);
   }
 
   @Test(expected = ParserException.class)
@@ -403,7 +405,8 @@ public class TestPointLocation
   {
 
     final String pointLocationString = "+401260-0750060/";
-    PointLocationParser.parsePointLocation(pointLocationString);
+    final PointLocation pointLocation = PointLocationParser
+      .parsePointLocation(pointLocationString);
   }
 
   @Test(expected = ParserException.class)
@@ -412,7 +415,8 @@ public class TestPointLocation
   {
 
     final String pointLocationString = "+401260.22-0750060.22/";
-    PointLocationParser.parsePointLocation(pointLocationString);
+    final PointLocation pointLocation = PointLocationParser
+      .parsePointLocation(pointLocationString);
   }
 
   @Test(expected = ParserException.class)
