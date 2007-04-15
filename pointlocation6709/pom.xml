@@ -9,7 +9,7 @@
   <groupId>pointlocation6709</groupId>
   <artifactId>pointlocation6709</artifactId>
   <name>Point Location 6709</name>
-  <description>Support for ISO 6709:1983.</description>
+  <description>Point Location 6709 is an LGPL licensed Java library for parsing and formatting geographic point locations in ISO 6909:1983 format. </description>
   <licenses>
     <license>
       <name>GNU Lesser General Public License</name>

@@ -130,8 +130,15 @@ public final class PointLocationFormatter
     final int absMinutes = Math.abs(angle.getField(Angle.Field.MINUTES));
     final int absSeconds = Math.abs(angle.getField(Angle.Field.SECONDS));
 
-    NumberFormat integerFormat = getIntegerFormat(2);
+    final NumberFormat integerFormat = getIntegerFormat(2);
     return integerFormat.format(absMinutes) + integerFormat.format(absSeconds);
+  }
+
+  private static NumberFormat getIntegerFormat(final int integerDigits)
+  {
+    final NumberFormat numberFormat = NumberFormat.getIntegerInstance();
+    numberFormat.setMinimumIntegerDigits(integerDigits);
+    return numberFormat;
   }
 
   private static NumberFormat getNumberFormat(final int integerDigits)
@@ -140,13 +147,6 @@ public final class PointLocationFormatter
     numberFormat.setMinimumIntegerDigits(integerDigits);
     numberFormat.setMinimumFractionDigits(1);
     numberFormat.setMaximumFractionDigits(5);
-    return numberFormat;
-  }
-
-  private static NumberFormat getIntegerFormat(final int integerDigits)
-  {
-    final NumberFormat numberFormat = NumberFormat.getIntegerInstance();
-    numberFormat.setMinimumIntegerDigits(integerDigits);
     return numberFormat;
   }
 

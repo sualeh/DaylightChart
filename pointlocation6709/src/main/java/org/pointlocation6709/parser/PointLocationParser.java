@@ -43,6 +43,7 @@ public final class PointLocationParser
    *        String representation of the point location
    * @return Point location
    * @throws ParserException
+   *         On an exception
    */
   public static PointLocation parsePointLocation(final String representation)
     throws ParserException

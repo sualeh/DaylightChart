@@ -20,7 +20,6 @@
 package org.pointlocation6709;
 
 
-
 /**
  * Utility class.
  * 
@@ -37,7 +36,7 @@ public final class Utility
    *        Value to split
    * @return Split parts
    */
-  public static int[] sexagesimalSplit(double value)
+  public static int[] sexagesimalSplit(final double value)
   {
 
     final double absValue;
