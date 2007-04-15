@@ -26,10 +26,10 @@
     <section name="Building From the Source Code">
       <subsection name="Maven Build">
         <p>
-          Point Location 6709 uses Maven 2 to build, run unit
+          Point Location 6709 uses Maven 2.0 to build, run unit
           tests, and create the project web-site. Download
-          <a href="http://maven.apache.org/">Maven 2.0</a>
-          .
+          <a href="http://maven.apache.org/">Maven 2.0</a>,
+          and run <code>mvn compile</code> to build the library.
         </p>
       </subsection>
       <subsection name="Eclipse">
@@ -38,7 +38,7 @@
           you have a successful Maven build. Maven will download all the
           dependencies needed to build Point Location 6709. You will need to define
           one Eclipse Java Classpath Variable,
-          <code>MAVEN_REPO</code>
+          <code>M2_REPO</code>
           to point to the Maven 2.0 repository.
         </p>
       </subsection>
