@@ -59,7 +59,7 @@ public class TestPointLocation
 
     assertEquals(0D, pointLocation.getAltitude());
 
-    assertEquals("+400000-0750000/", formattedPointLocationString1);
+    assertEquals("+40-075/", formattedPointLocationString1);
     assertEquals("+40.0-075.0/", formattedPointLocationString2);
   }
 
@@ -116,7 +116,7 @@ public class TestPointLocation
 
     assertEquals(0D, pointLocation.getAltitude());
 
-    assertEquals("+401200-0750000/", formattedPointLocationString1);
+    assertEquals("+4012-075/", formattedPointLocationString1);
     assertEquals("+40.2-075.0/", formattedPointLocationString2);
   }
 
@@ -231,7 +231,7 @@ public class TestPointLocation
 
     assertEquals(350D, pointLocation.getAltitude());
 
-    assertEquals("+400000-0750000+350.0/", formattedPointLocationString1);
+    assertEquals("+40-075+350.0/", formattedPointLocationString1);
     assertEquals("+40.0-075.0+350.0/", formattedPointLocationString2);
   }
 
@@ -288,7 +288,7 @@ public class TestPointLocation
 
     assertEquals(-169.2, pointLocation.getAltitude());
 
-    assertEquals("+401200-0750000-169.2/", formattedPointLocationString1);
+    assertEquals("+4012-075-169.2/", formattedPointLocationString1);
     assertEquals("+40.2-075.0-169.2/", formattedPointLocationString2);
   }
 

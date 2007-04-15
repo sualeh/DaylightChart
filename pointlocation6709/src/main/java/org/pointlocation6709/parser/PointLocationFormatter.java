@@ -129,9 +129,19 @@ public final class PointLocationFormatter
   {
     final int absMinutes = Math.abs(angle.getField(Angle.Field.MINUTES));
     final int absSeconds = Math.abs(angle.getField(Angle.Field.SECONDS));
+    if (absMinutes == 0 && absSeconds == 0)
+    {
+      return "";
+    }
 
     NumberFormat integerFormat = getIntegerFormat(2);
-    return integerFormat.format(absMinutes) + integerFormat.format(absSeconds);
+    String string = integerFormat.format(absMinutes);
+    if (absSeconds > 0)
+    {
+      string = string + integerFormat.format(absSeconds);
+    }
+
+    return string;
   }
 
   private static NumberFormat getNumberFormat(final int integerDigits)
