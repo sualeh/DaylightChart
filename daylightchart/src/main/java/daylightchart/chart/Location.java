@@ -25,7 +25,10 @@ package daylightchart.chart;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.TimeZone;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+import org.pointlocation6709.Longitude;
 import org.pointlocation6709.PointLocation;
 
 /**
@@ -40,6 +43,9 @@ public final class Location
 {
 
   private static final long serialVersionUID = 7929385835483597186L;
+
+  private static final Logger LOGGER = Logger.getLogger(Location.class
+    .getName());
 
   private final String city;
   private final String country;
@@ -247,27 +253,22 @@ public final class Location
 
   private void validateTimeZone()
   {
-    final String[] ignoreTzIds = new String[] {
-      "IST"
-    };
     final TimeZone timeZone = getTimeZone();
-    if (Arrays.asList(ignoreTzIds).contains(timeZone.getID()))
+    final Longitude longitude = getPointLocation().getLongitude();
+
+    final double tzOffsetHours = timeZone.getRawOffset() / (1000D * 60D * 60D);
+    final double longitiudeTzOffsetHours = longitude.getDegrees() / 15D;
+    final double hoursDifference = Math.abs(longitiudeTzOffsetHours
+                                            - tzOffsetHours);
+    // The tolerance band is a half hour on each side of the time zone,
+    // plus 10 minutes
+    final double toleranceBand = 0.5 + 0.17;
+    if (!(hoursDifference <= toleranceBand))
     {
-      return;
-    }
-    final int rawOffset = timeZone.getRawOffset();
-    final double tzOffsetHours = rawOffset / (1000D * 60D * 60D);
-    final double longitiudeTzOffsetHours = getPointLocation().getLongitude()
-      .getDegrees() / 15D;
-    boolean longitudeInTz = Math.abs(longitiudeTzOffsetHours - tzOffsetHours) <= 0.5;
-    if (!longitudeInTz)
-    {
-      System.err
-        .println
-        /* throw new IllegalStateException */("Longitude and timezones "
-                                               + "do not match for "
-                                               + toString());
+      LOGGER.log(Level.INFO, toString() + ": Longitude (" + longitude
+                             + ") and timezone (" + timeZone.getDisplayName()
+                             + ") do not match (difference " + hoursDifference
+                             + " hours)");
     }
   }
-
 }
