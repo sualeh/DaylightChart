@@ -73,25 +73,16 @@
             <id>assembly</id>
             <phase>package</phase>
             <goals>
-              <goal>assembly</goal>
+              <goal>attached</goal>
             </goals>
             <configuration>
-              <archive>
-                <index>true</index>
-                <manifest>
-                  <mainClass>daylightchart.Main</mainClass>
-                  <addClasspath>true</addClasspath>
-                </manifest>
-                <manifestEntries>
-                  <Project>${project.name}, ${project.version}</Project>
-                  <Author>Sualeh Fatehi, sualeh@hotmail.com</Author>
-                </manifestEntries>
-              </archive>
               <descriptorRefs>
                 <descriptorRef>src</descriptorRef>
                 <descriptorRef>bin</descriptorRef>
-                <descriptorRef>jar-with-dependencies</descriptorRef>
               </descriptorRefs>
+              <descriptors>
+                <descriptor>src/assemble/distrib-zip.xml</descriptor>
+              </descriptors>
             </configuration>
           </execution>
         </executions>
