@@ -12,5 +12,6 @@
 	<classpathentry kind="var" path="M2_REPO/junit/junit/4.2/junit-4.2.jar"/>
 	<classpathentry kind="var" path="M2_REPO/joda-time/joda-time/1.4/joda-time-1.4.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/Point Location 6709"/>
+	<classpathentry kind="var" path="M2_REPO/com/jgoodies/looks/2.1.2/looks-2.1.2.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

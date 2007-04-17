@@ -26,8 +26,6 @@ import java.awt.CheckboxMenuItem;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Menu;
-import java.awt.MenuBar;
 import java.awt.MenuItem;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -42,9 +40,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.BorderFactory;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JList;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
@@ -86,16 +88,9 @@ public final class DaylightChartGui
   public DaylightChartGui()
   {
     setTitle("Daylight Chart"); //$NON-NLS-1$
-    addWindowListener(new WindowAdapter()
-    {
-      @Override
-      public void windowClosing(final WindowEvent event)
-      {
-        exit();
-      }
-    });
+    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-    setMenuBar(createMenuBar());
+    setJMenuBar(createMenuBar());
 
     final Font font = new Font("Sans-serif", Font.PLAIN, 11); //$NON-NLS-1$
 
@@ -126,7 +121,7 @@ public final class DaylightChartGui
     chartPanel = new ChartPanel(null);
     chartPanel.setBackground(Color.WHITE);
     chartPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-    chartPanel.setPreferredSize(new Dimension(700, 500));
+    chartPanel.setPreferredSize(new Dimension(700, 495));
 
     final JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
                                                 new JScrollPane(listBox),
@@ -137,12 +132,12 @@ public final class DaylightChartGui
     pack();
   }
 
-  private Menu createFileMenu()
+  private JMenu createFileMenu()
   {
-    final Menu menuFile = new Menu(Messages
+    final JMenu menuFile = new JMenu(Messages
       .getString("DaylightChartGui.Menu.File")); //$NON-NLS-1$
 
-    final MenuItem saveLocations = new MenuItem(Messages
+    final JMenuItem saveLocations = new JMenuItem(Messages
       .getString("DaylightChartGui.Menu.File.SaveLocations")); //$NON-NLS-1$
     saveLocations.addActionListener(new ActionListener()
     {
@@ -152,7 +147,7 @@ public final class DaylightChartGui
       }
     });
     menuFile.add(saveLocations);
-    final MenuItem loadLocations = new MenuItem(Messages
+    final JMenuItem loadLocations = new JMenuItem(Messages
       .getString("DaylightChartGui.Menu.File.LoadLocations")); //$NON-NLS-1$
     loadLocations.addActionListener(new ActionListener()
     {
@@ -163,7 +158,7 @@ public final class DaylightChartGui
     });
     menuFile.add(loadLocations);
     menuFile.addSeparator();
-    final MenuItem saveImage = new MenuItem(Messages
+    final JMenuItem saveImage = new JMenuItem(Messages
       .getString("DaylightChartGui.Menu.File.SaveChart")); //$NON-NLS-1$
     saveImage.addActionListener(new ActionListener()
     {
@@ -181,7 +176,7 @@ public final class DaylightChartGui
       }
     });
     menuFile.add(saveImage);
-    final MenuItem print = new MenuItem(Messages
+    final JMenuItem print = new JMenuItem(Messages
       .getString("DaylightChartGui.Menu.File.PrintChart")); //$NON-NLS-1$
     print.addActionListener(new ActionListener()
     {
@@ -192,7 +187,7 @@ public final class DaylightChartGui
     });
     menuFile.add(print);
     menuFile.addSeparator();
-    final MenuItem exit = new MenuItem(Messages
+    final JMenuItem exit = new JMenuItem(Messages
       .getString("DaylightChartGui.Menu.File.Exit")); //$NON-NLS-1$
     exit.addActionListener(new ActionListener()
     {
@@ -205,12 +200,12 @@ public final class DaylightChartGui
     return menuFile;
   }
 
-  private Menu createHelpMenu()
+  private JMenu createHelpMenu()
   {
-    final Menu menuHelp = new Menu(Messages
+    final JMenu menuHelp = new JMenu(Messages
       .getString("DaylightChartGui.Menu.Help")); //$NON-NLS-1$
 
-    final MenuItem about = new MenuItem(Messages
+    final JMenuItem about = new JMenuItem(Messages
       .getString("DaylightChartGui.Menu.Help.About")); //$NON-NLS-1$
     about.addActionListener(new ActionListener()
     {
@@ -224,32 +219,32 @@ public final class DaylightChartGui
     return menuHelp;
   }
 
-  private MenuBar createMenuBar()
+  private JMenuBar createMenuBar()
   {
-    final MenuBar menu = new MenuBar();
+    final JMenuBar menu = new JMenuBar();
     menu.add(createFileMenu());
     menu.add(createOptionsMenu());
     menu.add(createHelpMenu());
     return menu;
   }
 
-  private Menu createOptionsMenu()
+  private JMenu createOptionsMenu()
   {
 
-    final Menu menuOptions = new Menu(Messages
+    final JMenu menuOptions = new JMenu(Messages
       .getString("DaylightChartGui.Menu.Options")); //$NON-NLS-1$
 
-    final CheckboxMenuItem sortByName = new CheckboxMenuItem(Messages
+    final JCheckBoxMenuItem sortByName = new JCheckBoxMenuItem(Messages
       .getString("DaylightChartGui.Menu.Options.SortByName"), //$NON-NLS-1$
-                                                             true);
-    final CheckboxMenuItem sortByLatitude = new CheckboxMenuItem(Messages
+                                                               true);
+    final JCheckBoxMenuItem sortByLatitude = new JCheckBoxMenuItem(Messages
       .getString("DaylightChartGui.Menu.Options.SortByLatitude"), //$NON-NLS-1$
-                                                                 false);
+                                                                   false);
 
-    final MenuItem chartOptionsMenuItem = new MenuItem(Messages
+    final JMenuItem chartOptionsMenuItem = new JMenuItem(Messages
       .getString("DaylightChartGui.Menu.Options.ChartOptions")); //$NON-NLS-1$
 
-    final MenuItem resetAll = new MenuItem(Messages
+    final JMenuItem resetAll = new JMenuItem(Messages
       .getString("DaylightChartGui.Menu.Options.ResetAll")); //$NON-NLS-1$
 
     menuOptions.add(sortByName);

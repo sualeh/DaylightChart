@@ -22,6 +22,17 @@
 package daylightchart;
 
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import javax.swing.JFrame;
+import javax.swing.UIManager;
+
+import com.jgoodies.looks.Options;
+import com.jgoodies.looks.plastic.Plastic3DLookAndFeel;
+import com.jgoodies.looks.plastic.PlasticLookAndFeel;
+import com.jgoodies.looks.plastic.theme.ExperienceRoyale;
+
 import daylightchart.gui.DaylightChartGui;
 
 /**
@@ -32,14 +43,28 @@ import daylightchart.gui.DaylightChartGui;
 public final class Main
 {
 
+  private static final Logger LOGGER = Logger.getLogger(Main.class.getName());
+
   /**
    * Main window.
    * 
    * @param args
-   *        Arguments 
+   *        Arguments
    */
   public static void main(final String[] args)
   {
+
+    try
+    {
+      JFrame.setDefaultLookAndFeelDecorated(true);
+      PlasticLookAndFeel.setPlasticTheme(new ExperienceRoyale());
+      UIManager.setLookAndFeel(new Plastic3DLookAndFeel());
+    }
+    catch (Exception e)
+    {
+      LOGGER.log(Level.WARNING, "Cannot set look and feel");
+    }
+
     new DaylightChartGui().setVisible(true);
   }
 
