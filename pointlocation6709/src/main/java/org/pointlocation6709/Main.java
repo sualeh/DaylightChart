@@ -25,7 +25,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Date;
 
+import org.pointlocation6709.parser.FormatterException;
 import org.pointlocation6709.parser.ParserException;
+import org.pointlocation6709.parser.PointLocationFormatType;
 import org.pointlocation6709.parser.PointLocationFormatter;
 import org.pointlocation6709.parser.PointLocationParser;
 
@@ -67,9 +69,14 @@ public final class Main
         final PointLocation pointLocation = PointLocationParser
           .parsePointLocation(inputLine);
         System.out.println(pointLocation);
-        System.out.println(PointLocationFormatter.formatIso6709(pointLocation));
+        System.out.println(PointLocationFormatter
+          .formatIso6709(pointLocation, PointLocationFormatType.MEDIUM));
       }
       catch (final ParserException e)
+      {
+        System.err.println(e.getMessage());
+      }
+      catch (FormatterException e)
       {
         System.err.println(e.getMessage());
       }

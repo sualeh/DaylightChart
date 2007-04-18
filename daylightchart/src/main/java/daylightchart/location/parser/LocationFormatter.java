@@ -27,6 +27,8 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.util.List;
 
+import org.pointlocation6709.parser.FormatterException;
+import org.pointlocation6709.parser.PointLocationFormatType;
 import org.pointlocation6709.parser.PointLocationFormatter;
 
 import daylightchart.location.Country;
@@ -46,19 +48,29 @@ public final class LocationFormatter
    * @param location
    *        Location to format
    * @return Formated string.
+   * @throws daylightchart.location.parser.FormatterException
    */
   public static String formatLocation(final Location location)
+    throws daylightchart.location.parser.FormatterException
   {
-    final String coordinatesString = PointLocationFormatter
-      .formatIso6709(location.getPointLocation());
+    String coordinatesString;
+    try
+    {
+      coordinatesString = PointLocationFormatter.formatIso6709(location
+        .getPointLocation(), PointLocationFormatType.MEDIUM);
+    }
+    catch (FormatterException e)
+    {
+      throw new daylightchart.location.parser.FormatterException(e);
+    }
     final String tzId = location.getTimeZone().getID();
 
     final String city = location.getCity();
     final Country country = location.getCountry();
 
     final StringBuffer representation = new StringBuffer().append(city)
-      .append(";").append(country.getIso3166CountryCode2()).append(";").append(tzId).append(";")
-      .append(coordinatesString);
+      .append(";").append(country.getIso3166CountryCode2()).append(";")
+      .append(tzId).append(";").append(coordinatesString);
     return new String(representation);
   }
 
@@ -68,18 +80,13 @@ public final class LocationFormatter
    * @param locations
    *        Locations to format
    * @return String
+   * @throws daylightchart.location.parser.FormatterException
    */
   public static String formatLocations(final List<Location> locations)
+    throws daylightchart.location.parser.FormatterException
   {
     final StringWriter writer = new StringWriter();
-    try
-    {
-      formatLocations(locations, writer);
-    }
-    catch (final IOException e)
-    {
-      // Ignore
-    }
+    formatLocations(locations, writer);
     return writer.toString();
   }
 
@@ -90,25 +97,33 @@ public final class LocationFormatter
    *        Locations to write.
    * @param writer
    *        Writer to write to.
+   * @throws daylightchart.location.parser.FormatterException
    * @throws IOException
    *         On an exception.
    */
   public static void formatLocations(final List<Location> locations,
                                      final Writer writer)
-    throws IOException
+    throws daylightchart.location.parser.FormatterException
   {
     if (locations == null || writer == null)
     {
       return;
     }
-    
-    final String line_separator = System.getProperty("line.separator", "\n");
-    for (final Location location: locations)
+
+    try
     {
-      writer.write(formatLocation(location) + line_separator);
+      final String line_separator = System.getProperty("line.separator", "\n");
+      for (final Location location: locations)
+      {
+        writer.write(formatLocation(location) + line_separator);
+      }
+      writer.flush();
+      writer.close();
     }
-    writer.flush();
-    writer.close();
+    catch (IOException e)
+    {
+      throw new daylightchart.location.parser.FormatterException(e);
+    }
   }
 
   /**

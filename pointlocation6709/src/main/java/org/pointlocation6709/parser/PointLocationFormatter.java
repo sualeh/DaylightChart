@@ -40,16 +40,104 @@ public final class PointLocationFormatter
    * 
    * @param pointLocation
    *        Point location to format
+   * @param formatType
+   *        Format type
    * @return Formatted string
    */
-  public static String formatIso6709(final PointLocation pointLocation)
+  public static String formatIso6709(final PointLocation pointLocation,
+                                     final PointLocationFormatType formatType)
+    throws FormatterException
+  {
+    if (pointLocation == null)
+    {
+      throw new FormatterException("No point location provided");
+    }
+    if (formatType == null)
+    {
+      throw new FormatterException("No format type provided");
+    }
+
+    String formattedPointLocation = "";
+    switch (formatType)
+    {
+      case DECIMAL:
+        formattedPointLocation = formatIso6709WithDecimals(pointLocation);
+        break;
+      case LONG:
+        formattedPointLocation = formatIso6709Long(pointLocation);
+        break;
+      case MEDIUM:
+        formattedPointLocation = formatIso6709Medium(pointLocation);
+        break;
+      case SHORT:
+        formattedPointLocation = formatIso6709Short(pointLocation);
+        break;
+      default:
+        throw new FormatterException("Unsupported format type");
+    }
+    return formattedPointLocation;
+
+  }
+
+  /**
+   * Formats a point location as an ISO 6709:1983 string.
+   * 
+   * @param pointLocation
+   *        Point location to format
+   * @return Formatted string
+   */
+  private static String formatIso6709Long(final PointLocation pointLocation)
   {
     final Latitude latitude = pointLocation.getLatitude();
     final Longitude longitude = pointLocation.getLongitude();
     String string = formatIntegerDegreesString(latitude)
-                    + formatSexagesimalMinutesString(latitude)
+                    + formatSexagesimalMinutesStringLong(latitude)
                     + formatIntegerDegreesString(longitude)
-                    + formatSexagesimalMinutesString(longitude);
+                    + formatSexagesimalMinutesStringLong(longitude);
+    final double altitude = pointLocation.getAltitude();
+    if (altitude != 0)
+    {
+      string = string + formatDoubleWithSign(altitude);
+    }
+    return string + "/";
+  }
+
+  /**
+   * Formats a point location as an ISO 6709:1983 string.
+   * 
+   * @param pointLocation
+   *        Point location to format
+   * @return Formatted string
+   */
+  private static String formatIso6709Medium(final PointLocation pointLocation)
+  {
+    final Latitude latitude = pointLocation.getLatitude();
+    final Longitude longitude = pointLocation.getLongitude();
+    String string = formatIntegerDegreesString(latitude)
+                    + formatSexagesimalMinutesStringMedium(latitude)
+                    + formatIntegerDegreesString(longitude)
+                    + formatSexagesimalMinutesStringMedium(longitude);
+    final double altitude = pointLocation.getAltitude();
+    if (altitude != 0)
+    {
+      string = string + formatDoubleWithSign(altitude);
+    }
+    return string + "/";
+  }
+
+  /**
+   * Formats a point location as an ISO 6709:1983 string.
+   * 
+   * @param pointLocation
+   *        Point location to format
+   * @return Formatted string
+   */
+  private static String formatIso6709Short(final PointLocation pointLocation)
+  {
+    final Latitude latitude = pointLocation.getLatitude();
+    final Longitude longitude = pointLocation.getLongitude();
+    String string = formatIntegerDegreesString(latitude)
+                    + formatIntegerDegreesString(longitude);
     final double altitude = pointLocation.getAltitude();
     if (altitude != 0)
     {
@@ -66,7 +154,7 @@ public final class PointLocationFormatter
    *        Point location to format
    * @return Formatted string
    */
-  public static String formatIso6709WithDecimals(final PointLocation pointLocation)
+  private static String formatIso6709WithDecimals(final PointLocation pointLocation)
   {
     final Latitude latitude = pointLocation.getLatitude();
     final Longitude longitude = pointLocation.getLongitude();
@@ -125,13 +213,26 @@ public final class PointLocationFormatter
     return sign + degrees;
   }
 
-  private static String formatSexagesimalMinutesString(final Angle angle)
+  private static String formatSexagesimalMinutesStringLong(final Angle angle)
   {
     final int absMinutes = Math.abs(angle.getField(Angle.Field.MINUTES));
     final int absSeconds = Math.abs(angle.getField(Angle.Field.SECONDS));
 
     final NumberFormat integerFormat = getIntegerFormat(2);
     return integerFormat.format(absMinutes) + integerFormat.format(absSeconds);
+  }
+
+  private static String formatSexagesimalMinutesStringMedium(final Angle angle)
+  {
+    int absMinutes = Math.abs(angle.getField(Angle.Field.MINUTES));
+    final int absSeconds = Math.abs(angle.getField(Angle.Field.SECONDS));
+    if (absSeconds >= 30)
+    {
+      absMinutes = absMinutes + 1;
+    }
+
+    final NumberFormat integerFormat = getIntegerFormat(2);
+    return integerFormat.format(absMinutes);
   }
 
   private static NumberFormat getIntegerFormat(final int integerDigits)

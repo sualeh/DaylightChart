@@ -31,6 +31,7 @@ import java.util.List;
 import org.junit.Test;
 
 import daylightchart.location.Location;
+import daylightchart.location.parser.FormatterException;
 import daylightchart.location.parser.LocationFormatter;
 import daylightchart.location.parser.LocationParser;
 import daylightchart.location.parser.ParserException;
@@ -43,7 +44,7 @@ public class TestLocation
 
   @Test
   public void location()
-    throws ParserException
+    throws ParserException, FormatterException
   {
 
     final String locationString = "Aberdeen;GB;Europe/London;+571000-0020400/";

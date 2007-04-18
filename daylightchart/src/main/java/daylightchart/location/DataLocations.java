@@ -38,6 +38,7 @@ import java.util.List;
 import org.pointlocation6709.Latitude;
 
 import daylightchart.UserPreferences;
+import daylightchart.location.parser.FormatterException;
 import daylightchart.location.parser.LocationFormatter;
 import daylightchart.location.parser.LocationParser;
 import daylightchart.location.parser.ParserException;
@@ -154,13 +155,22 @@ public final class DataLocations
    * 
    * @param dataFile
    *        File to write to.
-   * @throws IOException
+   * @throws FormatterException
+   * @throws FormatterException
    *         On an exception.
    */
   public void writeDataToFile(final File dataFile)
-    throws IOException
+    throws FormatterException
   {
-    final BufferedWriter writer = new BufferedWriter(new FileWriter(dataFile));
+    BufferedWriter writer;
+    try
+    {
+      writer = new BufferedWriter(new FileWriter(dataFile));
+    }
+    catch (IOException e)
+    {
+      throw new FormatterException(e);
+    }
     LocationFormatter.formatLocations(locations, writer);
   }
 

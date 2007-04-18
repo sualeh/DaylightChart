@@ -17,6 +17,7 @@ import java.util.prefs.Preferences;
 import daylightchart.chart.DaylightChart;
 import daylightchart.gui.options.ChartOptions;
 import daylightchart.location.Location;
+import daylightchart.location.parser.FormatterException;
 import daylightchart.location.parser.LocationFormatter;
 import daylightchart.location.parser.LocationParser;
 import daylightchart.location.parser.ParserException;
@@ -162,8 +163,15 @@ public final class UserPreferences
    */
   public void setLocations(final List<Location> locations)
   {
-    final String locationsString = LocationFormatter.formatLocations(locations);
-    preferences.put(keyLocations, locationsString);
+    try
+    {
+      final String locationsString = LocationFormatter.formatLocations(locations);
+      preferences.put(keyLocations, locationsString);
+    }
+    catch (FormatterException e)
+    {
+      LOGGER.log(Level.WARNING, "Could not save user locations list", e);
+    }
   }
 
   void listAllPreferences()
