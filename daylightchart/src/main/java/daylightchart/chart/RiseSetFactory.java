@@ -57,7 +57,15 @@ public final class RiseSetFactory
 
     final RiseSetYear riseSetYear = new RiseSetYear(location, year);
     final List<LocalDate> yearsDates = getYearsDates(year);
-    final TimeZone tz = location.getTimeZone();
+    final TimeZone tz;
+    if (location != null)
+    {
+      tz = location.getTimeZone();
+    }
+    else
+    {
+      tz = TimeZone.getDefault();
+    }
     final boolean useDaylightTime = tz.useDaylightTime();
     boolean wasDaylightSavings = false;
     for (final LocalDate date: yearsDates)
@@ -92,12 +100,15 @@ public final class RiseSetFactory
                                     final Location location,
                                     final LocalDate date)
   {
-    sunAlgorithm.setLatitude(location.getPointLocation().getLatitude()
-      .getDegrees());
-    sunAlgorithm.setLongitude(location.getPointLocation().getLongitude()
-      .getDegrees());
-    sunAlgorithm
-      .setTimeZoneOffset(location.getTimeZone().getRawOffset() / 1000.0 / 60.0 / 60.0);
+    if (location != null)
+    {
+      sunAlgorithm.setLatitude(location.getPointLocation().getLatitude()
+        .getDegrees());
+      sunAlgorithm.setLongitude(location.getPointLocation().getLongitude()
+        .getDegrees());
+      sunAlgorithm
+        .setTimeZoneOffset(location.getTimeZone().getRawOffset() / 1000.0 / 60.0 / 60.0);
+    }
     sunAlgorithm.setYear(date.getYear());
     sunAlgorithm.setMonth(date.getMonthOfYear());
     sunAlgorithm.setDay(date.getDayOfMonth());

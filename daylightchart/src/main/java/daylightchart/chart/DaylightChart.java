@@ -268,16 +268,19 @@ public class DaylightChart
   {
     TextTitle title;
 
-    title = new TextTitle(riseSetData.getLocation().toString(),
-                          new Font("SansSerif", //$NON-NLS-1$
-                                   Font.BOLD,
-                                   14));
-    setTitle(title);
+    Location location = riseSetData.getLocation();
+    if (location != null)
+    {
+      title = new TextTitle(location.toString(), new Font("SansSerif", //$NON-NLS-1$
+                                                          Font.BOLD,
+                                                          14));
+      setTitle(title);
 
-    clearSubtitles();
-    title = new TextTitle(LocationFormatter.printLocationDetails(riseSetData
-      .getLocation()), new Font("SansSerif", Font.PLAIN, 12)); //$NON-NLS-1$
-    addSubtitle(title);
+      clearSubtitles();
+      title = new TextTitle(LocationFormatter.printLocationDetails(location),
+                            new Font("SansSerif", Font.PLAIN, 12)); //$NON-NLS-1$
+      addSubtitle(title);
+    }
   }
 
   /**

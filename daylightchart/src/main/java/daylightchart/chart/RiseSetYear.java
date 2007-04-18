@@ -31,7 +31,6 @@ import org.joda.time.LocalTime;
 
 import daylightchart.location.Location;
 
-
 /**
  * A full year's sunrise and sunset times for a location.
  * 
@@ -51,7 +50,10 @@ public class RiseSetYear
   {
     this.location = location;
     this.year = year;
-    usesDaylightTime = location.getTimeZone().useDaylightTime();
+    if (location != null)
+    {
+      usesDaylightTime = location.getTimeZone().useDaylightTime();
+    }
     riseSets = new ArrayList<RiseSet>();
   }
 
