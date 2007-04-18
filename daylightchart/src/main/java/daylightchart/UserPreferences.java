@@ -14,17 +14,12 @@ import java.util.logging.Logger;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
-import org.pointlocation6709.Angle;
-import org.pointlocation6709.Latitude;
-import org.pointlocation6709.Longitude;
-import org.pointlocation6709.PointLocation;
-
 import daylightchart.chart.DaylightChart;
-import daylightchart.chart.Location;
 import daylightchart.gui.options.ChartOptions;
-import daylightchart.locationparser.LocationFormatter;
-import daylightchart.locationparser.LocationParser;
-import daylightchart.locationparser.ParserException;
+import daylightchart.location.Location;
+import daylightchart.location.parser.LocationFormatter;
+import daylightchart.location.parser.LocationParser;
+import daylightchart.location.parser.ParserException;
 
 /**
  * User preferences for the GUI.
@@ -58,10 +53,7 @@ public final class UserPreferences
    */
   private static ChartOptions getDefaultDaylightChartOptions()
   {
-    final PointLocation pointLocation = new PointLocation(new Latitude(Angle
-      .fromDegrees(0)), new Longitude(Angle.fromDegrees(0)));
-    final Location location = new Location("", "", "", pointLocation);
-    final DaylightChart chart = new DaylightChart(location);
+    final DaylightChart chart = new DaylightChart(null);
     chart.setTitle("");
 
     final ChartOptions chartOptions = new ChartOptions();
