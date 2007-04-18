@@ -47,7 +47,7 @@ public class TestLocation
     throws ParserException, FormatterException
   {
 
-    final String locationString = "Aberdeen;GB;Europe/London;+571000-0020400/";
+    final String locationString = "Aberdeen;GB;Europe/London;+5710-00204/";
     final Location location = LocationParser.parseLocation(locationString);
 
     assertEquals(locationString, LocationFormatter.formatLocation(location));
