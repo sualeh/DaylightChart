@@ -59,8 +59,10 @@ import org.jfree.chart.editor.ChartEditor;
 import daylightchart.UserPreferences;
 import daylightchart.Version;
 import daylightchart.chart.DaylightChart;
-import daylightchart.chart.Location;
 import daylightchart.gui.options.ChartOptions;
+import daylightchart.location.DataLocations;
+import daylightchart.location.Location;
+import daylightchart.location.LocationsSortOrder;
 
 /**
  * Provides an GUI for daylight charts.
