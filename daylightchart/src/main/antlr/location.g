@@ -20,10 +20,10 @@ header {
   * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
   *
   */
-package daylightchart.locationparser;
+package daylightchart.location.parser;
 
 import java.util.*;
-import daylightchart.chart.*;
+import daylightchart.location.*;
 import org.pointlocation6709.*;
 import org.pointlocation6709.parser.*;
 
@@ -55,7 +55,7 @@ location
   returns [Location location = null]
   {
     String city;
-    String country;
+    Country country;
     TimeZone timeZone;
     PointLocation pointLocation;
   }
@@ -87,11 +87,11 @@ city
   ;
 
 country
-  returns [String value = ""]
+  returns [Country value = null]
   :
   text: TEXT_FIELD
   {
-    value = text.getText();
+    value = Countries.lookupCountry(text.getText());
   }
   ;
 
