@@ -56,7 +56,8 @@ import org.joda.time.LocalDateTime;
 
 import daylightchart.gui.options.ChartOptions;
 import daylightchart.gui.options.ChartOptionsListener;
-import daylightchart.locationparser.LocationFormatter;
+import daylightchart.location.Location;
+import daylightchart.location.parser.LocationFormatter;
 
 /**
  * Produces a chart of daylight times for any location.
