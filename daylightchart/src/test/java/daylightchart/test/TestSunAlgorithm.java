@@ -29,9 +29,9 @@ import org.junit.Test;
 
 import daylightchart.astronomical.SunAlgorithm;
 import daylightchart.astronomical.SunAlgorithmFactory;
-import daylightchart.chart.Location;
-import daylightchart.locationparser.LocationParser;
-import daylightchart.locationparser.ParserException;
+import daylightchart.location.Location;
+import daylightchart.location.parser.LocationParser;
+import daylightchart.location.parser.ParserException;
 
 /**
  * Location tests.
@@ -81,7 +81,7 @@ public class TestSunAlgorithm
     throws ParserException
   {
 
-    final String strLoc = "Bakersfield, CA;USA;America/Los_Angeles;+3523-11901/";
+    final String strLoc = "Bakersfield, CA;US;America/Los_Angeles;+3523-11901/";
     final Location location = LocationParser.parseLocation(strLoc);
     final double riseset[] = calcRiseSet(new LocalDate(2003, 6, 24), location);
 

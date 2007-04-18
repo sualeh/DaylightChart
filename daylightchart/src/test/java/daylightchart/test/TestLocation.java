@@ -30,10 +30,10 @@ import java.util.List;
 
 import org.junit.Test;
 
-import daylightchart.chart.Location;
-import daylightchart.locationparser.LocationFormatter;
-import daylightchart.locationparser.LocationParser;
-import daylightchart.locationparser.ParserException;
+import daylightchart.location.Location;
+import daylightchart.location.parser.LocationFormatter;
+import daylightchart.location.parser.LocationParser;
+import daylightchart.location.parser.ParserException;
 
 /**
  * Location tests.
@@ -46,7 +46,7 @@ public class TestLocation
     throws ParserException
   {
 
-    final String locationString = "Aberdeen;UK;Europe/London;+571000-0020400/";
+    final String locationString = "Aberdeen;GB;Europe/London;+571000-0020400/";
     final Location location = LocationParser.parseLocation(locationString);
 
     assertEquals(locationString, LocationFormatter.formatLocation(location));
