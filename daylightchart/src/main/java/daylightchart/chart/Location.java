@@ -30,8 +30,6 @@ import java.util.logging.Logger;
 import org.pointlocation6709.Longitude;
 import org.pointlocation6709.PointLocation;
 
-import daylightchart.locationparser.Iso3166Country;
-
 /**
  * A location object has all the information required to define a
  * location, such as the name of the city and the country, the point
@@ -49,7 +47,7 @@ public final class Location
     .getName());
 
   private final String city;
-  private final String iso3166CountryCode;
+  private final String country;
   private final PointLocation pointLocation;
   private final String tzId;
 
@@ -61,10 +59,7 @@ public final class Location
    */
   public Location(final Location location)
   {
-    this(location.city,
-         location.iso3166CountryCode,
-         location.tzId,
-         location.pointLocation);
+    this(location.city, location.country, location.tzId, location.pointLocation);
   }
 
   /**
@@ -86,22 +81,7 @@ public final class Location
   {
 
     this.city = city;
-
-    // Check if the country is valid
-    if (Iso3166Country.isCountryName(country))
-    {
-      this.iso3166CountryCode = Iso3166Country
-        .lookupIso3166CountryCode(country);
-    }
-    else
-    {
-      this.iso3166CountryCode = country;
-      if (!Iso3166Country.isIso3166CountryCode(country))
-      {
-        LOGGER.log(Level.INFO, "Country may be invalid for: " + city + ", "
-                               + country);
-      }
-    }
+    this.country = country;
 
     this.tzId = tzId;
 
@@ -168,14 +148,14 @@ public final class Location
     {
       return false;
     }
-    if (iso3166CountryCode == null)
+    if (country == null)
     {
-      if (other.iso3166CountryCode != null)
+      if (other.country != null)
       {
         return false;
       }
     }
-    else if (!iso3166CountryCode.equals(other.iso3166CountryCode))
+    else if (!country.equals(other.country))
     {
       return false;
     }
@@ -208,27 +188,8 @@ public final class Location
    * 
    * @return Country.
    */
-  public String getIso3166CountryCode()
-  {
-    return iso3166CountryCode;
-  }
-
-  /**
-   * Country.
-   * 
-   * @return Country.
-   */
   public String getCountry()
   {
-    String country;
-    if (Iso3166Country.isIso3166CountryCode(iso3166CountryCode))
-    {
-      country = Iso3166Country.lookupCountryName(iso3166CountryCode);
-    }
-    else
-    {
-      country = iso3166CountryCode;
-    }
     return country;
   }
 
@@ -265,8 +226,7 @@ public final class Location
     result = prime * result + (city == null? 0: city.hashCode());
     result = prime * result
              + (pointLocation == null? 0: pointLocation.hashCode());
-    result = prime * result
-             + (iso3166CountryCode == null? 0: iso3166CountryCode.hashCode());
+    result = prime * result + (country == null? 0: country.hashCode());
     result = prime * result + (tzId == null? 0: tzId.hashCode());
     return result;
   }
@@ -282,7 +242,12 @@ public final class Location
   @Override
   public String toString()
   {
-    return getCity() + ", " + getCountry();
+    String description = "";
+    if (city != null && country != null)
+    {
+      description = city + ", " + country;
+    }
+    return description;
   }
 
   private void validateTimeZone()

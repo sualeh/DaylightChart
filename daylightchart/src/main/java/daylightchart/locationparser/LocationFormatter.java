@@ -53,11 +53,11 @@ public final class LocationFormatter
     final String tzId = location.getTimeZone().getID();
 
     final String city = location.getCity();
-    final String iso3166CountryCode = location.getIso3166CountryCode();
+    final String country = location.getCountry();
 
     final StringBuffer representation = new StringBuffer().append(city)
-      .append(";").append(iso3166CountryCode).append(";").append(tzId)
-      .append(";").append(corordinatesString);
+      .append(";").append(country).append(";").append(tzId).append(";")
+      .append(corordinatesString);
     return new String(representation);
   }
 
@@ -100,7 +100,7 @@ public final class LocationFormatter
     {
       return;
     }
-
+    
     final String line_separator = System.getProperty("line.separator", "\n");
     for (final Location location: locations)
     {

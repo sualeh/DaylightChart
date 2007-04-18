@@ -59,9 +59,9 @@ public class TestSunAlgorithm
     throws ParserException
   {
 
-    final String strLoc = "Aberdeen;UK;Europe/London;+5710-00204/";
-    final double riseset[] = calcRiseSet(new LocalDate(2001, 12, 2), LocationParser
-      .parseLocation(strLoc));
+    final String strLoc = "Aberdeen;GB;Europe/London;+5710-00204/";
+    final Location location = LocationParser.parseLocation(strLoc);
+    final double riseset[] = calcRiseSet(new LocalDate(2001, 12, 2), location);
 
     assertEquals(8 + 24 * ONE_MINUTE, riseset[SunAlgorithm.RISE], DELTA);
     assertEquals(12 + 3 + 31 * ONE_MINUTE, riseset[SunAlgorithm.SET], DELTA);
@@ -82,8 +82,8 @@ public class TestSunAlgorithm
   {
 
     final String strLoc = "Bakersfield, CA;USA;America/Los_Angeles;+3523-11901/";
-    final double riseset[] = calcRiseSet(new LocalDate(2003, 6, 24), LocationParser
-      .parseLocation(strLoc));
+    final Location location = LocationParser.parseLocation(strLoc);
+    final double riseset[] = calcRiseSet(new LocalDate(2003, 6, 24), location);
 
     assertEquals(4 + 42 * ONE_MINUTE, riseset[SunAlgorithm.RISE], DELTA);
     assertEquals(12 + 7 + 15 * ONE_MINUTE, riseset[SunAlgorithm.SET], DELTA);
@@ -104,8 +104,8 @@ public class TestSunAlgorithm
   {
 
     final String strLoc = "Geneva;Switzerland;Europe/Zurich;+4612+00609/";
-    final double riseset[] = calcRiseSet(new LocalDate(2001, 11, 28), LocationParser
-      .parseLocation(strLoc));
+    final Location location = LocationParser.parseLocation(strLoc);
+    final double riseset[] = calcRiseSet(new LocalDate(2001, 11, 28), location);
 
     assertEquals(7 + 54 * ONE_MINUTE, riseset[SunAlgorithm.RISE], DELTA);
     assertEquals(12 + 4 + 53 * ONE_MINUTE, riseset[SunAlgorithm.SET], DELTA);
@@ -126,8 +126,8 @@ public class TestSunAlgorithm
   {
 
     final String strLoc = "Nairobi;Kenya;Africa/Nairobi;-0117+03649/";
-    final double riseset[] = calcRiseSet(new LocalDate(2003, 6, 24), LocationParser
-      .parseLocation(strLoc));
+    final Location location = LocationParser.parseLocation(strLoc);
+    final double riseset[] = calcRiseSet(new LocalDate(2003, 6, 24), location);
 
     assertEquals(6 + 33 * ONE_MINUTE, riseset[SunAlgorithm.RISE], DELTA);
     assertEquals(12 + 6 + 36 * ONE_MINUTE, riseset[SunAlgorithm.SET], DELTA);
@@ -149,8 +149,8 @@ public class TestSunAlgorithm
   {
 
     final String strLoc = "Sydney;Australia;Australia/Sydney;-3352+15113/";
-    final double riseset[] = calcRiseSet(new LocalDate(2001, 12, 2), LocationParser
-      .parseLocation(strLoc));
+    final Location location = LocationParser.parseLocation(strLoc);
+    final double riseset[] = calcRiseSet(new LocalDate(2001, 12, 2), location);
 
     assertEquals(4 + 37 * ONE_MINUTE, riseset[SunAlgorithm.RISE], DELTA);
     assertEquals(18 + 52 * ONE_MINUTE, riseset[SunAlgorithm.SET], DELTA);

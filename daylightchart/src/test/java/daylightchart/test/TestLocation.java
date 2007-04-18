@@ -31,7 +31,6 @@ import java.util.List;
 import org.junit.Test;
 
 import daylightchart.chart.Location;
-import daylightchart.gui.DataLocations;
 import daylightchart.locationparser.LocationFormatter;
 import daylightchart.locationparser.LocationParser;
 import daylightchart.locationparser.ParserException;
