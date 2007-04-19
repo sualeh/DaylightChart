@@ -22,13 +22,19 @@
 package daylightchart.location.parser;
 
 
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TimeZone;
 
-import antlr.RecognitionException;
-import antlr.TokenStreamException;
+import org.pointlocation6709.PointLocation;
+import org.pointlocation6709.parser.PointLocationParser;
+
+import daylightchart.location.Countries;
+import daylightchart.location.Country;
 import daylightchart.location.Location;
 
 /**
@@ -51,55 +57,77 @@ public final class LocationParser
   public static Location parseLocation(final String representation)
     throws ParserException
   {
-    final AntlrLocationParser parser = constructLocationParser(representation);
-    Location location;
+    if (representation == null || representation.length() == 0)
+    {
+      throw new ParserException("No location provided");
+    }
+
+    String[] fields = representation.split(";");
+    if (fields.length != 4)
+    {
+      throw new ParserException("Invalid location format: " + representation);
+    }
+
     try
     {
-      location = parser.location();
+      String city = fields[0];
+      Country country = Countries.lookupCountry(fields[1]);
+      TimeZone timeZone = TimeZone.getTimeZone(fields[2]);
+      PointLocation pointLocation = PointLocationParser
+        .parsePointLocation(fields[3]);
+
+      Location location = new Location(city,
+                                       country,
+                                       timeZone.getID(),
+                                       pointLocation);
+      return location;
     }
-    catch (final RecognitionException e)
+    catch (org.pointlocation6709.parser.ParserException e)
     {
-      throw new ParserException(e);
+      throw new ParserException("Invalid location: " + representation, e);
     }
-    catch (final TokenStreamException e)
-    {
-      throw new ParserException(e);
-    }
-    return location;
+
   }
 
   /**
    * Reads locations from a reader.
    * 
-   * @param reader
+   * @param rdr
    *        Reader
    * @return List of locations
    * @throws ParserException
    *         On a parse exception
    */
-  public static List<Location> parseLocations(final Reader reader)
+  public static List<Location> parseLocations(final Reader rdr)
     throws ParserException
   {
-    if (reader == null)
+
+    if (rdr == null)
     {
       return new ArrayList<Location>();
     }
 
-    final AntlrLocationParser parser = constructLocationParser(reader);
     List<Location> locations;
     try
     {
-      locations = parser.locations();
+      locations = new ArrayList<Location>();
+      final BufferedReader reader = new BufferedReader(rdr);
+
+      String line;
+      while ((line = reader.readLine()) != null)
+      {
+        Location location = parseLocation(line);
+        locations.add(location);
+      }
+      reader.close();
     }
-    catch (final RecognitionException e)
+    catch (IOException e)
     {
-      throw new ParserException(e);
+      throw new ParserException("Invalid locations", e);
     }
-    catch (final TokenStreamException e)
-    {
-      throw new ParserException(e);
-    }
+
     return locations;
+
   }
 
   /**
@@ -119,19 +147,6 @@ public final class LocationParser
       return new ArrayList<Location>();
     }
     return parseLocations(new StringReader(locationsString));
-  }
-
-  private static AntlrLocationParser constructLocationParser(final Reader reader)
-  {
-    final AntlrLocationLexer lexer = new AntlrLocationLexer(reader);
-    final AntlrLocationParser parser = new AntlrLocationParser(lexer);
-    return parser;
-  }
-
-  private static AntlrLocationParser constructLocationParser(final String text)
-  {
-    final StringReader reader = new StringReader(text);
-    return constructLocationParser(reader);
   }
 
   private LocationParser()

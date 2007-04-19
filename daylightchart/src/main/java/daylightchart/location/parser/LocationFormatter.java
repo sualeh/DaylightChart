@@ -98,7 +98,6 @@ public final class LocationFormatter
    * @param writer
    *        Writer to write to.
    * @throws daylightchart.location.parser.FormatterException
-   * @throws IOException
    *         On an exception.
    */
   public static void formatLocations(final List<Location> locations,

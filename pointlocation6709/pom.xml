@@ -16,6 +16,13 @@
       <url>http://www.gnu.org/copyleft/lesser.txt</url>
     </license>
   </licenses>
+  <dependencies>
+    <dependency>
+      <groupId>antlr</groupId>
+      <artifactId>antlr</artifactId>
+      <version>2.7.7</version>
+    </dependency>
+  </dependencies>
   <build>
     <plugins>
       <plugin>
