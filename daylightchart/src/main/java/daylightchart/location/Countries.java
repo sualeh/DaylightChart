@@ -55,7 +55,7 @@ public final class Countries
       String line;
       while ((line = reader.readLine()) != null)
       {
-        Country country = new Country(line);
+        final Country country = new Country(line);
         iso3166CountryCodeMap.put(country.getIso3166CountryCode2(), country);
         fips10CountryCodeMap.put(country.getFips10CountryCode(), country);
         countryNameMap.put(country.getCountryName(), country);
@@ -70,22 +70,15 @@ public final class Countries
     }
   }
 
-  public static Country lookupIso3166CountryCode2(String iso3166CountryCode2)
-  {
-    return iso3166CountryCodeMap.get(iso3166CountryCode2);
-  }
-
-  public static Country lookupFips10CountryCode(String fips10CountryCode)
-  {
-    return fips10CountryCodeMap.get(fips10CountryCode);
-  }
-
-  public static Country lookupCountryName(String countryName)
-  {
-    return countryNameMap.get(countryName);
-  }
-
-  public static Country lookupCountry(String countryString)
+  /**
+   * Looks up a country from the provided string - whether a country
+   * code or a country name.
+   * 
+   * @param countryString
+   *        Country
+   * @return Country ojbect, or null
+   */
+  public static Country lookupCountry(final String countryString)
   {
     Country country;
     if (countryString == null)
@@ -108,6 +101,42 @@ public final class Countries
       country = lookupCountryName(countryString);
     }
     return country;
+  }
+
+  /**
+   * Looks up a country from the country name.
+   * 
+   * @param countryName
+   *        Country name
+   * @return Country ojbect, or null
+   */
+  public static Country lookupCountryName(final String countryName)
+  {
+    return countryNameMap.get(countryName);
+  }
+
+  /**
+   * Looks up a country from the FIPS-10 country code.
+   * 
+   * @param fips10CountryCode
+   *        FIPS-10 country code
+   * @return Country ojbect, or null
+   */
+  public static Country lookupFips10CountryCode(final String fips10CountryCode)
+  {
+    return fips10CountryCodeMap.get(fips10CountryCode);
+  }
+
+  /**
+   * Looks up a country from the two-letter ISO 3166 country code.
+   * 
+   * @param iso3166CountryCode2
+   *        ISO 3166 country code
+   * @return Country ojbect, or null
+   */
+  public static Country lookupIso3166CountryCode2(final String iso3166CountryCode2)
+  {
+    return iso3166CountryCodeMap.get(iso3166CountryCode2);
   }
 
 }

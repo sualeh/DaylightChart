@@ -33,8 +33,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.TimeZone;
 
+import org.pointlocation6709.Angle;
+import org.pointlocation6709.Latitude;
+import org.pointlocation6709.Longitude;
 import org.pointlocation6709.PointLocation;
-import org.pointlocation6709.parser.PointLocationParser;
+import org.pointlocation6709.Utility;
 
 import daylightchart.location.Countries;
 import daylightchart.location.Country;
@@ -45,52 +48,8 @@ import daylightchart.location.Location;
  * 
  * @author Sualeh Fatehi
  */
-public final class LocationParser
+public final class GNSCountryFilesParser
 {
-
-  /**
-   * Parses a string representation of the location.
-   * 
-   * @param representation
-   *        String representation of the location
-   * @return Location
-   * @throws ParserException
-   *         On a parse exception
-   */
-  public static Location parseLocation(final String representation)
-    throws ParserException
-  {
-    if (representation == null || representation.length() == 0)
-    {
-      throw new ParserException("No location provided");
-    }
-
-    final String[] fields = representation.split(";");
-    if (fields.length != 4)
-    {
-      throw new ParserException("Invalid location format: " + representation);
-    }
-
-    try
-    {
-      final String city = fields[0];
-      final Country country = Countries.lookupCountry(fields[1]);
-      final TimeZone timeZone = TimeZone.getTimeZone(fields[2]);
-      final PointLocation pointLocation = PointLocationParser
-        .parsePointLocation(fields[3]);
-
-      final Location location = new Location(city,
-                                             country,
-                                             timeZone,
-                                             pointLocation);
-      return location;
-    }
-    catch (final org.pointlocation6709.parser.ParserException e)
-    {
-      throw new ParserException("Invalid location: " + representation, e);
-    }
-
-  }
 
   /**
    * Reads locations from a reader.
@@ -119,8 +78,35 @@ public final class LocationParser
       String line;
       while ((line = reader.readLine()) != null)
       {
-        final Location location = parseLocation(line);
-        locations.add(location);
+        String[] fields = line.split("\t");
+        if (fields.length != 25)
+        {
+          continue;
+        }
+
+        String featureClassification = fields[9];
+        if (featureClassification.equalsIgnoreCase("P"))
+        {
+          String latitudeString = fields[3];
+          String longitudeString = fields[4];
+          String fips10CountryCode = fields[12];
+          String city = fields[22];
+
+          double longitudeDegrees = Double.parseDouble(longitudeString);
+
+          Country country = Countries
+            .lookupFips10CountryCode(fips10CountryCode);
+          Latitude latitude = new Latitude(Angle.fromDegrees(Double
+            .parseDouble(latitudeString)));
+          Longitude longitude = new Longitude(Angle
+            .fromDegrees(longitudeDegrees));
+          PointLocation pointLocation = new PointLocation(latitude, longitude);
+
+          int[] sexagesimalSplit = Utility.sexagesimalSplit(longitudeDegrees/ 15D);
+          TimeZone timeZone = TimeZone.getTimeZone("GMT");
+
+          locations.add(new Location(city, country, timeZone, pointLocation));
+        }
       }
       reader.close();
     }
@@ -179,7 +165,7 @@ public final class LocationParser
     }
   }
 
-  private LocationParser()
+  private GNSCountryFilesParser()
   {
   }
 

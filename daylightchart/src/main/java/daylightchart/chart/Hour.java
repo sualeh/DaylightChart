@@ -79,7 +79,9 @@ public final class Hour
     this(hour.hour, hour.inDaylightSavings, hour.time24);
   }
 
-  private Hour(double hour, boolean inDaylightSavings, boolean time24)
+  private Hour(final double hour,
+               final boolean inDaylightSavings,
+               final boolean time24)
   {
     double dayHour;
 
@@ -90,7 +92,7 @@ public final class Hour
     }
     this.hour = dayHour;
 
-    this.sexagesimalHourParts = Utility.sexagesimalSplit(hour);
+    sexagesimalHourParts = Utility.sexagesimalSplit(hour);
     this.inDaylightSavings = inDaylightSavings;
     this.time24 = time24;
   }

@@ -24,6 +24,11 @@ package daylightchart.location;
 
 import java.io.Serializable;
 
+/**
+ * Country, with ISO 3166 country code.
+ * 
+ * @author Sualeh Fatehi
+ */
 public final class Country
   implements Serializable
 {
@@ -159,9 +164,15 @@ public final class Country
     return result;
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see java.lang.Object#toString()
+   */
+  @Override
   public String toString()
   {
     return countryName;
   }
-  
+
 }

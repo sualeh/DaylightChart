@@ -22,6 +22,8 @@
 package daylightchart.location.parser;
 
 
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
@@ -59,7 +61,7 @@ public final class LocationFormatter
       coordinatesString = PointLocationFormatter.formatIso6709(location
         .getPointLocation(), PointLocationFormatType.MEDIUM);
     }
-    catch (FormatterException e)
+    catch (final FormatterException e)
     {
       throw new daylightchart.location.parser.FormatterException(e);
     }
@@ -91,6 +93,34 @@ public final class LocationFormatter
   }
 
   /**
+   * Formats a list of locations to a string.
+   * 
+   * @param locations
+   *        Locations to format
+   * @throws daylightchart.location.parser.FormatterException
+   */
+  public static void formatLocations(final List<Location> locations, File file)
+    throws daylightchart.location.parser.FormatterException
+  {
+    if (file == null)
+    {
+      throw new daylightchart.location.parser.FormatterException("No file provided");
+    }
+    
+    try
+    {
+      final FileWriter writer = new FileWriter(file);
+      formatLocations(locations, writer);
+      writer.flush();
+      writer.close();
+    }
+    catch (IOException e)
+    {
+      throw new daylightchart.location.parser.FormatterException(e);
+    }
+  }
+
+  /**
    * Writes location data out to a file. *
    * 
    * @param locations
@@ -119,7 +149,7 @@ public final class LocationFormatter
       writer.flush();
       writer.close();
     }
-    catch (IOException e)
+    catch (final IOException e)
     {
       throw new daylightchart.location.parser.FormatterException(e);
     }

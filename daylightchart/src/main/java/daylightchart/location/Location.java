@@ -49,8 +49,8 @@ public final class Location
   private final String city;
   private final Country country;
   private final PointLocation pointLocation;
-  private final String tzId;
-  
+  private final TimeZone timeZone;
+
   /**
    * Copy constructor. Copies the value of a provided location.
    * 
@@ -59,7 +59,10 @@ public final class Location
    */
   public Location(final Location location)
   {
-    this(location.city, location.country, location.tzId, location.pointLocation);
+    this(location.city,
+         location.country,
+         location.timeZone,
+         location.pointLocation);
   }
 
   /**
@@ -71,12 +74,12 @@ public final class Location
    *        Country
    * @param pointLocation
    *        Point location
-   * @param tzId
-   *        Timezone id
+   * @param timeZone
+   *        Timezone
    */
   public Location(final String city,
                   final Country country,
-                  final String tzId,
+                  final TimeZone timeZone,
                   final PointLocation pointLocation)
   {
 
@@ -84,10 +87,14 @@ public final class Location
     if (country == null)
     {
       throw new IllegalArgumentException("Country needs to be specified");
-    }    
+    }
     this.country = country;
 
-    this.tzId = tzId;
+    if (timeZone == null)
+    {
+      throw new IllegalArgumentException("Time zone needs to be specified");
+    }
+    this.timeZone = timeZone;
 
     if (pointLocation == null)
     {
@@ -115,65 +122,32 @@ public final class Location
    * @see java.lang.Object#equals(java.lang.Object)
    */
   @Override
-  public boolean equals(final Object obj)
+  public boolean equals(Object obj)
   {
-    if (this == obj)
-    {
-      return true;
-    }
-    if (obj == null)
-    {
-      return false;
-    }
-    if (!(obj instanceof Location))
-    {
-      return false;
-    }
+    if (this == obj) return true;
+    if (!super.equals(obj)) return false;
+    if (getClass() != obj.getClass()) return false;
     final Location other = (Location) obj;
     if (city == null)
     {
-      if (other.city != null)
-      {
-        return false;
-      }
+      if (other.city != null) return false;
     }
-    else if (!city.equals(other.city))
-    {
-      return false;
-    }
-    if (pointLocation == null)
-    {
-      if (other.pointLocation != null)
-      {
-        return false;
-      }
-    }
-    else if (!pointLocation.equals(other.pointLocation))
-    {
-      return false;
-    }
+    else if (!city.equals(other.city)) return false;
     if (country == null)
     {
-      if (other.country != null)
-      {
-        return false;
-      }
+      if (other.country != null) return false;
     }
-    else if (!country.equals(other.country))
+    else if (!country.equals(other.country)) return false;
+    if (pointLocation == null)
     {
-      return false;
+      if (other.pointLocation != null) return false;
     }
-    if (tzId == null)
+    else if (!pointLocation.equals(other.pointLocation)) return false;
+    if (timeZone == null)
     {
-      if (other.tzId != null)
-      {
-        return false;
-      }
+      if (other.timeZone != null) return false;
     }
-    else if (!tzId.equals(other.tzId))
-    {
-      return false;
-    }
+    else if (!timeZone.equals(other.timeZone)) return false;
     return true;
   }
 
@@ -214,7 +188,7 @@ public final class Location
    */
   public TimeZone getTimeZone()
   {
-    return TimeZone.getTimeZone(tzId);
+    return timeZone;
   }
 
   /**
@@ -226,12 +200,12 @@ public final class Location
   public int hashCode()
   {
     final int prime = 31;
-    int result = 1;
-    result = prime * result + (city == null? 0: city.hashCode());
+    int result = super.hashCode();
+    result = prime * result + ((city == null)? 0: city.hashCode());
+    result = prime * result + ((country == null)? 0: country.hashCode());
     result = prime * result
-             + (pointLocation == null? 0: pointLocation.hashCode());
-    result = prime * result + (country == null? 0: country.hashCode());
-    result = prime * result + (tzId == null? 0: tzId.hashCode());
+             + ((pointLocation == null)? 0: pointLocation.hashCode());
+    result = prime * result + ((timeZone == null)? 0: timeZone.hashCode());
     return result;
   }
 

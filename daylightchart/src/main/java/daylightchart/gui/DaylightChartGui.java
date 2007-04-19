@@ -31,6 +31,8 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -56,9 +58,11 @@ import daylightchart.UserPreferences;
 import daylightchart.Version;
 import daylightchart.chart.DaylightChart;
 import daylightchart.gui.options.ChartOptions;
-import daylightchart.location.DataLocations;
 import daylightchart.location.Location;
+import daylightchart.location.LocationComparator;
 import daylightchart.location.LocationsSortOrder;
+import daylightchart.location.parser.LocationFormatter;
+import daylightchart.location.parser.LocationParser;
 
 /**
  * Provides an GUI for daylight charts.
@@ -73,7 +77,7 @@ public final class DaylightChartGui
   private static final Logger LOGGER = Logger.getLogger(DaylightChartGui.class
     .getName());
 
-  private DataLocations dataLocations;
+  private List<Location> locations;
   private LocationsSortOrder locationsSortOrder;
   private final JList listBox;
   private final ChartPanel chartPanel;
@@ -93,8 +97,8 @@ public final class DaylightChartGui
     final Font font = new Font("Sans-serif", Font.PLAIN, 11); //$NON-NLS-1$
 
     locationsSortOrder = LocationsSortOrder.BY_NAME;
-    dataLocations = new DataLocations();
-    dataLocations.sortLocations(locationsSortOrder);
+    locations = new UserPreferences().getLocations();
+    Collections.sort(locations, new LocationComparator(locationsSortOrder));
 
     chartOptions = new UserPreferences().getChartOptions();
 
@@ -348,7 +352,7 @@ public final class DaylightChartGui
 
     try
     {
-      dataLocations = new DataLocations(selectedFile);
+      locations = LocationParser.parseLocations(selectedFile);
     }
     catch (final Exception e)
     {
@@ -370,8 +374,8 @@ public final class DaylightChartGui
   private void refreshView()
   {
     chartPanel.setChart(null);
-    dataLocations.sortLocations(locationsSortOrder);
-    listBox.setListData(new Vector<Location>(dataLocations.getLocations()));
+    Collections.sort(locations, new LocationComparator(locationsSortOrder));
+    listBox.setListData(new Vector<Location>(locations));
     listBox.setSelectedIndex(0);
     this.repaint();
   }
@@ -384,7 +388,7 @@ public final class DaylightChartGui
     {
       try
       {
-        dataLocations.writeDataToFile(selectedFile);
+        LocationFormatter.formatLocations(locations, selectedFile);
       }
       catch (final Exception e)
       {

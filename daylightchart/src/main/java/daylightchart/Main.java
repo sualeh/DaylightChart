@@ -59,7 +59,7 @@ public final class Main
       PlasticLookAndFeel.setPlasticTheme(new ExperienceRoyale());
       UIManager.setLookAndFeel(new Plastic3DLookAndFeel());
     }
-    catch (Exception e)
+    catch (final Exception e)
     {
       LOGGER.log(Level.WARNING, "Cannot set look and feel");
     }

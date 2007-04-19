@@ -81,6 +81,7 @@ public class DaylightChart
    * Instantiate the chart for a given location, and given year.
    * 
    * @param location
+   *        Location
    */
   public DaylightChart(final Location location)
   {
@@ -91,7 +92,9 @@ public class DaylightChart
    * Instantiate the chart for a given location, and given year.
    * 
    * @param location
+   *        Location
    * @param year
+   *        Year
    */
   public DaylightChart(final Location location, final int year)
   {
@@ -268,7 +271,7 @@ public class DaylightChart
   {
     TextTitle title;
 
-    Location location = riseSetData.getLocation();
+    final Location location = riseSetData.getLocation();
     if (location != null)
     {
       title = new TextTitle(location.toString(), new Font("SansSerif", //$NON-NLS-1$

@@ -4,10 +4,12 @@ package daylightchart;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
-import java.util.ArrayList;
+import java.io.Reader;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -31,8 +33,8 @@ public final class UserPreferences
 {
 
   private static final Logger LOGGER = Logger.getLogger(UserPreferences.class
-                                                        .getName());
-  
+    .getName());
+
   private static final String keyLocations = "daylightchart.locations";
   private static final String keyChartOptions = "daylightchart.chartOptions";
 
@@ -116,16 +118,35 @@ public final class UserPreferences
    */
   public List<Location> getLocations()
   {
-    String locationsString = preferences.get(keyLocations, null);
+
+    final String locationsString = preferences.get(keyLocations, null);
+
     try
     {
       return LocationParser.parseLocations(locationsString);
     }
-    catch (ParserException e)
+    catch (final ParserException e)
     {
       LOGGER.log(Level.WARNING, "Could get locations", e);
-      return new ArrayList<Location>();
     }
+
+    try
+    {
+      final InputStream dataStream = this.getClass().getClassLoader()
+        .getResourceAsStream("locations.data");
+      if (dataStream == null)
+      {
+        throw new IllegalStateException("Cannot read data from internal database");
+      }
+      final Reader reader = new InputStreamReader(dataStream);
+      return LocationParser.parseLocations(reader);
+    }
+    catch (final ParserException e)
+    {
+      throw new IllegalStateException("Cannot read data from internal database",
+                                      e);
+    }
+
   }
 
   /**
@@ -165,10 +186,11 @@ public final class UserPreferences
   {
     try
     {
-      final String locationsString = LocationFormatter.formatLocations(locations);
+      final String locationsString = LocationFormatter
+        .formatLocations(locations);
       preferences.put(keyLocations, locationsString);
     }
-    catch (FormatterException e)
+    catch (final FormatterException e)
     {
       LOGGER.log(Level.WARNING, "Could not save user locations list", e);
     }

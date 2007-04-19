@@ -19,18 +19,37 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * 
  */
-package daylightchart.location;
+package daylightchart.test;
 
+
+import static org.junit.Assert.assertEquals;
+
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.List;
+
+import org.junit.Test;
+
+import daylightchart.location.Location;
+import daylightchart.location.parser.GNSCountryFilesParser;
+import daylightchart.location.parser.ParserException;
 
 /**
- * Sort order for locations.
- * 
- * @author Sualeh Fatehi
+ * Location tests.
  */
-public enum LocationsSortOrder
+public class TestGNSCountryFiles
 {
-  /** Sort locations by name. */
-  BY_NAME,
-  /** Sort locations by latitude. */
-  BY_LATITUDE
+
+  @Test
+  public void locations()
+    throws ParserException
+  {
+    final InputStream dataStream = this.getClass().getClassLoader()
+      .getResourceAsStream("lo.txt");
+    final InputStreamReader reader = new InputStreamReader(dataStream);
+    List<Location> locations = GNSCountryFilesParser.parseLocations(reader);
+
+    assertEquals(6961, locations.size());
+  }
+
 }
