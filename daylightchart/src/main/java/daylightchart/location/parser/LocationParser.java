@@ -119,8 +119,12 @@ public final class LocationParser
       String line;
       while ((line = reader.readLine()) != null)
       {
-        final Location location = parseLocation(line);
-        locations.add(location);
+        line = line.trim();
+        if (!line.startsWith("#"))
+        {
+          final Location location = parseLocation(line);
+          locations.add(location);
+        }
       }
       reader.close();
     }

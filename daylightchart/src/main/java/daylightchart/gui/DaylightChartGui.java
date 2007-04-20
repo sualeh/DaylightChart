@@ -57,14 +57,12 @@ import org.jfree.chart.editor.ChartEditor;
 import daylightchart.UserPreferences;
 import daylightchart.Version;
 import daylightchart.chart.DaylightChart;
-import daylightchart.gui.LocationsFileFilter.LocationsFileFormat;
 import daylightchart.gui.options.ChartOptions;
 import daylightchart.location.Location;
 import daylightchart.location.LocationComparator;
 import daylightchart.location.LocationsSortOrder;
-import daylightchart.location.parser.GNSCountryFilesParser;
 import daylightchart.location.parser.LocationFormatter;
-import daylightchart.location.parser.LocationParser;
+import daylightchart.location.parser.LocationsLoader;
 
 /**
  * Provides an GUI for daylight charts.
@@ -341,17 +339,9 @@ public final class DaylightChartGui
     fileDialog
       .setSelectedFile(new File(lastSelectedDirectory, "locations.data")); //$NON-NLS-1$
     fileDialog.setDialogType(JFileChooser.OPEN_DIALOG);
-    fileDialog.setAcceptAllFileFilterUsed(false);
-    fileDialog
-      .addChoosableFileFilter(new LocationsFileFilter(LocationsFileFilter.LocationsFileFormat.gnsCountryFilesFormat));
-    fileDialog
-      .addChoosableFileFilter(new LocationsFileFilter(LocationsFileFilter.LocationsFileFormat.daylightchartLocationsFormat));
-
     fileDialog.showDialog(listBox, Messages
       .getString("DaylightChartGui.Menu.Open")); //$NON-NLS-1$
     final File selectedFile = fileDialog.getSelectedFile();
-    LocationsFileFilter fileFilter = (LocationsFileFilter) fileDialog
-      .getFileFilter();
     if (selectedFile == null)
     {
       return;
@@ -368,24 +358,11 @@ public final class DaylightChartGui
       return;
     }
 
-    try
-    {
-      LocationsFileFormat fileFormat = fileFilter.getFileFormat();
-      switch (fileFormat)
-      {
-        case daylightchartLocationsFormat:
-          locations = LocationParser.parseLocations(selectedFile);
-          break;
-        case gnsCountryFilesFormat:
-          locations = GNSCountryFilesParser.parseLocations(selectedFile);
-          break;
-      }
-      // new UserPreferences().setLocations(locations);
-    }
-    catch (final Exception e)
+    List<Location> locationsList = LocationsLoader.load(selectedFile);
+    if (locationsList == null)
     {
       LOGGER.log(Level.WARNING, Messages
-        .getString("DaylightChartGui.Error.ReadFile"), e); //$NON-NLS-1$
+        .getString("DaylightChartGui.Error.ReadFile")); //$NON-NLS-1$
       JOptionPane
         .showMessageDialog(this,
                            selectedFile
@@ -394,7 +371,12 @@ public final class DaylightChartGui
                                  .getString("DaylightChartGui.Error.CannotReadFile")); //$NON-NLS-1$
       return;
     }
-    refreshView();
+    else
+    {
+      locations = locationsList;
+      // new UserPreferences().setLocations(locations);
+      refreshView();
+    }
 
     lastSelectedDirectory = selectedFile.getParentFile();
   }
