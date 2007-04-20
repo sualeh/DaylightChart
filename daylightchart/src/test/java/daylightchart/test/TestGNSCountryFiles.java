@@ -28,6 +28,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.List;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import daylightchart.location.Location;
@@ -41,6 +42,7 @@ public class TestGNSCountryFiles
 {
 
   @Test
+  @Ignore
   public void locations()
     throws ParserException
   {
