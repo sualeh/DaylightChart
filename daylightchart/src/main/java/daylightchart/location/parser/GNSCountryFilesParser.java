@@ -29,6 +29,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TimeZone;
@@ -69,10 +70,10 @@ public final class GNSCountryFilesParser
       throw new ParserException("Cannot read locations");
     }
 
-    List<Location> locations;
     try
     {
-      locations = new ArrayList<Location>();
+      List<String> locationNames = new ArrayList<String>();
+      List<Location> locations = new ArrayList<Location>();
       final BufferedReader reader = new BufferedReader(rdr);
 
       String line;
@@ -84,13 +85,20 @@ public final class GNSCountryFilesParser
           continue;
         }
 
-        String featureClassification = fields[9];
-        if (featureClassification.equalsIgnoreCase("P"))
+        String featureDesignationCode = fields[10];
+        String nameType = fields[17];
+        if (featureDesignationCode.startsWith("PPL")
+            && (nameType.equals("C") || nameType.equals("N")))
         {
           String latitudeString = fields[3];
           String longitudeString = fields[4];
           String fips10CountryCode = fields[12];
-          String city = fields[22];
+          String city = fields[23];
+
+          if (locationNames.contains(city + ", " + fips10CountryCode))
+          {
+            continue;
+          }
 
           double longitudeDegrees = Double.parseDouble(longitudeString);
 
@@ -101,21 +109,21 @@ public final class GNSCountryFilesParser
           Longitude longitude = new Longitude(Angle
             .fromDegrees(longitudeDegrees));
           PointLocation pointLocation = new PointLocation(latitude, longitude);
-
-          int[] sexagesimalSplit = Utility.sexagesimalSplit(longitudeDegrees/ 15D);
-          TimeZone timeZone = TimeZone.getTimeZone("GMT");
+          TimeZone timeZone = TimeZone
+            .getTimeZone(formatTimeZone(longitudeDegrees));
 
           locations.add(new Location(city, country, timeZone, pointLocation));
+          locationNames.add(city + ", " + fips10CountryCode);
         }
       }
       reader.close();
+
+      return new ArrayList<Location>(locations);
     }
     catch (final IOException e)
     {
       throw new ParserException("Invalid locations", e);
     }
-
-    return new ArrayList<Location>(locations);
 
   }
 
@@ -163,6 +171,33 @@ public final class GNSCountryFilesParser
     {
       throw new ParserException(e);
     }
+  }
+
+  private static String formatTimeZone(double longitude)
+  {
+
+    double tzOffsetHours = longitude / 15D;
+    int[] fields = Utility.sexagesimalSplit(tzOffsetHours);
+    String tzId = "GMT";
+
+    if (fields[0] < 0)
+    {
+      tzId = tzId + "-";
+    }
+    else
+    {
+      tzId = tzId + "+";
+    }
+    final int absHours = Math.abs(fields[0]);
+    final int absMinutes = Math.abs(fields[1]);
+
+    final NumberFormat numberFormat = NumberFormat.getIntegerInstance();
+    numberFormat.setMinimumIntegerDigits(2);
+    tzId = tzId + numberFormat.format(absHours) + ":"
+           + numberFormat.format(absMinutes);
+
+    return tzId;
+
   }
 
   private GNSCountryFilesParser()

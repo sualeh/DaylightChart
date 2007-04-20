@@ -49,7 +49,7 @@ public class TestGNSCountryFiles
     final InputStreamReader reader = new InputStreamReader(dataStream);
     List<Location> locations = GNSCountryFilesParser.parseLocations(reader);
 
-    assertEquals(6961, locations.size());
+    assertEquals(4574, locations.size());
   }
 
 }

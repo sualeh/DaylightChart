@@ -57,10 +57,12 @@ import org.jfree.chart.editor.ChartEditor;
 import daylightchart.UserPreferences;
 import daylightchart.Version;
 import daylightchart.chart.DaylightChart;
+import daylightchart.gui.LocationsFileFilter.LocationsFileFormat;
 import daylightchart.gui.options.ChartOptions;
 import daylightchart.location.Location;
 import daylightchart.location.LocationComparator;
 import daylightchart.location.LocationsSortOrder;
+import daylightchart.location.parser.GNSCountryFilesParser;
 import daylightchart.location.parser.LocationFormatter;
 import daylightchart.location.parser.LocationParser;
 
@@ -260,9 +262,13 @@ public final class DaylightChartGui
     {
       public void itemStateChanged(final ItemEvent itemEvent)
       {
-        locationsSortOrder = LocationsSortOrder.BY_NAME;
-        sortByLatitude.setState(!sortByName.getState());
-        refreshView();
+        final boolean isSelected = sortByName.getState();
+        if (isSelected)
+        {
+          locationsSortOrder = LocationsSortOrder.BY_NAME;
+          refreshView();
+        }
+        sortByLatitude.setSelected(!isSelected);
       }
     });
 
@@ -270,9 +276,13 @@ public final class DaylightChartGui
     {
       public void itemStateChanged(final ItemEvent itemEvent)
       {
-        locationsSortOrder = LocationsSortOrder.BY_LATITUDE;
-        sortByName.setState(!sortByLatitude.getState());
-        refreshView();
+        final boolean isSelected = sortByLatitude.getState();
+        if (isSelected)
+        {
+          locationsSortOrder = LocationsSortOrder.BY_LATITUDE;
+          refreshView();
+        }
+        sortByName.setSelected(!sortByLatitude.getState());
       }
     });
 
@@ -331,9 +341,17 @@ public final class DaylightChartGui
     fileDialog
       .setSelectedFile(new File(lastSelectedDirectory, "locations.data")); //$NON-NLS-1$
     fileDialog.setDialogType(JFileChooser.OPEN_DIALOG);
+    fileDialog.setAcceptAllFileFilterUsed(false);
+    fileDialog
+      .addChoosableFileFilter(new LocationsFileFilter(LocationsFileFilter.LocationsFileFormat.gnsCountryFilesFormat));
+    fileDialog
+      .addChoosableFileFilter(new LocationsFileFilter(LocationsFileFilter.LocationsFileFormat.daylightchartLocationsFormat));
+
     fileDialog.showDialog(listBox, Messages
       .getString("DaylightChartGui.Menu.Open")); //$NON-NLS-1$
     final File selectedFile = fileDialog.getSelectedFile();
+    LocationsFileFilter fileFilter = (LocationsFileFilter) fileDialog
+      .getFileFilter();
     if (selectedFile == null)
     {
       return;
@@ -352,7 +370,17 @@ public final class DaylightChartGui
 
     try
     {
-      locations = LocationParser.parseLocations(selectedFile);
+      LocationsFileFormat fileFormat = fileFilter.getFileFormat();
+      switch (fileFormat)
+      {
+        case daylightchartLocationsFormat:
+          locations = LocationParser.parseLocations(selectedFile);
+          break;
+        case gnsCountryFilesFormat:
+          locations = GNSCountryFilesParser.parseLocations(selectedFile);
+          break;
+      }
+      // new UserPreferences().setLocations(locations);
     }
     catch (final Exception e)
     {
