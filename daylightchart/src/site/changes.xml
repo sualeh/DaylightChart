@@ -5,9 +5,18 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
-    <release version="1.0" date="2007-04-29">
+    <release version="1.0" date="2007-04-15">
       <action dev="Sualeh Fatehi" type="add">
         Added new project.
+      </action>
+    </release>
+    <release version="1.1" date="2007-04-22">
+      <action dev="Sualeh Fatehi" type="add">
+        New look and feel, courtesy of JGoodies Looks.
+      </action>
+      <action dev="Sualeh Fatehi" type="add">
+        The ability in load in
+        <a href="http://earth-info.nga.mil/gns/html/cntry_files.html">GNS Country Files</a>.
       </action>
     </release>
   </body>

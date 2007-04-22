@@ -12,13 +12,36 @@
         at any location in the world. Charts can be customized, saved, and printed.
       </subsection>
       <subsection name="Running">
+        <p>
         Daylight Chart depends on
         <a href="http://sourceforge.net/projects/daylightchart/pointlocation6709">
         Point Location 6709</a>,
         <a href="http://www.antlr.org/">ANTLR</a>,
         <a href="http://joda-time.sourceforge.net">Joda Time</a>,
+        <a href="https://looks.dev.java.net/">JGoodies Looks</a>,
         <a href="http://www.jfree.org/jfreechart/">JFreeChart</a> and <a href="http://www.jfree.org/jcommon/">JCommon</a>. Please ensure that
         all of these jars are on your classpath when you run Daylight Chart.
+        </p>
+        <p>
+        All of these are distributed in their binary form. Please refer to their individual
+        licenses for license terms.
+        </p>
+      </subsection>
+    </section>
+    <section name="How-to">
+      <subsection name="Save and Load Locations">
+        <p>
+          Daylight Chart has an option to save the locations list. This list
+          will be saved in the Daylight Chart Locations List Format. It can be
+          edited in any standard text editor, and loaded back into Daylight Chart.
+        </p>
+        <p>
+          In addition to the Daylight Chart Locations List Format, the
+          Daylight Chart program also supports loading of locations in the
+          <a href="http://earth-info.nga.mil/gns/html/cntry_files.html">GNS Country Files</a>.
+          However, the data in the GNS Country Files does not contain daylight savings
+          time information, so the charts will show only sunrise and sunset times.
+        </p>
       </subsection>
     </section>
     <section name="Building From the Source Code">
