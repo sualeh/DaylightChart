@@ -15,8 +15,7 @@
         New look and feel, courtesy of JGoodies Looks.
       </action>
       <action dev="Sualeh Fatehi" type="add">
-        The ability in load in
-        <a href="http://earth-info.nga.mil/gns/html/cntry_files.html">GNS Country Files</a>.
+        The ability in load in GNS Country Files.
       </action>
     </release>
   </body>

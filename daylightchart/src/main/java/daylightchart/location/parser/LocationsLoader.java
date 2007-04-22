@@ -58,6 +58,10 @@ public final class LocationsLoader
         locations = null;
       }
     }
+    if (locations != null && locations.size() == 0)
+    {
+      locations = null;
+    }
 
     // 2. Attempt to load as a GNS country file
     if (locations == null)
@@ -71,6 +75,28 @@ public final class LocationsLoader
         locations = null;
       }
     }
+    if (locations != null && locations.size() == 0)
+    {
+      locations = null;
+    }
+
+    // 3. Attempt to load as a GNIS file
+    if (locations == null)
+    {
+      try
+      {
+        locations = GNISFilesParser.parseLocations(file);
+      }
+      catch (ParserException e)
+      {
+        locations = null;
+      }
+    }
+    if (locations != null && locations.size() == 0)
+    {
+      locations = null;
+    }
+
     return locations;
   }
 
