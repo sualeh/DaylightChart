@@ -39,7 +39,7 @@ public class TestStringConversions
   {
     final Angle angle = Angle.fromDegrees(-15.45);
     final Latitude latitude = new Latitude(angle);
-    final Longitude longitude = new Longitude(angle);
+    final Angle longitude = new Longitude(angle);
 
     assertEquals("-15° 27\'", angle.toString());
     assertEquals("15° 27\' S", latitude.toString());
@@ -51,7 +51,7 @@ public class TestStringConversions
   {
     final Angle angle = Angle.fromDegrees(15.45);
     final Latitude latitude = new Latitude(angle);
-    final Longitude longitude = new Longitude(angle);
+    final Angle longitude = new Longitude(angle);
 
     assertEquals("15° 27\'", angle.toString());
     assertEquals("15° 27\' N", latitude.toString());

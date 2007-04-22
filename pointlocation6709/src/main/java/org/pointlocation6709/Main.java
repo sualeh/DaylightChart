@@ -76,7 +76,7 @@ public final class Main
       {
         System.err.println(e.getMessage());
       }
-      catch (FormatterException e)
+      catch (final FormatterException e)
       {
         System.err.println(e.getMessage());
       }

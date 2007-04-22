@@ -32,8 +32,6 @@ public class Angle
   implements Serializable, Comparable<Angle>
 {
 
-  protected static final char DEGREES = '\u00B0';
-
   /** Angle fields. */
   public enum Field
   {
@@ -44,6 +42,8 @@ public class Angle
     /** Seconds. */
     SECONDS,
   }
+
+  protected static final char DEGREES = '\u00B0';
 
   private static final long serialVersionUID = -6330836471692225095L;
 
@@ -297,6 +297,16 @@ public class Angle
   protected String getDirection()
   {
     return null;
+  }
+
+  protected void validateAbsoluteRange(final double degrees, final int range)
+  {
+    if (Math.abs(degrees) > range)
+    {
+      throw new IllegalArgumentException(degrees + DEGREES
+                                         + " is out of range, +/-" + range
+                                         + DEGREES);
+    }
   }
 
 }

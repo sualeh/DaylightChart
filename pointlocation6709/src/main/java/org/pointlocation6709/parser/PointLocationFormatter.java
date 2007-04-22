@@ -89,7 +89,7 @@ public final class PointLocationFormatter
   private static String formatIso6709Long(final PointLocation pointLocation)
   {
     final Latitude latitude = pointLocation.getLatitude();
-    final Longitude longitude = pointLocation.getLongitude();
+    final Angle longitude = pointLocation.getLongitude();
     String string = formatIntegerDegreesString(latitude)
                     + formatSexagesimalMinutesStringLong(latitude)
                     + formatIntegerDegreesString(longitude)
@@ -112,7 +112,7 @@ public final class PointLocationFormatter
   private static String formatIso6709Medium(final PointLocation pointLocation)
   {
     final Latitude latitude = pointLocation.getLatitude();
-    final Longitude longitude = pointLocation.getLongitude();
+    final Angle longitude = pointLocation.getLongitude();
     String string = formatIntegerDegreesString(latitude)
                     + formatSexagesimalMinutesStringMedium(latitude)
                     + formatIntegerDegreesString(longitude)
@@ -135,7 +135,7 @@ public final class PointLocationFormatter
   private static String formatIso6709Short(final PointLocation pointLocation)
   {
     final Latitude latitude = pointLocation.getLatitude();
-    final Longitude longitude = pointLocation.getLongitude();
+    final Angle longitude = pointLocation.getLongitude();
     String string = formatIntegerDegreesString(latitude)
                     + formatIntegerDegreesString(longitude);
     final double altitude = pointLocation.getAltitude();
@@ -157,7 +157,7 @@ public final class PointLocationFormatter
   private static String formatIso6709WithDecimals(final PointLocation pointLocation)
   {
     final Latitude latitude = pointLocation.getLatitude();
-    final Longitude longitude = pointLocation.getLongitude();
+    final Angle longitude = pointLocation.getLongitude();
     String string = formatIntegerDegreesString(latitude)
                     + formatDecimalMinutesString(latitude)
                     + formatIntegerDegreesString(longitude)

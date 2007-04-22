@@ -41,12 +41,7 @@ public final class Latitude
   {
     super(angle);
 
-    // Validate the range
-    final double degrees = getDegrees();
-    if (Math.abs(degrees) > 90)
-    {
-      throw new IllegalArgumentException(degrees + DEGREES + " is out of range");
-    }
+    validateAbsoluteRange(getDegrees(), 90);
   }
 
   @Override
