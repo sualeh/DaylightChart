@@ -39,7 +39,6 @@ import java.util.logging.Logger;
 
 import javax.swing.BorderFactory;
 import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JMenu;
@@ -61,8 +60,6 @@ import daylightchart.gui.options.ChartOptions;
 import daylightchart.location.Location;
 import daylightchart.location.LocationComparator;
 import daylightchart.location.LocationsSortOrder;
-import daylightchart.location.parser.LocationFormatter;
-import daylightchart.location.parser.LocationsLoader;
 
 /**
  * Provides an GUI for daylight charts.
@@ -73,15 +70,49 @@ public final class DaylightChartGui
   extends JFrame
 {
 
+  protected final class LocationsFileActionListener
+    implements ActionListener
+  {
+
+    private final DaylightChartGui mainWindow;
+
+    protected LocationsFileActionListener()
+    {
+      mainWindow = DaylightChartGui.this;
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+     */
+    public void actionPerformed(final ActionEvent actionevent)
+    {
+
+      if (actionevent.getActionCommand()
+        .equals("DaylightChartGui.Menu.File.SaveLocations")) //$NON-NLS-1$
+      {
+        GuiHelper.loadLocations(mainWindow);
+      }
+      else if (actionevent.getActionCommand()
+        .equals("DaylightChartGui.Menu.File.LoadLocations")) //$NON-NLS-1$
+      {
+        GuiHelper.saveLocations(mainWindow);
+      }
+    }
+    
+  }
+
   private final static long serialVersionUID = 3760840181833283637L;
+
   private static final Logger LOGGER = Logger.getLogger(DaylightChartGui.class
     .getName());
-
   private List<Location> locations;
   private LocationsSortOrder locationsSortOrder;
   private final JList listBox;
   private final ChartPanel chartPanel;
   private final ChartOptions chartOptions;
+
   private File lastSelectedDirectory = new File("."); //$NON-NLS-1$
 
   /**
@@ -134,6 +165,56 @@ public final class DaylightChartGui
     pack();
   }
 
+  /**
+   * Gets the last selected directory.
+   * 
+   * @return The last selected directory.
+   */
+  public File getLastSelectedDirectory()
+  {
+    return lastSelectedDirectory;
+  }
+
+  /**
+   * Get the locations list.
+   * 
+   * @return Locations
+   */
+  public List<Location> getLocations()
+  {
+    return locations;
+  }
+
+  /**
+   * Sets the last selected directory.
+   * 
+   * @param lastSelectedDirectory
+   *        the lastSelectedDirectory to set
+   */
+  public void setLastSelectedDirectory(final File lastSelectedDirectory)
+  {
+    if (lastSelectedDirectory != null && lastSelectedDirectory.isDirectory())
+    {
+      this.lastSelectedDirectory = lastSelectedDirectory;
+    }
+  }
+
+  /**
+   * Sets the locations list on the GUI.
+   * 
+   * @param locations
+   *        Locations
+   */
+  public void setLocations(final List<Location> locations)
+  {
+    if (locations != null && locations.size() > 0)
+    {
+      this.locations = locations;
+      refreshView();
+      // new UserPreferences().setLocations(locations);
+    }
+  }
+
   private JMenu createFileMenu()
   {
     final JMenu menuFile = new JMenu(Messages
@@ -141,25 +222,18 @@ public final class DaylightChartGui
 
     final JMenuItem saveLocations = new JMenuItem(Messages
       .getString("DaylightChartGui.Menu.File.SaveLocations")); //$NON-NLS-1$
-    saveLocations.addActionListener(new ActionListener()
-    {
-      public void actionPerformed(final ActionEvent actionevent)
-      {
-        saveLocations();
-      }
-    });
+    saveLocations.setActionCommand("DaylightChartGui.Menu.File.SaveLocations");
+    saveLocations.addActionListener(new LocationsFileActionListener());
     menuFile.add(saveLocations);
+
     final JMenuItem loadLocations = new JMenuItem(Messages
       .getString("DaylightChartGui.Menu.File.LoadLocations")); //$NON-NLS-1$
-    loadLocations.addActionListener(new ActionListener()
-    {
-      public void actionPerformed(final ActionEvent actionevent)
-      {
-        loadLocations();
-      }
-    });
+    loadLocations.setActionCommand("DaylightChartGui.Menu.File.LoadLocations");
+    loadLocations.addActionListener(new LocationsFileActionListener());
     menuFile.add(loadLocations);
+
     menuFile.addSeparator();
+
     final JMenuItem saveImage = new JMenuItem(Messages
       .getString("DaylightChartGui.Menu.File.SaveChart")); //$NON-NLS-1$
     saveImage.addActionListener(new ActionListener()
@@ -178,6 +252,7 @@ public final class DaylightChartGui
       }
     });
     menuFile.add(saveImage);
+
     final JMenuItem print = new JMenuItem(Messages
       .getString("DaylightChartGui.Menu.File.PrintChart")); //$NON-NLS-1$
     print.addActionListener(new ActionListener()
@@ -188,7 +263,9 @@ public final class DaylightChartGui
       }
     });
     menuFile.add(print);
+
     menuFile.addSeparator();
+
     final JMenuItem exit = new JMenuItem(Messages
       .getString("DaylightChartGui.Menu.File.Exit")); //$NON-NLS-1$
     exit.addActionListener(new ActionListener()
@@ -199,7 +276,9 @@ public final class DaylightChartGui
       }
     });
     menuFile.add(exit);
+
     return menuFile;
+
   }
 
   private JMenu createHelpMenu()
@@ -330,57 +409,6 @@ public final class DaylightChartGui
     System.exit(0);
   }
 
-  private void loadLocations()
-  {
-
-    final JFileChooser fileDialog = new JFileChooser();
-    fileDialog.setDialogTitle(Messages
-      .getString("DaylightChartGui.Menu.File.LoadLocations")); //$NON-NLS-1$
-    fileDialog
-      .setSelectedFile(new File(lastSelectedDirectory, "locations.data")); //$NON-NLS-1$
-    fileDialog.setDialogType(JFileChooser.OPEN_DIALOG);
-    fileDialog.showDialog(listBox, Messages
-      .getString("DaylightChartGui.Menu.Open")); //$NON-NLS-1$
-    final File selectedFile = fileDialog.getSelectedFile();
-    if (selectedFile == null)
-    {
-      return;
-    }
-
-    if (!selectedFile.exists() || !selectedFile.canRead())
-    {
-      JOptionPane
-        .showMessageDialog(this,
-                           selectedFile
-                               + "\n" //$NON-NLS-1$
-                               + Messages
-                                 .getString("DaylightChartGui.Error.CannotReadFile")); //$NON-NLS-1$
-      return;
-    }
-
-    List<Location> locationsList = LocationsLoader.load(selectedFile);
-    if (locationsList == null)
-    {
-      LOGGER.log(Level.WARNING, Messages
-        .getString("DaylightChartGui.Error.ReadFile")); //$NON-NLS-1$
-      JOptionPane
-        .showMessageDialog(this,
-                           selectedFile
-                               + "\n" //$NON-NLS-1$
-                               + Messages
-                                 .getString("DaylightChartGui.Error.CannotReadFile")); //$NON-NLS-1$
-      return;
-    }
-    else
-    {
-      locations = locationsList;
-      // new UserPreferences().setLocations(locations);
-      refreshView();
-    }
-
-    lastSelectedDirectory = selectedFile.getParentFile();
-  }
-
   private void refreshView()
   {
     chartPanel.setChart(null);
@@ -388,90 +416,6 @@ public final class DaylightChartGui
     listBox.setListData(new Vector<Location>(locations));
     listBox.setSelectedIndex(0);
     this.repaint();
-  }
-
-  private void saveLocations()
-  {
-    final File selectedFile = showSaveDialog(Messages
-      .getString("DaylightChartGui.Menu.File.SaveLocations"), "locations.data"); //$NON-NLS-1$ //$NON-NLS-2$
-    if (selectedFile != null)
-    {
-      try
-      {
-        LocationFormatter.formatLocations(locations, selectedFile);
-      }
-      catch (final Exception e)
-      {
-        LOGGER.log(Level.WARNING, Messages
-          .getString("DaylightChartGui.Error.SaveFile"), e); //$NON-NLS-1$
-        JOptionPane.showMessageDialog(this, Messages
-          .getString("DaylightChartGui.Error.CannotSaveFile") + "\n" //$NON-NLS-1$ //$NON-NLS-2$
-                                            + selectedFile, Messages
-          .getString("DaylightChartGui.Menu.File.SaveFile"), //$NON-NLS-1$
-                                      JOptionPane.OK_OPTION);
-      }
-    }
-  }
-
-  private File showSaveDialog(final String dialogTitle,
-                              final String suggestedFilename)
-  {
-    final JFileChooser fileDialog = new JFileChooser();
-    fileDialog.setDialogTitle(dialogTitle);
-    fileDialog.setSelectedFile(new File(lastSelectedDirectory,
-                                        suggestedFilename));
-    fileDialog.setDialogType(JFileChooser.SAVE_DIALOG);
-    fileDialog.showDialog(listBox, Messages
-      .getString("DaylightChartGui.Menu.File.SaveFile")); //$NON-NLS-1$
-    File selectedFile = fileDialog.getSelectedFile();
-    if (selectedFile != null)
-    {
-      if (selectedFile.exists())
-      {
-        final int confirm = JOptionPane
-          .showConfirmDialog(this,
-                             selectedFile
-                                 + "\n" //$NON-NLS-1$ 
-                                 + Messages
-                                   .getString("DaylightChartGui.ConfirmOverwrite"), //$NON-NLS-1$
-                             Messages
-                               .getString("DaylightChartGui.Menu.File.SaveFile"), //$NON-NLS-1$
-                             JOptionPane.YES_NO_OPTION);
-        if (confirm != JOptionPane.YES_OPTION)
-        {
-          selectedFile = null;
-        }
-      }
-      else
-      {
-        try
-        {
-          selectedFile.createNewFile();
-        }
-        catch (final IOException e)
-        {
-          LOGGER.log(Level.WARNING, Messages
-            .getString("DaylightChartGui.Error.SaveFile"), e); //$NON-NLS-1$
-          selectedFile = null;
-        }
-      }
-      if (selectedFile == null || !selectedFile.canWrite())
-      {
-        JOptionPane.showMessageDialog(this, Messages.getString(Messages
-          .getString("DaylightChartGui.Error.CannotSaveFile"))); //$NON-NLS-1$
-      }
-      if (selectedFile != null)
-      {
-        selectedFile.delete();
-      }
-    }
-    if (selectedFile != null)
-    {
-      // Save last selected directory
-      lastSelectedDirectory = selectedFile.getParentFile();
-    }
-
-    return selectedFile;
   }
 
 }

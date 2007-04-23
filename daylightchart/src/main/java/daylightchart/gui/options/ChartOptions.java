@@ -1,3 +1,24 @@
+/* 
+ * 
+ * Daylight Chart
+ * http://sourceforge.net/projects/daylightchart
+ * Copyright (c) 2007, Sualeh Fatehi.
+ * 
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ * 
+ */
 package daylightchart.gui.options;
 
 
@@ -6,6 +27,11 @@ import java.awt.Paint;
 
 import org.jfree.chart.JFreeChart;
 
+/**
+ * Options for customizing charts.
+ * 
+ * @author sfatehi
+ */
 public class ChartOptions
   extends Options
 {
@@ -18,6 +44,9 @@ public class ChartOptions
   private final PlotOptions plotOptions;
   private final TitleOptions titleOptions;
 
+  /**
+   * Constructor.
+   */
   public ChartOptions()
   {
     antiAlias = false;
@@ -27,6 +56,11 @@ public class ChartOptions
     titleOptions = new TitleOptions();
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see daylightchart.gui.options.Options#copyFromChart(org.jfree.chart.JFreeChart)
+   */
   @Override
   public void copyFromChart(final JFreeChart chart)
   {
@@ -67,6 +101,11 @@ public class ChartOptions
     this.backgroundPaint = backgroundPaint;
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see daylightchart.gui.options.Options#updateChart(org.jfree.chart.JFreeChart)
+   */
   @Override
   public void updateChart(final JFreeChart chart)
   {

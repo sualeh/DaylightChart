@@ -28,7 +28,7 @@ import java.util.Comparator;
 import org.pointlocation6709.Latitude;
 
 /**
- * Compares locations by latitude,
+ * Compares locations by latitude, or name.
  * 
  * @author sfatehi
  */
@@ -40,6 +40,12 @@ public final class LocationComparator
 
   private final LocationsSortOrder sortOrder;
 
+  /**
+   * Compares locations by latitude, or name.
+   * 
+   * @param sortOrder
+   *        Sort order - latitude or name.
+   */
   public LocationComparator(LocationsSortOrder sortOrder)
   {
     if (sortOrder != null)
@@ -75,5 +81,5 @@ public final class LocationComparator
     }
     return comparison;
   }
-  
+
 }

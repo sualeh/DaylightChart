@@ -1,3 +1,24 @@
+/* 
+ * 
+ * Daylight Chart
+ * http://sourceforge.net/projects/daylightchart
+ * Copyright (c) 2007, Sualeh Fatehi.
+ * 
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ * 
+ */
 package daylightchart.gui.options;
 
 
@@ -13,6 +34,11 @@ import org.jfree.chart.plot.Plot;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.ui.RectangleInsets;
 
+/**
+ * Options for customizing charts.
+ * 
+ * @author sfatehi
+ */
 public class PlotOptions
   extends Options
 {
@@ -27,6 +53,9 @@ public class PlotOptions
   private final AxisOptions domainAxisOptions;
   private final AxisOptions rangeAxisOptions;
 
+  /**
+   * Constructor.
+   */
   public PlotOptions()
   {
     backgroundPaint = Color.WHITE;
@@ -38,6 +67,11 @@ public class PlotOptions
     rangeAxisOptions = new AxisOptions();
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see daylightchart.gui.options.Options#copyFromChart(org.jfree.chart.JFreeChart)
+   */
   @Override
   public void copyFromChart(final JFreeChart chart)
   {
@@ -132,6 +166,11 @@ public class PlotOptions
     this.outlineStroke = outlineStroke;
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see daylightchart.gui.options.Options#updateChart(org.jfree.chart.JFreeChart)
+   */
   @Override
   public void updateChart(final JFreeChart chart)
   {
