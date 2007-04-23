@@ -29,11 +29,14 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TimeZone;
 
+import org.pointlocation6709.Longitude;
 import org.pointlocation6709.PointLocation;
+import org.pointlocation6709.Utility;
 import org.pointlocation6709.parser.PointLocationParser;
 
 import daylightchart.location.Countries;
@@ -41,7 +44,7 @@ import daylightchart.location.Country;
 import daylightchart.location.Location;
 
 /**
- * Parses objects from strings.
+ * Parses locations.
  * 
  * @author Sualeh Fatehi
  */
@@ -49,10 +52,61 @@ public final class LocationParser
 {
 
   /**
-   * Parses a string representation of the location.
+   * Calculates a non-DST aware timezone for a given longitude.
+   * 
+   * @param longitude
+   *        Longitude
+   * @return Time zone
+   */
+  public static TimeZone createTimeZoneForLongitude(final Longitude longitude)
+  {
+
+    if (longitude == null)
+    {
+      return null;
+    }
+
+    final boolean hoursOnly = true;
+
+    final double tzOffsetHours = longitude.getDegrees() / 15D;
+    final int[] fields = Utility.sexagesimalSplit(tzOffsetHours);
+    String tzId = "GMT";
+
+    if (fields[0] < 0)
+    {
+      tzId = tzId + "-";
+    }
+    else
+    {
+      tzId = tzId + "+";
+    }
+    int absHours = Math.abs(fields[0]);
+    final int absMinutes = Math.abs(fields[1]);
+    if (hoursOnly)
+    {
+      if (absMinutes >= 30)
+      {
+        absHours = absHours + 1;
+      }
+    }
+
+    final NumberFormat numberFormat = NumberFormat.getIntegerInstance();
+    numberFormat.setMinimumIntegerDigits(2);
+    tzId = tzId + numberFormat.format(absHours);
+    if (!hoursOnly)
+    {
+      tzId = tzId + ":" + numberFormat.format(absMinutes);
+    }
+
+    return TimeZone.getTimeZone(tzId);
+
+  }
+
+  /**
+   * Parses a string representation of a location.
    * 
    * @param representation
-   *        String representation of the location
+   *        String representation of a location
    * @return Location
    * @throws ParserException
    *         On a parse exception
@@ -90,6 +144,33 @@ public final class LocationParser
       throw new ParserException("Invalid location: " + representation, e);
     }
 
+  }
+
+  /**
+   * Reads locations from a file.
+   * 
+   * @param locationsFile
+   *        Locations file
+   * @return List of locations
+   * @throws ParserException
+   *         On a parse exception
+   */
+  public static List<Location> parseLocations(final File locationsFile)
+    throws ParserException
+  {
+    if (locationsFile == null || !locationsFile.exists()
+        || !locationsFile.canRead())
+    {
+      throw new ParserException("Cannot read file");
+    }
+    try
+    {
+      return parseLocations(new FileReader(locationsFile));
+    }
+    catch (final FileNotFoundException e)
+    {
+      throw new ParserException(e);
+    }
   }
 
   /**
@@ -154,33 +235,6 @@ public final class LocationParser
       throw new ParserException("Cannot read file");
     }
     return parseLocations(new StringReader(locationsString));
-  }
-
-  /**
-   * Reads locations from a reader.
-   * 
-   * @param locationsFile
-   *        Locations string
-   * @return List of locations
-   * @throws ParserException
-   *         On a parse exception
-   */
-  public static List<Location> parseLocations(final File locationsFile)
-    throws ParserException
-  {
-    if (locationsFile == null || !locationsFile.exists()
-        || !locationsFile.canRead())
-    {
-      throw new ParserException("Cannot read file");
-    }
-    try
-    {
-      return parseLocations(new FileReader(locationsFile));
-    }
-    catch (FileNotFoundException e)
-    {
-      throw new ParserException(e);
-    }
   }
 
   private LocationParser()

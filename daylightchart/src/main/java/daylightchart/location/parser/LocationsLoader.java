@@ -28,7 +28,7 @@ import java.util.List;
 import daylightchart.location.Location;
 
 /**
- * Parses objects from strings.
+ * Loads locations from a file of any supported format.
  * 
  * @author Sualeh Fatehi
  */
@@ -42,7 +42,7 @@ public final class LocationsLoader
    *        File to load
    * @return List of locations, or null on error
    */
-  public static List<Location> load(File file)
+  public static List<Location> load(final File file)
   {
     List<Location> locations = null;
 
@@ -53,7 +53,7 @@ public final class LocationsLoader
       {
         locations = LocationParser.parseLocations(file);
       }
-      catch (ParserException e)
+      catch (final ParserException e)
       {
         locations = null;
       }
@@ -70,7 +70,7 @@ public final class LocationsLoader
       {
         locations = GNSCountryFilesParser.parseLocations(file);
       }
-      catch (ParserException e)
+      catch (final ParserException e)
       {
         locations = null;
       }
@@ -87,7 +87,7 @@ public final class LocationsLoader
       {
         locations = GNISFilesParser.parseLocations(file);
       }
-      catch (ParserException e)
+      catch (final ParserException e)
       {
         locations = null;
       }

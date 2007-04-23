@@ -23,7 +23,7 @@ package daylightchart.location.parser;
 
 
 /**
- * Parser exception.
+ * Formatter exception.
  * 
  * @author Sualeh Fatehi
  */
@@ -31,10 +31,7 @@ public class FormatterException
   extends Exception
 {
 
-  /**
-   * 
-   */
-  private static final long serialVersionUID = -8091140656979529951L;
+  private static final long serialVersionUID = -8646676654554219081L;
 
   /**
    * Constructor.

@@ -29,7 +29,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TimeZone;
@@ -38,19 +37,45 @@ import org.pointlocation6709.Angle;
 import org.pointlocation6709.Latitude;
 import org.pointlocation6709.Longitude;
 import org.pointlocation6709.PointLocation;
-import org.pointlocation6709.Utility;
 
 import daylightchart.location.Countries;
 import daylightchart.location.Country;
 import daylightchart.location.Location;
 
 /**
- * Parses objects from strings.
+ * Parses data files.
  * 
  * @author Sualeh Fatehi
  */
 public final class GNISFilesParser
 {
+
+  /**
+   * Reads locations from a file.
+   * 
+   * @param locationsFile
+   *        Locations string
+   * @return List of locations
+   * @throws ParserException
+   *         On a parse exception
+   */
+  public static List<Location> parseLocations(final File locationsFile)
+    throws ParserException
+  {
+    if (locationsFile == null || !locationsFile.exists()
+        || !locationsFile.canRead())
+    {
+      throw new ParserException("Cannot read file");
+    }
+    try
+    {
+      return parseLocations(new FileReader(locationsFile));
+    }
+    catch (final FileNotFoundException e)
+    {
+      throw new ParserException(e);
+    }
+  }
 
   /**
    * Reads locations from a reader.
@@ -72,47 +97,45 @@ public final class GNISFilesParser
 
     try
     {
-      List<Location> locations = new ArrayList<Location>();
+      final List<Location> locations = new ArrayList<Location>();
       final BufferedReader reader = new BufferedReader(rdr);
 
       String line;
       while ((line = reader.readLine()) != null)
       {
-        String[] fields = line.split("\t");
+        final String[] fields = line.split("\t");
         if (fields.length != 17)
         {
           continue;
         }
 
-        Country usa = Countries.lookupCountry("US");
+        final Country usa = Countries.lookupCountry("US");
 
-        String featureClass = fields[2];
+        final String featureClass = fields[2];
         if (featureClass.equals("Populated Place"))
         {
-          String city = fields[1];
-          String county = fields[5];
-          String state = fields[3];
+          final String city = fields[1];
+          final String county = fields[5];
+          final String state = fields[3];
 
-          String latitudeString = fields[9];
-          String longitudeString = fields[10];
-          String elevationString = fields[14];
+          final String latitudeString = fields[9];
+          final String longitudeString = fields[10];
+          final String elevationString = fields[14];
 
-          double longitudeDegrees = Double.parseDouble(longitudeString);
-
-          Latitude latitude = new Latitude(Angle.fromDegrees(Double
+          final Latitude latitude = new Latitude(Angle.fromDegrees(Double
             .parseDouble(latitudeString)));
-          Longitude longitude = new Longitude(Angle
-            .fromDegrees(longitudeDegrees));
-          double elevation = 0;
-          if (elevationString.trim().length() > 0)
+          final Longitude longitude = new Longitude(Angle.fromDegrees(Double
+            .parseDouble(longitudeString)));
+          final double elevation = 0;
+          if (elevationString.length() > 0)
           {
             Double.parseDouble(elevationString);
           }
-          PointLocation pointLocation = new PointLocation(latitude,
-                                                          longitude,
-                                                          elevation);
-          TimeZone timeZone = TimeZone
-            .getTimeZone(formatTimeZone(longitudeDegrees));
+          final PointLocation pointLocation = new PointLocation(latitude,
+                                                                longitude,
+                                                                elevation);
+          final TimeZone timeZone = LocationParser
+            .createTimeZoneForLongitude(longitude);
 
           locations.add(new Location(city + ", " + county + ", " + state,
                                      usa,
@@ -148,60 +171,6 @@ public final class GNISFilesParser
       throw new ParserException("Cannot read file");
     }
     return parseLocations(new StringReader(locationsString));
-  }
-
-  /**
-   * Reads locations from a reader.
-   * 
-   * @param locationsFile
-   *        Locations string
-   * @return List of locations
-   * @throws ParserException
-   *         On a parse exception
-   */
-  public static List<Location> parseLocations(final File locationsFile)
-    throws ParserException
-  {
-    if (locationsFile == null || !locationsFile.exists()
-        || !locationsFile.canRead())
-    {
-      throw new ParserException("Cannot read file");
-    }
-    try
-    {
-      return parseLocations(new FileReader(locationsFile));
-    }
-    catch (FileNotFoundException e)
-    {
-      throw new ParserException(e);
-    }
-  }
-
-  private static String formatTimeZone(double longitude)
-  {
-
-    double tzOffsetHours = longitude / 15D;
-    int[] fields = Utility.sexagesimalSplit(tzOffsetHours);
-    String tzId = "GMT";
-
-    if (fields[0] < 0)
-    {
-      tzId = tzId + "-";
-    }
-    else
-    {
-      tzId = tzId + "+";
-    }
-    final int absHours = Math.abs(fields[0]);
-    final int absMinutes = Math.abs(fields[1]);
-
-    final NumberFormat numberFormat = NumberFormat.getIntegerInstance();
-    numberFormat.setMinimumIntegerDigits(2);
-    tzId = tzId + numberFormat.format(absHours) + ":"
-           + numberFormat.format(absMinutes);
-
-    return tzId;
-
   }
 
   private GNISFilesParser()

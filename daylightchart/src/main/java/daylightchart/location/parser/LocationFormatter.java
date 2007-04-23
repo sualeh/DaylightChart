@@ -97,16 +97,19 @@ public final class LocationFormatter
    * 
    * @param locations
    *        Locations to format
+   * @param file
+   *        File to write to.
    * @throws daylightchart.location.parser.FormatterException
    */
-  public static void formatLocations(final List<Location> locations, File file)
+  public static void formatLocations(final List<Location> locations,
+                                     final File file)
     throws daylightchart.location.parser.FormatterException
   {
     if (file == null)
     {
       throw new daylightchart.location.parser.FormatterException("No file provided");
     }
-    
+
     try
     {
       final FileWriter writer = new FileWriter(file);
@@ -114,7 +117,7 @@ public final class LocationFormatter
       writer.flush();
       writer.close();
     }
-    catch (IOException e)
+    catch (final IOException e)
     {
       throw new daylightchart.location.parser.FormatterException(e);
     }

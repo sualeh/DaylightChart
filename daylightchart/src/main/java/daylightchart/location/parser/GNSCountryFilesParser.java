@@ -29,7 +29,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TimeZone;
@@ -38,7 +37,6 @@ import org.pointlocation6709.Angle;
 import org.pointlocation6709.Latitude;
 import org.pointlocation6709.Longitude;
 import org.pointlocation6709.PointLocation;
-import org.pointlocation6709.Utility;
 
 import daylightchart.location.Countries;
 import daylightchart.location.Country;
@@ -51,6 +49,33 @@ import daylightchart.location.Location;
  */
 public final class GNSCountryFilesParser
 {
+
+  /**
+   * Reads locations from a file.
+   * 
+   * @param locationsFile
+   *        Locations file
+   * @return List of locations
+   * @throws ParserException
+   *         On a parse exception
+   */
+  public static List<Location> parseLocations(final File locationsFile)
+    throws ParserException
+  {
+    if (locationsFile == null || !locationsFile.exists()
+        || !locationsFile.canRead())
+    {
+      throw new ParserException("Cannot read file");
+    }
+    try
+    {
+      return parseLocations(new FileReader(locationsFile));
+    }
+    catch (final FileNotFoundException e)
+    {
+      throw new ParserException(e);
+    }
+  }
 
   /**
    * Reads locations from a reader.
@@ -72,45 +97,44 @@ public final class GNSCountryFilesParser
 
     try
     {
-      List<String> locationNames = new ArrayList<String>();
-      List<Location> locations = new ArrayList<Location>();
+      final List<String> locationNames = new ArrayList<String>();
+      final List<Location> locations = new ArrayList<Location>();
       final BufferedReader reader = new BufferedReader(rdr);
 
       String line;
       while ((line = reader.readLine()) != null)
       {
-        String[] fields = line.split("\t");
+        final String[] fields = line.split("\t");
         if (fields.length != 25)
         {
           continue;
         }
 
-        String featureDesignationCode = fields[10];
-        String nameType = fields[17];
+        final String featureDesignationCode = fields[10];
+        final String nameType = fields[17];
         if (featureDesignationCode.startsWith("PPL")
             && (nameType.equals("C") || nameType.equals("N")))
         {
-          String latitudeString = fields[3];
-          String longitudeString = fields[4];
-          String fips10CountryCode = fields[12];
-          String city = fields[23];
+          final String latitudeString = fields[3];
+          final String longitudeString = fields[4];
+          final String fips10CountryCode = fields[12];
+          final String city = fields[23];
 
           if (locationNames.contains(city + ", " + fips10CountryCode))
           {
             continue;
           }
 
-          double longitudeDegrees = Double.parseDouble(longitudeString);
-
-          Country country = Countries
+          final Country country = Countries
             .lookupFips10CountryCode(fips10CountryCode);
-          Latitude latitude = new Latitude(Angle.fromDegrees(Double
+          final Latitude latitude = new Latitude(Angle.fromDegrees(Double
             .parseDouble(latitudeString)));
-          Longitude longitude = new Longitude(Angle
-            .fromDegrees(longitudeDegrees));
-          PointLocation pointLocation = new PointLocation(latitude, longitude);
-          TimeZone timeZone = TimeZone
-            .getTimeZone(formatTimeZone(longitudeDegrees));
+          final Longitude longitude = new Longitude(Angle.fromDegrees(Double
+            .parseDouble(longitudeString)));
+          final PointLocation pointLocation = new PointLocation(latitude,
+                                                                longitude);
+          final TimeZone timeZone = LocationParser
+            .createTimeZoneForLongitude(longitude);
 
           locations.add(new Location(city, country, timeZone, pointLocation));
           locationNames.add(city + ", " + fips10CountryCode);
@@ -144,60 +168,6 @@ public final class GNSCountryFilesParser
       throw new ParserException("Cannot read file");
     }
     return parseLocations(new StringReader(locationsString));
-  }
-
-  /**
-   * Reads locations from a reader.
-   * 
-   * @param locationsFile
-   *        Locations string
-   * @return List of locations
-   * @throws ParserException
-   *         On a parse exception
-   */
-  public static List<Location> parseLocations(final File locationsFile)
-    throws ParserException
-  {
-    if (locationsFile == null || !locationsFile.exists()
-        || !locationsFile.canRead())
-    {
-      throw new ParserException("Cannot read file");
-    }
-    try
-    {
-      return parseLocations(new FileReader(locationsFile));
-    }
-    catch (FileNotFoundException e)
-    {
-      throw new ParserException(e);
-    }
-  }
-
-  private static String formatTimeZone(double longitude)
-  {
-
-    double tzOffsetHours = longitude / 15D;
-    int[] fields = Utility.sexagesimalSplit(tzOffsetHours);
-    String tzId = "GMT";
-
-    if (fields[0] < 0)
-    {
-      tzId = tzId + "-";
-    }
-    else
-    {
-      tzId = tzId + "+";
-    }
-    final int absHours = Math.abs(fields[0]);
-    final int absMinutes = Math.abs(fields[1]);
-
-    final NumberFormat numberFormat = NumberFormat.getIntegerInstance();
-    numberFormat.setMinimumIntegerDigits(2);
-    tzId = tzId + numberFormat.format(absHours) + ":"
-           + numberFormat.format(absMinutes);
-
-    return tzId;
-
   }
 
   private GNSCountryFilesParser()
