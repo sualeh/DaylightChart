@@ -17,6 +17,9 @@
       <action dev="Sualeh Fatehi" type="add">
         The ability in load in GNS Country Files.
       </action>
+      <action dev="Sualeh Fatehi" type="add">
+        The ability in load in GNIS Country Files.
+      </action>
     </release>
   </body>
 </document>
