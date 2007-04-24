@@ -22,6 +22,7 @@
 package daylightchart.gui;
 
 
+import java.awt.Cursor;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -80,6 +81,8 @@ public class GuiHelper
       return;
     }
 
+    mainWindow.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+
     List<Location> locationsList = LocationsLoader.load(selectedFile);
     if (locationsList == null)
     {
@@ -100,6 +103,8 @@ public class GuiHelper
 
     mainWindow.setLastSelectedDirectory(selectedFile.getParentFile());
 
+    mainWindow.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+    
   }
 
   private GuiHelper()
@@ -149,8 +154,8 @@ public class GuiHelper
    * @return Selected file.
    */
   public static File showSaveDialog(final String dialogTitle,
-                             final String suggestedFilename,
-                             DaylightChartGui mainWindow)
+                                    final String suggestedFilename,
+                                    DaylightChartGui mainWindow)
   {
     final JFileChooser fileDialog = new JFileChooser();
     fileDialog.setDialogTitle(dialogTitle);
