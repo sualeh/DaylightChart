@@ -114,8 +114,6 @@ public final class LocationFormatter
     {
       final FileWriter writer = new FileWriter(file);
       formatLocations(locations, writer);
-      writer.flush();
-      writer.close();
     }
     catch (final IOException e)
     {

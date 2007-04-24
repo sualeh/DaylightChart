@@ -32,6 +32,8 @@ import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TimeZone;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.pointlocation6709.Angle;
 import org.pointlocation6709.Latitude;
@@ -49,6 +51,9 @@ import daylightchart.location.Location;
  */
 public final class GNSCountryFilesParser
 {
+  
+  private static final Logger LOGGER = Logger
+    .getLogger(GNSCountryFilesParser.class.getName());
 
   /**
    * Reads locations from a file.
@@ -141,7 +146,8 @@ public final class GNSCountryFilesParser
         }
       }
       reader.close();
-
+      
+      LOGGER.log(Level.INFO, "Loaded " + locations.size() + " locations");
       return new ArrayList<Location>(locations);
     }
     catch (final IOException e)

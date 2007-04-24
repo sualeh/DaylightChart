@@ -32,6 +32,8 @@ import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TimeZone;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.pointlocation6709.Angle;
 import org.pointlocation6709.Latitude;
@@ -49,6 +51,9 @@ import daylightchart.location.Location;
  */
 public final class GNISFilesParser
 {
+
+  private static final Logger LOGGER = Logger.getLogger(GNISFilesParser.class
+    .getName());
 
   /**
    * Reads locations from a file.
@@ -115,7 +120,7 @@ public final class GNISFilesParser
         if (featureClass.equals("Populated Place"))
         {
           final String city = fields[1];
-          final String county = fields[5];
+          // final String county = fields[5];
           final String state = fields[3];
 
           final String latitudeString = fields[9];
@@ -131,20 +136,26 @@ public final class GNISFilesParser
           {
             Double.parseDouble(elevationString);
           }
-          final PointLocation pointLocation = new PointLocation(latitude,
-                                                                longitude,
-                                                                elevation);
-          final TimeZone timeZone = LocationParser
-            .createTimeZoneForLongitude(longitude);
+          if (latitude.getDegrees() != 0 && longitude.getDegrees() != 0)
+          {
+            final PointLocation pointLocation = new PointLocation(latitude,
+                                                                  longitude,
+                                                                  elevation);
+            final TimeZone timeZone = LocationParser
+              .createTimeZoneForLongitude(longitude);
 
-          locations.add(new Location(city + ", " + county + ", " + state,
-                                     usa,
-                                     timeZone,
-                                     pointLocation));
+            final String locationName = city + ", "
+                                        + /* county + ", " + */state;
+            locations.add(new Location(locationName,
+                                       usa,
+                                       timeZone,
+                                       pointLocation));
+          }
         }
       }
       reader.close();
-
+      
+      LOGGER.log(Level.INFO, "Loaded " + locations.size() + " locations");
       return new ArrayList<Location>(locations);
     }
     catch (final IOException e)

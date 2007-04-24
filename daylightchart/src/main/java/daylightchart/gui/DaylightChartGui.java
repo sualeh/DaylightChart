@@ -92,12 +92,12 @@ public final class DaylightChartGui
       if (actionevent.getActionCommand()
         .equals("DaylightChartGui.Menu.File.SaveLocations")) //$NON-NLS-1$
       {
-        GuiHelper.loadLocations(mainWindow);
+        GuiHelper.saveLocations(mainWindow);
       }
       else if (actionevent.getActionCommand()
         .equals("DaylightChartGui.Menu.File.LoadLocations")) //$NON-NLS-1$
       {
-        GuiHelper.saveLocations(mainWindow);
+        GuiHelper.loadLocations(mainWindow);
       }
     }
     
