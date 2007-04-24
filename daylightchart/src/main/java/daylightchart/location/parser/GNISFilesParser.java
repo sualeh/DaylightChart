@@ -141,8 +141,8 @@ public final class GNISFilesParser
             final PointLocation pointLocation = new PointLocation(latitude,
                                                                   longitude,
                                                                   elevation);
-            final TimeZone timeZone = LocationParser
-              .createTimeZoneForLongitude(longitude);
+            final TimeZone timeZone = DefaultTimezones
+              .attemptTimeZoneMatch(usa, longitude);
 
             final String locationName = city + ", "
                                         + /* county + ", " + */state;
@@ -154,7 +154,7 @@ public final class GNISFilesParser
         }
       }
       reader.close();
-      
+
       LOGGER.log(Level.INFO, "Loaded " + locations.size() + " locations");
       return new ArrayList<Location>(locations);
     }

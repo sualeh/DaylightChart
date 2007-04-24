@@ -39,30 +39,13 @@ public final class Country
   private final String iso3166CountryCode2;
   private final String fips10CountryCode;
 
-  Country(final String countryRecord)
+  Country(String countryName,
+          String iso3166CountryCode2,
+          String fips10CountryCode)
   {
-    if (countryRecord == null)
-    {
-      throw new IllegalArgumentException("No country record provided");
-    }
-
-    final String[] fields = countryRecord.split(",");
-
-    final boolean invalidNumberOfFields = fields.length != 3;
-    final boolean invalidHasNulls = fields[0] == null || fields[1] == null
-                                    || fields[2] == null;
-    final boolean invalidLengths = fields[0].length() != 2
-                                   || fields[2].length() == 0;
-    if (invalidNumberOfFields || invalidHasNulls || invalidLengths)
-    {
-      throw new IllegalArgumentException("Invalid country record: "
-                                         + countryRecord);
-    }
-
-    iso3166CountryCode2 = fields[0];
-    fips10CountryCode = fields[1];
-    countryName = fields[2];
-
+    this.countryName = countryName;
+    this.iso3166CountryCode2 = iso3166CountryCode2;
+    this.fips10CountryCode = fips10CountryCode;
   }
 
   /**

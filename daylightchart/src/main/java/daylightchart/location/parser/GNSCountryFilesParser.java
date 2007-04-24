@@ -51,7 +51,7 @@ import daylightchart.location.Location;
  */
 public final class GNSCountryFilesParser
 {
-  
+
   private static final Logger LOGGER = Logger
     .getLogger(GNSCountryFilesParser.class.getName());
 
@@ -138,15 +138,15 @@ public final class GNSCountryFilesParser
             .parseDouble(longitudeString)));
           final PointLocation pointLocation = new PointLocation(latitude,
                                                                 longitude);
-          final TimeZone timeZone = LocationParser
-            .createTimeZoneForLongitude(longitude);
+          final TimeZone timeZone = DefaultTimezones
+            .attemptTimeZoneMatch(country, longitude);
 
           locations.add(new Location(city, country, timeZone, pointLocation));
           locationNames.add(city + ", " + fips10CountryCode);
         }
       }
       reader.close();
-      
+
       LOGGER.log(Level.INFO, "Loaded " + locations.size() + " locations");
       return new ArrayList<Location>(locations);
     }

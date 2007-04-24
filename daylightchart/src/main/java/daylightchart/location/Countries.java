@@ -26,7 +26,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * In-memory database of locations.
@@ -55,7 +57,20 @@ public final class Countries
       String line;
       while ((line = reader.readLine()) != null)
       {
-        final Country country = new Country(line);
+
+        final String[] fields = line.split(",");
+
+        final boolean invalidNumberOfFields = fields.length != 3;
+        final boolean invalidHasNulls = fields[0] == null || fields[1] == null
+                                        || fields[2] == null;
+        final boolean invalidLengths = fields[0].length() != 2
+                                       || fields[2].length() == 0;
+        if (invalidNumberOfFields || invalidHasNulls || invalidLengths)
+        {
+          throw new IllegalArgumentException("Invalid country record: " + line);
+        }
+
+        final Country country = new Country(fields[2], fields[0], fields[1]);
         iso3166CountryCodeMap.put(country.getIso3166CountryCode2(), country);
         fips10CountryCodeMap.put(country.getFips10CountryCode(), country);
         countryNameMap.put(country.getCountryName(), country);
@@ -137,6 +152,16 @@ public final class Countries
   public static Country lookupIso3166CountryCode2(final String iso3166CountryCode2)
   {
     return iso3166CountryCodeMap.get(iso3166CountryCode2);
+  }
+
+  /**
+   * Gets a collection of all countries.
+   * 
+   * @return All countries.
+   */
+  public static Set<Country> getAllCountries()
+  {
+    return new HashSet<Country>(iso3166CountryCodeMap.values());
   }
 
 }

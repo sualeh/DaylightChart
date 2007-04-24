@@ -29,14 +29,11 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TimeZone;
 
-import org.pointlocation6709.Longitude;
 import org.pointlocation6709.PointLocation;
-import org.pointlocation6709.Utility;
 import org.pointlocation6709.parser.PointLocationParser;
 
 import daylightchart.location.Countries;
@@ -50,57 +47,6 @@ import daylightchart.location.Location;
  */
 public final class LocationParser
 {
-
-  /**
-   * Calculates a non-DST aware timezone for a given longitude.
-   * 
-   * @param longitude
-   *        Longitude
-   * @return Time zone
-   */
-  public static TimeZone createTimeZoneForLongitude(final Longitude longitude)
-  {
-
-    if (longitude == null)
-    {
-      return null;
-    }
-
-    final boolean hoursOnly = true;
-
-    final double tzOffsetHours = longitude.getDegrees() / 15D;
-    final int[] fields = Utility.sexagesimalSplit(tzOffsetHours);
-    String tzId = "GMT";
-
-    if (fields[0] < 0)
-    {
-      tzId = tzId + "-";
-    }
-    else
-    {
-      tzId = tzId + "+";
-    }
-    int absHours = Math.abs(fields[0]);
-    final int absMinutes = Math.abs(fields[1]);
-    if (hoursOnly)
-    {
-      if (absMinutes >= 30)
-      {
-        absHours = absHours + 1;
-      }
-    }
-
-    final NumberFormat numberFormat = NumberFormat.getIntegerInstance();
-    numberFormat.setMinimumIntegerDigits(2);
-    tzId = tzId + numberFormat.format(absHours);
-    if (!hoursOnly)
-    {
-      tzId = tzId + ":" + numberFormat.format(absMinutes);
-    }
-
-    return TimeZone.getTimeZone(tzId);
-
-  }
 
   /**
    * Parses a string representation of a location.
