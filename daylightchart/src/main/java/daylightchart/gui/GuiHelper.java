@@ -83,22 +83,29 @@ public class GuiHelper
 
     mainWindow.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 
-    List<Location> locationsList = LocationsLoader.load(selectedFile);
-    if (locationsList == null)
+    try
     {
-      LOGGER.log(Level.WARNING, Messages
-        .getString("DaylightChartGui.Error.ReadFile")); //$NON-NLS-1$
-      JOptionPane
-        .showMessageDialog(mainWindow,
-                           selectedFile
-                               + "\n" //$NON-NLS-1$
-                               + Messages
-                                 .getString("DaylightChartGui.Error.CannotReadFile")); //$NON-NLS-1$
-      return;
+      List<Location> locationsList = LocationsLoader.load(selectedFile);
+      if (locationsList == null)
+      {
+        LOGGER.log(Level.WARNING, Messages
+          .getString("DaylightChartGui.Error.ReadFile")); //$NON-NLS-1$
+        JOptionPane
+          .showMessageDialog(mainWindow,
+                             selectedFile
+                                 + "\n" //$NON-NLS-1$
+                                 + Messages
+                                   .getString("DaylightChartGui.Error.CannotReadFile")); //$NON-NLS-1$
+        return;
+      }
+      else
+      {
+        mainWindow.setLocations(locationsList);
+      }
     }
-    else
+    catch (Exception e)
     {
-      mainWindow.setLocations(locationsList);
+      LOGGER.log(Level.WARNING, "Could not load locations");
     }
 
     mainWindow.setLastSelectedDirectory(selectedFile.getParentFile());

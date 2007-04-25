@@ -125,22 +125,15 @@ public final class GNISFilesParser
 
           final String latitudeString = fields[9];
           final String longitudeString = fields[10];
-          final String elevationString = fields[14];
 
           final Latitude latitude = new Latitude(Angle.fromDegrees(Double
             .parseDouble(latitudeString)));
           final Longitude longitude = new Longitude(Angle.fromDegrees(Double
             .parseDouble(longitudeString)));
-          final double elevation = 0;
-          if (elevationString.length() > 0)
-          {
-            Double.parseDouble(elevationString);
-          }
           if (latitude.getDegrees() != 0 && longitude.getDegrees() != 0)
           {
             final PointLocation pointLocation = new PointLocation(latitude,
-                                                                  longitude,
-                                                                  elevation);
+                                                                  longitude);
             final TimeZone timeZone = DefaultTimezones
               .attemptTimeZoneMatch(usa, longitude);
 

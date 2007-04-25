@@ -25,6 +25,9 @@ package daylightchart.location.parser;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -32,9 +35,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TimeZone;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.pointlocation6709.Longitude;
-import org.pointlocation6709.Utility;
 
 import daylightchart.location.Countries;
 import daylightchart.location.Country;
@@ -47,7 +51,8 @@ import daylightchart.location.Country;
 public final class DefaultTimezones
 {
 
-  private static final long serialVersionUID = -2155899588206966572L;
+  private static final Logger LOGGER = Logger.getLogger(DefaultTimezones.class
+    .getName());
 
   private static final Map<Country, Set<TimeZone>> defaultTimezones = new HashMap<Country, Set<TimeZone>>();
 
@@ -88,11 +93,18 @@ public final class DefaultTimezones
 
         // Add default timezone for the country
         TimeZone defaultTimezone = TimeZone.getTimeZone(timezoneId);
-        Country country = Countries
-          .lookupIso3166CountryCode2(iso3166CountryCode2);
-        Set<TimeZone> defaultTimezonesForCountry = defaultTimezones
-          .get(country);
-        defaultTimezonesForCountry.add(defaultTimezone);
+        if (defaultTimezone.getID() != "GMT")
+        {
+          Country country = Countries
+            .lookupIso3166CountryCode2(iso3166CountryCode2);
+          Set<TimeZone> defaultTimezonesForCountry = defaultTimezones
+            .get(country);
+          defaultTimezonesForCountry.add(defaultTimezone);
+        }
+        else
+        {
+          LOGGER.log(Level.WARNING, "Cannot find timezone " + timezoneId);
+        }
       }
       reader.close();
 
@@ -134,18 +146,31 @@ public final class DefaultTimezones
     }
 
     // More than one timezone found - try a match by longitude
-    final double tzOffsetHours = longitude.getDegrees() / 15D;
-    final int[] fields = Utility.sexagesimalSplit(tzOffsetHours);
-    int absHours = Math.abs(fields[0]);
-    int absMinutes = Math.abs(fields[1]);
-    if (absMinutes >= 30)
+    double tzOffset;
+    tzOffset = longitude.getDegrees() / 15D; // In hours
+    tzOffset = roundToNearestHalf(tzOffset);
+    tzOffset = tzOffset * 60D * 60D * 1000D; // In milliseconds
+
+    TimeZone timeZone = null;
+    double leastDifference = Double.MAX_VALUE;
+    for (TimeZone defaultTimeZone: defaultTimezonesForCountry)
     {
-      absHours = absHours + 1;
-      absMinutes = 0;
+      double difference = Math.abs(defaultTimeZone.getRawOffset() - tzOffset);
+      if (difference < leastDifference)
+      {
+        leastDifference = difference;
+        timeZone = defaultTimeZone;
+      }
     }
 
-    return null;
+    return timeZone;
 
+  }
+
+  public static double roundToNearestHalf(double number)
+  {
+    return new BigDecimal(number * 2D)
+      .round(new MathContext(1, RoundingMode.HALF_UP)).doubleValue() / 2D;
   }
 
 }
