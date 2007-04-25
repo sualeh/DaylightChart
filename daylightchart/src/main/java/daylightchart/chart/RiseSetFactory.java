@@ -24,14 +24,16 @@ package daylightchart.chart;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.TimeZone;
 
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.joda.time.LocalDate;
-import org.joda.time.LocalTime;
+import org.joda.time.LocalDateTime;
 
 import daylightchart.astronomical.SunAlgorithm;
 import daylightchart.astronomical.SunAlgorithmFactory;
 import daylightchart.location.Location;
+import daylightchart.location.parser.DefaultTimezones;
 
 /**
  * Calculator for sunrise and sunset times for a year.
@@ -57,33 +59,23 @@ public final class RiseSetFactory
 
     final RiseSetYear riseSetYear = new RiseSetYear(location, year);
     final List<LocalDate> yearsDates = getYearsDates(year);
-    final TimeZone tz;
+    final DateTimeZone timeZone;
     if (location != null)
     {
-      tz = location.getTimeZone();
+      timeZone = DateTimeZone.forID(location.getTimeZoneId());
     }
     else
     {
-      tz = TimeZone.getDefault();
+      timeZone = DateTimeZone.getDefault();
     }
-    final boolean useDaylightTime = tz.useDaylightTime();
-    boolean wasDaylightSavings = false;
+    final boolean useDaylightTime = !timeZone.isFixed();
     for (final LocalDate date: yearsDates)
     {
-      final boolean inDaylightSavings = tz.inDaylightTime(date
-        .toDateTime((LocalTime) null).toGregorianCalendar().getTime());
-      if (wasDaylightSavings != inDaylightSavings)
-      {
-        if (!wasDaylightSavings)
-        {
-          riseSetYear.setDstStart(date);
-        }
-        else
-        {
-          riseSetYear.setDstEnd(date);
-        }
-      }
-      wasDaylightSavings = inDaylightSavings;
+      long instant = new DateTime(date).getMillis();
+      long standardOffset = timeZone.getStandardOffset(instant);
+      long offset = timeZone.getOffset(instant);
+      boolean inDaylightSavings = standardOffset != offset;
+
       // Calculate sunsrise and sunset
       final Hour[] riseSet = calcRiseSet(sunAlgorithm, location, date);
       final Hour sunrise = riseSet[0];
@@ -93,6 +85,15 @@ public final class RiseSetFactory
       //
       riseSetYear.addRiseSet(new RiseSet(location, date, sunrise, sunset));
     }
+
+    // Get transition points
+    long instant = new DateTime(yearsDates.get(0)).getMillis();
+    while (instant != timeZone.nextTransition(instant))
+    {
+      instant = timeZone.nextTransition(instant);
+      new LocalDateTime(instant);
+    }
+
     return riseSetYear;
   }
 
@@ -106,8 +107,8 @@ public final class RiseSetFactory
         .getDegrees());
       sunAlgorithm.setLongitude(location.getPointLocation().getLongitude()
         .getDegrees());
-      sunAlgorithm
-        .setTimeZoneOffset(location.getTimeZone().getRawOffset() / 1000.0 / 60.0 / 60.0);
+      sunAlgorithm.setTimeZoneOffset(DefaultTimezones
+        .getStandardTimeZoneOffsetHours(location.getTimeZoneId()));
     }
     sunAlgorithm.setYear(date.getYear());
     sunAlgorithm.setMonth(date.getMonthOfYear());

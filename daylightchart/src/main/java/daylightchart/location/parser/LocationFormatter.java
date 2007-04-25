@@ -29,6 +29,8 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.util.List;
 
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.pointlocation6709.parser.FormatterException;
 import org.pointlocation6709.parser.PointLocationFormatType;
 import org.pointlocation6709.parser.PointLocationFormatter;
@@ -65,7 +67,7 @@ public final class LocationFormatter
     {
       throw new daylightchart.location.parser.FormatterException(e);
     }
-    final String tzId = location.getTimeZone().getID();
+    final String tzId = location.getTimeZoneId();
 
     final String city = location.getCity();
     final Country country = location.getCountry();
@@ -165,8 +167,14 @@ public final class LocationFormatter
    */
   public static String printLocationDetails(final Location location)
   {
+    if (location == null)
+    {
+      return "";
+    }
+    long now = new DateTime().getMillis();
+    DateTimeZone timeZone = DateTimeZone.forID(location.getTimeZoneId());
     final String details = location.getPointLocation().toString() + ", "
-                           + location.getTimeZone().getDisplayName();
+                           + timeZone.getName(now);
     return details;
   }
 

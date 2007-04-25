@@ -31,7 +31,6 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -134,14 +133,14 @@ public final class GNISFilesParser
           {
             final PointLocation pointLocation = new PointLocation(latitude,
                                                                   longitude);
-            final TimeZone timeZone = DefaultTimezones
+            final String timeZoneId = DefaultTimezones
               .attemptTimeZoneMatch(usa, longitude);
 
             final String locationName = city + ", "
                                         + /* county + ", " + */state;
             locations.add(new Location(locationName,
                                        usa,
-                                       timeZone,
+                                       timeZoneId,
                                        pointLocation));
           }
         }

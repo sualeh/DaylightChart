@@ -31,7 +31,6 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -138,10 +137,10 @@ public final class GNSCountryFilesParser
             .parseDouble(longitudeString)));
           final PointLocation pointLocation = new PointLocation(latitude,
                                                                 longitude);
-          final TimeZone timeZone = DefaultTimezones
+          final String timeZoneId = DefaultTimezones
             .attemptTimeZoneMatch(country, longitude);
 
-          locations.add(new Location(city, country, timeZone, pointLocation));
+          locations.add(new Location(city, country, timeZoneId, pointLocation));
           locationNames.add(city + ", " + fips10CountryCode);
         }
       }

@@ -30,6 +30,7 @@ import org.junit.Test;
 import daylightchart.astronomical.SunAlgorithm;
 import daylightchart.astronomical.SunAlgorithmFactory;
 import daylightchart.location.Location;
+import daylightchart.location.parser.DefaultTimezones;
 import daylightchart.location.parser.LocationParser;
 import daylightchart.location.parser.ParserException;
 
@@ -163,8 +164,8 @@ public class TestSunAlgorithm
       .getDegrees());
     mSunAlgorithm.setLongitude(location.getPointLocation().getLongitude()
       .getDegrees());
-    mSunAlgorithm.setTimeZoneOffset(location.getTimeZone().getRawOffset()
-                                    / (1000.0 * 60.0 * 60.0));
+    mSunAlgorithm.setTimeZoneOffset(DefaultTimezones
+      .getStandardTimeZoneOffsetHours(location.getTimeZoneId()));
     mSunAlgorithm.setYear(date.getYear());
     mSunAlgorithm.setMonth(date.getMonthOfYear());
     mSunAlgorithm.setDay(date.getDayOfMonth());

@@ -24,6 +24,7 @@ package daylightchart.chart;
 
 import java.io.Serializable;
 
+import org.joda.time.LocalTime;
 import org.pointlocation6709.Utility;
 
 /**
@@ -37,25 +38,11 @@ public final class Hour
   implements Serializable, Comparable<Hour>
 {
 
-  /** Hour fields. */
-  public enum Field
-  {
-    /** Hours. */
-    HOURS,
-    /** Minutes. */
-    MINUTES,
-    /** Seconds. */
-    SECONDS
-  }
-
   private static final long serialVersionUID = 6973647622518973008L;
 
-  private final double hour;
-  private final int[] sexagesimalHourParts;
+  private final LocalTime hour;
   /** Adjusts the output of the time format for daylight savings time. */
   private boolean inDaylightSavings;
-  /** Contols the output of the time format to 12 hour or 24 hour clock. */
-  private boolean time24;
 
   /**
    * Constructor for the hour, given the value of the hour.
@@ -65,36 +52,13 @@ public final class Hour
    */
   public Hour(final double hour)
   {
-    this(hour, false, false);
-  }
-
-  /**
-   * Copy constructor. Copies the value of a provided hour.
-   * 
-   * @param hour
-   *        Hour to copy the value from.
-   */
-  public Hour(final Hour hour)
-  {
-    this(hour.hour, hour.inDaylightSavings, hour.time24);
-  }
-
-  private Hour(final double hour,
-               final boolean inDaylightSavings,
-               final boolean time24)
-  {
-    double dayHour;
-
-    dayHour = hour % 24D;
+    double dayHour = hour % 24D;
     if (dayHour < 0)
     {
       dayHour = dayHour + hour;
     }
-    this.hour = dayHour;
-
-    sexagesimalHourParts = Utility.sexagesimalSplit(hour);
-    this.inDaylightSavings = inDaylightSavings;
-    this.time24 = time24;
+    final int[] fields = Utility.sexagesimalSplit(dayHour);
+    this.hour = new LocalTime(fields[0], fields[1], fields[2]);
   }
 
   /**
@@ -102,120 +66,29 @@ public final class Hour
    * 
    * @see java.lang.Comparable#compareTo(java.lang.Object)
    */
-  public int compareTo(final Hour hour)
+  public int compareTo(final Hour otherHour)
   {
-    int comparison;
-    comparison = getField(Field.HOURS) - hour.getField(Field.HOURS);
-    if (comparison == 0)
-    {
-      comparison = getField(Field.MINUTES) - hour.getField(Field.MINUTES);
-    }
-    if (comparison == 0)
-    {
-      comparison = getField(Field.SECONDS) - hour.getField(Field.SECONDS);
-    }
-    return comparison;
+    return hour.compareTo(otherHour.hour);
   }
 
   /**
-   * {@inheritDoc}
+   * Get local time.
    * 
-   * @see java.lang.Object#equals(java.lang.Object)
+   * @return Local time
    */
-  @Override
-  public boolean equals(final Object obj)
+  public final LocalTime getLocalTime()
   {
-    if (this == obj)
-    {
-      return true;
-    }
-    if (obj == null)
-    {
-      return false;
-    }
-    if (getClass() != obj.getClass())
-    {
-      return false;
-    }
-    final Hour other = (Hour) obj;
-    if (Double.doubleToLongBits(hour) != Double.doubleToLongBits(other.hour))
-    {
-      return false;
-    }
-    if (inDaylightSavings != other.inDaylightSavings)
-    {
-      return false;
-    }
-    if (time24 != other.time24)
-    {
-      return false;
-    }
-    return true;
-  }
-
-  /**
-   * Gets an hour field - such as hours, minutes, or seconds. Signs will
-   * be consistent.
-   * 
-   * @param field
-   *        One of the field constants specifying the field to be
-   *        retrieved.
-   * @return Value of the hour field.
-   */
-  public final int getField(final Field field)
-  {
-    int fieldValue = sexagesimalHourParts[field.ordinal()];
-
-    // Adjust for DST
-    if (inDaylightSavings && field == Field.HOURS)
-    {
-      fieldValue = fieldValue + 1;
-    }
-
-    return fieldValue;
-  }
-
-  /**
-   * The value of the hour.
-   * 
-   * @return Value for Hour.
-   */
-  public double getHour()
-  {
-    double hour = this.hour;
+    LocalTime adjustedHour;
     if (inDaylightSavings)
     {
-      hour++;
+      adjustedHour = hour.plusHours(1);
     }
-    return hour;
-  }
+    else
+    {
+      adjustedHour = hour;
+    }
 
-  /**
-   * Whether the time should be output in 24-hour time format.
-   * 
-   * @return Whether output should be in 24-hour time format.
-   */
-  public boolean getTime24()
-  {
-    return time24;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see java.lang.Object#hashCode()
-   */
-  @Override
-  public int hashCode()
-  {
-    final int prime = 31;
-    int result = 1;
-    long temp;
-    temp = Double.doubleToLongBits(hour);
-    result = prime * result + (int) (temp ^ temp >>> 32);
-    result = prime * result + (inDaylightSavings? 1231: 1237);
-    result = prime * result + (time24? 1231: 1237);
-    return result;
+    return adjustedHour;
   }
 
   /**
@@ -240,17 +113,6 @@ public final class Hour
   }
 
   /**
-   * Set whether the time should be reported in 24 hour format.
-   * 
-   * @param time24
-   *        Whether the time should be reported in 24 hour format
-   */
-  public void setTime24(final boolean time24)
-  {
-    this.time24 = time24;
-  }
-
-  /**
    * {@inheritDoc}
    * 
    * @see java.lang.Object#toString()
@@ -258,37 +120,7 @@ public final class Hour
   @Override
   public String toString()
   {
-    final StringBuffer representation = new StringBuffer();
-    int hours;
-    final int minutes;
-    String padder = "0";
-    String modifier = "   ";
-
-    // get hours and minutes
-    hours = getField(Field.HOURS);
-    minutes = getField(Field.MINUTES);
-
-    // convert to 12 hour clock
-    if (!time24)
-    {
-      boolean isPM = false;
-      if (hours >= 12)
-      {
-        isPM = true;
-        hours = hours - 12;
-      } // end if
-      if (hours == 0)
-      {
-        hours = 12;
-      }
-      modifier = isPM? " pm": " am";
-      padder = " ";
-    }
-
-    representation.append(hours > 9? "": padder).append(hours).append(":")
-      .append(minutes > 9? "": "0").append(minutes).append(modifier);
-
-    return new String(representation);
+    return getLocalTime().toString();
   }
 
 }

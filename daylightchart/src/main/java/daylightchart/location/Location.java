@@ -23,12 +23,13 @@ package daylightchart.location;
 
 
 import java.io.Serializable;
-import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.pointlocation6709.Longitude;
 import org.pointlocation6709.PointLocation;
+
+import daylightchart.location.parser.DefaultTimezones;
 
 /**
  * A location object has all the information required to define a
@@ -49,7 +50,7 @@ public final class Location
   private final String city;
   private final Country country;
   private final PointLocation pointLocation;
-  private final TimeZone timeZone;
+  private final String timeZoneId;
 
   /**
    * Copy constructor. Copies the value of a provided location.
@@ -61,7 +62,7 @@ public final class Location
   {
     this(location.city,
          location.country,
-         location.timeZone,
+         location.timeZoneId,
          location.pointLocation);
   }
 
@@ -79,7 +80,7 @@ public final class Location
    */
   public Location(final String city,
                   final Country country,
-                  final TimeZone timeZone,
+                  final String timeZoneId,
                   final PointLocation pointLocation)
   {
 
@@ -90,11 +91,11 @@ public final class Location
     }
     this.country = country;
 
-    if (timeZone == null)
+    if (timeZoneId == null)
     {
       throw new IllegalArgumentException("Time zone needs to be specified");
     }
-    this.timeZone = timeZone;
+    this.timeZoneId = timeZoneId;
 
     if (pointLocation == null)
     {
@@ -143,11 +144,11 @@ public final class Location
       if (other.pointLocation != null) return false;
     }
     else if (!pointLocation.equals(other.pointLocation)) return false;
-    if (timeZone == null)
+    if (timeZoneId == null)
     {
-      if (other.timeZone != null) return false;
+      if (other.timeZoneId != null) return false;
     }
-    else if (!timeZone.equals(other.timeZone)) return false;
+    else if (!timeZoneId.equals(other.timeZoneId)) return false;
     return true;
   }
 
@@ -182,13 +183,13 @@ public final class Location
   }
 
   /**
-   * Time zone id for this location.
+   * Timezone id.
    * 
-   * @return Time zone.
+   * @return Timezone id.
    */
-  public TimeZone getTimeZone()
+  public String getTimeZoneId()
   {
-    return timeZone;
+    return timeZoneId;
   }
 
   /**
@@ -205,7 +206,7 @@ public final class Location
     result = prime * result + ((country == null)? 0: country.hashCode());
     result = prime * result
              + ((pointLocation == null)? 0: pointLocation.hashCode());
-    result = prime * result + ((timeZone == null)? 0: timeZone.hashCode());
+    result = prime * result + ((timeZoneId == null)? 0: timeZoneId.hashCode());
     return result;
   }
 
@@ -230,22 +231,23 @@ public final class Location
 
   private void validateTimeZone()
   {
-    final TimeZone timeZone = getTimeZone();
     final Longitude longitude = getPointLocation().getLongitude();
 
-    final double tzOffsetHours = timeZone.getRawOffset() / (1000D * 60D * 60D);
+    final double tzOffsetHours = DefaultTimezones
+      .getStandardTimeZoneOffsetHours(timeZoneId);
     final double longitiudeTzOffsetHours = longitude.getDegrees() / 15D;
     final double hoursDifference = Math.abs(longitiudeTzOffsetHours
                                             - tzOffsetHours);
     // The tolerance band is a half hour on each side of the time zone,
     // plus about 10 minutes
-    final double toleranceBand = 0.5 + 0.17;
+    final double toleranceBand = 0.5 /* + 0.17 */;
     if (!(hoursDifference <= toleranceBand))
     {
       LOGGER.log(Level.INFO, toString() + ": Longitude (" + longitude
-                             + ") and timezone (" + timeZone.getDisplayName()
+                             + ") and timezone (" + timeZoneId
                              + ") do not match (difference " + hoursDifference
                              + " hours)");
     }
   }
+
 }

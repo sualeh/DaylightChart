@@ -34,7 +34,6 @@ AU,Australia/Brisbane
 AU,Australia/Broken_Hill
 AU,Australia/Currie
 AU,Australia/Darwin
-AU,Australia/Eucla
 AU,Australia/Hobart
 AU,Australia/Lindeman
 AU,Australia/Lord_Howe
@@ -94,7 +93,6 @@ CA,America/Pangnirtung
 CA,America/Rainy_River
 CA,America/Rankin_Inlet
 CA,America/Regina
-CA,America/Resolute
 CA,America/St_Johns
 CA,America/Swift_Current
 CA,America/Thunder_Bay
@@ -137,7 +135,6 @@ EC,Pacific/Galapagos
 EE,Europe/Tallinn
 EG,Africa/Cairo
 EH,Africa/El_Aaiun
-ER,Africa/Asmara
 ES,Africa/Ceuta
 ES,Atlantic/Canary
 ES,Europe/Madrid
@@ -148,7 +145,6 @@ FK,Atlantic/Stanley
 FM,Pacific/Kosrae
 FM,Pacific/Ponape
 FM,Pacific/Truk
-FO,Atlantic/Faroe
 FR,Europe/Paris
 GA,Africa/Libreville
 GB,Europe/London
@@ -363,7 +359,6 @@ US,America/Indiana/Marengo
 US,America/Indiana/Petersburg
 US,America/Indiana/Vevay
 US,America/Indiana/Vincennes
-US,America/Indiana/Winamac
 US,America/Juneau
 US,America/Kentucky/Louisville
 US,America/Kentucky/Monticello

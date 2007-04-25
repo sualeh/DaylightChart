@@ -31,7 +31,6 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.TimeZone;
 
 import org.pointlocation6709.PointLocation;
 import org.pointlocation6709.parser.PointLocationParser;
@@ -75,13 +74,13 @@ public final class LocationParser
     {
       final String city = fields[0];
       final Country country = Countries.lookupCountry(fields[1]);
-      final TimeZone timeZone = TimeZone.getTimeZone(fields[2]);
+      final String timeZoneId = fields[2];
       final PointLocation pointLocation = PointLocationParser
         .parsePointLocation(fields[3]);
 
       final Location location = new Location(city,
                                              country,
-                                             timeZone,
+                                             timeZoneId,
                                              pointLocation);
       return location;
     }

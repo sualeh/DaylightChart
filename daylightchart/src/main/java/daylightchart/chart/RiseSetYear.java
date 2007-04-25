@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.joda.time.DateTimeZone;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
 
@@ -52,7 +53,8 @@ public class RiseSetYear
     this.year = year;
     if (location != null)
     {
-      usesDaylightTime = location.getTimeZone().useDaylightTime();
+      DateTimeZone timeZone = DateTimeZone.forID(location.getTimeZoneId());
+      usesDaylightTime = !timeZone.isFixed();
     }
     riseSets = new ArrayList<RiseSet>();
   }

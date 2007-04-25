@@ -34,10 +34,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.pointlocation6709.Longitude;
 
 import daylightchart.location.Countries;
@@ -54,7 +55,7 @@ public final class DefaultTimezones
   private static final Logger LOGGER = Logger.getLogger(DefaultTimezones.class
     .getName());
 
-  private static final Map<Country, Set<TimeZone>> defaultTimezones = new HashMap<Country, Set<TimeZone>>();
+  private static final Map<Country, Set<String>> defaultTimezones = new HashMap<Country, Set<String>>();
 
   /**
    * Loads data from internal database.
@@ -67,7 +68,7 @@ public final class DefaultTimezones
       Set<Country> allCountries = Countries.getAllCountries();
       for (Country country: allCountries)
       {
-        defaultTimezones.put(country, new HashSet<TimeZone>());
+        defaultTimezones.put(country, new HashSet<String>());
       }
 
       final BufferedReader reader = new BufferedReader(new InputStreamReader(DefaultTimezones.class
@@ -92,14 +93,14 @@ public final class DefaultTimezones
         String timezoneId = fields[1];
 
         // Add default timezone for the country
-        TimeZone defaultTimezone = TimeZone.getTimeZone(timezoneId);
+        DateTimeZone defaultTimezone = DateTimeZone.forID(timezoneId);
         if (defaultTimezone.getID() != "GMT")
         {
           Country country = Countries
             .lookupIso3166CountryCode2(iso3166CountryCode2);
-          Set<TimeZone> defaultTimezonesForCountry = defaultTimezones
+          Set<String> defaultTimezonesForCountry = defaultTimezones
             .get(country);
-          defaultTimezonesForCountry.add(defaultTimezone);
+          defaultTimezonesForCountry.add(defaultTimezone.getID());
         }
         else
         {
@@ -124,8 +125,8 @@ public final class DefaultTimezones
    *        Country
    * @return Country ojbect, or null
    */
-  public static TimeZone attemptTimeZoneMatch(Country country,
-                                              final Longitude longitude)
+  public static String attemptTimeZoneMatch(Country country,
+                                            final Longitude longitude)
   {
 
     if (country == null || longitude == null)
@@ -133,7 +134,7 @@ public final class DefaultTimezones
       return null;
     }
 
-    List<TimeZone> defaultTimezonesForCountry = new ArrayList<TimeZone>(defaultTimezones
+    List<String> defaultTimezonesForCountry = new ArrayList<String>(defaultTimezones
       .get(country));
     if (defaultTimezonesForCountry == null
         || defaultTimezonesForCountry.size() == 0)
@@ -149,21 +150,21 @@ public final class DefaultTimezones
     double tzOffset;
     tzOffset = longitude.getDegrees() / 15D; // In hours
     tzOffset = roundToNearestHalf(tzOffset);
-    tzOffset = tzOffset * 60D * 60D * 1000D; // In milliseconds
 
-    TimeZone timeZone = null;
+    String timeZoneId = null;
     double leastDifference = Double.MAX_VALUE;
-    for (TimeZone defaultTimeZone: defaultTimezonesForCountry)
+    for (String defaultTimeZoneId: defaultTimezonesForCountry)
     {
-      double difference = Math.abs(defaultTimeZone.getRawOffset() - tzOffset);
+      double difference = Math
+        .abs(getStandardTimeZoneOffsetHours(defaultTimeZoneId) - tzOffset);
       if (difference < leastDifference)
       {
         leastDifference = difference;
-        timeZone = defaultTimeZone;
+        timeZoneId = defaultTimeZoneId;
       }
     }
 
-    return timeZone;
+    return timeZoneId;
 
   }
 
@@ -171,6 +172,19 @@ public final class DefaultTimezones
   {
     return new BigDecimal(number * 2D)
       .round(new MathContext(1, RoundingMode.HALF_UP)).doubleValue() / 2D;
+  }
+
+  public static double getStandardTimeZoneOffsetHours(String timeZoneId)
+  {
+    if (timeZoneId == null)
+    {
+      return 0D;
+    }
+    final DateTimeZone timeZone = DateTimeZone.forID(timeZoneId);
+    long now = new DateTime().getMillis();
+    final double tzOffsetHours = timeZone.getStandardOffset(now)
+                                 / (60D * 60D * 1000D);
+    return tzOffsetHours;
   }
 
 }

@@ -47,8 +47,8 @@ public class RiseSet
   {
     final MutableDateTime mutableDate = date.toDateTime((LocalTime) null)
       .toMutableDateTime();
-    mutableDate.setHourOfDay(hour.getField(Hour.Field.HOURS));
-    mutableDate.setMinuteOfHour(hour.getField(Hour.Field.MINUTES));
+    mutableDate.setHourOfDay(hour.getLocalTime().getHourOfDay());
+    mutableDate.setMinuteOfHour(hour.getLocalTime().getMinuteOfHour());
     return mutableDate.toDateTime().toLocalDateTime();
   }
 
