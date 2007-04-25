@@ -87,11 +87,24 @@ public final class RiseSetFactory
     }
 
     // Get transition points
+    List<LocalDateTime> transitions = new ArrayList<LocalDateTime>();
     long instant = new DateTime(yearsDates.get(0)).getMillis();
     while (instant != timeZone.nextTransition(instant))
     {
       instant = timeZone.nextTransition(instant);
-      new LocalDateTime(instant);
+      LocalDateTime dateTime = new LocalDateTime(instant);
+      if (dateTime.getYear() > year) {
+        break;
+      }
+      transitions.add(dateTime);
+    }
+    if (transitions.size() < 2) {
+      riseSetYear.setUsesDaylightTime(false);
+    } else if (transitions.size() == 2) {
+      riseSetYear.setDstStart(new LocalDate(transitions.get(0)));
+      riseSetYear.setDstEnd(new LocalDate(transitions.get(1)));
+    } else {
+      // Determine 
     }
 
     return riseSetYear;
