@@ -39,9 +39,19 @@ public final class Country
   private final String iso3166CountryCode2;
   private final String fips10CountryCode;
 
-  Country(final String countryName,
-          final String iso3166CountryCode2,
-          final String fips10CountryCode)
+  /**
+   * Constructor.
+   * 
+   * @param countryName
+   *        Country name
+   * @param iso3166CountryCode2
+   *        Two letter ISO 3166 country code
+   * @param fips10CountryCode
+   *        FIPS 10 country code
+   */
+  public Country(final String countryName,
+                 final String iso3166CountryCode2,
+                 final String fips10CountryCode)
   {
     this.countryName = countryName;
     this.iso3166CountryCode2 = iso3166CountryCode2;
