@@ -273,7 +273,7 @@ public final class Location
                                             - tzOffsetHours);
     // The tolerance band is a half hour on each side of the time zone,
     // plus about 10 minutes
-    final double toleranceBand = 0.5 /* + 0.17 */;
+    final double toleranceBand = 0.5 + 0.17;
     if (!(hoursDifference <= toleranceBand))
     {
       LOGGER.log(Level.INFO, toString() + ": Longitude (" + longitude

@@ -28,9 +28,9 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.List;
+import java.util.TimeZone;
 
 import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
 import org.pointlocation6709.parser.FormatterException;
 import org.pointlocation6709.parser.PointLocationFormatType;
 import org.pointlocation6709.parser.PointLocationFormatter;
@@ -171,10 +171,9 @@ public final class LocationFormatter
     {
       return "";
     }
-    final long now = new DateTime().getMillis();
-    final DateTimeZone timeZone = DateTimeZone.forID(location.getTimeZoneId());
+    final TimeZone timeZone = TimeZone.getTimeZone(location.getTimeZoneId());
     final String details = location.getPointLocation().toString() + ", "
-                           + timeZone.getName(now);
+                           + timeZone.getDisplayName();
     return details;
   }
 

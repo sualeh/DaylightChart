@@ -35,11 +35,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
 import org.pointlocation6709.Longitude;
 
 import daylightchart.location.Country;
@@ -78,6 +77,12 @@ public final class DefaultTimezones
       while ((line = reader.readLine()) != null)
       {
 
+        line = line.trim();
+        if (line.startsWith("#"))
+        {
+          continue;
+        }
+
         final String[] fields = line.split(",");
 
         final boolean invalidNumberOfFields = fields.length != 2;
@@ -93,8 +98,8 @@ public final class DefaultTimezones
         final String timezoneId = fields[1];
 
         // Add default timezone for the country
-        final DateTimeZone defaultTimezone = DateTimeZone.forID(timezoneId);
-        if (defaultTimezone.getID() != "GMT")
+        final TimeZone defaultTimezone = TimeZone.getTimeZone(timezoneId);
+        if (!defaultTimezone.getID().equals("GMT"))
         {
           final Country country = Countries
             .lookupIso3166CountryCode2(iso3166CountryCode2);
@@ -171,6 +176,13 @@ public final class DefaultTimezones
 
   }
 
+  /**
+   * Create a standard GMT-based timezone id.
+   * 
+   * @param tzOffsetHours
+   *        Time zone offset, in hours
+   * @return Time zone id string
+   */
   public static String createTimeZoneId(final double tzOffsetHours)
   {
 
@@ -193,19 +205,30 @@ public final class DefaultTimezones
 
   }
 
+  /**
+   * Calculates the standard time zone offset, in hours.
+   * 
+   * @param timeZoneId
+   *        Time zone id
+   * @return Time zone offset, in hours
+   */
   public static double getStandardTimeZoneOffsetHours(final String timeZoneId)
   {
     if (timeZoneId == null)
     {
       return 0D;
     }
-    final DateTimeZone timeZone = DateTimeZone.forID(timeZoneId);
-    final long now = new DateTime().getMillis();
-    final double tzOffsetHours = timeZone.getStandardOffset(now)
-                                 / (60D * 60D * 1000D);
-    return tzOffsetHours;
+    final TimeZone timeZone = TimeZone.getTimeZone(timeZoneId);
+    return timeZone.getRawOffset() / (60D * 60D * 1000D);
   }
 
+  /**
+   * Utility to round a number to the nearest half.
+   * 
+   * @param number
+   *        Number to round
+   * @return Rounded numbers
+   */
   public static double roundToNearestHalf(final double number)
   {
     return new BigDecimal(number * 2D)
