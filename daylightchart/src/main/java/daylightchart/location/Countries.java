@@ -86,6 +86,16 @@ public final class Countries
   }
 
   /**
+   * Gets a collection of all countries.
+   * 
+   * @return All countries.
+   */
+  public static Set<Country> getAllCountries()
+  {
+    return new HashSet<Country>(iso3166CountryCodeMap.values());
+  }
+
+  /**
    * Looks up a country from the provided string - whether a country
    * code or a country name.
    * 
@@ -152,16 +162,6 @@ public final class Countries
   public static Country lookupIso3166CountryCode2(final String iso3166CountryCode2)
   {
     return iso3166CountryCodeMap.get(iso3166CountryCode2);
-  }
-
-  /**
-   * Gets a collection of all countries.
-   * 
-   * @return All countries.
-   */
-  public static Set<Country> getAllCountries()
-  {
-    return new HashSet<Country>(iso3166CountryCodeMap.values());
   }
 
 }

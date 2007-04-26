@@ -28,6 +28,7 @@ import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -65,8 +66,8 @@ public final class DefaultTimezones
     try
     {
 
-      Set<Country> allCountries = Countries.getAllCountries();
-      for (Country country: allCountries)
+      final Set<Country> allCountries = Countries.getAllCountries();
+      for (final Country country: allCountries)
       {
         defaultTimezones.put(country, new HashSet<String>());
       }
@@ -89,16 +90,16 @@ public final class DefaultTimezones
           throw new IllegalArgumentException("Invalid default timezone record: "
                                              + line);
         }
-        String iso3166CountryCode2 = fields[0];
-        String timezoneId = fields[1];
+        final String iso3166CountryCode2 = fields[0];
+        final String timezoneId = fields[1];
 
         // Add default timezone for the country
-        DateTimeZone defaultTimezone = DateTimeZone.forID(timezoneId);
+        final DateTimeZone defaultTimezone = DateTimeZone.forID(timezoneId);
         if (defaultTimezone.getID() != "GMT")
         {
-          Country country = Countries
+          final Country country = Countries
             .lookupIso3166CountryCode2(iso3166CountryCode2);
-          Set<String> defaultTimezonesForCountry = defaultTimezones
+          final Set<String> defaultTimezonesForCountry = defaultTimezones
             .get(country);
           defaultTimezonesForCountry.add(defaultTimezone.getID());
         }
@@ -123,23 +124,30 @@ public final class DefaultTimezones
    * 
    * @param country
    *        Country
+   * @param longitude
+   *        Longitude
    * @return Country ojbect, or null
    */
-  public static String attemptTimeZoneMatch(Country country,
+  public static String attemptTimeZoneMatch(final Country country,
                                             final Longitude longitude)
   {
 
-    if (country == null || longitude == null)
+    if (longitude == null)
     {
       return null;
     }
 
-    List<String> defaultTimezonesForCountry = new ArrayList<String>(defaultTimezones
+    // Timezone offset in hours
+    double tzOffsetHours;
+    tzOffsetHours = longitude.getDegrees() / 15D;
+    tzOffsetHours = roundToNearestHalf(tzOffsetHours);
+
+    final List<String> defaultTimezonesForCountry = new ArrayList<String>(defaultTimezones
       .get(country));
     if (defaultTimezonesForCountry == null
         || defaultTimezonesForCountry.size() == 0)
     {
-      return null;
+      return createTimeZoneId(tzOffsetHours);
     }
     else if (defaultTimezonesForCountry.size() == 1)
     {
@@ -147,16 +155,12 @@ public final class DefaultTimezones
     }
 
     // More than one timezone found - try a match by longitude
-    double tzOffset;
-    tzOffset = longitude.getDegrees() / 15D; // In hours
-    tzOffset = roundToNearestHalf(tzOffset);
-
     String timeZoneId = null;
     double leastDifference = Double.MAX_VALUE;
-    for (String defaultTimeZoneId: defaultTimezonesForCountry)
+    for (final String defaultTimeZoneId: defaultTimezonesForCountry)
     {
-      double difference = Math
-        .abs(getStandardTimeZoneOffsetHours(defaultTimeZoneId) - tzOffset);
+      final double difference = Math
+        .abs(getStandardTimeZoneOffsetHours(defaultTimeZoneId) - tzOffsetHours);
       if (difference < leastDifference)
       {
         leastDifference = difference;
@@ -168,23 +172,45 @@ public final class DefaultTimezones
 
   }
 
-  public static double roundToNearestHalf(double number)
+  public static String createTimeZoneId(final double tzOffsetHours)
   {
-    return new BigDecimal(number * 2D)
-      .round(new MathContext(1, RoundingMode.HALF_UP)).doubleValue() / 2D;
+
+    String timeZoneId = "GMT";
+    if (tzOffsetHours < 0)
+    {
+      timeZoneId = timeZoneId + "-";
+    }
+    else
+    {
+      timeZoneId = timeZoneId + "+";
+    }
+
+    final NumberFormat numberFormat = NumberFormat.getIntegerInstance();
+    numberFormat.setMinimumIntegerDigits(2);
+    timeZoneId = timeZoneId
+                 + numberFormat.format((int) Math.abs(tzOffsetHours));
+
+    return timeZoneId;
+
   }
 
-  public static double getStandardTimeZoneOffsetHours(String timeZoneId)
+  public static double getStandardTimeZoneOffsetHours(final String timeZoneId)
   {
     if (timeZoneId == null)
     {
       return 0D;
     }
     final DateTimeZone timeZone = DateTimeZone.forID(timeZoneId);
-    long now = new DateTime().getMillis();
+    final long now = new DateTime().getMillis();
     final double tzOffsetHours = timeZone.getStandardOffset(now)
                                  / (60D * 60D * 1000D);
     return tzOffsetHours;
+  }
+
+  public static double roundToNearestHalf(final double number)
+  {
+    return new BigDecimal(number * 2D)
+      .round(new MathContext(1, RoundingMode.HALF_UP)).doubleValue() / 2D;
   }
 
 }

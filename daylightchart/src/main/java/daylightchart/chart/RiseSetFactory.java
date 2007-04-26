@@ -71,10 +71,10 @@ public final class RiseSetFactory
     final boolean useDaylightTime = !timeZone.isFixed();
     for (final LocalDate date: yearsDates)
     {
-      long instant = getInstant(date);
-      long standardOffset = timeZone.getStandardOffset(instant);
-      long offset = timeZone.getOffset(instant);
-      boolean inDaylightSavings = standardOffset != offset;
+      final long instant = getInstant(date);
+      final long standardOffset = timeZone.getStandardOffset(instant);
+      final long offset = timeZone.getOffset(instant);
+      final boolean inDaylightSavings = standardOffset != offset;
 
       // Calculate sunsrise and sunset
       final Hour[] riseSet = calcRiseSet(sunAlgorithm, location, date);
@@ -87,12 +87,12 @@ public final class RiseSetFactory
     }
 
     // Get transition points
-    List<LocalDateTime> transitions = new ArrayList<LocalDateTime>();
+    final List<LocalDateTime> transitions = new ArrayList<LocalDateTime>();
     long instant = getInstant(yearsDates.get(0));
     while (instant != timeZone.nextTransition(instant))
     {
       instant = timeZone.nextTransition(instant);
-      LocalDateTime dateTime = new LocalDateTime(instant);
+      final LocalDateTime dateTime = new LocalDateTime(instant);
       if (dateTime.getYear() > year)
       {
         break;
@@ -114,12 +114,6 @@ public final class RiseSetFactory
     }
 
     return riseSetYear;
-  }
-
-  private static long getInstant(final LocalDate date)
-  {
-    long instant = new DateTime(date.toString()).getMillis();
-    return instant;
   }
 
   private static Hour[] calcRiseSet(final SunAlgorithm sunAlgorithm,
@@ -145,6 +139,12 @@ public final class RiseSetFactory
     return new Hour[] {
         new Hour(riseSet[0]), new Hour(riseSet[1])
     };
+  }
+
+  private static long getInstant(final LocalDate date)
+  {
+    final long instant = new DateTime(date.toString()).getMillis();
+    return instant;
   }
 
   /**

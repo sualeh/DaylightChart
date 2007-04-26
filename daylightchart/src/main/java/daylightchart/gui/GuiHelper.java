@@ -53,7 +53,7 @@ public class GuiHelper
    * @param mainWindow
    *        Main GUI window.
    */
-  public static void loadLocations(DaylightChartGui mainWindow)
+  public static void loadLocations(final DaylightChartGui mainWindow)
   {
 
     final JFileChooser fileDialog = new JFileChooser();
@@ -85,7 +85,7 @@ public class GuiHelper
 
     try
     {
-      List<Location> locationsList = LocationsLoader.load(selectedFile);
+      final List<Location> locationsList = LocationsLoader.load(selectedFile);
       if (locationsList == null)
       {
         LOGGER.log(Level.WARNING, Messages
@@ -103,7 +103,7 @@ public class GuiHelper
         mainWindow.setLocations(locationsList);
       }
     }
-    catch (Exception e)
+    catch (final Exception e)
     {
       LOGGER.log(Level.WARNING, "Could not load locations");
     }
@@ -111,12 +111,7 @@ public class GuiHelper
     mainWindow.setLastSelectedDirectory(selectedFile.getParentFile());
 
     mainWindow.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-    
-  }
 
-  private GuiHelper()
-  {
-    // Prevent instantiation
   }
 
   /**
@@ -125,7 +120,7 @@ public class GuiHelper
    * @param mainWindow
    *        Main GUI window.
    */
-  public static void saveLocations(DaylightChartGui mainWindow)
+  public static void saveLocations(final DaylightChartGui mainWindow)
   {
     final File selectedFile = showSaveDialog(Messages
                                                .getString("DaylightChartGui.Menu.File.SaveLocations"), "locations.data", mainWindow); //$NON-NLS-1$ //$NON-NLS-2$
@@ -162,7 +157,7 @@ public class GuiHelper
    */
   public static File showSaveDialog(final String dialogTitle,
                                     final String suggestedFilename,
-                                    DaylightChartGui mainWindow)
+                                    final DaylightChartGui mainWindow)
   {
     final JFileChooser fileDialog = new JFileChooser();
     fileDialog.setDialogTitle(dialogTitle);
@@ -220,6 +215,11 @@ public class GuiHelper
     }
 
     return selectedFile;
+  }
+
+  private GuiHelper()
+  {
+    // Prevent instantiation
   }
 
 }

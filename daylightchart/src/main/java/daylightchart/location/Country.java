@@ -39,9 +39,9 @@ public final class Country
   private final String iso3166CountryCode2;
   private final String fips10CountryCode;
 
-  Country(String countryName,
-          String iso3166CountryCode2,
-          String fips10CountryCode)
+  Country(final String countryName,
+          final String iso3166CountryCode2,
+          final String fips10CountryCode)
   {
     this.countryName = countryName;
     this.iso3166CountryCode2 = iso3166CountryCode2;

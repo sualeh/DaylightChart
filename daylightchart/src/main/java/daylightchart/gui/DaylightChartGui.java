@@ -100,7 +100,7 @@ public final class DaylightChartGui
         GuiHelper.loadLocations(mainWindow);
       }
     }
-    
+
   }
 
   private final static long serialVersionUID = 3760840181833283637L;

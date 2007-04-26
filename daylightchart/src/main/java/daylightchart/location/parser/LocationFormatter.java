@@ -171,8 +171,8 @@ public final class LocationFormatter
     {
       return "";
     }
-    long now = new DateTime().getMillis();
-    DateTimeZone timeZone = DateTimeZone.forID(location.getTimeZoneId());
+    final long now = new DateTime().getMillis();
+    final DateTimeZone timeZone = DateTimeZone.forID(location.getTimeZoneId());
     final String details = location.getPointLocation().toString() + ", "
                            + timeZone.getName(now);
     return details;

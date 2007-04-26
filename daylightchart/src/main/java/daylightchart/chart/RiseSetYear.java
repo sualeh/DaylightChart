@@ -53,7 +53,8 @@ public class RiseSetYear
     this.year = year;
     if (location != null)
     {
-      DateTimeZone timeZone = DateTimeZone.forID(location.getTimeZoneId());
+      final DateTimeZone timeZone = DateTimeZone
+        .forID(location.getTimeZoneId());
       usesDaylightTime = !timeZone.isFixed();
     }
     riseSets = new ArrayList<RiseSet>();

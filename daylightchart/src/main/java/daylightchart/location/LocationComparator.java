@@ -46,7 +46,7 @@ public final class LocationComparator
    * @param sortOrder
    *        Sort order - latitude or name.
    */
-  public LocationComparator(LocationsSortOrder sortOrder)
+  public LocationComparator(final LocationsSortOrder sortOrder)
   {
     if (sortOrder != null)
     {
