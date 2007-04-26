@@ -35,7 +35,6 @@ import java.util.List;
 import org.pointlocation6709.PointLocation;
 import org.pointlocation6709.parser.PointLocationParser;
 
-import daylightchart.location.Countries;
 import daylightchart.location.Country;
 import daylightchart.location.Location;
 

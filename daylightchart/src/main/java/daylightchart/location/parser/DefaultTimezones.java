@@ -42,7 +42,6 @@ import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.pointlocation6709.Longitude;
 
-import daylightchart.location.Countries;
 import daylightchart.location.Country;
 
 /**

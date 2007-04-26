@@ -39,7 +39,6 @@ import org.pointlocation6709.Latitude;
 import org.pointlocation6709.Longitude;
 import org.pointlocation6709.PointLocation;
 
-import daylightchart.location.Countries;
 import daylightchart.location.Country;
 import daylightchart.location.Location;
 
