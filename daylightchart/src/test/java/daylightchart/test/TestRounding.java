@@ -35,6 +35,7 @@ import daylightchart.location.parser.ParserException;
 public class TestRounding
 {
 
+  @SuppressWarnings("boxing")
   @Test
   public void rounding()
     throws ParserException

@@ -77,7 +77,8 @@ public class AxisOptions
    * @see daylightchart.gui.options.Options#copyFromChart(org.jfree.chart.JFreeChart)
    */
   @Override
-  public void copyFromChart(final JFreeChart chart)
+  public void copyFromChart(@SuppressWarnings("unused")
+  final JFreeChart chart)
   {
     // We do not know which axis to work from
     throw new NotImplementedException();
@@ -242,7 +243,8 @@ public class AxisOptions
    * @see daylightchart.gui.options.Options#updateChart(org.jfree.chart.JFreeChart)
    */
   @Override
-  public void updateChart(final JFreeChart chart)
+  public void updateChart(@SuppressWarnings("unused")
+  final JFreeChart chart)
   {
     // We do not know which axis to update
     throw new NotImplementedException();

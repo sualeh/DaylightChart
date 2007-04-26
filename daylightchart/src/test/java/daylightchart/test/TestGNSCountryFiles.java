@@ -41,6 +41,7 @@ import daylightchart.location.parser.ParserException;
 public class TestGNSCountryFiles
 {
 
+  @SuppressWarnings("boxing")
   @Test
   @Ignore
   public void locations()

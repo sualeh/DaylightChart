@@ -30,7 +30,6 @@ import java.io.Writer;
 import java.util.List;
 import java.util.TimeZone;
 
-import org.joda.time.DateTime;
 import org.pointlocation6709.parser.FormatterException;
 import org.pointlocation6709.parser.PointLocationFormatType;
 import org.pointlocation6709.parser.PointLocationFormatter;

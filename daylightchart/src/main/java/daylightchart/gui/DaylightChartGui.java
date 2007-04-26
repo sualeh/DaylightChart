@@ -137,7 +137,8 @@ public final class DaylightChartGui
     listBox.setFont(font);
     listBox.addListSelectionListener(new ListSelectionListener()
     {
-      public void valueChanged(final ListSelectionEvent e)
+      public void valueChanged(@SuppressWarnings("unused")
+      final ListSelectionEvent listSelectionEvent)
       {
         Location location = (Location) listBox.getSelectedValue();
         if (location == null)
@@ -238,7 +239,8 @@ public final class DaylightChartGui
       .getString("DaylightChartGui.Menu.File.SaveChart")); //$NON-NLS-1$
     saveImage.addActionListener(new ActionListener()
     {
-      public void actionPerformed(final ActionEvent actionevent)
+      public void actionPerformed(@SuppressWarnings("unused")
+      final ActionEvent actionevent)
       {
         try
         {
@@ -257,7 +259,8 @@ public final class DaylightChartGui
       .getString("DaylightChartGui.Menu.File.PrintChart")); //$NON-NLS-1$
     print.addActionListener(new ActionListener()
     {
-      public void actionPerformed(final ActionEvent actionevent)
+      public void actionPerformed(@SuppressWarnings("unused")
+      final ActionEvent actionevent)
       {
         chartPanel.createChartPrintJob();
       }
@@ -270,7 +273,8 @@ public final class DaylightChartGui
       .getString("DaylightChartGui.Menu.File.Exit")); //$NON-NLS-1$
     exit.addActionListener(new ActionListener()
     {
-      public void actionPerformed(final ActionEvent actionevent)
+      public void actionPerformed(@SuppressWarnings("unused")
+      final ActionEvent actionevent)
       {
         exit();
       }
@@ -290,7 +294,8 @@ public final class DaylightChartGui
       .getString("DaylightChartGui.Menu.Help.About")); //$NON-NLS-1$
     about.addActionListener(new ActionListener()
     {
-      public void actionPerformed(final ActionEvent actionevent)
+      public void actionPerformed(@SuppressWarnings("unused")
+      final ActionEvent actionevent)
       {
         JOptionPane.showMessageDialog(DaylightChartGui.this, Version.about());
       }
@@ -337,7 +342,8 @@ public final class DaylightChartGui
 
     sortByName.addItemListener(new ItemListener()
     {
-      public void itemStateChanged(final ItemEvent itemEvent)
+      public void itemStateChanged(@SuppressWarnings("unused")
+      final ItemEvent itemEvent)
       {
         final boolean isSelected = sortByName.getState();
         if (isSelected)
@@ -351,7 +357,8 @@ public final class DaylightChartGui
 
     sortByLatitude.addItemListener(new ItemListener()
     {
-      public void itemStateChanged(final ItemEvent itemEvent)
+      public void itemStateChanged(@SuppressWarnings("unused")
+      final ItemEvent itemEvent)
       {
         final boolean isSelected = sortByLatitude.getState();
         if (isSelected)
@@ -365,7 +372,8 @@ public final class DaylightChartGui
 
     chartOptionsMenuItem.addActionListener(new ActionListener()
     {
-      public void actionPerformed(final ActionEvent actionevent)
+      public void actionPerformed(@SuppressWarnings("unused")
+      final ActionEvent actionevent)
       {
         final ChartEditor chartEditor = chartOptions.getChartEditor();
         final int confirmValue = JOptionPane
@@ -388,7 +396,8 @@ public final class DaylightChartGui
 
     resetAll.addActionListener(new ActionListener()
     {
-      public void actionPerformed(final ActionEvent actionevent)
+      public void actionPerformed(@SuppressWarnings("unused")
+      final ActionEvent actionevent)
       {
         new UserPreferences().clear();
         JOptionPane

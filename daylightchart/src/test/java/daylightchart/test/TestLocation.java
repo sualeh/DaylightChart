@@ -54,6 +54,7 @@ public class TestLocation
 
   }
 
+  @SuppressWarnings("boxing")
   @Test
   public void locations()
     throws ParserException
@@ -62,7 +63,7 @@ public class TestLocation
       .getResourceAsStream("locations.data");
     final InputStreamReader reader = new InputStreamReader(dataStream);
     List<Location> locations = LocationParser.parseLocations(reader);
-    
+
     assertEquals(99, locations.size());
   }
 

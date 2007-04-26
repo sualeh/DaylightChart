@@ -75,7 +75,7 @@ public final class Location
    *        Country
    * @param pointLocation
    *        Point location
-   * @param timeZone
+   * @param timeZoneId
    *        Timezone
    */
   public Location(final String city,

@@ -109,6 +109,7 @@ public class DaylightChart
    * 
    * @see daylightchart.gui.options.ChartOptionsListener#afterSettingChartOptions(ChartOptions)
    */
+  @SuppressWarnings("unchecked")
   public void afterSettingChartOptions(final ChartOptions chartOptions)
   {
     // Fix title and subtitles
@@ -138,7 +139,8 @@ public class DaylightChart
    * 
    * @see daylightchart.gui.options.ChartOptionsListener#beforeSettingChartOptions(ChartOptions)
    */
-  public void beforeSettingChartOptions(final ChartOptions chartOptions)
+  public void beforeSettingChartOptions(@SuppressWarnings("unused")
+  final ChartOptions chartOptions)
   {
     // No-op
   }
@@ -206,6 +208,7 @@ public class DaylightChart
     plot.addDomainMarker(dstMarker, Layer.BACKGROUND);
   }
 
+  @SuppressWarnings("deprecation")
   private void createHoursAxis(final XYPlot plot)
   {
     final DateAxis hoursAxis = new DateAxis();
