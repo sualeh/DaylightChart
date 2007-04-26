@@ -135,6 +135,7 @@ EC,Pacific/Galapagos
 EE,Europe/Tallinn
 EG,Africa/Cairo
 EH,Africa/El_Aaiun
+ER,Africa/Asmera
 ES,Africa/Ceuta
 ES,Atlantic/Canary
 ES,Europe/Madrid
@@ -145,6 +146,7 @@ FK,Atlantic/Stanley
 FM,Pacific/Kosrae
 FM,Pacific/Ponape
 FM,Pacific/Truk
+FO,Atlantic/Faeroe
 FR,Europe/Paris
 GA,Africa/Libreville
 GB,Europe/London

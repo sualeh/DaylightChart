@@ -71,7 +71,7 @@ public final class RiseSetFactory
     final boolean useDaylightTime = !timeZone.isFixed();
     for (final LocalDate date: yearsDates)
     {
-      long instant = new DateTime(date).getMillis();
+      long instant = getInstant(date);
       long standardOffset = timeZone.getStandardOffset(instant);
       long offset = timeZone.getOffset(instant);
       boolean inDaylightSavings = standardOffset != offset;
@@ -88,26 +88,38 @@ public final class RiseSetFactory
 
     // Get transition points
     List<LocalDateTime> transitions = new ArrayList<LocalDateTime>();
-    long instant = new DateTime(yearsDates.get(0)).getMillis();
+    long instant = getInstant(yearsDates.get(0));
     while (instant != timeZone.nextTransition(instant))
     {
       instant = timeZone.nextTransition(instant);
       LocalDateTime dateTime = new LocalDateTime(instant);
-      if (dateTime.getYear() > year) {
+      if (dateTime.getYear() > year)
+      {
         break;
       }
       transitions.add(dateTime);
     }
-    if (transitions.size() < 2) {
+    if (transitions.size() < 2)
+    {
       riseSetYear.setUsesDaylightTime(false);
-    } else if (transitions.size() == 2) {
+    }
+    else if (transitions.size() == 2)
+    {
       riseSetYear.setDstStart(new LocalDate(transitions.get(0)));
       riseSetYear.setDstEnd(new LocalDate(transitions.get(1)));
-    } else {
-      // Determine 
+    }
+    else
+    {
+      // Determine
     }
 
     return riseSetYear;
+  }
+
+  private static long getInstant(final LocalDate date)
+  {
+    long instant = new DateTime(date.toString()).getMillis();
+    return instant;
   }
 
   private static Hour[] calcRiseSet(final SunAlgorithm sunAlgorithm,
