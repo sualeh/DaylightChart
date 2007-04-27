@@ -30,7 +30,7 @@ import java.io.Serializable;
  * @author Sualeh Fatehi
  */
 public final class Country
-  implements Serializable
+  implements Serializable, Comparable<Country>
 {
 
   private static final long serialVersionUID = -5625327893850178062L;
@@ -56,6 +56,16 @@ public final class Country
     this.name = name;
     this.iso3166Code2 = iso3166Code2;
     this.fips10Code = fips10Code;
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see java.lang.Comparable#compareTo(java.lang.Object)
+   */
+  public int compareTo(final Country otherCountry)
+  {
+    return iso3166Code2.compareTo(otherCountry.iso3166Code2);
   }
 
   /**

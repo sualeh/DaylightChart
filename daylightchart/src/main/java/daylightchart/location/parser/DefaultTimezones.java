@@ -25,7 +25,6 @@ package daylightchart.location.parser;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
@@ -33,14 +32,11 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TimeZone;
-import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -56,54 +52,6 @@ import daylightchart.location.USState;
  */
 public final class DefaultTimezones
 {
-
-  /**
-   * Compares time zone ids.
-   * 
-   * @author sfatehi
-   */
-  private static final class TimeZoneIdComparator
-    implements Serializable, Comparator<String>
-  {
-
-    private static final long serialVersionUID = -1376900272123395097L;
-
-    /**
-     * {@inheritDoc}
-     * 
-     * @see java.util.Comparator#compare(java.lang.Object,
-     *      java.lang.Object)
-     */
-    public int compare(final String timeZoneId1, final String timeZoneId2)
-    {
-      int comparison = 0;
-
-      if (timeZoneId1 == null || timeZoneId2 == null)
-      {
-        return comparison;
-      }
-
-      // 1. Compare time zone offset
-      if (comparison == 0)
-      {
-        comparison = (int) (getStandardTimeZoneOffsetHours(timeZoneId1) - getStandardTimeZoneOffsetHours(timeZoneId2));
-      }
-      // 2. Compare time zone parts
-      if (comparison == 0)
-      {
-        comparison = timeZoneId1.split("/").length
-                     - timeZoneId2.split("/").length;
-      }
-      // 3. Do a basic string comparison
-      if (comparison == 0)
-      {
-        comparison = timeZoneId1.compareTo(timeZoneId2);
-      }
-
-      return comparison;
-    }
-
-  }
 
   private static final Logger LOGGER = Logger.getLogger(DefaultTimezones.class
     .getName());
@@ -168,26 +116,22 @@ public final class DefaultTimezones
       }
       reader.close();
 
-      // Sort all time zones lists
-      final TimeZoneIdComparator timeZoneIdComparator = new TimeZoneIdComparator();
-      Set<Entry<Country, List<String>>> entrySet = defaultTimezones.entrySet();
-      for (Entry<Country, List<String>> entry: entrySet)
-      {
-        final Country country = entry.getKey();
-        final List<String> defaultTimeZonesList = entry.getValue();
-        if (defaultTimeZonesList.size() > 1)
-        {
-          Collections.sort(defaultTimeZonesList, timeZoneIdComparator);
-          log(entry);
-        }
-      }
-
     }
     catch (final IOException e)
     {
       throw new IllegalStateException("Cannot read data from internal database",
                                       e);
     }
+  }
+
+  /**
+   * Gets the map of default time zones.
+   * 
+   * @return Default time zones map
+   */
+  static final Map<Country, List<String>> getMap()
+  {
+    return new HashMap<Country, List<String>>(defaultTimezones);
   }
 
   /**
@@ -255,35 +199,6 @@ public final class DefaultTimezones
 
     return timeZoneId;
 
-  }
-
-  private static void log(Entry<Country, List<String>> entry)
-  {
-    List<String> timeZones = entry.getValue();
-    Set<Double> timeZoneOffsetHoursSet = new HashSet<Double>();
-    for (String timeZoneId: timeZones)
-    {
-      timeZoneOffsetHoursSet.add(getStandardTimeZoneOffsetHours(timeZoneId));
-    }
-    if (timeZones.size() == timeZoneOffsetHoursSet.size())
-    {
-      return;
-    }
-
-    final NumberFormat numberFormat = NumberFormat.getInstance();
-    numberFormat.setMinimumIntegerDigits(2);
-    numberFormat.setMinimumFractionDigits(1);
-
-    StringBuffer buffer = new StringBuffer();
-    buffer.append("\"" + entry.getKey() + "\"" + " - [");
-    for (String timeZoneId: timeZones)
-    {
-      double standardTimeZoneOffsetHours = getStandardTimeZoneOffsetHours(timeZoneId);
-      buffer.append("\n  " + numberFormat.format(standardTimeZoneOffsetHours)
-                    + "\t\"" + timeZoneId + "\"");
-    }
-    buffer.append("\n]\n");
-    LOGGER.log(Level.INFO, buffer.toString());
   }
 
   /**

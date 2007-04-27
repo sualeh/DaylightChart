@@ -33,7 +33,7 @@ import java.io.Serializable;
  * @author Sualeh Fatehi
  */
 public final class USState
-  implements Serializable
+  implements Serializable, Comparable<USState>
 {
 
   private static final long serialVersionUID = -5807680114125246988L;
@@ -59,6 +59,16 @@ public final class USState
     this.name = name;
     this.fips5_2AlphaCode = fips5_2AlphaCode;
     this.fips5_2NumericCode = fips5_2NumericCode;
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see java.lang.Comparable#compareTo(java.lang.Object)
+   */
+  public int compareTo(final USState otherUSState)
+  {
+    return fips5_2NumericCode - otherUSState.fips5_2NumericCode;
   }
 
   /**
