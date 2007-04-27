@@ -35,10 +35,12 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TimeZone;
+import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -72,26 +74,30 @@ public final class DefaultTimezones
      * @see java.util.Comparator#compare(java.lang.Object,
      *      java.lang.Object)
      */
-    public int compare(final String o1, final String o2)
+    public int compare(final String timeZoneId1, final String timeZoneId2)
     {
       int comparison = 0;
 
-      if (o1 == null || o2 == null)
+      if (timeZoneId1 == null || timeZoneId2 == null)
       {
         return comparison;
       }
 
-      // 1. Compare time zone parts
-      comparison = o1.split("/").length - o2.split("/").length;
-      // 2. Compare overall length
+      // 1. Compare time zone offset
       if (comparison == 0)
       {
-        comparison = o1.length() - o2.length();
+        comparison = (int) (getStandardTimeZoneOffsetHours(timeZoneId1) - getStandardTimeZoneOffsetHours(timeZoneId2));
+      }
+      // 2. Compare time zone parts
+      if (comparison == 0)
+      {
+        comparison = timeZoneId1.split("/").length
+                     - timeZoneId2.split("/").length;
       }
       // 3. Do a basic string comparison
       if (comparison == 0)
       {
-        comparison = o1.compareTo(o2);
+        comparison = timeZoneId1.compareTo(timeZoneId2);
       }
 
       return comparison;
@@ -164,9 +170,16 @@ public final class DefaultTimezones
 
       // Sort all time zones lists
       final TimeZoneIdComparator timeZoneIdComparator = new TimeZoneIdComparator();
-      for (final List<String> defaultTimeZonesList: defaultTimezones.values())
+      Set<Entry<Country, List<String>>> entrySet = defaultTimezones.entrySet();
+      for (Entry<Country, List<String>> entry: entrySet)
       {
-        Collections.sort(defaultTimeZonesList, timeZoneIdComparator);
+        final Country country = entry.getKey();
+        final List<String> defaultTimeZonesList = entry.getValue();
+        if (defaultTimeZonesList.size() > 1)
+        {
+          Collections.sort(defaultTimeZonesList, timeZoneIdComparator);
+          log(entry);
+        }
       }
 
     }
@@ -244,33 +257,33 @@ public final class DefaultTimezones
 
   }
 
-  /**
-   * Create a standard GMT-based timezone id.
-   * 
-   * @param tzOffsetHours
-   *        Time zone offset, in hours
-   * @return Time zone id string
-   */
-  public static String createTimeZoneId(final double tzOffsetHours)
+  private static void log(Entry<Country, List<String>> entry)
   {
-
-    String timeZoneId = "GMT";
-    if (tzOffsetHours < 0)
+    List<String> timeZones = entry.getValue();
+    Set<Double> timeZoneOffsetHoursSet = new HashSet<Double>();
+    for (String timeZoneId: timeZones)
     {
-      timeZoneId = timeZoneId + "-";
+      timeZoneOffsetHoursSet.add(getStandardTimeZoneOffsetHours(timeZoneId));
     }
-    else
+    if (timeZones.size() == timeZoneOffsetHoursSet.size())
     {
-      timeZoneId = timeZoneId + "+";
+      return;
     }
 
-    final NumberFormat numberFormat = NumberFormat.getIntegerInstance();
+    final NumberFormat numberFormat = NumberFormat.getInstance();
     numberFormat.setMinimumIntegerDigits(2);
-    timeZoneId = timeZoneId
-                 + numberFormat.format((int) Math.abs(tzOffsetHours));
+    numberFormat.setMinimumFractionDigits(1);
 
-    return timeZoneId;
-
+    StringBuffer buffer = new StringBuffer();
+    buffer.append("\"" + entry.getKey() + "\"" + " - [");
+    for (String timeZoneId: timeZones)
+    {
+      double standardTimeZoneOffsetHours = getStandardTimeZoneOffsetHours(timeZoneId);
+      buffer.append("\n  " + numberFormat.format(standardTimeZoneOffsetHours)
+                    + "\t\"" + timeZoneId + "\"");
+    }
+    buffer.append("\n]\n");
+    LOGGER.log(Level.INFO, buffer.toString());
   }
 
   /**
@@ -301,6 +314,35 @@ public final class DefaultTimezones
   {
     return new BigDecimal(number * 2D)
       .round(new MathContext(1, RoundingMode.HALF_UP)).doubleValue() / 2D;
+  }
+
+  /**
+   * Create a standard GMT-based timezone id.
+   * 
+   * @param tzOffsetHours
+   *        Time zone offset, in hours
+   * @return Time zone id string
+   */
+  private static String createTimeZoneId(final double tzOffsetHours)
+  {
+
+    String timeZoneId = "GMT";
+    if (tzOffsetHours < 0)
+    {
+      timeZoneId = timeZoneId + "-";
+    }
+    else
+    {
+      timeZoneId = timeZoneId + "+";
+    }
+
+    final NumberFormat numberFormat = NumberFormat.getIntegerInstance();
+    numberFormat.setMinimumIntegerDigits(2);
+    timeZoneId = timeZoneId
+                 + numberFormat.format((int) Math.abs(tzOffsetHours));
+
+    return timeZoneId;
+
   }
 
   /**
