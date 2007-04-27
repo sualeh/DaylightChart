@@ -276,7 +276,7 @@ public final class Location
     final double toleranceBand = 0.5 + 0.17;
     if (!(hoursDifference <= toleranceBand))
     {
-      LOGGER.log(Level.INFO, toString() + ": Longitude (" + longitude
+      LOGGER.log(Level.FINE, toString() + ": Longitude (" + longitude
                              + ") and timezone (" + timeZoneId
                              + ") do not match (difference " + hoursDifference
                              + " hours)");

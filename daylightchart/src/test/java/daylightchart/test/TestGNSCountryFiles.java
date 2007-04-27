@@ -32,6 +32,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import daylightchart.location.Location;
+import daylightchart.location.parser.GNISFilesParser;
 import daylightchart.location.parser.GNSCountryFilesParser;
 import daylightchart.location.parser.ParserException;
 
@@ -44,7 +45,7 @@ public class TestGNSCountryFiles
   @SuppressWarnings("boxing")
   @Test
   @Ignore
-  public void locations()
+  public void locations1()
     throws ParserException
   {
     final InputStream dataStream = this.getClass().getClassLoader()
@@ -53,6 +54,34 @@ public class TestGNSCountryFiles
     List<Location> locations = GNSCountryFilesParser.parseLocations(reader);
 
     assertEquals(4574, locations.size());
+  }
+
+  @SuppressWarnings("boxing")
+  @Test
+  @Ignore
+  public void locations2()
+    throws ParserException
+  {
+    final InputStream dataStream = this.getClass().getClassLoader()
+      .getResourceAsStream("ar.txt");
+    final InputStreamReader reader = new InputStreamReader(dataStream);
+    List<Location> locations = GNSCountryFilesParser.parseLocations(reader);
+
+    assertEquals(5467, locations.size());
+  }
+
+  @SuppressWarnings("boxing")
+  @Test
+  @Ignore
+  public void locations3()
+    throws ParserException
+  {
+    final InputStream dataStream = this.getClass().getClassLoader()
+      .getResourceAsStream("IN_DECI.txt");
+    final InputStreamReader reader = new InputStreamReader(dataStream);
+    List<Location> locations = GNISFilesParser.parseLocations(reader);
+
+    assertEquals(3451, locations.size());
   }
 
 }

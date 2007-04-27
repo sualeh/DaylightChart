@@ -73,9 +73,9 @@ public final class Countries
         }
 
         final Country country = new Country(fields[2], fields[0], fields[1]);
-        iso3166CountryCodeMap.put(country.getIso3166CountryCode2(), country);
-        fips10CountryCodeMap.put(country.getFips10CountryCode(), country);
-        countryNameMap.put(country.getCountryName(), country);
+        iso3166CountryCodeMap.put(country.getIso3166Code2(), country);
+        fips10CountryCodeMap.put(country.getFips10Code(), country);
+        countryNameMap.put(country.getName(), country);
       }
       reader.close();
 

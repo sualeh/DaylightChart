@@ -25,13 +25,16 @@ package daylightchart.location.parser;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -42,6 +45,7 @@ import java.util.logging.Logger;
 import org.pointlocation6709.Longitude;
 
 import daylightchart.location.Country;
+import daylightchart.location.USState;
 
 /**
  * In-memory database of locations.
@@ -51,10 +55,54 @@ import daylightchart.location.Country;
 public final class DefaultTimezones
 {
 
+  /**
+   * Compares time zone ids.
+   * 
+   * @author sfatehi
+   */
+  private static final class TimeZoneIdComparator
+    implements Serializable, Comparator<String>
+  {
+
+    private static final long serialVersionUID = -1376900272123395097L;
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see java.util.Comparator#compare(java.lang.Object,
+     *      java.lang.Object)
+     */
+    public int compare(final String o1, final String o2)
+    {
+      int comparison = 0;
+
+      if (o1 == null || o2 == null)
+      {
+        return comparison;
+      }
+
+      // 1. Compare time zone parts
+      comparison = o1.split("/").length - o2.split("/").length;
+      // 2. Compare overall length
+      if (comparison == 0)
+      {
+        comparison = o1.length() - o2.length();
+      }
+      // 3. Do a basic string comparison
+      if (comparison == 0)
+      {
+        comparison = o1.compareTo(o2);
+      }
+
+      return comparison;
+    }
+
+  }
+
   private static final Logger LOGGER = Logger.getLogger(DefaultTimezones.class
     .getName());
 
-  private static final Map<Country, Set<String>> defaultTimezones = new HashMap<Country, Set<String>>();
+  private static final Map<Country, List<String>> defaultTimezones = new HashMap<Country, List<String>>();
 
   /**
    * Loads data from internal database.
@@ -67,7 +115,7 @@ public final class DefaultTimezones
       final Set<Country> allCountries = Countries.getAllCountries();
       for (final Country country: allCountries)
       {
-        defaultTimezones.put(country, new HashSet<String>());
+        defaultTimezones.put(country, new ArrayList<String>());
       }
 
       final BufferedReader reader = new BufferedReader(new InputStreamReader(DefaultTimezones.class
@@ -103,7 +151,7 @@ public final class DefaultTimezones
         {
           final Country country = Countries
             .lookupIso3166CountryCode2(iso3166CountryCode2);
-          final Set<String> defaultTimezonesForCountry = defaultTimezones
+          final List<String> defaultTimezonesForCountry = defaultTimezones
             .get(country);
           defaultTimezonesForCountry.add(defaultTimezone.getID());
         }
@@ -113,6 +161,13 @@ public final class DefaultTimezones
         }
       }
       reader.close();
+
+      // Sort all time zones lists
+      final TimeZoneIdComparator timeZoneIdComparator = new TimeZoneIdComparator();
+      for (final List<String> defaultTimeZonesList: defaultTimezones.values())
+      {
+        Collections.sort(defaultTimeZonesList, timeZoneIdComparator);
+      }
 
     }
     catch (final IOException e)
@@ -124,15 +179,18 @@ public final class DefaultTimezones
 
   /**
    * Looks up a country from the provided string - whether a country
-   * code or a country name.
+   * code or a country name. *
    * 
+   * @param city
+   *        City
    * @param country
    *        Country
    * @param longitude
    *        Longitude
    * @return Country ojbect, or null
    */
-  public static String attemptTimeZoneMatch(final Country country,
+  public static String attemptTimeZoneMatch(final String city,
+                                            final Country country,
                                             final Longitude longitude)
   {
 
@@ -146,8 +204,8 @@ public final class DefaultTimezones
     tzOffsetHours = longitude.getDegrees() / 15D;
     tzOffsetHours = roundToNearestHalf(tzOffsetHours);
 
-    final List<String> defaultTimezonesForCountry = new ArrayList<String>(defaultTimezones
-      .get(country));
+    final List<String> defaultTimezonesForCountry = defaultTimezones
+      .get(country);
     if (defaultTimezonesForCountry == null
         || defaultTimezonesForCountry.size() == 0)
     {
@@ -155,22 +213,32 @@ public final class DefaultTimezones
     }
     else if (defaultTimezonesForCountry.size() == 1)
     {
-      return defaultTimezonesForCountry.get(0);
+      return defaultTimezonesForCountry.toArray(new String[1])[0];
     }
 
-    // More than one timezone found - try a match by longitude
+    // More than one timezone found
     String timeZoneId = null;
-    double leastDifference = Double.MAX_VALUE;
-    for (final String defaultTimeZoneId: defaultTimezonesForCountry)
+    // 1. Try a match by city and country name
+    timeZoneId = findBestTimeZoneId(city, country);
+    // 2. Try a match by longitude
+    if (timeZoneId == null)
     {
-      final double difference = Math
-        .abs(getStandardTimeZoneOffsetHours(defaultTimeZoneId) - tzOffsetHours);
-      if (difference < leastDifference)
+      double leastDifference = Double.MAX_VALUE;
+      for (final String defaultTimeZoneId: defaultTimezonesForCountry)
       {
-        leastDifference = difference;
-        timeZoneId = defaultTimeZoneId;
+        final double difference = Math
+          .abs(getStandardTimeZoneOffsetHours(defaultTimeZoneId)
+               - tzOffsetHours);
+        if (difference < leastDifference)
+        {
+          leastDifference = difference;
+          timeZoneId = defaultTimeZoneId;
+        }
       }
     }
+
+    LOGGER.log(Level.INFO, "Time zone id for \"" + city + ", " + country
+                           + "\" is \"" + timeZoneId + "\"");
 
     return timeZoneId;
 
@@ -233,6 +301,92 @@ public final class DefaultTimezones
   {
     return new BigDecimal(number * 2D)
       .round(new MathContext(1, RoundingMode.HALF_UP)).doubleValue() / 2D;
+  }
+
+  /**
+   * Gets best possible timezone ID for a location. Returns a null if no
+   * good match is found.
+   * 
+   * @param city
+   *        City.
+   * @param strCountry
+   *        Country.
+   * @return String, best possible time zone id.
+   */
+  private static String findBestTimeZoneId(final String city,
+                                           final Country country)
+  {
+
+    if (city == null || city.length() == 0)
+    {
+      return null;
+    }
+    if (country == null)
+    {
+      return null;
+    }
+
+    final List<String> countryTimeZones = defaultTimezones.get(country);
+    if (countryTimeZones == null)
+    {
+      return null;
+    }
+    if (countryTimeZones.size() == 1)
+    {
+      // If the country has only one time zone, return it
+      return countryTimeZones.toArray(new String[1])[0];
+    }
+
+    final List<String> locationParts = new ArrayList<String>();
+    for (final String locationPart: city.split(","))
+    {
+      locationParts.add(locationPart.trim().replaceAll(" |-", "_"));
+    }
+    if (country.getIso3166Code2().equals("US") && locationParts.size() >= 2)
+    {
+      final String stateString = locationParts.get(locationParts.size() - 1);
+      final USState state = USStates.lookupUSState(stateString);
+      if (state != null)
+      {
+        // Replace state code with full state name
+        locationParts.remove(stateString);
+        locationParts.add(state.getName());
+      }
+    }
+    locationParts.add(country.getName());
+
+    String bestTimeZoneId = null;
+    for (final String countryTimeZoneId: countryTimeZones)
+    {
+      final List<String> timeZoneParts = new ArrayList<String>();
+      timeZoneParts.addAll(Arrays.asList(countryTimeZoneId.split("/")));
+      timeZoneParts.remove(0); // Remove the continent
+      Collections.reverse(timeZoneParts);
+
+      final String locationPart1 = locationParts.get(0).toLowerCase();
+      final String timeZonePart1 = timeZoneParts.get(0).toLowerCase();
+      if (locationPart1.indexOf(timeZonePart1) >= 0)
+      {
+        if (locationParts.size() > 1 && timeZoneParts.size() > 1)
+        {
+          final String locationPart2 = locationParts.get(1).toLowerCase();
+          final String timeZonePart2 = timeZoneParts.get(1).toLowerCase();
+          if (locationPart2.indexOf(timeZonePart2) >= 0)
+          {
+            bestTimeZoneId = countryTimeZoneId;
+            break;
+          }
+        }
+        else
+        {
+          bestTimeZoneId = countryTimeZoneId;
+          break;
+        }
+      }
+    }
+
+    return bestTimeZoneId;
+
   }
 
 }

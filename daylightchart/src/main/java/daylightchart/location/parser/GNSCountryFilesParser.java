@@ -137,7 +137,7 @@ public final class GNSCountryFilesParser
           final PointLocation pointLocation = new PointLocation(latitude,
                                                                 longitude);
           final String timeZoneId = DefaultTimezones
-            .attemptTimeZoneMatch(country, longitude);
+            .attemptTimeZoneMatch(city, country, longitude);
 
           locations.add(new Location(city, country, timeZoneId, pointLocation));
           locationNames.add(city + ", " + fips10CountryCode);

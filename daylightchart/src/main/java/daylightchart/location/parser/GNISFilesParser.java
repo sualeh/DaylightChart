@@ -117,10 +117,8 @@ public final class GNISFilesParser
         final String featureClass = fields[2];
         if (featureClass.equals("Populated Place"))
         {
-          final String city = fields[1];
-          // final String county = fields[5];
-          final String state = fields[3];
-
+          // City name is in the form: city, state
+          final String city = fields[1] + ", " + fields[3];
           final String latitudeString = fields[9];
           final String longitudeString = fields[10];
 
@@ -133,14 +131,8 @@ public final class GNISFilesParser
             final PointLocation pointLocation = new PointLocation(latitude,
                                                                   longitude);
             final String timeZoneId = DefaultTimezones
-              .attemptTimeZoneMatch(usa, longitude);
-
-            final String locationName = city + ", "
-                                        + /* county + ", " + */state;
-            locations.add(new Location(locationName,
-                                       usa,
-                                       timeZoneId,
-                                       pointLocation));
+              .attemptTimeZoneMatch(city, usa, longitude);
+            locations.add(new Location(city, usa, timeZoneId, pointLocation));
           }
         }
       }
