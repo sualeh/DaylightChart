@@ -175,7 +175,8 @@ public final class DefaultTimezonesUtility
     numberFormat.setMinimumIntegerDigits(2);
     numberFormat.setMinimumFractionDigits(1);
 
-    logBuffer.append(entry.getKey() + "\n");
+    logBuffer.append(entry.getKey() + ", " + entry.getKey().getIso3166Code2()
+                     + "\n");
     logBuffer.append("[");
     for (final String timeZoneId: timeZones)
     {
