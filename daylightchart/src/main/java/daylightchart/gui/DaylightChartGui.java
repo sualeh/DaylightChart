@@ -113,8 +113,6 @@ public final class DaylightChartGui
   private final ChartPanel chartPanel;
   private final ChartOptions chartOptions;
 
-  private File lastSelectedDirectory = new File("."); //$NON-NLS-1$
-
   /**
    * Creates a new instance of a Daylight Chart main window.
    */
@@ -167,16 +165,6 @@ public final class DaylightChartGui
   }
 
   /**
-   * Gets the last selected directory.
-   * 
-   * @return The last selected directory.
-   */
-  public File getLastSelectedDirectory()
-  {
-    return lastSelectedDirectory;
-  }
-
-  /**
    * Get the locations list.
    * 
    * @return Locations
@@ -184,20 +172,6 @@ public final class DaylightChartGui
   public List<Location> getLocations()
   {
     return locations;
-  }
-
-  /**
-   * Sets the last selected directory.
-   * 
-   * @param lastSelectedDirectory
-   *        the lastSelectedDirectory to set
-   */
-  public void setLastSelectedDirectory(final File lastSelectedDirectory)
-  {
-    if (lastSelectedDirectory != null && lastSelectedDirectory.isDirectory())
-    {
-      this.lastSelectedDirectory = lastSelectedDirectory;
-    }
   }
 
   /**

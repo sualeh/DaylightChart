@@ -32,6 +32,7 @@ import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
+import daylightchart.UserPreferences;
 import daylightchart.location.Location;
 import daylightchart.location.parser.LocationFormatter;
 import daylightchart.location.parser.LocationsLoader;
@@ -59,8 +60,8 @@ public class GuiHelper
     final JFileChooser fileDialog = new JFileChooser();
     fileDialog.setDialogTitle(Messages
       .getString("DaylightChartGui.Menu.File.LoadLocations")); //$NON-NLS-1$
-    fileDialog.setSelectedFile(new File(mainWindow.getLastSelectedDirectory(),
-                                        "locations.data")); //$NON-NLS-1$
+    fileDialog.setSelectedFile(new File(new UserPreferences()
+      .getDataFileDirectory(), "locations.data"));
     fileDialog.setDialogType(JFileChooser.OPEN_DIALOG);
     fileDialog.showDialog(mainWindow, Messages
       .getString("DaylightChartGui.Menu.Open")); //$NON-NLS-1$
@@ -108,7 +109,7 @@ public class GuiHelper
       LOGGER.log(Level.WARNING, "Could not load locations");
     }
 
-    mainWindow.setLastSelectedDirectory(selectedFile.getParentFile());
+    new UserPreferences().setDataFileDirectory(selectedFile.getParentFile());
 
     mainWindow.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 
@@ -161,8 +162,8 @@ public class GuiHelper
   {
     final JFileChooser fileDialog = new JFileChooser();
     fileDialog.setDialogTitle(dialogTitle);
-    fileDialog.setSelectedFile(new File(mainWindow.getLastSelectedDirectory(),
-                                        suggestedFilename));
+    fileDialog.setSelectedFile(new File(new UserPreferences()
+      .getDataFileDirectory(), suggestedFilename));
     fileDialog.setDialogType(JFileChooser.SAVE_DIALOG);
     fileDialog.showDialog(mainWindow, Messages
       .getString("DaylightChartGui.Menu.File.SaveFile")); //$NON-NLS-1$
@@ -211,7 +212,7 @@ public class GuiHelper
     if (selectedFile != null)
     {
       // Save last selected directory
-      mainWindow.setLastSelectedDirectory(selectedFile.getParentFile());
+      new UserPreferences().setDataFileDirectory(selectedFile.getParentFile());
     }
 
     return selectedFile;

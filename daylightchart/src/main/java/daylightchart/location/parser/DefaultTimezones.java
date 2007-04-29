@@ -37,6 +37,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TimeZone;
+import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -57,9 +58,11 @@ public final class DefaultTimezones
     .getName());
 
   private static final Map<Country, List<String>> defaultTimezones = new HashMap<Country, List<String>>();
+  private static final Map<String, List<String>> allTimezoneIds = new HashMap<String, List<String>>();
 
   /**
-   * Loads data from internal database.
+   * Loads default time zone from internal database. These are default
+   * time zone ids for every time zone for each country.
    */
   static
   {
@@ -124,6 +127,23 @@ public final class DefaultTimezones
     }
   }
 
+  static
+  {
+    String[] allTimeZoneIds = TimeZone.getAvailableIDs();
+    for (String timeZoneId: allTimeZoneIds)
+    {
+      if (timeZoneId.startsWith("Etc/"))
+      {
+        continue;
+      }
+      List<String> timeZoneIdParts = splitTimeZoneId(timeZoneId);
+      if (timeZoneIdParts.size() > 0)
+      {
+        allTimezoneIds.put(timeZoneId, timeZoneIdParts);
+      }
+    }
+  }
+
   /**
    * Gets the map of default time zones.
    * 
@@ -161,25 +181,26 @@ public final class DefaultTimezones
     tzOffsetHours = longitude.getDegrees() / 15D;
     tzOffsetHours = roundToNearestHalf(tzOffsetHours);
 
-    final List<String> defaultTimezonesForCountry = defaultTimezones
-      .get(country);
-    if (defaultTimezonesForCountry == null
-        || defaultTimezonesForCountry.size() == 0)
-    {
-      return createTimeZoneId(tzOffsetHours);
-    }
-    else if (defaultTimezonesForCountry.size() == 1)
-    {
-      return defaultTimezonesForCountry.toArray(new String[1])[0];
-    }
-
     // More than one timezone found
     String timeZoneId = null;
     // 1. Try a match by city and country name
     timeZoneId = findBestTimeZoneId(city, country);
-    // 2. Try a match by longitude
+    // 2. Check the countries deault time zone
     if (timeZoneId == null)
     {
+      final List<String> defaultTimezonesForCountry = defaultTimezones
+        .get(country);
+      if (defaultTimezonesForCountry == null
+          || defaultTimezonesForCountry.size() == 0)
+      {
+        return createTimeZoneId(tzOffsetHours);
+      }
+      else if (defaultTimezonesForCountry.size() == 1)
+      {
+        return defaultTimezonesForCountry.toArray(new String[1])[0];
+      }
+      // 3. Try a match by longitude, if there are more than one
+      // defaults for a country
       double leastDifference = Double.MAX_VALUE;
       for (final String defaultTimeZoneId: defaultTimezonesForCountry)
       {
@@ -191,6 +212,7 @@ public final class DefaultTimezones
           leastDifference = difference;
           timeZoneId = defaultTimeZoneId;
         }
+
       }
     }
 
@@ -283,17 +305,6 @@ public final class DefaultTimezones
       return null;
     }
 
-    final List<String> countryTimeZones = defaultTimezones.get(country);
-    if (countryTimeZones == null)
-    {
-      return null;
-    }
-    if (countryTimeZones.size() == 1)
-    {
-      // If the country has only one time zone, return it
-      return countryTimeZones.toArray(new String[1])[0];
-    }
-
     final List<String> locationParts = new ArrayList<String>();
     for (final String locationPart: city.split(","))
     {
@@ -313,30 +324,28 @@ public final class DefaultTimezones
     locationParts.add(country.getName());
 
     String bestTimeZoneId = null;
-    for (final String countryTimeZoneId: countryTimeZones)
-    {
-      final List<String> timeZoneParts = new ArrayList<String>();
-      timeZoneParts.addAll(Arrays.asList(countryTimeZoneId.split("/")));
-      timeZoneParts.remove(0); // Remove the continent
-      Collections.reverse(timeZoneParts);
 
+    for (Entry<String, List<String>> entry: allTimezoneIds.entrySet())
+    {
+      String timeZoneId = entry.getKey();
+      List<String> timeZoneParts = entry.getValue();
       final String locationPart1 = locationParts.get(0).toLowerCase();
       final String timeZonePart1 = timeZoneParts.get(0).toLowerCase();
-      if (locationPart1.indexOf(timeZonePart1) >= 0)
+      if (locationPart1.equals(timeZonePart1))
       {
         if (locationParts.size() > 1 && timeZoneParts.size() > 1)
         {
           final String locationPart2 = locationParts.get(1).toLowerCase();
           final String timeZonePart2 = timeZoneParts.get(1).toLowerCase();
-          if (locationPart2.indexOf(timeZonePart2) >= 0)
+          if (locationPart2.equals(timeZonePart2))
           {
-            bestTimeZoneId = countryTimeZoneId;
+            bestTimeZoneId = timeZoneId;
             break;
           }
         }
         else
         {
-          bestTimeZoneId = countryTimeZoneId;
+          bestTimeZoneId = timeZoneId;
           break;
         }
       }
@@ -344,6 +353,22 @@ public final class DefaultTimezones
 
     return bestTimeZoneId;
 
+  }
+
+  private static List<String> splitTimeZoneId(final String timeZoneId)
+  {
+    final List<String> timeZoneParts = new ArrayList<String>();
+    timeZoneParts.addAll(Arrays.asList(timeZoneId.split("/")));
+    // If the first part is not a country, it is a continent, so
+    // remove it
+    String firstPart = timeZoneParts.get(0);
+    Country country = Countries.lookupCountry(firstPart);
+    if (country == null)
+    {
+      timeZoneParts.remove(0); // Remove the continent
+    }
+    Collections.reverse(timeZoneParts);
+    return timeZoneParts;
   }
 
 }

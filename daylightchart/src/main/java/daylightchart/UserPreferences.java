@@ -3,6 +3,7 @@ package daylightchart;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -37,6 +38,7 @@ public final class UserPreferences
 
   private static final String keyLocations = "daylightchart.locations";
   private static final String keyChartOptions = "daylightchart.chartOptions";
+  private static final String keyDataFileDirectory = "daylightchart.dataFileDirectory";
 
   /**
    * Main method. Lists all user preferences.
@@ -112,6 +114,17 @@ public final class UserPreferences
   }
 
   /**
+   * Get the default directory for data files.
+   * 
+   * @return Directory for data files
+   */
+  public File getDataFileDirectory()
+  {
+    final String dataFileDirectory = preferences.get(keyDataFileDirectory, ".");
+    return new File(dataFileDirectory);
+  }
+
+  /**
    * Gets the locations for the current user.
    * 
    * @return Locations
@@ -174,6 +187,17 @@ public final class UserPreferences
       bytes = new byte[0];
     }
     preferences.putByteArray(keyChartOptions, bytes);
+  }
+
+  /**
+   * Set the default directory for data files.
+   * 
+   * @param dataFileDirectory
+   *        Default directory for data files
+   */
+  public void setDataFileDirectory(final File dataFileDirectory)
+  {
+    preferences.put(keyDataFileDirectory, dataFileDirectory.getAbsolutePath());
   }
 
   /**
