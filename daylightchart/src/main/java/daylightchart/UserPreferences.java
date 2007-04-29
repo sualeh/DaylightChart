@@ -132,15 +132,18 @@ public final class UserPreferences
   public List<Location> getLocations()
   {
 
-    final String locationsString = preferences.get(keyLocations, null);
-
-    try
+    final String locationsDataFileName = preferences.get(keyLocations, null);
+    if (locationsDataFileName != null)
     {
-      return LocationParser.parseLocations(locationsString);
-    }
-    catch (final ParserException e)
-    {
-      LOGGER.log(Level.WARNING, "Could get locations", e);
+      try
+      {
+        final File locationsDataFile = new File(locationsDataFileName);
+        return LocationParser.parseLocations(locationsDataFile);
+      }
+      catch (final ParserException e)
+      {
+        LOGGER.log(Level.WARNING, "Could get locations", e);
+      }
     }
 
     try
@@ -210,11 +213,27 @@ public final class UserPreferences
   {
     try
     {
-      final String locationsString = LocationFormatter
-        .formatLocations(locations);
-      preferences.put(keyLocations, locationsString);
+      // Delete previous locations file
+      final String previousFileName = preferences.get(keyLocations, null);
+      if (previousFileName != null)
+      {
+        final File previousFile = new File(previousFileName);
+        if (previousFile.exists())
+        {
+          previousFile.delete();
+        }
+      }
+      // Create a new locations file
+      final File locationsDataFile = File
+        .createTempFile("daylightchart.locations.", ".data");
+      LocationFormatter.formatLocations(locations, locationsDataFile);
+      preferences.put(keyLocations, locationsDataFile.getAbsolutePath());
     }
     catch (final FormatterException e)
+    {
+      LOGGER.log(Level.WARNING, "Could not save user locations list", e);
+    }
+    catch (final IOException e)
     {
       LOGGER.log(Level.WARNING, "Could not save user locations list", e);
     }
