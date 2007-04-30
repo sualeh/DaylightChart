@@ -210,17 +210,17 @@ public final class DaylightChartGui
     final JMenu menuFile = new JMenu(Messages
       .getString("DaylightChartGui.Menu.File")); //$NON-NLS-1$
 
-    final JMenuItem saveLocations = new JMenuItem(Messages
-      .getString("DaylightChartGui.Menu.File.SaveLocations")); //$NON-NLS-1$
-    saveLocations.setActionCommand("DaylightChartGui.Menu.File.SaveLocations"); //$NON-NLS-1$
-    saveLocations.addActionListener(new LocationsFileActionListener());
-    menuFile.add(saveLocations);
-
     final JMenuItem loadLocations = new JMenuItem(Messages
       .getString("DaylightChartGui.Menu.File.LoadLocations")); //$NON-NLS-1$
     loadLocations.setActionCommand("DaylightChartGui.Menu.File.LoadLocations"); //$NON-NLS-1$
     loadLocations.addActionListener(new LocationsFileActionListener());
     menuFile.add(loadLocations);
+
+    final JMenuItem saveLocations = new JMenuItem(Messages
+      .getString("DaylightChartGui.Menu.File.SaveLocations")); //$NON-NLS-1$
+    saveLocations.setActionCommand("DaylightChartGui.Menu.File.SaveLocations"); //$NON-NLS-1$
+    saveLocations.addActionListener(new LocationsFileActionListener());
+    menuFile.add(saveLocations);
 
     menuFile.addSeparator();
 

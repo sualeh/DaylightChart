@@ -63,22 +63,24 @@ public class GuiHelper
     fileDialog.setSelectedFile(new File(new UserPreferences()
       .getDataFileDirectory(), "locations.data"));
     fileDialog.setDialogType(JFileChooser.OPEN_DIALOG);
-    fileDialog.showDialog(mainWindow, Messages
+    int dialogReturnValue = fileDialog.showDialog(mainWindow, Messages
       .getString("DaylightChartGui.Menu.Open")); //$NON-NLS-1$
-    final File selectedFile = fileDialog.getSelectedFile();
-    if (selectedFile == null)
+
+    if (dialogReturnValue != JFileChooser.APPROVE_OPTION)
     {
       return;
     }
 
-    if (!selectedFile.exists() || !selectedFile.canRead())
+    final File selectedFile = fileDialog.getSelectedFile();
+    if (selectedFile == null || !selectedFile.exists()
+        || !selectedFile.canRead())
     {
       JOptionPane
         .showMessageDialog(mainWindow,
                            selectedFile
                                + "\n" //$NON-NLS-1$
                                + Messages
-                                 .getString("DaylightChartGui.Error.CannotReadFile")); //$NON-NLS-1$
+                                 .getString("DaylightChartGui.Error.DidNotReadFile")); //$NON-NLS-1$
       return;
     }
 
@@ -87,7 +89,7 @@ public class GuiHelper
     try
     {
       final List<Location> locationsList = LocationsLoader.load(selectedFile);
-      if (locationsList == null)
+      if (locationsList == null || locationsList.size() == 0)
       {
         LOGGER.log(Level.WARNING, Messages
           .getString("DaylightChartGui.Error.ReadFile")); //$NON-NLS-1$
@@ -96,20 +98,19 @@ public class GuiHelper
                              selectedFile
                                  + "\n" //$NON-NLS-1$
                                  + Messages
-                                   .getString("DaylightChartGui.Error.CannotReadFile")); //$NON-NLS-1$
-        return;
+                                   .getString("DaylightChartGui.Error.DidNotReadFile")); //$NON-NLS-1$
       }
       else
       {
         mainWindow.setLocations(locationsList);
+        new UserPreferences()
+          .setDataFileDirectory(selectedFile.getParentFile());
       }
     }
     catch (final Exception e)
     {
       LOGGER.log(Level.WARNING, "Could not load locations");
     }
-
-    new UserPreferences().setDataFileDirectory(selectedFile.getParentFile());
 
     mainWindow.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 
