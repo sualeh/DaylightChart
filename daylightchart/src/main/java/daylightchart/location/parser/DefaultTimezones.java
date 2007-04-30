@@ -169,7 +169,7 @@ public final class DefaultTimezones
     // Timezone offset in hours
     double tzOffsetHours;
     tzOffsetHours = longitude.getDegrees() / 15D;
-    tzOffsetHours = roundToNearestHalf(tzOffsetHours);
+    tzOffsetHours = roundToNearestFraction(tzOffsetHours, 0.25D);
 
     // More than one timezone found
     String timeZoneId = null;
@@ -183,7 +183,7 @@ public final class DefaultTimezones
       if (defaultTimezonesForCountry == null
           || defaultTimezonesForCountry.size() == 0)
       {
-        return createTimeZoneId(tzOffsetHours);
+        return createGMTTimeZoneId(tzOffsetHours);
       }
       else if (defaultTimezonesForCountry.size() == 1)
       {
@@ -214,6 +214,34 @@ public final class DefaultTimezones
   }
 
   /**
+   * Create a standard GMT-based timezone id.
+   * 
+   * @param tzOffsetHours
+   *        Time zone offset, in hours
+   * @return Time zone id string
+   */
+  public static String createGMTTimeZoneId(final double tzOffsetHours)
+  {
+    String timeZoneId = "GMT";
+    if (tzOffsetHours < 0)
+    {
+      timeZoneId = timeZoneId + "-";
+    }
+    else
+    {
+      timeZoneId = timeZoneId + "+";
+    }
+
+    final NumberFormat numberFormat = NumberFormat.getInstance();
+    numberFormat.setMinimumIntegerDigits(2);
+    numberFormat.setMaximumFractionDigits(3);
+    timeZoneId = timeZoneId
+                 + numberFormat.format((int) Math.abs(tzOffsetHours));
+
+    return timeZoneId;
+  }
+
+  /**
    * Calculates the standard time zone offset, in hours.
    * 
    * @param timeZoneId
@@ -235,12 +263,16 @@ public final class DefaultTimezones
    * 
    * @param number
    *        Number to round
+   * @param fraction
+   *        Fraction to round to
    * @return Rounded numbers
    */
-  public static double roundToNearestHalf(final double number)
+  public static double roundToNearestFraction(final double number,
+                                              final double fraction)
   {
-    return new BigDecimal(number * 2D)
-      .round(new MathContext(1, RoundingMode.HALF_UP)).doubleValue() / 2D;
+    return new BigDecimal(number / fraction)
+      .round(new MathContext(1, RoundingMode.HALF_UP)).doubleValue()
+           * fraction;
   }
 
   /**
@@ -251,35 +283,6 @@ public final class DefaultTimezones
   static final Map<Country, List<String>> getMap()
   {
     return new HashMap<Country, List<String>>(defaultTimezones);
-  }
-
-  /**
-   * Create a standard GMT-based timezone id.
-   * 
-   * @param tzOffsetHours
-   *        Time zone offset, in hours
-   * @return Time zone id string
-   */
-  private static String createTimeZoneId(final double tzOffsetHours)
-  {
-
-    String timeZoneId = "GMT";
-    if (tzOffsetHours < 0)
-    {
-      timeZoneId = timeZoneId + "-";
-    }
-    else
-    {
-      timeZoneId = timeZoneId + "+";
-    }
-
-    final NumberFormat numberFormat = NumberFormat.getIntegerInstance();
-    numberFormat.setMinimumIntegerDigits(2);
-    timeZoneId = timeZoneId
-                 + numberFormat.format((int) Math.abs(tzOffsetHours));
-
-    return timeZoneId;
-
   }
 
   /**
