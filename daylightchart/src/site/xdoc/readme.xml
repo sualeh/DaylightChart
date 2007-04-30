@@ -40,13 +40,13 @@
           Daylight Chart program also supports loading of locations in the
           <a href="http://earth-info.nga.mil/gns/html/cntry_files.html">GNS Country Files</a>
           format. However, the data in the GNS Country Files does not contain daylight savings
-          time information, so the charts will show only sunrise and sunset times.
+          time information, so Daylight Chart will make a best guess of the time zone.
         </p>
         <p>
           The Daylight Chart program can load populated places in the USA in the
           <a href="http://geonames.usgs.gov/domestic/download_data.htm">GNIS file</a> format.
           The data in the GNIS files does not contain daylight savings
-          time information, so the charts will show only sunrise and sunset times.
+          time information,  so Daylight Chart will make a best guess of the time zone.
         </p>
       </subsection>
     </section>

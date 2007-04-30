@@ -18,10 +18,20 @@
         The ability in load in GNS Country Files.
       </action>
       <action dev="Sualeh Fatehi" type="add">
-        The ability in load in GNIS Country Files.
+        The ability in load in GNIS Files.
       </action>
     </release>
     <release version="1.2" date="2007-05-22">
+      <action dev="Sualeh Fatehi" type="fix">
+        Now makes a best guess at the time zone for locations
+        loaded in from GNS Country Files and GNIS Files.
+      </action>    
+      <action dev="Sualeh Fatehi" type="add">
+        New menu option to see online help.
+      </action>      
+      <action dev="Sualeh Fatehi" type="add">
+        New option to see daylight chart with local time.
+      </action>      
     </release>    
   </body>
 </document>
