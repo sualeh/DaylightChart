@@ -42,12 +42,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.pointlocation6709.Longitude;
+import org.pointlocation6709.Utility;
 
 import daylightchart.location.Country;
 import daylightchart.location.USState;
 
 /**
- * In-memory database of locations.
+ * Time zone utilities.
  * 
  * @author Sualeh Fatehi
  */
@@ -61,8 +62,8 @@ public final class DefaultTimezones
   private static final Map<String, List<String>> allTimezoneIds = new HashMap<String, List<String>>();
 
   /**
-   * Loads default time zone from internal database. These are default
-   * time zone ids for every time zone for each country.
+   * Loads default time zones from the internal database. These are
+   * default time zone ids for every time zone for each country.
    */
   static
   {
@@ -169,13 +170,14 @@ public final class DefaultTimezones
     // Timezone offset in hours
     double tzOffsetHours;
     tzOffsetHours = longitude.getDegrees() / 15D;
-    tzOffsetHours = roundToNearestFraction(tzOffsetHours, 0.25D);
+    tzOffsetHours = roundToNearestFraction(tzOffsetHours, 0.5D);
 
     // More than one timezone found
     String timeZoneId = null;
-    // 1. Try a match by city and country name
+    // 1. Try a match by city name, in case there is a special
+    // time zone for the city
     timeZoneId = findBestTimeZoneId(city, country);
-    // 2. Check the countries deault time zone
+    // 2. Check the country's default time zone
     if (timeZoneId == null)
     {
       final List<String> defaultTimezonesForCountry = defaultTimezones
@@ -189,8 +191,8 @@ public final class DefaultTimezones
       {
         return defaultTimezonesForCountry.toArray(new String[1])[0];
       }
-      // 3. Try a match by longitude, if there are more than one
-      // defaults for a country
+      // 3. Try a match by longitude, if no good default for
+      // the country is found
       double leastDifference = Double.MAX_VALUE;
       for (final String defaultTimeZoneId: defaultTimezonesForCountry)
       {
@@ -232,12 +234,13 @@ public final class DefaultTimezones
       timeZoneId = timeZoneId + "+";
     }
 
-    final NumberFormat numberFormat = NumberFormat.getInstance();
-    numberFormat.setMinimumIntegerDigits(2);
-    numberFormat.setMaximumFractionDigits(3);
-    timeZoneId = timeZoneId
-                 + numberFormat.format((int) Math.abs(tzOffsetHours));
+    int[] hourFields = Utility.sexagesimalSplit(Math.abs(tzOffsetHours));
 
+    final NumberFormat numberFormat = NumberFormat.getIntegerInstance();
+    numberFormat.setMinimumIntegerDigits(2);
+
+    timeZoneId = timeZoneId + numberFormat.format(hourFields[0]) + ":"
+                 + numberFormat.format(hourFields[1]);
     return timeZoneId;
   }
 

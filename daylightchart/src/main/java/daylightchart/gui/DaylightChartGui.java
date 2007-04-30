@@ -151,9 +151,10 @@ public final class DaylightChartGui
         }
         if (chartInLocalTime)
         {
+          final double tzOffsetHours = location.getPointLocation()
+            .getLongitude().getDegrees() / 15D;
           final String timeZoneId = DefaultTimezones
-            .createGMTTimeZoneId(DefaultTimezones
-              .getStandardTimeZoneOffsetHours(location.getTimeZoneId()));
+            .createGMTTimeZoneId(tzOffsetHours);
           location = new Location(location.getCity(),
                                   location.getCountry(),
                                   timeZoneId,
