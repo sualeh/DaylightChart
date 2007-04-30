@@ -140,7 +140,7 @@ public final class DaylightChartGui
     listBox.setFont(font);
     listBox.addListSelectionListener(new ListSelectionListener()
     {
-      public void valueChanged(@SuppressWarnings("unused")
+      public void valueChanged(@SuppressWarnings("unused")//$NON-NLS-1$
       final ListSelectionEvent listSelectionEvent)
       {
         Location location = (Location) listBox.getSelectedValue();
@@ -212,13 +212,13 @@ public final class DaylightChartGui
 
     final JMenuItem saveLocations = new JMenuItem(Messages
       .getString("DaylightChartGui.Menu.File.SaveLocations")); //$NON-NLS-1$
-    saveLocations.setActionCommand("DaylightChartGui.Menu.File.SaveLocations");
+    saveLocations.setActionCommand("DaylightChartGui.Menu.File.SaveLocations"); //$NON-NLS-1$
     saveLocations.addActionListener(new LocationsFileActionListener());
     menuFile.add(saveLocations);
 
     final JMenuItem loadLocations = new JMenuItem(Messages
       .getString("DaylightChartGui.Menu.File.LoadLocations")); //$NON-NLS-1$
-    loadLocations.setActionCommand("DaylightChartGui.Menu.File.LoadLocations");
+    loadLocations.setActionCommand("DaylightChartGui.Menu.File.LoadLocations"); //$NON-NLS-1$
     loadLocations.addActionListener(new LocationsFileActionListener());
     menuFile.add(loadLocations);
 
@@ -228,7 +228,7 @@ public final class DaylightChartGui
       .getString("DaylightChartGui.Menu.File.SaveChart")); //$NON-NLS-1$
     saveImage.addActionListener(new ActionListener()
     {
-      public void actionPerformed(@SuppressWarnings("unused")
+      public void actionPerformed(@SuppressWarnings("unused")//$NON-NLS-1$
       final ActionEvent actionevent)
       {
         try
@@ -248,7 +248,7 @@ public final class DaylightChartGui
       .getString("DaylightChartGui.Menu.File.PrintChart")); //$NON-NLS-1$
     print.addActionListener(new ActionListener()
     {
-      public void actionPerformed(@SuppressWarnings("unused")
+      public void actionPerformed(@SuppressWarnings("unused")//$NON-NLS-1$
       final ActionEvent actionevent)
       {
         chartPanel.createChartPrintJob();
@@ -262,7 +262,7 @@ public final class DaylightChartGui
       .getString("DaylightChartGui.Menu.File.Exit")); //$NON-NLS-1$
     exit.addActionListener(new ActionListener()
     {
-      public void actionPerformed(@SuppressWarnings("unused")
+      public void actionPerformed(@SuppressWarnings("unused")//$NON-NLS-1$
       final ActionEvent actionevent)
       {
         exit();
@@ -279,14 +279,15 @@ public final class DaylightChartGui
     final JMenu menuHelp = new JMenu(Messages
       .getString("DaylightChartGui.Menu.Help")); //$NON-NLS-1$
 
-    final JMenuItem onlineHelp = new JMenuItem("Online Help");
+    final JMenuItem onlineHelp = new JMenuItem(Messages
+      .getString("DaylightChartGui.Menu.Help.Online")); //$NON-NLS-1$
     onlineHelp.addActionListener(new ActionListener()
     {
-      public void actionPerformed(@SuppressWarnings("unused")
+      public void actionPerformed(@SuppressWarnings("unused")//$NON-NLS-1$
       final ActionEvent actionevent)
       {
         BareBonesBrowserLaunch
-          .openURL("http://daylightchart.sourceforge.net/readme.html");
+          .openURL("http://daylightchart.sourceforge.net/readme.html"); //$NON-NLS-1$
       }
     });
     menuHelp.add(onlineHelp);
@@ -295,7 +296,7 @@ public final class DaylightChartGui
       .getString("DaylightChartGui.Menu.Help.About")); //$NON-NLS-1$
     about.addActionListener(new ActionListener()
     {
-      public void actionPerformed(@SuppressWarnings("unused")
+      public void actionPerformed(@SuppressWarnings("unused")//$NON-NLS-1$
       final ActionEvent actionevent)
       {
         JOptionPane.showMessageDialog(DaylightChartGui.this, Version.about());
@@ -328,9 +329,11 @@ public final class DaylightChartGui
       .getString("DaylightChartGui.Menu.Options.SortByLatitude"), //$NON-NLS-1$
                                                                    false);
 
-    final JCheckBoxMenuItem useLocalTime = new JCheckBoxMenuItem("Use Local Time",
+    final JCheckBoxMenuItem useLocalTime = new JCheckBoxMenuItem(Messages
+      .getString("DaylightChartGui.Menu.Options.UseLocalTime"), //$NON-NLS-1$
                                                                  false);
-    final JCheckBoxMenuItem useTimeZone = new JCheckBoxMenuItem("Use Time Zone",
+    final JCheckBoxMenuItem useTimeZone = new JCheckBoxMenuItem(Messages
+      .getString("DaylightChartGui.Menu.Options.UseTimeZone"), //$NON-NLS-1$
                                                                 true);
 
     final JMenuItem chartOptionsMenuItem = new JMenuItem(Messages
@@ -351,7 +354,7 @@ public final class DaylightChartGui
 
     sortByName.addItemListener(new ItemListener()
     {
-      public void itemStateChanged(@SuppressWarnings("unused")
+      public void itemStateChanged(@SuppressWarnings("unused")//$NON-NLS-1$
       final ItemEvent itemEvent)
       {
         final boolean isSelected = sortByName.getState();
@@ -366,7 +369,7 @@ public final class DaylightChartGui
 
     sortByLatitude.addItemListener(new ItemListener()
     {
-      public void itemStateChanged(@SuppressWarnings("unused")
+      public void itemStateChanged(@SuppressWarnings("unused")//$NON-NLS-1$
       final ItemEvent itemEvent)
       {
         final boolean isSelected = sortByLatitude.getState();
@@ -381,7 +384,7 @@ public final class DaylightChartGui
 
     useLocalTime.addItemListener(new ItemListener()
     {
-      public void itemStateChanged(@SuppressWarnings("unused")
+      public void itemStateChanged(@SuppressWarnings("unused")//$NON-NLS-1$
       final ItemEvent itemEvent)
       {
         final boolean isSelected = useLocalTime.getState();
@@ -396,7 +399,7 @@ public final class DaylightChartGui
 
     useTimeZone.addItemListener(new ItemListener()
     {
-      public void itemStateChanged(@SuppressWarnings("unused")
+      public void itemStateChanged(@SuppressWarnings("unused")//$NON-NLS-1$
       final ItemEvent itemEvent)
       {
         final boolean isSelected = useTimeZone.getState();
@@ -411,7 +414,7 @@ public final class DaylightChartGui
 
     chartOptionsMenuItem.addActionListener(new ActionListener()
     {
-      public void actionPerformed(@SuppressWarnings("unused")
+      public void actionPerformed(@SuppressWarnings("unused")//$NON-NLS-1$
       final ActionEvent actionevent)
       {
         final ChartEditor chartEditor = chartOptions.getChartEditor();
@@ -435,7 +438,7 @@ public final class DaylightChartGui
 
     resetAll.addActionListener(new ActionListener()
     {
-      public void actionPerformed(@SuppressWarnings("unused")
+      public void actionPerformed(@SuppressWarnings("unused")//$NON-NLS-1$
       final ActionEvent actionevent)
       {
         new UserPreferences().clear();
