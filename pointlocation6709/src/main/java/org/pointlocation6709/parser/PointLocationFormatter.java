@@ -226,7 +226,7 @@ public final class PointLocationFormatter
   {
     int absMinutes = Math.abs(angle.getField(Angle.Field.MINUTES));
     final int absSeconds = Math.abs(angle.getField(Angle.Field.SECONDS));
-    if (absSeconds >= 30)
+    if (absMinutes < 59 && absSeconds >= 30)
     {
       absMinutes = absMinutes + 1;
     }
