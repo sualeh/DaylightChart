@@ -279,6 +279,18 @@ public final class DaylightChartGui
     final JMenu menuHelp = new JMenu(Messages
       .getString("DaylightChartGui.Menu.Help")); //$NON-NLS-1$
 
+    final JMenuItem onlineHelp = new JMenuItem("Online Help");
+    onlineHelp.addActionListener(new ActionListener()
+    {
+      public void actionPerformed(@SuppressWarnings("unused")
+      final ActionEvent actionevent)
+      {
+        BareBonesBrowserLaunch
+          .openURL("http://daylightchart.sourceforge.net/readme.html");
+      }
+    });
+    menuHelp.add(onlineHelp);
+
     final JMenuItem about = new JMenuItem(Messages
       .getString("DaylightChartGui.Menu.Help.About")); //$NON-NLS-1$
     about.addActionListener(new ActionListener()
