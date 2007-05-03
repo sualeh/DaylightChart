@@ -43,22 +43,22 @@ public class ApplicationWorkbenchAdvisor
     return new ApplicationWorkbenchWindowAdvisor(configurer);
   }
 
+  @Override
+  public String getInitialWindowPerspectiveId()
+  {
+    return PERSPECTIVE_ID;
+  }
+
   /**
    * {@inheritDoc}
    * 
    * @see org.eclipse.ui.application.WorkbenchAdvisor#initialize(org.eclipse.ui.application.IWorkbenchConfigurer)
    */
   @Override
-  public void initialize(IWorkbenchConfigurer configurer)
+  public void initialize(final IWorkbenchConfigurer configurer)
   {
     super.initialize(configurer);
-//    configurer.setSaveAndRestore(true);
-  }
-
-  @Override
-  public String getInitialWindowPerspectiveId()
-  {
-    return PERSPECTIVE_ID;
+    // configurer.setSaveAndRestore(true);
   }
 
 }

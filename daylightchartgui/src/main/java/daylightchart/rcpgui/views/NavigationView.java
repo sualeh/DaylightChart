@@ -151,7 +151,7 @@ public class NavigationView
         }
       }
     });
-    setLocations(new UserPreferences().getLocations());
+    setLocations(UserPreferences.getLocations());
     // Register the viewer with the selection services
     getSite().setSelectionProvider(treeViewer);
   }

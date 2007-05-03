@@ -53,5 +53,5 @@ public class Perspective
 
     layout.getViewLayout(NavigationView.ID).setCloseable(false);
   }
-  
+
 }

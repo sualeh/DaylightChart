@@ -22,10 +22,14 @@
 package daylightchart.rcpgui;
 
 
-import org.eclipse.jface.action.GroupMarker;
+import org.eclipse.jface.action.ICoolBarManager;
 import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
+import org.eclipse.jface.action.ToolBarContributionItem;
+import org.eclipse.jface.action.ToolBarManager;
+import org.eclipse.swt.SWT;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.actions.ActionFactory;
@@ -34,8 +38,11 @@ import org.eclipse.ui.application.ActionBarAdvisor;
 import org.eclipse.ui.application.IActionBarConfigurer;
 
 import daylightchart.rcpgui.actions.OpenLocationsFileAction;
+import daylightchart.rcpgui.actions.PrintChartAction;
 import daylightchart.rcpgui.actions.SaveChartAction;
 import daylightchart.rcpgui.actions.SaveLocationsFileAction;
+import daylightchart.rcpgui.actions.SortLocationsAction;
+import daylightchart.rcpgui.actions.UseTimeZoneAction;
 
 /**
  * An action bar advisor is responsible for creating, adding, and
@@ -52,31 +59,27 @@ public class ApplicationActionBarAdvisor
   // with FILL_PROXY.
   private IWorkbenchAction exitAction;
   private IWorkbenchAction aboutAction;
+
   private OpenLocationsFileAction openLocationsFileAction;
   private SaveLocationsFileAction saveLocationsFileAction;
   private SaveChartAction saveChartAction;
+  private PrintChartAction printChartAction;
+
+  private SortLocationsAction sortLocationsAction;
+  private UseTimeZoneAction useTimeZoneAction;
 
   public ApplicationActionBarAdvisor(final IActionBarConfigurer configurer)
   {
     super(configurer);
-
   }
 
-  // /**
-  // * {@inheritDoc}
-  // *
-  // * @see
-  // org.eclipse.ui.application.ActionBarAdvisor#fillCoolBar(org.eclipse.jface.action.ICoolBarManager)
-  // */
-  // @Override
-  // protected void fillCoolBar(final ICoolBarManager coolBar)
-  // {
-  // final IToolBarManager toolbar = new ToolBarManager(SWT.FLAT |
-  // SWT.RIGHT);
-  // coolBar.add(new ToolBarContributionItem(toolbar, "main"));
-  // toolbar.add(openViewAction);
-  // toolbar.add(messagePopupAction);
-  // }
+//  @Override
+//  protected void fillCoolBar(final ICoolBarManager coolBar)
+//  {
+//    final IToolBarManager toolbar = new ToolBarManager(SWT.FLAT | SWT.RIGHT);
+//    coolBar.add(new ToolBarContributionItem(toolbar, "main"));
+//    toolbar.add(openLocationsFileAction);
+//  }
 
   /**
    * {@inheritDoc}
@@ -88,13 +91,12 @@ public class ApplicationActionBarAdvisor
   {
     final MenuManager fileMenu = new MenuManager("&File",
                                                  IWorkbenchActionConstants.M_FILE);
+    final MenuManager optionsMenu = new MenuManager("&Options", "options");
     final MenuManager helpMenu = new MenuManager("&Help",
                                                  IWorkbenchActionConstants.M_HELP);
 
     menuBar.add(fileMenu);
-    // Add a group marker indicating where action set menus will
-    // appear.
-    menuBar.add(new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));
+    menuBar.add(optionsMenu);
     menuBar.add(helpMenu);
 
     // File
@@ -104,6 +106,10 @@ public class ApplicationActionBarAdvisor
     fileMenu.add(saveChartAction);
     fileMenu.add(new Separator());
     fileMenu.add(exitAction);
+
+    // Options
+    optionsMenu.add(sortLocationsAction);
+    optionsMenu.add(useTimeZoneAction);
 
     // Help
     helpMenu.add(aboutAction);
@@ -125,14 +131,24 @@ public class ApplicationActionBarAdvisor
     aboutAction = ActionFactory.ABOUT.create(window);
     register(aboutAction);
 
-    openLocationsFileAction = new OpenLocationsFileAction(window, "Open Locations File...");
+    openLocationsFileAction = new OpenLocationsFileAction(window);
     register(openLocationsFileAction);
-    
-    saveLocationsFileAction = new SaveLocationsFileAction(window, "Save Locations File...");
+
+    saveLocationsFileAction = new SaveLocationsFileAction(window);
     register(saveLocationsFileAction);
-    
-    saveChartAction = new SaveChartAction(window, "Save Chart As...");
+
+    saveChartAction = new SaveChartAction(window);
     register(saveChartAction);
+
+    printChartAction = new PrintChartAction(window);
+    register(printChartAction);
+
+    sortLocationsAction = new SortLocationsAction(window);
+    register(sortLocationsAction);
+
+    useTimeZoneAction = new UseTimeZoneAction(window);
+    register(useTimeZoneAction);
+
   }
 
 }

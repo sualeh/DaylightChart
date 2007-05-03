@@ -22,9 +22,6 @@
 package daylightchart.rcpgui.actions;
 
 
-import java.io.File;
-import java.util.List;
-
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelection;
@@ -32,24 +29,18 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.ui.IWorkbenchWindow;
 
-import daylightchart.location.Location;
-import daylightchart.location.parser.FormatterException;
-import daylightchart.location.parser.LocationFormatter;
-import daylightchart.location.parser.LocationsLoader;
-import daylightchart.rcpgui.views.NavigationView;
-
-public class SaveLocationsFileAction
+public class PrintChartAction
   extends Action
 {
 
-  public static final String ID = SaveLocationsFileAction.class.getName();
+  public static final String ID = PrintChartAction.class.getName();
 
   private final IWorkbenchWindow window;
 
-  public SaveLocationsFileAction(final IWorkbenchWindow window)
+  public PrintChartAction(final IWorkbenchWindow window)
   {
     this.window = window;
-    setText("Save Locations File...");
+    setText("Print chart...");
     // The id is used to refer to the action in a menu or toolbar
     setId(ID);
     // Associate the action with a pre-defined command, to allow key
@@ -60,33 +51,13 @@ public class SaveLocationsFileAction
   @Override
   public void run()
   {
-    if (window == null)
+    if (window != null)
     {
-      return;
-    }
-    
-    FileDialog dialog = new FileDialog(window.getShell(), SWT.SAVE);
-    String selectedFileName = dialog.open();
-    if (selectedFileName == null)
-    {
-      return;
-    }
 
-    File selectedFile = new File(selectedFileName);
-    NavigationView navigationView = (NavigationView) window.getActivePage()
-      .findView(NavigationView.ID);
-    List<Location> locations = navigationView.getLocations();
-    try
-    {      
-      LocationFormatter.formatLocations(locations, selectedFile);
+      MessageDialog.openInformation(window.getShell(),
+                                    "Print Chart",
+                                    "<need to find which chart to print>");
     }
-    catch (FormatterException e)
-    {
-      MessageDialog.openError(window.getShell(),
-                              "Save Locations",
-                              "Error saving locations file " + selectedFileName);
-    }
-    
   }
 
 }

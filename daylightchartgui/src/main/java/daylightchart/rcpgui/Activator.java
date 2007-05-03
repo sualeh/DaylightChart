@@ -89,5 +89,5 @@ public class Activator
     plugin = null;
     super.stop(context);
   }
-  
+
 }

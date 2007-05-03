@@ -31,6 +31,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.ui.IWorkbenchWindow;
 
+import daylightchart.UserPreferences;
 import daylightchart.location.Location;
 import daylightchart.location.parser.LocationsLoader;
 import daylightchart.location.parser.ParserException;
@@ -44,11 +45,10 @@ public class OpenLocationsFileAction
 
   private final IWorkbenchWindow window;
 
-  public OpenLocationsFileAction(final IWorkbenchWindow window,
-                                 final String label)
+  public OpenLocationsFileAction(final IWorkbenchWindow window)
   {
     this.window = window;
-    setText(label);
+    setText( "Open Locations File...");
     // The id is used to refer to the action in a menu or toolbar
     setId(ID);
     // Associate the action with a pre-defined command, to allow key
@@ -59,24 +59,28 @@ public class OpenLocationsFileAction
   @Override
   public void run()
   {
-    if (window != null)
+    if (window == null)
     {
-      FileDialog dialog = new FileDialog(window.getShell(), SWT.OPEN);
-      String selectedFile = dialog.open();
-
-      if (selectedFile == null)
-      {
-        return;
-      }
-
-      List<Location> locations = LocationsLoader.load(new File(selectedFile));
-      if (locations == null || locations.size() > 1)
-      {
-        NavigationView navigationView = (NavigationView) window.getActivePage()
-          .findView(NavigationView.ID);
-        navigationView.setLocations(locations);
-      }
-
+      return;
     }
+    
+    FileDialog dialog = new FileDialog(window.getShell(), SWT.OPEN);
+    String selectedFileName = dialog.open();
+    if (selectedFileName == null)
+    {
+      return;
+    }
+
+    File selectedFile = new File(selectedFileName);
+    List<Location> locations = LocationsLoader.load(selectedFile);
+    if (locations == null || locations.size() > 1)
+    {
+      NavigationView navigationView = (NavigationView) window.getActivePage()
+        .findView(NavigationView.ID);
+      navigationView.setLocations(locations);
+      UserPreferences.setLocations(locations);
+    }
+    
   }
+
 }

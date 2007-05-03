@@ -58,7 +58,7 @@ public class ApplicationWorkbenchWindowAdvisor
   {
     final IWorkbenchWindowConfigurer configurer = getWindowConfigurer();
     configurer.setInitialSize(new Point(800, 600));
-    configurer.setShowCoolBar(true);
+    configurer.setShowCoolBar(false);
     configurer.setShowStatusLine(false);
   }
 

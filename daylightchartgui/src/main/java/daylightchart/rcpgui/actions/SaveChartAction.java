@@ -29,23 +29,23 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.ui.IWorkbenchWindow;
 
-
 public class SaveChartAction
   extends Action
 {
 
+  public static final String ID = SaveChartAction.class.getName();
+
   private final IWorkbenchWindow window;
 
-  public SaveChartAction(final IWorkbenchWindow window,
-                      final String label)
+  public SaveChartAction(final IWorkbenchWindow window)
   {
     this.window = window;
-    setText(label);
+    setText("Save Chart As...");
     // The id is used to refer to the action in a menu or toolbar
-    setId(ICommandIds.CMD_SAVE_CHART);
+    setId(ID);
     // Associate the action with a pre-defined command, to allow key
     // bindings.
-    setActionDefinitionId(ICommandIds.CMD_SAVE_CHART);
+    setActionDefinitionId(ID);
   }
 
   @Override
