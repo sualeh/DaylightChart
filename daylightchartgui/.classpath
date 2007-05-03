@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src/main/java"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5"/>
+	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
+	<classpathentry kind="var" path="M2_REPO/pointlocation6709/pointlocation6709/1.1/pointlocation6709-1.1.jar"/>
+	<classpathentry kind="var" path="M2_REPO/daylightchart/daylightchart/1.2/daylightchart-1.2.jar"/>
+	<classpathentry kind="var" path="M2_REPO/jfree/jfreechart/1.0.4/jfreechart-1.0.4.jar" sourcepath="/JFreeHome/jfreechart-1.0.4/source"/>
+	<classpathentry kind="var" path="M2_REPO/jfree/jcommon/1.0.8/jcommon-1.0.8.jar" sourcepath="/JFreeHome"/>
+	<classpathentry kind="var" path="M2_REPO/antlr/antlr/2.7.7/antlr-2.7.7.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Dependencies"/>
+	<classpathentry kind="output" path="target/classes"/>
+</classpath>

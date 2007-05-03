@@ -1,0 +1,18 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Daylight Chart
+Bundle-SymbolicName: Daylight_Chart_GUI; singleton:=true
+Bundle-Version: 1.0.0
+Bundle-Activator: daylightchart.rcpgui.Activator
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime
+Eclipse-LazyStart: true
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-ClassPath: .,
+ lib/antlr-2.7.7.jar,
+ lib/daylightchart-1.2.jar,
+ lib/jcommon-1.0.8.jar,
+ lib/jfreechart-1.0.4.jar,
+ lib/joda-time-1.4.jar,
+ lib/looks-2.1.2.jar,
+ lib/pointlocation6709-1.1.jar
