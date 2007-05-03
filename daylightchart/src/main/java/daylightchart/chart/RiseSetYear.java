@@ -67,7 +67,7 @@ public class RiseSetYear
   public Date getDstEndDate()
   {
     Date dstEndDate = null;
-    if (usesDaylightTime)
+    if (usesDaylightTime && dstEnd != null)
     {
       dstEndDate = dstEnd.toDateTime((LocalTime) null).toGregorianCalendar()
         .getTime();
@@ -83,7 +83,7 @@ public class RiseSetYear
   public Date getDstStartDate()
   {
     Date dstStartDate = null;
-    if (usesDaylightTime)
+    if (usesDaylightTime && dstStart != null)
     {
       dstStartDate = dstStart.toDateTime((LocalTime) null)
         .toGregorianCalendar().getTime();

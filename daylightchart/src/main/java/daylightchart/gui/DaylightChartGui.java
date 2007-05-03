@@ -37,7 +37,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.BorderFactory;
-import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JMenu;
@@ -55,11 +54,10 @@ import org.jfree.chart.editor.ChartEditor;
 import daylightchart.UserPreferences;
 import daylightchart.Version;
 import daylightchart.chart.DaylightChart;
-import daylightchart.gui.options.ChartOptions;
+import daylightchart.chart.TimeZoneOption;
+import daylightchart.chart.options.ChartOptions;
 import daylightchart.location.Location;
-import daylightchart.location.LocationComparator;
 import daylightchart.location.LocationsSortOrder;
-import daylightchart.location.parser.DefaultTimezones;
 
 /**
  * Provides an GUI for daylight charts.
@@ -92,12 +90,12 @@ public final class DaylightChartGui
       if (actionevent.getActionCommand()
         .equals("DaylightChartGui.Menu.File.SaveLocations")) //$NON-NLS-1$
       {
-        GuiHelper.saveLocations(mainWindow);
+        Actions.doSaveLocationsFileAction(mainWindow);
       }
       else if (actionevent.getActionCommand()
         .equals("DaylightChartGui.Menu.File.LoadLocations")) //$NON-NLS-1$
       {
-        GuiHelper.loadLocations(mainWindow);
+        Actions.doOpenLocationsFileAction(mainWindow);
       }
     }
 
@@ -116,7 +114,7 @@ public final class DaylightChartGui
   // Options
   private final ChartOptions chartOptions;
   private LocationsSortOrder locationsSortOrder;
-  private boolean chartInLocalTime;
+  private TimeZoneOption timeZoneOption = TimeZoneOption.USE_TIME_ZONE;
 
   /**
    * Creates a new instance of a Daylight Chart main window.
@@ -131,10 +129,10 @@ public final class DaylightChartGui
     final Font font = new Font("Sans-serif", Font.PLAIN, 11); //$NON-NLS-1$
 
     locationsSortOrder = LocationsSortOrder.BY_NAME;
-    locations = new UserPreferences().getLocations();
-    Collections.sort(locations, new LocationComparator(locationsSortOrder));
+    locations = UserPreferences.getLocations();
+    Collections.sort(locations, locationsSortOrder);
 
-    chartOptions = new UserPreferences().getChartOptions();
+    chartOptions = UserPreferences.getChartOptions();
 
     listBox = new JList();
     listBox.setFont(font);
@@ -149,18 +147,7 @@ public final class DaylightChartGui
           listBox.setSelectedIndex(0);
           location = (Location) listBox.getSelectedValue();
         }
-        if (chartInLocalTime)
-        {
-          final double tzOffsetHours = location.getPointLocation()
-            .getLongitude().getDegrees() / 15D;
-          final String timeZoneId = DefaultTimezones
-            .createGMTTimeZoneId(tzOffsetHours);
-          location = new Location(location.getCity(),
-                                  location.getCountry(),
-                                  timeZoneId,
-                                  location.getPointLocation());
-        }
-        final DaylightChart chart = new DaylightChart(location);
+        final DaylightChart chart = new DaylightChart(location, timeZoneOption);
         chartOptions.updateChart(chart);
         chartPanel.setChart(chart);
       }
@@ -202,7 +189,7 @@ public final class DaylightChartGui
     {
       this.locations = locations;
       refreshView();
-      new UserPreferences().setLocations(locations);
+      UserPreferences.setLocations(locations);
     }
   }
 
@@ -211,17 +198,19 @@ public final class DaylightChartGui
     final JMenu menuFile = new JMenu(Messages
       .getString("DaylightChartGui.Menu.File")); //$NON-NLS-1$
 
-    final JMenuItem loadLocations = new JMenuItem(Messages
+    final JMenuItem openLocationsFile = new JMenuItem(Messages
       .getString("DaylightChartGui.Menu.File.LoadLocations")); //$NON-NLS-1$
-    loadLocations.setActionCommand("DaylightChartGui.Menu.File.LoadLocations"); //$NON-NLS-1$
-    loadLocations.addActionListener(new LocationsFileActionListener());
-    menuFile.add(loadLocations);
+    openLocationsFile
+      .setActionCommand("DaylightChartGui.Menu.File.LoadLocations"); //$NON-NLS-1$
+    openLocationsFile.addActionListener(new LocationsFileActionListener());
+    menuFile.add(openLocationsFile);
 
-    final JMenuItem saveLocations = new JMenuItem(Messages
+    final JMenuItem saveLocationsFile = new JMenuItem(Messages
       .getString("DaylightChartGui.Menu.File.SaveLocations")); //$NON-NLS-1$
-    saveLocations.setActionCommand("DaylightChartGui.Menu.File.SaveLocations"); //$NON-NLS-1$
-    saveLocations.addActionListener(new LocationsFileActionListener());
-    menuFile.add(saveLocations);
+    saveLocationsFile
+      .setActionCommand("DaylightChartGui.Menu.File.SaveLocations"); //$NON-NLS-1$
+    saveLocationsFile.addActionListener(new LocationsFileActionListener());
+    menuFile.add(saveLocationsFile);
 
     menuFile.addSeparator();
 
@@ -323,19 +312,11 @@ public final class DaylightChartGui
     final JMenu menuOptions = new JMenu(Messages
       .getString("DaylightChartGui.Menu.Options")); //$NON-NLS-1$
 
-    final JCheckBoxMenuItem sortByName = new JCheckBoxMenuItem(Messages
-      .getString("DaylightChartGui.Menu.Options.SortByName"), //$NON-NLS-1$
-                                                               true);
-    final JCheckBoxMenuItem sortByLatitude = new JCheckBoxMenuItem(Messages
-      .getString("DaylightChartGui.Menu.Options.SortByLatitude"), //$NON-NLS-1$
-                                                                   false);
+    final JMenuItem sortLocations = new JMenuItem(Messages
+      .getString("DaylightChartGui.Menu.Options.SortByLatitude"));//$NON-NLS-1$
 
-    final JCheckBoxMenuItem useLocalTime = new JCheckBoxMenuItem(Messages
-      .getString("DaylightChartGui.Menu.Options.UseLocalTime"), //$NON-NLS-1$
-                                                                 false);
-    final JCheckBoxMenuItem useTimeZone = new JCheckBoxMenuItem(Messages
-      .getString("DaylightChartGui.Menu.Options.UseTimeZone"), //$NON-NLS-1$
-                                                                true);
+    final JMenuItem useTimeZone = new JMenuItem(Messages
+      .getString("DaylightChartGui.Menu.Options.UseLocalTime")); //$NON-NLS-1$
 
     final JMenuItem chartOptionsMenuItem = new JMenuItem(Messages
       .getString("DaylightChartGui.Menu.Options.ChartOptions")); //$NON-NLS-1$
@@ -343,58 +324,31 @@ public final class DaylightChartGui
     final JMenuItem resetAll = new JMenuItem(Messages
       .getString("DaylightChartGui.Menu.Options.ResetAll")); //$NON-NLS-1$
 
-    menuOptions.add(sortByName);
-    menuOptions.add(sortByLatitude);
-    menuOptions.addSeparator();
-    menuOptions.add(useLocalTime);
+    menuOptions.add(sortLocations);
     menuOptions.add(useTimeZone);
     menuOptions.addSeparator();
     menuOptions.add(chartOptionsMenuItem);
     menuOptions.addSeparator();
     menuOptions.add(resetAll);
 
-    sortByName.addItemListener(new ItemListener()
+    sortLocations.addItemListener(new ItemListener()
     {
       public void itemStateChanged(@SuppressWarnings("unused")//$NON-NLS-1$
       final ItemEvent itemEvent)
       {
-        final boolean isSelected = sortByName.getState();
-        if (isSelected)
-        {
-          locationsSortOrder = LocationsSortOrder.BY_NAME;
-          refreshView();
-        }
-        sortByLatitude.setSelected(!isSelected);
-      }
-    });
-
-    sortByLatitude.addItemListener(new ItemListener()
-    {
-      public void itemStateChanged(@SuppressWarnings("unused")//$NON-NLS-1$
-      final ItemEvent itemEvent)
-      {
-        final boolean isSelected = sortByLatitude.getState();
-        if (isSelected)
+        if (locationsSortOrder == LocationsSortOrder.BY_NAME)
         {
           locationsSortOrder = LocationsSortOrder.BY_LATITUDE;
-          refreshView();
+          sortLocations.setText(Messages
+            .getString("DaylightChartGui.Menu.Options.SortByName")); //$NON-NLS-1$
         }
-        sortByName.setSelected(!isSelected);
-      }
-    });
-
-    useLocalTime.addItemListener(new ItemListener()
-    {
-      public void itemStateChanged(@SuppressWarnings("unused")//$NON-NLS-1$
-      final ItemEvent itemEvent)
-      {
-        final boolean isSelected = useLocalTime.getState();
-        if (isSelected)
+        else
         {
-          chartInLocalTime = true;
-          refreshView();
+          locationsSortOrder = LocationsSortOrder.BY_NAME;
+          sortLocations.setText(Messages
+            .getString("DaylightChartGui.Menu.Options.SortByLatitudes")); //$NON-NLS-1$
         }
-        useTimeZone.setSelected(!isSelected);
+        refreshView();
       }
     });
 
@@ -403,13 +357,19 @@ public final class DaylightChartGui
       public void itemStateChanged(@SuppressWarnings("unused")//$NON-NLS-1$
       final ItemEvent itemEvent)
       {
-        final boolean isSelected = useTimeZone.getState();
-        if (isSelected)
+        if (timeZoneOption == TimeZoneOption.USE_TIME_ZONE)
         {
-          chartInLocalTime = false;
-          refreshView();
+          timeZoneOption = TimeZoneOption.USE_LOCAL_TIME;
+          useTimeZone.setText(Messages
+            .getString("DaylightChartGui.Menu.Options.UseTimeZone")); //$NON-NLS-1$
         }
-        useLocalTime.setSelected(!isSelected);
+        else
+        {
+          timeZoneOption = TimeZoneOption.USE_TIME_ZONE;
+          useTimeZone.setText(Messages
+            .getString("DaylightChartGui.Menu.Options.UseLocalTime")); //$NON-NLS-1$
+        }
+        refreshView();
       }
     });
 
@@ -429,7 +389,7 @@ public final class DaylightChartGui
           // Get chart options from the editor
           chartOptions.copyFromChartEditor(chartEditor);
           // Save preferences
-          new UserPreferences().setChartOptions(chartOptions);
+          UserPreferences.setChartOptions(chartOptions);
           // Also apply changes to the current chart
           final DaylightChart chart = (DaylightChart) chartPanel.getChart();
           chartOptions.updateChart(chart);
@@ -442,7 +402,7 @@ public final class DaylightChartGui
       public void actionPerformed(@SuppressWarnings("unused")//$NON-NLS-1$
       final ActionEvent actionevent)
       {
-        new UserPreferences().clear();
+        UserPreferences.clear();
         JOptionPane
           .showMessageDialog(DaylightChartGui.this, Messages
             .getString("DaylightChartGui.Message.ResetAll"), //$NON-NLS-1$
@@ -464,7 +424,7 @@ public final class DaylightChartGui
   private void refreshView()
   {
     chartPanel.setChart(null);
-    Collections.sort(locations, new LocationComparator(locationsSortOrder));
+    Collections.sort(locations, locationsSortOrder);
     listBox.setListData(new Vector<Location>(locations));
     listBox.setSelectedIndex(0);
     this.repaint();

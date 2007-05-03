@@ -52,26 +52,40 @@ public final class RiseSetFactory
    * @return Full years sunset and sunrise times for a location
    */
   public static RiseSetYear createRiseSetYear(final Location location,
-                                              final int year)
+                                              final int year,
+                                              final TimeZoneOption timeZoneOption)
   {
     final SunAlgorithm sunAlgorithm = SunAlgorithmFactory.getInstance();
 
     final RiseSetYear riseSetYear = new RiseSetYear(location, year);
     final List<LocalDate> yearsDates = getYearsDates(year);
-    final TimeZone tz;
+    final TimeZone timeZone;
     if (location != null)
     {
-      tz = TimeZone.getTimeZone(location.getTimeZoneId());
+      final String timeZoneId;
+      if (timeZoneOption != null
+          && timeZoneOption == TimeZoneOption.USE_TIME_ZONE)
+      {
+        timeZoneId = location.getTimeZoneId();
+      }
+      else
+      {
+        final double tzOffsetHours = location.getPointLocation().getLongitude()
+          .getDegrees() / 15D;
+        timeZoneId = DefaultTimezones.createGMTTimeZoneId(tzOffsetHours);
+      }
+      timeZone = TimeZone.getTimeZone(timeZoneId);
     }
     else
     {
-      tz = TimeZone.getDefault();
+      timeZone = TimeZone.getDefault();
     }
-    final boolean useDaylightTime = tz.useDaylightTime();
+    final boolean useDaylightTime = timeZone.useDaylightTime();
     boolean wasDaylightSavings = false;
+    riseSetYear.setUsesDaylightTime(useDaylightTime);
     for (final LocalDate date: yearsDates)
     {
-      final boolean inDaylightSavings = tz.inDaylightTime(date
+      final boolean inDaylightSavings = timeZone.inDaylightTime(date
         .toDateTime((LocalTime) null).toGregorianCalendar().getTime());
       if (wasDaylightSavings != inDaylightSavings)
       {

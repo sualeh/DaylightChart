@@ -19,31 +19,20 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * 
  */
-package daylightchart.gui.options;
+package daylightchart.chart;
 
 
 /**
- * Allows a chart to act on chart options being set.
+ * Time option for charting.
  * 
  * @author sfatehi
  */
-public interface ChartOptionsListener
+public enum TimeZoneOption
 {
 
-  /**
-   * Called after setting chart options.
-   * 
-   * @param chartOptions
-   *        Chart options
-   */
-  void afterSettingChartOptions(ChartOptions chartOptions);
-
-  /**
-   * Called before setting chart options.
-   * 
-   * @param chartOptions
-   *        Chart options
-   */
-  void beforeSettingChartOptions(ChartOptions chartOptions);
+  /** Use local time for the time - do not correct for time zone, and DST */
+  USE_LOCAL_TIME,
+  /** Use time zone for the time - correct for time zone, and DST */
+  USE_TIME_ZONE;
 
 }

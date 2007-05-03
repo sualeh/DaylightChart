@@ -18,7 +18,7 @@ import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
 import daylightchart.chart.DaylightChart;
-import daylightchart.gui.options.ChartOptions;
+import daylightchart.chart.options.ChartOptions;
 import daylightchart.location.Location;
 import daylightchart.location.parser.FormatterException;
 import daylightchart.location.parser.LocationFormatter;
@@ -40,40 +40,13 @@ public final class UserPreferences
   private static final String keyChartOptions = "daylightchart.chartOptions";
   private static final String keyDataFileDirectory = "daylightchart.dataFileDirectory";
 
-  /**
-   * Main method. Lists all user preferences.
-   * 
-   * @param args
-   *        Command line arguments
-   */
-  public static void main(final String[] args)
-  {
-    new UserPreferences().listAllPreferences();
-  }
-
-  /**
-   * Creates a chart options instance.
-   * 
-   * @return Chart options
-   */
-  private static ChartOptions getDefaultDaylightChartOptions()
-  {
-    final DaylightChart chart = new DaylightChart(null);
-    chart.setTitle("");
-
-    final ChartOptions chartOptions = new ChartOptions();
-    chartOptions.copyFromChart(chart);
-
-    return chartOptions;
-  }
-
-  private final Preferences preferences = Preferences.userNodeForPackage(this
-    .getClass());
+  private static final Preferences preferences = Preferences
+    .userNodeForPackage(UserPreferences.class);
 
   /**
    * Clears all user preferences.
    */
-  public void clear()
+  public static void clear()
   {
     try
     {
@@ -90,7 +63,7 @@ public final class UserPreferences
    * 
    * @return Chart options
    */
-  public ChartOptions getChartOptions()
+  public static ChartOptions getChartOptions()
   {
     ChartOptions chartOptions = null;
     final byte[] bytes = preferences.getByteArray(keyChartOptions, new byte[0]);
@@ -118,7 +91,7 @@ public final class UserPreferences
    * 
    * @return Directory for data files
    */
-  public File getDataFileDirectory()
+  public static File getDataFileDirectory()
   {
     final String dataFileDirectory = preferences.get(keyDataFileDirectory, ".");
     return new File(dataFileDirectory);
@@ -129,7 +102,7 @@ public final class UserPreferences
    * 
    * @return Locations
    */
-  public List<Location> getLocations()
+  public static List<Location> getLocations()
   {
 
     final String locationsDataFileName = preferences.get(keyLocations, null);
@@ -148,8 +121,8 @@ public final class UserPreferences
 
     try
     {
-      final InputStream dataStream = this.getClass().getClassLoader()
-        .getResourceAsStream("locations.data");
+      final InputStream dataStream = Thread.currentThread()
+        .getContextClassLoader().getResourceAsStream("locations.data");
       if (dataStream == null)
       {
         throw new IllegalStateException("Cannot read data from internal database");
@@ -166,12 +139,23 @@ public final class UserPreferences
   }
 
   /**
+   * Main method. Lists all user preferences.
+   * 
+   * @param args
+   *        Command line arguments
+   */
+  public static void main(final String[] args)
+  {
+    UserPreferences.listAllPreferences();
+  }
+
+  /**
    * Sets the chart options for the current user.
    * 
    * @param chartOptions
    *        Chart options
    */
-  public void setChartOptions(final ChartOptions chartOptions)
+  public static void setChartOptions(final ChartOptions chartOptions)
   {
     byte[] bytes;
     try
@@ -198,7 +182,7 @@ public final class UserPreferences
    * @param dataFileDirectory
    *        Default directory for data files
    */
-  public void setDataFileDirectory(final File dataFileDirectory)
+  public static void setDataFileDirectory(final File dataFileDirectory)
   {
     preferences.put(keyDataFileDirectory, dataFileDirectory.getAbsolutePath());
   }
@@ -209,7 +193,7 @@ public final class UserPreferences
    * @param locations
    *        Locations
    */
-  public void setLocations(final List<Location> locations)
+  public static void setLocations(final List<Location> locations)
   {
     try
     {
@@ -239,7 +223,7 @@ public final class UserPreferences
     }
   }
 
-  void listAllPreferences()
+  static void listAllPreferences()
   {
     System.out.println("User preferences:");
     try
@@ -254,6 +238,23 @@ public final class UserPreferences
     {
       LOGGER.log(Level.WARNING, "Could list preferences", e);
     }
+  }
+
+  /**
+   * Creates a chart options instance.
+   * 
+   * @return Chart options
+   */
+  private static ChartOptions getDefaultDaylightChartOptions()
+  {
+    final ChartOptions chartOptions = new ChartOptions();
+    chartOptions.copyFromChart(new DaylightChart());
+    return chartOptions;
+  }
+
+  private UserPreferences()
+  {
+    // prevent external instantiation
   }
 
 }

@@ -54,8 +54,8 @@ import org.jfree.ui.RectangleInsets;
 import org.jfree.ui.TextAnchor;
 import org.joda.time.LocalDateTime;
 
-import daylightchart.gui.options.ChartOptions;
-import daylightchart.gui.options.ChartOptionsListener;
+import daylightchart.chart.options.ChartOptions;
+import daylightchart.chart.options.ChartOptionsListener;
 import daylightchart.location.Location;
 import daylightchart.location.parser.LocationFormatter;
 
@@ -78,6 +78,15 @@ public class DaylightChart
   private final RiseSetYear riseSetData;
 
   /**
+   * Create an empty chart, just to get the default chart options.
+   */
+  public DaylightChart()
+  {
+    this(null);
+    setTitle("");
+  }
+
+  /**
    * Instantiate the chart for a given location, and given year.
    * 
    * @param location
@@ -85,9 +94,20 @@ public class DaylightChart
    */
   public DaylightChart(final Location location)
   {
-    this(location, Calendar.getInstance().get(Calendar.YEAR));
+    this(location, Calendar.getInstance().get(Calendar.YEAR), TimeZoneOption.USE_TIME_ZONE);
   }
 
+  /**
+   * Instantiate the chart for a given location, and given year.
+   * 
+   * @param location
+   *        Location
+   */
+  public DaylightChart(final Location location, final TimeZoneOption timeZoneOption)
+  {
+    this(location, Calendar.getInstance().get(Calendar.YEAR), timeZoneOption);
+  }
+  
   /**
    * Instantiate the chart for a given location, and given year.
    * 
@@ -96,18 +116,18 @@ public class DaylightChart
    * @param year
    *        Year
    */
-  public DaylightChart(final Location location, final int year)
+  public DaylightChart(final Location location, final int year, final TimeZoneOption timeZoneOption)
   {
     super(new XYPlot());
     // Calculate rise and set timings for the whole year
-    riseSetData = RiseSetFactory.createRiseSetYear(location, year);
+    riseSetData = RiseSetFactory.createRiseSetYear(location, year, timeZoneOption);
     createChart();
   }
 
   /**
    * {@inheritDoc}
    * 
-   * @see daylightchart.gui.options.ChartOptionsListener#afterSettingChartOptions(ChartOptions)
+   * @see daylightchart.chart.options.ChartOptionsListener#afterSettingChartOptions(ChartOptions)
    */
   @SuppressWarnings("unchecked")
   public void afterSettingChartOptions(final ChartOptions chartOptions)
@@ -137,7 +157,7 @@ public class DaylightChart
   /**
    * {@inheritDoc}
    * 
-   * @see daylightchart.gui.options.ChartOptionsListener#beforeSettingChartOptions(ChartOptions)
+   * @see daylightchart.chart.options.ChartOptionsListener#beforeSettingChartOptions(ChartOptions)
    */
   public void beforeSettingChartOptions(@SuppressWarnings("unused")
   final ChartOptions chartOptions)
