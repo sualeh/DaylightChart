@@ -28,7 +28,6 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.util.Collections;
 import java.util.List;
 import java.util.Vector;
 import java.util.logging.Level;
@@ -49,13 +48,13 @@ import javax.swing.event.ListSelectionListener;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.editor.ChartEditor;
 
-import daylightchart.UserPreferences;
 import daylightchart.Version;
 import daylightchart.chart.DaylightChart;
 import daylightchart.chart.TimeZoneOption;
 import daylightchart.location.Location;
 import daylightchart.location.LocationsSortOrder;
 import daylightchart.options.Options;
+import daylightchart.options.UserPreferences;
 import daylightchart.options.chart.ChartOptions;
 
 /**
@@ -302,7 +301,7 @@ public final class DaylightChartGui
   private JMenu createOptionsMenu()
   {
 
-    Options options = UserPreferences.getOptions();
+    final Options options = UserPreferences.getOptions();
 
     final JMenu menuOptions = new JMenu(Messages
       .getString("DaylightChartGui.Menu.Options")); //$NON-NLS-1$
@@ -395,7 +394,7 @@ public final class DaylightChartGui
         }
         options.setTimeZoneOption(timeZoneOption);
         UserPreferences.setOptions(options);
-        
+
         refreshView();
       }
     });

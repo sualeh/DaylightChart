@@ -32,10 +32,10 @@ import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
-import daylightchart.UserPreferences;
 import daylightchart.location.Location;
 import daylightchart.location.parser.LocationFormatter;
 import daylightchart.location.parser.LocationsLoader;
+import daylightchart.options.UserPreferences;
 
 /**
  * GUI helper methods.

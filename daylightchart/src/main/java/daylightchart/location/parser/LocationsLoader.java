@@ -26,9 +26,9 @@ import java.io.File;
 import java.util.Collections;
 import java.util.List;
 
-import daylightchart.UserPreferences;
 import daylightchart.location.Location;
 import daylightchart.location.LocationsSortOrder;
+import daylightchart.options.UserPreferences;
 
 /**
  * Loads locations from a file of any supported format.
@@ -101,9 +101,10 @@ public final class LocationsLoader
     }
 
     // Sort by current user preferences
-    LocationsSortOrder locationsSortOrder = UserPreferences.getOptions().getLocationsSortOrder();
+    final LocationsSortOrder locationsSortOrder = UserPreferences.getOptions()
+      .getLocationsSortOrder();
     Collections.sort(locations, locationsSortOrder);
-    
+
     return locations;
   }
 
