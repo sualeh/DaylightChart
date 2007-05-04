@@ -28,9 +28,10 @@ import java.util.List;
 import org.eclipse.jface.action.Action;
 import org.eclipse.ui.IWorkbenchWindow;
 
-import daylightchart.chart.TimeZoneOption;
 import daylightchart.location.Location;
 import daylightchart.location.LocationsSortOrder;
+import daylightchart.options.Options;
+import daylightchart.options.UserPreferences;
 import daylightchart.rcpgui.views.NavigationView;
 
 public class SortLocationsAction
@@ -40,13 +41,21 @@ public class SortLocationsAction
   public static final String ID = UseTimeZoneAction.class.getName();
 
   private final IWorkbenchWindow window;
-  private LocationsSortOrder locationsSortOrder = null;
 
   public SortLocationsAction(final IWorkbenchWindow window)
   {
     this.window = window;
 
-    flip();
+    Options options = UserPreferences.getOptions();
+    switch (options.getLocationsSortOrder())
+    {
+      case BY_LATITUDE:
+        setText("Sort Locations by Latitude");
+        break;
+      case BY_NAME:
+        setText("Sort Locations by Name");
+        break;
+    }
 
     // The id is used to refer to the action in a menu or toolbar
     setId(ID);
@@ -67,7 +76,8 @@ public class SortLocationsAction
       .getActivePage().findView(NavigationView.ID);
 
     final List<Location> locations = navigationView.getLocations();
-    Collections.sort(locations, locationsSortOrder);
+    Collections.sort(locations, UserPreferences.getOptions()
+      .getLocationsSortOrder());
     navigationView.setLocations(locations);
 
     flip();
@@ -75,10 +85,8 @@ public class SortLocationsAction
 
   private void flip()
   {
-    if (locationsSortOrder == null)
-    {
-      locationsSortOrder = LocationsSortOrder.BY_NAME;
-    }
+    Options options = UserPreferences.getOptions();
+    LocationsSortOrder locationsSortOrder = options.getLocationsSortOrder();
     switch (locationsSortOrder)
     {
       case BY_NAME:
@@ -90,6 +98,8 @@ public class SortLocationsAction
         locationsSortOrder = LocationsSortOrder.BY_NAME;
         break;
     }
+    options.setLocationsSortOrder(locationsSortOrder);
+    UserPreferences.setOptions(options);
   }
 
 }

@@ -26,15 +26,13 @@ import java.io.File;
 import java.util.List;
 
 import org.eclipse.jface.action.Action;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.ui.IWorkbenchWindow;
 
-import daylightchart.UserPreferences;
 import daylightchart.location.Location;
 import daylightchart.location.parser.LocationsLoader;
-import daylightchart.location.parser.ParserException;
+import daylightchart.options.UserPreferences;
 import daylightchart.rcpgui.views.NavigationView;
 
 public class OpenLocationsFileAction

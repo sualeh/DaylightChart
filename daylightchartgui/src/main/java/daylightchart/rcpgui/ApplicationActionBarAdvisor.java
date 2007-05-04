@@ -22,6 +22,7 @@
 package daylightchart.rcpgui;
 
 
+import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.action.ICoolBarManager;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
@@ -39,6 +40,7 @@ import org.eclipse.ui.application.IActionBarConfigurer;
 
 import daylightchart.rcpgui.actions.OpenLocationsFileAction;
 import daylightchart.rcpgui.actions.PrintChartAction;
+import daylightchart.rcpgui.actions.ResetAllAction;
 import daylightchart.rcpgui.actions.SaveChartAction;
 import daylightchart.rcpgui.actions.SaveLocationsFileAction;
 import daylightchart.rcpgui.actions.SortLocationsAction;
@@ -67,6 +69,7 @@ public class ApplicationActionBarAdvisor
 
   private SortLocationsAction sortLocationsAction;
   private UseTimeZoneAction useTimeZoneAction;
+  private ResetAllAction resetAllAction;
 
   public ApplicationActionBarAdvisor(final IActionBarConfigurer configurer)
   {
@@ -111,6 +114,8 @@ public class ApplicationActionBarAdvisor
     // Options
     optionsMenu.add(sortLocationsAction);
     optionsMenu.add(useTimeZoneAction);
+    optionsMenu.add(new Separator());
+    optionsMenu.add(resetAllAction);
 
     // Help
     helpMenu.add(aboutAction);
@@ -150,6 +155,8 @@ public class ApplicationActionBarAdvisor
     useTimeZoneAction = new UseTimeZoneAction(window);
     register(useTimeZoneAction);
 
+    resetAllAction = new ResetAllAction(window);
+    register(resetAllAction);    
   }
 
 }

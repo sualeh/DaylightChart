@@ -29,28 +29,17 @@ import daylightchart.chart.TimeZoneOption;
 import daylightchart.options.Options;
 import daylightchart.options.UserPreferences;
 
-public class UseTimeZoneAction
+public class ResetAllAction
   extends Action
 {
 
-  public static final String ID = UseTimeZoneAction.class.getName();
+  public static final String ID = ResetAllAction.class.getName();
 
   private final IWorkbenchWindow window;
 
-  public UseTimeZoneAction(final IWorkbenchWindow window)
+  public ResetAllAction(final IWorkbenchWindow window)
   {
     this.window = window;
-
-    Options options = UserPreferences.getOptions();
-    switch (options.getTimeZoneOption())
-    {
-      case USE_LOCAL_TIME:
-        setText("Use Local Time");
-        break;
-      case USE_TIME_ZONE:
-        setText("Use Time Zone");
-        break;
-    }
 
     // The id is used to refer to the action in a menu or toolbar
     setId(ID);
@@ -62,31 +51,7 @@ public class UseTimeZoneAction
   @Override
   public void run()
   {
-    if (window == null)
-    {
-      return;
-    }
-
-    flip();
-  }
-
-  private void flip()
-  {
-    Options options = UserPreferences.getOptions();
-    TimeZoneOption timeZoneOption = options.getTimeZoneOption();
-    switch (timeZoneOption)
-    {
-      case USE_LOCAL_TIME:
-        setText("Use Time Zone");
-        timeZoneOption = TimeZoneOption.USE_TIME_ZONE;
-        break;
-      case USE_TIME_ZONE:
-        setText("Use Local Time");
-        timeZoneOption = TimeZoneOption.USE_LOCAL_TIME;
-        break;
-    }
-    options.setTimeZoneOption(timeZoneOption);
-    UserPreferences.setOptions(options);
+    UserPreferences.clear();
   }
 
 }

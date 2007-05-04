@@ -42,8 +42,8 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 
-import daylightchart.UserPreferences;
 import daylightchart.location.Location;
+import daylightchart.options.UserPreferences;
 import daylightchart.rcpgui.tree.LeafNode;
 import daylightchart.rcpgui.tree.ParentTreeNode;
 import daylightchart.rcpgui.tree.TreeNode;
