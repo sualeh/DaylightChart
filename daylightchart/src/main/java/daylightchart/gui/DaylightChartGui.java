@@ -118,8 +118,6 @@ public final class DaylightChartGui
     setTitle("Daylight Chart"); //$NON-NLS-1$
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-    setJMenuBar(createMenuBar());
-
     final Font font = new Font("Sans-serif", Font.PLAIN, 11); //$NON-NLS-1$
 
     locations = UserPreferences.getLocations();
@@ -157,6 +155,9 @@ public final class DaylightChartGui
                                                 chartPanel);
     splitPane.setOneTouchExpandable(true);
     getContentPane().add(splitPane);
+    
+    setJMenuBar(createMenuBar());    
+    
     refreshView();
     pack();
   }
@@ -308,7 +309,7 @@ public final class DaylightChartGui
 
     final JMenuItem sortLocations = new JMenuItem(Messages
       .getString("DaylightChartGui.Menu.Options.SortByLatitude"));//$NON-NLS-1$
-
+    
     final JMenuItem useTimeZone = new JMenuItem(Messages
       .getString("DaylightChartGui.Menu.Options.UseLocalTime")); //$NON-NLS-1$
 
@@ -349,7 +350,8 @@ public final class DaylightChartGui
         refreshView();
       }
     });
-
+    sortLocations.doClick();
+    
     useTimeZone.addActionListener(new ActionListener()
     {
       public void actionPerformed(@SuppressWarnings("unused")
@@ -372,6 +374,7 @@ public final class DaylightChartGui
         refreshView();
       }
     });
+    useTimeZone.doClick();
 
     chartOptionsMenuItem.addActionListener(new ActionListener()
     {
