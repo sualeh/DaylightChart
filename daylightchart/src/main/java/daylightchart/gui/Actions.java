@@ -45,8 +45,8 @@ import daylightchart.location.parser.LocationsLoader;
 public class Actions
 {
 
-  private static final Logger LOGGER = Logger.getLogger(Actions.class
-    .getName());
+  private static final Logger LOGGER = Logger
+    .getLogger(Actions.class.getName());
 
   /**
    * Loads locations from a file.
@@ -60,10 +60,10 @@ public class Actions
     final JFileChooser fileDialog = new JFileChooser();
     fileDialog.setDialogTitle(Messages
       .getString("DaylightChartGui.Menu.File.LoadLocations")); //$NON-NLS-1$
-    fileDialog.setSelectedFile(new File(UserPreferences
-      .getDataFileDirectory(), "locations.data"));
+    fileDialog.setSelectedFile(new File(UserPreferences.getDataFileDirectory(),
+                                        "locations.data"));
     fileDialog.setDialogType(JFileChooser.OPEN_DIALOG);
-    int dialogReturnValue = fileDialog.showDialog(mainWindow, Messages
+    final int dialogReturnValue = fileDialog.showDialog(mainWindow, Messages
       .getString("DaylightChartGui.Menu.Open")); //$NON-NLS-1$
 
     if (dialogReturnValue != JFileChooser.APPROVE_OPTION)
@@ -103,8 +103,7 @@ public class Actions
       else
       {
         mainWindow.setLocations(locationsList);
-        UserPreferences
-          .setDataFileDirectory(selectedFile.getParentFile());
+        UserPreferences.setDataFileDirectory(selectedFile.getParentFile());
       }
     }
     catch (final Exception e)
@@ -158,13 +157,13 @@ public class Actions
    * @return Selected file.
    */
   private static File showSaveDialog(final String dialogTitle,
-                                    final String suggestedFilename,
-                                    final DaylightChartGui mainWindow)
+                                     final String suggestedFilename,
+                                     final DaylightChartGui mainWindow)
   {
     final JFileChooser fileDialog = new JFileChooser();
     fileDialog.setDialogTitle(dialogTitle);
-    fileDialog.setSelectedFile(new File(UserPreferences
-      .getDataFileDirectory(), suggestedFilename));
+    fileDialog.setSelectedFile(new File(UserPreferences.getDataFileDirectory(),
+                                        suggestedFilename));
     fileDialog.setDialogType(JFileChooser.SAVE_DIALOG);
     fileDialog.showDialog(mainWindow, Messages
       .getString("DaylightChartGui.Menu.File.SaveFile")); //$NON-NLS-1$

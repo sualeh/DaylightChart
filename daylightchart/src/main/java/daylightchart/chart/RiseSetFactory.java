@@ -49,6 +49,8 @@ public final class RiseSetFactory
    *        Location
    * @param year
    *        Year
+   * @param timeZoneOption
+   *        Time zone option
    * @return Full years sunset and sunrise times for a location
    */
   public static RiseSetYear createRiseSetYear(final Location location,

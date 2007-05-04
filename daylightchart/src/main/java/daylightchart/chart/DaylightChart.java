@@ -54,10 +54,10 @@ import org.jfree.ui.RectangleInsets;
 import org.jfree.ui.TextAnchor;
 import org.joda.time.LocalDateTime;
 
-import daylightchart.chart.options.ChartOptions;
-import daylightchart.chart.options.ChartOptionsListener;
 import daylightchart.location.Location;
 import daylightchart.location.parser.LocationFormatter;
+import daylightchart.options.chart.ChartOptions;
+import daylightchart.options.chart.ChartOptionsListener;
 
 /**
  * Produces a chart of daylight times for any location.
@@ -94,20 +94,11 @@ public class DaylightChart
    */
   public DaylightChart(final Location location)
   {
-    this(location, Calendar.getInstance().get(Calendar.YEAR), TimeZoneOption.USE_TIME_ZONE);
+    this(location,
+         Calendar.getInstance().get(Calendar.YEAR),
+         TimeZoneOption.USE_TIME_ZONE);
   }
 
-  /**
-   * Instantiate the chart for a given location, and given year.
-   * 
-   * @param location
-   *        Location
-   */
-  public DaylightChart(final Location location, final TimeZoneOption timeZoneOption)
-  {
-    this(location, Calendar.getInstance().get(Calendar.YEAR), timeZoneOption);
-  }
-  
   /**
    * Instantiate the chart for a given location, and given year.
    * 
@@ -115,19 +106,39 @@ public class DaylightChart
    *        Location
    * @param year
    *        Year
+   * @param timeZoneOption
+   *        Time zone option
    */
-  public DaylightChart(final Location location, final int year, final TimeZoneOption timeZoneOption)
+  public DaylightChart(final Location location,
+                       final int year,
+                       final TimeZoneOption timeZoneOption)
   {
     super(new XYPlot());
     // Calculate rise and set timings for the whole year
-    riseSetData = RiseSetFactory.createRiseSetYear(location, year, timeZoneOption);
+    riseSetData = RiseSetFactory.createRiseSetYear(location,
+                                                   year,
+                                                   timeZoneOption);
     createChart();
+  }
+
+  /**
+   * Instantiate the chart for a given location, and given year.
+   * 
+   * @param location
+   *        Location
+   * @param timeZoneOption
+   *        Time zone option
+   */
+  public DaylightChart(final Location location,
+                       final TimeZoneOption timeZoneOption)
+  {
+    this(location, Calendar.getInstance().get(Calendar.YEAR), timeZoneOption);
   }
 
   /**
    * {@inheritDoc}
    * 
-   * @see daylightchart.chart.options.ChartOptionsListener#afterSettingChartOptions(ChartOptions)
+   * @see daylightchart.options.chart.ChartOptionsListener#afterSettingChartOptions(ChartOptions)
    */
   @SuppressWarnings("unchecked")
   public void afterSettingChartOptions(final ChartOptions chartOptions)
@@ -157,7 +168,7 @@ public class DaylightChart
   /**
    * {@inheritDoc}
    * 
-   * @see daylightchart.chart.options.ChartOptionsListener#beforeSettingChartOptions(ChartOptions)
+   * @see daylightchart.options.chart.ChartOptionsListener#beforeSettingChartOptions(ChartOptions)
    */
   public void beforeSettingChartOptions(@SuppressWarnings("unused")
   final ChartOptions chartOptions)

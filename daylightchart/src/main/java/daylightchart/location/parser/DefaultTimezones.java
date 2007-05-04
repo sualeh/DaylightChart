@@ -234,7 +234,7 @@ public final class DefaultTimezones
       timeZoneId = timeZoneId + "+";
     }
 
-    int[] hourFields = Utility.sexagesimalSplit(Math.abs(tzOffsetHours));
+    final int[] hourFields = Utility.sexagesimalSplit(Math.abs(tzOffsetHours));
 
     final NumberFormat numberFormat = NumberFormat.getIntegerInstance();
     numberFormat.setMinimumIntegerDigits(2);

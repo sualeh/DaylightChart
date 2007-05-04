@@ -39,6 +39,12 @@ public class BareBonesBrowserLaunch
 
   private static final String errMsg = "Error attempting to launch web browser";
 
+  /**
+   * Quick test for the Bare Bones Browser Launch.
+   * 
+   * @param args
+   *        None.s
+   */
   public static void main(final String[] args)
   {
     final JFrame frame = new JFrame();
@@ -47,7 +53,8 @@ public class BareBonesBrowserLaunch
     final JButton webButton = new JButton("Web Trip");
     webButton.addActionListener(new ActionListener()
     {
-      public void actionPerformed(final ActionEvent e)
+      public void actionPerformed(@SuppressWarnings("unused")
+      final ActionEvent e)
       {
         BareBonesBrowserLaunch.openURL(urlField.getText().trim());
       }
@@ -70,6 +77,7 @@ public class BareBonesBrowserLaunch
    * @param url
    *        URL to launch in a browser
    */
+  @SuppressWarnings("unchecked")
   public static void openURL(final String url)
   {
     final String osName = System.getProperty("os.name");

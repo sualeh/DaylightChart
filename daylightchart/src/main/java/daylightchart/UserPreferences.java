@@ -18,13 +18,13 @@ import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
 import daylightchart.chart.DaylightChart;
-import daylightchart.chart.TimeZoneOption;
-import daylightchart.chart.options.ChartOptions;
 import daylightchart.location.Location;
 import daylightchart.location.parser.FormatterException;
 import daylightchart.location.parser.LocationFormatter;
 import daylightchart.location.parser.LocationParser;
 import daylightchart.location.parser.ParserException;
+import daylightchart.options.Options;
+import daylightchart.options.chart.ChartOptions;
 
 /**
  * User preferences for the GUI.
@@ -38,9 +38,8 @@ public final class UserPreferences
     .getName());
 
   private static final String keyLocations = "daylightchart.locations";
-  private static final String keyChartOptions = "daylightchart.chartOptions";
+  private static final String keyOptions = "daylightchart.options";
   private static final String keyDataFileDirectory = "daylightchart.dataFileDirectory";
-  private static final String keyTimeZoneOption = "daylightchart.timeZoneOption";
 
   private static final Preferences preferences = Preferences
     .userNodeForPackage(UserPreferences.class);
@@ -58,52 +57,6 @@ public final class UserPreferences
     {
       LOGGER.log(Level.WARNING, "Could clear preferences", e);
     }
-  }
-
-  /**
-   * Gets the time zone option.
-   * 
-   * @return Time zone option.
-   */
-  public static TimeZoneOption getTimeZoneOption()
-  {
-    String timeZoneOptionString = preferences.get(keyTimeZoneOption,
-                                                  TimeZoneOption.USE_LOCAL_TIME
-                                                    .toString());
-    return TimeZoneOption.valueOf(TimeZoneOption.class, timeZoneOptionString);
-  }
-
-  public static setTimeZoneOption(TimeZoneOption timeZoneOption)
-  {
-    preferences.put(keyTimeZoneOption, timeZoneOption.toString());
-  }
-
-  /**
-   * Gets the chart options for the current user.
-   * 
-   * @return Chart options
-   */
-  public static ChartOptions getChartOptions()
-  {
-    ChartOptions chartOptions = null;
-    final byte[] bytes = preferences.getByteArray(keyChartOptions, new byte[0]);
-    try
-    {
-      // Deserialize from a byte array
-      final ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(bytes));
-      chartOptions = (ChartOptions) in.readObject();
-      in.close();
-    }
-    catch (final ClassNotFoundException e)
-    {
-      throw new ClassCastException(e.getMessage());
-    }
-    catch (final IOException e)
-    {
-      LOGGER.log(Level.WARNING, "Could get chart options", e);
-      chartOptions = getDefaultDaylightChartOptions();
-    }
-    return chartOptions;
   }
 
   /**
@@ -159,6 +112,34 @@ public final class UserPreferences
   }
 
   /**
+   * Gets the options for the current user.
+   * 
+   * @return Options
+   */
+  public static Options getOptions()
+  {
+    Options options = null;
+    final byte[] bytes = preferences.getByteArray(keyOptions, new byte[0]);
+    try
+    {
+      // Deserialize from a byte array
+      final ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(bytes));
+      options = (Options) in.readObject();
+      in.close();
+    }
+    catch (final ClassNotFoundException e)
+    {
+      throw new ClassCastException(e.getMessage());
+    }
+    catch (final IOException e)
+    {
+      LOGGER.log(Level.WARNING, "Could get chart options", e);
+      options = getDefaultDaylightChartOptions();
+    }
+    return options;
+  }
+
+  /**
    * Main method. Lists all user preferences.
    * 
    * @param args
@@ -167,33 +148,6 @@ public final class UserPreferences
   public static void main(final String[] args)
   {
     UserPreferences.listAllPreferences();
-  }
-
-  /**
-   * Sets the chart options for the current user.
-   * 
-   * @param chartOptions
-   *        Chart options
-   */
-  public static void setChartOptions(final ChartOptions chartOptions)
-  {
-    byte[] bytes;
-    try
-    {
-      // Serialize to a byte array
-      final ByteArrayOutputStream bos = new ByteArrayOutputStream();
-      final ObjectOutput out = new ObjectOutputStream(bos);
-      out.writeObject(chartOptions);
-      out.close();
-      // Get the bytes of the serialized object
-      bytes = bos.toByteArray();
-    }
-    catch (final Exception e)
-    {
-      LOGGER.log(Level.WARNING, "Could set chart options", e);
-      bytes = new byte[0];
-    }
-    preferences.putByteArray(keyChartOptions, bytes);
   }
 
   /**
@@ -243,6 +197,33 @@ public final class UserPreferences
     }
   }
 
+  /**
+   * Sets the options for the current user.
+   * 
+   * @param options
+   *        Options
+   */
+  public static void setOptions(final Options options)
+  {
+    byte[] bytes;
+    try
+    {
+      // Serialize to a byte array
+      final ByteArrayOutputStream bos = new ByteArrayOutputStream();
+      final ObjectOutput out = new ObjectOutputStream(bos);
+      out.writeObject(options);
+      out.close();
+      // Get the bytes of the serialized object
+      bytes = bos.toByteArray();
+    }
+    catch (final Exception e)
+    {
+      LOGGER.log(Level.WARNING, "Could set chart options", e);
+      bytes = new byte[0];
+    }
+    preferences.putByteArray(keyOptions, bytes);
+  }
+
   static void listAllPreferences()
   {
     System.out.println("User preferences:");
@@ -265,11 +246,15 @@ public final class UserPreferences
    * 
    * @return Chart options
    */
-  private static ChartOptions getDefaultDaylightChartOptions()
+  private static Options getDefaultDaylightChartOptions()
   {
     final ChartOptions chartOptions = new ChartOptions();
     chartOptions.copyFromChart(new DaylightChart());
-    return chartOptions;
+
+    final Options options = new Options();
+    options.setChartOptions(chartOptions);
+
+    return options;
   }
 
   private UserPreferences()
