@@ -22,10 +22,15 @@
 package daylightchart.rcpgui.actions;
 
 
+import javax.swing.JOptionPane;
+
 import org.eclipse.jface.action.Action;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.ui.IWorkbenchWindow;
 
 import daylightchart.chart.TimeZoneOption;
+import daylightchart.gui.DaylightChartGui;
+import daylightchart.gui.Messages;
 import daylightchart.options.Options;
 import daylightchart.options.UserPreferences;
 
@@ -52,6 +57,9 @@ public class ResetAllAction
   public void run()
   {
     UserPreferences.clear();
+    MessageDialog
+      .openInformation(window.getShell(), Messages
+        .getString("DaylightChartGui.Menu.Options.ResetAll"),//$NON-NLS-1$
+                       Messages.getString("DaylightChartGui.Message.ResetAll")); //$NON-NLS-1$
   }
-
 }

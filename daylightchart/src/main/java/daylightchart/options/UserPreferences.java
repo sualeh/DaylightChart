@@ -116,10 +116,7 @@ public final class UserPreferences
       }
     }
 
-    // Sort by current user preferences
-    final LocationsSortOrder locationsSortOrder = UserPreferences.getOptions()
-      .getLocationsSortOrder();
-    Collections.sort(locations, locationsSortOrder);
+    UserPreferences.sortLocations(locations);
 
     return locations;
 
@@ -274,6 +271,19 @@ public final class UserPreferences
   private UserPreferences()
   {
     // Prevent external instantiation
+  }
+
+  /**
+   * Sorts locations by current preferences.
+   * 
+   * @param locations
+   *        Locations to sort
+   */
+  public static void sortLocations(List<Location> locations)
+  {
+    final LocationsSortOrder locationsSortOrder = getOptions()
+      .getLocationsSortOrder();
+    Collections.sort(locations, locationsSortOrder);
   }
 
 }

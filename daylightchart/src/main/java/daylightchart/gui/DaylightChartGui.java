@@ -311,11 +311,11 @@ public final class DaylightChartGui
     {
       case BY_NAME:
         sortLocations.setText(Messages
-          .getString("DaylightChartGui.Menu.Options.SortByName")); //$NON-NLS-1$
+          .getString("DaylightChartGui.Menu.Options.SortByLatitude")); //$NON-NLS-1$
         break;
       case BY_LATITUDE:
         sortLocations.setText(Messages
-          .getString("DaylightChartGui.Menu.Options.SortByLatitude")); //$NON-NLS-1$
+          .getString("DaylightChartGui.Menu.Options.SortByName")); //$NON-NLS-1$
         break;
     }
 
@@ -324,11 +324,11 @@ public final class DaylightChartGui
     {
       case USE_TIME_ZONE:
         useTimeZone.setText(Messages
-          .getString("DaylightChartGui.Menu.Options.UseTimeZone")); //$NON-NLS-1$
+          .getString("DaylightChartGui.Menu.Options.UseLocalTime")); //$NON-NLS-1$
         break;
       case USE_LOCAL_TIME:
         useTimeZone.setText(Messages
-          .getString("DaylightChartGui.Menu.Options.UseLocalTime")); //$NON-NLS-1$
+          .getString("DaylightChartGui.Menu.Options.UseTimeZone")); //$NON-NLS-1$
         break;
     }
 
@@ -357,17 +357,18 @@ public final class DaylightChartGui
           case BY_NAME:
             locationsSortOrder = LocationsSortOrder.BY_LATITUDE;
             sortLocations.setText(Messages
-              .getString("DaylightChartGui.Menu.Options.SortByLatitude")); //$NON-NLS-1$
+              .getString("DaylightChartGui.Menu.Options.SortByName")); //$NON-NLS-1$
             break;
           case BY_LATITUDE:
             locationsSortOrder = LocationsSortOrder.BY_NAME;
             sortLocations.setText(Messages
-              .getString("DaylightChartGui.Menu.Options.SortByName")); //$NON-NLS-1$
+              .getString("DaylightChartGui.Menu.Options.SortByLatitude")); //$NON-NLS-1$
             break;
         }
         options.setLocationsSortOrder(locationsSortOrder);
         UserPreferences.setOptions(options);
 
+        UserPreferences.sortLocations(locations);
         refreshView();
       }
     });
@@ -384,12 +385,12 @@ public final class DaylightChartGui
           case USE_TIME_ZONE:
             timeZoneOption = TimeZoneOption.USE_LOCAL_TIME;
             useTimeZone.setText(Messages
-              .getString("DaylightChartGui.Menu.Options.UseTimeZone")); //$NON-NLS-1$
+              .getString("DaylightChartGui.Menu.Options.UseLocalTime")); //$NON-NLS-1$
             break;
           case USE_LOCAL_TIME:
             timeZoneOption = TimeZoneOption.USE_TIME_ZONE;
             useTimeZone.setText(Messages
-              .getString("DaylightChartGui.Menu.Options.UseLocalTime")); //$NON-NLS-1$
+              .getString("DaylightChartGui.Menu.Options.UseTimeZone")); //$NON-NLS-1$
             break;
         }
         options.setTimeZoneOption(timeZoneOption);
