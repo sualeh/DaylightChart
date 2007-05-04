@@ -11,6 +11,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.io.Reader;
+import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,6 +20,7 @@ import java.util.prefs.Preferences;
 
 import daylightchart.chart.DaylightChart;
 import daylightchart.location.Location;
+import daylightchart.location.LocationsSortOrder;
 import daylightchart.location.parser.FormatterException;
 import daylightchart.location.parser.LocationFormatter;
 import daylightchart.location.parser.LocationParser;
@@ -78,21 +80,24 @@ public final class UserPreferences
   public static List<Location> getLocations()
   {
 
+    List<Location> locations = null;
+
     final String locationsDataFileName = preferences.get(keyLocations, null);
     if (locationsDataFileName != null)
     {
       try
       {
         final File locationsDataFile = new File(locationsDataFileName);
-        return LocationParser.parseLocations(locationsDataFile);
+        locations = LocationParser.parseLocations(locationsDataFile);
       }
       catch (final ParserException e)
       {
         LOGGER.log(Level.WARNING, "Could get locations", e);
+        locations = null;
       }
     }
 
-    try
+    if (locations == null)
     {
       final InputStream dataStream = Thread.currentThread()
         .getContextClassLoader().getResourceAsStream("locations.data");
@@ -101,13 +106,23 @@ public final class UserPreferences
         throw new IllegalStateException("Cannot read data from internal database");
       }
       final Reader reader = new InputStreamReader(dataStream);
-      return LocationParser.parseLocations(reader);
+      try
+      {
+        locations = LocationParser.parseLocations(reader);
+      }
+      catch (final ParserException e)
+      {
+        throw new IllegalStateException("Cannot read data from internal database",
+                                        e);
+      }
     }
-    catch (final ParserException e)
-    {
-      throw new IllegalStateException("Cannot read data from internal database",
-                                      e);
-    }
+
+    // Sort by current user preferences
+    LocationsSortOrder locationsSortOrder = UserPreferences.getOptions()
+      .getLocationsSortOrder();
+    Collections.sort(locations, locationsSortOrder);
+
+    return locations;
 
   }
 

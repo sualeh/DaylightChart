@@ -121,8 +121,6 @@ public final class DaylightChartGui
     final Font font = new Font("Sans-serif", Font.PLAIN, 11); //$NON-NLS-1$
 
     locations = UserPreferences.getLocations();
-    Collections.sort(locations, UserPreferences.getOptions()
-      .getLocationsSortOrder());
 
     listBox = new JList();
     listBox.setFont(font);
@@ -155,9 +153,9 @@ public final class DaylightChartGui
                                                 chartPanel);
     splitPane.setOneTouchExpandable(true);
     getContentPane().add(splitPane);
-    
-    setJMenuBar(createMenuBar());    
-    
+
+    setJMenuBar(createMenuBar());
+
     refreshView();
     pack();
   }
@@ -304,14 +302,36 @@ public final class DaylightChartGui
   private JMenu createOptionsMenu()
   {
 
+    Options options = UserPreferences.getOptions();
+
     final JMenu menuOptions = new JMenu(Messages
       .getString("DaylightChartGui.Menu.Options")); //$NON-NLS-1$
 
-    final JMenuItem sortLocations = new JMenuItem(Messages
-      .getString("DaylightChartGui.Menu.Options.SortByLatitude"));//$NON-NLS-1$
-    
-    final JMenuItem useTimeZone = new JMenuItem(Messages
-      .getString("DaylightChartGui.Menu.Options.UseLocalTime")); //$NON-NLS-1$
+    final JMenuItem sortLocations = new JMenuItem();
+    switch (options.getLocationsSortOrder())
+    {
+      case BY_NAME:
+        sortLocations.setText(Messages
+          .getString("DaylightChartGui.Menu.Options.SortByName")); //$NON-NLS-1$
+        break;
+      case BY_LATITUDE:
+        sortLocations.setText(Messages
+          .getString("DaylightChartGui.Menu.Options.SortByLatitude")); //$NON-NLS-1$
+        break;
+    }
+
+    final JMenuItem useTimeZone = new JMenuItem();
+    switch (options.getTimeZoneOption())
+    {
+      case USE_TIME_ZONE:
+        useTimeZone.setText(Messages
+          .getString("DaylightChartGui.Menu.Options.UseTimeZone")); //$NON-NLS-1$
+        break;
+      case USE_LOCAL_TIME:
+        useTimeZone.setText(Messages
+          .getString("DaylightChartGui.Menu.Options.UseLocalTime")); //$NON-NLS-1$
+        break;
+    }
 
     final JMenuItem chartOptionsMenuItem = new JMenuItem(Messages
       .getString("DaylightChartGui.Menu.Options.ChartOptions")); //$NON-NLS-1$
@@ -332,49 +352,53 @@ public final class DaylightChartGui
       final ActionEvent actionevent)
       {
         final Options options = UserPreferences.getOptions();
-        switch (options.getLocationsSortOrder())
+        LocationsSortOrder locationsSortOrder = options.getLocationsSortOrder();
+        switch (locationsSortOrder)
         {
           case BY_NAME:
-            options.setLocationsSortOrder(LocationsSortOrder.BY_LATITUDE);
-            sortLocations.setText(Messages
-              .getString("DaylightChartGui.Menu.Options.SortByName")); //$NON-NLS-1$
-            break;
-          case BY_LATITUDE:
-            options.setLocationsSortOrder(LocationsSortOrder.BY_NAME);
+            locationsSortOrder = LocationsSortOrder.BY_LATITUDE;
             sortLocations.setText(Messages
               .getString("DaylightChartGui.Menu.Options.SortByLatitude")); //$NON-NLS-1$
             break;
+          case BY_LATITUDE:
+            locationsSortOrder = LocationsSortOrder.BY_NAME;
+            sortLocations.setText(Messages
+              .getString("DaylightChartGui.Menu.Options.SortByName")); //$NON-NLS-1$
+            break;
         }
+        options.setLocationsSortOrder(locationsSortOrder);
         UserPreferences.setOptions(options);
 
         refreshView();
       }
     });
-    sortLocations.doClick();
-    
+
     useTimeZone.addActionListener(new ActionListener()
     {
       public void actionPerformed(@SuppressWarnings("unused")
       final ActionEvent actionevent)
       {
         final Options options = UserPreferences.getOptions();
-        switch (options.getTimeZoneOption())
+        TimeZoneOption timeZoneOption = options.getTimeZoneOption();
+        switch (timeZoneOption)
         {
           case USE_TIME_ZONE:
-            options.setTimeZoneOption(TimeZoneOption.USE_LOCAL_TIME);
+            timeZoneOption = TimeZoneOption.USE_LOCAL_TIME;
             useTimeZone.setText(Messages
               .getString("DaylightChartGui.Menu.Options.UseTimeZone")); //$NON-NLS-1$
             break;
           case USE_LOCAL_TIME:
-            options.setTimeZoneOption(TimeZoneOption.USE_TIME_ZONE);
+            timeZoneOption = TimeZoneOption.USE_TIME_ZONE;
             useTimeZone.setText(Messages
               .getString("DaylightChartGui.Menu.Options.UseLocalTime")); //$NON-NLS-1$
             break;
         }
+        options.setTimeZoneOption(timeZoneOption);
+        UserPreferences.setOptions(options);
+        
         refreshView();
       }
     });
-    useTimeZone.doClick();
 
     chartOptionsMenuItem.addActionListener(new ActionListener()
     {
@@ -430,8 +454,6 @@ public final class DaylightChartGui
   private void refreshView()
   {
     chartPanel.setChart(null);
-    Collections.sort(locations, UserPreferences.getOptions()
-      .getLocationsSortOrder());
     listBox.setListData(new Vector<Location>(locations));
     listBox.setSelectedIndex(0);
     this.repaint();

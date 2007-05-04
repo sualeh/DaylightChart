@@ -23,9 +23,12 @@ package daylightchart.location.parser;
 
 
 import java.io.File;
+import java.util.Collections;
 import java.util.List;
 
+import daylightchart.UserPreferences;
 import daylightchart.location.Location;
+import daylightchart.location.LocationsSortOrder;
 
 /**
  * Loads locations from a file of any supported format.
@@ -97,6 +100,10 @@ public final class LocationsLoader
       locations = null;
     }
 
+    // Sort by current user preferences
+    LocationsSortOrder locationsSortOrder = UserPreferences.getOptions().getLocationsSortOrder();
+    Collections.sort(locations, locationsSortOrder);
+    
     return locations;
   }
 
