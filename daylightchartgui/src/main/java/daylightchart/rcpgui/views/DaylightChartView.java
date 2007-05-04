@@ -22,15 +22,22 @@
 package daylightchart.rcpgui.views;
 
 
+import java.awt.Frame;
+
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.awt.SWT_AWT;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.part.ViewPart;
+import org.jfree.chart.ChartPanel;
 
 import daylightchart.chart.DaylightChart;
+import daylightchart.chart.TimeZoneOption;
 import daylightchart.location.Location;
+import daylightchart.options.UserPreferences;
 import daylightchart.rcpgui.tree.LeafNode;
 
 public class DaylightChartView
@@ -63,15 +70,20 @@ public class DaylightChartView
     if (location != null)
     {
       setPartName(location.toString());
-      DaylightChart daylightChart = new DaylightChart(location);
+      
+      final TimeZoneOption timeZoneOption = UserPreferences.getOptions()
+        .getTimeZoneOption();
+      DaylightChart daylightChart = new DaylightChart(location, timeZoneOption);
+      
       Composite chartComposite;
 
-      // chartComposite = new Composite(parent, SWT.EMBEDDED);
-      // chartComposite.setLayoutData(new GridData(GridData.FILL_BOTH));
-      // final Frame frame = SWT_AWT.new_Frame(chartComposite);
-      // frame.add(new ChartPanel(daylightChart));
+      chartComposite = new Composite(parent, SWT.EMBEDDED);
+      chartComposite.setLayoutData(new GridData(GridData.FILL_BOTH));
+      final Frame frame = SWT_AWT.new_Frame(chartComposite);
+      frame.add(new ChartPanel(daylightChart));
 
-      chartComposite = new ChartComposite(parent, SWT.NONE, daylightChart, true);
+      // chartComposite = new ChartComposite(parent, SWT.NONE,
+      // daylightChart, true);
     }
     else
     {

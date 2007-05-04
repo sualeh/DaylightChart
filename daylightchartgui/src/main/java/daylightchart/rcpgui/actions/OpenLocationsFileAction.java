@@ -30,6 +30,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.ui.IWorkbenchWindow;
 
+import daylightchart.gui.Messages;
 import daylightchart.location.Location;
 import daylightchart.location.parser.LocationsLoader;
 import daylightchart.options.UserPreferences;
@@ -46,7 +47,7 @@ public class OpenLocationsFileAction
   public OpenLocationsFileAction(final IWorkbenchWindow window)
   {
     this.window = window;
-    setText( "Open Locations File...");
+    setText(Messages.getString("DaylightChartGui.Menu.File.LoadLocations")); //$NON-NLS-1$
     // The id is used to refer to the action in a menu or toolbar
     setId(ID);
     // Associate the action with a pre-defined command, to allow key
@@ -61,7 +62,7 @@ public class OpenLocationsFileAction
     {
       return;
     }
-    
+
     FileDialog dialog = new FileDialog(window.getShell(), SWT.OPEN);
     String selectedFileName = dialog.open();
     if (selectedFileName == null)
@@ -78,7 +79,7 @@ public class OpenLocationsFileAction
       navigationView.setLocations(locations);
       UserPreferences.setLocations(locations);
     }
-    
+
   }
 
 }

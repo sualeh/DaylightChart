@@ -40,7 +40,7 @@ public class ResetAllAction
   public ResetAllAction(final IWorkbenchWindow window)
   {
     this.window = window;
-
+    setText("Reset All");
     // The id is used to refer to the action in a menu or toolbar
     setId(ID);
     // Associate the action with a pre-defined command, to allow key

@@ -28,6 +28,7 @@ import java.util.List;
 import org.eclipse.jface.action.Action;
 import org.eclipse.ui.IWorkbenchWindow;
 
+import daylightchart.gui.Messages;
 import daylightchart.location.Location;
 import daylightchart.location.LocationsSortOrder;
 import daylightchart.options.Options;
@@ -50,10 +51,11 @@ public class SortLocationsAction
     switch (options.getLocationsSortOrder())
     {
       case BY_LATITUDE:
-        setText("Sort Locations by Latitude");
+        setText(Messages.getString("DaylightChartGui.Menu.Options.SortByName")); //$NON-NLS-1$
         break;
       case BY_NAME:
-        setText("Sort Locations by Name");
+        setText(Messages
+          .getString("DaylightChartGui.Menu.Options.SortByLatitude")); //$NON-NLS-1$
         break;
     }
 
@@ -75,12 +77,12 @@ public class SortLocationsAction
     final NavigationView navigationView = (NavigationView) window
       .getActivePage().findView(NavigationView.ID);
 
+    flip();
     final List<Location> locations = navigationView.getLocations();
     Collections.sort(locations, UserPreferences.getOptions()
       .getLocationsSortOrder());
     navigationView.setLocations(locations);
 
-    flip();
   }
 
   private void flip()
@@ -90,11 +92,12 @@ public class SortLocationsAction
     switch (locationsSortOrder)
     {
       case BY_NAME:
-        setText("Sort Locations by Latitude");
+        setText(Messages.getString("DaylightChartGui.Menu.Options.SortByName")); //$NON-NLS-1$
         locationsSortOrder = LocationsSortOrder.BY_LATITUDE;
         break;
       case BY_LATITUDE:
-        setText("Sort Locations by Name");
+        setText(Messages
+          .getString("DaylightChartGui.Menu.Options.SortByLatitude")); //$NON-NLS-1$
         locationsSortOrder = LocationsSortOrder.BY_NAME;
         break;
     }

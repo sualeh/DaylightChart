@@ -32,6 +32,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.ui.IWorkbenchWindow;
 
+import daylightchart.gui.Messages;
 import daylightchart.location.Location;
 import daylightchart.location.parser.FormatterException;
 import daylightchart.location.parser.LocationFormatter;
@@ -49,7 +50,7 @@ public class SaveLocationsFileAction
   public SaveLocationsFileAction(final IWorkbenchWindow window)
   {
     this.window = window;
-    setText("Save Locations File...");
+    setText(Messages.getString("DaylightChartGui.Menu.File.SaveLocations")); //$NON-NLS-1$
     // The id is used to refer to the action in a menu or toolbar
     setId(ID);
     // Associate the action with a pre-defined command, to allow key
@@ -64,7 +65,7 @@ public class SaveLocationsFileAction
     {
       return;
     }
-    
+
     FileDialog dialog = new FileDialog(window.getShell(), SWT.SAVE);
     String selectedFileName = dialog.open();
     if (selectedFileName == null)
@@ -77,16 +78,17 @@ public class SaveLocationsFileAction
       .findView(NavigationView.ID);
     List<Location> locations = navigationView.getLocations();
     try
-    {      
+    {
       LocationFormatter.formatLocations(locations, selectedFile);
     }
     catch (FormatterException e)
     {
-      MessageDialog.openError(window.getShell(),
-                              "Save Locations",
-                              "Error saving locations file " + selectedFileName);
+      MessageDialog
+        .openError(window.getShell(),
+                   "Save Locations",
+                   "Error saving locations file " + selectedFileName);
     }
-    
+
   }
 
 }

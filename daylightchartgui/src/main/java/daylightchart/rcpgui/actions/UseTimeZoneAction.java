@@ -26,6 +26,7 @@ import org.eclipse.jface.action.Action;
 import org.eclipse.ui.IWorkbenchWindow;
 
 import daylightchart.chart.TimeZoneOption;
+import daylightchart.gui.Messages;
 import daylightchart.options.Options;
 import daylightchart.options.UserPreferences;
 
@@ -45,10 +46,11 @@ public class UseTimeZoneAction
     switch (options.getTimeZoneOption())
     {
       case USE_LOCAL_TIME:
-        setText("Use Local Time");
+        setText(Messages.getString("DaylightChartGui.Menu.Options.UseTimeZone")); //$NON-NLS-1$
         break;
       case USE_TIME_ZONE:
-        setText("Use Time Zone");
+        setText(Messages
+          .getString("DaylightChartGui.Menu.Options.UseLocalTime")); //$NON-NLS-1$
         break;
     }
 
@@ -77,11 +79,12 @@ public class UseTimeZoneAction
     switch (timeZoneOption)
     {
       case USE_LOCAL_TIME:
-        setText("Use Time Zone");
+        setText(Messages
+          .getString("DaylightChartGui.Menu.Options.UseLocalTime")); //$NON-NLS-1$
         timeZoneOption = TimeZoneOption.USE_TIME_ZONE;
         break;
       case USE_TIME_ZONE:
-        setText("Use Local Time");
+        setText(Messages.getString("DaylightChartGui.Menu.Options.UseTimeZone")); //$NON-NLS-1$
         timeZoneOption = TimeZoneOption.USE_LOCAL_TIME;
         break;
     }
