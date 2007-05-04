@@ -104,6 +104,7 @@ public class ApplicationActionBarAdvisor
     fileMenu.add(saveLocationsFileAction);
     fileMenu.add(new Separator());
     fileMenu.add(saveChartAction);
+    fileMenu.add(printChartAction);
     fileMenu.add(new Separator());
     fileMenu.add(exitAction);
 

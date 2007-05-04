@@ -18,6 +18,7 @@ import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
 import daylightchart.chart.DaylightChart;
+import daylightchart.chart.TimeZoneOption;
 import daylightchart.chart.options.ChartOptions;
 import daylightchart.location.Location;
 import daylightchart.location.parser.FormatterException;
@@ -39,6 +40,7 @@ public final class UserPreferences
   private static final String keyLocations = "daylightchart.locations";
   private static final String keyChartOptions = "daylightchart.chartOptions";
   private static final String keyDataFileDirectory = "daylightchart.dataFileDirectory";
+  private static final String keyTimeZoneOption = "daylightchart.timeZoneOption";
 
   private static final Preferences preferences = Preferences
     .userNodeForPackage(UserPreferences.class);
@@ -56,6 +58,24 @@ public final class UserPreferences
     {
       LOGGER.log(Level.WARNING, "Could clear preferences", e);
     }
+  }
+
+  /**
+   * Gets the time zone option.
+   * 
+   * @return Time zone option.
+   */
+  public static TimeZoneOption getTimeZoneOption()
+  {
+    String timeZoneOptionString = preferences.get(keyTimeZoneOption,
+                                                  TimeZoneOption.USE_LOCAL_TIME
+                                                    .toString());
+    return TimeZoneOption.valueOf(TimeZoneOption.class, timeZoneOptionString);
+  }
+
+  public static setTimeZoneOption(TimeZoneOption timeZoneOption)
+  {
+    preferences.put(keyTimeZoneOption, timeZoneOption.toString());
   }
 
   /**

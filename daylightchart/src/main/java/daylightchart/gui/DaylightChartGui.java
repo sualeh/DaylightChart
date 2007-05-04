@@ -331,10 +331,10 @@ public final class DaylightChartGui
     menuOptions.addSeparator();
     menuOptions.add(resetAll);
 
-    sortLocations.addItemListener(new ItemListener()
+    sortLocations.addActionListener(new ActionListener()
     {
-      public void itemStateChanged(@SuppressWarnings("unused")//$NON-NLS-1$
-      final ItemEvent itemEvent)
+      public void actionPerformed(@SuppressWarnings("unused")//$NON-NLS-1$
+      final ActionEvent actionevent)
       {
         if (locationsSortOrder == LocationsSortOrder.BY_NAME)
         {
@@ -346,16 +346,16 @@ public final class DaylightChartGui
         {
           locationsSortOrder = LocationsSortOrder.BY_NAME;
           sortLocations.setText(Messages
-            .getString("DaylightChartGui.Menu.Options.SortByLatitudes")); //$NON-NLS-1$
+            .getString("DaylightChartGui.Menu.Options.SortByLatitude")); //$NON-NLS-1$
         }
         refreshView();
       }
     });
 
-    useTimeZone.addItemListener(new ItemListener()
+    useTimeZone.addActionListener(new ActionListener()
     {
-      public void itemStateChanged(@SuppressWarnings("unused")//$NON-NLS-1$
-      final ItemEvent itemEvent)
+      public void actionPerformed(@SuppressWarnings("unused")//$NON-NLS-1$
+      final ActionEvent actionevent)
       {
         if (timeZoneOption == TimeZoneOption.USE_TIME_ZONE)
         {

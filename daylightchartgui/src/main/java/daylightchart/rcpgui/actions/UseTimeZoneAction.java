@@ -28,6 +28,7 @@ import java.util.List;
 import org.eclipse.jface.action.Action;
 import org.eclipse.ui.IWorkbenchWindow;
 
+import daylightchart.chart.TimeZoneOption;
 import daylightchart.location.Location;
 import daylightchart.location.LocationsSortOrder;
 import daylightchart.rcpgui.views.NavigationView;
@@ -39,13 +40,13 @@ public class UseTimeZoneAction
   public static final String ID = UseTimeZoneAction.class.getName();
 
   private final IWorkbenchWindow window;
-  private LocationsSortOrder locationsSortOrder = null;
+  private TimeZoneOption timeZoneOption = null;
 
   public UseTimeZoneAction(final IWorkbenchWindow window)
   {
     this.window = window;
 
-    flipNewSortOrder();
+    flip();
 
     // The id is used to refer to the action in a menu or toolbar
     setId(ID);
@@ -64,25 +65,27 @@ public class UseTimeZoneAction
 
     final NavigationView navigationView = (NavigationView) window
       .getActivePage().findView(NavigationView.ID);
-    
-    flipNewSortOrder();
-    final List<Location> locations = navigationView.getLocations();    
-    Collections.sort(locations, locationsSortOrder);
-    navigationView.setLocations(locations);    
+
+    flip();
 
   }
 
-  private void flipNewSortOrder()
+  private void flip()
   {
-    if (locationsSortOrder == null || locationsSortOrder == LocationsSortOrder.BY_NAME)
+    if (timeZoneOption == null)
     {
-      setText("Sort Locations by Name");
-      locationsSortOrder = LocationsSortOrder.BY_LATITUDE;
+      timeZoneOption = TimeZoneOption.USE_TIME_ZONE;
     }
-    else
+    switch (timeZoneOption)
     {
-      setText("Sort Locations by Latitude");
-      locationsSortOrder = LocationsSortOrder.BY_NAME;
+      case USE_LOCAL_TIME:
+        setText("Use Time Zone");
+        timeZoneOption = TimeZoneOption.USE_TIME_ZONE;
+        break;
+      case USE_TIME_ZONE:
+        setText("Use Local Time");
+        timeZoneOption = TimeZoneOption.USE_LOCAL_TIME;
+        break;
     }
   }
 

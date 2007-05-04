@@ -28,6 +28,7 @@ import java.util.List;
 import org.eclipse.jface.action.Action;
 import org.eclipse.ui.IWorkbenchWindow;
 
+import daylightchart.chart.TimeZoneOption;
 import daylightchart.location.Location;
 import daylightchart.location.LocationsSortOrder;
 import daylightchart.rcpgui.views.NavigationView;
@@ -36,7 +37,7 @@ public class SortLocationsAction
   extends Action
 {
 
-  public static final String ID = SortLocationsAction.class.getName();
+  public static final String ID = UseTimeZoneAction.class.getName();
 
   private final IWorkbenchWindow window;
   private LocationsSortOrder locationsSortOrder = null;
@@ -45,7 +46,7 @@ public class SortLocationsAction
   {
     this.window = window;
 
-    flipNewSortOrder();
+    flip();
 
     // The id is used to refer to the action in a menu or toolbar
     setId(ID);
@@ -64,25 +65,30 @@ public class SortLocationsAction
 
     final NavigationView navigationView = (NavigationView) window
       .getActivePage().findView(NavigationView.ID);
-    
-    flipNewSortOrder();
-    final List<Location> locations = navigationView.getLocations();    
-    Collections.sort(locations, locationsSortOrder);
-    navigationView.setLocations(locations);    
 
+    final List<Location> locations = navigationView.getLocations();
+    Collections.sort(locations, locationsSortOrder);
+    navigationView.setLocations(locations);
+
+    flip();
   }
 
-  private void flipNewSortOrder()
+  private void flip()
   {
-    if (locationsSortOrder == null || locationsSortOrder == LocationsSortOrder.BY_NAME)
+    if (locationsSortOrder == null)
     {
-      setText("Sort Locations by Name");
-      locationsSortOrder = LocationsSortOrder.BY_LATITUDE;
-    }
-    else
-    {
-      setText("Sort Locations by Latitude");
       locationsSortOrder = LocationsSortOrder.BY_NAME;
+    }
+    switch (locationsSortOrder)
+    {
+      case BY_NAME:
+        setText("Sort Locations by Latitude");
+        locationsSortOrder = LocationsSortOrder.BY_LATITUDE;
+        break;
+      case BY_LATITUDE:
+        setText("Sort Locations by Name");
+        locationsSortOrder = LocationsSortOrder.BY_NAME;
+        break;
     }
   }
 
