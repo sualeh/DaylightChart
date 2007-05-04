@@ -79,8 +79,7 @@ public class SortLocationsAction
 
     flip();
     final List<Location> locations = navigationView.getLocations();
-    Collections.sort(locations, UserPreferences.getOptions()
-      .getLocationsSortOrder());
+    UserPreferences.sortLocations(locations);
     navigationView.setLocations(locations);
 
   }

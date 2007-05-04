@@ -61,7 +61,7 @@
             name="Daylight Chart">
          <property
                name="aboutText"
-               value="RCP Mail template created by PDE">
+               value="Daylight Chart shows sunrise and sunset times in an attractive chart, for any location in the world. The effect of daylight savings time is also displayed. Charts can be exported to image files.">
          </property>
          <property
                name="aboutImage"
