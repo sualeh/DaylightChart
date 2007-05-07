@@ -28,6 +28,7 @@
       <outputDirectory></outputDirectory>
       <includes>
         <include>daylightchart.*</include>
+        <include>*.exe</include>
       </includes>
      </fileSet>
   </fileSets>

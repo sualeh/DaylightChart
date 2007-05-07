@@ -33,5 +33,14 @@
         New option to see daylight chart with local time.
       </action>
     </release>
+    <release version="1.3" date="2007-05-15">
+      <action dev="Sualeh Fatehi" type="add">
+        New Windows executable to launch daylight time.
+      </action>
+      <action dev="Sualeh Fatehi" type="add">
+        Now remembers the locations sort order, and whether to use
+        the time zone for the chart.
+      </action>
+    </release>
   </body>
 </document>
