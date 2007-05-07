@@ -22,17 +22,26 @@
 package daylightchart.rcpgui.actions;
 
 
+import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import org.eclipse.core.commands.Command;
+import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.commands.ICommandService;
+
+import daylightchart.rcpgui.commands.SaveChartCommandHandler;
+import daylightchart.rcpgui.views.DaylightChartView;
 
 public class SaveChartAction
   extends Action
 {
-
+  private static final Logger LOGGER = Logger.getLogger(SaveChartAction.class
+    .getName());
   public static final String ID = SaveChartAction.class.getName();
 
   private final IWorkbenchWindow window;
@@ -53,13 +62,27 @@ public class SaveChartAction
   {
     if (window != null)
     {
-      FileDialog dialog = new FileDialog(window.getShell(), SWT.SAVE);
-      String selectedFile = dialog.open();
-
-      MessageDialog.openInformation(window.getShell(),
-                                    "Save Chart",
-                                    selectedFile);
+      ICommandService service = (ICommandService) PlatformUI.getWorkbench()
+        .getService(ICommandService.class);
+      Command command = service.getCommand(SaveChartCommandHandler.ID);
+      if (command != null && command.isEnabled())
+      {
+        try
+        {
+          ExecutionEvent event = new ExecutionEvent(command,
+                                                    new HashMap(),
+                                                    null,
+                                                    ID);
+          command.executeWithChecks(event);
+        }
+        catch (Exception e)
+        {
+          LOGGER.log(Level.WARNING, "Execute save chart action - "
+                                    + e.getMessage());
+        }
+      }
     }
+
   }
 
 }

@@ -23,7 +23,17 @@ package daylightchart.rcpgui.views;
 
 
 import java.awt.Frame;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+import org.eclipse.core.commands.Command;
+import org.eclipse.core.commands.ExecutionEvent;
+import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.commands.IExecutionListener;
+import org.eclipse.core.commands.NotHandledException;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -31,6 +41,8 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.awt.SWT_AWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.commands.ICommandService;
 import org.eclipse.ui.part.ViewPart;
 import org.jfree.chart.ChartPanel;
 
@@ -38,13 +50,21 @@ import daylightchart.chart.DaylightChart;
 import daylightchart.chart.TimeZoneOption;
 import daylightchart.location.Location;
 import daylightchart.options.UserPreferences;
+import daylightchart.rcpgui.commands.PrintChartCommandHandler;
+import daylightchart.rcpgui.commands.SaveChartCommandHandler;
 import daylightchart.rcpgui.tree.LeafNode;
 
 public class DaylightChartView
   extends ViewPart
 {
 
+  private static final Logger LOGGER = Logger.getLogger(DaylightChartView.class
+    .getName());
+
   public static final String ID = "daylightchart.rcpgui.DaylightChartView";
+
+  private Location location;
+  private ChartPanel chartPanel;
 
   @Override
   public void createPartControl(final Composite parent)
@@ -52,7 +72,6 @@ public class DaylightChartView
 
     ISelection selection = getSite().getWorkbenchWindow().getSelectionService()
       .getSelection(NavigationView.ID);
-    Location location = null;
     if (!selection.isEmpty())
     {
       if (selection instanceof IStructuredSelection)
@@ -70,17 +89,18 @@ public class DaylightChartView
     if (location != null)
     {
       setPartName(location.toString());
-      
+
       final TimeZoneOption timeZoneOption = UserPreferences.getOptions()
         .getTimeZoneOption();
       DaylightChart daylightChart = new DaylightChart(location, timeZoneOption);
-      
+
       Composite chartComposite;
 
       chartComposite = new Composite(parent, SWT.EMBEDDED);
       chartComposite.setLayoutData(new GridData(GridData.FILL_BOTH));
       final Frame frame = SWT_AWT.new_Frame(chartComposite);
-      frame.add(new ChartPanel(daylightChart));
+      chartPanel = new ChartPanel(daylightChart);
+      frame.add(chartPanel);
 
       // chartComposite = new ChartComposite(parent, SWT.NONE,
       // daylightChart, true);
@@ -96,6 +116,71 @@ public class DaylightChartView
   @Override
   public void setFocus()
   {
+    registerCommandListener(SaveChartCommandHandler.ID);
+    registerCommandListener(PrintChartCommandHandler.ID);
   }
+
+  private void registerCommandListener(String commandId)
+  {
+    ICommandService service = (ICommandService) PlatformUI.getWorkbench()
+      .getService(ICommandService.class);
+    Command cmd = service.getCommand(commandId);
+    // Remove all listeners
+    for (CommandListener commandListener: listeners)
+    {
+      cmd.removeExecutionListener(commandListener);
+    }
+    // Add listener for this view
+    cmd.addExecutionListener(listener);
+  }
+
+  private class CommandListener
+    implements IExecutionListener
+  {
+
+    public CommandListener()
+    {
+      DaylightChartView.listeners.add(this);
+    }
+
+    public void notHandled(String commandId, NotHandledException exception)
+    {
+
+    }
+
+    public void postExecuteFailure(String commandId,
+                                   ExecutionException exception)
+    {
+
+    }
+
+    public void postExecuteSuccess(String commandId, Object returnValue)
+    {
+      if (commandId.equals(SaveChartCommandHandler.ID))
+      {
+        try
+        {
+          chartPanel.doSaveAs();
+        }
+        catch (IOException e)
+        {
+          LOGGER.log(Level.WARNING, "Could not execute action to save chart");
+        }
+      }
+      if (commandId.equals(PrintChartCommandHandler.ID))
+      {
+        chartPanel.createChartPrintJob();
+      }
+    }
+
+    public void preExecute(String commandId, ExecutionEvent event)
+    {
+
+    }
+
+  }
+
+  private CommandListener listener = new CommandListener();
+  static List<CommandListener> listeners = new ArrayList<CommandListener>();
 
 }
