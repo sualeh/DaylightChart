@@ -12,19 +12,16 @@
         at any location in the world. Charts can be customized, saved, and printed.
       </subsection>
       <subsection name="Running">
-        <p>
-        Daylight Chart depends on
-        <a href="http://sourceforge.net/projects/daylightchart/pointlocation6709">
-        Point Location 6709</a>,
-        <a href="http://www.antlr.org/">ANTLR</a>,
-        <a href="http://joda-time.sourceforge.net">Joda Time</a>,
-        <a href="https://looks.dev.java.net/">JGoodies Looks</a>,
-        <a href="http://www.jfree.org/jfreechart/">JFreeChart</a> and <a href="http://www.jfree.org/jcommon/">JCommon</a>. Please ensure that
-        all of these jars are on your classpath when you run Daylight Chart.
+        <p>The steps for running Daylight Chart are:
         </p>
-        <p>
-        All of these are distributed in their unmodified binary form. Please refer to their individual
-        licenses for license terms.
+        <ol>
+          <li>Download and install <a href="http://www.java.com/en/download/index.jsp">Java</a>
+          on your computer, if you do not already have it.</li>
+          <li>Download <a href="http://sourceforge.net/project/showfiles.php?group_id=193171">Daylight Chart</a>.
+          Just one download file is needed - daylightchart-1.2-distrib.zip.</li>
+          <li>Unzip the daylightchart-1.2-distrib.zip file into any folder on your computer,
+          keeping the internal folder structure intact.</a>
+          <li>Run the "daylightchart" command.</li>
         </p>
       </subsection>
     </section>
@@ -56,7 +53,7 @@
           Daylight Chart uses Maven 2.0 to build, run unit
           tests, and create the project web-site. Download
           <a href="http://maven.apache.org/">Maven 2.0</a>,
-          and run <code>mvn compile</code> to build the library.
+          and run <code>mvn install</code> to build.
         </p>
       </subsection>
       <subsection name="Eclipse">
@@ -67,6 +64,22 @@
           one Eclipse Java Classpath Variable,
           <code>M2_REPO</code>
           to point to the Maven 2.0 repository.
+        </p>
+      </subsection>
+      <subsection name="Dependencies">
+        <p>
+        Daylight Chart depends on
+        <a href="http://sourceforge.net/projects/daylightchart/pointlocation6709">
+        Point Location 6709</a>,
+        <a href="http://www.antlr.org/">ANTLR</a>,
+        <a href="http://joda-time.sourceforge.net">Joda Time</a>,
+        <a href="https://looks.dev.java.net/">JGoodies Looks</a>,
+        <a href="http://www.jfree.org/jfreechart/">JFreeChart</a> and <a href="http://www.jfree.org/jcommon/">JCommon</a>.
+        Please ensure that all of these jars are on your classpath when you run Daylight Chart.
+        </p>
+        <p>
+        All of the dependencies are distributed in their unmodified binary form. Please refer to their individual
+        licenses for license terms.
         </p>
       </subsection>
     </section>
