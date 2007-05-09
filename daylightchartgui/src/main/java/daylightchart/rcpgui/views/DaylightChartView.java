@@ -22,7 +22,6 @@
 package daylightchart.rcpgui.views;
 
 
-import java.awt.Frame;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,9 +37,16 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.awt.SWT_AWT;
-import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.graphics.GC;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.ImageData;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.swt.printing.PrintDialog;
+import org.eclipse.swt.printing.Printer;
+import org.eclipse.swt.printing.PrinterData;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.commands.ICommandService;
 import org.eclipse.ui.part.ViewPart;
@@ -63,13 +69,13 @@ public class DaylightChartView
 
   public static final String ID = "daylightchart.rcpgui.DaylightChartView";
 
-  private Location location;
-  private ChartPanel chartPanel;
+  private ChartComposite chartComposite;
 
   @Override
   public void createPartControl(final Composite parent)
   {
 
+    Location location = null;
     ISelection selection = getSite().getWorkbenchWindow().getSelectionService()
       .getSelection(NavigationView.ID);
     if (!selection.isEmpty())
@@ -94,16 +100,7 @@ public class DaylightChartView
         .getTimeZoneOption();
       DaylightChart daylightChart = new DaylightChart(location, timeZoneOption);
 
-      Composite chartComposite;
-
-      chartComposite = new Composite(parent, SWT.EMBEDDED);
-      chartComposite.setLayoutData(new GridData(GridData.FILL_BOTH));
-      final Frame frame = SWT_AWT.new_Frame(chartComposite);
-      chartPanel = new ChartPanel(daylightChart);
-      frame.add(chartPanel);
-
-      // chartComposite = new ChartComposite(parent, SWT.NONE,
-      // daylightChart, true);
+      chartComposite = new ChartComposite(parent, daylightChart);
     }
     else
     {
@@ -158,18 +155,11 @@ public class DaylightChartView
     {
       if (commandId.equals(SaveChartCommandHandler.ID))
       {
-        try
-        {
-          chartPanel.doSaveAs();
-        }
-        catch (IOException e)
-        {
-          LOGGER.log(Level.WARNING, "Could not execute action to save chart");
-        }
+        chartComposite.doSaveAs();
       }
       if (commandId.equals(PrintChartCommandHandler.ID))
       {
-        chartPanel.createChartPrintJob();
+        chartComposite.createChartPrintJob();
       }
     }
 
