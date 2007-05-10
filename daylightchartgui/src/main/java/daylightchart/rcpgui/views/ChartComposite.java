@@ -41,19 +41,18 @@ import org.eclipse.swt.printing.PrinterData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.FileDialog;
 import org.jfree.chart.ChartPanel;
-
-import daylightchart.chart.DaylightChart;
+import org.jfree.chart.JFreeChart;
 
 public class ChartComposite
   extends Composite
 {
 
-  public ChartComposite(Composite parent, DaylightChart daylightChart)
+  public ChartComposite(Composite parent, JFreeChart chart)
   {
     super(parent, SWT.EMBEDDED);
     setLayoutData(new GridData(GridData.FILL_BOTH));
     final Frame frame = SWT_AWT.new_Frame(this);
-    ChartPanel chartPanel = new ChartPanel(daylightChart,
+    ChartPanel chartPanel = new ChartPanel(chart,
                                            false,
                                            false,
                                            false,
@@ -108,6 +107,7 @@ public class ChartComposite
   }
 
   public void doSaveAs()
+    throws IOException
   {
     FileDialog fileDialog = new FileDialog(getShell(), SWT.SAVE);
     String[] extensions = {
@@ -150,4 +150,5 @@ public class ChartComposite
     gc.dispose();
     return deviceImage;
   }
+  
 }

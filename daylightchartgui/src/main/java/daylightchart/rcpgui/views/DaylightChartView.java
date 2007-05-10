@@ -155,7 +155,15 @@ public class DaylightChartView
     {
       if (commandId.equals(SaveChartCommandHandler.ID))
       {
-        chartComposite.doSaveAs();
+        try
+        {
+          chartComposite.doSaveAs();
+        }
+        catch (IOException e)
+        {
+          MessageDialog.openError(getSite().getShell(), "Save Chart Error", e
+            .getMessage());
+        }
       }
       if (commandId.equals(PrintChartCommandHandler.ID))
       {
