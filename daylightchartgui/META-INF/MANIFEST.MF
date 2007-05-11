@@ -16,5 +16,4 @@ Bundle-ClassPath: .,
  lib/pointlocation6709-1.1.jar,
  lib/jcommon-1.0.9.jar,
  lib/jfreechart-1.0.5.jar,
- lib/jfreechart-1.0.5-swt.jar,
- lib/swtgraphics2d.jar
+ lib/jfreechart-1.0.5-swt.jar
