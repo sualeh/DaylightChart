@@ -55,6 +55,7 @@ import daylightchart.location.Location;
 import daylightchart.location.LocationsSortOrder;
 import daylightchart.options.Options;
 import daylightchart.options.UserPreferences;
+import daylightchart.options.chart.ChartEditorFactory;
 import daylightchart.options.chart.ChartOptions;
 
 /**
@@ -408,7 +409,8 @@ public final class DaylightChartGui
         final Options options = UserPreferences.getOptions();
         final ChartOptions chartOptions = options.getChartOptions();
 
-        final ChartEditor chartEditor = chartOptions.getChartEditor();
+        final ChartEditor chartEditor = ChartEditorFactory
+          .getXYPlotChartEditorFromOptions(chartOptions);
         final int confirmValue = JOptionPane
           .showConfirmDialog(DaylightChartGui.this, chartEditor, Messages
             .getString("DaylightChartGui.Menu.Options.ChartOptions"), //$NON-NLS-1$

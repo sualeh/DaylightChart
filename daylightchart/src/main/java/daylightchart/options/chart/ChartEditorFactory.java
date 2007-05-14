@@ -22,61 +22,36 @@
 package daylightchart.options.chart;
 
 
-import java.io.Serializable;
-
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.axis.DateAxis;
 import org.jfree.chart.editor.ChartEditor;
 import org.jfree.chart.editor.ChartEditorManager;
 import org.jfree.chart.plot.XYPlot;
 
 /**
- * Options for customizing charts.
- * 
+ * Chart editor factory creates a chart for 
  * @author sfatehi
+ *
  */
-public abstract class BaseChartOptions
-  implements Serializable
+public final class ChartEditorFactory
 {
 
-  private static final JFreeChart chart = createDummyChart();
-
-  private static JFreeChart createDummyChart()
+  /**
+   * Gets a chart editor that has preset options.
+   * 
+   * @return Chart editor.
+   */
+  public static final ChartEditor getXYPlotChartEditorFromOptions(final ChartOptions options)
   {
+    // This is overkill, but make a fake chart, whose sole purpose is to
+    // transfer settings between a chart editor and chart options
     final JFreeChart chart = new JFreeChart(new XYPlot());
-    chart.setTitle("");
-    final XYPlot plot = chart.getXYPlot();
-    plot.setDomainAxis(new DateAxis());
-    plot.setRangeAxis(new DateAxis());
-    return chart;
+    options.updateChart(chart);
+    return ChartEditorManager.getChartEditor(chart);
   }
 
-  /**
-   * Copies options from the provided chart.
-   * 
-   * @param chart
-   *        Chart to copy options from
-   */
-  public abstract void copyFromChart(JFreeChart chart);
-
-  /**
-   * Copies options from the provided chart editor.
-   * 
-   * @param chartEditor
-   *        Chart editor to copy options from
-   */
-  public final void copyFromChartEditor(final ChartEditor chartEditor)
+  private ChartEditorFactory()
   {
-    chartEditor.updateChart(chart);
-    copyFromChart(chart);
+    // Prevent instantiation
   }
-
-  /**
-   * Updates a chart with these options.
-   * 
-   * @param chart
-   *        Chart to update.
-   */
-  public abstract void updateChart(JFreeChart chart);
 
 }
