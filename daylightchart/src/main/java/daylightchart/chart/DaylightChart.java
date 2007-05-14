@@ -314,7 +314,7 @@ public class DaylightChart
       setTitle(title);
 
       clearSubtitles();
-      title = new TextTitle(LocationFormatter.printLocationDetails(location),
+      title = new TextTitle(location.getDetails(),
                             new Font("SansSerif", Font.PLAIN, 12)); //$NON-NLS-1$
       addSubtitle(title);
     }

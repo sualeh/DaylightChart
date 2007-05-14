@@ -28,7 +28,6 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.List;
-import java.util.TimeZone;
 
 import org.pointlocation6709.parser.FormatterException;
 import org.pointlocation6709.parser.PointLocationFormatType;
@@ -155,25 +154,6 @@ public final class LocationFormatter
     {
       throw new daylightchart.location.parser.FormatterException(e);
     }
-  }
-
-  /**
-   * Details for the location.
-   * 
-   * @param location
-   *        Location
-   * @return Details for this location.
-   */
-  public static String printLocationDetails(final Location location)
-  {
-    if (location == null)
-    {
-      return "";
-    }
-    final TimeZone timeZone = TimeZone.getTimeZone(location.getTimeZoneId());
-    final String details = location.getPointLocation().toString() + ", "
-                           + timeZone.getDisplayName();
-    return details;
   }
 
   private LocationFormatter()

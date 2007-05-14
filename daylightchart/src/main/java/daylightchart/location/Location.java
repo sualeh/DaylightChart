@@ -23,6 +23,7 @@ package daylightchart.location;
 
 
 import java.io.Serializable;
+import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -203,6 +204,19 @@ public final class Location
   public Country getCountry()
   {
     return country;
+  }
+
+  /**
+   * Details for this location.
+   * 
+   * @return Details for this location.
+   */
+  public String getDetails()
+  {
+    final TimeZone timeZone = TimeZone.getTimeZone(getTimeZoneId());
+    final String details = getPointLocation().toString() + ", "
+                           + timeZone.getDisplayName();
+    return details;
   }
 
   /**

@@ -22,8 +22,6 @@
 package daylightchart.gui;
 
 
-import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -33,7 +31,6 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JMenu;
@@ -45,11 +42,9 @@ import javax.swing.JSplitPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import org.jfree.chart.ChartPanel;
 import org.jfree.chart.editor.ChartEditor;
 
 import daylightchart.Version;
-import daylightchart.chart.DaylightChart;
 import daylightchart.chart.TimeZoneOption;
 import daylightchart.location.Location;
 import daylightchart.location.LocationsSortOrder;
@@ -108,7 +103,7 @@ public final class DaylightChartGui
   private List<Location> locations;
 
   private final JList listBox;
-  private final ChartPanel chartPanel;
+  private final LocationsTabbedPane locationsTabbedPane;
 
   /**
    * Creates a new instance of a Daylight Chart main window.
@@ -121,6 +116,8 @@ public final class DaylightChartGui
     final Font font = new Font("Sans-serif", Font.PLAIN, 11); //$NON-NLS-1$
 
     locations = UserPreferences.getLocations();
+
+    locationsTabbedPane = new LocationsTabbedPane();
 
     listBox = new JList();
     listBox.setFont(font);
@@ -135,22 +132,13 @@ public final class DaylightChartGui
           listBox.setSelectedIndex(0);
           location = (Location) listBox.getSelectedValue();
         }
-        final Options options = UserPreferences.getOptions();
-        final DaylightChart chart = new DaylightChart(location, options
-          .getTimeZoneOption());
-        options.getChartOptions().updateChart(chart);
-        chartPanel.setChart(chart);
+        locationsTabbedPane.addLocationTab(location);
       }
     });
 
-    chartPanel = new ChartPanel(null);
-    chartPanel.setBackground(Color.WHITE);
-    chartPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-    chartPanel.setPreferredSize(new Dimension(700, 495));
-
     final JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
                                                 new JScrollPane(listBox),
-                                                chartPanel);
+                                                locationsTabbedPane);
     splitPane.setOneTouchExpandable(true);
     getContentPane().add(splitPane);
 
@@ -214,15 +202,7 @@ public final class DaylightChartGui
       public void actionPerformed(@SuppressWarnings("unused")
       final ActionEvent actionevent)
       {
-        try
-        {
-          chartPanel.doSaveAs();
-        }
-        catch (final IOException e)
-        {
-          LOGGER.log(Level.WARNING, Messages
-            .getString("DaylightChartGui.Error.SaveChart"), e); //$NON-NLS-1$
-        }
+        locationsTabbedPane.saveSelectedChart();
       }
     });
     menuFile.add(saveImage);
@@ -234,7 +214,7 @@ public final class DaylightChartGui
       public void actionPerformed(@SuppressWarnings("unused")
       final ActionEvent actionevent)
       {
-        chartPanel.createChartPrintJob();
+        locationsTabbedPane.printSelectedChart();
       }
     });
     menuFile.add(print);
@@ -422,9 +402,6 @@ public final class DaylightChartGui
           chartOptions.copyFromChartEditor(chartEditor);
           // Save preferences
           UserPreferences.setOptions(options);
-          // Also apply changes to the current chart
-          final DaylightChart chart = (DaylightChart) chartPanel.getChart();
-          chartOptions.updateChart(chart);
         }
       }
     });
@@ -455,7 +432,6 @@ public final class DaylightChartGui
 
   private void refreshView()
   {
-    chartPanel.setChart(null);
     listBox.setListData(new Vector<Location>(locations));
     listBox.setSelectedIndex(0);
     this.repaint();
