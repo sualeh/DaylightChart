@@ -46,6 +46,7 @@ public class LocationsList
 {
 
   private static final long serialVersionUID = -6884483130453983685L;
+  
   private List<Location> locations;
 
   /**
