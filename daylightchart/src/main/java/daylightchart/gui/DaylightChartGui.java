@@ -22,16 +22,11 @@
 package daylightchart.gui;
 
 
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.List;
-import java.util.Vector;
 
 import javax.swing.JFrame;
-import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -50,7 +45,7 @@ import daylightchart.options.UserPreferences;
 import daylightchart.options.chart.ChartOptions;
 
 /**
- * Provides an GUI for daylight charts. s
+ * Provides an GUI for daylight charts.
  * 
  * @author Sualeh Fatehi
  */
@@ -93,9 +88,7 @@ public final class DaylightChartGui
 
   private final static long serialVersionUID = 3760840181833283637L;
 
-  private List<Location> locations;
-
-  private final JList listBox;
+  private final LocationsList locationsList;
   private final LocationsTabbedPane locationsTabbedPane;
 
   /**
@@ -106,57 +99,44 @@ public final class DaylightChartGui
     setTitle("Daylight Chart"); //$NON-NLS-1$
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-    final Font font = new Font("Sans-serif", Font.PLAIN, 11); //$NON-NLS-1$
-
-    locations = UserPreferences.getLocations();
-
     locationsTabbedPane = new LocationsTabbedPane();
-
-    listBox = new JList();
-    listBox.setFont(font);
-    listBox.addMouseListener(new MouseAdapter()
-    {
-      @Override
-      public void mouseClicked(final MouseEvent e)
-      {
-        if (!e.isConsumed() && e.getClickCount() == 2)
-        {
-          Location location = (Location) listBox.getSelectedValue();
-          if (location == null)
-          {
-            listBox.setSelectedIndex(0);
-            location = (Location) listBox.getSelectedValue();
-          }
-          locationsTabbedPane.addLocationTab(location);
-        }
-        e.consume();
-      }
-    });
+    locationsList = new LocationsList(this);
 
     final JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
-                                                new JScrollPane(listBox),
+                                                new JScrollPane(locationsList),
                                                 locationsTabbedPane);
     splitPane.setOneTouchExpandable(true);
     getContentPane().add(splitPane);
 
     setJMenuBar(createMenuBar());
 
-    refreshView();
+    this.repaint();
 
     // Open the first location
-    locationsTabbedPane.addLocationTab((Location) listBox.getSelectedValue());
+    locationsTabbedPane.addLocationTab(locationsList.getSelectedLocation());
 
     pack();
   }
 
   /**
-   * Get the locations list.
+   * Add a new location tab.
    * 
-   * @return Locations
+   * @param location
+   *        Location.
    */
-  public List<Location> getLocations()
+  void addLocationTab(final Location location)
   {
-    return locations;
+    locationsTabbedPane.addLocationTab(location);
+  }
+
+  /**
+   * Gets locations from the list.
+   * 
+   * @return Locations list.
+   */
+  List<Location> getLocations()
+  {
+    return locationsList.getLocations();
   }
 
   /**
@@ -165,13 +145,12 @@ public final class DaylightChartGui
    * @param locations
    *        Locations
    */
-  public void setLocations(final List<Location> locations)
+  void setLocations(final List<Location> locations)
   {
     if (locations != null && locations.size() > 0)
     {
-      this.locations = locations;
-      refreshView();
-      UserPreferences.setLocations(locations);
+      locationsList.setLocations(locations);
+      this.repaint();
     }
   }
 
@@ -350,8 +329,8 @@ public final class DaylightChartGui
         options.setLocationsSortOrder(locationsSortOrder);
         UserPreferences.setOptions(options);
 
-        UserPreferences.sortLocations(locations);
-        refreshView();
+        locationsList.sortLocations();
+        DaylightChartGui.this.repaint();
       }
     });
 
@@ -420,13 +399,6 @@ public final class DaylightChartGui
   {
     dispose();
     System.exit(0);
-  }
-
-  private void refreshView()
-  {
-    listBox.setListData(new Vector<Location>(locations));
-    listBox.setSelectedIndex(0);
-    this.repaint();
   }
 
 }
