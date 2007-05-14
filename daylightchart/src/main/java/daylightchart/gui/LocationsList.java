@@ -36,15 +36,24 @@ import javax.swing.JList;
 import daylightchart.location.Location;
 import daylightchart.options.UserPreferences;
 
+/**
+ * Locations list component.
+ * 
+ * @author Sualeh Fatehi
+ */
 public class LocationsList
   extends JList
 {
-  /**
-   * 
-   */
+
   private static final long serialVersionUID = -6884483130453983685L;
   private List<Location> locations;
 
+  /**
+   * Create a new locations list component.
+   * 
+   * @param parent
+   *        Main window.
+   */
   public LocationsList(final DaylightChartGui parent)
   {
 
@@ -53,9 +62,6 @@ public class LocationsList
     setFont(new Font("Sans-serif", Font.PLAIN, 11));
     setCellRenderer(new DefaultListCellRenderer()
     {
-      /**
-       * 
-       */
       private static final long serialVersionUID = -5892518623547830472L;
 
       @Override
@@ -99,16 +105,32 @@ public class LocationsList
     });
   }
 
+  /**
+   * Gets all locations in the list.
+   * 
+   * @return Locations list.
+   */
   public List<Location> getLocations()
   {
     return new ArrayList<Location>(locations);
   }
 
+  /**
+   * Get the currently selected location.
+   * 
+   * @return Currently selected location.
+   */
   public Location getSelectedLocation()
   {
     return (Location) getSelectedValue();
   }
 
+  /**
+   * Set the locations list.
+   * 
+   * @param locations
+   *        Locations list.
+   */
   public void setLocations(final List<Location> locations)
   {
     if (locations != null && locations.size() > 0)
@@ -120,6 +142,9 @@ public class LocationsList
     }
   }
 
+  /**
+   * Sort the locations in the list.
+   */
   public void sortLocations()
   {
     UserPreferences.sortLocations(locations);
