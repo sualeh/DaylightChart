@@ -128,8 +128,8 @@ public class BareBonesBrowserLaunch
     }
     catch (final Exception e)
     {
-      JOptionPane.showMessageDialog(null, errMsg + ":\n"
-                                          + e.getLocalizedMessage());
+      JOptionPane.showMessageDialog(null, errMsg + ":\n" +
+                                          e.getLocalizedMessage());
     }
   }
 

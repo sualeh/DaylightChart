@@ -55,7 +55,6 @@ import org.jfree.ui.TextAnchor;
 import org.joda.time.LocalDateTime;
 
 import daylightchart.location.Location;
-import daylightchart.location.parser.LocationFormatter;
 import daylightchart.options.chart.ChartOptions;
 import daylightchart.options.chart.ChartOptionsListener;
 

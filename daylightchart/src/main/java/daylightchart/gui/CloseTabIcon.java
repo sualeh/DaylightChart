@@ -109,8 +109,8 @@ public class CloseTabIcon
         {
           // Asking for isConsumed is *very* important, otherwise more
           // than one tab might get closed.
-          if (!e.isConsumed() && position != null
-              && position.contains(e.getX(), e.getY()))
+          if (!e.isConsumed() && position != null &&
+              position.contains(e.getX(), e.getY()))
           {
             if (tabbedPane != null)
             {

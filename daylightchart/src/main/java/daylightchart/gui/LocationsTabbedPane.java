@@ -24,18 +24,11 @@ package daylightchart.gui;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.io.File;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.swing.BorderFactory;
-import javax.swing.JFileChooser;
 import javax.swing.JTabbedPane;
 
 import org.jfree.chart.ChartPanel;
-import org.jfree.chart.ChartUtilities;
-import org.jfree.ui.ExtensionFileFilter;
 
 import daylightchart.chart.DaylightChart;
 import daylightchart.location.Location;
@@ -52,9 +45,6 @@ public class LocationsTabbedPane
 {
 
   private static final long serialVersionUID = -2086804705336786590L;
-
-  private static final Logger LOGGER = Logger
-    .getLogger(LocationsTabbedPane.class.getName());
 
   /**
    * Add a new tab for the location.
@@ -75,10 +65,11 @@ public class LocationsTabbedPane
     chartPanel.setPreferredSize(new Dimension(700, 495));
 
     final String tabTitle = location.toString();
-    final String toolTip = "<b>" + tabTitle + "</b><br>"
-                           + location.getDetails();
+    final String toolTip = "<html><b>" + tabTitle + "</b><br>" +
+                           location.getDetails() + "</html>";
 
     addTab(tabTitle, new CloseTabIcon(), chartPanel, toolTip);
+    setSelectedIndex(getComponentCount() - 1);
   }
 
   /**
@@ -86,7 +77,7 @@ public class LocationsTabbedPane
    */
   public void printSelectedChart()
   {
-    getSelectedChart().createChartPrintJob();
+    Actions.doPrintChartAction(getSelectedChart());
   }
 
   /**
@@ -94,42 +85,7 @@ public class LocationsTabbedPane
    */
   public void saveSelectedChart()
   {
-    try
-    {
-
-      ChartPanel chartPanel = getSelectedChart();
-      JFileChooser fileChooser = new JFileChooser();
-      fileChooser.setCurrentDirectory(UserPreferences.getDataFileDirectory());
-      fileChooser.setAcceptAllFileFilterUsed(false);      
-      fileChooser
-        .addChoosableFileFilter(new ExtensionFileFilter("Portable Network Graphics (*.png)",
-                                                        ".png"));
-      fileChooser
-        .addChoosableFileFilter(new ExtensionFileFilter("JPEG (*.jpg)", ".jpg"));
-
-      int option = fileChooser.showSaveDialog(chartPanel);
-      if (option == JFileChooser.APPROVE_OPTION)
-      {
-        fileChooser.getFileFilter();
-        String filename = fileChooser.getSelectedFile().getPath();
-        if (chartPanel.isEnforceFileExtensions())
-        {
-          if (!filename.endsWith(".png"))
-          {
-            filename = filename + ".png";
-          }
-        }
-        ChartUtilities.saveChartAsPNG(new File(filename),
-                                      chartPanel.getChart(),
-                                      chartPanel.getWidth(),
-                                      chartPanel.getHeight());
-      }
-    }
-    catch (final IOException e)
-    {
-      LOGGER.log(Level.WARNING, Messages
-        .getString("DaylightChartGui.Error.SaveChart"), e); //$NON-NLS-1$
-    }
+    Actions.doSaveChartAction(getSelectedChart());
   }
 
   private ChartPanel getSelectedChart()

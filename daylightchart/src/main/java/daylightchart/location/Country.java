@@ -165,8 +165,8 @@ public final class Country
     int result = 1;
     result = prime * result + (name == null? 0: name.hashCode());
     result = prime * result + (fips10Code == null? 0: fips10Code.hashCode());
-    result = prime * result
-             + (iso3166Code2 == null? 0: iso3166Code2.hashCode());
+    result = prime * result +
+             (iso3166Code2 == null? 0: iso3166Code2.hashCode());
     return result;
   }
 

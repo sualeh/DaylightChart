@@ -159,8 +159,8 @@ public final class USState
   {
     final int prime = 31;
     int result = 1;
-    result = prime * result
-             + (fips5_2AlphaCode == null? 0: fips5_2AlphaCode.hashCode());
+    result = prime * result +
+             (fips5_2AlphaCode == null? 0: fips5_2AlphaCode.hashCode());
     result = prime * result + fips5_2NumericCode;
     result = prime * result + (name == null? 0: name.hashCode());
     return result;

@@ -13,16 +13,23 @@ public class ExtensionFileFilter
   implements java.io.FileFilter
 {
 
-  private static String getExtension(final File f)
+  /**
+   * Gets the extension for the given file.
+   * 
+   * @param file
+   *        File
+   * @return Extension
+   */
+  public static String getExtension(final File file)
   {
     String extension = "";
-    final String fileName = f.getName();
+    final String fileName = file.getName();
     final int i = fileName.lastIndexOf('.');
     if (i > 0 && i < fileName.length() - 1)
     {
       extension = fileName.substring(i + 1).toLowerCase();
     }
-    return extension;
+    return "." + extension;
   }
 
   /** A description for the file type. */
@@ -42,7 +49,18 @@ public class ExtensionFileFilter
   public ExtensionFileFilter(final String description, final String extension)
   {
     this.description = description;
-    this.extension = extension;
+
+    String fileExtension = extension;
+    if (fileExtension == null)
+    {
+      fileExtension = "";
+    }
+    if (!fileExtension.startsWith("."))
+    {
+      fileExtension = "." + fileExtension;
+    }
+    this.extension = fileExtension;
+
   }
 
   /**
@@ -79,6 +97,16 @@ public class ExtensionFileFilter
   public String getDescription()
   {
     return description;
+  }
+
+  /**
+   * Gets the file extension.
+   * 
+   * @return File extension.
+   */
+  public String getExtension()
+  {
+    return extension;
   }
 
 }

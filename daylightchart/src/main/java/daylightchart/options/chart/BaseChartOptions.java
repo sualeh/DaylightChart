@@ -72,6 +72,17 @@ public abstract class BaseChartOptions
   }
 
   /**
+   * Gets a chart editor that has preset options.
+   * 
+   * @return Chart editor.
+   */
+  public final ChartEditor getChartEditor()
+  {
+    updateChart(chart);
+    return ChartEditorManager.getChartEditor(chart);
+  }
+
+  /**
    * Updates a chart with these options.
    * 
    * @param chart

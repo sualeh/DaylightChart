@@ -25,11 +25,10 @@ package daylightchart.gui;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
 import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.swing.JFrame;
 import javax.swing.JList;
@@ -39,8 +38,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 
 import org.jfree.chart.editor.ChartEditor;
 
@@ -50,11 +47,10 @@ import daylightchart.location.Location;
 import daylightchart.location.LocationsSortOrder;
 import daylightchart.options.Options;
 import daylightchart.options.UserPreferences;
-import daylightchart.options.chart.ChartEditorFactory;
 import daylightchart.options.chart.ChartOptions;
 
 /**
- * Provides an GUI for daylight charts.
+ * Provides an GUI for daylight charts. s
  * 
  * @author Sualeh Fatehi
  */
@@ -97,9 +93,6 @@ public final class DaylightChartGui
 
   private final static long serialVersionUID = 3760840181833283637L;
 
-  private static final Logger LOGGER = Logger.getLogger(DaylightChartGui.class
-    .getName());
-
   private List<Location> locations;
 
   private final JList listBox;
@@ -121,18 +114,22 @@ public final class DaylightChartGui
 
     listBox = new JList();
     listBox.setFont(font);
-    listBox.addListSelectionListener(new ListSelectionListener()
+    listBox.addMouseListener(new MouseAdapter()
     {
-      public void valueChanged(@SuppressWarnings("unused")
-      final ListSelectionEvent listSelectionEvent)
+      @Override
+      public void mouseClicked(final MouseEvent e)
       {
-        Location location = (Location) listBox.getSelectedValue();
-        if (location == null)
+        if (!e.isConsumed() && e.getClickCount() == 2)
         {
-          listBox.setSelectedIndex(0);
-          location = (Location) listBox.getSelectedValue();
+          Location location = (Location) listBox.getSelectedValue();
+          if (location == null)
+          {
+            listBox.setSelectedIndex(0);
+            location = (Location) listBox.getSelectedValue();
+          }
+          locationsTabbedPane.addLocationTab(location);
         }
-        locationsTabbedPane.addLocationTab(location);
+        e.consume();
       }
     });
 
@@ -145,6 +142,10 @@ public final class DaylightChartGui
     setJMenuBar(createMenuBar());
 
     refreshView();
+
+    // Open the first location
+    locationsTabbedPane.addLocationTab((Location) listBox.getSelectedValue());
+
     pack();
   }
 
@@ -376,8 +377,6 @@ public final class DaylightChartGui
         }
         options.setTimeZoneOption(timeZoneOption);
         UserPreferences.setOptions(options);
-
-        refreshView();
       }
     });
 
@@ -389,8 +388,7 @@ public final class DaylightChartGui
         final Options options = UserPreferences.getOptions();
         final ChartOptions chartOptions = options.getChartOptions();
 
-        final ChartEditor chartEditor = ChartEditorFactory
-          .getXYPlotChartEditorFromOptions(chartOptions);
+        final ChartEditor chartEditor = chartOptions.getChartEditor();
         final int confirmValue = JOptionPane
           .showConfirmDialog(DaylightChartGui.this, chartEditor, Messages
             .getString("DaylightChartGui.Menu.Options.ChartOptions"), //$NON-NLS-1$
@@ -412,12 +410,6 @@ public final class DaylightChartGui
       final ActionEvent actionevent)
       {
         UserPreferences.clear();
-        JOptionPane
-          .showMessageDialog(DaylightChartGui.this, Messages
-            .getString("DaylightChartGui.Message.ResetAll"), //$NON-NLS-1$
-                             Messages
-                               .getString("DaylightChartGui.Menu.Options.ResetAll"), //$NON-NLS-1$
-                             JOptionPane.INFORMATION_MESSAGE);
       }
     });
 

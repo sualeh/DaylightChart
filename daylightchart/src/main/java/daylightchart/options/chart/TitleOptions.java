@@ -63,9 +63,12 @@ public class TitleOptions
   public void copyFromChart(final JFreeChart chart)
   {
     final TextTitle title = chart.getTitle();
-    titleFont = title.getFont();
-    titlePaint = title.getPaint();
-    titleText = title.getText();
+    if (title != null)
+    {
+      titleFont = title.getFont();
+      titlePaint = title.getPaint();
+      titleText = title.getText();
+    }
   }
 
   public Font getTitleFont()

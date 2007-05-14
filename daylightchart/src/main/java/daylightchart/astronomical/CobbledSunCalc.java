@@ -434,8 +434,8 @@ final class CobbledSunCalc
     UT = hour - timezoneOffset;
     // Julian Day Number
     final int monthx = (month - 14) / 12; // Relies on integer math
-    JD = 1461 * (year + 4800 + monthx) / 4 + 367 * (month - 2 - 12 * monthx)
-         / 12 - 3 * (year + 4900 + monthx) / 100 / 4 + day - 32075;
+    JD = 1461 * (year + 4800 + monthx) / 4 + 367 * (month - 2 - 12 * monthx) /
+         12 - 3 * (year + 4900 + monthx) / 100 / 4 + day - 32075;
     // Julian Day 2000.00
     J2000 = JD - J2000_OFFSET;
     // Number of Julian Centuries since J2000.0
@@ -443,22 +443,22 @@ final class CobbledSunCalc
     t0 = J2000 / 36525D;
 
     // Greenwich Mean Sidereal Time (GMST)
-    GMST = 6.697374558 + 1.0027379093 * UT
-           + (8640184.812866 + (0.093104 - 6.2E-6 * t0) * t0) * t0 / 3600D;
+    GMST = 6.697374558 + 1.0027379093 * UT +
+           (8640184.812866 + (0.093104 - 6.2E-6 * t0) * t0) * t0 / 3600D;
     // Local Mean Sidereal Time (LMST)
     LMST = 24D * frac((GMST + longitude / 15D) / 24D);
 
     // Geometric Mean Anomaly of the Sun (degrees)
-    g = range360(357.52910 + (35999.05030 - (0.0001559 + 0.00000048 * t) * t)
-                 * t);
+    g = range360(357.52910 + (35999.05030 - (0.0001559 + 0.00000048 * t) * t) *
+                 t);
 
     // Geometric Mean Longitude of the Sun corrected for aberration
     // (degrees)
     q = range360(280.46645 + (36000.76983 + 0.0003032 * t) * t);
 
     // Equation of Center for the Sun
-    C = (1.914602 - (0.004817 - 0.000014 * t) * t) * sin(g)
-        + (0.019993 - 0.000101 * t) * sin(2D * g) + 0.000289 * sin(3D * g);
+    C = (1.914602 - (0.004817 - 0.000014 * t) * t) * sin(g) +
+        (0.019993 - 0.000101 * t) * sin(2D * g) + 0.000289 * sin(3D * g);
 
     // Sun's Geocentric Apparent Ecliptic Longitude adjusted for
     // aberration (degrees)
@@ -524,8 +524,8 @@ final class CobbledSunCalc
      * and nautical twilight is when the sun is at altitude -6 degrees).
      */
     // Altitude, or elevation (degrees)
-    altitude = Math.asin(sin(latitude) * sin(declination) + cos(latitude)
-                         * cos(declination) * cos(tau));
+    altitude = Math.asin(sin(latitude) * sin(declination) + cos(latitude) *
+                         cos(declination) * cos(tau));
     altitude /= DEGREESTORADIANS; // convert radians to degrees
     epherimides[ALTITUDE] = altitude;
 
@@ -536,8 +536,8 @@ final class CobbledSunCalc
      * degrees, and west to be 270 degrees.
      */
     // Azimuth (degrees)
-    azimuth = Math.acos((sin(altitude) * sin(latitude) - sin(declination))
-                        / (cos(altitude) * cos(latitude)));
+    azimuth = Math.acos((sin(altitude) * sin(latitude) - sin(declination)) /
+                        (cos(altitude) * cos(latitude)));
     azimuth /= DEGREESTORADIANS; // convert radians to degrees
     if (azimuth * tau < 0)
     {
@@ -672,10 +672,10 @@ final class CobbledSunCalc
 
     riseset = calcRiseSet(SUNRISE_SUNSET);
 
-    value = "latitude=" + latitude + ";" + "longitude=" + longitude + ";"
-            + "timezone=" + timezoneOffset + ";" + "date=" + year + "." + month
-            + "." + day + ";" + "rise=" + fmt60(riseset[RISE]) + ";" + "set="
-            + fmt60(riseset[SET]) + ";" + "";
+    value = "latitude=" + latitude + ";" + "longitude=" + longitude + ";" +
+            "timezone=" + timezoneOffset + ";" + "date=" + year + "." + month +
+            "." + day + ";" + "rise=" + fmt60(riseset[RISE]) + ";" + "set=" +
+            fmt60(riseset[SET]) + ";" + "";
 
     return value;
 

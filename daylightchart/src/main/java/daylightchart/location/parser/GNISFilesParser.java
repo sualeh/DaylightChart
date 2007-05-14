@@ -65,8 +65,8 @@ public final class GNISFilesParser
   public static List<Location> parseLocations(final File locationsFile)
     throws ParserException
   {
-    if (locationsFile == null || !locationsFile.exists()
-        || !locationsFile.canRead())
+    if (locationsFile == null || !locationsFile.exists() ||
+        !locationsFile.canRead())
     {
       throw new ParserException("Cannot read file");
     }

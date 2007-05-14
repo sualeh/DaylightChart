@@ -64,11 +64,11 @@ public final class USStates
         final String[] fields = line.split(",");
 
         final boolean invalidNumberOfFields = fields.length != 3;
-        final boolean invalidHasNulls = fields[0] == null || fields[1] == null
-                                        || fields[2] == null;
-        final boolean invalidLengths = fields[1].length() != 2
-                                       && fields[1].length() != 0
-                                       || fields[2].length() == 0;
+        final boolean invalidHasNulls = fields[0] == null ||
+                                        fields[1] == null || fields[2] == null;
+        final boolean invalidLengths = fields[1].length() != 2 &&
+                                       fields[1].length() != 0 ||
+                                       fields[2].length() == 0;
         if (invalidNumberOfFields || invalidHasNulls || invalidLengths)
         {
           throw new IllegalArgumentException("Invalid US state record: " + line);

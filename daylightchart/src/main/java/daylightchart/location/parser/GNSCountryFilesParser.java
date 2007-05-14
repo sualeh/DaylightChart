@@ -65,8 +65,8 @@ public final class GNSCountryFilesParser
   public static List<Location> parseLocations(final File locationsFile)
     throws ParserException
   {
-    if (locationsFile == null || !locationsFile.exists()
-        || !locationsFile.canRead())
+    if (locationsFile == null || !locationsFile.exists() ||
+        !locationsFile.canRead())
     {
       throw new ParserException("Cannot read file");
     }
@@ -115,8 +115,8 @@ public final class GNSCountryFilesParser
 
         final String featureDesignationCode = fields[10];
         final String nameType = fields[17];
-        if (featureDesignationCode.startsWith("PPL")
-            && (nameType.equals("C") || nameType.equals("N")))
+        if (featureDesignationCode.startsWith("PPL") &&
+            (nameType.equals("C") || nameType.equals("N")))
         {
           final String latitudeString = fields[3];
           final String longitudeString = fields[4];

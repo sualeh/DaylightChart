@@ -235,6 +235,19 @@ public final class UserPreferences
     preferences.putByteArray(keyOptions, bytes);
   }
 
+  /**
+   * Sorts locations by current preferences.
+   * 
+   * @param locations
+   *        Locations to sort
+   */
+  public static void sortLocations(final List<Location> locations)
+  {
+    final LocationsSortOrder locationsSortOrder = getOptions()
+      .getLocationsSortOrder();
+    Collections.sort(locations, locationsSortOrder);
+  }
+
   static void listAllPreferences()
   {
     System.out.println("User preferences:");
@@ -271,19 +284,6 @@ public final class UserPreferences
   private UserPreferences()
   {
     // Prevent external instantiation
-  }
-
-  /**
-   * Sorts locations by current preferences.
-   * 
-   * @param locations
-   *        Locations to sort
-   */
-  public static void sortLocations(List<Location> locations)
-  {
-    final LocationsSortOrder locationsSortOrder = getOptions()
-      .getLocationsSortOrder();
-    Collections.sort(locations, locationsSortOrder);
   }
 
 }
