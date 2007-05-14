@@ -26,6 +26,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -96,6 +97,10 @@ public final class DaylightChartGui
    */
   public DaylightChartGui()
   {
+
+    setIconImage(new ImageIcon(DaylightChartGui.class.getResource("/icon.png"))
+      .getImage());
+
     setTitle("Daylight Chart"); //$NON-NLS-1$
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -113,7 +118,7 @@ public final class DaylightChartGui
     this.repaint();
 
     // Open the first location
-    locationsTabbedPane.addLocationTab(locationsList.getSelectedLocation());
+    addLocationTab(locationsList.getSelectedLocation());
 
     pack();
   }
