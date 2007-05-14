@@ -38,6 +38,8 @@ import org.eclipse.ui.actions.ActionFactory.IWorkbenchAction;
 import org.eclipse.ui.application.ActionBarAdvisor;
 import org.eclipse.ui.application.IActionBarConfigurer;
 
+import daylightchart.options.chart.ChartOptionsListener;
+import daylightchart.rcpgui.actions.ChartOptionsAction;
 import daylightchart.rcpgui.actions.OpenLocationsFileAction;
 import daylightchart.rcpgui.actions.PrintChartAction;
 import daylightchart.rcpgui.actions.ResetAllAction;
@@ -69,6 +71,7 @@ public class ApplicationActionBarAdvisor
 
   private SortLocationsAction sortLocationsAction;
   private UseTimeZoneAction useTimeZoneAction;
+  private ChartOptionsAction chartOptionsAction;
   private ResetAllAction resetAllAction;
 
   public ApplicationActionBarAdvisor(final IActionBarConfigurer configurer)
@@ -76,13 +79,14 @@ public class ApplicationActionBarAdvisor
     super(configurer);
   }
 
-//  @Override
-//  protected void fillCoolBar(final ICoolBarManager coolBar)
-//  {
-//    final IToolBarManager toolbar = new ToolBarManager(SWT.FLAT | SWT.RIGHT);
-//    coolBar.add(new ToolBarContributionItem(toolbar, "main"));
-//    toolbar.add(openLocationsFileAction);
-//  }
+// @Override
+// protected void fillCoolBar(final ICoolBarManager coolBar)
+// {
+// final IToolBarManager toolbar = new ToolBarManager(SWT.FLAT |
+// SWT.RIGHT);
+// coolBar.add(new ToolBarContributionItem(toolbar, "main"));
+// toolbar.add(openLocationsFileAction);
+// }
 
   /**
    * {@inheritDoc}
@@ -113,7 +117,9 @@ public class ApplicationActionBarAdvisor
 
     // Options
     optionsMenu.add(sortLocationsAction);
-    optionsMenu.add(useTimeZoneAction);
+    optionsMenu.add(useTimeZoneAction);    
+    optionsMenu.add(new Separator());
+    optionsMenu.add(chartOptionsAction);
     optionsMenu.add(new Separator());
     optionsMenu.add(resetAllAction);
 
@@ -155,8 +161,11 @@ public class ApplicationActionBarAdvisor
     useTimeZoneAction = new UseTimeZoneAction(window);
     register(useTimeZoneAction);
 
+    chartOptionsAction = new ChartOptionsAction(window);
+    register(chartOptionsAction);
+    
     resetAllAction = new ResetAllAction(window);
-    register(resetAllAction);    
+    register(resetAllAction);
   }
 
 }
