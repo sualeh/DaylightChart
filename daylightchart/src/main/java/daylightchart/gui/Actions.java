@@ -114,8 +114,10 @@ public class Actions
         UserPreferences.setDataFileDirectory(selectedFile.getParentFile());
       }
     }
-    catch (final Exception e)
+    catch (final RuntimeException e)
     {
+      // We catch exceptions, because otherwise the cursor may get stuck
+      // in busy mode
       LOGGER.log(Level.WARNING, "Could not load locations");
     }
 
@@ -267,6 +269,9 @@ public class Actions
         }
       }
 
+      // Save last selected directory
+      UserPreferences.setDataFileDirectory(selectedFile.getParentFile());
+
       if (selectedFile.exists())
       {
         final int confirm = JOptionPane
@@ -283,8 +288,6 @@ public class Actions
           selectedFile = null;
         }
       }
-      // Save last selected directory
-      UserPreferences.setDataFileDirectory(selectedFile.getParentFile());
     }
     return selectedFile;
   }

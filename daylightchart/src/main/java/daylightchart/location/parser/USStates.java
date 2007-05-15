@@ -52,9 +52,10 @@ public final class USStates
    */
   static
   {
+    BufferedReader reader = null;
     try
     {
-      final BufferedReader reader = new BufferedReader(new InputStreamReader(USStates.class
+      reader = new BufferedReader(new InputStreamReader(USStates.class
         .getClassLoader().getResourceAsStream("us.states.data")));
 
       String line;
@@ -80,13 +81,26 @@ public final class USStates
         numericCodeMap.put(state.getFips5_2NumericCode(), state);
         stateNameMap.put(state.getName(), state);
       }
-      reader.close();
-
     }
     catch (final IOException e)
     {
       throw new IllegalStateException("Cannot read data from internal database",
                                       e);
+    }
+    finally
+    {
+      if (reader != null)
+      {
+        try
+        {
+          reader.close();
+        }
+        catch (final IOException e)
+        {
+          throw new IllegalStateException("Cannot read data from internal database",
+                                          e);
+        }
+      }
     }
   }
 

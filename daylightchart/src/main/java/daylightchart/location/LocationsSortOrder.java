@@ -22,7 +22,6 @@
 package daylightchart.location;
 
 
-import java.io.Serializable;
 import java.util.Comparator;
 
 import org.pointlocation6709.Latitude;
@@ -33,7 +32,7 @@ import org.pointlocation6709.Latitude;
  * @author Sualeh Fatehi
  */
 public enum LocationsSortOrder
-  implements Comparator<Location>, Serializable
+  implements Comparator<Location>
 {
 
   /** Sort locations by name. */

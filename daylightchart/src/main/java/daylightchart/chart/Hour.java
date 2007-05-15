@@ -76,7 +76,7 @@ public final class Hour
    * 
    * @return Local time
    */
-  public final LocalTime getLocalTime()
+  public LocalTime getLocalTime()
   {
     LocalTime adjustedHour;
     if (inDaylightSavings)

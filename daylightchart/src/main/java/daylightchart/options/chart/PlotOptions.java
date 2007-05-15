@@ -70,7 +70,7 @@ public class PlotOptions
   /**
    * {@inheritDoc}
    * 
-   * @see daylightchart.options.chart.Options#copyFromChart(org.jfree.chart.JFreeChart)
+   * @see BaseChartOptions#copyFromChart(org.jfree.chart.JFreeChart)
    */
   @Override
   public void copyFromChart(final JFreeChart chart)
@@ -169,7 +169,7 @@ public class PlotOptions
   /**
    * {@inheritDoc}
    * 
-   * @see daylightchart.options.chart.Options#updateChart(org.jfree.chart.JFreeChart)
+   * @see BaseChartOptions#updateChart(org.jfree.chart.JFreeChart)
    */
   @Override
   public void updateChart(final JFreeChart chart)

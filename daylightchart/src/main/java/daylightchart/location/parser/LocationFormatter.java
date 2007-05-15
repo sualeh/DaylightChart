@@ -168,8 +168,8 @@ public final class LocationFormatter
     String toolTip = "";
     if (location != null)
     {
-      toolTip = "<html><b>" + location.toString() + "</b><br>"
-                + location.getDetails() + "</html>";
+      toolTip = "<html><b>" + location.toString() + "</b><br>" +
+                location.getDetails() + "</html>";
     }
     return toolTip;
   }

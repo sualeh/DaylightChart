@@ -23,6 +23,7 @@ package daylightchart.gui;
 
 
 import java.io.File;
+import java.util.Locale;
 
 /**
  * Filters files by extension.
@@ -48,7 +49,7 @@ public class ExtensionFileFilter
     final int i = fileName.lastIndexOf('.');
     if (i > 0 && i < fileName.length() - 1)
     {
-      extension = fileName.substring(i + 1).toLowerCase();
+      extension = fileName.substring(i + 1).toLowerCase(Locale.ENGLISH);
     }
     return "." + extension;
   }

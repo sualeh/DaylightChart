@@ -51,9 +51,10 @@ public final class Countries
    */
   static
   {
+    BufferedReader reader = null;
     try
     {
-      final BufferedReader reader = new BufferedReader(new InputStreamReader(Countries.class
+      reader = new BufferedReader(new InputStreamReader(Countries.class
         .getClassLoader().getResourceAsStream("countries.data")));
 
       String line;
@@ -77,13 +78,26 @@ public final class Countries
         fips10CountryCodeMap.put(country.getFips10Code(), country);
         countryNameMap.put(country.getName(), country);
       }
-      reader.close();
-
     }
     catch (final IOException e)
     {
       throw new IllegalStateException("Cannot read data from internal database",
                                       e);
+    }
+    finally
+    {
+      if (reader != null)
+      {
+        try
+        {
+          reader.close();
+        }
+        catch (final IOException e)
+        {
+          throw new IllegalStateException("Cannot read data from internal database",
+                                          e);
+        }
+      }
     }
   }
 

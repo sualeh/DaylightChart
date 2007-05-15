@@ -67,6 +67,7 @@ public final class DefaultTimezones
    */
   static
   {
+    BufferedReader reader = null;
     try
     {
 
@@ -76,7 +77,7 @@ public final class DefaultTimezones
         defaultTimezones.put(country, new ArrayList<String>());
       }
 
-      final BufferedReader reader = new BufferedReader(new InputStreamReader(DefaultTimezones.class
+      reader = new BufferedReader(new InputStreamReader(DefaultTimezones.class
         .getClassLoader().getResourceAsStream("default.timezones.data")));
 
       String line;
@@ -118,13 +119,26 @@ public final class DefaultTimezones
           LOGGER.log(Level.WARNING, "Cannot find timezone " + timezoneId);
         }
       }
-      reader.close();
-
     }
     catch (final IOException e)
     {
       throw new IllegalStateException("Cannot read data from internal database",
                                       e);
+    }
+    finally
+    {
+      if (reader != null)
+      {
+        try
+        {
+          reader.close();
+        }
+        catch (final IOException e)
+        {
+          throw new IllegalStateException("Cannot read data from internal database",
+                                          e);
+        }
+      }
     }
   }
 
@@ -283,7 +297,7 @@ public final class DefaultTimezones
    * 
    * @return Default time zones map
    */
-  static final Map<Country, List<String>> getMap()
+  static Map<Country, List<String>> getMap()
   {
     return new HashMap<Country, List<String>>(defaultTimezones);
   }

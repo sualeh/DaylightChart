@@ -28,7 +28,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
-import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -153,25 +152,6 @@ public final class GNSCountryFilesParser
       throw new ParserException("Invalid locations", e);
     }
 
-  }
-
-  /**
-   * Reads locations from a String.
-   * 
-   * @param locationsString
-   *        Locations string
-   * @return List of locations
-   * @throws ParserException
-   *         On a parse exception
-   */
-  public static List<Location> parseLocations(final String locationsString)
-    throws ParserException
-  {
-    if (locationsString == null)
-    {
-      throw new ParserException("Cannot read file");
-    }
-    return parseLocations(new StringReader(locationsString));
   }
 
   private GNSCountryFilesParser()

@@ -113,10 +113,9 @@ public final class Location
     this.pointLocation = pointLocation;
 
     // Set transient fields
-    this.description = city + ", " + country;
+    description = city + ", " + country;
     final TimeZone timeZone = TimeZone.getTimeZone(timeZoneId);
-    this.details = getPointLocation().toString() + ", "
-                   + timeZone.getDisplayName();
+    details = getPointLocation().toString() + ", " + timeZone.getDisplayName();
 
     // Now that all fields are set, validate
     validateTimeZone();
@@ -262,8 +261,8 @@ public final class Location
     int result = super.hashCode();
     result = prime * result + (city == null? 0: city.hashCode());
     result = prime * result + (country == null? 0: country.hashCode());
-    result = prime * result
-             + (pointLocation == null? 0: pointLocation.hashCode());
+    result = prime * result +
+             (pointLocation == null? 0: pointLocation.hashCode());
     result = prime * result + (timeZoneId == null? 0: timeZoneId.hashCode());
     return result;
   }
@@ -289,17 +288,17 @@ public final class Location
     final double tzOffsetHours = DefaultTimezones
       .getStandardTimeZoneOffsetHours(timeZoneId);
     final double longitiudeTzOffsetHours = longitude.getDegrees() / 15D;
-    final double hoursDifference = Math.abs(longitiudeTzOffsetHours
-                                            - tzOffsetHours);
+    final double hoursDifference = Math.abs(longitiudeTzOffsetHours -
+                                            tzOffsetHours);
     // The tolerance band is a half hour on each side of the time zone,
     // plus about 10 minutes
     final double toleranceBand = 0.5 + 0.17;
     if (!(hoursDifference <= toleranceBand))
     {
-      LOGGER.log(Level.FINE, toString() + ": Longitude (" + longitude
-                             + ") and timezone (" + timeZoneId
-                             + ") do not match (difference " + hoursDifference
-                             + " hours)");
+      LOGGER.log(Level.FINE, toString() + ": Longitude (" + longitude +
+                             ") and timezone (" + timeZoneId +
+                             ") do not match (difference " + hoursDifference +
+                             " hours)");
     }
   }
 

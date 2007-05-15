@@ -49,7 +49,7 @@ public class CloseTabIcon
 
   private final Icon icon;
   private JTabbedPane tabbedPane;
-  private transient Rectangle position;
+  private Rectangle position;
 
   /**
    * Creates a new instance of CloseTabIcon.
