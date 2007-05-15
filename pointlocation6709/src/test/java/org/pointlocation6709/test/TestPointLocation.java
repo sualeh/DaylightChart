@@ -37,6 +37,75 @@ import org.pointlocation6709.parser.PointLocationParser;
 public class TestPointLocation
 {
 
+  @Test(expected = ParserException.class)
+  public void badPointLocation_1()
+    throws ParserException, FormatterException
+  {
+    PointLocationParser.parsePointLocation("+40/");
+  }
+
+  @Test(expected = ParserException.class)
+  public void badPointLocation_2()
+    throws ParserException, FormatterException
+  {
+    PointLocationParser.parsePointLocation("4000/");
+  }
+
+  @Test(expected = ParserException.class)
+  public void badPointLocation_3()
+    throws ParserException, FormatterException
+  {
+    PointLocationParser.parsePointLocation("+40121300-075001500/");
+  }
+
+  @Test(expected = ParserException.class)
+  public void badPointLocation_4()
+    throws ParserException, FormatterException
+  {
+    PointLocationParser.parsePointLocation("+40121-075001/");
+  }
+
+  @Test(expected = ParserException.class)
+  public void invalidPointLocation_1()
+    throws ParserException, FormatterException
+  {
+
+    final String pointLocationString = "+4060-07560/";
+    /* final PointLocation pointLocation = */PointLocationParser
+      .parsePointLocation(pointLocationString);
+  }
+
+  @Test(expected = ParserException.class)
+  public void invalidPointLocation_2()
+    throws ParserException, FormatterException
+  {
+
+    final String pointLocationString = "+4060.22-07560.25/";
+    /* final PointLocation pointLocation = */PointLocationParser
+      .parsePointLocation(pointLocationString);
+  }
+
+  @Test(expected = ParserException.class)
+  public void invalidPointLocation_3()
+    throws ParserException, FormatterException
+  {
+
+    final String pointLocationString = "+401260-0750060/";
+    /* final PointLocation pointLocation = */PointLocationParser
+      .parsePointLocation(pointLocationString);
+  }
+
+  @Test(expected = ParserException.class)
+  public void invalidPointLocation_4()
+    throws ParserException, FormatterException
+  {
+
+    final String pointLocationString = "+401260.22-0750060.22/";
+    /* final PointLocation pointLocation = */PointLocationParser
+      .parsePointLocation(pointLocationString);
+  }
+
+  @SuppressWarnings("boxing")
   @Test
   public void pointLocation_a()
     throws ParserException, FormatterException, FormatterException
@@ -65,6 +134,7 @@ public class TestPointLocation
     assertEquals("+40.0-075.0/", formattedPointLocationString2);
   }
 
+  @SuppressWarnings("boxing")
   @Test
   public void pointLocation_b()
     throws ParserException, FormatterException
@@ -94,6 +164,7 @@ public class TestPointLocation
     assertEquals("+40.20361-075.00417/", formattedPointLocationString2);
   }
 
+  @SuppressWarnings("boxing")
   @Test
   public void pointLocation_c()
     throws ParserException, FormatterException
@@ -122,6 +193,7 @@ public class TestPointLocation
     assertEquals("+40.2-075.0/", formattedPointLocationString2);
   }
 
+  @SuppressWarnings("boxing")
   @Test
   public void pointLocation_d()
     throws ParserException, FormatterException
@@ -151,6 +223,7 @@ public class TestPointLocation
     assertEquals("+40.20367-075.00417/", formattedPointLocationString2);
   }
 
+  @SuppressWarnings("boxing")
   @Test
   public void pointLocation_e()
     throws ParserException, FormatterException
@@ -180,6 +253,7 @@ public class TestPointLocation
     assertEquals("+40.20361-075.00417/", formattedPointLocationString2);
   }
 
+  @SuppressWarnings("boxing")
   @Test
   public void pointLocation_f()
     throws ParserException, FormatterException
@@ -209,6 +283,7 @@ public class TestPointLocation
     assertEquals("+40.20364-075.00419/", formattedPointLocationString2);
   }
 
+  @SuppressWarnings("boxing")
   @Test
   public void pointLocation_g()
     throws ParserException, FormatterException
@@ -237,6 +312,7 @@ public class TestPointLocation
     assertEquals("+40.0-075.0+350.0/", formattedPointLocationString2);
   }
 
+  @SuppressWarnings("boxing")
   @Test
   public void pointLocation_h()
     throws ParserException, FormatterException
@@ -266,6 +342,7 @@ public class TestPointLocation
     assertEquals("+40.20361-075.00417+350.517/", formattedPointLocationString2);
   }
 
+  @SuppressWarnings("boxing")
   @Test
   public void pointLocation_j()
     throws ParserException, FormatterException
@@ -294,6 +371,7 @@ public class TestPointLocation
     assertEquals("+40.2-075.0-169.2/", formattedPointLocationString2);
   }
 
+  @SuppressWarnings("boxing")
   @Test
   public void pointLocation_k()
     throws ParserException, FormatterException
@@ -323,6 +401,7 @@ public class TestPointLocation
     assertEquals("+40.20367-075.00417-169.2/", formattedPointLocationString2);
   }
 
+  @SuppressWarnings("boxing")
   @Test
   public void pointLocation_m()
     throws ParserException, FormatterException
@@ -352,6 +431,7 @@ public class TestPointLocation
     assertEquals("+40.20361-075.00417+2.79/", formattedPointLocationString2);
   }
 
+  @SuppressWarnings("boxing")
   @Test
   public void pointLocation_n()
     throws ParserException, FormatterException
@@ -381,74 +461,9 @@ public class TestPointLocation
     assertEquals("+40.20364-075.00419+2.79/", formattedPointLocationString2);
   }
 
-  @Test(expected = ParserException.class)
-  public void invalidPointLocation_1()
-    throws ParserException, FormatterException
-  {
-
-    final String pointLocationString = "+4060-07560/";
-    final PointLocation pointLocation = PointLocationParser
-      .parsePointLocation(pointLocationString);
-  }
-
-  @Test(expected = ParserException.class)
-  public void invalidPointLocation_2()
-    throws ParserException, FormatterException
-  {
-
-    final String pointLocationString = "+4060.22-07560.25/";
-    final PointLocation pointLocation = PointLocationParser
-      .parsePointLocation(pointLocationString);
-  }
-
-  @Test(expected = ParserException.class)
-  public void invalidPointLocation_3()
-    throws ParserException, FormatterException
-  {
-
-    final String pointLocationString = "+401260-0750060/";
-    final PointLocation pointLocation = PointLocationParser
-      .parsePointLocation(pointLocationString);
-  }
-
-  @Test(expected = ParserException.class)
-  public void invalidPointLocation_4()
-    throws ParserException, FormatterException
-  {
-
-    final String pointLocationString = "+401260.22-0750060.22/";
-    final PointLocation pointLocation = PointLocationParser
-      .parsePointLocation(pointLocationString);
-  }
-
-  @Test(expected = ParserException.class)
-  public void badPointLocation_1()
-    throws ParserException, FormatterException
-  {
-    PointLocationParser.parsePointLocation("+40/");
-  }
-
-  @Test(expected = ParserException.class)
-  public void badPointLocation_2()
-    throws ParserException, FormatterException
-  {
-    PointLocationParser.parsePointLocation("4000/");
-  }
-
-  @Test(expected = ParserException.class)
-  public void badPointLocation_3()
-    throws ParserException, FormatterException
-  {
-    PointLocationParser.parsePointLocation("+40121300-075001500/");
-  }
-
-  @Test(expected = ParserException.class)
-  public void badPointLocation_4()
-    throws ParserException, FormatterException
-  {
-    PointLocationParser.parsePointLocation("+40121-075001/");
-  }
-
+  @SuppressWarnings( {
+      "boxing", "boxing", "boxing"
+  })
   @Test
   public void pointLocationBoundary_1()
     throws ParserException, FormatterException
@@ -483,10 +498,11 @@ public class TestPointLocation
   {
 
     final String pointLocationString = "+40+180/";
-    final PointLocation pointLocation = PointLocationParser
+    /* final PointLocation pointLocation = */PointLocationParser
       .parsePointLocation(pointLocationString);
   }
 
+  @SuppressWarnings("boxing")
   @Test
   public void pointLocationBoundary_3()
     throws ParserException, FormatterException
@@ -515,11 +531,12 @@ public class TestPointLocation
     assertEquals("+90.0-075.0/", formattedPointLocationString2);
   }
 
+  @SuppressWarnings("boxing")
   @Test
   public void pointLocationBoundary_4()
     throws ParserException, FormatterException
   {
-    
+
     final String pointLocationString = "-90-075/";
     final PointLocation pointLocation = PointLocationParser
       .parsePointLocation(pointLocationString);
