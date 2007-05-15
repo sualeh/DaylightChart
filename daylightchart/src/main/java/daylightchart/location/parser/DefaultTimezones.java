@@ -34,6 +34,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.TimeZone;
@@ -349,14 +350,18 @@ public final class DefaultTimezones
     {
       final String timeZoneId = entry.getKey();
       final List<String> timeZoneParts = entry.getValue();
-      final String locationPart1 = locationParts.get(0).toLowerCase();
-      final String timeZonePart1 = timeZoneParts.get(0).toLowerCase();
+      final String locationPart1 = locationParts.get(0)
+        .toLowerCase(Locale.ENGLISH);
+      final String timeZonePart1 = timeZoneParts.get(0)
+        .toLowerCase(Locale.ENGLISH);
       if (locationPart1.equals(timeZonePart1))
       {
         if (timeZoneParts.size() > 1)
         {
-          final String locationPart2 = locationParts.get(1).toLowerCase();
-          final String timeZonePart2 = timeZoneParts.get(1).toLowerCase();
+          final String locationPart2 = locationParts.get(1)
+            .toLowerCase(Locale.ENGLISH);
+          final String timeZonePart2 = timeZoneParts.get(1)
+            .toLowerCase(Locale.ENGLISH);
           if (locationPart2.equals(timeZonePart2))
           {
             bestTimeZoneId = timeZoneId;
