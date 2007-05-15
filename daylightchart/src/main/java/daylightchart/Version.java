@@ -1,23 +1,23 @@
-/* 
- * 
+/*
+ *
  * Daylight Chart
  * http://sourceforge.net/projects/daylightchart
  * Copyright (c) 2007, Sualeh Fatehi.
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- * 
+ *
  */
 package daylightchart;
 
@@ -26,18 +26,18 @@ package daylightchart;
  * Version information for this product. Has methods to obtain
  * information about the product, as well as a main method, so it can be
  * called from the command line.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public final class Version
 {
 
   private static final String PRODUCTNAME = "Daylight Chart"; //$NON-NLS-1$
-  private static final String VERSION = "1.2"; //$NON-NLS-1$
+  private static final String VERSION = "1.3"; //$NON-NLS-1$
 
   /**
    * Information about this product.
-   * 
+   *
    * @return Information about this product.
    */
   public static String about()
@@ -50,7 +50,7 @@ public final class Version
 
   /**
    * Product name.
-   * 
+   *
    * @return Product name.
    */
   public static String getProductName()
@@ -60,7 +60,7 @@ public final class Version
 
   /**
    * Product version number.
-   * 
+   *
    * @return Product version number.
    */
   public static String getVersion()
@@ -70,7 +70,7 @@ public final class Version
 
   /**
    * Main routine. Prints information about this product.
-   * 
+   *
    * @param args
    *        Arguments to the main routine - they are ignored.
    */
@@ -85,7 +85,7 @@ public final class Version
 
   /**
    * String representation. Information about this product.
-   * 
+   *
    * @return String representation.
    */
   @Override
