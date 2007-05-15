@@ -53,6 +53,9 @@ public final class Location
   private final PointLocation pointLocation;
   private final String timeZoneId;
 
+  private final transient String description;
+  private final transient String details;
+
   /**
    * Copy constructor. Copies the value of a provided location.
    * 
@@ -85,7 +88,12 @@ public final class Location
                   final PointLocation pointLocation)
   {
 
+    if (city == null)
+    {
+      throw new IllegalArgumentException("City needs to be specified");
+    }
     this.city = city;
+
     if (country == null)
     {
       throw new IllegalArgumentException("Country needs to be specified");
@@ -103,6 +111,12 @@ public final class Location
       throw new IllegalArgumentException("Both latitude and longitude need to be specified");
     }
     this.pointLocation = pointLocation;
+
+    // Set transient fields
+    this.description = city + ", " + country;
+    final TimeZone timeZone = TimeZone.getTimeZone(timeZoneId);
+    this.details = getPointLocation().toString() + ", "
+                   + timeZone.getDisplayName();
 
     // Now that all fields are set, validate
     validateTimeZone();
@@ -213,9 +227,6 @@ public final class Location
    */
   public String getDetails()
   {
-    final TimeZone timeZone = TimeZone.getTimeZone(getTimeZoneId());
-    final String details = getPointLocation().toString() + ", " +
-                           timeZone.getDisplayName();
     return details;
   }
 
@@ -251,8 +262,8 @@ public final class Location
     int result = super.hashCode();
     result = prime * result + (city == null? 0: city.hashCode());
     result = prime * result + (country == null? 0: country.hashCode());
-    result = prime * result +
-             (pointLocation == null? 0: pointLocation.hashCode());
+    result = prime * result
+             + (pointLocation == null? 0: pointLocation.hashCode());
     result = prime * result + (timeZoneId == null? 0: timeZoneId.hashCode());
     return result;
   }
@@ -268,11 +279,6 @@ public final class Location
   @Override
   public String toString()
   {
-    String description = "";
-    if (city != null && country != null)
-    {
-      description = city + ", " + country;
-    }
     return description;
   }
 
@@ -283,17 +289,17 @@ public final class Location
     final double tzOffsetHours = DefaultTimezones
       .getStandardTimeZoneOffsetHours(timeZoneId);
     final double longitiudeTzOffsetHours = longitude.getDegrees() / 15D;
-    final double hoursDifference = Math.abs(longitiudeTzOffsetHours -
-                                            tzOffsetHours);
+    final double hoursDifference = Math.abs(longitiudeTzOffsetHours
+                                            - tzOffsetHours);
     // The tolerance band is a half hour on each side of the time zone,
     // plus about 10 minutes
     final double toleranceBand = 0.5 + 0.17;
     if (!(hoursDifference <= toleranceBand))
     {
-      LOGGER.log(Level.FINE, toString() + ": Longitude (" + longitude +
-                             ") and timezone (" + timeZoneId +
-                             ") do not match (difference " + hoursDifference +
-                             " hours)");
+      LOGGER.log(Level.FINE, toString() + ": Longitude (" + longitude
+                             + ") and timezone (" + timeZoneId
+                             + ") do not match (difference " + hoursDifference
+                             + " hours)");
     }
   }
 

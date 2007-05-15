@@ -32,6 +32,7 @@ import org.jfree.chart.ChartPanel;
 
 import daylightchart.chart.DaylightChart;
 import daylightchart.location.Location;
+import daylightchart.location.parser.LocationFormatter;
 import daylightchart.options.Options;
 import daylightchart.options.UserPreferences;
 
@@ -64,11 +65,10 @@ public class LocationsTabbedPane
     chartPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
     chartPanel.setPreferredSize(new Dimension(700, 495));
 
-    final String tabTitle = location.toString();
-    final String toolTip = "<html><b>" + tabTitle + "</b><br>" +
-                           location.getDetails() + "</html>";
-
-    addTab(tabTitle, new CloseTabIcon(), chartPanel, toolTip);
+    addTab(location.toString(),
+           new CloseTabIcon(),
+           chartPanel,
+           LocationFormatter.getToolTip(location));
     setSelectedIndex(getComponentCount() - 1);
   }
 

@@ -140,7 +140,8 @@ public final class UserPreferences
     }
     catch (final ClassNotFoundException e)
     {
-      throw new ClassCastException(e.getMessage());
+      LOGGER.log(Level.WARNING, "Could get chart options", e);
+      options = getDefaultDaylightChartOptions();
     }
     catch (final IOException e)
     {

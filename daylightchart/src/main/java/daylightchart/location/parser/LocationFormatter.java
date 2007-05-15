@@ -156,6 +156,24 @@ public final class LocationFormatter
     }
   }
 
+  /**
+   * Gets the tooltip for a location.
+   * 
+   * @param location
+   *        Loaction.
+   * @return Tooltip
+   */
+  public static String getToolTip(final Location location)
+  {
+    String toolTip = "";
+    if (location != null)
+    {
+      toolTip = "<html><b>" + location.toString() + "</b><br>"
+                + location.getDetails() + "</html>";
+    }
+    return toolTip;
+  }
+
   private LocationFormatter()
   {
   }

@@ -34,6 +34,7 @@ import javax.swing.DefaultListCellRenderer;
 import javax.swing.JList;
 
 import daylightchart.location.Location;
+import daylightchart.location.parser.LocationFormatter;
 import daylightchart.options.UserPreferences;
 
 /**
@@ -46,7 +47,7 @@ public class LocationsList
 {
 
   private static final long serialVersionUID = -6884483130453983685L;
-  
+
   private List<Location> locations;
 
   /**
@@ -77,12 +78,7 @@ public class LocationsList
                                            index,
                                            isSelected,
                                            cellHasFocus);
-
-        final Location location = (Location) value;
-        final String toolTip = "<html><b>" + location.toString() + "</b><br>" +
-                               location.getDetails() + "</html>";
-        setToolTipText("<html>" + toolTip + "</html>");
-
+        setToolTipText(LocationFormatter.getToolTip((Location) value));
         return this;
       }
     });
