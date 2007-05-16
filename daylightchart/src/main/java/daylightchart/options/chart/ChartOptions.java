@@ -71,32 +71,52 @@ public class ChartOptions
     titleOptions.copyFromChart(chart);
   }
 
-  public Paint getBackgroundPaint()
+  /**
+   * @return the backgroundPaint
+   */
+  public final Paint getBackgroundPaint()
   {
     return backgroundPaint;
   }
 
-  public PlotOptions getPlotOptions()
+  /**
+   * @return the plotOptions
+   */
+  public final PlotOptions getPlotOptions()
   {
     return plotOptions;
   }
 
-  public TitleOptions getTitleOptions()
+  /**
+   * @return the titleOptions
+   */
+  public final TitleOptions getTitleOptions()
   {
     return titleOptions;
   }
 
-  public boolean isAntiAlias()
+  /**
+   * @return the antiAlias
+   */
+  public final boolean isAntiAlias()
   {
     return antiAlias;
   }
 
-  public void setAntiAlias(final boolean antiAlias)
+  /**
+   * @param antiAlias
+   *        the antiAlias to set
+   */
+  public final void setAntiAlias(final boolean antiAlias)
   {
     this.antiAlias = antiAlias;
   }
 
-  public void setBackgroundPaint(final Paint backgroundPaint)
+  /**
+   * @param backgroundPaint
+   *        the backgroundPaint to set
+   */
+  public final void setBackgroundPaint(final Paint backgroundPaint)
   {
     this.backgroundPaint = backgroundPaint;
   }

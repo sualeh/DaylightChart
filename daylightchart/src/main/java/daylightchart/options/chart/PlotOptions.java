@@ -116,52 +116,86 @@ public class PlotOptions
     }
   }
 
-  public Paint getBackgroundPaint()
+  /**
+   * @return the backgroundPaint
+   */
+  public final Paint getBackgroundPaint()
   {
     return backgroundPaint;
   }
 
-  public AxisOptions getDomainAxisOptions()
+  /**
+   * @return the domainAxisOptions
+   */
+  public final AxisOptions getDomainAxisOptions()
   {
     return domainAxisOptions;
   }
 
-  public RectangleInsets getInsets()
+  /**
+   * @return the insets
+   */
+  public final RectangleInsets getInsets()
   {
     return insets;
   }
 
-  public Paint getOutlinePaint()
+  /**
+   * @return the outlinePaint
+   */
+  public final Paint getOutlinePaint()
   {
     return outlinePaint;
   }
 
-  public Stroke getOutlineStroke()
+  /**
+   * @return the outlineStroke
+   */
+  public final Stroke getOutlineStroke()
   {
     return outlineStroke;
   }
 
-  public AxisOptions getRangeAxisOptions()
+  /**
+   * @return the rangeAxisOptions
+   */
+  public final AxisOptions getRangeAxisOptions()
   {
     return rangeAxisOptions;
   }
 
-  public void setBackgroundPaint(final Paint backgroundPaint)
+  /**
+   * @param backgroundPaint
+   *        the backgroundPaint to set
+   */
+  public final void setBackgroundPaint(final Paint backgroundPaint)
   {
     this.backgroundPaint = backgroundPaint;
   }
 
-  public void setInsets(final RectangleInsets insets)
+  /**
+   * @param insets
+   *        the insets to set
+   */
+  public final void setInsets(final RectangleInsets insets)
   {
     this.insets = insets;
   }
 
-  public void setOutlinePaint(final Paint outlinePaint)
+  /**
+   * @param outlinePaint
+   *        the outlinePaint to set
+   */
+  public final void setOutlinePaint(final Paint outlinePaint)
   {
     this.outlinePaint = outlinePaint;
   }
 
-  public void setOutlineStroke(final Stroke outlineStroke)
+  /**
+   * @param outlineStroke
+   *        the outlineStroke to set
+   */
+  public final void setOutlineStroke(final Stroke outlineStroke)
   {
     this.outlineStroke = outlineStroke;
   }

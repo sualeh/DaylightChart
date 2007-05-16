@@ -275,10 +275,10 @@ public class DaylightChart
   }
 
   /**
-   * Creates a dataset for the sunrise and sunset times for the whole
+   * Creates a data-set for the sunrise and sunset times for the whole
    * year.
    * 
-   * @return A dataset for the sunrise and sunset times.
+   * @return A data-set for the sunrise and sunset times.
    */
   private TimeSeriesCollection createTimeSeries()
   {
@@ -338,11 +338,11 @@ public class DaylightChart
    * @param dateTime
    *        Date time
    */
-  private Long time(final LocalDateTime dateTime)
+  private long time(final LocalDateTime dateTime)
   {
     final Minute m = new Minute(dateTime.getMinuteOfHour(), dateTime
       .getHourOfDay(), 1, 1, 1970);
-    return new Long(m.getFirstMillisecond());
+    return m.getFirstMillisecond();
   }
 
 }

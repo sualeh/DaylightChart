@@ -71,32 +71,53 @@ public class TitleOptions
     }
   }
 
-  public Font getTitleFont()
+  /**
+   * @return the titleFont
+   */
+  public final Font getTitleFont()
   {
     return titleFont;
   }
 
-  public Paint getTitlePaint()
+  /**
+   * @return the titlePaint
+   */
+  public final Paint getTitlePaint()
   {
     return titlePaint;
   }
 
-  public String getTitleText()
+  /**
+   * @return the titleText
+   */
+  public final String getTitleText()
   {
     return titleText;
   }
 
-  public void setTitleFont(final Font titleFont)
+  /**
+   * @param titleFont
+   *        the titleFont to set
+   */
+  public final void setTitleFont(final Font titleFont)
   {
     this.titleFont = titleFont;
   }
 
-  public void setTitlePaint(final Paint titlePaint)
+  /**
+   * @param titlePaint
+   *        the titlePaint to set
+   */
+  public final void setTitlePaint(final Paint titlePaint)
   {
     this.titlePaint = titlePaint;
   }
 
-  public void setTitleText(final String titleText)
+  /**
+   * @param titleText
+   *        the titleText to set
+   */
+  public final void setTitleText(final String titleText)
   {
     this.titleText = titleText;
   }
