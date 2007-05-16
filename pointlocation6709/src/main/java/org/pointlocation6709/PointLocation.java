@@ -163,7 +163,7 @@ public final class PointLocation
   /**
    * Altitude for this location, in meters.
    * 
-   * @return the altitude
+   * @return Altitude
    */
   public double getAltitude()
   {

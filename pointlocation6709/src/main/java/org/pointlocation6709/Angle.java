@@ -48,8 +48,8 @@ public class Angle
   private static final long serialVersionUID = -6330836471692225095L;
 
   /**
-   * Static contruction method, contructs an angle from the degree value
-   * provided.
+   * Static construction method, constructs an angle from the degree
+   * value provided.
    * 
    * @param degrees
    *        Value of the angle in degrees.
@@ -61,8 +61,8 @@ public class Angle
   }
 
   /**
-   * Static contruction method, contructs an angle from the radian value
-   * provided.
+   * Static construction method, constructs an angle from the radian
+   * value provided.
    * 
    * @param radians
    *        Value of the angle in radians.
@@ -80,7 +80,7 @@ public class Angle
    * @param numerator
    *        Numerator for the modulus.
    * @param denominator
-   *        Denomintor for the modulus.
+   *        Denominator for the modulus.
    * @return Modulus of the operands.
    */
   private static double mod(final double numerator, final double denominator)
@@ -303,9 +303,9 @@ public class Angle
   {
     if (Math.abs(degrees) > range)
     {
-      throw new IllegalArgumentException(degrees + DEGREES
-                                         + " is out of range, +/-" + range
-                                         + DEGREES);
+      throw new IllegalArgumentException(degrees + DEGREES +
+                                         " is out of range, +/-" + range +
+                                         DEGREES);
     }
   }
 

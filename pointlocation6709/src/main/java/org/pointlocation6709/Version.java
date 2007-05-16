@@ -26,7 +26,7 @@ package org.pointlocation6709;
  * Version information for this product. Has methods to obtain
  * information about the product, as well as a main method, so it can be
  * called from the command line.
- *
+ * 
  * @author Sualeh Fatehi
  */
 public final class Version
@@ -37,7 +37,7 @@ public final class Version
 
   /**
    * Information about this product.
-   *
+   * 
    * @return Information about this product.
    */
   public static String about()
@@ -50,7 +50,7 @@ public final class Version
 
   /**
    * Product name.
-   *
+   * 
    * @return Product name.
    */
   public static String getProductName()
@@ -60,7 +60,7 @@ public final class Version
 
   /**
    * Product version number.
-   *
+   * 
    * @return Product version number.
    */
   public static String getVersion()
@@ -70,7 +70,7 @@ public final class Version
 
   /**
    * Main routine. Prints information about this product.
-   *
+   * 
    * @param args
    *        Arguments to the main routine - they are ignored.
    */
@@ -85,15 +85,13 @@ public final class Version
 
   /**
    * String representation. Information about this product.
-   *
+   * 
    * @return String representation.
    */
   @Override
   public String toString()
   {
-
     return about();
-
   }
 
 }
