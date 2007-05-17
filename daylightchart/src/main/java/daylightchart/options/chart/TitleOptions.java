@@ -22,7 +22,6 @@
 package daylightchart.options.chart;
 
 
-import java.awt.Color;
 import java.awt.Font;
 import java.awt.Paint;
 
@@ -43,16 +42,6 @@ public class TitleOptions
   private Font titleFont;
   private Paint titlePaint;
   private String titleText;
-
-  /**
-   * Constructor.
-   */
-  public TitleOptions()
-  {
-    titleFont = new Font("Default", Font.PLAIN, 12);
-    titlePaint = Color.BLACK;
-    titleText = "";
-  }
 
   /**
    * {@inheritDoc}

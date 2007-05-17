@@ -22,8 +22,6 @@
 package daylightchart.options.chart;
 
 
-import java.awt.BasicStroke;
-import java.awt.Color;
 import java.awt.Paint;
 import java.awt.Stroke;
 
@@ -58,11 +56,6 @@ public class PlotOptions
    */
   public PlotOptions()
   {
-    backgroundPaint = Color.WHITE;
-    outlinePaint = Color.WHITE;
-    outlineStroke = new BasicStroke();
-    insets = new RectangleInsets(0, 0, 0, 0);
-    //
     domainAxisOptions = new AxisOptions();
     rangeAxisOptions = new AxisOptions();
   }

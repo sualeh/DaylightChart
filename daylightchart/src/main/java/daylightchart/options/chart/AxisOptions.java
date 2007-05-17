@@ -22,7 +22,6 @@
 package daylightchart.options.chart;
 
 
-import java.awt.Color;
 import java.awt.Font;
 import java.awt.Paint;
 
@@ -53,23 +52,6 @@ public class AxisOptions
   private Paint tickLabelPaint;
   private boolean tickLabelsVisible;
   private boolean tickMarksVisible;
-
-  /**
-   * Constructor.
-   */
-  public AxisOptions()
-  {
-    label = "";
-    labelFont = new Font("Default", Font.PLAIN, 12);
-    labelInsets = new RectangleInsets(0, 0, 0, 0);
-    labelPaint = Color.BLACK;
-    //
-    tickLabelFont = new Font("Default", Font.PLAIN, 12);
-    tickLabelInsets = new RectangleInsets(0, 0, 0, 0);
-    tickLabelPaint = Color.BLACK;
-    tickLabelsVisible = true;
-    tickMarksVisible = true;
-  }
 
   /**
    * {@inheritDoc}

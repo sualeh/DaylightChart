@@ -22,7 +22,6 @@
 package daylightchart.options.chart;
 
 
-import java.awt.Color;
 import java.awt.Paint;
 
 import org.jfree.chart.JFreeChart;
@@ -49,9 +48,6 @@ public class ChartOptions
    */
   public ChartOptions()
   {
-    antiAlias = false;
-    backgroundPaint = Color.WHITE;
-    //
     plotOptions = new PlotOptions();
     titleOptions = new TitleOptions();
   }
