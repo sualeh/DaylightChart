@@ -22,10 +22,8 @@
 package daylightchart.gui;
 
 
-import java.awt.Color;
 import java.awt.Dimension;
 
-import javax.swing.BorderFactory;
 import javax.swing.JTabbedPane;
 
 import org.jfree.chart.ChartPanel;
@@ -61,9 +59,7 @@ public class LocationsTabbedPane
     options.getChartOptions().updateChart(chart);
 
     final ChartPanel chartPanel = new ChartPanel(chart);
-    chartPanel.setBackground(Color.WHITE);
-    chartPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-    chartPanel.setPreferredSize(new Dimension(700, 495));
+    chartPanel.setPreferredSize(new Dimension(700, 525));
 
     addTab(location.toString(),
            new CloseTabIcon(),

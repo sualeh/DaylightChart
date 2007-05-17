@@ -180,6 +180,7 @@ public class DaylightChart
    */
   private void createChart()
   {
+
     final XYPlot plot = getXYPlot();
 
     plot.setBackgroundPaint(nightColor);
@@ -202,8 +203,6 @@ public class DaylightChart
     plot.setRenderer(1, createOutlineRenderer());
 
     createTitles();
-
-    setBackgroundPaint(Color.WHITE);
   }
 
   private XYItemRenderer createDifferenceRenderer()
@@ -307,10 +306,12 @@ public class DaylightChart
     if (location != null)
     {
       title = new TextTitle(location.toString());
+      title.setExpandToFitSpace(true);
       setTitle(title);
 
       clearSubtitles();
       title = new TextTitle(location.getDetails());
+      title.setExpandToFitSpace(true);
       addSubtitle(title);
     }
   }
