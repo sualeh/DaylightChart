@@ -232,7 +232,6 @@ public class DaylightChart
     dstMarker.setLabel(Messages.getString("DaylightChart.Label.Marker")); //$NON-NLS-1$
     dstMarker.setLabelPaint(Color.WHITE);
     dstMarker.setLabelAnchor(RectangleAnchor.BOTTOM_RIGHT);
-    dstMarker.setLabelFont(new Font("SansSerif", Font.BOLD, 12)); //$NON-NLS-1$
     dstMarker.setLabelTextAnchor(TextAnchor.BASELINE_RIGHT);
     //
     plot.addDomainMarker(dstMarker, Layer.BACKGROUND);
@@ -307,14 +306,11 @@ public class DaylightChart
     final Location location = riseSetData.getLocation();
     if (location != null)
     {
-      title = new TextTitle(location.toString(), new Font("SansSerif", //$NON-NLS-1$
-                                                          Font.BOLD,
-                                                          14));
+      title = new TextTitle(location.toString());
       setTitle(title);
 
       clearSubtitles();
-      title = new TextTitle(location.getDetails(),
-                            new Font("SansSerif", Font.PLAIN, 12)); //$NON-NLS-1$
+      title = new TextTitle(location.getDetails());
       addSubtitle(title);
     }
   }

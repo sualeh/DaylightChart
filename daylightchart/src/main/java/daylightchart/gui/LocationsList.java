@@ -23,7 +23,6 @@ package daylightchart.gui;
 
 
 import java.awt.Component;
-import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -61,7 +60,6 @@ public class LocationsList
 
     setLocations(UserPreferences.getLocations());
 
-    setFont(new Font("Sans-serif", Font.PLAIN, 11));
     setCellRenderer(new DefaultListCellRenderer()
     {
       private static final long serialVersionUID = -5892518623547830472L;

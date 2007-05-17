@@ -30,7 +30,7 @@ import javax.swing.UIManager;
 
 import com.jgoodies.looks.plastic.Plastic3DLookAndFeel;
 import com.jgoodies.looks.plastic.PlasticLookAndFeel;
-import com.jgoodies.looks.plastic.theme.ExperienceRoyale;
+import com.jgoodies.looks.plastic.theme.LightGray;
 
 import daylightchart.gui.DaylightChartGui;
 
@@ -56,7 +56,7 @@ public final class Main
     try
     {
       JFrame.setDefaultLookAndFeelDecorated(true);
-      PlasticLookAndFeel.setPlasticTheme(new ExperienceRoyale());
+      PlasticLookAndFeel.setPlasticTheme(new LightGray());
       UIManager.setLookAndFeel(new Plastic3DLookAndFeel());
     }
     catch (final Exception e)
