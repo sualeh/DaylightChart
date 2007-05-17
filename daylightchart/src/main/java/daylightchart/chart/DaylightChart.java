@@ -181,6 +181,8 @@ public class DaylightChart
   private void createChart()
   {
 
+    setBackgroundPaint(Color.white);
+
     final XYPlot plot = getXYPlot();
 
     plot.setBackgroundPaint(nightColor);
