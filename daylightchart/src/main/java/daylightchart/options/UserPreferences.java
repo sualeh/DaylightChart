@@ -300,6 +300,8 @@ public final class UserPreferences
     final Options options = new Options();
     options.setChartOptions(chartOptions);
 
+    // Save the defaults
+    setOptions(options);
     return options;
   }
 
