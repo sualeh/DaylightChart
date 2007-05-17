@@ -28,7 +28,6 @@ import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 
-import com.jgoodies.looks.plastic.Plastic3DLookAndFeel;
 import com.jgoodies.looks.plastic.PlasticLookAndFeel;
 import com.jgoodies.looks.plastic.theme.LightGray;
 
@@ -57,7 +56,7 @@ public final class Main
     {
       JFrame.setDefaultLookAndFeelDecorated(true);
       PlasticLookAndFeel.setPlasticTheme(new LightGray());
-      UIManager.setLookAndFeel(new Plastic3DLookAndFeel());
+      UIManager.setLookAndFeel(new PlasticLookAndFeel());
     }
     catch (final Exception e)
     {
