@@ -60,6 +60,7 @@ public class LocationsList
 
     setLocations(UserPreferences.getLocations());
 
+    setBackground(null);
     setCellRenderer(new DefaultListCellRenderer()
     {
       private static final long serialVersionUID = -5892518623547830472L;

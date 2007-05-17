@@ -29,7 +29,7 @@ import javax.swing.JFrame;
 import javax.swing.UIManager;
 
 import com.jgoodies.looks.plastic.PlasticLookAndFeel;
-import com.jgoodies.looks.plastic.theme.LightGray;
+import com.jgoodies.looks.plastic.theme.ExperienceRoyale;
 
 import daylightchart.gui.DaylightChartGui;
 
@@ -55,7 +55,7 @@ public final class Main
     try
     {
       JFrame.setDefaultLookAndFeelDecorated(true);
-      PlasticLookAndFeel.setPlasticTheme(new LightGray());
+      PlasticLookAndFeel.setPlasticTheme(new ExperienceRoyale());
       UIManager.setLookAndFeel(new PlasticLookAndFeel());
     }
     catch (final Exception e)
