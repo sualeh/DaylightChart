@@ -131,11 +131,33 @@ public class DaylightChartServlet
 
       DaylightChart daylightChart = new DaylightChart(location);
 
+      // Get the image width
+      int width;
+      try
+      {
+        width = Integer.parseInt(request.getParameter("width"));
+      }
+      catch (NumberFormatException e)
+      {
+        width = 700;
+      }
+      
+      // Get the image height
+      int height;
+      try
+      {
+        height = Integer.parseInt(request.getParameter("height"));
+      }
+      catch (NumberFormatException e)
+      {
+        height = 495;
+      }
+      
       response.setContentType("image/jpeg");
       ChartUtilities.writeChartAsJPEG(response.getOutputStream(),
                                       daylightChart,
-                                      700,
-                                      495);
+                                      width,
+                                      height);
 
     }
     catch (ParserException e)
