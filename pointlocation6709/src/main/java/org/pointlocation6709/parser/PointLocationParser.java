@@ -60,7 +60,7 @@ public final class PointLocationParser
       latitude = new Latitude(Angle.fromDegrees(Double
         .parseDouble(representation)));
     }
-    catch (final NumberFormatException e)
+    catch (final RuntimeException e)
     {
       latitude = null;
     }
@@ -68,18 +68,19 @@ public final class PointLocationParser
     // 2. Attempt to parse in ISO 6709 format
     if (latitude == null)
     {
-      final AntlrPointLocationParser parser = constructPointLocationParser(representation);
+      final AntlrPointLocationParser parser = constructPointLocationParser(representation +
+                                                                           "+");
       try
       {
         latitude = parser.latitude();
       }
       catch (final RecognitionException e)
       {
-        throw new ParserException("Error parsing - " + representation, e);
+        throw new ParserException("Error parsing \"" + representation + "\"", e);
       }
       catch (final TokenStreamException e)
       {
-        throw new ParserException("Error parsing - " + representation, e);
+        throw new ParserException("Error parsing \"" + representation + "\"", e);
       }
     }
 
@@ -107,7 +108,7 @@ public final class PointLocationParser
       longitude = new Longitude(Angle.fromDegrees(Double
         .parseDouble(representation)));
     }
-    catch (final NumberFormatException e)
+    catch (final RuntimeException e)
     {
       longitude = null;
     }
@@ -115,7 +116,8 @@ public final class PointLocationParser
     // 2. Attempt to parse in ISO 6709 format
     if (longitude == null)
     {
-      final AntlrPointLocationParser parser = constructPointLocationParser(representation);
+      final AntlrPointLocationParser parser = constructPointLocationParser(representation +
+                                                                           "+");
       try
       {
         longitude = parser.longitude();

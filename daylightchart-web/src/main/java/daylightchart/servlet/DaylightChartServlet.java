@@ -37,6 +37,7 @@ import org.pointlocation6709.parser.PointLocationParser;
 import daylightchart.chart.DaylightChart;
 import daylightchart.location.Country;
 import daylightchart.location.Location;
+import daylightchart.location.parser.Countries;
 import daylightchart.location.parser.DefaultTimezones;
 
 /**
@@ -62,6 +63,26 @@ public class DaylightChartServlet
 
     try
     {
+
+      // Get the city
+      String city = request.getParameter("city");
+      if (city == null || city.trim().length() == 0)
+      {
+        city = "";
+      }
+
+      // Get the country
+      String countryString = request.getParameter("country");
+      if (countryString == null || countryString.trim().length() == 0)
+      {
+        countryString = "";
+      }
+      Country country = Countries.lookupCountry(countryString);
+      if (country == null)
+      {
+        country = Country.UNKNOWN;
+      }
+
       // Get the latitude
       String latitudeValue = request.getParameter("latitude");
       if (latitudeValue == null || latitudeValue.length() == 0)
@@ -71,6 +92,14 @@ public class DaylightChartServlet
       if (latitudeValue == null || latitudeValue.length() == 0)
       {
         throw new ServletException("Latitude not provided");
+      }
+      else
+      {
+        latitudeValue = latitudeValue.trim();
+      }
+      if (!latitudeValue.matches("[+-].*"))
+      {
+        latitudeValue = "+" + latitudeValue;
       }
       Latitude latitude = PointLocationParser.parseLatitude(latitudeValue);
 
@@ -84,16 +113,21 @@ public class DaylightChartServlet
       {
         throw new ServletException("Longitude not provided");
       }
+      else
+      {
+        longitudeValue = longitudeValue.trim();
+      }
+      if (!longitudeValue.matches("[+-].*"))
+      {
+        longitudeValue = "+" + longitudeValue;
+      }
       Longitude longitude = PointLocationParser.parseLongitude(longitudeValue);
 
       // Create the chart
       PointLocation pointLocation = new PointLocation(latitude, longitude);
-      String timeZoneId = DefaultTimezones.createGMTTimeZoneId(pointLocation
-        .getLongitude());
-      Location location = new Location("",
-                                       Country.UNKNOWN,
-                                       timeZoneId,
-                                       pointLocation);
+      String timeZoneId = DefaultTimezones
+        .attemptTimeZoneMatch(city, country, pointLocation.getLongitude());
+      Location location = new Location(city, country, timeZoneId, pointLocation);
 
       DaylightChart daylightChart = new DaylightChart(location);
 
@@ -109,5 +143,4 @@ public class DaylightChartServlet
       throw new ServletException(e);
     }
   }
-  
 }
