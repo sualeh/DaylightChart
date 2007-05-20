@@ -219,7 +219,6 @@ public final class DefaultTimezones
           leastDifference = difference;
           timeZoneId = defaultTimeZoneId;
         }
-
       }
     }
 
@@ -233,12 +232,18 @@ public final class DefaultTimezones
   /**
    * Create a standard GMT-based timezone id.
    * 
-   * @param tzOffsetHours
-   *        Time zone offset, in hours
+   * @param longitude
+   *        Longitude
    * @return Time zone id string
    */
-  public static String createGMTTimeZoneId(final double tzOffsetHours)
+  public static String createGMTTimeZoneId(final Longitude longitude)
   {
+    if (longitude == null)
+    {
+      return TimeZone.getDefault().getID();
+    }
+
+    final double tzOffsetHours = longitude.getDegrees() / 15D;
     String timeZoneId = "GMT";
     if (tzOffsetHours < 0)
     {
@@ -301,6 +306,35 @@ public final class DefaultTimezones
   static Map<Country, List<String>> getMap()
   {
     return new HashMap<Country, List<String>>(defaultTimezones);
+  }
+
+  /**
+   * Create a standard GMT-based timezone id.
+   * 
+   * @param tzOffsetHours
+   *        Time zone offset, in hours
+   * @return Time zone id string
+   */
+  private static String createGMTTimeZoneId(final double tzOffsetHours)
+  {
+    String timeZoneId = "GMT";
+    if (tzOffsetHours < 0)
+    {
+      timeZoneId = timeZoneId + "-";
+    }
+    else
+    {
+      timeZoneId = timeZoneId + "+";
+    }
+
+    final int[] hourFields = Utility.sexagesimalSplit(Math.abs(tzOffsetHours));
+
+    final NumberFormat numberFormat = NumberFormat.getIntegerInstance();
+    numberFormat.setMinimumIntegerDigits(2);
+
+    timeZoneId = timeZoneId + numberFormat.format(hourFields[0]) + ":" +
+                 numberFormat.format(hourFields[1]);
+    return timeZoneId;
   }
 
   /**

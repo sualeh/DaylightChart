@@ -92,7 +92,7 @@ public final class Location
     {
       throw new IllegalArgumentException("City needs to be specified");
     }
-    this.city = city;
+    this.city = city.trim();
 
     if (country == null)
     {
@@ -113,7 +113,21 @@ public final class Location
     this.pointLocation = pointLocation;
 
     // Set transient fields
-    description = city + ", " + country;
+    final StringBuilder descriptionBuilder = new StringBuilder();
+    if (this.city.length() > 0)
+    {
+      descriptionBuilder.append(city);
+    }
+    if (country != Country.UNKNOWN)
+    {
+      if (descriptionBuilder.length() > 0)
+      {
+        descriptionBuilder.append(", ");
+      }
+      descriptionBuilder.append(country);
+    }
+    description = descriptionBuilder.toString();
+
     final TimeZone timeZone = TimeZone.getTimeZone(timeZoneId);
     details = getPointLocation().toString() + ", " + timeZone.getDisplayName();
 
@@ -217,6 +231,16 @@ public final class Location
   public Country getCountry()
   {
     return country;
+  }
+
+  /**
+   * Gets the description - city, country.
+   * 
+   * @return Description.
+   */
+  public String getDescription()
+  {
+    return description;
   }
 
   /**

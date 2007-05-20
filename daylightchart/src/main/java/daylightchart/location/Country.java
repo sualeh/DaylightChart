@@ -33,10 +33,12 @@ public final class Country
   implements Serializable, Comparable<Country>
 {
 
-  private static final long serialVersionUID = -5625327893850178062L;
+  public static final Country UNKNOWN = new Country("", "", "");
 
+  private static final long serialVersionUID = -5625327893850178062L;
   private final String name;
   private final String iso3166Code2;
+
   private final String fips10Code;
 
   /**

@@ -72,9 +72,8 @@ public final class RiseSetFactory
       }
       else
       {
-        final double tzOffsetHours = location.getPointLocation().getLongitude()
-          .getDegrees() / 15D;
-        timeZoneId = DefaultTimezones.createGMTTimeZoneId(tzOffsetHours);
+        timeZoneId = DefaultTimezones.createGMTTimeZoneId(location
+          .getPointLocation().getLongitude());
       }
       timeZone = TimeZone.getTimeZone(timeZoneId);
     }

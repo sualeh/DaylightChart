@@ -23,6 +23,9 @@ package org.pointlocation6709.parser;
 import java.io.Reader;
 import java.io.StringReader;
 
+import org.pointlocation6709.Angle;
+import org.pointlocation6709.Latitude;
+import org.pointlocation6709.Longitude;
 import org.pointlocation6709.PointLocation;
 
 import antlr.RecognitionException;
@@ -35,6 +38,100 @@ import antlr.TokenStreamException;
  */
 public final class PointLocationParser
 {
+
+  /**
+   * Parses a string representation of the latitude.
+   * 
+   * @param representation
+   *        String representation of the point location
+   * @return Latitude
+   * @throws ParserException
+   *         On an exception
+   */
+  public static Latitude parseLatitude(final String representation)
+    throws ParserException
+  {
+
+    Latitude latitude;
+
+    // 1. Attempt to parse as an angle
+    try
+    {
+      latitude = new Latitude(Angle.fromDegrees(Double
+        .parseDouble(representation)));
+    }
+    catch (final NumberFormatException e)
+    {
+      latitude = null;
+    }
+
+    // 2. Attempt to parse in ISO 6709 format
+    if (latitude == null)
+    {
+      final AntlrPointLocationParser parser = constructPointLocationParser(representation);
+      try
+      {
+        latitude = parser.latitude();
+      }
+      catch (final RecognitionException e)
+      {
+        throw new ParserException("Error parsing - " + representation, e);
+      }
+      catch (final TokenStreamException e)
+      {
+        throw new ParserException("Error parsing - " + representation, e);
+      }
+    }
+
+    return latitude;
+  }
+
+  /**
+   * Parses a string representation of the longitude.
+   * 
+   * @param representation
+   *        String representation of the point location
+   * @return Longitude
+   * @throws ParserException
+   *         On an exception
+   */
+  public static Longitude parseLongitude(final String representation)
+    throws ParserException
+  {
+
+    Longitude longitude;
+
+    // 1. Attempt to parse as an angle
+    try
+    {
+      longitude = new Longitude(Angle.fromDegrees(Double
+        .parseDouble(representation)));
+    }
+    catch (final NumberFormatException e)
+    {
+      longitude = null;
+    }
+
+    // 2. Attempt to parse in ISO 6709 format
+    if (longitude == null)
+    {
+      final AntlrPointLocationParser parser = constructPointLocationParser(representation);
+      try
+      {
+        longitude = parser.longitude();
+      }
+      catch (final RecognitionException e)
+      {
+        throw new ParserException("Error parsing - " + representation, e);
+      }
+      catch (final TokenStreamException e)
+      {
+        throw new ParserException("Error parsing - " + representation, e);
+      }
+    }
+
+    return longitude;
+  }
 
   /**
    * Parses a string representation of the point location.
@@ -56,11 +153,11 @@ public final class PointLocationParser
     }
     catch (final RecognitionException e)
     {
-      throw new ParserException(e);
+      throw new ParserException("Error parsing - " + representation, e);
     }
     catch (final TokenStreamException e)
     {
-      throw new ParserException(e);
+      throw new ParserException("Error parsing - " + representation, e);
     }
     return pointLocation;
   }
