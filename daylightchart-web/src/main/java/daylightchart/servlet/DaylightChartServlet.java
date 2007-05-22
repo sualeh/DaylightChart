@@ -60,10 +60,62 @@ public class DaylightChartServlet
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException
   {
-
     try
     {
+      // Create the chart
+      Location location = getRequestedLocation(request);
+      DaylightChart daylightChart = new DaylightChart(location);
 
+      // Get the image width
+      int width;
+      try
+      {
+        width = Integer.parseInt(request.getParameter("width"));
+      }
+      catch (NumberFormatException e)
+      {
+        width = 700;
+      }
+
+      // Get the image height
+      int height;
+      try
+      {
+        height = Integer.parseInt(request.getParameter("height"));
+      }
+      catch (NumberFormatException e)
+      {
+        height = 495;
+      }
+
+      response.setContentType("image/jpeg");
+      ChartUtilities.writeChartAsJPEG(response.getOutputStream(),
+                                      daylightChart,
+                                      width,
+                                      height);
+
+    }
+    catch (RuntimeException e)
+    {
+      throw new ServletException(e);
+    }
+
+  }
+
+  /**
+   * Gets the location from the request.
+   * 
+   * @param request
+   *        HTTP request
+   * @return Location
+   * @throws ServletException
+   *         On an exception
+   */
+  private Location getRequestedLocation(HttpServletRequest request)
+    throws ServletException
+  {
+    try
+    {
       // Get the city
       String city = request.getParameter("city");
       if (city == null || city.trim().length() == 0)
@@ -128,41 +180,13 @@ public class DaylightChartServlet
       String timeZoneId = DefaultTimezones
         .attemptTimeZoneMatch(city, country, pointLocation.getLongitude());
       Location location = new Location(city, country, timeZoneId, pointLocation);
-
-      DaylightChart daylightChart = new DaylightChart(location);
-
-      // Get the image width
-      int width;
-      try
-      {
-        width = Integer.parseInt(request.getParameter("width"));
-      }
-      catch (NumberFormatException e)
-      {
-        width = 700;
-      }
-      
-      // Get the image height
-      int height;
-      try
-      {
-        height = Integer.parseInt(request.getParameter("height"));
-      }
-      catch (NumberFormatException e)
-      {
-        height = 495;
-      }
-      
-      response.setContentType("image/jpeg");
-      ChartUtilities.writeChartAsJPEG(response.getOutputStream(),
-                                      daylightChart,
-                                      width,
-                                      height);
-
+      return location;
     }
+
     catch (ParserException e)
     {
       throw new ServletException(e);
     }
   }
+
 }
