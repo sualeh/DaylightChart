@@ -68,12 +68,9 @@
               <goal>attached</goal>
             </goals>
             <configuration>
-              <descriptorRefs>
-                <descriptorRef>src</descriptorRef>
-                <descriptorRef>bin</descriptorRef>
-              </descriptorRefs>
               <descriptors>
                 <descriptor>src/assemble/distrib-zip.xml</descriptor>
+                <descriptor>src/assemble/src-zip.xml</descriptor>
               </descriptors>
             </configuration>
           </execution>
