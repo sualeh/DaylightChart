@@ -43,7 +43,7 @@ public class BareBonesBrowserLaunch
    * Quick test for the Bare Bones Browser Launch.
    * 
    * @param args
-   *        None.s
+   *        None.
    */
   public static void main(final String[] args)
   {
@@ -128,8 +128,8 @@ public class BareBonesBrowserLaunch
     }
     catch (final Exception e)
     {
-      JOptionPane.showMessageDialog(null, errMsg + ":\n" +
-                                          e.getLocalizedMessage());
+      JOptionPane.showMessageDialog(null, errMsg + ":\n"
+                                          + e.getLocalizedMessage());
     }
   }
 

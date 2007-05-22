@@ -62,7 +62,7 @@ public class CloseTabIcon
   /**
    * {@inheritDoc}
    * 
-   * @see javax.swing.Icon#getIconHeight()
+   * @see Icon#getIconHeight()
    */
   public int getIconHeight()
   {
@@ -72,7 +72,7 @@ public class CloseTabIcon
   /**
    * {@inheritDoc}
    * 
-   * @see javax.swing.Icon#getIconWidth()
+   * @see Icon#getIconWidth()
    */
   public int getIconWidth()
   {
@@ -82,8 +82,7 @@ public class CloseTabIcon
   /**
    * {@inheritDoc}
    * 
-   * @see javax.swing.Icon#paintIcon(java.awt.Component,
-   *      java.awt.Graphics, int, int)
+   * @see Icon#paintIcon(Component, Graphics, int, int)
    */
   public void paintIcon(final Component component,
                         final Graphics g,
