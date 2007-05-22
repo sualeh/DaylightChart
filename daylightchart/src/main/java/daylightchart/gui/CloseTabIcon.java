@@ -56,7 +56,7 @@ public class CloseTabIcon
    */
   public CloseTabIcon()
   {
-    icon = new ImageIcon(CloseTabIcon.class.getResource("/close_tab.jpg"));
+    icon = new ImageIcon(CloseTabIcon.class.getResource("/close_tab.gif"));
   }
 
   /**
@@ -109,8 +109,8 @@ public class CloseTabIcon
         {
           // Asking for isConsumed is *very* important, otherwise more
           // than one tab might get closed.
-          if (!e.isConsumed() && position != null &&
-              position.contains(e.getX(), e.getY()))
+          if (!e.isConsumed() && position != null
+              && position.contains(e.getX(), e.getY()))
           {
             if (tabbedPane != null)
             {
