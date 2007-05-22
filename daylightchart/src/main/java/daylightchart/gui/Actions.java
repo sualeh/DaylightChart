@@ -78,15 +78,14 @@ public class Actions
     }
 
     final File selectedFile = fileDialog.getSelectedFile();
-    if (selectedFile == null || !selectedFile.exists() ||
-        !selectedFile.canRead())
+    if (selectedFile == null || !selectedFile.exists()
+        || !selectedFile.canRead())
     {
       JOptionPane
         .showMessageDialog(mainWindow,
-                           selectedFile +
-                               "\n" //$NON-NLS-1$
-                               +
-                               Messages
+                           selectedFile
+                               + "\n" //$NON-NLS-1$
+                               + Messages
                                  .getString("DaylightChartGui.Error.DidNotReadFile")); //$NON-NLS-1$
       return;
     }
@@ -102,10 +101,9 @@ public class Actions
           .getString("DaylightChartGui.Error.ReadFile")); //$NON-NLS-1$
         JOptionPane
           .showMessageDialog(mainWindow,
-                             selectedFile +
-                                 "\n" //$NON-NLS-1$
-                                 +
-                                 Messages
+                             selectedFile
+                                 + "\n" //$NON-NLS-1$
+                                 + Messages
                                    .getString("DaylightChartGui.Error.DidNotReadFile")); //$NON-NLS-1$
       }
       else
@@ -151,7 +149,7 @@ public class Actions
     fileFilters.add(new ExtensionFileFilter("JPEG (*.jpg)", ".jpg"));
     final File selectedFile = showSaveDialog(Messages
       .getString("DaylightChartGui.Menu.File.SaveChart"), //$NON-NLS-1$
-                                             "chart",
+                                             chartPanel.getName(),
                                              fileFilters,
                                              chartPanel);
     if (selectedFile != null)
@@ -264,8 +262,8 @@ public class Actions
         if (!ExtensionFileFilter.getExtension(selectedFile)
           .equals(selectedExtension))
         {
-          selectedFile = new File(selectedFile.getAbsoluteFile() +
-                                  selectedExtension);
+          selectedFile = new File(selectedFile.getAbsoluteFile()
+                                  + selectedExtension);
         }
       }
 
@@ -276,10 +274,9 @@ public class Actions
       {
         final int confirm = JOptionPane
           .showConfirmDialog(parent,
-                             selectedFile +
-                                 "\n" //$NON-NLS-1$ 
-                                 +
-                                 Messages
+                             selectedFile
+                                 + "\n" //$NON-NLS-1$ 
+                                 + Messages
                                    .getString("DaylightChartGui.ConfirmOverwrite"), //$NON-NLS-1$
                              dialogTitle,
                              JOptionPane.YES_NO_OPTION);

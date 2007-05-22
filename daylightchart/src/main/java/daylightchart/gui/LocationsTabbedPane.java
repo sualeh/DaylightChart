@@ -59,13 +59,14 @@ public class LocationsTabbedPane
     options.getChartOptions().updateChart(chart);
 
     final ChartPanel chartPanel = new ChartPanel(chart);
+    chartPanel.setName(location.toString());
     chartPanel.setPreferredSize(new Dimension(700, 525));
 
     addTab(location.toString(),
            new CloseTabIcon(),
            chartPanel,
            LocationFormatter.getToolTip(location));
-    setSelectedIndex(getComponentCount() - 1);
+    setSelectedIndex(getTabCount() - 1);
   }
 
   /**
