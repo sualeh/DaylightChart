@@ -22,7 +22,10 @@
 package daylightchart.gui;
 
 
+import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -30,7 +33,12 @@ import java.util.List;
 import java.util.Vector;
 
 import javax.swing.DefaultListCellRenderer;
+import javax.swing.ImageIcon;
 import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
+import javax.swing.JScrollPane;
+import javax.swing.JToolBar;
 
 import daylightchart.location.Location;
 import daylightchart.location.parser.LocationFormatter;
@@ -42,12 +50,17 @@ import daylightchart.options.UserPreferences;
  * @author Sualeh Fatehi
  */
 public class LocationsList
-  extends JList
+  extends JPanel
 {
 
   private static final long serialVersionUID = -6884483130453983685L;
 
+  private final DaylightChartGui parent;
+  private final JList locationsList;
   private List<Location> locations;
+  private DaylightChartGuiAction add;
+  private DaylightChartGuiAction delete;
+  private DaylightChartGuiAction edit;
 
   /**
    * Create a new locations list component.
@@ -58,9 +71,21 @@ public class LocationsList
   public LocationsList(final DaylightChartGui parent)
   {
 
-    setLocations(UserPreferences.getLocations());
+    super(new BorderLayout());
 
-    setCellRenderer(new DefaultListCellRenderer()
+    this.parent = parent;
+
+    createActions();
+
+    final JToolBar toolBar = new JToolBar();
+    add(toolBar, BorderLayout.NORTH);
+    toolBar.add(add);
+    toolBar.add(delete);
+    toolBar.add(edit);
+
+    locationsList = new JList();
+    add(new JScrollPane(locationsList));
+    locationsList.setCellRenderer(new DefaultListCellRenderer()
     {
       private static final long serialVersionUID = -5892518623547830472L;
 
@@ -80,24 +105,34 @@ public class LocationsList
         return this;
       }
     });
-    addMouseListener(new MouseAdapter()
+    locationsList.addMouseListener(new MouseAdapter()
     {
       @Override
       public void mouseClicked(final MouseEvent e)
       {
-        if (!e.isConsumed() && e.getClickCount() == 2)
+        if (!e.isConsumed())
         {
-          Location location = (Location) getSelectedValue();
-          if (location == null)
+          if (e.getClickCount() == 2)
           {
-            setSelectedIndex(0);
-            location = (Location) getSelectedValue();
+            Location location = (Location) locationsList.getSelectedValue();
+            if (location == null)
+            {
+              locationsList.setSelectedIndex(0);
+              location = (Location) locationsList.getSelectedValue();
+            }
+            parent.addLocationTab(location);
           }
-          parent.addLocationTab(location);
+          e.consume();
         }
-        e.consume();
+        else if (e.getButton() == MouseEvent.BUTTON2
+                 || e.getButton() == MouseEvent.BUTTON3)
+        {
+          createPopupMenu().show(e.getComponent(), e.getX(), e.getY());
+        }
       }
     });
+
+    setLocations(UserPreferences.getLocations());
   }
 
   /**
@@ -117,7 +152,12 @@ public class LocationsList
    */
   public Location getSelectedLocation()
   {
-    return (Location) getSelectedValue();
+    return (Location) locationsList.getSelectedValue();
+  }
+
+  public int getSelectedLocationIndex()
+  {
+    return locationsList.getSelectedIndex();
   }
 
   /**
@@ -131,10 +171,21 @@ public class LocationsList
     if (locations != null && locations.size() > 0)
     {
       this.locations = locations;
-      setListData(new Vector<Location>(locations));
-      setSelectedIndex(0);
+      locationsList.setListData(new Vector<Location>(locations));
+      locationsList.setSelectedIndex(0);
       UserPreferences.setLocations(locations);
     }
+  }
+
+  /**
+   * Sets the selected location.
+   * 
+   * @param location
+   *        Location to select
+   */
+  public void setSelectedLocation(final Location location)
+  {
+    locationsList.setSelectedValue(location, true);
   }
 
   /**
@@ -144,6 +195,63 @@ public class LocationsList
   {
     UserPreferences.sortLocations(locations);
     setLocations(locations);
+  }
+
+  private void createActions()
+  {
+
+    add = new DaylightChartGuiAction("Add", new ImageIcon(LocationsList.class
+      .getResource("/icons/add_location.gif")), "Add a new location");
+    delete = new DaylightChartGuiAction("Delete",
+                                        new ImageIcon(LocationsList.class
+                                          .getResource("/icons/delete_location.gif")),
+                                        "Delete the selected location");
+    edit = new DaylightChartGuiAction("Edit", new ImageIcon(LocationsList.class
+      .getResource("/icons/edit_location.gif")), "Edit the selected  location");
+
+    add.addActionListener(new ActionListener()
+    {
+      public void actionPerformed(final ActionEvent e)
+      {
+        final LocationDialog ld = new LocationDialog(parent, null, "Add");
+        ld.setVisible(true);
+      }
+    });
+
+    delete.addActionListener(new ActionListener()
+    {
+      public void actionPerformed(final ActionEvent e)
+      {
+        final Location location = getSelectedLocation();
+        final LocationDialog locDialog = new LocationDialog(parent,
+                                                            location,
+                                                            "Delete");
+        locDialog.setVisible(true);
+        setSelectedLocation(location);
+      }
+    });
+
+    edit.addActionListener(new ActionListener()
+    {
+      public void actionPerformed(final ActionEvent e)
+      {
+        final Location location = getSelectedLocation();
+        final LocationDialog locDialog = new LocationDialog(parent,
+                                                            location,
+                                                            "Edit");
+        locDialog.setVisible(true);
+      }
+    });
+
+  }
+
+  private JPopupMenu createPopupMenu()
+  {
+    final JPopupMenu rightPopup = new JPopupMenu();
+    rightPopup.add(add);
+    rightPopup.add(delete);
+    rightPopup.add(edit);
+    return rightPopup;
   }
 
 }

@@ -27,9 +27,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.List;
 
 import javax.swing.ButtonGroup;
@@ -40,9 +37,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import javax.swing.JPopupMenu;
 import javax.swing.JRadioButtonMenuItem;
-import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JToolBar;
 
@@ -70,8 +65,6 @@ public final class DaylightChartGui
   private final LocationsList locationsList;
   private final LocationsTabbedPane locationsTabbedPane;
 
-  private JPopupMenu rightPopupMenu = null;
-
   /**
    * Creates a new instance of a Daylight Chart main window.
    */
@@ -84,38 +77,35 @@ public final class DaylightChartGui
     setTitle("Daylight Chart"); //$NON-NLS-1$
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+    // Create basic UI
     locationsTabbedPane = new LocationsTabbedPane();
     locationsList = new LocationsList(this);
 
     final JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
-                                                new JScrollPane(locationsList),
+                                                locationsList,
                                                 locationsTabbedPane);
     splitPane.setOneTouchExpandable(true);
     getContentPane().add(splitPane);
 
+    // Create menus and toolbars
     final JMenuBar menuBar = new JMenuBar();
     setJMenuBar(menuBar);
     final JToolBar toolBar = new JToolBar();
     add(toolBar, BorderLayout.NORTH);
 
     createFileMenu(menuBar, toolBar);
-    menuBar.add(createOptionsMenu());
+    createOptionsMenu(menuBar, toolBar);
     createHelpMenu(menuBar, toolBar);
-
-    this.repaint();
 
     // Open the first location
     addLocationTab(locationsList.getSelectedLocation());
-
-    // 5/16/2007
-    addLocationsEditor();
 
     pack();
   }
 
   public int getSelectedLocationIndex()
   {
-    return locationsList.getSelectedIndex();
+    return locationsList.getSelectedLocationIndex();
   }
 
   /**
@@ -152,32 +142,6 @@ public final class DaylightChartGui
       locationsList.setLocations(locations);
       this.repaint();
     }
-  }
-
-  /**
-   * This method adds the functionality of a Location editor, i.e adding
-   * a new location, deteting and modifying an existing location.
-   */
-  private void addLocationsEditor()
-  {
-    rightPopupMenu = createRightPopup();
-
-    MouseListener mouseListener = new MouseAdapter()
-    {
-      public void mouseClicked(MouseEvent e)
-      {
-        if (e.getButton() == MouseEvent.BUTTON1)
-        {
-          int index = locationsList.locationToIndex(e.getPoint());
-        }
-        else if ((e.getButton() == MouseEvent.BUTTON2)
-                 || (e.getButton() == MouseEvent.BUTTON3))
-        {
-          rightPopupMenu.show(e.getComponent(), e.getX(), e.getY());
-        }
-      }
-    };
-    locationsList.addMouseListener(mouseListener);
   }
 
   private void createFileMenu(JMenuBar menuBar, JToolBar toolBar)
@@ -261,7 +225,8 @@ public final class DaylightChartGui
       public void actionPerformed(@SuppressWarnings("unused")
       final ActionEvent actionevent)
       {
-        exit();
+        dispose();
+        System.exit(0);
       }
     });
 
@@ -327,7 +292,7 @@ public final class DaylightChartGui
 
   }
 
-  private JMenu createOptionsMenu()
+  private void createOptionsMenu(JMenuBar menuBar, JToolBar toolBar)
   {
 
     String text;
@@ -476,74 +441,7 @@ public final class DaylightChartGui
       }
     });
 
-    return menuOptions;
-  }
-
-  private JPopupMenu createRightPopup()
-  {
-    final JPopupMenu rightPopup = new JPopupMenu();
-    JMenuItem moptAdd = new JMenuItem("Add");
-    JMenuItem moptDelete = new JMenuItem("Delete");
-    JMenuItem moptEdit = new JMenuItem("Edit");
-
-    moptAdd.addActionListener(new ActionListener()
-    {
-      public void actionPerformed(ActionEvent e)
-      {
-        doAdd();
-      }
-    });
-
-    moptDelete.addActionListener(new ActionListener()
-    {
-      public void actionPerformed(ActionEvent e)
-      {
-        Location location = (Location) locationsList.getSelectedValue();
-        doDelete(location);
-      }
-    });
-
-    moptEdit.addActionListener(new ActionListener()
-    {
-      public void actionPerformed(ActionEvent e)
-      {
-        Location location = (Location) locationsList.getSelectedValue();
-        doEdit(location);
-      }
-    });
-
-    rightPopup.add(moptAdd);
-    rightPopup.add(moptDelete);
-    rightPopup.add(moptEdit);
-    return rightPopup;
-  }
-
-  private void doAdd()
-  {
-    LocationDialog ld = new LocationDialog(this, null, "Add");
-    ld.setVisible(true);
-  }
-
-  private void doDelete(Location locn)
-  {
-    Location location = locn;
-    LocationDialog locDialog = new LocationDialog(this, location, "Delete");
-    locDialog.setVisible(true);
-    locationsList.setSelectedValue(location, true);
-  }
-
-  private void doEdit(Location locn)
-  {
-    Location location = locn;
-    LocationDialog locDialog = new LocationDialog(this, location, "Edit");
-    locDialog.setVisible(true);
-    locationsList.setSelectedIndex(locDialog.getIndex());
-  }
-
-  private void exit()
-  {
-    dispose();
-    System.exit(0);
+    menuBar.add(menuOptions);
   }
 
 }
