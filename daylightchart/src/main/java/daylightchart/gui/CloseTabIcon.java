@@ -56,7 +56,7 @@ public class CloseTabIcon
    */
   public CloseTabIcon()
   {
-    icon = new ImageIcon(CloseTabIcon.class.getResource("/close_tab.gif"));
+    icon = new ImageIcon(CloseTabIcon.class.getResource("/icons/close_tab.gif"));
   }
 
   /**

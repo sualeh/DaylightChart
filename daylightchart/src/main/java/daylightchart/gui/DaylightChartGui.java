@@ -32,6 +32,7 @@ import java.awt.event.MouseListener;
 import java.util.List;
 
 import javax.swing.ButtonGroup;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -205,18 +206,26 @@ public final class DaylightChartGui
 
   private JMenu createFileMenu()
   {
+
+    String text;
+    Icon icon;
+
     final JMenu menuFile = new JMenu(Messages
       .getString("DaylightChartGui.Menu.File")); //$NON-NLS-1$
 
-    final JMenuItem openLocationsFile = new JMenuItem(Messages
-      .getString("DaylightChartGui.Menu.File.LoadLocations")); //$NON-NLS-1$
+    icon = new ImageIcon(DaylightChartGui.class
+      .getResource("/icons/load_locations.gif")); //$NON-NLS-1$
+    text = Messages.getString("DaylightChartGui.Menu.File.LoadLocations");//$NON-NLS-1$
+    final JMenuItem openLocationsFile = new JMenuItem(text, icon);
     openLocationsFile
       .setActionCommand("DaylightChartGui.Menu.File.LoadLocations"); //$NON-NLS-1$
     openLocationsFile.addActionListener(new LocationsFileActionListener());
     menuFile.add(openLocationsFile);
 
-    final JMenuItem saveLocationsFile = new JMenuItem(Messages
-      .getString("DaylightChartGui.Menu.File.SaveLocations")); //$NON-NLS-1$
+    icon = new ImageIcon(DaylightChartGui.class
+      .getResource("/icons/save_locations.gif")); //$NON-NLS-1$
+    text = Messages.getString("DaylightChartGui.Menu.File.SaveLocations");//$NON-NLS-1$
+    final JMenuItem saveLocationsFile = new JMenuItem(text, icon);
     saveLocationsFile
       .setActionCommand("DaylightChartGui.Menu.File.SaveLocations"); //$NON-NLS-1$
     saveLocationsFile.addActionListener(new LocationsFileActionListener());
