@@ -110,22 +110,19 @@ public class LocationsList
       @Override
       public void mouseClicked(final MouseEvent e)
       {
-        if (!e.isConsumed())
+        if (!e.isConsumed() && e.getClickCount() == 2)
         {
-          if (e.getClickCount() == 2)
+          Location location = (Location) locationsList.getSelectedValue();
+          if (location == null)
           {
-            Location location = (Location) locationsList.getSelectedValue();
-            if (location == null)
-            {
-              locationsList.setSelectedIndex(0);
-              location = (Location) locationsList.getSelectedValue();
-            }
-            parent.addLocationTab(location);
+            locationsList.setSelectedIndex(0);
+            location = (Location) locationsList.getSelectedValue();
           }
+          parent.addLocationTab(location);
           e.consume();
         }
-        else if (e.getButton() == MouseEvent.BUTTON2
-                 || e.getButton() == MouseEvent.BUTTON3)
+        if (e.getButton() == MouseEvent.BUTTON2
+            || e.getButton() == MouseEvent.BUTTON3)
         {
           createPopupMenu().show(e.getComponent(), e.getX(), e.getY());
         }
