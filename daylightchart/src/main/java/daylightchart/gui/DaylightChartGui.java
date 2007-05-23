@@ -24,14 +24,22 @@ package daylightchart.gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.List;
 
+import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPopupMenu;
+import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 
@@ -92,6 +100,8 @@ public final class DaylightChartGui
   private final LocationsList locationsList;
   private final LocationsTabbedPane locationsTabbedPane;
 
+  private JPopupMenu rightPopupMenu = null;
+
   /**
    * Creates a new instance of a Daylight Chart main window.
    */
@@ -120,7 +130,15 @@ public final class DaylightChartGui
     // Open the first location
     addLocationTab(locationsList.getSelectedLocation());
 
+    // 5/16/2007
+    addLocationsEditor();
+
     pack();
+  }
+
+  public int getSelectedLocationIndex()
+  {
+    return locationsList.getSelectedIndex();
   }
 
   /**
@@ -157,6 +175,32 @@ public final class DaylightChartGui
       locationsList.setLocations(locations);
       this.repaint();
     }
+  }
+
+  /**
+   * This method adds the functionality of a Location editor, i.e adding
+   * a new location, deteting and modifying an existing location.
+   */
+  private void addLocationsEditor()
+  {
+    rightPopupMenu = createRightPopup();
+
+    MouseListener mouseListener = new MouseAdapter()
+    {
+      public void mouseClicked(MouseEvent e)
+      {
+        if (e.getButton() == MouseEvent.BUTTON1)
+        {
+          int index = locationsList.locationToIndex(e.getPoint());
+        }
+        else if ((e.getButton() == MouseEvent.BUTTON2)
+                 || (e.getButton() == MouseEvent.BUTTON3))
+        {
+          rightPopupMenu.show(e.getComponent(), e.getX(), e.getY());
+        }
+      }
+    };
+    locationsList.addMouseListener(mouseListener);
   }
 
   private JMenu createFileMenu()
@@ -272,31 +316,29 @@ public final class DaylightChartGui
     final JMenu menuOptions = new JMenu(Messages
       .getString("DaylightChartGui.Menu.Options")); //$NON-NLS-1$
 
-    final JMenuItem sortLocations = new JMenuItem();
-    switch (options.getLocationsSortOrder())
-    {
-      case BY_NAME:
-        sortLocations.setText(Messages
-          .getString("DaylightChartGui.Menu.Options.SortByLatitude")); //$NON-NLS-1$
-        break;
-      case BY_LATITUDE:
-        sortLocations.setText(Messages
-          .getString("DaylightChartGui.Menu.Options.SortByName")); //$NON-NLS-1$
-        break;
-    }
+    final ButtonGroup sortingMenuItems = new ButtonGroup();
+    final JRadioButtonMenuItem sortByLatitude = new JRadioButtonMenuItem(Messages
+                                                                           .getString("DaylightChartGui.Menu.Options.SortByLatitude"), options.getLocationsSortOrder() == LocationsSortOrder.BY_LATITUDE); //$NON-NLS-1$
+    sortingMenuItems.add(sortByLatitude);
+    menuOptions.add(sortByLatitude);
+    final JRadioButtonMenuItem sortByName = new JRadioButtonMenuItem(Messages
+                                                                       .getString("DaylightChartGui.Menu.Options.SortByName"), options.getLocationsSortOrder() == LocationsSortOrder.BY_NAME); //$NON-NLS-1$
+    sortingMenuItems.add(sortByName);
+    menuOptions.add(sortByName);
 
-    final JMenuItem useTimeZone = new JMenuItem();
-    switch (options.getTimeZoneOption())
-    {
-      case USE_TIME_ZONE:
-        useTimeZone.setText(Messages
-          .getString("DaylightChartGui.Menu.Options.UseLocalTime")); //$NON-NLS-1$
-        break;
-      case USE_LOCAL_TIME:
-        useTimeZone.setText(Messages
-          .getString("DaylightChartGui.Menu.Options.UseTimeZone")); //$NON-NLS-1$
-        break;
-    }
+    menuOptions.addSeparator();
+
+    final ButtonGroup timeZoneMenuItems = new ButtonGroup();
+    final JRadioButtonMenuItem useLocalTime = new JRadioButtonMenuItem(Messages
+                                                                         .getString("DaylightChartGui.Menu.Options.UseLocalTime"), options.getTimeZoneOption() == TimeZoneOption.USE_LOCAL_TIME); //$NON-NLS-1$
+    timeZoneMenuItems.add(useLocalTime);
+    menuOptions.add(useLocalTime);
+    final JRadioButtonMenuItem useTimeZone = new JRadioButtonMenuItem(Messages
+                                                                        .getString("DaylightChartGui.Menu.Options.UseTimeZone"), options.getTimeZoneOption() == TimeZoneOption.USE_TIME_ZONE); //$NON-NLS-1$
+    timeZoneMenuItems.add(useTimeZone);
+    menuOptions.add(useTimeZone);
+
+    menuOptions.addSeparator();
 
     final JMenuItem chartOptionsMenuItem = new JMenuItem(Messages
       .getString("DaylightChartGui.Menu.Options.ChartOptions")); //$NON-NLS-1$
@@ -304,63 +346,65 @@ public final class DaylightChartGui
     final JMenuItem resetAll = new JMenuItem(Messages
       .getString("DaylightChartGui.Menu.Options.ResetAll")); //$NON-NLS-1$
 
-    menuOptions.add(sortLocations);
-    menuOptions.add(useTimeZone);
-    menuOptions.addSeparator();
     menuOptions.add(chartOptionsMenuItem);
     menuOptions.addSeparator();
     menuOptions.add(resetAll);
 
-    sortLocations.addActionListener(new ActionListener()
+    sortByName.addItemListener(new ItemListener()
     {
-      public void actionPerformed(@SuppressWarnings("unused")
-      final ActionEvent actionevent)
+      public void itemStateChanged(ItemEvent e)
       {
-        final Options options = UserPreferences.getOptions();
-        LocationsSortOrder locationsSortOrder = options.getLocationsSortOrder();
-        switch (locationsSortOrder)
+        if (e.getStateChange() == ItemEvent.SELECTED)
         {
-          case BY_NAME:
-            locationsSortOrder = LocationsSortOrder.BY_LATITUDE;
-            sortLocations.setText(Messages
-              .getString("DaylightChartGui.Menu.Options.SortByName")); //$NON-NLS-1$
-            break;
-          case BY_LATITUDE:
-            locationsSortOrder = LocationsSortOrder.BY_NAME;
-            sortLocations.setText(Messages
-              .getString("DaylightChartGui.Menu.Options.SortByLatitude")); //$NON-NLS-1$
-            break;
-        }
-        options.setLocationsSortOrder(locationsSortOrder);
-        UserPreferences.setOptions(options);
+          final Options options = UserPreferences.getOptions();
+          options.setLocationsSortOrder(LocationsSortOrder.BY_NAME);
+          UserPreferences.setOptions(options);
 
-        locationsList.sortLocations();
-        DaylightChartGui.this.repaint();
+          locationsList.sortLocations();
+          DaylightChartGui.this.repaint();
+        }
       }
     });
 
-    useTimeZone.addActionListener(new ActionListener()
+    sortByLatitude.addItemListener(new ItemListener()
     {
-      public void actionPerformed(@SuppressWarnings("unused")
-      final ActionEvent actionevent)
+      public void itemStateChanged(ItemEvent e)
       {
-        final Options options = UserPreferences.getOptions();
-        TimeZoneOption timeZoneOption = options.getTimeZoneOption();
-        switch (timeZoneOption)
+        if (e.getStateChange() == ItemEvent.SELECTED)
         {
-          case USE_TIME_ZONE:
-            timeZoneOption = TimeZoneOption.USE_LOCAL_TIME;
-            useTimeZone.setText(Messages
-              .getString("DaylightChartGui.Menu.Options.UseLocalTime")); //$NON-NLS-1$
-            break;
-          case USE_LOCAL_TIME:
-            timeZoneOption = TimeZoneOption.USE_TIME_ZONE;
-            useTimeZone.setText(Messages
-              .getString("DaylightChartGui.Menu.Options.UseTimeZone")); //$NON-NLS-1$
-            break;
+          final Options options = UserPreferences.getOptions();
+          options.setLocationsSortOrder(LocationsSortOrder.BY_LATITUDE);
+          UserPreferences.setOptions(options);
+
+          locationsList.sortLocations();
+          DaylightChartGui.this.repaint();
         }
-        options.setTimeZoneOption(timeZoneOption);
-        UserPreferences.setOptions(options);
+      }
+    });
+
+    useTimeZone.addItemListener(new ItemListener()
+    {
+      public void itemStateChanged(ItemEvent e)
+      {
+        if (e.getStateChange() == ItemEvent.SELECTED)
+        {
+          final Options options = UserPreferences.getOptions();
+          options.setTimeZoneOption(TimeZoneOption.USE_TIME_ZONE);
+          UserPreferences.setOptions(options);
+        }
+      }
+    });
+
+    useLocalTime.addItemListener(new ItemListener()
+    {
+      public void itemStateChanged(ItemEvent e)
+      {
+        if (e.getStateChange() == ItemEvent.SELECTED)
+        {
+          final Options options = UserPreferences.getOptions();
+          options.setTimeZoneOption(TimeZoneOption.USE_LOCAL_TIME);
+          UserPreferences.setOptions(options);
+        }
       }
     });
 
@@ -398,6 +442,67 @@ public final class DaylightChartGui
     });
 
     return menuOptions;
+  }
+
+  private JPopupMenu createRightPopup()
+  {
+    final JPopupMenu rightPopup = new JPopupMenu();
+    JMenuItem moptAdd = new JMenuItem("Add");
+    JMenuItem moptDelete = new JMenuItem("Delete");
+    JMenuItem moptEdit = new JMenuItem("Edit");
+
+    moptAdd.addActionListener(new ActionListener()
+    {
+      public void actionPerformed(ActionEvent e)
+      {
+        doAdd();
+      }
+    });
+
+    moptDelete.addActionListener(new ActionListener()
+    {
+      public void actionPerformed(ActionEvent e)
+      {
+        Location location = (Location) locationsList.getSelectedValue();
+        doDelete(location);
+      }
+    });
+
+    moptEdit.addActionListener(new ActionListener()
+    {
+      public void actionPerformed(ActionEvent e)
+      {
+        Location location = (Location) locationsList.getSelectedValue();
+        doEdit(location);
+      }
+    });
+
+    rightPopup.add(moptAdd);
+    rightPopup.add(moptDelete);
+    rightPopup.add(moptEdit);
+    return rightPopup;
+  }
+
+  private void doAdd()
+  {
+    LocationDialog ld = new LocationDialog(this, null, "Add");
+    ld.setVisible(true);
+  }
+
+  private void doDelete(Location locn)
+  {
+    Location location = locn;
+    LocationDialog locDialog = new LocationDialog(this, location, "Delete");
+    locDialog.setVisible(true);
+    locationsList.setSelectedValue(location, true);
+  }
+
+  private void doEdit(Location locn)
+  {
+    Location location = locn;
+    LocationDialog locDialog = new LocationDialog(this, location, "Edit");
+    locDialog.setVisible(true);
+    locationsList.setSelectedIndex(locDialog.getIndex());
   }
 
   private void exit()
