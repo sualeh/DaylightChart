@@ -78,6 +78,7 @@ public class LocationsList
     createActions();
 
     final JToolBar toolBar = new JToolBar();
+    toolBar.setRollover(true);
     add(toolBar, BorderLayout.NORTH);
     toolBar.add(add);
     toolBar.add(delete);

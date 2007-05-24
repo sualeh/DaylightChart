@@ -77,6 +77,17 @@ public final class DaylightChartGui
     setTitle("Daylight Chart"); //$NON-NLS-1$
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+    // Create menus and toolbars
+    final JMenuBar menuBar = new JMenuBar();
+    setJMenuBar(menuBar);
+    final JToolBar toolBar = new JToolBar();
+    toolBar.setRollover(true);
+    add(toolBar, BorderLayout.NORTH);
+
+    createFileMenu(menuBar, toolBar);
+    createOptionsMenu(menuBar, toolBar);
+    createHelpMenu(menuBar, toolBar);
+
     // Create basic UI
     locationsTabbedPane = new LocationsTabbedPane();
     locationsList = new LocationsList(this);
@@ -86,16 +97,6 @@ public final class DaylightChartGui
                                                 locationsTabbedPane);
     splitPane.setOneTouchExpandable(true);
     getContentPane().add(splitPane);
-
-    // Create menus and toolbars
-    final JMenuBar menuBar = new JMenuBar();
-    setJMenuBar(menuBar);
-    final JToolBar toolBar = new JToolBar();
-    add(toolBar, BorderLayout.NORTH);
-
-    createFileMenu(menuBar, toolBar);
-    createOptionsMenu(menuBar, toolBar);
-    createHelpMenu(menuBar, toolBar);
 
     // Open the first location
     addLocationTab(locationsList.getSelectedLocation());
@@ -308,21 +309,25 @@ public final class DaylightChartGui
 
     text = Messages.getString("DaylightChartGui.Menu.Options.SortByLatitude"); //$NON-NLS-1$
     icon = new ImageIcon(DaylightChartGui.class
-      .getResource("/icons/sort_by_name.gif")); //$NON-NLS-1$
+      .getResource("/icons/sort_by_latitude.gif")); //$NON-NLS-1$
     isSelected = options.getLocationsSortOrder() == LocationsSortOrder.BY_LATITUDE;
     final JRadioButtonMenuItem sortByLatitude = new JRadioButtonMenuItem(text,
                                                                          icon,
                                                                          isSelected);
+    sortByLatitude.setSelectedIcon(new ImageIcon(DaylightChartGui.class
+      .getResource("/icons/sort_by_latitude_dim.gif")));
     sortingMenuItems.add(sortByLatitude);
     menuOptions.add(sortByLatitude);
 
     text = Messages.getString("DaylightChartGui.Menu.Options.SortByName"); //$NON-NLS-1$
     icon = new ImageIcon(DaylightChartGui.class
-      .getResource("/icons/sort_by_latitude.gif")); //$NON-NLS-1$
+      .getResource("/icons/sort_by_name.gif")); //$NON-NLS-1$
     isSelected = options.getLocationsSortOrder() == LocationsSortOrder.BY_NAME;
     final JRadioButtonMenuItem sortByName = new JRadioButtonMenuItem(text,
                                                                      icon,
                                                                      isSelected);
+    sortByName.setSelectedIcon(new ImageIcon(DaylightChartGui.class
+      .getResource("/icons/sort_by_name_dim.gif")));
     sortingMenuItems.add(sortByName);
     menuOptions.add(sortByName);
 
