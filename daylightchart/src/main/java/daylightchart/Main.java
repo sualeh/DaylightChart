@@ -25,7 +25,6 @@ package daylightchart;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.swing.JFrame;
 import javax.swing.UIManager;
 
 import com.jgoodies.looks.plastic.PlasticLookAndFeel;
@@ -54,7 +53,6 @@ public final class Main
 
     try
     {
-      JFrame.setDefaultLookAndFeelDecorated(true);
       PlasticLookAndFeel.setPlasticTheme(new LightGray());
       UIManager.setLookAndFeel(new PlasticLookAndFeel());
     }
