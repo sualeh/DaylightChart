@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src/main/java"/>
-	<classpathentry kind="src" output="target/test-classes" path="src/test/resources"/>
 	<classpathentry excluding="**/*.java" kind="src" path="src/main/resources"/>
 	<classpathentry kind="src" output="target/test-classes" path="src/test/java"/>
-	<classpathentry kind="src" path="src/site"/>
+	<classpathentry excluding="**/*.java" kind="src" output="target/test-classes" path="src/test/resources"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="var" path="M2_REPO/jfree/jcommon/1.0.8/jcommon-1.0.8.jar" sourcepath="/JFreeHome"/>
-	<classpathentry kind="var" path="M2_REPO/jfree/jfreechart/1.0.4/jfreechart-1.0.4.jar" sourcepath="/JFreeHome/jfreechart-1.0.4/source"/>
-	<classpathentry kind="var" path="M2_REPO/junit/junit/4.2/junit-4.2.jar"/>
-	<classpathentry kind="var" path="M2_REPO/joda-time/joda-time/1.4/joda-time-1.4.jar" sourcepath="/JFreeHome/joda-time-1.4-src/src/java"/>
+	<classpathentry kind="var" path="M2_REPO/com/jgoodies/looks/2.1.2/looks-2.1.2.jar" sourcepath="M2_REPO/com/jgoodies/looks/2.1.2/looks-2.1.2-sources.jar"/>
+	<classpathentry kind="var" path="M2_REPO/joda-time/joda-time/1.4/joda-time-1.4.jar"/>
+	<classpathentry kind="var" path="M2_REPO/jfree/jfreechart/1.0.4/jfreechart-1.0.4.jar" sourcepath="M2_REPO/jfree/jfreechart/1.0.4/jfreechart-1.0.4-sources.jar"/>
+	<classpathentry kind="var" path="M2_REPO/junit/junit/4.3.1/junit-4.3.1.jar"/>
+	<classpathentry kind="var" path="M2_REPO/jgoodies/forms/1.0.5/forms-1.0.5.jar"/>
+	<classpathentry kind="var" path="M2_REPO/jfree/jcommon/1.0.8/jcommon-1.0.8.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/Point Location 6709"/>
-	<classpathentry kind="var" path="M2_REPO/com/jgoodies/looks/2.1.2/looks-2.1.2.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
