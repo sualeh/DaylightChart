@@ -59,6 +59,8 @@ public final class UserPreferences
   private static final Logger LOGGER = Logger.getLogger(UserPreferences.class
     .getName());
 
+  private static boolean savePreferences = true;
+
   private static final String keyLocations = "daylightchart.locations";
   private static final String keyOptions = "daylightchart.options";
   private static final String keyDataFileDirectory = "daylightchart.dataFileDirectory";
@@ -173,14 +175,28 @@ public final class UserPreferences
   }
 
   /**
+   * Whether to save preferences.
+   * 
+   * @return Whether to save preferences.
+   */
+  public static boolean isSavePreferences()
+  {
+    return savePreferences;
+  }
+
+  /**
    * Main method. Lists all user preferences.
    * 
    * @param args
    *        Command line arguments
+   * @throws Exception
+   *         On an exception
    */
   public static void main(final String[] args)
+    throws Exception
   {
-    UserPreferences.listAllPreferences();
+    System.out.println("User preferences:");
+    UserPreferences.preferences.exportNode(System.out);
   }
 
   /**
@@ -191,6 +207,10 @@ public final class UserPreferences
    */
   public static void setDataFileDirectory(final File dataFileDirectory)
   {
+    if (!savePreferences)
+    {
+      return;
+    }
     preferences.put(keyDataFileDirectory, dataFileDirectory.getAbsolutePath());
   }
 
@@ -202,6 +222,10 @@ public final class UserPreferences
    */
   public static void setLocations(final List<Location> locations)
   {
+    if (!savePreferences)
+    {
+      return;
+    }
     try
     {
       // Delete previous locations file
@@ -238,6 +262,10 @@ public final class UserPreferences
    */
   public static void setOptions(final Options options)
   {
+    if (!savePreferences)
+    {
+      return;
+    }
     byte[] bytes;
     try
     {
@@ -258,6 +286,17 @@ public final class UserPreferences
   }
 
   /**
+   * Whether to save preferences.
+   * 
+   * @param savePreferences
+   *        Whether to save preferences.
+   */
+  public static void setSavePreferences(final boolean savePreferences)
+  {
+    UserPreferences.savePreferences = savePreferences;
+  }
+
+  /**
    * Sorts locations by current preferences.
    * 
    * @param locations
@@ -265,26 +304,13 @@ public final class UserPreferences
    */
   public static void sortLocations(final List<Location> locations)
   {
+    if (!savePreferences)
+    {
+      return;
+    }
     final LocationsSortOrder locationsSortOrder = getOptions()
       .getLocationsSortOrder();
     Collections.sort(locations, locationsSortOrder);
-  }
-
-  static void listAllPreferences()
-  {
-    System.out.println("User preferences:");
-    try
-    {
-      preferences.exportNode(System.out);
-    }
-    catch (final IOException e)
-    {
-      LOGGER.log(Level.WARNING, "Could list preferences", e);
-    }
-    catch (final BackingStoreException e)
-    {
-      LOGGER.log(Level.WARNING, "Could list preferences", e);
-    }
   }
 
   /**

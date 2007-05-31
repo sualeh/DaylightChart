@@ -31,6 +31,7 @@ import com.jgoodies.looks.plastic.PlasticLookAndFeel;
 import com.jgoodies.looks.plastic.theme.LightGray;
 
 import daylightchart.gui.DaylightChartGui;
+import daylightchart.options.UserPreferences;
 
 /**
  * Main window.
@@ -51,6 +52,16 @@ public final class Main
   public static void main(final String[] args)
   {
 
+    // Parse command line
+    if (args.length > 1)
+    {
+      if (args[0].equals("-noprefs"))
+      {
+        UserPreferences.setSavePreferences(false);
+      }
+    }
+
+    // Set UI look and feel
     try
     {
       PlasticLookAndFeel.setPlasticTheme(new LightGray());
