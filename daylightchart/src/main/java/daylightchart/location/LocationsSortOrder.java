@@ -56,8 +56,8 @@ public enum LocationsSortOrder
       case BY_LATITUDE:
         final Latitude latitude1 = location1.getPointLocation().getLatitude();
         final Latitude latitude2 = location2.getPointLocation().getLatitude();
-        comparison = (int) Math.signum(latitude2.getRadians() -
-                                       latitude1.getRadians());
+        comparison = (int) Math.signum(latitude2.getRadians()
+                                       - latitude1.getRadians());
         break;
       case BY_NAME:
         comparison = location1.compareTo(location2);

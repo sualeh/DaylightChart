@@ -65,8 +65,8 @@ public final class RiseSetFactory
     if (location != null)
     {
       final String timeZoneId;
-      if (timeZoneOption != null &&
-          timeZoneOption == TimeZoneOption.USE_TIME_ZONE)
+      if (timeZoneOption != null
+          && timeZoneOption == TimeZoneOption.USE_TIME_ZONE)
       {
         timeZoneId = location.getTimeZoneId();
       }

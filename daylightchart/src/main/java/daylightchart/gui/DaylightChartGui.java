@@ -43,8 +43,14 @@ import javax.swing.JToolBar;
 
 import org.jfree.chart.editor.ChartEditor;
 
-import daylightchart.Version;
+import sf.util.ui.ExitAction;
 import daylightchart.chart.TimeZoneOption;
+import daylightchart.gui.actions.AboutAction;
+import daylightchart.gui.actions.OnlineHelpAction;
+import daylightchart.gui.actions.OpenLocationsFileAction;
+import daylightchart.gui.actions.PrintChartAction;
+import daylightchart.gui.actions.SaveChartAction;
+import daylightchart.gui.actions.SaveLocationsFileAction;
 import daylightchart.location.Location;
 import daylightchart.location.LocationsSortOrder;
 import daylightchart.options.Options;
@@ -77,6 +83,16 @@ public final class DaylightChartGui
     setTitle("Daylight Chart"); //$NON-NLS-1$
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+    // Create basic UI
+    locationsTabbedPane = new LocationsTabbedPane();
+    locationsList = new LocationsList(this);
+
+    final JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
+                                                locationsList,
+                                                locationsTabbedPane);
+    splitPane.setOneTouchExpandable(true);
+    getContentPane().add(splitPane);
+
     // Create menus and toolbars
     final JMenuBar menuBar = new JMenuBar();
     setJMenuBar(menuBar);
@@ -87,16 +103,6 @@ public final class DaylightChartGui
     createFileMenu(menuBar, toolBar);
     createOptionsMenu(menuBar, toolBar);
     createHelpMenu(menuBar, toolBar);
-
-    // Create basic UI
-    locationsTabbedPane = new LocationsTabbedPane();
-    locationsList = new LocationsList(this);
-
-    final JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
-                                                locationsList,
-                                                locationsTabbedPane);
-    splitPane.setOneTouchExpandable(true);
-    getContentPane().add(splitPane);
 
     // Open the first location
     addLocationTab(locationsList.getSelectedLocation());
@@ -125,7 +131,7 @@ public final class DaylightChartGui
    * 
    * @return Locations list.
    */
-  List<Location> getLocations()
+  public List<Location> getLocations()
   {
     return locationsList.getLocations();
   }
@@ -136,7 +142,7 @@ public final class DaylightChartGui
    * @param locations
    *        Locations
    */
-  void setLocations(final List<Location> locations)
+  public void setLocations(final List<Location> locations)
   {
     if (locations != null && locations.size() > 0)
     {
@@ -145,91 +151,16 @@ public final class DaylightChartGui
     }
   }
 
-  private void createFileMenu(JMenuBar menuBar, JToolBar toolBar)
+  private void createFileMenu(final JMenuBar menuBar, final JToolBar toolBar)
   {
 
-    String text;
-    Icon icon;
+    final OpenLocationsFileAction openLocationsFile = new OpenLocationsFileAction(this);
+    final SaveLocationsFileAction saveLocationsFile = new SaveLocationsFileAction(this);
+    final SaveChartAction saveChart = new SaveChartAction(locationsTabbedPane);
+    final PrintChartAction printChart = new PrintChartAction(locationsTabbedPane);
 
-    icon = new ImageIcon(DaylightChartGui.class
-      .getResource("/icons/load_locations.gif")); //$NON-NLS-1$
-    text = Messages.getString("DaylightChartGui.Menu.File.LoadLocations");//$NON-NLS-1$
-    final DaylightChartGuiAction openLocationsFile = new DaylightChartGuiAction(text,
-                                                                                icon,
-                                                                                "Open a locations file");
-    openLocationsFile.addActionListener(new ActionListener()
-    {
-      /**
-       * {@inheritDoc}
-       * 
-       * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-       */
-      public void actionPerformed(final ActionEvent actionevent)
-      {
-        Actions.doOpenLocationsFileAction(DaylightChartGui.this);
-      }
-    });
-
-    icon = new ImageIcon(DaylightChartGui.class
-      .getResource("/icons/save_locations.gif")); //$NON-NLS-1$
-    text = Messages.getString("DaylightChartGui.Menu.File.SaveLocations");//$NON-NLS-1$
-    final DaylightChartGuiAction saveLocationsFile = new DaylightChartGuiAction(text,
-                                                                                icon,
-                                                                                "Save a locations file");
-    saveLocationsFile.addActionListener(new ActionListener()
-    {
-      /**
-       * {@inheritDoc}
-       * 
-       * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-       */
-      public void actionPerformed(final ActionEvent actionevent)
-      {
-        Actions.doSaveLocationsFileAction(DaylightChartGui.this);
-      }
-    });
-
-    icon = new ImageIcon(DaylightChartGui.class
-      .getResource("/icons/save_chart.gif")); //$NON-NLS-1$    
-    text = Messages.getString("DaylightChartGui.Menu.File.SaveChart"); //$NON-NLS-1$
-    final DaylightChartGuiAction saveChart = new DaylightChartGuiAction(text,
-                                                                        icon,
-                                                                        "Save the chart"); //$NON-NLS-1$
-    saveChart.addActionListener(new ActionListener()
-    {
-      public void actionPerformed(@SuppressWarnings("unused")
-      final ActionEvent actionevent)
-      {
-        locationsTabbedPane.saveSelectedChart();
-      }
-    });
-
-    icon = new ImageIcon(DaylightChartGui.class
-      .getResource("/icons/print_chart.gif")); //$NON-NLS-1$
-    text = Messages.getString("DaylightChartGui.Menu.File.PrintChart");//$NON-NLS-1$    
-    final DaylightChartGuiAction printChart = new DaylightChartGuiAction(text,
-                                                                         icon,
-                                                                         "Print the chart");
-    printChart.addActionListener(new ActionListener()
-    {
-      public void actionPerformed(@SuppressWarnings("unused")
-      final ActionEvent actionevent)
-      {
-        locationsTabbedPane.printSelectedChart();
-      }
-    });
-
-    final DaylightChartGuiAction exit = new DaylightChartGuiAction(Messages
-      .getString("DaylightChartGui.Menu.File.Exit"), "Exit the program"); //$NON-NLS-1$
-    exit.addActionListener(new ActionListener()
-    {
-      public void actionPerformed(@SuppressWarnings("unused")
-      final ActionEvent actionevent)
-      {
-        dispose();
-        System.exit(0);
-      }
-    });
+    final ExitAction exit = new ExitAction(this, Messages
+      .getString("DaylightChartGui.Menu.File.Exit")); //$NON-NLS-1$
 
     final JMenu menuFile = new JMenu(Messages
       .getString("DaylightChartGui.Menu.File")); //$NON-NLS-1$
@@ -250,37 +181,11 @@ public final class DaylightChartGui
 
   }
 
-  private void createHelpMenu(JMenuBar menuBar, JToolBar toolBar)
+  private void createHelpMenu(final JMenuBar menuBar, final JToolBar toolBar)
   {
 
-    String text;
-    Icon icon;
-
-    icon = new ImageIcon(DaylightChartGui.class.getResource("/icons/help.gif")); //$NON-NLS-1$
-    text = Messages.getString("DaylightChartGui.Menu.Help.Online");//$NON-NLS-1$       
-    final DaylightChartGuiAction onlineHelp = new DaylightChartGuiAction(text,
-                                                                         icon,
-                                                                         "Online help");
-    onlineHelp.addActionListener(new ActionListener()
-    {
-      public void actionPerformed(@SuppressWarnings("unused")
-      final ActionEvent actionevent)
-      {
-        BareBonesBrowserLaunch
-          .openURL("http://daylightchart.sourceforge.net/readme.html"); //$NON-NLS-1$
-      }
-    });
-
-    final DaylightChartGuiAction about = new DaylightChartGuiAction(Messages
-      .getString("DaylightChartGui.Menu.Help.About"), "About Daylight Chart"); //$NON-NLS-1$
-    about.addActionListener(new ActionListener()
-    {
-      public void actionPerformed(@SuppressWarnings("unused")
-      final ActionEvent actionevent)
-      {
-        JOptionPane.showMessageDialog(DaylightChartGui.this, Version.about());
-      }
-    });
+    final OnlineHelpAction onlineHelp = new OnlineHelpAction();
+    final AboutAction about = new AboutAction(DaylightChartGui.this);
 
     final JMenu menuHelp = new JMenu(Messages
       .getString("DaylightChartGui.Menu.Help")); //$NON-NLS-1$
@@ -293,7 +198,7 @@ public final class DaylightChartGui
 
   }
 
-  private void createOptionsMenu(JMenuBar menuBar, JToolBar toolBar)
+  private void createOptionsMenu(final JMenuBar menuBar, final JToolBar toolBar)
   {
 
     String text;
@@ -357,7 +262,7 @@ public final class DaylightChartGui
 
     sortByName.addItemListener(new ItemListener()
     {
-      public void itemStateChanged(ItemEvent e)
+      public void itemStateChanged(final ItemEvent e)
       {
         if (e.getStateChange() == ItemEvent.SELECTED)
         {
@@ -373,7 +278,7 @@ public final class DaylightChartGui
 
     sortByLatitude.addItemListener(new ItemListener()
     {
-      public void itemStateChanged(ItemEvent e)
+      public void itemStateChanged(final ItemEvent e)
       {
         if (e.getStateChange() == ItemEvent.SELECTED)
         {
@@ -389,7 +294,7 @@ public final class DaylightChartGui
 
     useTimeZone.addItemListener(new ItemListener()
     {
-      public void itemStateChanged(ItemEvent e)
+      public void itemStateChanged(final ItemEvent e)
       {
         if (e.getStateChange() == ItemEvent.SELECTED)
         {
@@ -402,7 +307,7 @@ public final class DaylightChartGui
 
     useLocalTime.addItemListener(new ItemListener()
     {
-      public void itemStateChanged(ItemEvent e)
+      public void itemStateChanged(final ItemEvent e)
       {
         if (e.getStateChange() == ItemEvent.SELECTED)
         {

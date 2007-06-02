@@ -33,13 +33,13 @@ import java.util.List;
 import java.util.Vector;
 
 import javax.swing.DefaultListCellRenderer;
-import javax.swing.ImageIcon;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JToolBar;
 
+import sf.util.ui.GuiAction;
 import daylightchart.location.Location;
 import daylightchart.location.parser.LocationFormatter;
 import daylightchart.options.UserPreferences;
@@ -58,9 +58,9 @@ public class LocationsList
   private final DaylightChartGui parent;
   private final JList locationsList;
   private List<Location> locations;
-  private DaylightChartGuiAction add;
-  private DaylightChartGuiAction delete;
-  private DaylightChartGuiAction edit;
+  private GuiAction add;
+  private GuiAction delete;
+  private GuiAction edit;
 
   /**
    * Create a new locations list component.
@@ -198,14 +198,9 @@ public class LocationsList
   private void createActions()
   {
 
-    add = new DaylightChartGuiAction("Add", new ImageIcon(LocationsList.class
-      .getResource("/icons/add_location.gif")), "Add a new location");
-    delete = new DaylightChartGuiAction("Delete",
-                                        new ImageIcon(LocationsList.class
-                                          .getResource("/icons/delete_location.gif")),
-                                        "Delete the selected location");
-    edit = new DaylightChartGuiAction("Edit", new ImageIcon(LocationsList.class
-      .getResource("/icons/edit_location.gif")), "Edit the selected  location");
+    add = new GuiAction("Add", "/icons/add_location.gif");
+    delete = new GuiAction("Delete", "/icons/delete_location.gif");
+    edit = new GuiAction("Edit", "/icons/edit_location.gif");
 
     add.addActionListener(new ActionListener()
     {

@@ -95,12 +95,12 @@ public final class DefaultTimezones
 
         final boolean invalidNumberOfFields = fields.length != 2;
         final boolean invalidHasNulls = fields[0] == null || fields[1] == null;
-        final boolean invalidLengths = fields[0].length() != 2 ||
-                                       fields[1].length() == 0;
+        final boolean invalidLengths = fields[0].length() != 2
+                                       || fields[1].length() == 0;
         if (invalidNumberOfFields || invalidHasNulls || invalidLengths)
         {
-          throw new IllegalArgumentException("Invalid default timezone record: " +
-                                             line);
+          throw new IllegalArgumentException("Invalid default timezone record: "
+                                             + line);
         }
         final String iso3166CountryCode2 = fields[0];
         final String timezoneId = fields[1];
@@ -197,8 +197,8 @@ public final class DefaultTimezones
     {
       final List<String> defaultTimezonesForCountry = defaultTimezones
         .get(country);
-      if (defaultTimezonesForCountry == null ||
-          defaultTimezonesForCountry.size() == 0)
+      if (defaultTimezonesForCountry == null
+          || defaultTimezonesForCountry.size() == 0)
       {
         return createGMTTimeZoneId(tzOffsetHours);
       }
@@ -212,8 +212,8 @@ public final class DefaultTimezones
       for (final String defaultTimeZoneId: defaultTimezonesForCountry)
       {
         final double difference = Math
-          .abs(getStandardTimeZoneOffsetHours(defaultTimeZoneId) -
-               tzOffsetHours);
+          .abs(getStandardTimeZoneOffsetHours(defaultTimeZoneId)
+               - tzOffsetHours);
         if (difference < leastDifference)
         {
           leastDifference = difference;
@@ -222,8 +222,8 @@ public final class DefaultTimezones
       }
     }
 
-    LOGGER.log(Level.INFO, "Time zone id for \"" + city + ", " + country +
-                           "\" is \"" + timeZoneId + "\"");
+    LOGGER.log(Level.INFO, "Time zone id for \"" + city + ", " + country
+                           + "\" is \"" + timeZoneId + "\"");
 
     return timeZoneId;
 
@@ -259,8 +259,8 @@ public final class DefaultTimezones
     final NumberFormat numberFormat = NumberFormat.getIntegerInstance();
     numberFormat.setMinimumIntegerDigits(2);
 
-    timeZoneId = timeZoneId + numberFormat.format(hourFields[0]) + ":" +
-                 numberFormat.format(hourFields[1]);
+    timeZoneId = timeZoneId + numberFormat.format(hourFields[0]) + ":"
+                 + numberFormat.format(hourFields[1]);
     return timeZoneId;
   }
 
@@ -294,8 +294,8 @@ public final class DefaultTimezones
                                               final double fraction)
   {
     return new BigDecimal(number / fraction)
-      .round(new MathContext(1, RoundingMode.HALF_UP)).doubleValue() *
-           fraction;
+      .round(new MathContext(1, RoundingMode.HALF_UP)).doubleValue()
+           * fraction;
   }
 
   /**
@@ -332,8 +332,8 @@ public final class DefaultTimezones
     final NumberFormat numberFormat = NumberFormat.getIntegerInstance();
     numberFormat.setMinimumIntegerDigits(2);
 
-    timeZoneId = timeZoneId + numberFormat.format(hourFields[0]) + ":" +
-                 numberFormat.format(hourFields[1]);
+    timeZoneId = timeZoneId + numberFormat.format(hourFields[0]) + ":"
+                 + numberFormat.format(hourFields[1]);
     return timeZoneId;
   }
 

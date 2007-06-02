@@ -23,10 +23,23 @@ package daylightchart.gui;
 
 
 import java.awt.Dimension;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
+import javax.swing.filechooser.FileFilter;
 
 import org.jfree.chart.ChartPanel;
+import org.jfree.chart.ChartUtilities;
+
+import sf.util.ui.Actions;
+import sf.util.ui.CloseTabIcon;
+import sf.util.ui.ExtensionFileFilter;
 
 import daylightchart.chart.DaylightChart;
 import daylightchart.location.Location;
@@ -44,6 +57,9 @@ public class LocationsTabbedPane
 {
 
   private static final long serialVersionUID = -2086804705336786590L;
+
+  private static final Logger LOGGER = Logger
+    .getLogger(LocationsTabbedPane.class.getName());
 
   /**
    * Add a new tab for the location.
@@ -74,7 +90,7 @@ public class LocationsTabbedPane
    */
   public void printSelectedChart()
   {
-    Actions.doPrintChartAction(getSelectedChart());
+    getSelectedChart().createChartPrintJob();
   }
 
   /**
@@ -82,7 +98,52 @@ public class LocationsTabbedPane
    */
   public void saveSelectedChart()
   {
-    Actions.doSaveChartAction(getSelectedChart());
+    final ChartPanel chartPanel = getSelectedChart();
+    final List<FileFilter> fileFilters = new ArrayList<FileFilter>();
+    fileFilters
+      .add(new ExtensionFileFilter("Portable Network Graphics (*.png)", ".png"));
+    fileFilters.add(new ExtensionFileFilter("JPEG (*.jpg)", ".jpg"));
+    final File selectedFile = Actions
+      .showSaveDialog(chartPanel, Messages
+        .getString("DaylightChartGui.Menu.File.SaveChart"), //$NON-NLS-1$
+                      fileFilters,
+                      new File(UserPreferences.getDataFileDirectory(),
+                               chartPanel.getName()),
+                      Messages.getString("DaylightChartGui.ConfirmOverwrite")); //$NON-NLS-1$
+    if (selectedFile != null)
+    {
+      try
+      {
+        final String extension = ExtensionFileFilter.getExtension(selectedFile);
+        if (extension.equals(".png"))
+        {
+          ChartUtilities.saveChartAsPNG(selectedFile,
+                                        chartPanel.getChart(),
+                                        chartPanel.getWidth(),
+                                        chartPanel.getHeight());
+        }
+        else if (extension.equals(".jpg"))
+        {
+          ChartUtilities.saveChartAsJPEG(selectedFile,
+                                         chartPanel.getChart(),
+                                         chartPanel.getWidth(),
+                                         chartPanel.getHeight());
+        }
+
+        // Save last selected directory
+        UserPreferences.setDataFileDirectory(selectedFile.getParentFile());
+      }
+      catch (final IOException e)
+      {
+        LOGGER.log(Level.WARNING, Messages
+          .getString("DaylightChartGui.Error.SaveChart"), e); //$NON-NLS-1$
+        JOptionPane.showMessageDialog(chartPanel, Messages
+          .getString("DaylightChartGui.Error.CannotSaveFile") + "\n" //$NON-NLS-1$ //$NON-NLS-2$
+                                                  + selectedFile, Messages
+          .getString("DaylightChartGui.Menu.File.SaveChart"), //$NON-NLS-1$
+                                      JOptionPane.OK_OPTION);
+      }
+    }
   }
 
   private ChartPanel getSelectedChart()
