@@ -25,10 +25,11 @@ package daylightchart.location.parser;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import daylightchart.location.Country;
 
@@ -106,9 +107,12 @@ public final class Countries
    * 
    * @return All countries.
    */
-  public static Set<Country> getAllCountries()
+  public static List<Country> getAllCountries()
   {
-    return new HashSet<Country>(iso3166CountryCodeMap.values());
+    final ArrayList<Country> countries = new ArrayList<Country>(iso3166CountryCodeMap
+      .values());
+    Collections.sort(countries);
+    return countries;
   }
 
   /**

@@ -36,7 +36,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 import java.util.TimeZone;
 import java.util.Map.Entry;
 import java.util.logging.Level;
@@ -72,7 +71,7 @@ public final class DefaultTimezones
     try
     {
 
-      final Set<Country> allCountries = Countries.getAllCountries();
+      final List<Country> allCountries = Countries.getAllCountries();
       for (final Country country: allCountries)
       {
         defaultTimezones.put(country, new ArrayList<String>());

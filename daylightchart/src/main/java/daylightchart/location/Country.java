@@ -67,7 +67,7 @@ public final class Country
    */
   public int compareTo(final Country otherCountry)
   {
-    return iso3166Code2.compareTo(otherCountry.iso3166Code2);
+    return name.compareTo(otherCountry.name);
   }
 
   /**
