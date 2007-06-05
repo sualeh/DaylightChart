@@ -7,7 +7,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.util.List;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -15,18 +14,18 @@ import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import org.pointlocation6709.Latitude;
 import org.pointlocation6709.Longitude;
 import org.pointlocation6709.PointLocation;
+import org.pointlocation6709.parser.CoordinateParser;
 import org.pointlocation6709.parser.FormatterException;
 import org.pointlocation6709.parser.PointLocationFormatType;
 import org.pointlocation6709.parser.PointLocationFormatter;
-import org.pointlocation6709.parser.PointLocationParser;
 
 import com.jgoodies.forms.builder.PanelBuilder;
 import com.jgoodies.forms.factories.ButtonBarFactory;
@@ -43,11 +42,10 @@ import daylightchart.location.parser.DefaultTimezones;
  * is allowed to add new locations, and delete or modify existing
  * locations.
  * 
- * @author Pradnya Devare
+ * @author Pradnya Devare, Sualeh Fatehi
  */
 public class LocationDialog
   extends JDialog
-  implements ActionListener
 {
 
   private class Error
@@ -89,33 +87,32 @@ public class LocationDialog
 
   }
 
-  public static final String DELETE = "Delete";
-
-  public static final String EDIT = "Edit";
-
-  public static final String ADD = "Add";
+  enum LocationMaintenanceOperation
+  {
+    DELETE,
+    EDIT,
+    ADD;
+  }
 
   private static final long serialVersionUID = -5161588534167787490L;
 
   private static final Logger LOGGER = Logger.getLogger(LocationDialog.class
     .getName());
 
-  private DaylightChartGui parent = null;
+  private LocationsList locationsList;
 
-  private JTextField txtCity = null;
-  private JComboBox cbCountries = null;
-  private JTextField txtLatitude = null;
-  private JTextField txtLongitude = null;
-  private JTextField txtTimeZone = null;
+  private JTextField txtCity;
+  private JComboBox cbCountries;
+  private JTextField txtLatitude;
+  private JTextField txtLongitude;
+  private JTextField txtTimeZone;
 
-  private JLabel lblMessage = null;
+  private JLabel lblMessage;
 
-  private JButton btnOK = null;
-  private JButton btnCancel = null;
+  private JButton btnOK;
+  private JButton btnCancel;
 
-  private String action = null;
-  private List<Location> locations = null;
-  private int index = 0;
+  private Location editLocation;
 
   /**
    * Constructor. This is used when there is a delete or edit operation
@@ -128,17 +125,16 @@ public class LocationDialog
    * @param String
    *        act
    */
-  public LocationDialog(final DaylightChartGui frame,
-                        final Location locn,
-                        final String act)
+  public LocationDialog(final LocationsList locationsList,
+                        final Location location,
+                        final LocationMaintenanceOperation act)
   {
-
-    super(frame, true);
+    super((JFrame) locationsList.getParent(), true);
     setSize(350, 230);
     setResizable(false);
 
-    parent = frame;
-    locations = parent.getLocations();
+    this.locationsList = locationsList;
+    editLocation = location;
 
     txtCity = new JTextField();
     cbCountries = new JComboBox(new Vector<Country>(Countries.getAllCountries()));
@@ -146,11 +142,41 @@ public class LocationDialog
     txtLongitude = new JTextField();
     txtTimeZone = new JTextField();
 
+    ActionListener actionListener = new ActionListener()
+    {
+
+      public void actionPerformed(final ActionEvent actevt)
+      {
+        if (actevt.getSource() == btnOK)
+        {
+          final Error error = validateInformation();
+          if (error.hasError())
+          {
+            error.display();
+            return;
+          }
+          Location location = getCurrentLocation();
+          switch (act)
+          {
+            case ADD:
+              parent.addLocation(location);
+              break;
+            case EDIT:
+              parent.replaceLocation(editLocation, location);
+              break;
+            case DELETE:
+              parent.removeLocation(editLocation);
+          }
+        }
+        dispose();
+      }
+    };
+
     btnOK = new JButton("Ok");
     btnCancel = new JButton("Cancel");
 
-    btnOK.addActionListener(this);
-    btnCancel.addActionListener(this);
+    btnOK.addActionListener(actionListener);
+    btnCancel.addActionListener(actionListener);
 
     lblMessage = new JLabel(" ");
     lblMessage.setForeground(Color.red);
@@ -158,7 +184,7 @@ public class LocationDialog
     final JPanel dialogPanel = buildDialogPanel();
     add(dialogPanel);
 
-    final FocusListener listener = new FocusListener()
+    final FocusListener focusListener = new FocusListener()
     {
       public void focusGained(FocusEvent e)
       {
@@ -166,8 +192,8 @@ public class LocationDialog
 
       public void focusLost(FocusEvent event)
       {
-        Latitude latitude = null;
-        Longitude longitude = null;
+        Latitude latitude;
+        Longitude longitude;
         if (event.getComponent().equals(txtLatitude))
         {
           latitude = getLatitude();
@@ -200,45 +226,14 @@ public class LocationDialog
       }
     };
 
-    txtLatitude.addFocusListener(listener);
-    txtLongitude.addFocusListener(listener);
-    txtCity.addFocusListener(listener);
-    cbCountries.addFocusListener(listener);
+    txtLatitude.addFocusListener(focusListener);
+    txtLongitude.addFocusListener(focusListener);
+    txtCity.addFocusListener(focusListener);
+    cbCountries.addFocusListener(focusListener);
 
-    repaint();
-    action = act;
+    setLocation(location);
 
-    if (locn != null) // i.e if its not the ADD operation
-    {
-      Latitude latitude = locn.getPointLocation().getLatitude();
-      Longitude longitude = locn.getPointLocation().getLongitude();
-
-      if (action.equals(LocationDialog.DELETE))
-      {
-        txtLatitude.setText(latitude.toString());
-        txtLongitude.setText(longitude.toString());
-      }
-      else if (action.equals(LocationDialog.EDIT))
-      {
-        try
-        {
-          txtLatitude.setText(PointLocationFormatter
-            .formatLatitude(latitude, PointLocationFormatType.DECIMAL));
-          txtLongitude.setText(PointLocationFormatter
-            .formatLongitude(longitude, PointLocationFormatType.DECIMAL));
-        }
-        catch (final FormatterException e)
-        {
-
-        }
-      }
-      txtCity.setText(locn.getCity());
-      cbCountries.setSelectedItem(locn.getCountry());
-      txtTimeZone.setText(locn.getTimeZoneId());
-      index = parent.getSelectedLocationIndex();
-    }
-
-    if (act.equals(LocationDialog.DELETE))
+    if (act == LocationMaintenanceOperation.DELETE)
     {
       txtLatitude.setEditable(false);
       txtLongitude.setEditable(false);
@@ -248,6 +243,30 @@ public class LocationDialog
     }
 
     repaint();
+  }
+
+  private void setLocation(final Location location)
+  {
+    if (location != null)
+    {
+      Latitude latitude = location.getPointLocation().getLatitude();
+      Longitude longitude = location.getPointLocation().getLongitude();
+
+      try
+      {
+        txtLatitude.setText(PointLocationFormatter
+          .formatLatitude(latitude, PointLocationFormatType.LONG));
+        txtLongitude.setText(PointLocationFormatter
+          .formatLongitude(longitude, PointLocationFormatType.LONG));
+      }
+      catch (final FormatterException e)
+      {
+        LOGGER.log(Level.FINE, e.getMessage(), e);
+      }
+      txtCity.setText(location.getCity());
+      cbCountries.setSelectedItem(location.getCountry());
+      txtTimeZone.setText(location.getTimeZoneId());
+    }
   }
 
   private JPanel buildDialogPanel()
@@ -280,82 +299,6 @@ public class LocationDialog
 
     final JPanel dialogPanel = builder.getPanel();
     return dialogPanel;
-  }
-
-  public void actionPerformed(final ActionEvent actevt)
-  {
-
-    if (actevt.getSource() == btnOK)
-    {
-      if (action.equals(LocationDialog.ADD))
-      {
-        final Error error = validateInformation();
-        if (error.hasError())
-        {
-          error.display();
-        }
-        else
-        {
-          Location location = getCurrentLocation();
-          locations.add(location);
-          parent.setLocations(locations);
-          dispose();
-        }
-      }
-      else if (action.equals(LocationDialog.EDIT))
-      {
-        final Error error = validateInformation();
-        if (error.hasError())
-        {
-          error.display();
-        }
-        else
-        {
-          Location location = getCurrentLocation();
-          locations.remove(index);
-          locations.add(index, location);
-
-          parent.setLocations(locations);
-          dispose();
-        }
-      }
-      else
-      // Delete
-      {
-        final int rep = JOptionPane
-          .showConfirmDialog(this,
-                             "Are you sure?",
-                             "Confirm Deletion",
-                             JOptionPane.YES_NO_OPTION);
-        if (rep == JOptionPane.OK_OPTION)
-        {
-          locations.remove(index);
-          index = 0;
-          parent.setLocations(locations);
-          dispose();
-        }
-        else if (rep == JOptionPane.CANCEL_OPTION)
-        {
-          dispose();
-        }
-      }
-    }
-    else if (actevt.getSource() == btnCancel)
-    {
-      dispose();
-      System.out.println("Cancel pressed ");
-
-    }
-  }
-
-  /**
-   * This method returns the current index on the Locations list.
-   * 
-   * @return int
-   */
-  public int getIndex()
-  {
-    return index;
   }
 
   private Country getCountry()
@@ -403,8 +346,7 @@ public class LocationDialog
     Latitude latitude = null;
     try
     {
-      latitude = PointLocationParser
-        .parseLatitude(txtLatitude.getText().trim());
+      latitude = CoordinateParser.parseLatitude(txtLatitude.getText());
     }
     catch (org.pointlocation6709.parser.ParserException e)
     {
@@ -418,8 +360,7 @@ public class LocationDialog
     Longitude longitude = null;
     try
     {
-      longitude = PointLocationParser.parseLongitude(txtLongitude.getText()
-        .trim());
+      longitude = CoordinateParser.parseLongitude(txtLongitude.getText());
     }
     catch (org.pointlocation6709.parser.ParserException e)
     {

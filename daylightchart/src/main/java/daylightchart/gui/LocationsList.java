@@ -206,7 +206,9 @@ public class LocationsList
     {
       public void actionPerformed(final ActionEvent e)
       {
-        final LocationDialog ld = new LocationDialog(parent, null, "Add");
+        final LocationDialog ld = new LocationDialog(LocationsList.this,
+                                                     null,
+                                                     LocationDialog.LocationMaintenanceOperation.ADD);
         ld.setVisible(true);
       }
     });
@@ -216,9 +218,9 @@ public class LocationsList
       public void actionPerformed(final ActionEvent e)
       {
         final Location location = getSelectedLocation();
-        final LocationDialog locDialog = new LocationDialog(parent,
+        final LocationDialog locDialog = new LocationDialog(LocationsList.this,
                                                             location,
-                                                            "Delete");
+                                                            LocationDialog.LocationMaintenanceOperation.DELETE);
         locDialog.setVisible(true);
         setSelectedLocation(location);
       }
@@ -229,9 +231,9 @@ public class LocationsList
       public void actionPerformed(final ActionEvent e)
       {
         final Location location = getSelectedLocation();
-        final LocationDialog locDialog = new LocationDialog(parent,
+        final LocationDialog locDialog = new LocationDialog(LocationsList.this,
                                                             location,
-                                                            "Edit");
+                                                            LocationDialog.LocationMaintenanceOperation.EDIT);
         locDialog.setVisible(true);
       }
     });
