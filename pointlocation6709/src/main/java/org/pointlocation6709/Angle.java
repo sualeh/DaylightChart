@@ -32,18 +32,36 @@ public class Angle
   implements Serializable, Comparable<Angle>
 {
 
-  /** Angle fields. */
+  /**
+   * Angle fields.
+   */
   public enum Field
   {
     /** Degrees. */
-    DEGREES,
+    DEGREES("\u00B0"),
     /** Minutes. */
-    MINUTES,
+    MINUTES("'"),
     /** Seconds. */
-    SECONDS,
-  }
+    SECONDS("\"");
 
-  protected static final char DEGREES = '\u00B0';
+    private final String symbol;
+
+    private Field(final String symbol)
+    {
+      this.symbol = symbol;
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see java.lang.Enum#toString()
+     */
+    public String toString()
+    {
+      return symbol;
+    }
+
+  }
 
   private static final long serialVersionUID = -6330836471692225095L;
 
@@ -267,11 +285,11 @@ public class Angle
     final int absIntMinutes = Math.abs(getField(Field.MINUTES));
     final int absIntSeconds = Math.abs(getField(Field.SECONDS));
 
-    representation.append(absIntDegrees).append(DEGREES).append(" ")
-      .append(Math.abs(absIntMinutes)).append("'");
+    representation.append(absIntDegrees).append(Field.DEGREES).append(" ")
+      .append(Math.abs(absIntMinutes)).append(Field.MINUTES);
     if (absIntSeconds > 0)
     {
-      representation.append(" ").append(absIntSeconds).append('"');
+      representation.append(" ").append(absIntSeconds).append(Field.SECONDS);
     }
     if (direction == null)
     {
@@ -303,9 +321,9 @@ public class Angle
   {
     if (Math.abs(degrees) > range)
     {
-      throw new IllegalArgumentException(degrees + DEGREES +
+      throw new IllegalArgumentException("" + degrees + Field.DEGREES +
                                          " is out of range, +/-" + range +
-                                         DEGREES);
+                                         Field.DEGREES);
     }
   }
 

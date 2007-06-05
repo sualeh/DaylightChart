@@ -20,6 +20,10 @@
 package org.pointlocation6709;
 
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 /**
  * Utility class.
  * 
@@ -69,6 +73,28 @@ public final class Utility
     return new int[] {
         units, minutes, seconds
     };
+  }
+
+  /**
+   * Combines sexagesimal parts into a a double value.
+   * 
+   * @param parts
+   *        Parts to combine
+   * @return Sexagesimal value
+   */
+  public static double sexagesimalCombine(final List<Integer> parts)
+  {
+    double value = 0D;
+    if (parts != null)
+    {
+      List<Integer> partsReversed = new ArrayList<Integer>(parts);
+      Collections.reverse(partsReversed);
+      for (Integer part: partsReversed)
+      {
+        value = value / 60D + part.doubleValue();
+      }
+    }
+    return value;
   }
 
   private Utility()
