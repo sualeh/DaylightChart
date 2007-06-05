@@ -133,6 +133,15 @@ public class LocationsList
     setLocations(UserPreferences.getLocations());
   }
 
+  public void addLocation(final Location location)
+  {
+    if (location != null)
+    {
+      locations.add(location);
+    }
+    setLocations(locations);
+  }
+
   /**
    * Gets all locations in the list.
    * 
@@ -141,6 +150,11 @@ public class LocationsList
   public List<Location> getLocations()
   {
     return new ArrayList<Location>(locations);
+  }
+
+  public DaylightChartGui getMainWindow()
+  {
+    return parent;
   }
 
   /**
@@ -156,6 +170,26 @@ public class LocationsList
   public int getSelectedLocationIndex()
   {
     return locationsList.getSelectedIndex();
+  }
+
+  public void removeLocation(final Location editLocation)
+  {
+    if (editLocation != null)
+    {
+      locations.remove(editLocation);
+    }
+    setLocations(locations);
+  }
+
+  public void replaceLocation(final Location editLocation,
+                              final Location location)
+  {
+    if (editLocation != null && location != null)
+    {
+      locations.remove(editLocation);
+      locations.add(location);
+    }
+    setLocations(locations);
   }
 
   /**
@@ -247,34 +281,6 @@ public class LocationsList
     rightPopup.add(delete);
     rightPopup.add(edit);
     return rightPopup;
-  }
-
-  public void addLocation(Location location)
-  {
-    if (location != null)
-    {
-      locations.add(location);
-    }
-    setLocations(locations);
-  }
-
-  public void replaceLocation(Location editLocation, Location location)
-  {
-    if (editLocation != null && location != null)
-    {
-      locations.remove(editLocation);
-      locations.add(location);
-    }
-    setLocations(locations);
-  }
-
-  public void removeLocation(Location editLocation)
-  {
-    if (editLocation != null)
-    {
-      locations.remove(editLocation);
-    }
-    setLocations(locations);
   }
 
 }

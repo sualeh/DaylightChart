@@ -47,6 +47,13 @@ public class LocationDialog
   extends JDialog
 {
 
+  enum LocationMaintenanceOperation
+  {
+    DELETE,
+    EDIT,
+    ADD;
+  }
+
   private class Error
   {
 
@@ -86,32 +93,23 @@ public class LocationDialog
 
   }
 
-  enum LocationMaintenanceOperation
-  {
-    DELETE,
-    EDIT,
-    ADD;
-  }
-
   private static final long serialVersionUID = -5161588534167787490L;
 
   private static final Logger LOGGER = Logger.getLogger(LocationDialog.class
     .getName());
 
-  private LocationsList locationsList;
+  private final JTextField txtCity;
+  private final JComboBox cbCountries;
+  private final JTextField txtLatitude;
+  private final JTextField txtLongitude;
+  private final JTextField txtTimeZone;
 
-  private JTextField txtCity;
-  private JComboBox cbCountries;
-  private JTextField txtLatitude;
-  private JTextField txtLongitude;
-  private JTextField txtTimeZone;
+  private final JLabel lblMessage;
 
-  private JLabel lblMessage;
+  private final JButton btnOK;
+  private final JButton btnCancel;
 
-  private JButton btnOK;
-  private JButton btnCancel;
-
-  private Location editLocation;
+  private final Location editLocation;
 
   /**
    * Constructor. This is used when there is a delete or edit operation
@@ -128,13 +126,10 @@ public class LocationDialog
                         final Location location,
                         final LocationMaintenanceOperation act)
   {
-    super();
-// super((JFrame) locationsList.getParent().getParent().getParent(),
-// true);
+    super(locationsList.getMainWindow(), true);
     setSize(350, 230);
     setResizable(false);
 
-    this.locationsList = locationsList;
     editLocation = location;
 
     txtCity = new JTextField();
@@ -143,7 +138,7 @@ public class LocationDialog
     txtLongitude = new JTextField();
     txtTimeZone = new JTextField();
 
-    ActionListener actionListener = new ActionListener()
+    final ActionListener actionListener = new ActionListener()
     {
 
       public void actionPerformed(final ActionEvent actevt)
@@ -193,23 +188,20 @@ public class LocationDialog
 
       public void focusLost(FocusEvent event)
       {
+        if (event.isTemporary())
+        {
+          return;
+        }
+
         Latitude latitude = null;
         Longitude longitude = null;
         if (event.getComponent().equals(txtLatitude))
         {
-          latitude = getLatitude();
-          if (latitude != null)
-          {
-            txtLatitude.setText(latitude.toString());
-          }
+          setLatitude(getLatitude());
         }
         if (event.getComponent().equals(txtLongitude))
         {
-          longitude = getLongitude();
-          if (longitude != null)
-          {
-            txtLongitude.setText(longitude.toString());
-          }
+          setLongitude(getLongitude());
         }
 
         if (latitude != null && longitude != null)
@@ -224,6 +216,7 @@ public class LocationDialog
             txtTimeZone.setText(getTimeZoneId());
           }
         }
+
       }
     };
 
@@ -244,30 +237,6 @@ public class LocationDialog
     }
 
     repaint();
-  }
-
-  private void setLocation(final Location location)
-  {
-    if (location != null)
-    {
-      Latitude latitude = location.getPointLocation().getLatitude();
-      Longitude longitude = location.getPointLocation().getLongitude();
-
-      try
-      {
-        txtLatitude.setText(PointLocationFormatter
-          .formatLatitude(latitude, PointLocationFormatType.LONG));
-        txtLongitude.setText(PointLocationFormatter
-          .formatLongitude(longitude, PointLocationFormatType.LONG));
-      }
-      catch (final FormatterException e)
-      {
-        LOGGER.log(Level.FINE, e.getMessage(), e);
-      }
-      txtCity.setText(location.getCity());
-      cbCountries.setSelectedItem(location.getCountry());
-      txtTimeZone.setText(location.getTimeZoneId());
-    }
   }
 
   private JPanel buildDialogPanel()
@@ -302,25 +271,119 @@ public class LocationDialog
     return dialogPanel;
   }
 
+  private String getCity()
+  {
+    return txtCity.getText().trim();
+  }
+
   private Country getCountry()
   {
     final Country country = (Country) cbCountries.getSelectedItem();
     return country;
   }
 
-  private String getCity()
-  {
-    return txtCity.getText().trim();
-  }
-
   private Location getCurrentLocation()
   {
     final PointLocation ploc = new PointLocation(getLatitude(), getLongitude());
-    Location location = new Location(getCity(),
-                                     getCountry(),
-                                     getTimeZoneId(),
-                                     ploc);
+    final Location location = new Location(getCity(),
+                                           getCountry(),
+                                           getTimeZoneId(),
+                                           ploc);
     return location;
+  }
+
+  private Latitude getLatitude()
+  {
+    Latitude latitude = null;
+    try
+    {
+      latitude = CoordinateParser.parseLatitude(txtLatitude.getText());
+    }
+    catch (final org.pointlocation6709.parser.ParserException e)
+    {
+      LOGGER.log(Level.FINE, e.getMessage(), e);
+    }
+    return latitude;
+  }
+
+  private Longitude getLongitude()
+  {
+    Longitude longitude = null;
+    try
+    {
+      longitude = CoordinateParser.parseLongitude(txtLongitude.getText());
+    }
+    catch (final org.pointlocation6709.parser.ParserException e)
+    {
+      LOGGER.log(Level.FINE, e.getMessage(), e);
+    }
+    return longitude;
+  }
+
+  private String getTimeZoneId()
+  {
+    return DefaultTimezones.attemptTimeZoneMatch(getCity(),
+                                                 getCountry(),
+                                                 getLongitude());
+  }
+
+  private void setLocation(final Location location)
+  {
+    if (location != null)
+    {
+      setLatitude(location.getPointLocation().getLatitude());
+      setLongitude(location.getPointLocation().getLongitude());
+      setCity(location.getCity());
+      setCountry(location.getCountry());
+      setTimeZoneId(location.getTimeZoneId());
+    }
+  }
+
+  private void setTimeZoneId(final String timeZoneId)
+  {
+    txtTimeZone.setText(timeZoneId);
+  }
+
+  private void setCountry(final Country country)
+  {
+    cbCountries.setSelectedItem(country);
+  }
+
+  private void setCity(final String city)
+  {
+    txtCity.setText(city);
+  }
+
+  private void setLatitude(final Latitude latitude)
+  {
+    if (latitude != null)
+    {
+      try
+      {
+        txtLatitude.setText(PointLocationFormatter
+          .formatLatitude(latitude, PointLocationFormatType.LONG));
+      }
+      catch (final FormatterException e)
+      {
+        LOGGER.log(Level.FINE, e.getMessage(), e);
+      }
+    }
+  }
+
+  private void setLongitude(final Longitude longitude)
+  {
+    if (longitude != null)
+    {
+      try
+      {
+        txtLongitude.setText(PointLocationFormatter
+          .formatLongitude(longitude, PointLocationFormatType.LONG));
+      }
+      catch (final FormatterException e)
+      {
+        LOGGER.log(Level.FINE, e.getMessage(), e);
+      }
+    }
   }
 
   private Error validateInformation()
@@ -340,40 +403,5 @@ public class LocationDialog
     }
 
     return new Error("", null, false);
-  }
-
-  private Latitude getLatitude()
-  {
-    Latitude latitude = null;
-    try
-    {
-      latitude = CoordinateParser.parseLatitude(txtLatitude.getText());
-    }
-    catch (org.pointlocation6709.parser.ParserException e)
-    {
-      LOGGER.log(Level.FINE, e.getMessage(), e);
-    }
-    return latitude;
-  }
-
-  private Longitude getLongitude()
-  {
-    Longitude longitude = null;
-    try
-    {
-      longitude = CoordinateParser.parseLongitude(txtLongitude.getText());
-    }
-    catch (org.pointlocation6709.parser.ParserException e)
-    {
-      LOGGER.log(Level.FINE, e.getMessage(), e);
-    }
-    return longitude;
-  }
-
-  private String getTimeZoneId()
-  {
-    return DefaultTimezones.attemptTimeZoneMatch(getCity(),
-                                                 getCountry(),
-                                                 getLongitude());
   }
 }

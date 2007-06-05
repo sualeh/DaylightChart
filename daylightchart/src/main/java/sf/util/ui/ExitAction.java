@@ -46,7 +46,7 @@ public final class ExitAction
    * @param text
    *        TODO
    */
-  public ExitAction(final JFrame frame, String text)
+  public ExitAction(final JFrame frame, final String text)
   {
     super(text, "/icons/exit.gif" //$NON-NLS-1$ 
     );

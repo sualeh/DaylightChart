@@ -110,22 +110,6 @@ public final class DaylightChartGui
     pack();
   }
 
-  public int getSelectedLocationIndex()
-  {
-    return locationsList.getSelectedLocationIndex();
-  }
-
-  /**
-   * Add a new location tab.
-   * 
-   * @param location
-   *        Location.
-   */
-  void addLocationTab(final Location location)
-  {
-    locationsTabbedPane.addLocationTab(location);
-  }
-
   /**
    * Gets locations from the list.
    * 
@@ -134,6 +118,11 @@ public final class DaylightChartGui
   public List<Location> getLocations()
   {
     return locationsList.getLocations();
+  }
+
+  public int getSelectedLocationIndex()
+  {
+    return locationsList.getSelectedLocationIndex();
   }
 
   /**
@@ -149,6 +138,17 @@ public final class DaylightChartGui
       locationsList.setLocations(locations);
       this.repaint();
     }
+  }
+
+  /**
+   * Add a new location tab.
+   * 
+   * @param location
+   *        Location.
+   */
+  void addLocationTab(final Location location)
+  {
+    locationsTabbedPane.addLocationTab(location);
   }
 
   private void createFileMenu(final JMenuBar menuBar, final JToolBar toolBar)
