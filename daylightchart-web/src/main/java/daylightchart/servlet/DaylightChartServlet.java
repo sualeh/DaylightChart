@@ -31,8 +31,8 @@ import org.jfree.chart.ChartUtilities;
 import org.pointlocation6709.Latitude;
 import org.pointlocation6709.Longitude;
 import org.pointlocation6709.PointLocation;
+import org.pointlocation6709.parser.CoordinateParser;
 import org.pointlocation6709.parser.ParserException;
-import org.pointlocation6709.parser.PointLocationParser;
 
 import daylightchart.chart.DaylightChart;
 import daylightchart.location.Country;
@@ -51,20 +51,24 @@ public class DaylightChartServlet
 
   private static final long serialVersionUID = 3184265489619614766L;
 
-  protected void doGet(HttpServletRequest request, HttpServletResponse response)
+  @Override
+  protected void doGet(final HttpServletRequest request,
+                       final HttpServletResponse response)
     throws ServletException, IOException
   {
     doPost(request, response);
   }
 
-  protected void doPost(HttpServletRequest request, HttpServletResponse response)
+  @Override
+  protected void doPost(final HttpServletRequest request,
+                        final HttpServletResponse response)
     throws ServletException, IOException
   {
     try
     {
       // Create the chart
-      Location location = getRequestedLocation(request);
-      DaylightChart daylightChart = new DaylightChart(location);
+      final Location location = getRequestedLocation(request);
+      final DaylightChart daylightChart = new DaylightChart(location);
 
       // Get the image width
       int width;
@@ -72,7 +76,7 @@ public class DaylightChartServlet
       {
         width = Integer.parseInt(request.getParameter("width"));
       }
-      catch (NumberFormatException e)
+      catch (final NumberFormatException e)
       {
         width = 700;
       }
@@ -83,7 +87,7 @@ public class DaylightChartServlet
       {
         height = Integer.parseInt(request.getParameter("height"));
       }
-      catch (NumberFormatException e)
+      catch (final NumberFormatException e)
       {
         height = 495;
       }
@@ -95,7 +99,7 @@ public class DaylightChartServlet
                                       height);
 
     }
-    catch (RuntimeException e)
+    catch (final RuntimeException e)
     {
       throw new ServletException(e);
     }
@@ -111,7 +115,7 @@ public class DaylightChartServlet
    * @throws ServletException
    *         On an exception
    */
-  private Location getRequestedLocation(HttpServletRequest request)
+  private Location getRequestedLocation(final HttpServletRequest request)
     throws ServletException
   {
     try
@@ -153,7 +157,7 @@ public class DaylightChartServlet
       {
         latitudeValue = "+" + latitudeValue;
       }
-      Latitude latitude = PointLocationParser.parseLatitude(latitudeValue);
+      final Latitude latitude = CoordinateParser.parseLatitude(latitudeValue);
 
       // Get the longitude
       String longitudeValue = request.getParameter("longitude");
@@ -173,17 +177,21 @@ public class DaylightChartServlet
       {
         longitudeValue = "+" + longitudeValue;
       }
-      Longitude longitude = PointLocationParser.parseLongitude(longitudeValue);
+      final Longitude longitude = CoordinateParser
+        .parseLongitude(longitudeValue);
 
       // Create the chart
-      PointLocation pointLocation = new PointLocation(latitude, longitude);
-      String timeZoneId = DefaultTimezones
+      final PointLocation pointLocation = new PointLocation(latitude, longitude);
+      final String timeZoneId = DefaultTimezones
         .attemptTimeZoneMatch(city, country, pointLocation.getLongitude());
-      Location location = new Location(city, country, timeZoneId, pointLocation);
+      final Location location = new Location(city,
+                                             country,
+                                             timeZoneId,
+                                             pointLocation);
       return location;
     }
 
-    catch (ParserException e)
+    catch (final ParserException e)
     {
       throw new ServletException(e);
     }
