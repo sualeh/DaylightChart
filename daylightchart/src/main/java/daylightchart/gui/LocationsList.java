@@ -249,4 +249,32 @@ public class LocationsList
     return rightPopup;
   }
 
+  public void addLocation(Location location)
+  {
+    if (location != null)
+    {
+      locations.add(location);
+    }
+    setLocations(locations);
+  }
+
+  public void replaceLocation(Location editLocation, Location location)
+  {
+    if (editLocation != null && location != null)
+    {
+      locations.remove(editLocation);
+      locations.add(location);
+    }
+    setLocations(locations);
+  }
+
+  public void removeLocation(Location editLocation)
+  {
+    if (editLocation != null)
+    {
+      locations.remove(editLocation);
+    }
+    setLocations(locations);
+  }
+
 }

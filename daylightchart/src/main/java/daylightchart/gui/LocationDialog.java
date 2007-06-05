@@ -14,7 +14,6 @@ import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -129,7 +128,9 @@ public class LocationDialog
                         final Location location,
                         final LocationMaintenanceOperation act)
   {
-    super((JFrame) locationsList.getParent(), true);
+    super();
+// super((JFrame) locationsList.getParent().getParent().getParent(),
+// true);
     setSize(350, 230);
     setResizable(false);
 
@@ -159,13 +160,13 @@ public class LocationDialog
           switch (act)
           {
             case ADD:
-              parent.addLocation(location);
+              locationsList.addLocation(location);
               break;
             case EDIT:
-              parent.replaceLocation(editLocation, location);
+              locationsList.replaceLocation(editLocation, location);
               break;
             case DELETE:
-              parent.removeLocation(editLocation);
+              locationsList.removeLocation(editLocation);
           }
         }
         dispose();
@@ -192,8 +193,8 @@ public class LocationDialog
 
       public void focusLost(FocusEvent event)
       {
-        Latitude latitude;
-        Longitude longitude;
+        Latitude latitude = null;
+        Longitude longitude = null;
         if (event.getComponent().equals(txtLatitude))
         {
           latitude = getLatitude();
