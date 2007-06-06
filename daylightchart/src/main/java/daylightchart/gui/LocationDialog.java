@@ -23,6 +23,7 @@ import org.pointlocation6709.Latitude;
 import org.pointlocation6709.Longitude;
 import org.pointlocation6709.PointLocation;
 import org.pointlocation6709.parser.CoordinateParser;
+import org.pointlocation6709.parser.ParserException;
 
 import com.jgoodies.forms.builder.PanelBuilder;
 import com.jgoodies.forms.factories.ButtonBarFactory;
@@ -47,8 +48,11 @@ public class LocationDialog
 
   enum LocationMaintenanceOperation
   {
+    /** Delete location. */
     Delete,
+    /** Edit location. */
     Edit,
+    /** Add location. */
     Add;
   }
 
@@ -71,6 +75,11 @@ public class LocationDialog
 
   /**
    * Dialog for location delete, add or edit operation to be performed.
+   * 
+   * @param locationsList
+   *        Locations list
+   * @param operation
+   *        Operation to perform
    */
   public LocationDialog(final LocationsList locationsList,
                         final LocationMaintenanceOperation operation)
@@ -102,11 +111,7 @@ public class LocationDialog
       public void actionPerformed(final ActionEvent actionEvent)
       {
         final Object source = actionEvent.getSource();
-        if (source == cancel)
-        {
-          dispose();
-        }
-        else if (source == ok)
+        if (source == ok)
         {
           boolean hasError = validateAndShowError();
           if (hasError)
@@ -143,33 +148,30 @@ public class LocationDialog
 
     final FocusListener focusListener = new FocusListener()
     {
-      public void focusGained(FocusEvent e)
+      public void focusGained(@SuppressWarnings("unused")
+      FocusEvent e)
       {
       }
 
       public void focusLost(FocusEvent event)
       {
-        if (event.isTemporary())
+        if (!event.isTemporary())
         {
-          return;
-        }
+          final Component focusComponent = event.getComponent();
+          if (focusComponent.equals(txtLatitude))
+          {
+            setLatitude(getLatitude());
+          }
+          else if (focusComponent.equals(txtLongitude))
+          {
+            setLongitude(getLongitude());
+          }
 
-        final Component focusComponent = event.getComponent();
-        System.err.println("Focus lost in " + focusComponent);
-
-        if (focusComponent.equals(txtLatitude))
-        {
-          setLatitude(getLatitude());
-        }
-        if (focusComponent.equals(txtLongitude))
-        {
-          setLongitude(getLongitude());
-        }
-
-        boolean hasError = validateAndShowError();
-        if (!hasError)
-        {
-          setTimeZoneId(getTimeZoneId());
+          boolean hasError = validateAndShowError();
+          if (!hasError)
+          {
+            setTimeZoneId(getTimeZoneId());
+          }
         }
       }
     };
@@ -200,15 +202,13 @@ public class LocationDialog
 
     final JPanel buttonBar = ButtonBarFactory.buildOKCancelBar(ok, cancel);
 
-    FormLayout layout;
-    PanelBuilder builder;
-    final CellConstraints cc = new CellConstraints();
+    FormLayout layout = new FormLayout("right:p, 3dlu, p", // columns
+                                       "p, 3dlu, p, 3dlu, p, 3dlu, p, 3dlu, p, 3dlu, p, 3dlu, p"); // rows
 
-    layout = new FormLayout("right:p, 3dlu, p", // columns
-                            "p, 3dlu, p, 3dlu, p, 3dlu, p, 3dlu, p, 3dlu, p, 3dlu, p"); // rows
-
-    builder = new PanelBuilder(layout);
+    PanelBuilder builder = new PanelBuilder(layout);
     builder.setDefaultDialogBorder();
+
+    final CellConstraints cc = new CellConstraints();
 
     builder.addLabel("City", cc.xy(1, 1));
     builder.add(txtCity, cc.xy(3, 1));
@@ -224,8 +224,7 @@ public class LocationDialog
     builder.add(lblMessage, cc.xyw(1, 11, 3));
     builder.add(buttonBar, cc.xyw(1, 13, 3));
 
-    final JPanel dialogPanel = builder.getPanel();
-    return dialogPanel;
+    return builder.getPanel();
   }
 
   private String getCity()
@@ -253,7 +252,7 @@ public class LocationDialog
     {
       latitude = CoordinateParser.parseLatitude(txtLatitude.getText());
     }
-    catch (final org.pointlocation6709.parser.ParserException e)
+    catch (final ParserException e)
     {
       LOGGER.log(Level.FINE, e.getMessage(), e);
     }
@@ -267,7 +266,7 @@ public class LocationDialog
     {
       longitude = CoordinateParser.parseLongitude(txtLongitude.getText());
     }
-    catch (final org.pointlocation6709.parser.ParserException e)
+    catch (final ParserException e)
     {
       LOGGER.log(Level.FINE, e.getMessage(), e);
     }
@@ -276,9 +275,9 @@ public class LocationDialog
 
   private String getTimeZoneId()
   {
-    final String timeZoneId = DefaultTimezones
-      .attemptTimeZoneMatch(getCity(), getCountry(), getLongitude());
-    return timeZoneId;
+    return DefaultTimezones.attemptTimeZoneMatch(getCity(),
+                                                 getCountry(),
+                                                 getLongitude());
   }
 
   private void setCity(final String city)
