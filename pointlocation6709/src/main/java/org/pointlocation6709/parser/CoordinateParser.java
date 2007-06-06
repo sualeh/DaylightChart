@@ -167,11 +167,11 @@ public final class CoordinateParser
     throws ParserException
   {
     // Clean the representation, so that it can be parsed
-    String representation = coordinateString;
-    if (StringUtils.isBlank(representation))
+    if (StringUtils.isBlank(coordinateString))
     {
       throw new ParserException("No value provided");
     }
+    String representation = coordinateString.trim();
 
     boolean isIso6709Format = true;
 
@@ -201,14 +201,9 @@ public final class CoordinateParser
                                                " ");
     representation = representation.replaceAll(Angle.Field.SECONDS.toString(),
                                                " ");
-    // Squeeze spaces
-    representation = StringUtils.trim(representation);
-    while (representation.indexOf("  ") > -1)
-    {
-      representation.replaceAll("  ", " ");
-    }
 
-    final List<String> degreeParts = Arrays.asList(representation.split(" "));
+    final List<String> degreeParts = new ArrayList<String>(Arrays
+      .asList(StringUtils.split(representation, ' ')));
     if (degreeParts.size() > 4)
     {
       throw new ParserException("Incorrectly formed angle - " +
@@ -226,7 +221,7 @@ public final class CoordinateParser
     {
       // Find the sign
       final CompassDirection compassDirection = CompassDirection
-        .valueOf(degreeParts.get(degreeParts.size() - 1).toUpperCase());
+        .valueOf(degreeParts.get(degreeParts.size() - 1).trim().toUpperCase());
       sign = compassDirection.getSign();
       isIso6709Format = false;
       // Remove the sign
@@ -249,7 +244,7 @@ public final class CoordinateParser
       {
         try
         {
-          angleFields.add(new Integer(Integer.parseInt(degreePart)));
+          angleFields.add(new Integer(Integer.parseInt(degreePart.trim())));
         }
         catch (final NumberFormatException e)
         {
