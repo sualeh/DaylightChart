@@ -240,10 +240,8 @@ public class LocationsList
     {
       public void actionPerformed(final ActionEvent e)
       {
-        final LocationDialog ld = new LocationDialog(LocationsList.this,
-                                                     null,
-                                                     LocationDialog.LocationMaintenanceOperation.ADD);
-        ld.setVisible(true);
+        new LocationDialog(LocationsList.this,
+                           LocationDialog.LocationMaintenanceOperation.Add);
       }
     });
 
@@ -251,12 +249,8 @@ public class LocationsList
     {
       public void actionPerformed(final ActionEvent e)
       {
-        final Location location = getSelectedLocation();
-        final LocationDialog locDialog = new LocationDialog(LocationsList.this,
-                                                            location,
-                                                            LocationDialog.LocationMaintenanceOperation.DELETE);
-        locDialog.setVisible(true);
-        setSelectedLocation(location);
+        new LocationDialog(LocationsList.this,
+                           LocationDialog.LocationMaintenanceOperation.Delete);
       }
     });
 
@@ -264,11 +258,8 @@ public class LocationsList
     {
       public void actionPerformed(final ActionEvent e)
       {
-        final Location location = getSelectedLocation();
-        final LocationDialog locDialog = new LocationDialog(LocationsList.this,
-                                                            location,
-                                                            LocationDialog.LocationMaintenanceOperation.EDIT);
-        locDialog.setVisible(true);
+        new LocationDialog(LocationsList.this,
+                           LocationDialog.LocationMaintenanceOperation.Edit);
       }
     });
 
