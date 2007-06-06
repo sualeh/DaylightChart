@@ -167,11 +167,6 @@ public class LocationsList
     return (Location) locationsList.getSelectedValue();
   }
 
-  public int getSelectedLocationIndex()
-  {
-    return locationsList.getSelectedIndex();
-  }
-
   public void removeLocation(final Location editLocation)
   {
     if (editLocation != null)
@@ -202,6 +197,7 @@ public class LocationsList
   {
     if (locations != null && locations.size() > 0)
     {
+      UserPreferences.sortLocations(locations);
       this.locations = locations;
       locationsList.setListData(new Vector<Location>(locations));
       locationsList.setSelectedIndex(0);
@@ -225,7 +221,6 @@ public class LocationsList
    */
   public void sortLocations()
   {
-    UserPreferences.sortLocations(locations);
     setLocations(locations);
   }
 

@@ -120,11 +120,6 @@ public final class DaylightChartGui
     return locationsList.getLocations();
   }
 
-  public int getSelectedLocationIndex()
-  {
-    return locationsList.getSelectedLocationIndex();
-  }
-
   /**
    * Sets the locations list on the GUI.
    * 

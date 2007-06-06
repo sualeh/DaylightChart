@@ -81,7 +81,14 @@ public class LocationDialog
     setSize(350, 230);
     setResizable(false);
 
-    editLocation = locationsList.getSelectedLocation();
+    if (operation == LocationMaintenanceOperation.Add)
+    {
+      editLocation = null;
+    }
+    else
+    {
+      editLocation = locationsList.getSelectedLocation();
+    }
 
     txtCity = new JTextField();
     cbCountries = new JComboBox(new Vector<Country>(Countries.getAllCountries()));
