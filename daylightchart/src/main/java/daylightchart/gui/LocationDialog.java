@@ -12,11 +12,11 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import org.pointlocation6709.Latitude;
@@ -25,9 +25,8 @@ import org.pointlocation6709.PointLocation;
 import org.pointlocation6709.parser.CoordinateParser;
 import org.pointlocation6709.parser.ParserException;
 
-import com.jgoodies.forms.builder.PanelBuilder;
+import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.factories.ButtonBarFactory;
-import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
 import daylightchart.location.Country;
@@ -144,7 +143,19 @@ public class LocationDialog
     lblMessage = new JLabel(" ");
     lblMessage.setForeground(Color.red);
 
-    getContentPane().add(buildDialogPanel());
+    FormLayout layout = new FormLayout("right:p, 3dlu, p");
+    DefaultFormBuilder builder = new DefaultFormBuilder(layout);
+    builder.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+    builder.append("City", txtCity);
+    builder.append("Country", cbCountries);
+    builder.append("Latitude", txtLatitude);
+    builder.append("Longitude", txtLongitude);
+    builder.append("Time Zone", txtTimeZone);
+
+    builder.append(lblMessage, 3);
+    builder.append(ButtonBarFactory.buildOKCancelBar(ok, cancel), 3);
+
+    getContentPane().add(builder.getPanel());
 
     final FocusListener focusListener = new FocusListener()
     {
@@ -195,36 +206,6 @@ public class LocationDialog
     pack();
     setLocationRelativeTo(locationsList.getMainWindow());
     setVisible(true);
-  }
-
-  private JPanel buildDialogPanel()
-  {
-
-    final JPanel buttonBar = ButtonBarFactory.buildOKCancelBar(ok, cancel);
-
-    FormLayout layout = new FormLayout("right:p, 3dlu, p", // columns
-                                       "p, 3dlu, p, 3dlu, p, 3dlu, p, 3dlu, p, 3dlu, p, 3dlu, p"); // rows
-
-    PanelBuilder builder = new PanelBuilder(layout);
-    builder.setDefaultDialogBorder();
-
-    final CellConstraints cc = new CellConstraints();
-
-    builder.addLabel("City", cc.xy(1, 1));
-    builder.add(txtCity, cc.xy(3, 1));
-    builder.addLabel("Country", cc.xy(1, 3));
-    builder.add(cbCountries, cc.xy(3, 3));
-    builder.addLabel("Latitude", cc.xy(1, 5));
-    builder.add(txtLatitude, cc.xy(3, 5));
-    builder.addLabel("Longitude", cc.xy(1, 7));
-    builder.add(txtLongitude, cc.xy(3, 7));
-    builder.addLabel("Time Zone", cc.xy(1, 9));
-    builder.add(txtTimeZone, cc.xy(3, 9));
-
-    builder.add(lblMessage, cc.xyw(1, 11, 3));
-    builder.add(buttonBar, cc.xyw(1, 13, 3));
-
-    return builder.getPanel();
   }
 
   private String getCity()
