@@ -35,7 +35,7 @@ import daylightchart.location.parser.Countries;
 import daylightchart.location.parser.DefaultTimezones;
 
 /**
- * This class is used for the display of the Location editor. The user
+ * This class is used for the display of the location editor. The user
  * is allowed to add new locations, and delete or modify existing
  * locations.
  * 
@@ -354,7 +354,7 @@ public class LocationDialog
     }
     else
     {
-      showError("", null);
+      showError(" ", null);
     }
     return hasError;
   }
