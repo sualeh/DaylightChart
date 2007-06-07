@@ -168,6 +168,11 @@ public class LocationDialog
       {
         if (!event.isTemporary())
         {
+          if (event.getOppositeComponent().equals(cancel))
+          {
+            return;
+          }
+
           final Component focusComponent = event.getComponent();
           if (focusComponent.equals(txtLatitude))
           {
