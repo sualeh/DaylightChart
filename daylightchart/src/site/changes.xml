@@ -45,5 +45,13 @@
         the time zone for the chart.
       </action>
     </release>
+    <release version="1.4" date="2007-06-09">
+      <action dev="Sualeh Fatehi" type="add">
+        Location editor to add, edit, and delete locations.
+      </action>
+      <action dev="Sualeh Fatehi" type="add">
+        Icons and toolbars in the main window.
+      </action>
+    </release>    
   </body>
 </document>
