@@ -60,7 +60,8 @@ public enum LocationsSortOrder
                                        - latitude1.getRadians());
         break;
       case BY_NAME:
-        comparison = location1.compareTo(location2);
+        comparison = location1.getDescription().toLowerCase()
+          .compareTo(location2.getDescription().toLowerCase());
         break;
     }
     return comparison;
