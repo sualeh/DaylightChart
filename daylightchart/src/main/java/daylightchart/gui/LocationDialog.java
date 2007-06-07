@@ -16,7 +16,6 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
-import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import org.pointlocation6709.Latitude;
@@ -65,7 +64,6 @@ public class LocationDialog
   private final JTextField latitudeValue;
   private final JTextField longitudeValue;
   private final JTextField timeZone;
-  private final JLabel error;
 
   private final JButton ok;
   private final JButton cancel;
@@ -140,9 +138,6 @@ public class LocationDialog
     ok.addActionListener(actionListener);
     cancel.addActionListener(actionListener);
 
-    error = new JLabel(" ");
-    error.setForeground(Color.red);
-
     FormLayout layout = new FormLayout("right:p, 3dlu, p");
     DefaultFormBuilder builder = new DefaultFormBuilder(layout);
     builder.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -152,7 +147,6 @@ public class LocationDialog
     builder.append("Longitude", longitudeValue);
     builder.append("Time Zone", timeZone);
 
-    builder.append(error, 3);
     builder.append(ButtonBarFactory.buildOKCancelBar(ok, cancel), 3);
 
     getContentPane().add(builder.getPanel());
@@ -203,7 +197,6 @@ public class LocationDialog
       longitudeValue.setEditable(false);
       city.setEditable(false);
       countries.setEnabled(false);
-      error.setVisible(false);
     }
 
     setCurrentLocation(editLocation);
@@ -309,12 +302,14 @@ public class LocationDialog
     timeZone.setText(TimeZone.getTimeZone(timeZoneId).getDisplayName());
   }
 
-  private void showError(final String message, final Component component)
+  private void showError(final Component component)
   {
-    error.setText(message);
+    city.setBackground(Color.white);
+    latitudeValue.setBackground(Color.white);
+    longitudeValue.setBackground(Color.white);
     if (component != null)
     {
-      component.requestFocus();
+      component.setBackground(new Color(255, 255, 204));
     }
   }
 
@@ -324,21 +319,21 @@ public class LocationDialog
     if (getCity().length() == 0)
     {
       hasError = true;
-      showError("Please provide a city", city);
+      showError(city);
     }
     else if (getLatitude() == null)
     {
       hasError = true;
-      showError("Please provide a latitude", latitudeValue);
+      showError(latitudeValue);
     }
     else if (getLongitude() == null)
     {
       hasError = true;
-      showError("Please provide a longitude", longitudeValue);
+      showError(longitudeValue);
     }
     else
     {
-      showError(" ", null);
+      showError(null);
     }
     return hasError;
   }
