@@ -60,12 +60,12 @@ public class LocationDialog
   private static final Logger LOGGER = Logger.getLogger(LocationDialog.class
     .getName());
 
-  private final JTextField txtCity;
-  private final JComboBox cbCountries;
-  private final JTextField txtLatitude;
-  private final JTextField txtLongitude;
-  private final JTextField txtTimeZone;
-  private final JLabel lblMessage;
+  private final JTextField city;
+  private final JComboBox countries;
+  private final JTextField latitudeValue;
+  private final JTextField longitudeValue;
+  private final JTextField timeZone;
+  private final JLabel error;
 
   private final JButton ok;
   private final JButton cancel;
@@ -97,12 +97,12 @@ public class LocationDialog
       editLocation = locationsList.getSelectedLocation();
     }
 
-    txtCity = new JTextField();
-    cbCountries = new JComboBox(new Vector<Country>(Countries.getAllCountries()));
-    txtLatitude = new JTextField();
-    txtLongitude = new JTextField();
-    txtTimeZone = new JTextField();
-    txtTimeZone.setEditable(false);
+    city = new JTextField();
+    countries = new JComboBox(new Vector<Country>(Countries.getAllCountries()));
+    latitudeValue = new JTextField();
+    longitudeValue = new JTextField();
+    timeZone = new JTextField();
+    timeZone.setEditable(false);
 
     final ActionListener actionListener = new ActionListener()
     {
@@ -140,19 +140,19 @@ public class LocationDialog
     ok.addActionListener(actionListener);
     cancel.addActionListener(actionListener);
 
-    lblMessage = new JLabel(" ");
-    lblMessage.setForeground(Color.red);
+    error = new JLabel(" ");
+    error.setForeground(Color.red);
 
     FormLayout layout = new FormLayout("right:p, 3dlu, p");
     DefaultFormBuilder builder = new DefaultFormBuilder(layout);
     builder.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-    builder.append("City", txtCity);
-    builder.append("Country", cbCountries);
-    builder.append("Latitude", txtLatitude);
-    builder.append("Longitude", txtLongitude);
-    builder.append("Time Zone", txtTimeZone);
+    builder.append("City", city);
+    builder.append("Country", countries);
+    builder.append("Latitude", latitudeValue);
+    builder.append("Longitude", longitudeValue);
+    builder.append("Time Zone", timeZone);
 
-    builder.append(lblMessage, 3);
+    builder.append(error, 3);
     builder.append(ButtonBarFactory.buildOKCancelBar(ok, cancel), 3);
 
     getContentPane().add(builder.getPanel());
@@ -174,11 +174,11 @@ public class LocationDialog
           }
 
           final Component focusComponent = event.getComponent();
-          if (focusComponent.equals(txtLatitude))
+          if (focusComponent.equals(latitudeValue))
           {
             setLatitude(getLatitude());
           }
-          else if (focusComponent.equals(txtLongitude))
+          else if (focusComponent.equals(longitudeValue))
           {
             setLongitude(getLongitude());
           }
@@ -192,18 +192,18 @@ public class LocationDialog
       }
     };
 
-    txtLatitude.addFocusListener(focusListener);
-    txtLongitude.addFocusListener(focusListener);
-    txtCity.addFocusListener(focusListener);
-    cbCountries.addFocusListener(focusListener);
+    latitudeValue.addFocusListener(focusListener);
+    longitudeValue.addFocusListener(focusListener);
+    city.addFocusListener(focusListener);
+    countries.addFocusListener(focusListener);
 
     if (operation == LocationMaintenanceOperation.Delete)
     {
-      txtLatitude.setEditable(false);
-      txtLongitude.setEditable(false);
-      txtCity.setEditable(false);
-      cbCountries.setEnabled(false);
-      lblMessage.setVisible(false);
+      latitudeValue.setEditable(false);
+      longitudeValue.setEditable(false);
+      city.setEditable(false);
+      countries.setEnabled(false);
+      error.setVisible(false);
     }
 
     setCurrentLocation(editLocation);
@@ -215,12 +215,12 @@ public class LocationDialog
 
   private String getCity()
   {
-    return txtCity.getText().trim();
+    return city.getText().trim();
   }
 
   private Country getCountry()
   {
-    return (Country) cbCountries.getSelectedItem();
+    return (Country) countries.getSelectedItem();
   }
 
   private Location getCurrentLocation()
@@ -236,7 +236,7 @@ public class LocationDialog
     Latitude latitude = null;
     try
     {
-      latitude = CoordinateParser.parseLatitude(txtLatitude.getText());
+      latitude = CoordinateParser.parseLatitude(latitudeValue.getText());
     }
     catch (final ParserException e)
     {
@@ -250,7 +250,7 @@ public class LocationDialog
     Longitude longitude = null;
     try
     {
-      longitude = CoordinateParser.parseLongitude(txtLongitude.getText());
+      longitude = CoordinateParser.parseLongitude(longitudeValue.getText());
     }
     catch (final ParserException e)
     {
@@ -266,14 +266,14 @@ public class LocationDialog
                                                  getLongitude());
   }
 
-  private void setCity(final String city)
+  private void setCity(final String cityName)
   {
-    txtCity.setText(city);
+    city.setText(cityName);
   }
 
   private void setCountry(final Country country)
   {
-    cbCountries.setSelectedItem(country);
+    countries.setSelectedItem(country);
   }
 
   private void setCurrentLocation(final Location location)
@@ -292,7 +292,7 @@ public class LocationDialog
   {
     if (latitude != null)
     {
-      txtLatitude.setText(latitude.toString());
+      latitudeValue.setText(latitude.toString());
     }
   }
 
@@ -300,19 +300,18 @@ public class LocationDialog
   {
     if (longitude != null)
     {
-      txtLongitude.setText(longitude.toString());
+      longitudeValue.setText(longitude.toString());
     }
   }
 
   private void setTimeZoneId(final String timeZoneId)
   {
-    final TimeZone timeZone = TimeZone.getTimeZone(timeZoneId);
-    txtTimeZone.setText(timeZone.getDisplayName());
+    timeZone.setText(TimeZone.getTimeZone(timeZoneId).getDisplayName());
   }
 
   private void showError(final String message, final Component component)
   {
-    lblMessage.setText(message);
+    error.setText(message);
     if (component != null)
     {
       component.requestFocus();
@@ -325,17 +324,17 @@ public class LocationDialog
     if (getCity().length() == 0)
     {
       hasError = true;
-      showError("Enter a city", txtCity);
+      showError("Enter a city", city);
     }
     else if (getLatitude() == null)
     {
       hasError = true;
-      showError("Enter a latitude", txtLatitude);
+      showError("Enter a latitude", latitudeValue);
     }
     else if (getLongitude() == null)
     {
       hasError = true;
-      showError("Enter a longitude", txtLongitude);
+      showError("Enter a longitude", longitudeValue);
     }
     else
     {
