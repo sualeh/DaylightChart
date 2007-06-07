@@ -5,10 +5,8 @@
     <artifactId>daylightchart-all</artifactId>
     <version>1.4</version>
   </parent>
-  <groupId>daylightchart</groupId>
   <artifactId>daylightchart-web</artifactId>
   <packaging>war</packaging>
-  <version>1.4</version>
   <name>Daylight Chart Web</name>
   <dependencies>
     <dependency>

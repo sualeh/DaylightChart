@@ -6,9 +6,7 @@
     <artifactId>daylightchart-all</artifactId>
     <version>1.4</version>
   </parent>
-  <groupId>daylightchart</groupId>
   <artifactId>daylightchart</artifactId>
-  <version>1.4</version>
   <name>Daylight Chart</name>
   <licenses>
     <license>
@@ -38,9 +36,9 @@
       <version>2.1.2</version>
     </dependency>
     <dependency>
-        <groupId>jgoodies</groupId>
-        <artifactId>forms</artifactId>
-        <version>1.0.5</version>
+      <groupId>jgoodies</groupId>
+      <artifactId>forms</artifactId>
+      <version>1.0.5</version>
     </dependency>
   </dependencies>
   <build>
