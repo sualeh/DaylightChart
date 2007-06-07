@@ -324,17 +324,17 @@ public class LocationDialog
     if (getCity().length() == 0)
     {
       hasError = true;
-      showError("Enter a city", city);
+      showError("Please provide a city", city);
     }
     else if (getLatitude() == null)
     {
       hasError = true;
-      showError("Enter a latitude", latitudeValue);
+      showError("Please provide a latitude", latitudeValue);
     }
     else if (getLongitude() == null)
     {
       hasError = true;
-      showError("Enter a longitude", longitudeValue);
+      showError("Please provide a longitude", longitudeValue);
     }
     else
     {
