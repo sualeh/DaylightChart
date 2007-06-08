@@ -32,18 +32,17 @@ import sf.util.ui.GuiAction;
 enum LocationsListOperation
 {
 
-  /** Delete location. */
-  delete("Delete Location", "/icons/delete_location.gif"),
+  /** Add location. */
+  add("Add Location", "/icons/add_location.gif"),
   /** Edit location. */
   edit("Edit Location", "/icons/edit_location.gif"),
-  /** Add location. */
-  add("Add Location", "/icons/add_location.gif");
+  /** Delete location. */
+  delete("Delete Location", "/icons/delete_location.gif");
 
   private final String iconResource;
   private final String text;
 
-  private LocationsListOperation(final String text,
-                                            final String iconResource)
+  private LocationsListOperation(final String text, final String iconResource)
   {
     this.text = text;
     this.iconResource = iconResource;
@@ -56,7 +55,7 @@ enum LocationsListOperation
    *        Locations list.
    * @return Action
    */
-  public GuiAction getAction(final LocationsList locationsList)
+  GuiAction getAction(final LocationsList locationsList)
   {
     final GuiAction action = new GuiAction(text, iconResource);
     action.addActionListener(new ActionListener()
@@ -66,8 +65,7 @@ enum LocationsListOperation
       {
         Location selectedLocation = locationsList.getSelectedLocation();
         Location editedLocation = LocationDialog
-          .showLocationDialog(locationsList,
-                              LocationsListOperation.this);
+          .showLocationDialog(locationsList, LocationsListOperation.this);
         if (editedLocation != null)
         {
           switch (LocationsListOperation.this)
@@ -92,7 +90,7 @@ enum LocationsListOperation
    * 
    * @return Text
    */
-  public final String getText()
+  final String getText()
   {
     return text;
   }
