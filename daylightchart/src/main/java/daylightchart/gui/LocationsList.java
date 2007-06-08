@@ -246,7 +246,7 @@ public class LocationsList
 
   private void createActions(final JToolBar toolBar, final JPopupMenu popupMenu)
   {
-    for (final LocationsListMaintenanceOperation operation: LocationsListMaintenanceOperation
+    for (final LocationsListOperation operation: LocationsListOperation
       .values())
     {
       final GuiAction action = operation.getAction(this);

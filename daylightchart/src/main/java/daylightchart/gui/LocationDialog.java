@@ -61,7 +61,7 @@ public class LocationDialog
    *         the dialog was canceled
    */
   public static Location showLocationDialog(final LocationsList locationsList,
-                                            final LocationsListMaintenanceOperation operation)
+                                            final LocationsListOperation operation)
   {
     final LocationDialog locationDialog = new LocationDialog(locationsList,
                                                              operation);
@@ -88,7 +88,7 @@ public class LocationDialog
   private boolean dialogNotCancelled;
 
   private LocationDialog(final LocationsList locationsList,
-                         final LocationsListMaintenanceOperation operation)
+                         final LocationsListOperation operation)
   {
 
     super(locationsList.getMainWindow(), operation.getText(), true);
@@ -177,14 +177,14 @@ public class LocationDialog
     city.addFocusListener(focusListener);
     countries.addFocusListener(focusListener);
 
-    if (operation == LocationsListMaintenanceOperation.delete)
+    if (operation == LocationsListOperation.delete)
     {
       latitudeValue.setEditable(false);
       longitudeValue.setEditable(false);
       city.setEditable(false);
       countries.setEnabled(false);
     }
-    if (operation != LocationsListMaintenanceOperation.add)
+    if (operation != LocationsListOperation.add)
     {
       setCurrentLocation(locationsList.getSelectedLocation());
     }
