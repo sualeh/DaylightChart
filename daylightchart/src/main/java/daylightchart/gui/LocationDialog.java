@@ -44,56 +44,56 @@ public class LocationDialog
   extends JDialog
 {
 
-  enum LocationMaintenanceOperation
-  {
-    /** Delete location. */
-    Delete,
-    /** Edit location. */
-    Edit,
-    /** Add location. */
-    Add;
-  }
-
   private static final long serialVersionUID = -5161588534167787490L;
 
   private static final Logger LOGGER = Logger.getLogger(LocationDialog.class
     .getName());
 
-  private final JTextField city;
-  private final JComboBox countries;
-  private final JTextField latitudeValue;
-  private final JTextField longitudeValue;
-  private final JTextField timeZone;
-
-  private final JButton ok;
-  private final JButton cancel;
-
-  private final Location editLocation;
-
   /**
-   * Dialog for location delete, add or edit operation to be performed.
+   * Show a dialog for location delete, add or edit operation to be
+   * performed.
    * 
    * @param locationsList
    *        Locations list
    * @param operation
    *        Operation to perform
+   * @return Location, if one was added, edited or deleted, or null if
+   *         the dialog was canceled
    */
-  public LocationDialog(final LocationsList locationsList,
-                        final LocationMaintenanceOperation operation)
+  public static Location showLocationDialog(final LocationsList locationsList,
+                                            final LocationsListMaintenanceOperation operation)
   {
-
-    super(locationsList.getMainWindow(), operation + " a Location", true);
-    setSize(350, 230);
-    setResizable(false);
-
-    if (operation == LocationMaintenanceOperation.Add)
+    final LocationDialog locationDialog = new LocationDialog(locationsList,
+                                                             operation);
+    if (locationDialog.dialogNotCancelled)
     {
-      editLocation = null;
+      return locationDialog.getCurrentLocation();
     }
     else
     {
-      editLocation = locationsList.getSelectedLocation();
+      return null;
     }
+  }
+
+  private final JTextField city;
+  private final JComboBox countries;
+  private final JTextField latitudeValue;
+  private final JTextField longitudeValue;
+
+  private final JTextField timeZone;
+  private final JButton ok;
+
+  private final JButton cancel;
+
+  private boolean dialogNotCancelled;
+
+  private LocationDialog(final LocationsList locationsList,
+                         final LocationsListMaintenanceOperation operation)
+  {
+
+    super(locationsList.getMainWindow(), operation.getText(), true);
+    setSize(350, 230);
+    setResizable(false);
 
     city = new JTextField();
     countries = new JComboBox(new Vector<Country>(Countries.getAllCountries()));
@@ -104,29 +104,16 @@ public class LocationDialog
 
     final ActionListener actionListener = new ActionListener()
     {
-
       public void actionPerformed(final ActionEvent actionEvent)
       {
         final Object source = actionEvent.getSource();
         if (source == ok)
         {
-          boolean hasError = validateAndShowError();
-          if (hasError)
+          if (isCurrentLocationValid())
           {
             return;
           }
-          Location location = getCurrentLocation();
-          switch (operation)
-          {
-            case Add:
-              locationsList.addLocation(location);
-              break;
-            case Edit:
-              locationsList.replaceLocation(editLocation, location);
-              break;
-            case Delete:
-              locationsList.removeLocation(editLocation);
-          }
+          dialogNotCancelled = true;
         }
         dispose();
       }
@@ -138,8 +125,8 @@ public class LocationDialog
     ok.addActionListener(actionListener);
     cancel.addActionListener(actionListener);
 
-    FormLayout layout = new FormLayout("right:p, 3dlu, p");
-    DefaultFormBuilder builder = new DefaultFormBuilder(layout);
+    final FormLayout layout = new FormLayout("right:p, 3dlu, p");
+    final DefaultFormBuilder builder = new DefaultFormBuilder(layout);
     builder.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
     builder.append("City", city);
     builder.append("Country", countries);
@@ -177,8 +164,7 @@ public class LocationDialog
             setLongitude(getLongitude());
           }
 
-          boolean hasError = validateAndShowError();
-          if (!hasError)
+          if (isCurrentLocationValid())
           {
             setTimeZoneId(getTimeZoneId());
           }
@@ -191,19 +177,28 @@ public class LocationDialog
     city.addFocusListener(focusListener);
     countries.addFocusListener(focusListener);
 
-    if (operation == LocationMaintenanceOperation.Delete)
+    if (operation == LocationsListMaintenanceOperation.delete)
     {
       latitudeValue.setEditable(false);
       longitudeValue.setEditable(false);
       city.setEditable(false);
       countries.setEnabled(false);
     }
-
-    setCurrentLocation(editLocation);
+    if (operation != LocationsListMaintenanceOperation.add)
+    {
+      setCurrentLocation(locationsList.getSelectedLocation());
+    }
 
     pack();
     setLocationRelativeTo(locationsList.getMainWindow());
     setVisible(true);
+  }
+
+  private void clearError()
+  {
+    city.setBackground(Color.white);
+    latitudeValue.setBackground(Color.white);
+    longitudeValue.setBackground(Color.white);
   }
 
   private String getCity()
@@ -259,6 +254,28 @@ public class LocationDialog
                                                  getLongitude());
   }
 
+  private boolean isCurrentLocationValid()
+  {
+    boolean hasError = false;
+    clearError();
+    if (getCity().length() == 0)
+    {
+      hasError = true;
+      showError(city);
+    }
+    else if (getLatitude() == null)
+    {
+      hasError = true;
+      showError(latitudeValue);
+    }
+    else if (getLongitude() == null)
+    {
+      hasError = true;
+      showError(longitudeValue);
+    }
+    return hasError;
+  }
+
   private void setCity(final String cityName)
   {
     city.setText(cityName);
@@ -304,38 +321,10 @@ public class LocationDialog
 
   private void showError(final Component component)
   {
-    city.setBackground(Color.white);
-    latitudeValue.setBackground(Color.white);
-    longitudeValue.setBackground(Color.white);
     if (component != null)
     {
       component.setBackground(new Color(255, 255, 204));
     }
-  }
-
-  private boolean validateAndShowError()
-  {
-    boolean hasError = false;
-    if (getCity().length() == 0)
-    {
-      hasError = true;
-      showError(city);
-    }
-    else if (getLatitude() == null)
-    {
-      hasError = true;
-      showError(latitudeValue);
-    }
-    else if (getLongitude() == null)
-    {
-      hasError = true;
-      showError(longitudeValue);
-    }
-    else
-    {
-      showError(null);
-    }
-    return hasError;
   }
 
 }

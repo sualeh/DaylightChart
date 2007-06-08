@@ -24,8 +24,6 @@ package daylightchart.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -40,6 +38,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JToolBar;
 
 import sf.util.ui.GuiAction;
+
 import daylightchart.location.Location;
 import daylightchart.location.parser.LocationFormatter;
 import daylightchart.options.UserPreferences;
@@ -58,9 +57,6 @@ public class LocationsList
   private final DaylightChartGui parent;
   private final JList locationsList;
   private List<Location> locations;
-  private GuiAction add;
-  private GuiAction delete;
-  private GuiAction edit;
 
   /**
    * Create a new locations list component.
@@ -75,14 +71,13 @@ public class LocationsList
 
     this.parent = parent;
 
-    createActions();
-
     final JToolBar toolBar = new JToolBar();
     toolBar.setRollover(true);
     add(toolBar, BorderLayout.NORTH);
-    toolBar.add(add);
-    toolBar.add(delete);
-    toolBar.add(edit);
+
+    final JPopupMenu popupMenu = new JPopupMenu();
+
+    createActions(toolBar, popupMenu);
 
     locationsList = new JList();
     add(new JScrollPane(locationsList));
@@ -125,7 +120,7 @@ public class LocationsList
         if (e.getButton() == MouseEvent.BUTTON2
             || e.getButton() == MouseEvent.BUTTON3)
         {
-          createPopupMenu().show(e.getComponent(), e.getX(), e.getY());
+          popupMenu.show(e.getComponent(), e.getX(), e.getY());
         }
       }
     });
@@ -133,6 +128,12 @@ public class LocationsList
     setLocations(UserPreferences.getLocations());
   }
 
+  /**
+   * Add a location to the list, in sorted order.
+   * 
+   * @param location
+   *        Location to add
+   */
   public void addLocation(final Location location)
   {
     if (location != null)
@@ -152,6 +153,11 @@ public class LocationsList
     return new ArrayList<Location>(locations);
   }
 
+  /**
+   * Gets the parent window.
+   * 
+   * @return Window
+   */
   public DaylightChartGui getMainWindow()
   {
     return parent;
@@ -167,22 +173,36 @@ public class LocationsList
     return (Location) locationsList.getSelectedValue();
   }
 
-  public void removeLocation(final Location editLocation)
+  /**
+   * Removes the specified location.
+   * 
+   * @param location
+   *        Location
+   */
+  public void removeLocation(final Location location)
   {
-    if (editLocation != null)
+    if (location != null)
     {
-      locations.remove(editLocation);
+      locations.remove(location);
     }
     setLocations(locations);
   }
 
-  public void replaceLocation(final Location editLocation,
-                              final Location location)
+  /**
+   * Replaces a location on the list with another.
+   * 
+   * @param location
+   *        Location to replace
+   * @param newLocation
+   *        New location
+   */
+  public void replaceLocation(final Location location,
+                              final Location newLocation)
   {
-    if (editLocation != null && location != null)
+    if (location != null && newLocation != null)
     {
-      locations.remove(editLocation);
-      locations.add(location);
+      locations.remove(location);
+      locations.add(newLocation);
     }
     setLocations(locations);
   }
@@ -224,49 +244,15 @@ public class LocationsList
     setLocations(locations);
   }
 
-  private void createActions()
+  private void createActions(final JToolBar toolBar, final JPopupMenu popupMenu)
   {
-
-    add = new GuiAction("Add", "/icons/add_location.gif");
-    delete = new GuiAction("Delete", "/icons/delete_location.gif");
-    edit = new GuiAction("Edit", "/icons/edit_location.gif");
-
-    add.addActionListener(new ActionListener()
+    for (final LocationsListMaintenanceOperation operation: LocationsListMaintenanceOperation
+      .values())
     {
-      public void actionPerformed(final ActionEvent e)
-      {
-        new LocationDialog(LocationsList.this,
-                           LocationDialog.LocationMaintenanceOperation.Add);
-      }
-    });
-
-    delete.addActionListener(new ActionListener()
-    {
-      public void actionPerformed(final ActionEvent e)
-      {
-        new LocationDialog(LocationsList.this,
-                           LocationDialog.LocationMaintenanceOperation.Delete);
-      }
-    });
-
-    edit.addActionListener(new ActionListener()
-    {
-      public void actionPerformed(final ActionEvent e)
-      {
-        new LocationDialog(LocationsList.this,
-                           LocationDialog.LocationMaintenanceOperation.Edit);
-      }
-    });
-
-  }
-
-  private JPopupMenu createPopupMenu()
-  {
-    final JPopupMenu rightPopup = new JPopupMenu();
-    rightPopup.add(add);
-    rightPopup.add(delete);
-    rightPopup.add(edit);
-    return rightPopup;
+      final GuiAction action = operation.getAction(this);
+      toolBar.add(action);
+      popupMenu.add(action);
+    }
   }
 
 }
