@@ -130,7 +130,7 @@ public class LocationDialog
         final Object source = actionEvent.getSource();
         if (source == ok)
         {
-          if (isCurrentLocationValid())
+          if (!isCurrentLocationValid())
           {
             return;
           }
