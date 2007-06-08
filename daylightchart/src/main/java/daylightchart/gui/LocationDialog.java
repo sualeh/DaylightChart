@@ -96,6 +96,8 @@ public class LocationDialog
     }
   }
 
+  private final LocationsListOperation operation;
+
   private final JTextField city;
   private final JComboBox countries;
   private final JTextField latitudeValue;
@@ -116,12 +118,17 @@ public class LocationDialog
     setSize(350, 230);
     setResizable(false);
 
+    this.operation = operation;
+
     city = new JTextField();
     countries = new JComboBox(new Vector<Country>(Countries.getAllCountries()));
     latitudeValue = new JTextField();
     longitudeValue = new JTextField();
     timeZone = new JTextField();
     timeZone.setEditable(false);
+
+    ok = new JButton("Ok");
+    cancel = new JButton("Cancel");
 
     final ActionListener actionListener = new ActionListener()
     {
@@ -140,24 +147,8 @@ public class LocationDialog
       }
     };
 
-    ok = new JButton("Ok");
-    cancel = new JButton("Cancel");
-
     ok.addActionListener(actionListener);
     cancel.addActionListener(actionListener);
-
-    final FormLayout layout = new FormLayout("right:p, 3dlu, p");
-    final DefaultFormBuilder builder = new DefaultFormBuilder(layout);
-    builder.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-    builder.append("City", city);
-    builder.append("Country", countries);
-    builder.append("Latitude", latitudeValue);
-    builder.append("Longitude", longitudeValue);
-    builder.append("Time Zone", timeZone);
-
-    builder.append(ButtonBarFactory.buildOKCancelBar(ok, cancel), 3);
-
-    getContentPane().add(builder.getPanel());
 
     final FocusListener focusListener = new FocusListener()
     {
@@ -198,6 +189,18 @@ public class LocationDialog
     city.addFocusListener(focusListener);
     countries.addFocusListener(focusListener);
 
+    final FormLayout layout = new FormLayout("right:p, 3dlu, p");
+    final DefaultFormBuilder builder = new DefaultFormBuilder(layout);
+    builder.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+    builder.append("City", city);
+    builder.append("Country", countries);
+    builder.append("Latitude", latitudeValue);
+    builder.append("Longitude", longitudeValue);
+    builder.append("Time Zone", timeZone);
+    builder.append(ButtonBarFactory.buildOKCancelBar(ok, cancel), 3);
+
+    getContentPane().add(builder.getPanel());
+
     if (operation == LocationsListOperation.delete)
     {
       latitudeValue.setEditable(false);
@@ -217,9 +220,12 @@ public class LocationDialog
 
   private void clearError()
   {
-    city.setBackground(Color.white);
-    latitudeValue.setBackground(Color.white);
-    longitudeValue.setBackground(Color.white);
+    if (operation != LocationsListOperation.delete)
+    {
+      city.setBackground(Color.white);
+      latitudeValue.setBackground(Color.white);
+      longitudeValue.setBackground(Color.white);
+    }
   }
 
   private String getCity()
@@ -344,10 +350,7 @@ public class LocationDialog
 
   private void showError(final Component component)
   {
-    if (component != null)
-    {
-      component.setBackground(new Color(255, 255, 204));
-    }
+    component.setBackground(new Color(255, 255, 204));
   }
 
 }
