@@ -52,6 +52,11 @@
       <action dev="Sualeh Fatehi" type="add">
         Icons and toolbars in the main window.
       </action>
-    </release>    
+    </release> 
+    <release version="1.4.1" date="2007-06-15">
+      <action dev="Sualeh Fatehi" type="fix">
+        Fixing distribution.
+      </action>
+    </release>         
   </body>
 </document>

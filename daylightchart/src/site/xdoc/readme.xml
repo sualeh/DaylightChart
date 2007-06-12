@@ -18,8 +18,8 @@
           <li>Download and install <a href="http://www.java.com/en/download/index.jsp">Java</a>
           on your computer, if you do not already have it.</li>
           <li>Download <a href="http://sourceforge.net/project/showfiles.php?group_id=193171">Daylight Chart</a>.
-          Just one download file is needed - daylightchart-1.4-distrib.zip.</li>
-          <li>Unzip the daylightchart-1.4-distrib.zip file into any folder on your computer,
+          Just one download file is needed - daylightchart-1.4.1-distrib.zip.</li>
+          <li>Unzip the daylightchart-1.4.1-distrib.zip file into any folder on your computer,
           keeping the internal folder structure intact.</li>
           <li>Run the "daylightchart" command.</li>
         </ol>
