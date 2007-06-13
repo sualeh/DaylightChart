@@ -50,7 +50,7 @@ public final class OnlineHelpAction
     super(Messages.getString("DaylightChartGui.Menu.Help.Online"), //$NON-NLS-1$
           "/icons/help.gif" //$NON-NLS-1$ 
     );
-    setShortcutKey(KeyStroke.getKeyStroke("control H"));
+    setShortcutKey(KeyStroke.getKeyStroke("F1"));
     addActionListener(new ActionListener()
     {
       public void actionPerformed(@SuppressWarnings("unused")
