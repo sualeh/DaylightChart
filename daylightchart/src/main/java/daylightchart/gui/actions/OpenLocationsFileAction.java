@@ -32,6 +32,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.JOptionPane;
+import javax.swing.KeyStroke;
 import javax.swing.filechooser.FileFilter;
 
 import sf.util.ui.Actions;
@@ -70,7 +71,7 @@ public final class OpenLocationsFileAction
     super(Messages.getString("DaylightChartGui.Menu.File.LoadLocations"),//$NON-NLS-1$
           "/icons/load_locations.gif" //$NON-NLS-1$
     );
-
+    setShortcutKey(KeyStroke.getKeyStroke("control O"));
     addActionListener(new ActionListener()
     {
       /**

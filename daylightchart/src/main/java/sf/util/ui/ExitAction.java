@@ -26,6 +26,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
+import javax.swing.KeyStroke;
 
 /**
  * Exits an application.
@@ -50,6 +51,7 @@ public final class ExitAction
   {
     super(text, "/icons/exit.gif" //$NON-NLS-1$ 
     );
+    setShortcutKey(KeyStroke.getKeyStroke("control Q"));
     addActionListener(new ActionListener()
     {
       public void actionPerformed(@SuppressWarnings("unused")

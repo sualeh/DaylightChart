@@ -22,22 +22,29 @@
 package daylightchart.gui;
 
 
+import java.awt.AWTEvent;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.TimeZone;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JTextField;
+import javax.swing.KeyStroke;
 
 import org.pointlocation6709.Latitude;
 import org.pointlocation6709.Longitude;
@@ -64,6 +71,42 @@ import daylightchart.location.parser.DefaultTimezones;
 public class LocationDialog
   extends JDialog
 {
+
+  final class DialogButtonListener
+    implements ActionListener, KeyListener
+  {
+    public void actionPerformed(final ActionEvent actionEvent)
+    {
+      doAction(actionEvent);
+    }
+
+    public void keyPressed(final KeyEvent keyEvent)
+    {
+    }
+
+    public void keyReleased(final KeyEvent keyEvents)
+    {
+    }
+
+    public void keyTyped(final KeyEvent keyEvent)
+    {
+      doAction(keyEvent);
+    }
+
+    private void doAction(final AWTEvent event)
+    {
+      final Object source = event.getSource();
+      if (source == ok)
+      {
+        if (!isCurrentLocationValid())
+        {
+          return;
+        }
+        dialogNotCancelled = true;
+      }
+      dispose();
+    }
+  }
 
   private static final long serialVersionUID = -5161588534167787490L;
 
@@ -102,10 +145,9 @@ public class LocationDialog
   private final JComboBox countries;
   private final JTextField latitudeValue;
   private final JTextField longitudeValue;
-
   private final JTextField timeZone;
-  private final JButton ok;
 
+  private final JButton ok;
   private final JButton cancel;
 
   private boolean dialogNotCancelled;
@@ -117,6 +159,7 @@ public class LocationDialog
     super(locationsList.getMainWindow(), operation.getText(), true);
     setSize(350, 230);
     setResizable(false);
+    disposeOnEscapeKey();
 
     this.operation = operation;
 
@@ -130,25 +173,11 @@ public class LocationDialog
     ok = new JButton("Ok");
     cancel = new JButton("Cancel");
 
-    final ActionListener actionListener = new ActionListener()
-    {
-      public void actionPerformed(final ActionEvent actionEvent)
-      {
-        final Object source = actionEvent.getSource();
-        if (source == ok)
-        {
-          if (!isCurrentLocationValid())
-          {
-            return;
-          }
-          dialogNotCancelled = true;
-        }
-        dispose();
-      }
-    };
-
-    ok.addActionListener(actionListener);
-    cancel.addActionListener(actionListener);
+    final DialogButtonListener listener = new DialogButtonListener();
+    ok.addActionListener(listener);
+    ok.addKeyListener(listener);
+    cancel.addActionListener(listener);
+    cancel.addKeyListener(listener);
 
     final FocusListener focusListener = new FocusListener()
     {
@@ -226,6 +255,25 @@ public class LocationDialog
       latitudeValue.setBackground(Color.white);
       longitudeValue.setBackground(Color.white);
     }
+  }
+
+  private void disposeOnEscapeKey()
+  {
+    final Action action = new AbstractAction()
+    {
+      /**
+       * 
+       */
+      private static final long serialVersionUID = -180000433351276424L;
+
+      public void actionPerformed(ActionEvent arg0)
+      {
+        dispose();
+      }
+    };
+    final KeyStroke stroke = KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0);
+    rootPane.getActionMap().put(action, action);
+    rootPane.getInputMap(JComponent.WHEN_FOCUSED).put(stroke, action);
   }
 
   private String getCity()
@@ -352,5 +400,4 @@ public class LocationDialog
   {
     component.setBackground(new Color(255, 255, 204));
   }
-
 }

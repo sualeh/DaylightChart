@@ -25,6 +25,8 @@ package daylightchart.gui.actions;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.KeyStroke;
+
 import daylightchart.gui.LocationsTabbedPane;
 import daylightchart.gui.Messages;
 
@@ -52,6 +54,7 @@ public final class PrintChartAction
     super(Messages.getString("DaylightChartGui.Menu.File.PrintChart"), //$NON-NLS-1$
           "/icons/print_chart.gif" //$NON-NLS-1$ 
     );
+    setShortcutKey(KeyStroke.getKeyStroke("control P"));
     addActionListener(new ActionListener()
     {
       public void actionPerformed(@SuppressWarnings("unused")

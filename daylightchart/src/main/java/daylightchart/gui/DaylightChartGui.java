@@ -44,6 +44,7 @@ import javax.swing.JToolBar;
 import org.jfree.chart.editor.ChartEditor;
 
 import sf.util.ui.ExitAction;
+import sf.util.ui.GuiAction;
 import daylightchart.chart.TimeZoneOption;
 import daylightchart.gui.actions.AboutAction;
 import daylightchart.gui.actions.OnlineHelpAction;
@@ -101,6 +102,7 @@ public final class DaylightChartGui
     add(toolBar, BorderLayout.NORTH);
 
     createFileMenu(menuBar, toolBar);
+    createActions(menuBar, toolBar);
     createOptionsMenu(menuBar, toolBar);
     createHelpMenu(menuBar, toolBar);
 
@@ -146,6 +148,19 @@ public final class DaylightChartGui
     locationsTabbedPane.addLocationTab(location);
   }
 
+  private void createActions(final JMenuBar menuBar, final JToolBar toolBar)
+  {
+    final JMenu menuActions = new JMenu("Actions");
+
+    for (final LocationsListOperation operation: LocationsListOperation
+      .values())
+    {
+      final GuiAction action = operation.getAction(locationsList);
+      menuActions.add(action);
+    }
+    menuBar.add(menuActions);
+  }
+
   private void createFileMenu(final JMenuBar menuBar, final JToolBar toolBar)
   {
 
@@ -173,6 +188,7 @@ public final class DaylightChartGui
     toolBar.addSeparator();
     toolBar.add(saveChart);
     toolBar.add(printChart);
+    toolBar.addSeparator();
 
   }
 

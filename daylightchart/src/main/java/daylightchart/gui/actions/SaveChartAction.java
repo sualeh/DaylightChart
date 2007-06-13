@@ -25,6 +25,8 @@ package daylightchart.gui.actions;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.KeyStroke;
+
 import daylightchart.gui.LocationsTabbedPane;
 import daylightchart.gui.Messages;
 
@@ -52,6 +54,7 @@ public final class SaveChartAction
     super(Messages.getString("DaylightChartGui.Menu.File.SaveChart"), //$NON-NLS-1$
           "/icons/save_chart.gif" //$NON-NLS-1$ 
     );
+    setShortcutKey(KeyStroke.getKeyStroke("control S"));
     addActionListener(new ActionListener()
     {
       public void actionPerformed(@SuppressWarnings("unused")

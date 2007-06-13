@@ -31,6 +31,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.JOptionPane;
+import javax.swing.KeyStroke;
 import javax.swing.filechooser.FileFilter;
 
 import sf.util.ui.Actions;
@@ -68,7 +69,7 @@ public final class SaveLocationsFileAction
     super(Messages.getString("DaylightChartGui.Menu.File.SaveLocations"), //$NON-NLS-1$ 
           "/icons/save_locations.gif" //$NON-NLS-1$
     );
-
+    setShortcutKey(KeyStroke.getKeyStroke("control alt S"));
     addActionListener(new ActionListener()
     {
       /**

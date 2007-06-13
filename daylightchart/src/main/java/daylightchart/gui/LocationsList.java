@@ -24,6 +24,8 @@ package daylightchart.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -38,7 +40,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JToolBar;
 
 import sf.util.ui.GuiAction;
-
 import daylightchart.location.Location;
 import daylightchart.location.parser.LocationFormatter;
 import daylightchart.options.UserPreferences;
@@ -108,13 +109,7 @@ public class LocationsList
       {
         if (!e.isConsumed() && e.getClickCount() == 2)
         {
-          Location location = (Location) locationsList.getSelectedValue();
-          if (location == null)
-          {
-            locationsList.setSelectedIndex(0);
-            location = (Location) locationsList.getSelectedValue();
-          }
-          parent.addLocationTab(location);
+          openNewLocationTab(parent);
           e.consume();
         }
         if (e.getButton() == MouseEvent.BUTTON2
@@ -122,6 +117,25 @@ public class LocationsList
         {
           popupMenu.show(e.getComponent(), e.getX(), e.getY());
         }
+      }
+    });
+    locationsList.addKeyListener(new KeyListener()
+    {
+      public void keyPressed(final KeyEvent e)
+      {
+      }
+
+      public void keyReleased(final KeyEvent e)
+      {
+      }
+
+      public void keyTyped(final KeyEvent e)
+      {
+        if (e.getKeyChar() == KeyEvent.VK_ENTER)
+        {
+          openNewLocationTab(parent);
+        }
+        e.consume();
       }
     });
 
@@ -253,6 +267,17 @@ public class LocationsList
       toolBar.add(action);
       popupMenu.add(action);
     }
+  }
+
+  private void openNewLocationTab(final DaylightChartGui parent)
+  {
+    Location location = (Location) locationsList.getSelectedValue();
+    if (location == null)
+    {
+      locationsList.setSelectedIndex(0);
+      location = (Location) locationsList.getSelectedValue();
+    }
+    parent.addLocationTab(location);
   }
 
 }

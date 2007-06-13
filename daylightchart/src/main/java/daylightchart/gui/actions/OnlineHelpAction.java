@@ -25,6 +25,8 @@ package daylightchart.gui.actions;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.KeyStroke;
+
 import sf.util.ui.BareBonesBrowserLaunch;
 import sf.util.ui.GuiAction;
 import daylightchart.gui.Messages;
@@ -48,6 +50,7 @@ public final class OnlineHelpAction
     super(Messages.getString("DaylightChartGui.Menu.Help.Online"), //$NON-NLS-1$
           "/icons/help.gif" //$NON-NLS-1$ 
     );
+    setShortcutKey(KeyStroke.getKeyStroke("control H"));
     addActionListener(new ActionListener()
     {
       public void actionPerformed(@SuppressWarnings("unused")

@@ -25,6 +25,8 @@ package daylightchart.gui;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.KeyStroke;
+
 import daylightchart.location.Location;
 
 import sf.util.ui.GuiAction;
@@ -33,19 +35,23 @@ enum LocationsListOperation
 {
 
   /** Add location. */
-  add("Add Location", "/icons/add_location.gif"),
+  add("Add Location", "/icons/add_location.gif", "shift INSERT"),
   /** Edit location. */
-  edit("Edit Location", "/icons/edit_location.gif"),
+  edit("Edit Location", "/icons/edit_location.gif", "control E"),
   /** Delete location. */
-  delete("Delete Location", "/icons/delete_location.gif");
+  delete("Delete Location", "/icons/delete_location.gif", "shift DELETE");
 
   private final String iconResource;
   private final String text;
+  private final KeyStroke keyStroke;
 
-  private LocationsListOperation(final String text, final String iconResource)
+  private LocationsListOperation(final String text,
+                                 final String iconResource,
+                                 final String keyStroke)
   {
     this.text = text;
     this.iconResource = iconResource;
+    this.keyStroke = KeyStroke.getKeyStroke(keyStroke);
   }
 
   /**
@@ -58,13 +64,14 @@ enum LocationsListOperation
   GuiAction getAction(final LocationsList locationsList)
   {
     final GuiAction action = new GuiAction(text, iconResource);
+    action.setShortcutKey(keyStroke);
     action.addActionListener(new ActionListener()
     {
       public void actionPerformed(@SuppressWarnings("unused")
       final ActionEvent e)
       {
-        Location selectedLocation = locationsList.getSelectedLocation();
-        Location editedLocation = LocationDialog
+        final Location selectedLocation = locationsList.getSelectedLocation();
+        final Location editedLocation = LocationDialog
           .showLocationDialog(locationsList, LocationsListOperation.this);
         if (editedLocation != null)
         {
