@@ -47,6 +47,7 @@ import sf.util.ui.ExitAction;
 import sf.util.ui.GuiAction;
 import daylightchart.chart.TimeZoneOption;
 import daylightchart.gui.actions.AboutAction;
+import daylightchart.gui.actions.CloseCurrentTabAction;
 import daylightchart.gui.actions.OnlineHelpAction;
 import daylightchart.gui.actions.OpenLocationsFileAction;
 import daylightchart.gui.actions.PrintChartAction;
@@ -158,6 +159,10 @@ public final class DaylightChartGui
       final GuiAction action = operation.getAction(locationsList);
       menuActions.add(action);
     }
+
+    menuActions.addSeparator();
+    menuActions.add(new CloseCurrentTabAction(locationsTabbedPane));
+
     menuBar.add(menuActions);
   }
 

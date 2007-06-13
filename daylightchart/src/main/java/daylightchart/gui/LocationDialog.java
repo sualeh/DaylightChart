@@ -75,19 +75,41 @@ public class LocationDialog
   final class DialogButtonListener
     implements ActionListener, KeyListener
   {
+    /**
+     * {@inheritDoc}
+     * 
+     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+     */
     public void actionPerformed(final ActionEvent actionEvent)
     {
       doAction(actionEvent);
     }
 
-    public void keyPressed(final KeyEvent keyEvent)
+    /**
+     * {@inheritDoc}
+     * 
+     * @see java.awt.event.KeyListener#keyPressed(java.awt.event.KeyEvent)
+     */
+    public void keyPressed(@SuppressWarnings("unused")
+    final KeyEvent keyEvent)
     {
     }
 
-    public void keyReleased(final KeyEvent keyEvents)
+    /**
+     * {@inheritDoc}
+     * 
+     * @see java.awt.event.KeyListener#keyReleased(java.awt.event.KeyEvent)
+     */
+    public void keyReleased(@SuppressWarnings("unused")
+    final KeyEvent keyEvents)
     {
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * @see java.awt.event.KeyListener#keyTyped(java.awt.event.KeyEvent)
+     */
     public void keyTyped(final KeyEvent keyEvent)
     {
       doAction(keyEvent);
@@ -261,12 +283,11 @@ public class LocationDialog
   {
     final Action action = new AbstractAction()
     {
-      /**
-       * 
-       */
+
       private static final long serialVersionUID = -180000433351276424L;
 
-      public void actionPerformed(ActionEvent arg0)
+      public void actionPerformed(@SuppressWarnings("unused")
+      ActionEvent actionEvent)
       {
         dispose();
       }
