@@ -53,7 +53,7 @@
         Icons and toolbars in the main window.
       </action>
     </release> 
-    <release version="1.4.1" date="2007-06-15">
+    <release version="1.5" date="2007-06-15">
       <action dev="Sualeh Fatehi" type="fix">
         Fixing distribution.
       </action>
