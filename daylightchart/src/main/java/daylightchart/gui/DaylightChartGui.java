@@ -151,19 +151,20 @@ public final class DaylightChartGui
 
   private void createActions(final JMenuBar menuBar, final JToolBar toolBar)
   {
-    final JMenu menuActions = new JMenu("Actions");
+    final JMenu menu = new JMenu("Actions");
+    menu.setMnemonic('A');
 
     for (final LocationsListOperation operation: LocationsListOperation
       .values())
     {
       final GuiAction action = operation.getAction(locationsList);
-      menuActions.add(action);
+      menu.add(action);
     }
 
-    menuActions.addSeparator();
-    menuActions.add(new CloseCurrentTabAction(locationsTabbedPane));
+    menu.addSeparator();
+    menu.add(new CloseCurrentTabAction(locationsTabbedPane));
 
-    menuBar.add(menuActions);
+    menuBar.add(menu);
   }
 
   private void createFileMenu(final JMenuBar menuBar, final JToolBar toolBar)
@@ -177,16 +178,18 @@ public final class DaylightChartGui
     final ExitAction exit = new ExitAction(this, Messages
       .getString("DaylightChartGui.Menu.File.Exit")); //$NON-NLS-1$
 
-    final JMenu menuFile = new JMenu(Messages
+    final JMenu menu = new JMenu(Messages
       .getString("DaylightChartGui.Menu.File")); //$NON-NLS-1$
-    menuFile.add(openLocationsFile);
-    menuFile.add(saveLocationsFile);
-    menuFile.addSeparator();
-    menuFile.add(saveChart);
-    menuFile.add(printChart);
-    menuFile.addSeparator();
-    menuFile.add(exit);
-    menuBar.add(menuFile);
+    menu.setMnemonic('F');
+
+    menu.add(openLocationsFile);
+    menu.add(saveLocationsFile);
+    menu.addSeparator();
+    menu.add(saveChart);
+    menu.add(printChart);
+    menu.addSeparator();
+    menu.add(exit);
+    menuBar.add(menu);
 
     toolBar.add(openLocationsFile);
     toolBar.add(saveLocationsFile);
@@ -205,6 +208,8 @@ public final class DaylightChartGui
 
     final JMenu menuHelp = new JMenu(Messages
       .getString("DaylightChartGui.Menu.Help")); //$NON-NLS-1$
+    menuHelp.setMnemonic('H');
+
     menuHelp.add(onlineHelp);
     menuHelp.add(about);
     menuBar.add(menuHelp);
@@ -223,8 +228,9 @@ public final class DaylightChartGui
 
     final Options options = UserPreferences.getOptions();
 
-    final JMenu menuOptions = new JMenu(Messages
+    final JMenu menu = new JMenu(Messages
       .getString("DaylightChartGui.Menu.Options")); //$NON-NLS-1$
+    menu.setMnemonic('O');
 
     final ButtonGroup sortingMenuItems = new ButtonGroup();
 
@@ -238,7 +244,7 @@ public final class DaylightChartGui
     sortByLatitude.setSelectedIcon(new ImageIcon(DaylightChartGui.class
       .getResource("/icons/sort_by_latitude_dim.gif")));
     sortingMenuItems.add(sortByLatitude);
-    menuOptions.add(sortByLatitude);
+    menu.add(sortByLatitude);
 
     text = Messages.getString("DaylightChartGui.Menu.Options.SortByName"); //$NON-NLS-1$
     icon = new ImageIcon(DaylightChartGui.class
@@ -250,21 +256,21 @@ public final class DaylightChartGui
     sortByName.setSelectedIcon(new ImageIcon(DaylightChartGui.class
       .getResource("/icons/sort_by_name_dim.gif")));
     sortingMenuItems.add(sortByName);
-    menuOptions.add(sortByName);
+    menu.add(sortByName);
 
-    menuOptions.addSeparator();
+    menu.addSeparator();
 
     final ButtonGroup timeZoneMenuItems = new ButtonGroup();
     final JRadioButtonMenuItem useLocalTime = new JRadioButtonMenuItem(Messages
                                                                          .getString("DaylightChartGui.Menu.Options.UseLocalTime"), options.getTimeZoneOption() == TimeZoneOption.USE_LOCAL_TIME); //$NON-NLS-1$
     timeZoneMenuItems.add(useLocalTime);
-    menuOptions.add(useLocalTime);
+    menu.add(useLocalTime);
     final JRadioButtonMenuItem useTimeZone = new JRadioButtonMenuItem(Messages
                                                                         .getString("DaylightChartGui.Menu.Options.UseTimeZone"), options.getTimeZoneOption() == TimeZoneOption.USE_TIME_ZONE); //$NON-NLS-1$
     timeZoneMenuItems.add(useTimeZone);
-    menuOptions.add(useTimeZone);
+    menu.add(useTimeZone);
 
-    menuOptions.addSeparator();
+    menu.addSeparator();
 
     final JMenuItem chartOptionsMenuItem = new JMenuItem(Messages
       .getString("DaylightChartGui.Menu.Options.ChartOptions")); //$NON-NLS-1$
@@ -272,9 +278,9 @@ public final class DaylightChartGui
     final JMenuItem resetAll = new JMenuItem(Messages
       .getString("DaylightChartGui.Menu.Options.ResetAll")); //$NON-NLS-1$
 
-    menuOptions.add(chartOptionsMenuItem);
-    menuOptions.addSeparator();
-    menuOptions.add(resetAll);
+    menu.add(chartOptionsMenuItem);
+    menu.addSeparator();
+    menu.add(resetAll);
 
     sortByName.addItemListener(new ItemListener()
     {
@@ -367,7 +373,7 @@ public final class DaylightChartGui
       }
     });
 
-    menuBar.add(menuOptions);
+    menuBar.add(menu);
   }
 
 }
