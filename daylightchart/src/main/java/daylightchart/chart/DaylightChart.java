@@ -25,7 +25,6 @@ package daylightchart.chart;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Stroke;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -72,7 +71,7 @@ public class DaylightChart
 
   private static final Color daylightColor = new Color(0xFF, 0xFF, 0x40, 190);
   private static final Color nightColor = new Color(75, 11, 91, 190);
-  private static final Stroke outlineStroke = new BasicStroke(0.2f);
+  private static final Font chartFont = new Font("Helvetica", Font.PLAIN, 12);
 
   private final RiseSetYear riseSetData;
 
@@ -211,7 +210,7 @@ public class DaylightChart
   {
     XYItemRenderer renderer;
     renderer = new XYDifferenceRenderer(daylightColor, daylightColor, false);
-    renderer.setStroke(outlineStroke);
+    renderer.setStroke(new BasicStroke(0.2f));
     renderer.setSeriesPaint(0, Color.WHITE);
     renderer.setSeriesPaint(1, Color.WHITE);
     return renderer;
@@ -230,7 +229,6 @@ public class DaylightChart
                                                         null,
                                                         null,
                                                         0.4f);
-    dstMarker.setLabel(Messages.getString("DaylightChart.Label.Marker")); //$NON-NLS-1$
     dstMarker.setLabelPaint(Color.WHITE);
     dstMarker.setLabelAnchor(RectangleAnchor.BOTTOM_RIGHT);
     dstMarker.setLabelTextAnchor(TextAnchor.BASELINE_RIGHT);
@@ -241,26 +239,29 @@ public class DaylightChart
   @SuppressWarnings("deprecation")
   private void createHoursAxis(final XYPlot plot)
   {
-    final DateAxis hoursAxis = new DateAxis();
-    hoursAxis.setInverted(true);
-    hoursAxis.setLowerMargin(0.0);
-    hoursAxis.setUpperMargin(0.0);
+    final DateAxis axis = new DateAxis();
+    axis.setInverted(true);
+    axis.setLowerMargin(0.0f);
+    axis.setUpperMargin(0.0f);
+    axis.setTickLabelFont(chartFont.deriveFont(Font.PLAIN, 12));
     // Fix the axis range for all the hours in the day
-    hoursAxis.setRange(new Date(70, 0, 1), new Date(70, 0, 2));
+    axis.setRange(new Date(70, 0, 1), new Date(70, 0, 2));
     //
-    plot.setRangeAxis(hoursAxis);
+    plot.setRangeAxis(axis);
   }
 
   private void createMonthsAxis(final XYPlot plot)
   {
-    final DateAxis monthsAxis = new DateAxis();
-    monthsAxis.setTickMarkPosition(DateTickMarkPosition.START);
-    monthsAxis.setLowerMargin(0.02);
-    monthsAxis.setUpperMargin(0.02);
-    monthsAxis.setDateFormatOverride(new SimpleDateFormat("MMM")); //$NON-NLS-1$
-    monthsAxis.setTickUnit(new DateTickUnit(DateTickUnit.MONTH, 1), true, true);
+    final DateAxis axis = new DateAxis();
+    axis.setTickMarkPosition(DateTickMarkPosition.START);
+    axis.setLowerMargin(0.0f);
+    axis.setUpperMargin(0.0f);
+    axis.setTickLabelFont(chartFont.deriveFont(Font.PLAIN, 12));
+    axis.setDateFormatOverride(new SimpleDateFormat("yyyy-MM")); //$NON-NLS-1$
+    axis.setVerticalTickLabels(true);
+    axis.setTickUnit(new DateTickUnit(DateTickUnit.MONTH, 1), true, true);
     //
-    plot.setDomainAxis(monthsAxis);
+    plot.setDomainAxis(axis);
     plot.setDomainAxisLocation(AxisLocation.TOP_OR_LEFT);
   }
 
@@ -268,7 +269,7 @@ public class DaylightChart
   {
     XYItemRenderer renderer;
     renderer = new XYLineAndShapeRenderer(true, false);
-    renderer.setStroke(outlineStroke);
+    renderer.setStroke(new BasicStroke(0.6f));
     renderer.setSeriesPaint(0, Color.WHITE);
     renderer.setSeriesPaint(1, Color.WHITE);
     return renderer;
@@ -307,11 +308,13 @@ public class DaylightChart
     final Location location = riseSetData.getLocation();
     if (location != null)
     {
-      title = new TextTitle(location.toString());
+      title = new TextTitle(location.toString(), chartFont
+        .deriveFont(Font.BOLD, 18));
       setTitle(title);
 
       clearSubtitles();
-      title = new TextTitle(location.getDetails());
+      title = new TextTitle(location.getDetails(), chartFont
+        .deriveFont(Font.PLAIN, 18));
       addSubtitle(title);
     }
   }
