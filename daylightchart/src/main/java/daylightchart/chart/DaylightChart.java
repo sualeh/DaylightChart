@@ -26,11 +26,8 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.AxisLocation;
@@ -138,28 +135,23 @@ public class DaylightChart
    * 
    * @see daylightchart.options.chart.ChartOptionsListener#afterSettingChartOptions(ChartOptions)
    */
-  @SuppressWarnings("unchecked")
   public void afterSettingChartOptions(final ChartOptions chartOptions)
   {
     // Fix title and subtitles
-    setTitle(riseSetData.getLocation().toString());
-    final TextTitle title = getTitle();
-    Font subtitleFont = title.getFont();
-    subtitleFont = subtitleFont.deriveFont(Font.PLAIN);
-    final TextTitle subtitle = (TextTitle) getSubtitle(0);
-    subtitle.setFont(subtitleFont);
-    subtitle.setPaint(title.getPaint());
-    // Fix font on the domain marker
-    final Collection<IntervalMarker> domainMarkers = getXYPlot()
-      .getDomainMarkers(Layer.BACKGROUND);
-    if (domainMarkers != null && domainMarkers.size() > 0)
+    if (chartOptions.getTitleOptions().getShowTitle())
     {
-      final List<IntervalMarker> domainMarkersList = new ArrayList<IntervalMarker>();
-      domainMarkersList.addAll(domainMarkers);
-      final IntervalMarker dstMarker = domainMarkersList.get(0);
-      final Font labelFont = chartOptions.getPlotOptions()
-        .getDomainAxisOptions().getLabelFont();
-      dstMarker.setLabelFont(labelFont);
+      setTitle(riseSetData.getLocation().toString());
+      final TextTitle title = getTitle();
+      Font subtitleFont = title.getFont();
+      subtitleFont = subtitleFont.deriveFont(Font.PLAIN);
+      final TextTitle subtitle = (TextTitle) getSubtitle(0);
+      subtitle.setFont(subtitleFont);
+      subtitle.setPaint(title.getPaint());
+    }
+    else
+    {
+      setTitle((TextTitle) null);
+      clearSubtitles();
     }
   }
 

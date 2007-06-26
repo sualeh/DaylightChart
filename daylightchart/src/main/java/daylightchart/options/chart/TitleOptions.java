@@ -39,6 +39,7 @@ public class TitleOptions
 
   private static final long serialVersionUID = -6096894681186027546L;
 
+  private boolean hideTitle;
   private Font titleFont;
   private Paint titlePaint;
   private String titleText;
@@ -58,6 +59,16 @@ public class TitleOptions
       titlePaint = title.getPaint();
       titleText = title.getText();
     }
+  }
+
+  /**
+   * Whether to show the title.
+   * 
+   * @return Show title.
+   */
+  public boolean getShowTitle()
+  {
+    return !hideTitle;
   }
 
   /**
@@ -82,6 +93,16 @@ public class TitleOptions
   public final String getTitleText()
   {
     return titleText;
+  }
+
+  /**
+   * Whether to show the title.
+   * 
+   * @param showTitle
+   */
+  public void setShowTitle(final boolean showTitle)
+  {
+    this.hideTitle = !showTitle;
   }
 
   /**
@@ -119,12 +140,19 @@ public class TitleOptions
   @Override
   public void updateChart(final JFreeChart chart)
   {
-    final TextTitle title = chart.getTitle();
-    if (title != null)
+    if (hideTitle)
     {
-      title.setFont(titleFont);
-      title.setPaint(titlePaint);
-      title.setText(titleText);
+      final TextTitle title = chart.getTitle();
+      if (title != null)
+      {
+        title.setFont(titleFont);
+        title.setPaint(titlePaint);
+        title.setText(titleText);
+      }
+    }
+    else
+    {
+      chart.setTitle((TextTitle) null);
     }
   }
 
