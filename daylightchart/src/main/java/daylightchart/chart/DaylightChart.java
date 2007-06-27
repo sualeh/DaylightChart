@@ -249,7 +249,7 @@ public class DaylightChart
     axis.setLowerMargin(0.0f);
     axis.setUpperMargin(0.0f);
     axis.setTickLabelFont(chartFont.deriveFont(Font.PLAIN, 12));
-    axis.setDateFormatOverride(new SimpleDateFormat("yyyy-MM")); //$NON-NLS-1$
+    axis.setDateFormatOverride(new SimpleDateFormat("MMM"));
     axis.setVerticalTickLabels(true);
     axis.setTickUnit(new DateTickUnit(DateTickUnit.MONTH, 1), true, true);
     //
@@ -275,10 +275,8 @@ public class DaylightChart
    */
   private TimeSeriesCollection createTimeSeries()
   {
-    final TimeSeries sunriseSeries = new TimeSeries(Messages
-      .getString("DaylightChart.Label.Sunrise")); //$NON-NLS-1$
-    final TimeSeries sunsetSeries = new TimeSeries(Messages
-      .getString("DaylightChart.Label.Sunset")); //$NON-NLS-1$
+    final TimeSeries sunriseSeries = new TimeSeries("Sunrise");
+    final TimeSeries sunsetSeries = new TimeSeries("Sunset");
     for (final RiseSet riseSet: riseSetData.getRiseSets())
     {
       final LocalDateTime sunrise = riseSet.getSunrise();
