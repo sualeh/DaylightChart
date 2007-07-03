@@ -149,7 +149,9 @@ public final class DaylightChartGui
     locationsTabbedPane.addLocationTab(location);
   }
 
-  private void createActions(final JMenuBar menuBar, final JToolBar toolBar)
+  private void createActions(final JMenuBar menuBar,
+                             @SuppressWarnings("unused")
+                             final JToolBar toolBar)
   {
     final JMenu menu = new JMenu("Actions");
     menu.setMnemonic('A');
@@ -219,7 +221,9 @@ public final class DaylightChartGui
 
   }
 
-  private void createOptionsMenu(final JMenuBar menuBar, final JToolBar toolBar)
+  private void createOptionsMenu(final JMenuBar menuBar,
+                                 @SuppressWarnings("unused")
+                                 final JToolBar toolBar)
   {
 
     String text;
