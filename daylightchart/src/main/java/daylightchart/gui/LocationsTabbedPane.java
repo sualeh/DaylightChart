@@ -109,7 +109,8 @@ public class LocationsTabbedPane
                       fileFilters,
                       new File(UserPreferences.getDataFileDirectory(),
                                chartPanel.getName()),
-                      Messages.getString("DaylightChartGui.ConfirmOverwrite")); //$NON-NLS-1$
+                      Messages
+                        .getString("DaylightChartGui.Message.Confirm.FileOverwrite")); //$NON-NLS-1$
     if (selectedFile != null)
     {
       try
@@ -136,11 +137,11 @@ public class LocationsTabbedPane
       catch (final IOException e)
       {
         LOGGER.log(Level.WARNING, Messages
-          .getString("DaylightChartGui.Error.SaveChart"), e); //$NON-NLS-1$
+          .getString("DaylightChartGui.Message.Error.CannotSaveFile"), e); //$NON-NLS-1$
         JOptionPane.showMessageDialog(chartPanel, Messages
-          .getString("DaylightChartGui.Error.CannotSaveFile") + "\n" //$NON-NLS-1$ //$NON-NLS-2$
+          .getString("DaylightChartGui.Message.Error.CannotSaveFile") + "\n" //$NON-NLS-1$ //$NON-NLS-2$
                                                   + selectedFile, Messages
-          .getString("DaylightChartGui.Menu.File.SaveChart"), //$NON-NLS-1$
+          .getString("DaylightChartGui.Message.Error.CannotSaveFile"), //$NON-NLS-1$
                                       JOptionPane.OK_OPTION);
       }
     }

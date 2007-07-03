@@ -93,7 +93,7 @@ public final class OpenLocationsFileAction
                           new File(UserPreferences.getDataFileDirectory(),
                                    "locations.data"),
                           Messages
-                            .getString("DaylightChartGui.Error.DidNotReadFile"));
+                            .getString("DaylightChartGui.Message.Error.CannotOpenFile"));
 
         mainWindow.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 
@@ -104,13 +104,13 @@ public final class OpenLocationsFileAction
           if (locationsList == null || locationsList.size() == 0)
           {
             LOGGER.log(Level.WARNING, Messages
-              .getString("DaylightChartGui.Error.ReadFile")); //$NON-NLS-1$
+              .getString("DaylightChartGui.Message.Error.CannotOpenFile")); //$NON-NLS-1$
             JOptionPane
               .showMessageDialog(mainWindow,
                                  selectedFile
                                      + "\n" //$NON-NLS-1$
                                      + Messages
-                                       .getString("DaylightChartGui.Error.DidNotReadFile")); //$NON-NLS-1$
+                                       .getString("DaylightChartGui.Message.Error.CannotOpenFile")); //$NON-NLS-1$
           }
           else
           {

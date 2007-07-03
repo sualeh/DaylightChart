@@ -91,7 +91,7 @@ public final class SaveLocationsFileAction
                           new File(UserPreferences.getDataFileDirectory(),
                                    "locations.data"),
                           Messages
-                            .getString("DaylightChartGui.ConfirmOverwrite")); //$NON-NLS-1$
+                            .getString("DaylightChartGui.Message.Confirm.FileOverwrite")); //$NON-NLS-1$
         if (selectedFile != null)
         {
           try
@@ -105,12 +105,15 @@ public final class SaveLocationsFileAction
           catch (final Exception e)
           {
             LOGGER.log(Level.WARNING, Messages
-              .getString("DaylightChartGui.Error.SaveFile"), e); //$NON-NLS-1$
-            JOptionPane.showMessageDialog(mainWindow, Messages
-              .getString("DaylightChartGui.Error.CannotSaveFile") + "\n" //$NON-NLS-1$ //$NON-NLS-2$
-                                                      + selectedFile, Messages
-              .getString("DaylightChartGui.Menu.File.SaveFile"), //$NON-NLS-1$
-                                          JOptionPane.OK_OPTION);
+              .getString("DaylightChartGui.Message.Error.CannotSaveFile"), e); //$NON-NLS-1$
+            JOptionPane
+              .showMessageDialog(mainWindow,
+                                 Messages
+                                   .getString("DaylightChartGui.Message.Error.CannotSaveFile") + "\n" //$NON-NLS-1$ //$NON-NLS-2$
+                                     + selectedFile,
+                                 Messages
+                                   .getString("DaylightChartGui.Menu.File.SaveFile"), //$NON-NLS-1$
+                                 JOptionPane.OK_OPTION);
           }
         }
       }
