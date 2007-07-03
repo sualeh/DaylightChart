@@ -90,7 +90,7 @@ public class LocationDialog
      * 
      * @see java.awt.event.KeyListener#keyPressed(java.awt.event.KeyEvent)
      */
-    public void keyPressed(@SuppressWarnings("unused")
+    public void keyPressed(@SuppressWarnings("unused") //$NON-NLS-1$
     final KeyEvent keyEvent)
     {
     }
@@ -100,7 +100,7 @@ public class LocationDialog
      * 
      * @see java.awt.event.KeyListener#keyReleased(java.awt.event.KeyEvent)
      */
-    public void keyReleased(@SuppressWarnings("unused")
+    public void keyReleased(@SuppressWarnings("unused") //$NON-NLS-1$
     final KeyEvent keyEvents)
     {
     }
@@ -203,7 +203,7 @@ public class LocationDialog
 
     final FocusListener focusListener = new FocusListener()
     {
-      public void focusGained(@SuppressWarnings("unused")
+      public void focusGained(@SuppressWarnings("unused") //$NON-NLS-1$
       FocusEvent e)
       {
       }
@@ -240,7 +240,7 @@ public class LocationDialog
     city.addFocusListener(focusListener);
     countries.addFocusListener(focusListener);
 
-    final FormLayout layout = new FormLayout("right:p, 3dlu, p");
+    final FormLayout layout = new FormLayout("right:p, 3dlu, p"); //$NON-NLS-1$
     final DefaultFormBuilder builder = new DefaultFormBuilder(layout);
     builder.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
     builder.append("City", city);
@@ -286,7 +286,7 @@ public class LocationDialog
 
       private static final long serialVersionUID = -180000433351276424L;
 
-      public void actionPerformed(@SuppressWarnings("unused")
+      public void actionPerformed(@SuppressWarnings("unused") //$NON-NLS-1$
       ActionEvent actionEvent)
       {
         dispose();

@@ -101,8 +101,8 @@ public class LocationsTabbedPane
     final ChartPanel chartPanel = getSelectedChart();
     final List<FileFilter> fileFilters = new ArrayList<FileFilter>();
     fileFilters
-      .add(new ExtensionFileFilter("Portable Network Graphics (*.png)", ".png"));
-    fileFilters.add(new ExtensionFileFilter("JPEG (*.jpg)", ".jpg"));
+      .add(new ExtensionFileFilter("Portable Network Graphics (*.png)", ".png")); //$NON-NLS-1$ //$NON-NLS-2$
+    fileFilters.add(new ExtensionFileFilter("JPEG (*.jpg)", ".jpg")); //$NON-NLS-1$ //$NON-NLS-2$
     final File selectedFile = Actions
       .showSaveDialog(chartPanel, Messages
         .getString("DaylightChartGui.Menu.File.SaveChart"), //$NON-NLS-1$
@@ -116,14 +116,14 @@ public class LocationsTabbedPane
       try
       {
         final String extension = ExtensionFileFilter.getExtension(selectedFile);
-        if (extension.equals(".png"))
+        if (extension.equals(".png")) //$NON-NLS-1$
         {
           ChartUtilities.saveChartAsPNG(selectedFile,
                                         chartPanel.getChart(),
                                         chartPanel.getWidth(),
                                         chartPanel.getHeight());
         }
-        else if (extension.equals(".jpg"))
+        else if (extension.equals(".jpg")) //$NON-NLS-1$
         {
           ChartUtilities.saveChartAsJPEG(selectedFile,
                                          chartPanel.getChart(),

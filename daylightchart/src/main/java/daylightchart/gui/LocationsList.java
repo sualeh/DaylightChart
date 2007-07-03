@@ -121,12 +121,12 @@ public class LocationsList
     });
     locationsList.addKeyListener(new KeyListener()
     {
-      public void keyPressed(@SuppressWarnings("unused")
+      public void keyPressed(@SuppressWarnings("unused") //$NON-NLS-1$
       final KeyEvent e)
       {
       }
 
-      public void keyReleased(@SuppressWarnings("unused")
+      public void keyReleased(@SuppressWarnings("unused") //$NON-NLS-1$
       final KeyEvent e)
       {
       }

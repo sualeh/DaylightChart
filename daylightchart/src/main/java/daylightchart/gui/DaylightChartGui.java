@@ -79,7 +79,7 @@ public final class DaylightChartGui
   public DaylightChartGui()
   {
 
-    setIconImage(new ImageIcon(DaylightChartGui.class.getResource("/icon.png"))
+    setIconImage(new ImageIcon(DaylightChartGui.class.getResource("/icon.png")) //$NON-NLS-1$
       .getImage());
 
     setTitle("Daylight Chart"); //$NON-NLS-1$
@@ -150,10 +150,10 @@ public final class DaylightChartGui
   }
 
   private void createActions(final JMenuBar menuBar,
-                             @SuppressWarnings("unused")
+                             @SuppressWarnings("unused") //$NON-NLS-1$
                              final JToolBar toolBar)
   {
-    final JMenu menu = new JMenu("Actions");
+    final JMenu menu = new JMenu(Messages.getString("DaylightChartGui.Menu.Actions")); //$NON-NLS-1$
     menu.setMnemonic('A');
 
     for (final LocationsListOperation operation: LocationsListOperation
@@ -222,7 +222,7 @@ public final class DaylightChartGui
   }
 
   private void createOptionsMenu(final JMenuBar menuBar,
-                                 @SuppressWarnings("unused")
+                                 @SuppressWarnings("unused") //$NON-NLS-1$
                                  final JToolBar toolBar)
   {
 
@@ -246,7 +246,7 @@ public final class DaylightChartGui
                                                                          icon,
                                                                          isSelected);
     sortByLatitude.setSelectedIcon(new ImageIcon(DaylightChartGui.class
-      .getResource("/icons/sort_by_latitude_dim.gif")));
+      .getResource("/icons/sort_by_latitude_dim.gif"))); //$NON-NLS-1$
     sortingMenuItems.add(sortByLatitude);
     menu.add(sortByLatitude);
 
@@ -258,7 +258,7 @@ public final class DaylightChartGui
                                                                      icon,
                                                                      isSelected);
     sortByName.setSelectedIcon(new ImageIcon(DaylightChartGui.class
-      .getResource("/icons/sort_by_name_dim.gif")));
+      .getResource("/icons/sort_by_name_dim.gif"))); //$NON-NLS-1$
     sortingMenuItems.add(sortByName);
     menu.add(sortByName);
 
@@ -346,7 +346,7 @@ public final class DaylightChartGui
 
     chartOptionsMenuItem.addActionListener(new ActionListener()
     {
-      public void actionPerformed(@SuppressWarnings("unused")
+      public void actionPerformed(@SuppressWarnings("unused") //$NON-NLS-1$
       final ActionEvent actionevent)
       {
         final Options options = UserPreferences.getOptions();
@@ -370,7 +370,7 @@ public final class DaylightChartGui
 
     resetAll.addActionListener(new ActionListener()
     {
-      public void actionPerformed(@SuppressWarnings("unused")
+      public void actionPerformed(@SuppressWarnings("unused") //$NON-NLS-1$
       final ActionEvent actionevent)
       {
         UserPreferences.clear();
