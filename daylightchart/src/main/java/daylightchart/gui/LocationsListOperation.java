@@ -35,11 +35,14 @@ enum LocationsListOperation
 {
 
   /** Add location. */
-  add(Messages.getString("DaylightChartGui.Menu.Actions.AddLocation"), "/icons/add_location.gif", "shift INSERT"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+  add(
+    Messages.getString("DaylightChartGui.Menu.Actions.AddLocation"), "/icons/add_location.gif", "shift INSERT"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
   /** Edit location. */
-  edit(Messages.getString("DaylightChartGui.Menu.Actions.EditLocation"), "/icons/edit_location.gif", "control E"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+  edit(
+    Messages.getString("DaylightChartGui.Menu.Actions.EditLocation"), "/icons/edit_location.gif", "control E"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
   /** Delete location. */
-  delete(Messages.getString("DaylightChartGui.Menu.Actions.DeleteLocation"), "/icons/delete_location.gif", "shift DELETE"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+  delete(
+    Messages.getString("DaylightChartGui.Menu.Actions.DeleteLocation"), "/icons/delete_location.gif", "shift DELETE"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
   private final String iconResource;
   private final String text;
@@ -67,7 +70,7 @@ enum LocationsListOperation
     action.setShortcutKey(keyStroke);
     action.addActionListener(new ActionListener()
     {
-      public void actionPerformed(@SuppressWarnings("unused") //$NON-NLS-1$
+      public void actionPerformed(@SuppressWarnings("unused")
       final ActionEvent e)
       {
         final Location selectedLocation = locationsList.getSelectedLocation();

@@ -150,10 +150,11 @@ public final class DaylightChartGui
   }
 
   private void createActions(final JMenuBar menuBar,
-                             @SuppressWarnings("unused") //$NON-NLS-1$
+                             @SuppressWarnings("unused")
                              final JToolBar toolBar)
   {
-    final JMenu menu = new JMenu(Messages.getString("DaylightChartGui.Menu.Actions")); //$NON-NLS-1$
+    final JMenu menu = new JMenu(Messages
+      .getString("DaylightChartGui.Menu.Actions")); //$NON-NLS-1$
     menu.setMnemonic('A');
 
     for (final LocationsListOperation operation: LocationsListOperation
@@ -222,7 +223,7 @@ public final class DaylightChartGui
   }
 
   private void createOptionsMenu(final JMenuBar menuBar,
-                                 @SuppressWarnings("unused") //$NON-NLS-1$
+                                 @SuppressWarnings("unused")
                                  final JToolBar toolBar)
   {
 
@@ -346,7 +347,7 @@ public final class DaylightChartGui
 
     chartOptionsMenuItem.addActionListener(new ActionListener()
     {
-      public void actionPerformed(@SuppressWarnings("unused") //$NON-NLS-1$
+      public void actionPerformed(@SuppressWarnings("unused")
       final ActionEvent actionevent)
       {
         final Options options = UserPreferences.getOptions();
@@ -370,7 +371,7 @@ public final class DaylightChartGui
 
     resetAll.addActionListener(new ActionListener()
     {
-      public void actionPerformed(@SuppressWarnings("unused") //$NON-NLS-1$
+      public void actionPerformed(@SuppressWarnings("unused")
       final ActionEvent actionevent)
       {
         UserPreferences.clear();

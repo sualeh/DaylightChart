@@ -102,7 +102,7 @@ public class TitleOptions
    */
   public void setShowTitle(final boolean showTitle)
   {
-    this.hideTitle = !showTitle;
+    hideTitle = !showTitle;
   }
 
   /**
