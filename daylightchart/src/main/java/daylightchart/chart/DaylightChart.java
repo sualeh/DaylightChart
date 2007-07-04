@@ -152,7 +152,7 @@ public class DaylightChart
 
   private void adjustForChartOrientation(final ChartOrientation chartOrientation)
   {
-    if (chartOrientation != null)
+    if (chartOrientation == null)
     {
       return;
     }
