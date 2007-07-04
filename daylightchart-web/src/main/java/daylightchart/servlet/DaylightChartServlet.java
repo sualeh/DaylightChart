@@ -21,6 +21,7 @@ package daylightchart.servlet;
 
 
 import java.io.IOException;
+import java.util.Calendar;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -39,6 +40,7 @@ import daylightchart.location.Country;
 import daylightchart.location.Location;
 import daylightchart.location.parser.Countries;
 import daylightchart.location.parser.DefaultTimezones;
+import daylightchart.options.Options;
 
 /**
  * Serves up Daylight Charts.
@@ -68,7 +70,8 @@ public class DaylightChartServlet
     {
       // Create the chart
       final Location location = getRequestedLocation(request);
-      final DaylightChart daylightChart = new DaylightChart(location);
+      final DaylightChart daylightChart = new DaylightChart(location, Calendar
+        .getInstance().get(Calendar.YEAR), new Options());
 
       // Get the image width
       int width;
