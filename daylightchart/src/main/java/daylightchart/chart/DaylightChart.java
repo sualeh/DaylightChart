@@ -34,6 +34,7 @@ import org.jfree.chart.axis.AxisLocation;
 import org.jfree.chart.axis.DateAxis;
 import org.jfree.chart.axis.DateTickMarkPosition;
 import org.jfree.chart.axis.DateTickUnit;
+import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.plot.IntervalMarker;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
@@ -149,6 +150,34 @@ public class DaylightChart
     // No-op
   }
 
+  private void adjustForChartOrientation(final ChartOrientation chartOrientation)
+  {
+    if (chartOrientation != null)
+    {
+      return;
+    }
+
+    final XYPlot plot = getXYPlot();
+    final ValueAxis hoursAxis = plot.getRangeAxis();
+    final ValueAxis monthsAxis = plot.getDomainAxis();
+
+    switch (chartOrientation)
+    {
+      case standard:
+        hoursAxis.setInverted(true);
+        plot.setDomainAxisLocation(AxisLocation.TOP_OR_LEFT);
+        break;
+      case conventional:
+        break;
+      case vertical:
+        plot.setOrientation(PlotOrientation.HORIZONTAL);
+        monthsAxis.setInverted(true);
+        break;
+      default:
+        break;
+    }
+  }
+
   /**
    * Creates the daylight chart.
    */
@@ -162,8 +191,8 @@ public class DaylightChart
     plot.setBackgroundPaint(nightColor);
     plot.setAxisOffset(new RectangleInsets(5.0, 5.0, 5.0, 5.0));
 
-    createMonthsAxis(plot, chartOrientation);
-    createHoursAxis(plot, chartOrientation);
+    createMonthsAxis(plot);
+    createHoursAxis(plot);
 
     // Create a marker region for daylight savings time
     if (riseSetData.usesDaylightTime())
@@ -177,11 +206,8 @@ public class DaylightChart
     riseSetData.setUsesDaylightTime(false);
     plot.setDataset(1, createTimeSeries());
     plot.setRenderer(1, createOutlineRenderer());
-    if (chartOrientation != null
-        && chartOrientation == ChartOrientation.vertical)
-    {
-      plot.setOrientation(PlotOrientation.HORIZONTAL);
-    }
+
+    adjustForChartOrientation(chartOrientation);
 
     createTitles();
   }
@@ -217,8 +243,7 @@ public class DaylightChart
   }
 
   @SuppressWarnings("deprecation")
-  private void createHoursAxis(final XYPlot plot,
-                               final ChartOrientation chartOrientation)
+  private void createHoursAxis(final XYPlot plot)
   {
     final DateAxis axis = new DateAxis();
     axis.setLowerMargin(0.0f);
@@ -228,16 +253,9 @@ public class DaylightChart
     axis.setRange(new Date(70, 0, 1), new Date(70, 0, 2));
     //
     plot.setRangeAxis(axis);
-    // Adjust for chart orientation
-    if (chartOrientation != null
-        && chartOrientation == ChartOrientation.standard)
-    {
-      axis.setInverted(true);
-    }
   }
 
-  private void createMonthsAxis(final XYPlot plot,
-                                final ChartOrientation chartOrientation)
+  private void createMonthsAxis(final XYPlot plot)
   {
     final DateAxis axis = new DateAxis();
     axis.setTickMarkPosition(DateTickMarkPosition.START);
@@ -249,18 +267,6 @@ public class DaylightChart
     axis.setTickUnit(new DateTickUnit(DateTickUnit.MONTH, 1), true, true);
     //
     plot.setDomainAxis(axis);
-    // Adjust for chart orientation
-    if (chartOrientation != null)
-    {
-      if (chartOrientation == ChartOrientation.standard)
-      {
-        plot.setDomainAxisLocation(AxisLocation.TOP_OR_LEFT);
-      }
-      if (chartOrientation == ChartOrientation.vertical)
-      {
-        axis.setInverted(true);
-      }
-    }
   }
 
   private XYItemRenderer createOutlineRenderer()
