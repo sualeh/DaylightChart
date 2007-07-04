@@ -221,11 +221,6 @@ public class DaylightChart
                                final ChartOrientation chartOrientation)
   {
     final DateAxis axis = new DateAxis();
-    if (chartOrientation != null
-        && chartOrientation == ChartOrientation.standard)
-    {
-      axis.setInverted(true);
-    }
     axis.setLowerMargin(0.0f);
     axis.setUpperMargin(0.0f);
     axis.setTickLabelFont(chartFont.deriveFont(Font.PLAIN, 12));
@@ -233,6 +228,12 @@ public class DaylightChart
     axis.setRange(new Date(70, 0, 1), new Date(70, 0, 2));
     //
     plot.setRangeAxis(axis);
+    // Adjust for chart orientation
+    if (chartOrientation != null
+        && chartOrientation == ChartOrientation.standard)
+    {
+      axis.setInverted(true);
+    }
   }
 
   private void createMonthsAxis(final XYPlot plot,
@@ -248,6 +249,7 @@ public class DaylightChart
     axis.setTickUnit(new DateTickUnit(DateTickUnit.MONTH, 1), true, true);
     //
     plot.setDomainAxis(axis);
+    // Adjust for chart orientation
     if (chartOrientation != null)
     {
       if (chartOrientation == ChartOrientation.standard)
