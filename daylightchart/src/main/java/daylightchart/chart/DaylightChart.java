@@ -35,6 +35,7 @@ import org.jfree.chart.axis.DateAxis;
 import org.jfree.chart.axis.DateTickMarkPosition;
 import org.jfree.chart.axis.DateTickUnit;
 import org.jfree.chart.plot.IntervalMarker;
+import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYDifferenceRenderer;
 import org.jfree.chart.renderer.xy.XYItemRenderer;
@@ -51,6 +52,7 @@ import org.jfree.ui.TextAnchor;
 import org.joda.time.LocalDateTime;
 
 import daylightchart.location.Location;
+import daylightchart.options.Options;
 import daylightchart.options.chart.ChartOptions;
 import daylightchart.options.chart.ChartOptionsListener;
 
@@ -77,21 +79,8 @@ public class DaylightChart
    */
   public DaylightChart()
   {
-    this(null);
+    this(null, Calendar.getInstance().get(Calendar.YEAR), new Options());
     setTitle("");
-  }
-
-  /**
-   * Instantiate the chart for a given location, and given year.
-   * 
-   * @param location
-   *        Location
-   */
-  public DaylightChart(final Location location)
-  {
-    this(location,
-         Calendar.getInstance().get(Calendar.YEAR),
-         TimeZoneOption.USE_TIME_ZONE);
   }
 
   /**
@@ -101,33 +90,27 @@ public class DaylightChart
    *        Location
    * @param year
    *        Year
-   * @param timeZoneOption
-   *        Time zone option
+   * @param options
+   *        Options
    */
   public DaylightChart(final Location location,
                        final int year,
-                       final TimeZoneOption timeZoneOption)
+                       final Options options)
   {
     super(new XYPlot());
+
+    TimeZoneOption timeZoneOption = TimeZoneOption.USE_TIME_ZONE;
+    ChartOrientation chartOrientation = ChartOrientation.standard;
+    if (options != null)
+    {
+      timeZoneOption = options.getTimeZoneOption();
+      chartOrientation = options.getChartOrientation();
+    }
     // Calculate rise and set timings for the whole year
     riseSetData = RiseSetFactory.createRiseSetYear(location,
                                                    year,
                                                    timeZoneOption);
-    createChart();
-  }
-
-  /**
-   * Instantiate the chart for a given location, and given year.
-   * 
-   * @param location
-   *        Location
-   * @param timeZoneOption
-   *        Time zone option
-   */
-  public DaylightChart(final Location location,
-                       final TimeZoneOption timeZoneOption)
-  {
-    this(location, Calendar.getInstance().get(Calendar.YEAR), timeZoneOption);
+    createChart(chartOrientation);
   }
 
   /**
@@ -169,7 +152,7 @@ public class DaylightChart
   /**
    * Creates the daylight chart.
    */
-  private void createChart()
+  private void createChart(final ChartOrientation chartOrientation)
   {
 
     setBackgroundPaint(Color.white);
@@ -179,8 +162,8 @@ public class DaylightChart
     plot.setBackgroundPaint(nightColor);
     plot.setAxisOffset(new RectangleInsets(5.0, 5.0, 5.0, 5.0));
 
-    createMonthsAxis(plot);
-    createHoursAxis(plot);
+    createMonthsAxis(plot, chartOrientation);
+    createHoursAxis(plot, chartOrientation);
 
     // Create a marker region for daylight savings time
     if (riseSetData.usesDaylightTime())
@@ -194,6 +177,11 @@ public class DaylightChart
     riseSetData.setUsesDaylightTime(false);
     plot.setDataset(1, createTimeSeries());
     plot.setRenderer(1, createOutlineRenderer());
+    if (chartOrientation != null
+        && chartOrientation == ChartOrientation.vertical)
+    {
+      plot.setOrientation(PlotOrientation.HORIZONTAL);
+    }
 
     createTitles();
   }
@@ -229,10 +217,15 @@ public class DaylightChart
   }
 
   @SuppressWarnings("deprecation")
-  private void createHoursAxis(final XYPlot plot)
+  private void createHoursAxis(final XYPlot plot,
+                               final ChartOrientation chartOrientation)
   {
     final DateAxis axis = new DateAxis();
-    axis.setInverted(true);
+    if (chartOrientation != null
+        && chartOrientation == ChartOrientation.standard)
+    {
+      axis.setInverted(true);
+    }
     axis.setLowerMargin(0.0f);
     axis.setUpperMargin(0.0f);
     axis.setTickLabelFont(chartFont.deriveFont(Font.PLAIN, 12));
@@ -242,7 +235,8 @@ public class DaylightChart
     plot.setRangeAxis(axis);
   }
 
-  private void createMonthsAxis(final XYPlot plot)
+  private void createMonthsAxis(final XYPlot plot,
+                                final ChartOrientation chartOrientation)
   {
     final DateAxis axis = new DateAxis();
     axis.setTickMarkPosition(DateTickMarkPosition.START);
@@ -254,7 +248,17 @@ public class DaylightChart
     axis.setTickUnit(new DateTickUnit(DateTickUnit.MONTH, 1), true, true);
     //
     plot.setDomainAxis(axis);
-    plot.setDomainAxisLocation(AxisLocation.TOP_OR_LEFT);
+    if (chartOrientation != null)
+    {
+      if (chartOrientation == ChartOrientation.standard)
+      {
+        plot.setDomainAxisLocation(AxisLocation.TOP_OR_LEFT);
+      }
+      if (chartOrientation == ChartOrientation.vertical)
+      {
+        axis.setInverted(true);
+      }
+    }
   }
 
   private XYItemRenderer createOutlineRenderer()

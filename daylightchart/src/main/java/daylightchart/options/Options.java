@@ -24,6 +24,7 @@ package daylightchart.options;
 
 import java.io.Serializable;
 
+import daylightchart.chart.ChartOrientation;
 import daylightchart.chart.TimeZoneOption;
 import daylightchart.location.LocationsSortOrder;
 import daylightchart.options.chart.ChartOptions;
@@ -42,6 +43,7 @@ public class Options
   private LocationsSortOrder locationsSortOrder;
   private TimeZoneOption timeZoneOption;
   private ChartOptions chartOptions;
+  private ChartOrientation chartOrientation;
 
   /**
    * Default options.
@@ -51,6 +53,7 @@ public class Options
     locationsSortOrder = LocationsSortOrder.BY_NAME;
     timeZoneOption = TimeZoneOption.USE_TIME_ZONE;
     chartOptions = new ChartOptions();
+    chartOrientation = ChartOrientation.standard;
   }
 
   /**
@@ -59,6 +62,16 @@ public class Options
   public final ChartOptions getChartOptions()
   {
     return chartOptions;
+  }
+
+  /**
+   * Gets the chart orientation.
+   * 
+   * @return Chart orientation
+   */
+  public ChartOrientation getChartOrientation()
+  {
+    return chartOrientation;
   }
 
   /**
@@ -87,6 +100,17 @@ public class Options
     {
       this.chartOptions = chartOptions;
     }
+  }
+
+  /**
+   * Sets the chart orientation.
+   * 
+   * @param chartOrientation
+   *        Chart orientation
+   */
+  public void setChartOrientation(final ChartOrientation chartOrientation)
+  {
+    this.chartOrientation = chartOrientation;
   }
 
   /**

@@ -26,6 +26,7 @@ import java.awt.Dimension;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -70,8 +71,8 @@ public class LocationsTabbedPane
   public void addLocationTab(final Location location)
   {
     final Options options = UserPreferences.getOptions();
-    final DaylightChart chart = new DaylightChart(location, options
-      .getTimeZoneOption());
+    final DaylightChart chart = new DaylightChart(location, Calendar
+      .getInstance().get(Calendar.YEAR), options);
     options.getChartOptions().updateChart(chart);
 
     final ChartPanel chartPanel = new ChartPanel(chart);

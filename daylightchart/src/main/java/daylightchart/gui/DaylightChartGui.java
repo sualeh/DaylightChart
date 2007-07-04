@@ -45,6 +45,7 @@ import org.jfree.chart.editor.ChartEditor;
 
 import sf.util.ui.ExitAction;
 import sf.util.ui.GuiAction;
+import daylightchart.chart.ChartOrientation;
 import daylightchart.chart.TimeZoneOption;
 import daylightchart.gui.actions.AboutAction;
 import daylightchart.gui.actions.CloseCurrentTabAction;
@@ -277,6 +278,25 @@ public final class DaylightChartGui
 
     menu.addSeparator();
 
+    final ButtonGroup chartOrientationMenuItems = new ButtonGroup();
+    final JRadioButtonMenuItem orientationStandard = new JRadioButtonMenuItem("Standard",
+                                                                              options
+                                                                                .getChartOrientation() == ChartOrientation.standard);
+    chartOrientationMenuItems.add(orientationStandard);
+    menu.add(orientationStandard);
+    final JRadioButtonMenuItem orientationConventional = new JRadioButtonMenuItem("Conventional",
+                                                                                  options
+                                                                                    .getChartOrientation() == ChartOrientation.conventional);
+    chartOrientationMenuItems.add(orientationConventional);
+    menu.add(orientationConventional);
+    final JRadioButtonMenuItem orientationVertical = new JRadioButtonMenuItem("Vertical",
+                                                                              options
+                                                                                .getChartOrientation() == ChartOrientation.vertical);
+    chartOrientationMenuItems.add(orientationVertical);
+    menu.add(orientationVertical);
+
+    menu.addSeparator();
+
     final JMenuItem chartOptionsMenuItem = new JMenuItem(Messages
       .getString("DaylightChartGui.Menu.Options.ChartOptions")); //$NON-NLS-1$
 
@@ -340,6 +360,45 @@ public final class DaylightChartGui
         {
           final Options options = UserPreferences.getOptions();
           options.setTimeZoneOption(TimeZoneOption.USE_LOCAL_TIME);
+          UserPreferences.setOptions(options);
+        }
+      }
+    });
+
+    orientationStandard.addItemListener(new ItemListener()
+    {
+      public void itemStateChanged(final ItemEvent e)
+      {
+        if (e.getStateChange() == ItemEvent.SELECTED)
+        {
+          final Options options = UserPreferences.getOptions();
+          options.setChartOrientation(ChartOrientation.standard);
+          UserPreferences.setOptions(options);
+        }
+      }
+    });
+
+    orientationConventional.addItemListener(new ItemListener()
+    {
+      public void itemStateChanged(final ItemEvent e)
+      {
+        if (e.getStateChange() == ItemEvent.SELECTED)
+        {
+          final Options options = UserPreferences.getOptions();
+          options.setChartOrientation(ChartOrientation.conventional);
+          UserPreferences.setOptions(options);
+        }
+      }
+    });
+
+    orientationVertical.addItemListener(new ItemListener()
+    {
+      public void itemStateChanged(final ItemEvent e)
+      {
+        if (e.getStateChange() == ItemEvent.SELECTED)
+        {
+          final Options options = UserPreferences.getOptions();
+          options.setChartOrientation(ChartOrientation.vertical);
           UserPreferences.setOptions(options);
         }
       }
