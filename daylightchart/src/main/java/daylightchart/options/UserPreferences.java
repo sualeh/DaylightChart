@@ -168,7 +168,7 @@ public final class UserPreferences
     }
     catch (final IOException e)
     {
-      LOGGER.log(Level.WARNING, "Could get chart options", e);
+      LOGGER.log(Level.FINE, "Could get chart options", e);
       options = getDefaultDaylightChartOptions();
     }
     return options;
