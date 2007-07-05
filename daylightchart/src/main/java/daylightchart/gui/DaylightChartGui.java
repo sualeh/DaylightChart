@@ -433,11 +433,19 @@ public final class DaylightChartGui
       public void actionPerformed(@SuppressWarnings("unused")
       final ActionEvent actionevent)
       {
+        // Clear all preferences
         UserPreferences.clear();
+
+        // Dispose this window
+        final JFrame mainWindow = DaylightChartGui.this;
+        mainWindow.setVisible(false);
+        mainWindow.dispose();
+
+        // Open a new window
+        new DaylightChartGui().setVisible(true);
       }
     });
 
     menuBar.add(menu);
   }
-
 }
