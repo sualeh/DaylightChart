@@ -279,17 +279,20 @@ public final class DaylightChartGui
     menu.addSeparator();
 
     final ButtonGroup chartOrientationMenuItems = new ButtonGroup();
-    final JRadioButtonMenuItem orientationStandard = new JRadioButtonMenuItem("Standard",
+    final JRadioButtonMenuItem orientationStandard = new JRadioButtonMenuItem(Messages
+                                                                                .getString("DaylightChartGui.Menu.Options.Orientation.Standard"), //$NON-NLS-1$
                                                                               options
                                                                                 .getChartOrientation() == ChartOrientation.standard);
     chartOrientationMenuItems.add(orientationStandard);
     menu.add(orientationStandard);
-    final JRadioButtonMenuItem orientationConventional = new JRadioButtonMenuItem("Conventional",
+    final JRadioButtonMenuItem orientationConventional = new JRadioButtonMenuItem(Messages
+                                                                                    .getString("DaylightChartGui.Menu.Options.Orientation.Conventional"), //$NON-NLS-1$
                                                                                   options
                                                                                     .getChartOrientation() == ChartOrientation.conventional);
     chartOrientationMenuItems.add(orientationConventional);
     menu.add(orientationConventional);
-    final JRadioButtonMenuItem orientationVertical = new JRadioButtonMenuItem("Vertical",
+    final JRadioButtonMenuItem orientationVertical = new JRadioButtonMenuItem(Messages
+                                                                                .getString("DaylightChartGui.Menu.Options.Orientation.Vertical"), //$NON-NLS-1$
                                                                               options
                                                                                 .getChartOrientation() == ChartOrientation.vertical);
     chartOrientationMenuItems.add(orientationVertical);
