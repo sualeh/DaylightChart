@@ -236,10 +236,12 @@ final class CobbledSunCalc
    * @param horizon
    *        The adopted true altitude of the horizon in degrees. Use one
    *        of the following values. <br>
-   *        &#8729; SUNRISE_SUNSET <br>
-   *        &#8729; CIVIL_TWILIGHT <br>
-   *        &#8729; NAUTICAL_TWILIGHT <br>
-   *        &#8729; ASTRONOMICAL_TWILIGHT
+   *        <ul>
+   *        <li>SUNRISE_SUNSET</li>
+   *        <li>CIVIL_TWILIGHT</li>
+   *        <li>NAUTICAL_TWILIGHT</li>
+   *        <li>ASTRONOMICAL_TWILIGHT</li>
+   *        </ul>
    * @return Array for sunrise and sunset times. Use RISE and SET as
    *         indices into this array.
    * @see <a

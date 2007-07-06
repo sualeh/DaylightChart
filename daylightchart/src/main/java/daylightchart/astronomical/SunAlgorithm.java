@@ -97,6 +97,10 @@ public interface SunAlgorithm
 
   /** Sunrise and sunset angle, in degrees */
   double SUNRISE_SUNSET = -(50.0 / 60.0);
+  double CIVIL_TWILIGHT = -6.0;
+  double NAUTICAL_TWILIGHT = -12.0;
+  double ASTRONOMICAL_TWILIGHT = -18.0;
+  double TWILIGHT = CIVIL_TWILIGHT;
 
   /**
    * Compute the time of sunrise and sunset for this date.
