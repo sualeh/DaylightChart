@@ -216,7 +216,7 @@ public class DaylightChart
   {
     XYItemRenderer renderer;
     renderer = new XYDifferenceRenderer(daylightColor, daylightColor, false);
-    renderer.setStroke(new BasicStroke(0.2f));
+    renderer.setBaseStroke(new BasicStroke(0.2f));
     renderer.setSeriesPaint(0, Color.WHITE);
     renderer.setSeriesPaint(1, Color.WHITE);
     return renderer;
@@ -273,7 +273,7 @@ public class DaylightChart
   {
     XYItemRenderer renderer;
     renderer = new XYLineAndShapeRenderer(true, false);
-    renderer.setStroke(new BasicStroke(0.6f));
+    renderer.setBaseStroke(new BasicStroke(0.6f));
     renderer.setSeriesPaint(0, Color.WHITE);
     renderer.setSeriesPaint(1, Color.WHITE);
     return renderer;

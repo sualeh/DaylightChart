@@ -22,11 +22,19 @@
 package daylightchart.chart;
 
 
+/**
+ * Orientation of the chart.
+ * 
+ * @author Sualeh Fatehi
+ */
 public enum ChartOrientation
 {
 
+  /** Standard. */
   standard,
+  /** Conventional. */
   conventional,
+  /** Vertical. */
   vertical;
 
 }

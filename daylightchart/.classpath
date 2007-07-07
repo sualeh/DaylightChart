@@ -7,10 +7,10 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="var" path="M2_REPO/com/jgoodies/looks/2.1.2/looks-2.1.2.jar" sourcepath="M2_REPO/com/jgoodies/looks/2.1.2/looks-2.1.2-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/joda-time/joda-time/1.4/joda-time-1.4.jar"/>
-	<classpathentry kind="var" path="M2_REPO/jfree/jfreechart/1.0.4/jfreechart-1.0.4.jar" sourcepath="M2_REPO/jfree/jfreechart/1.0.4/jfreechart-1.0.4-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/junit/junit/4.3.1/junit-4.3.1.jar"/>
 	<classpathentry kind="var" path="M2_REPO/jgoodies/forms/1.0.5/forms-1.0.5.jar" sourcepath="/JFreeHome/forms-1.1.0/src/core"/>
-	<classpathentry kind="var" path="M2_REPO/jfree/jcommon/1.0.8/jcommon-1.0.8.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/Point Location 6709"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/jcommon-1.0.10"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/jfreechart-1.0.6"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
