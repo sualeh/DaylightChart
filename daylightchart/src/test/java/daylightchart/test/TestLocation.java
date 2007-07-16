@@ -64,7 +64,7 @@ public class TestLocation
     final InputStreamReader reader = new InputStreamReader(dataStream);
     List<Location> locations = LocationParser.parseLocations(reader);
 
-    assertEquals(100, locations.size());
+    assertEquals(101, locations.size());
   }
 
 }

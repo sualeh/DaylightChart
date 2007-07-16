@@ -289,6 +289,8 @@ public class DaylightChart
   {
     final TimeSeries sunriseSeries = new TimeSeries("Sunrise");
     final TimeSeries sunsetSeries = new TimeSeries("Sunset");
+    final TimeSeries sunriseWrapSeries = new TimeSeries("Sunrise (Wrap)");
+    final TimeSeries sunsetWrapSeries = new TimeSeries("Sunset (Wrap)");
     for (final RiseSet riseSet: riseSetData.getRiseSets())
     {
       final LocalDateTime sunrise = riseSet.getSunrise();

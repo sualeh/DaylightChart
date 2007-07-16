@@ -27,10 +27,18 @@ import java.util.logging.Logger;
 
 import javax.swing.UIManager;
 
+import sf.util.CommandLineParser;
+import sf.util.CommandLineParser.BooleanOption;
+import sf.util.CommandLineParser.Option;
+import sf.util.CommandLineParser.StringOption;
+
 import com.jgoodies.looks.plastic.PlasticLookAndFeel;
 import com.jgoodies.looks.plastic.theme.LightGray;
 
 import daylightchart.gui.DaylightChartGui;
+import daylightchart.location.Location;
+import daylightchart.location.parser.LocationParser;
+import daylightchart.location.parser.ParserException;
 import daylightchart.options.UserPreferences;
 
 /**
@@ -43,6 +51,9 @@ public final class Main
 
   private static final Logger LOGGER = Logger.getLogger(Main.class.getName());
 
+  private static final String OPTION_NOPREFS = "noprefs";
+  private static final String OPTION_LOCATION = "location";
+
   /**
    * Main window.
    * 
@@ -53,13 +64,29 @@ public final class Main
   {
 
     // Parse command line
-    if (args.length > 1)
+    final CommandLineParser parser1 = new CommandLineParser();
+    parser1.addOption(new BooleanOption(Option.NO_SHORT_FORM, OPTION_NOPREFS));
+    parser1.addOption(new StringOption(Option.NO_SHORT_FORM,
+                                       OPTION_LOCATION,
+                                       null));
+    final CommandLineParser parser = parser1;
+    parser.parse(args);
+    final boolean noPrefs = parser.getBooleanOptionValue(OPTION_NOPREFS);
+    final String locationString = parser.getStringOptionValue(OPTION_LOCATION);
+    Location location = null;
+    if (locationString != null)
     {
-      if (args[0].equals("-noprefs"))
+      try
       {
-        UserPreferences.setSavePreferences(false);
+        location = LocationParser.parseLocation(locationString);
+      }
+      catch (ParserException e)
+      {
+        location = null;
       }
     }
+
+    UserPreferences.setSavePreferences(!noPrefs);
 
     // Set UI look and feel
     try
@@ -72,7 +99,8 @@ public final class Main
       LOGGER.log(Level.WARNING, "Cannot set look and feel");
     }
 
-    new DaylightChartGui().setVisible(true);
+    new DaylightChartGui(location).setVisible(true);
+
   }
 
   private Main()
