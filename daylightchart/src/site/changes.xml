@@ -102,14 +102,19 @@
       <action
         dev="Sualeh Fatehi"
         type="fix">
-        Fixing reset all option. This option now close the current window, and
+        Fixing reset all option. This option now closes the current window, and
         opens a new one, so that all tabs are closed, and all menus are reset.
       </action>
       <action
         dev="Sualeh Fatehi"
-        type="all">
+        type="add">
         Adding options for chart orientation.
-      </action>      
+      </action>    
+      <action
+        dev="Sualeh Fatehi"
+        type="add">
+        Adding new command line option for a chart for a single location.
+      </action>          
     </release>
   </body>
 </document>

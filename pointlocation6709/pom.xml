@@ -4,7 +4,7 @@
   <parent>
     <groupId>daylightchart</groupId>
     <artifactId>daylightchart-all</artifactId>
-    <version>1.5</version>
+    <version>1.6</version>
   </parent>
   <groupId>pointlocation6709</groupId>
   <artifactId>pointlocation6709</artifactId>
