@@ -26,7 +26,7 @@ public class DaylightBand
    * @param name
    *        Name of the band.
    */
-  public DaylightBand(String name)
+  public DaylightBand(final String name)
   {
     this.name = name;
     sunriseSeries = new TimeSeries("Sunrise " + name);
@@ -58,6 +58,17 @@ public class DaylightBand
     band.addSeries(sunriseSeries);
     band.addSeries(sunsetSeries);
     return band;
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see java.lang.Object#toString()
+   */
+  @Override
+  public String toString()
+  {
+    return name;
   }
 
   /**
