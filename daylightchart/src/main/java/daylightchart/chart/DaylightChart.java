@@ -45,9 +45,6 @@ import org.jfree.chart.renderer.xy.XYItemRenderer;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.chart.title.TextTitle;
 import org.jfree.data.time.Day;
-import org.jfree.data.time.Minute;
-import org.jfree.data.time.TimeSeries;
-import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.ui.Layer;
 import org.jfree.ui.RectangleAnchor;
 import org.jfree.ui.RectangleInsets;
@@ -186,13 +183,15 @@ public class DaylightChart
   private void createChart(final ChartOrientation chartOrientation)
   {
 
+    createTitles();
+
     setBackgroundPaint(Color.white);
 
     final XYPlot plot = getXYPlot();
 
     plot.setBackgroundPaint(nightColor);
-    plot.setAxisOffset(new RectangleInsets(5.0, 5.0, 5.0, 5.0));
 
+    plot.setAxisOffset(new RectangleInsets(5.0, 5.0, 5.0, 5.0));
     createMonthsAxis(plot);
     createHoursAxis(plot);
 
@@ -202,39 +201,32 @@ public class DaylightChart
       createDSTMarker(plot);
     }
 
-    List<TimeSeries> timeSeries;
+    List<DaylightBand> bands;
     XYItemRenderer renderer;
 
-    // Create daylight plot, with daylight saving time taken into
-    // account
-    timeSeries = createTimeSeries("With Clock-Shift");
+    // Create daylight plot, clock-shift taken into account
+    bands = createTimeSeries("With Clock-Shift");
     renderer = createDifferenceRenderer();
-    createDaylightBands(plot, timeSeries, renderer);
+    createDaylightBands(plot, bands, renderer);
 
-    // Create outline plot, with without clock shift
+    // Create outline plot, without clock shift
     riseSetData.setUsesDaylightTime(false);
-    timeSeries = createTimeSeries("Without Clock-Shift");
+    bands = createTimeSeries("Without Clock-Shift");
     renderer = createOutlineRenderer();
-    createDaylightBands(plot, timeSeries, renderer);
+    createDaylightBands(plot, bands, renderer);
 
     adjustForChartOrientation(chartOrientation);
 
-    createTitles();
   }
 
   private void createDaylightBands(final XYPlot plot,
-                                   final List<TimeSeries> timeSeries,
+                                   final List<DaylightBand> bands,
                                    final XYItemRenderer renderer)
   {
-    final int numberOfBands = timeSeries.size() / 2;
-    for (int band = 0; band < numberOfBands; band++)
+    for (DaylightBand band: bands)
     {
-      final TimeSeriesCollection bandSeries = new TimeSeriesCollection();
-      bandSeries.addSeries(timeSeries.get(band * 2));
-      bandSeries.addSeries(timeSeries.get(band * 2 + 1));
-
       int currentDatasetNumber = plot.getDatasetCount();
-      plot.setDataset(currentDatasetNumber, bandSeries);
+      plot.setDataset(currentDatasetNumber, band.getTimeSeriesCollection());
       plot.setRenderer(currentDatasetNumber, renderer);
     }
   }
@@ -312,20 +304,16 @@ public class DaylightChart
    * 
    * @return A data-set for the sunrise and sunset times.
    */
-  private List<TimeSeries> createTimeSeries(final String seriesType)
+  private List<DaylightBand> createTimeSeries(final String seriesType)
   {
     int bandCount = 0;
-    final TimeSeries sunriseSeries = new TimeSeries("Sunrise (" + seriesType
-                                                    + ", #" + bandCount + ")");
-    final TimeSeries sunsetSeries = new TimeSeries("Sunset (" + seriesType
-                                                   + ", #" + bandCount + ")");
+    final DaylightBand baseBand = new DaylightBand(seriesType + ", #"
+                                                   + bandCount);
 
-    final List<TimeSeries> timeseries = new ArrayList<TimeSeries>();
-    timeseries.add(sunriseSeries);
-    timeseries.add(sunsetSeries);
+    final List<DaylightBand> bands = new ArrayList<DaylightBand>();
+    bands.add(baseBand);
 
-    TimeSeries sunriseWrapSeries = null;
-    TimeSeries sunsetWrapSeries = null;
+    DaylightBand wrapBand = null;
 
     for (final RiseSet riseSet: riseSetData.getRiseSets())
     {
@@ -333,13 +321,10 @@ public class DaylightChart
       final LocalDateTime sunset = riseSet.getSunset();
       if (sunset.getHourOfDay() < 12)
       {
-        if (sunriseWrapSeries == null && sunsetWrapSeries == null)
+        if (wrapBand == null)
         {
           bandCount = bandCount + 1;
-          sunriseWrapSeries = new TimeSeries("Sunrise (" + seriesType + ", #"
-                                             + bandCount + ")");
-          sunsetWrapSeries = new TimeSeries("Sunset (" + seriesType + ", #"
-                                            + bandCount + ")");
+          wrapBand = new DaylightBand(seriesType + ", #" + bandCount);
         }
 
         final LocalDateTime beforeMidnight = new LocalDateTime(sunrise
@@ -363,31 +348,24 @@ public class DaylightChart
                                                               1);
 
         // Split the daylight hours across two series
-        sunriseSeries.add(day(sunrise), time(sunrise));
-        sunsetSeries.add(day(beforeMidnight), time(beforeMidnight));
-
-        sunriseWrapSeries.add(day(afterMidnight), time(afterMidnight));
-        sunsetWrapSeries.add(day(sunset), time(sunset));
+        baseBand.add(sunrise, beforeMidnight);
+        wrapBand.add(afterMidnight, sunset);
       }
       else
       {
-        // End the wrap series, if necessary
-        if (sunriseWrapSeries != null && sunsetWrapSeries != null)
+        // End the wrap band, if necessary
+        if (wrapBand != null)
         {
-          timeseries.add(sunriseWrapSeries);
-          timeseries.add(sunsetWrapSeries);
-
-          sunriseWrapSeries = null;
-          sunsetWrapSeries = null;
+          bands.add(wrapBand);
+          wrapBand = null;
         }
 
         // Add sunset and sunrise as usual
-        sunriseSeries.add(day(sunrise), time(sunrise));
-        sunsetSeries.add(day(sunset), time(sunset));
+        baseBand.add(sunrise, sunset);
       }
     }
 
-    return timeseries;
+    return bands;
   }
 
   private void createTitles()
@@ -406,32 +384,6 @@ public class DaylightChart
         .deriveFont(Font.PLAIN, 18));
       addSubtitle(title);
     }
-  }
-
-  /**
-   * A utility method for creating a value based on a date.
-   * 
-   * @param dateTime
-   *        Date time
-   */
-  private Day day(final LocalDateTime dateTime)
-  {
-    return new Day(dateTime.getDayOfMonth(),
-                   dateTime.getMonthOfYear(),
-                   dateTime.getYear());
-  }
-
-  /**
-   * A utility method for creating a value based on a time.
-   * 
-   * @param dateTime
-   *        Date time
-   */
-  private long time(final LocalDateTime dateTime)
-  {
-    final Minute m = new Minute(dateTime.getMinuteOfHour(), dateTime
-      .getHourOfDay(), 1, 1, 1970);
-    return m.getFirstMillisecond();
   }
 
 }
