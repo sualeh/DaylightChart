@@ -206,7 +206,7 @@ public class DaylightChart
 
     timeSeries = createTimeSeries();
     int numberOfBands = timeSeries.size() / 2;
-    for (int band = 0; band < numberOfBands - 1; band++)
+    for (int band = 0; band < (numberOfBands - 1); band++)
     {
       TimeSeriesCollection seriesBand = new TimeSeriesCollection();
       seriesBand.addSeries(timeSeries.get(band * 2));
