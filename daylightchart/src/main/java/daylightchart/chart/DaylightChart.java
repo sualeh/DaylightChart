@@ -218,12 +218,13 @@ public class DaylightChart
 
     // Create outline plot
     riseSetData.setUsesDaylightTime(false);
+    final int datasetNumber = plot.getSeriesCount();
     timeSeries = createTimeSeries();
     TimeSeriesCollection seriesBand = new TimeSeriesCollection();
     seriesBand.addSeries(timeSeries.get(0));
     seriesBand.addSeries(timeSeries.get(1));
-    plot.setDataset(plot.getSeriesCount(), seriesBand);
-    plot.setRenderer(plot.getSeriesCount(), createOutlineRenderer());
+    plot.setDataset(datasetNumber, seriesBand);
+    plot.setRenderer(datasetNumber, createOutlineRenderer());
 
     adjustForChartOrientation(chartOrientation);
 
