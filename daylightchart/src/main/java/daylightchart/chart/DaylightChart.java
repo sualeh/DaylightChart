@@ -178,6 +178,76 @@ public class DaylightChart
   }
 
   /**
+   * Creates a data-set for the sunrise and sunset times for the whole
+   * year.
+   * 
+   * @return A data-set for the sunrise and sunset times.
+   */
+  private List<DaylightBand> createBands(final String seriesType)
+  {
+    int bandCount = 0;
+    final DaylightBand baseBand = new DaylightBand(seriesType + ", #"
+                                                   + bandCount);
+
+    final List<DaylightBand> bands = new ArrayList<DaylightBand>();
+    bands.add(baseBand);
+
+    DaylightBand wrapBand = null;
+
+    for (final RiseSet riseSet: riseSetData.getRiseSets())
+    {
+      final LocalDateTime sunrise = riseSet.getSunrise();
+      final LocalDateTime sunset = riseSet.getSunset();
+      if (sunset.getHourOfDay() < 12)
+      {
+        if (wrapBand == null)
+        {
+          bandCount = bandCount + 1;
+          wrapBand = new DaylightBand(seriesType + ", #" + bandCount);
+        }
+
+        final LocalDateTime beforeMidnight = new LocalDateTime(sunrise
+                                                                 .getYear(),
+                                                               sunrise
+                                                                 .getMonthOfYear(),
+                                                               sunrise
+                                                                 .getDayOfMonth(),
+                                                               23,
+                                                               59,
+                                                               59,
+                                                               999);
+        final LocalDateTime afterMidnight = new LocalDateTime(sunrise.getYear(),
+                                                              sunrise
+                                                                .getMonthOfYear(),
+                                                              sunrise
+                                                                .getDayOfMonth(),
+                                                              0,
+                                                              0,
+                                                              0,
+                                                              1);
+
+        // Split the daylight hours across two series
+        baseBand.add(sunrise, beforeMidnight);
+        wrapBand.add(afterMidnight, sunset);
+      }
+      else
+      {
+        // End the wrap band, if necessary
+        if (wrapBand != null)
+        {
+          bands.add(wrapBand);
+          wrapBand = null;
+        }
+
+        // Add sunset and sunrise as usual
+        baseBand.add(sunrise, sunset);
+      }
+    }
+
+    return bands;
+  }
+
+  /**
    * Creates the daylight chart.
    */
   private void createChart(final ChartOrientation chartOrientation)
@@ -205,13 +275,13 @@ public class DaylightChart
     XYItemRenderer renderer;
 
     // Create daylight plot, clock-shift taken into account
-    bands = createTimeSeries("With Clock-Shift");
+    bands = createBands("With Clock-Shift");
     renderer = createDifferenceRenderer();
     createDaylightBands(plot, bands, renderer);
 
     // Create outline plot, without clock shift
     riseSetData.setUsesDaylightTime(false);
-    bands = createTimeSeries("Without Clock-Shift");
+    bands = createBands("Without Clock-Shift");
     renderer = createOutlineRenderer();
     createDaylightBands(plot, bands, renderer);
 
@@ -223,9 +293,9 @@ public class DaylightChart
                                    final List<DaylightBand> bands,
                                    final XYItemRenderer renderer)
   {
-    for (DaylightBand band: bands)
+    for (final DaylightBand band: bands)
     {
-      int currentDatasetNumber = plot.getDatasetCount();
+      final int currentDatasetNumber = plot.getDatasetCount();
       plot.setDataset(currentDatasetNumber, band.getTimeSeriesCollection());
       plot.setRenderer(currentDatasetNumber, renderer);
     }
@@ -296,76 +366,6 @@ public class DaylightChart
     renderer.setSeriesPaint(0, Color.WHITE);
     renderer.setSeriesPaint(1, Color.WHITE);
     return renderer;
-  }
-
-  /**
-   * Creates a data-set for the sunrise and sunset times for the whole
-   * year.
-   * 
-   * @return A data-set for the sunrise and sunset times.
-   */
-  private List<DaylightBand> createTimeSeries(final String seriesType)
-  {
-    int bandCount = 0;
-    final DaylightBand baseBand = new DaylightBand(seriesType + ", #"
-                                                   + bandCount);
-
-    final List<DaylightBand> bands = new ArrayList<DaylightBand>();
-    bands.add(baseBand);
-
-    DaylightBand wrapBand = null;
-
-    for (final RiseSet riseSet: riseSetData.getRiseSets())
-    {
-      final LocalDateTime sunrise = riseSet.getSunrise();
-      final LocalDateTime sunset = riseSet.getSunset();
-      if (sunset.getHourOfDay() < 12)
-      {
-        if (wrapBand == null)
-        {
-          bandCount = bandCount + 1;
-          wrapBand = new DaylightBand(seriesType + ", #" + bandCount);
-        }
-
-        final LocalDateTime beforeMidnight = new LocalDateTime(sunrise
-                                                                 .getYear(),
-                                                               sunrise
-                                                                 .getMonthOfYear(),
-                                                               sunrise
-                                                                 .getDayOfMonth(),
-                                                               23,
-                                                               59,
-                                                               59,
-                                                               999);
-        final LocalDateTime afterMidnight = new LocalDateTime(sunrise.getYear(),
-                                                              sunrise
-                                                                .getMonthOfYear(),
-                                                              sunrise
-                                                                .getDayOfMonth(),
-                                                              0,
-                                                              0,
-                                                              0,
-                                                              1);
-
-        // Split the daylight hours across two series
-        baseBand.add(sunrise, beforeMidnight);
-        wrapBand.add(afterMidnight, sunset);
-      }
-      else
-      {
-        // End the wrap band, if necessary
-        if (wrapBand != null)
-        {
-          bands.add(wrapBand);
-          wrapBand = null;
-        }
-
-        // Add sunset and sunrise as usual
-        baseBand.add(sunrise, sunset);
-      }
-    }
-
-    return bands;
   }
 
   private void createTitles()
