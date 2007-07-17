@@ -26,8 +26,10 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.AxisLocation;
@@ -200,12 +202,28 @@ public class DaylightChart
       createDSTMarker(plot);
     }
 
-    plot.setDataset(0, createTimeSeries());
-    plot.setRenderer(0, createDifferenceRenderer());
+    List<TimeSeries> timeSeries;
 
+    timeSeries = createTimeSeries();
+    int numberOfBands = timeSeries.size() / 2;
+    for (int band = 0; band < numberOfBands - 1; band++)
+    {
+      TimeSeriesCollection seriesBand = new TimeSeriesCollection();
+      seriesBand.addSeries(timeSeries.get(band * 2));
+      seriesBand.addSeries(timeSeries.get(band * 2 + 1));
+
+      plot.setDataset(band, seriesBand);
+      plot.setRenderer(band, createDifferenceRenderer());
+    }
+
+    // Create outline plot
     riseSetData.setUsesDaylightTime(false);
-    plot.setDataset(1, createTimeSeries());
-    plot.setRenderer(1, createOutlineRenderer());
+    timeSeries = createTimeSeries();
+    TimeSeriesCollection seriesBand = new TimeSeriesCollection();
+    seriesBand.addSeries(timeSeries.get(0));
+    seriesBand.addSeries(timeSeries.get(1));
+    plot.setDataset(plot.getSeriesCount(), seriesBand);
+    plot.setRenderer(plot.getSeriesCount(), createOutlineRenderer());
 
     adjustForChartOrientation(chartOrientation);
 
@@ -285,23 +303,72 @@ public class DaylightChart
    * 
    * @return A data-set for the sunrise and sunset times.
    */
-  private TimeSeriesCollection createTimeSeries()
+  private List<TimeSeries> createTimeSeries()
   {
     final TimeSeries sunriseSeries = new TimeSeries("Sunrise");
     final TimeSeries sunsetSeries = new TimeSeries("Sunset");
-    final TimeSeries sunriseWrapSeries = new TimeSeries("Sunrise (Wrap)");
-    final TimeSeries sunsetWrapSeries = new TimeSeries("Sunset (Wrap)");
+    TimeSeries sunriseWrapSeries = null;
+    TimeSeries sunsetWrapSeries = null;
+
+    final List<TimeSeries> timeseries = new ArrayList<TimeSeries>();
+    timeseries.add(sunriseSeries);
+    timeseries.add(sunsetSeries);
+
     for (final RiseSet riseSet: riseSetData.getRiseSets())
     {
       final LocalDateTime sunrise = riseSet.getSunrise();
-      sunriseSeries.add(day(sunrise), time(sunrise));
       final LocalDateTime sunset = riseSet.getSunset();
-      sunsetSeries.add(day(sunset), time(sunset));
+      if (sunset.getHourOfDay() < 12)
+      {
+        if (sunriseWrapSeries == null && sunsetWrapSeries == null)
+        {
+          sunriseWrapSeries = new TimeSeries("Sunrise (Wrap)");
+          sunsetWrapSeries = new TimeSeries("Sunset (Wrap)");
+        }
+
+        final LocalDateTime beforeMidnight = new LocalDateTime(sunrise
+                                                                 .getYear(),
+                                                               sunrise
+                                                                 .getMonthOfYear(),
+                                                               sunrise
+                                                                 .getDayOfMonth(),
+                                                               23,
+                                                               59,
+                                                               59);
+        final LocalDateTime afterMidnight = new LocalDateTime(sunrise.getYear(),
+                                                              sunrise
+                                                                .getMonthOfYear(),
+                                                              sunrise
+                                                                .getDayOfMonth(),
+                                                              0,
+                                                              1,
+                                                              1);
+
+        // Split the daylight hours across two series
+        sunriseSeries.add(day(sunrise), time(sunrise));
+        sunsetSeries.add(day(beforeMidnight), time(beforeMidnight));
+
+        sunriseWrapSeries.add(day(afterMidnight), time(afterMidnight));
+        sunsetWrapSeries.add(day(sunset), time(sunset));
+      }
+      else
+      {
+        // End the wrap series, if necessary
+        if (sunriseWrapSeries != null && sunsetWrapSeries != null)
+        {
+          timeseries.add(sunriseWrapSeries);
+          timeseries.add(sunsetWrapSeries);
+
+          sunriseWrapSeries = null;
+          sunsetWrapSeries = null;
+        }
+
+        // Add sunset and sunrise as usual
+        sunriseSeries.add(day(sunrise), time(sunrise));
+        sunsetSeries.add(day(sunset), time(sunset));
+      }
     }
 
-    final TimeSeriesCollection timeseries = new TimeSeriesCollection();
-    timeseries.addSeries(sunriseSeries);
-    timeseries.addSeries(sunsetSeries);
     return timeseries;
   }
 
