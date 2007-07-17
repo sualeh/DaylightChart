@@ -149,6 +149,18 @@ public class DaylightChart
     // No-op
   }
 
+  private void addBandsToPlot(final List<DaylightBand> bands,
+                              final XYPlot plot,
+                              final XYItemRenderer renderer)
+  {
+    for (final DaylightBand band: bands)
+    {
+      final int currentDatasetNumber = plot.getDatasetCount();
+      plot.setDataset(currentDatasetNumber, band.getTimeSeriesCollection());
+      plot.setRenderer(currentDatasetNumber, renderer);
+    }
+  }
+
   private void adjustForChartOrientation(final ChartOrientation chartOrientation)
   {
     if (chartOrientation == null)
@@ -277,28 +289,16 @@ public class DaylightChart
     // Create daylight plot, clock-shift taken into account
     bands = createBands("With Clock-Shift");
     renderer = createDifferenceRenderer();
-    createDaylightBands(plot, bands, renderer);
+    addBandsToPlot(bands, plot, renderer);
 
     // Create outline plot, without clock shift
     riseSetData.setUsesDaylightTime(false);
     bands = createBands("Without Clock-Shift");
     renderer = createOutlineRenderer();
-    createDaylightBands(plot, bands, renderer);
+    addBandsToPlot(bands, plot, renderer);
 
     adjustForChartOrientation(chartOrientation);
 
-  }
-
-  private void createDaylightBands(final XYPlot plot,
-                                   final List<DaylightBand> bands,
-                                   final XYItemRenderer renderer)
-  {
-    for (final DaylightBand band: bands)
-    {
-      final int currentDatasetNumber = plot.getDatasetCount();
-      plot.setDataset(currentDatasetNumber, band.getTimeSeriesCollection());
-      plot.setRenderer(currentDatasetNumber, renderer);
-    }
   }
 
   private XYItemRenderer createDifferenceRenderer()
