@@ -203,32 +203,40 @@ public class DaylightChart
     }
 
     List<TimeSeries> timeSeries;
+    XYItemRenderer renderer;
 
-    timeSeries = createTimeSeries();
-    int numberOfBands = timeSeries.size() / 2;
-    for (int band = 0; band < (numberOfBands - 1); band++)
-    {
-      TimeSeriesCollection seriesBand = new TimeSeriesCollection();
-      seriesBand.addSeries(timeSeries.get(band * 2));
-      seriesBand.addSeries(timeSeries.get(band * 2 + 1));
+    // Create daylight plot, with daylight saving time taken into
+    // account
+    timeSeries = createTimeSeries("With Clock-Shift");
+    renderer = createDifferenceRenderer();
+    createDaylightBands(plot, timeSeries, renderer);
 
-      plot.setDataset(band, seriesBand);
-      plot.setRenderer(band, createDifferenceRenderer());
-    }
-
-    // Create outline plot
+    // Create outline plot, with without clock shift
     riseSetData.setUsesDaylightTime(false);
-    final int datasetNumber = plot.getSeriesCount();
-    timeSeries = createTimeSeries();
-    TimeSeriesCollection seriesBand = new TimeSeriesCollection();
-    seriesBand.addSeries(timeSeries.get(0));
-    seriesBand.addSeries(timeSeries.get(1));
-    plot.setDataset(datasetNumber, seriesBand);
-    plot.setRenderer(datasetNumber, createOutlineRenderer());
+    timeSeries = createTimeSeries("Without Clock-Shift");
+    renderer = createOutlineRenderer();
+    createDaylightBands(plot, timeSeries, renderer);
 
     adjustForChartOrientation(chartOrientation);
 
     createTitles();
+  }
+
+  private void createDaylightBands(final XYPlot plot,
+                                   final List<TimeSeries> timeSeries,
+                                   final XYItemRenderer renderer)
+  {
+    final int numberOfBands = timeSeries.size() / 2;
+    for (int band = 0; band < numberOfBands; band++)
+    {
+      final TimeSeriesCollection bandSeries = new TimeSeriesCollection();
+      bandSeries.addSeries(timeSeries.get(band * 2));
+      bandSeries.addSeries(timeSeries.get(band * 2 + 1));
+
+      int currentDatasetNumber = plot.getDatasetCount();
+      plot.setDataset(currentDatasetNumber, bandSeries);
+      plot.setRenderer(currentDatasetNumber, renderer);
+    }
   }
 
   private XYItemRenderer createDifferenceRenderer()
@@ -304,16 +312,20 @@ public class DaylightChart
    * 
    * @return A data-set for the sunrise and sunset times.
    */
-  private List<TimeSeries> createTimeSeries()
+  private List<TimeSeries> createTimeSeries(final String seriesType)
   {
-    final TimeSeries sunriseSeries = new TimeSeries("Sunrise");
-    final TimeSeries sunsetSeries = new TimeSeries("Sunset");
-    TimeSeries sunriseWrapSeries = null;
-    TimeSeries sunsetWrapSeries = null;
+    int bandCount = 0;
+    final TimeSeries sunriseSeries = new TimeSeries("Sunrise (" + seriesType
+                                                    + ", #" + bandCount + ")");
+    final TimeSeries sunsetSeries = new TimeSeries("Sunset (" + seriesType
+                                                   + ", #" + bandCount + ")");
 
     final List<TimeSeries> timeseries = new ArrayList<TimeSeries>();
     timeseries.add(sunriseSeries);
     timeseries.add(sunsetSeries);
+
+    TimeSeries sunriseWrapSeries = null;
+    TimeSeries sunsetWrapSeries = null;
 
     for (final RiseSet riseSet: riseSetData.getRiseSets())
     {
@@ -323,8 +335,11 @@ public class DaylightChart
       {
         if (sunriseWrapSeries == null && sunsetWrapSeries == null)
         {
-          sunriseWrapSeries = new TimeSeries("Sunrise (Wrap)");
-          sunsetWrapSeries = new TimeSeries("Sunset (Wrap)");
+          bandCount = bandCount + 1;
+          sunriseWrapSeries = new TimeSeries("Sunrise (" + seriesType + ", #"
+                                             + bandCount + ")");
+          sunsetWrapSeries = new TimeSeries("Sunset (" + seriesType + ", #"
+                                            + bandCount + ")");
         }
 
         final LocalDateTime beforeMidnight = new LocalDateTime(sunrise
@@ -335,14 +350,16 @@ public class DaylightChart
                                                                  .getDayOfMonth(),
                                                                23,
                                                                59,
-                                                               59);
+                                                               59,
+                                                               999);
         final LocalDateTime afterMidnight = new LocalDateTime(sunrise.getYear(),
                                                               sunrise
                                                                 .getMonthOfYear(),
                                                               sunrise
                                                                 .getDayOfMonth(),
                                                               0,
-                                                              1,
+                                                              0,
+                                                              0,
                                                               1);
 
         // Split the daylight hours across two series
