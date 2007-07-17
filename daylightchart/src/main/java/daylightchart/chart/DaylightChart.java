@@ -197,11 +197,10 @@ public class DaylightChart
    */
   private List<DaylightBand> createBands(final String seriesType)
   {
-    int bandCount = 0;
-    final DaylightBand baseBand = new DaylightBand(seriesType + ", #"
-                                                   + bandCount);
-
     final List<DaylightBand> bands = new ArrayList<DaylightBand>();
+
+    final DaylightBand baseBand = new DaylightBand(seriesType + ", #"
+                                                   + bands.size());
     bands.add(baseBand);
 
     DaylightBand wrapBand = null;
@@ -212,10 +211,11 @@ public class DaylightChart
       final LocalDateTime sunset = riseSet.getSunset();
       if (sunset.getHourOfDay() < 12)
       {
+        // Create a new wrap band if necessary
         if (wrapBand == null)
         {
-          bandCount = bandCount + 1;
-          wrapBand = new DaylightBand(seriesType + ", #" + bandCount);
+          wrapBand = new DaylightBand(seriesType + ", #" + bands.size());
+          bands.add(wrapBand);
         }
 
         final LocalDateTime beforeMidnight = new LocalDateTime(sunrise
@@ -247,7 +247,6 @@ public class DaylightChart
         // End the wrap band, if necessary
         if (wrapBand != null)
         {
-          bands.add(wrapBand);
           wrapBand = null;
         }
 
