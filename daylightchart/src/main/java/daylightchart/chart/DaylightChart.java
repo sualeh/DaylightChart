@@ -30,6 +30,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.AxisLocation;
@@ -49,7 +51,6 @@ import org.jfree.ui.Layer;
 import org.jfree.ui.RectangleAnchor;
 import org.jfree.ui.RectangleInsets;
 import org.jfree.ui.TextAnchor;
-import org.joda.time.LocalDateTime;
 
 import daylightchart.location.Location;
 import daylightchart.options.Options;
@@ -67,6 +68,9 @@ public class DaylightChart
 {
 
   private static final long serialVersionUID = 1223227216177061127L;
+
+  private static final Logger LOGGER = Logger.getLogger(DaylightChart.class
+    .getName());
 
   private static final Color daylightColor = new Color(0xFF, 0xFF, 0x40, 190);
   private static final Color nightColor = new Color(75, 11, 91, 190);
@@ -155,6 +159,8 @@ public class DaylightChart
   {
     for (final DaylightBand band: bands)
     {
+      LOGGER.log(Level.FINE, band.toString());
+      System.out.println(band);
       final int currentDatasetNumber = plot.getDatasetCount();
       plot.setDataset(currentDatasetNumber, band.getTimeSeriesCollection());
       plot.setRenderer(currentDatasetNumber, renderer);
@@ -207,9 +213,8 @@ public class DaylightChart
 
     for (final RiseSet riseSet: riseSetData.getRiseSets())
     {
-      final LocalDateTime sunrise = riseSet.getSunrise();
-      final LocalDateTime sunset = riseSet.getSunset();
-      if (sunset.getHourOfDay() < 12)
+      final RiseSet[] riseSets = RiseSet.splitAtMidnight(riseSet);
+      if (riseSets.length == 2)
       {
         // Create a new wrap band if necessary
         if (wrapBand == null)
@@ -217,32 +222,11 @@ public class DaylightChart
           wrapBand = new DaylightBand(seriesType + ", #" + bands.size());
           bands.add(wrapBand);
         }
-
-        final LocalDateTime beforeMidnight = new LocalDateTime(sunrise
-                                                                 .getYear(),
-                                                               sunrise
-                                                                 .getMonthOfYear(),
-                                                               sunrise
-                                                                 .getDayOfMonth(),
-                                                               23,
-                                                               59,
-                                                               59,
-                                                               999);
-        final LocalDateTime afterMidnight = new LocalDateTime(sunrise.getYear(),
-                                                              sunrise
-                                                                .getMonthOfYear(),
-                                                              sunrise
-                                                                .getDayOfMonth(),
-                                                              0,
-                                                              0,
-                                                              0,
-                                                              1);
-
         // Split the daylight hours across two series
-        baseBand.add(sunrise, beforeMidnight);
-        wrapBand.add(afterMidnight, sunset);
+        baseBand.add(riseSets[0]);
+        wrapBand.add(riseSets[1]);
       }
-      else
+      else if (riseSets.length == 1)
       {
         // End the wrap band, if necessary
         if (wrapBand != null)
@@ -251,7 +235,7 @@ public class DaylightChart
         }
 
         // Add sunset and sunrise as usual
-        baseBand.add(sunrise, sunset);
+        baseBand.add(riseSet);
       }
     }
 

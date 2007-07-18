@@ -1,10 +1,14 @@
 package daylightchart.chart;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.jfree.data.time.Day;
 import org.jfree.data.time.Minute;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
+import org.jfree.data.time.TimeSeriesDataItem;
 import org.joda.time.LocalDateTime;
 
 /**
@@ -17,8 +21,7 @@ public class DaylightBand
 {
 
   private final String name;
-  private final TimeSeries sunriseSeries;
-  private final TimeSeries sunsetSeries;
+  private final List<RiseSet> riseSets;
 
   /**
    * Create a new daylight band.
@@ -29,22 +32,18 @@ public class DaylightBand
   public DaylightBand(final String name)
   {
     this.name = name;
-    sunriseSeries = new TimeSeries("Sunrise " + name);
-    sunsetSeries = new TimeSeries("Sunset " + name);
+    riseSets = new ArrayList<RiseSet>();
   }
 
   /**
    * Add a sunrise and sunset point to the band.
    * 
-   * @param sunrise
-   *        Sunrise time
-   * @param sunset
-   *        Sunset time
+   * @param riseSet
+   *        Sunrise and sunset time
    */
-  public void add(final LocalDateTime sunrise, final LocalDateTime sunset)
+  public void add(final RiseSet riseSet)
   {
-    sunriseSeries.add(day(sunrise), time(sunrise));
-    sunsetSeries.add(day(sunset), time(sunset));
+    riseSets.add(riseSet);
   }
 
   /**
@@ -54,9 +53,20 @@ public class DaylightBand
    */
   public TimeSeriesCollection getTimeSeriesCollection()
   {
+    final TimeSeries sunriseSeries = new TimeSeries("Sunrise " + name);
+    final TimeSeries sunsetSeries = new TimeSeries("Sunset " + name);
+    for (final RiseSet riseSet: riseSets)
+    {
+      final LocalDateTime sunrise = riseSet.getSunrise();
+      final LocalDateTime sunset = riseSet.getSunset();
+      sunriseSeries.add(toTimeSeriesDataItem(sunrise));
+      sunsetSeries.add(toTimeSeriesDataItem(sunset));
+    }
+
     final TimeSeriesCollection band = new TimeSeriesCollection();
     band.addSeries(sunriseSeries);
     band.addSeries(sunsetSeries);
+
     return band;
   }
 
@@ -68,33 +78,30 @@ public class DaylightBand
   @Override
   public String toString()
   {
-    return name;
+    final StringBuffer buffer = new StringBuffer();
+    buffer.append(name).append("\n");
+    for (final RiseSet riseSet: riseSets)
+    {
+      buffer.append("  ").append(riseSet).append("\n");
+    }
+    return buffer.toString();
   }
 
   /**
    * A utility method for creating a value based on a date.
    * 
-   * @param dateTime
-   *        Date time
+   * @param date
+   *        Date
    */
-  private Day day(final LocalDateTime dateTime)
+  private TimeSeriesDataItem toTimeSeriesDataItem(final LocalDateTime dateTime)
   {
-    return new Day(dateTime.getDayOfMonth(),
-                   dateTime.getMonthOfYear(),
-                   dateTime.getYear());
-  }
-
-  /**
-   * A utility method for creating a value based on a time.
-   * 
-   * @param dateTime
-   *        Date time
-   */
-  private long time(final LocalDateTime dateTime)
-  {
-    final Minute m = new Minute(dateTime.getMinuteOfHour(), dateTime
+    final Day day = new Day(dateTime.getDayOfMonth(),
+                            dateTime.getMonthOfYear(),
+                            dateTime.getYear());
+    final Minute minute = new Minute(dateTime.getMinuteOfHour(), dateTime
       .getHourOfDay(), 1, 1, 1970);
-    return m.getFirstMillisecond();
+    final long minuteValue = minute.getFirstMillisecond();
+    return new TimeSeriesDataItem(day, minuteValue);
   }
 
 }

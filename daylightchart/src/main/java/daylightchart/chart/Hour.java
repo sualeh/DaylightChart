@@ -24,6 +24,7 @@ package daylightchart.chart;
 
 import java.io.Serializable;
 
+import org.joda.time.LocalDateTime;
 import org.joda.time.LocalTime;
 import org.pointlocation6709.Utility;
 
@@ -59,6 +60,21 @@ public final class Hour
     }
     final int[] fields = Utility.sexagesimalSplit(dayHour);
     this.hour = new LocalTime(fields[0], fields[1], fields[2]);
+  }
+
+  /**
+   * Constructor for the hour, given the value of the hour.
+   * 
+   * @param hour
+   *        The value of the hour.
+   */
+  public Hour(final LocalDateTime hour)
+  {
+    if (hour == null)
+    {
+      throw new NullPointerException("Cannot use null hour");
+    }
+    this.hour = hour.toLocalTime();
   }
 
   /**

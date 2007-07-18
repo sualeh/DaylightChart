@@ -42,6 +42,63 @@ public class RiseSet
 
   private static final long serialVersionUID = 3092668888760029582L;
 
+  /**
+   * Splits the given RiseSet at midnight.
+   * 
+   * @param riseSet
+   *        RiseSet to split
+   * @return Split RiseSet(s)
+   */
+  public static RiseSet[] splitAtMidnight(final RiseSet riseSet)
+  {
+    if (riseSet == null)
+    {
+      return new RiseSet[0];
+    }
+
+    final LocalDateTime sunrise = riseSet.getSunrise();
+    final LocalDateTime sunset = riseSet.getSunset();
+    if (sunset.getHourOfDay() < 12)
+    {
+      final LocalDateTime beforeMidnight = new LocalDateTime(sunrise.getYear(),
+                                                             sunrise
+                                                               .getMonthOfYear(),
+                                                             sunrise
+                                                               .getDayOfMonth(),
+                                                             23,
+                                                             59,
+                                                             59,
+                                                             999);
+      final LocalDateTime afterMidnight = new LocalDateTime(sunrise.getYear(),
+                                                            sunrise
+                                                              .getMonthOfYear(),
+                                                            sunrise
+                                                              .getDayOfMonth(),
+                                                            0,
+                                                            0,
+                                                            0,
+                                                            1);
+
+      // Split the sunrise and sunset times
+      return new RiseSet[] {
+          new RiseSet(riseSet.getLocation(),
+                      riseSet.getDate(),
+                      new Hour(sunrise),
+                      new Hour(beforeMidnight)),
+          new RiseSet(riseSet.getLocation(),
+                      riseSet.getDate(),
+                      new Hour(afterMidnight),
+                      new Hour(sunset))
+      };
+    }
+    else
+    {
+      return new RiseSet[] {
+        riseSet
+      };
+    }
+  }
+
   private static LocalDateTime toLocalDateTime(final LocalDate date,
                                                final Hour hour)
   {
@@ -130,6 +187,18 @@ public class RiseSet
   {
     sunrise.setInDaylightSavings(usesDaylightTime);
     sunset.setInDaylightSavings(usesDaylightTime);
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see java.lang.Object#toString()
+   */
+  @Override
+  public String toString()
+  {
+    return location.getDescription() + ": " + date + " - sunrise " + sunrise
+           + " sunset " + sunset;
   }
 
 }
