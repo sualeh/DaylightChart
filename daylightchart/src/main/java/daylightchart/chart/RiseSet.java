@@ -36,7 +36,7 @@ import daylightchart.location.Location;
  * 
  * @author Sualeh Fatehi
  */
-public class RiseSet
+final class RiseSet
   implements Serializable
 {
 
@@ -49,7 +49,7 @@ public class RiseSet
    *        RiseSet to split
    * @return Split RiseSet(s)
    */
-  public static RiseSet[] splitAtMidnight(final RiseSet riseSet)
+  static RiseSet[] splitAtMidnight(final RiseSet riseSet)
   {
     if (riseSet == null)
     {
@@ -139,10 +139,10 @@ public class RiseSet
    * @param sunset
    *        Sunset time
    */
-  public RiseSet(final Location location,
-                 final LocalDate date,
-                 final Hour sunrise,
-                 final Hour sunset)
+  RiseSet(final Location location,
+          final LocalDate date,
+          final Hour sunrise,
+          final Hour sunset)
   {
     this.location = location;
     this.date = date;
@@ -155,7 +155,7 @@ public class RiseSet
    * 
    * @return Date
    */
-  public LocalDate getDate()
+  LocalDate getDate()
   {
     return date;
   }
@@ -165,7 +165,7 @@ public class RiseSet
    * 
    * @return Location
    */
-  public Location getLocation()
+  Location getLocation()
   {
     return location;
   }
@@ -175,7 +175,7 @@ public class RiseSet
    * 
    * @return Sunrise time
    */
-  public LocalDateTime getSunrise()
+  LocalDateTime getSunrise()
   {
     return toLocalDateTime(date, sunrise);
   }
@@ -185,7 +185,7 @@ public class RiseSet
    * 
    * @return Sunset time
    */
-  public LocalDateTime getSunset()
+  LocalDateTime getSunset()
   {
     return toLocalDateTime(date, sunset);
   }
@@ -196,7 +196,7 @@ public class RiseSet
    * @param usesDaylightTime
    *        Whether the daylight time is on
    */
-  public void setUsesDaylightTime(final boolean usesDaylightTime)
+  void setUsesDaylightTime(final boolean usesDaylightTime)
   {
     sunrise.setInDaylightSavings(usesDaylightTime);
     sunset.setInDaylightSavings(usesDaylightTime);

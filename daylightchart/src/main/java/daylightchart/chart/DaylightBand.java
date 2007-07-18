@@ -17,7 +17,7 @@ import org.joda.time.LocalDateTime;
  * 
  * @author sfatehi
  */
-public class DaylightBand
+final class DaylightBand
 {
 
   private final String name;
@@ -29,7 +29,7 @@ public class DaylightBand
    * @param name
    *        Name of the band.
    */
-  public DaylightBand(final String name)
+  DaylightBand(final String name)
   {
     this.name = name;
     riseSets = new ArrayList<RiseSet>();
@@ -41,7 +41,7 @@ public class DaylightBand
    * @param riseSet
    *        Sunrise and sunset time
    */
-  public void add(final RiseSet riseSet)
+  void add(final RiseSet riseSet)
   {
     riseSets.add(riseSet);
   }
@@ -51,7 +51,7 @@ public class DaylightBand
    * 
    * @return Time series collection
    */
-  public TimeSeriesCollection getTimeSeriesCollection()
+  TimeSeriesCollection getTimeSeriesCollection()
   {
     final TimeSeries sunriseSeries = new TimeSeries("Sunrise " + name);
     final TimeSeries sunsetSeries = new TimeSeries("Sunset " + name);

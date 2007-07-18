@@ -37,7 +37,7 @@ import daylightchart.location.Location;
  * 
  * @author Sualeh Fatehi
  */
-public class RiseSetYear
+final class RiseSetYear
 {
 
   private final Location location;
@@ -64,7 +64,7 @@ public class RiseSetYear
    * 
    * @return End of DST.
    */
-  public Date getDstEndDate()
+  Date getDstEndDate()
   {
     Date dstEndDate = null;
     if (usesDaylightTime && dstEnd != null)
@@ -80,7 +80,7 @@ public class RiseSetYear
    * 
    * @return Start of DST.
    */
-  public Date getDstStartDate()
+  Date getDstStartDate()
   {
     Date dstStartDate = null;
     if (usesDaylightTime && dstStart != null)
@@ -96,7 +96,7 @@ public class RiseSetYear
    * 
    * @return Location.
    */
-  public Location getLocation()
+  Location getLocation()
   {
     return location;
   }
@@ -106,7 +106,7 @@ public class RiseSetYear
    * 
    * @return List of rise/ set timings.
    */
-  public List<RiseSet> getRiseSets()
+  List<RiseSet> getRiseSets()
   {
     return riseSets;
   }
@@ -116,7 +116,7 @@ public class RiseSetYear
    * 
    * @return Year.
    */
-  public int getYear()
+  int getYear()
   {
     return year;
   }
@@ -127,7 +127,7 @@ public class RiseSetYear
    * @param usesDaylightTime
    *        Whether the location uses DST rules.
    */
-  public void setUsesDaylightTime(final boolean usesDaylightTime)
+  void setUsesDaylightTime(final boolean usesDaylightTime)
   {
     this.usesDaylightTime = usesDaylightTime;
     for (final RiseSet riseSet: riseSets)
@@ -141,7 +141,7 @@ public class RiseSetYear
    * 
    * @return Whether the location uses DST rules.
    */
-  public boolean usesDaylightTime()
+  boolean usesDaylightTime()
   {
     return usesDaylightTime;
   }
