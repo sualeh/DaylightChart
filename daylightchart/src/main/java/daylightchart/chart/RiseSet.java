@@ -58,28 +58,28 @@ public class RiseSet
 
     final LocalDateTime sunrise = riseSet.getSunrise();
     final LocalDateTime sunset = riseSet.getSunset();
+
+    final LocalDateTime beforeMidnight = new LocalDateTime(sunrise.getYear(),
+                                                           sunrise
+                                                             .getMonthOfYear(),
+                                                           sunrise
+                                                             .getDayOfMonth(),
+                                                           23,
+                                                           59,
+                                                           59,
+                                                           999);
+    final LocalDateTime afterMidnight = new LocalDateTime(sunrise.getYear(),
+                                                          sunrise
+                                                            .getMonthOfYear(),
+                                                          sunrise
+                                                            .getDayOfMonth(),
+                                                          0,
+                                                          0,
+                                                          0,
+                                                          1);
+
     if (sunset.getHourOfDay() < 12)
     {
-      final LocalDateTime beforeMidnight = new LocalDateTime(sunrise.getYear(),
-                                                             sunrise
-                                                               .getMonthOfYear(),
-                                                             sunrise
-                                                               .getDayOfMonth(),
-                                                             23,
-                                                             59,
-                                                             59,
-                                                             999);
-      final LocalDateTime afterMidnight = new LocalDateTime(sunrise.getYear(),
-                                                            sunrise
-                                                              .getMonthOfYear(),
-                                                            sunrise
-                                                              .getDayOfMonth(),
-                                                            0,
-                                                            0,
-                                                            0,
-                                                            1);
-
-      // Split the sunrise and sunset times
       return new RiseSet[] {
           new RiseSet(riseSet.getLocation(),
                       riseSet.getDate(),
@@ -89,6 +89,19 @@ public class RiseSet
                       riseSet.getDate(),
                       new Hour(afterMidnight),
                       new Hour(sunset))
+      };
+    }
+    else if (sunrise.getHourOfDay() > 12)
+    {
+      return new RiseSet[] {
+          new RiseSet(riseSet.getLocation(),
+                      riseSet.getDate(),
+                      new Hour(afterMidnight),
+                      new Hour(sunset)),
+          new RiseSet(riseSet.getLocation(),
+                      riseSet.getDate(),
+                      new Hour(sunrise),
+                      new Hour(beforeMidnight))
       };
     }
     else
