@@ -24,10 +24,15 @@ package daylightchart.gui;
 
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.Transferable;
+import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.KeyStroke;
 
@@ -35,6 +40,8 @@ import sf.util.ui.GuiAction;
 import daylightchart.location.Location;
 import daylightchart.location.parser.FormatterException;
 import daylightchart.location.parser.LocationFormatter;
+import daylightchart.location.parser.LocationParser;
+import daylightchart.location.parser.ParserException;
 
 enum LocationsListOperation
 {
@@ -54,6 +61,9 @@ enum LocationsListOperation
   /** Paste location. */
   paste(
     Messages.getString("DaylightChartGui.Menu.Actions.PasteLocation"), "/icons/paste_location.gif", "ctrl V"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+
+  private static final Logger LOGGER = Logger
+    .getLogger(LocationsListOperation.class.getName());
 
   private final String iconResource;
   private final String text;
@@ -128,7 +138,7 @@ enum LocationsListOperation
               copyLocationToClipboard(selectedLocation);
               break;
             case paste:
-              locationsList.addLocation(editedLocation);
+              pasteLocationFromClipboard();
               break;
             default:
               break;
@@ -144,14 +154,46 @@ enum LocationsListOperation
           selectedLocationString = LocationFormatter
             .formatLocation(selectedLocation);
         }
-        catch (FormatterException e)
+        catch (final FormatterException e)
         {
           selectedLocationString = "";
         }
-        Clipboard systemClipboard = Toolkit.getDefaultToolkit()
+        final Clipboard systemClipboard = Toolkit.getDefaultToolkit()
           .getSystemClipboard();
-        Transferable transferable = new StringSelection(selectedLocationString);
+        final Transferable transferable = new StringSelection(selectedLocationString);
         systemClipboard.setContents(transferable, null);
+      }
+
+      private void pasteLocationFromClipboard()
+      {
+        String locationString = "";
+        final Clipboard clipboard = Toolkit.getDefaultToolkit()
+          .getSystemClipboard();
+        final Transferable contents = clipboard.getContents(null);
+        if (contents != null
+            && contents.isDataFlavorSupported(DataFlavor.stringFlavor))
+        {
+          try
+          {
+            locationString = (String) contents
+              .getTransferData(DataFlavor.stringFlavor);
+            final Location location = LocationParser
+              .parseLocation(locationString);
+            locationsList.addLocation(location);
+          }
+          catch (final UnsupportedFlavorException e)
+          {
+            LOGGER.log(Level.FINE, "Could not paste from the clipboard", e);
+          }
+          catch (final IOException e)
+          {
+            LOGGER.log(Level.FINE, "Could not paste from the clipboard", e);
+          }
+          catch (final ParserException e)
+          {
+            LOGGER.log(Level.FINE, "Could not paste from the clipboard", e);
+          }
+        }
       }
 
     });

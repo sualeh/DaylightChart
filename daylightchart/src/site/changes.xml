@@ -114,7 +114,12 @@
         dev="Sualeh Fatehi"
         type="add">
         Adding new command line option for a chart for a single location.
-      </action>          
+      </action>     
+      <action
+        dev="Sualeh Fatehi"
+        type="add">
+        Adding new copy and paste actions for the locations list.
+      </action>             
     </release>
   </body>
 </document>
