@@ -57,6 +57,23 @@ final class DaylightBand
   }
 
   /**
+   * {@inheritDoc}
+   * 
+   * @see java.lang.Object#toString()
+   */
+  @Override
+  public String toString()
+  {
+    final StringBuffer buffer = new StringBuffer();
+    buffer.append(name).append("\n");
+    for (final RiseSet riseSet: riseSets)
+    {
+      buffer.append("  ").append(riseSet).append("\n");
+    }
+    return buffer.toString();
+  }
+
+  /**
    * Add a sunrise and sunset point to the band.
    * 
    * @param riseSet
@@ -89,23 +106,6 @@ final class DaylightBand
     band.addSeries(sunsetSeries);
 
     return band;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see java.lang.Object#toString()
-   */
-  @Override
-  public String toString()
-  {
-    final StringBuffer buffer = new StringBuffer();
-    buffer.append(name).append("\n");
-    for (final RiseSet riseSet: riseSets)
-    {
-      buffer.append("  ").append(riseSet).append("\n");
-    }
-    return buffer.toString();
   }
 
   /**

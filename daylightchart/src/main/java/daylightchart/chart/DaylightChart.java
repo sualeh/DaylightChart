@@ -67,6 +67,70 @@ public class DaylightChart
   implements ChartOptionsListener
 {
 
+  private enum DaylightSavingsMode
+  {
+    WITH_CLOCK_SHIFT("With Clock Shift", true),
+    WITHOUT_CLOCK_SHIFT("Without Clock Shift", false);
+
+    private final boolean adjustedForDaylightSavings;
+    private final String description;
+
+    private DaylightSavingsMode(final String description,
+                                final boolean adjustedForDaylightSavings)
+    {
+      this.description = description;
+      this.adjustedForDaylightSavings = adjustedForDaylightSavings;
+    }
+
+    String getDescription()
+    {
+      return description;
+    }
+
+    XYItemRenderer getRenderer()
+    {
+      XYItemRenderer renderer;
+      switch (this)
+      {
+        case WITH_CLOCK_SHIFT:
+          renderer = createDifferenceRenderer();
+          break;
+        case WITHOUT_CLOCK_SHIFT:
+          renderer = createOutlineRenderer();
+          break;
+        default:
+          renderer = null;
+          break;
+      }
+      return renderer;
+    }
+
+    boolean isAdjustedForDaylightSavings()
+    {
+      return adjustedForDaylightSavings;
+    }
+
+    private XYItemRenderer createDifferenceRenderer()
+    {
+      XYItemRenderer renderer;
+      renderer = new XYDifferenceRenderer(daylightColor, daylightColor, false);
+      renderer.setBaseStroke(new BasicStroke(0.2f));
+      renderer.setSeriesPaint(0, Color.WHITE);
+      renderer.setSeriesPaint(1, Color.WHITE);
+      return renderer;
+    }
+
+    private XYItemRenderer createOutlineRenderer()
+    {
+      XYItemRenderer renderer;
+      renderer = new XYLineAndShapeRenderer(true, false);
+      renderer.setBaseStroke(new BasicStroke(0.6f));
+      renderer.setSeriesPaint(0, Color.WHITE);
+      renderer.setSeriesPaint(1, Color.WHITE);
+      return renderer;
+    }
+  }
+
   private static final long serialVersionUID = 1223227216177061127L;
 
   private static final Logger LOGGER = Logger.getLogger(DaylightChart.class
@@ -153,20 +217,6 @@ public class DaylightChart
     // No-op
   }
 
-  private void addBandsToPlot(final List<DaylightBand> bands,
-                              final XYPlot plot,
-                              final XYItemRenderer renderer)
-  {
-    for (final DaylightBand band: bands)
-    {
-      LOGGER.log(Level.FINE, band.toString());
-      System.out.println(band);
-      final int currentDatasetNumber = plot.getDatasetCount();
-      plot.setDataset(currentDatasetNumber, band.getTimeSeriesCollection());
-      plot.setRenderer(currentDatasetNumber, renderer);
-    }
-  }
-
   private void adjustForChartOrientation(final ChartOrientation chartOrientation)
   {
     if (chartOrientation == null)
@@ -201,17 +251,20 @@ public class DaylightChart
    * 
    * @return A data-set for the sunrise and sunset times.
    */
-  private List<DaylightBand> createBands(final String seriesType)
+  private void createBandsInPlot(final DaylightSavingsMode daylightSavingsMode,
+                                 final XYPlot plot)
   {
     final List<DaylightBand> bands = new ArrayList<DaylightBand>();
 
-    final DaylightBand baseBand = new DaylightBand(seriesType + ", #"
-                                                   + bands.size());
+    final DaylightBand baseBand = new DaylightBand(daylightSavingsMode
+      .getDescription()
+                                                   + ", #" + bands.size());
     bands.add(baseBand);
 
     DaylightBand wrapBand = null;
 
-    for (final RiseSet riseSet: riseSetData.getRiseSets())
+    for (final RiseSet riseSet: riseSetData.getRiseSets(daylightSavingsMode
+      .isAdjustedForDaylightSavings()))
     {
       final RiseSet[] riseSets = RiseSet.splitAtMidnight(riseSet);
       if (riseSets.length == 2)
@@ -219,7 +272,8 @@ public class DaylightChart
         // Create a new wrap band if necessary
         if (wrapBand == null)
         {
-          wrapBand = new DaylightBand(seriesType + ", #" + bands.size());
+          wrapBand = new DaylightBand(daylightSavingsMode + ", #"
+                                      + bands.size());
           bands.add(wrapBand);
         }
         // Split the daylight hours across two series
@@ -239,7 +293,14 @@ public class DaylightChart
       }
     }
 
-    return bands;
+    for (final DaylightBand band: bands)
+    {
+      LOGGER.log(Level.FINE, band.toString());
+      System.out.println(band);
+      final int currentDatasetNumber = plot.getDatasetCount();
+      plot.setDataset(currentDatasetNumber, band.getTimeSeriesCollection());
+      plot.setRenderer(currentDatasetNumber, daylightSavingsMode.getRenderer());
+    }
   }
 
   /**
@@ -266,32 +327,13 @@ public class DaylightChart
       createDSTMarker(plot);
     }
 
-    List<DaylightBand> bands;
-    XYItemRenderer renderer;
-
     // Create daylight plot, clock-shift taken into account
-    bands = createBands("With Clock-Shift");
-    renderer = createDifferenceRenderer();
-    addBandsToPlot(bands, plot, renderer);
-
+    createBandsInPlot(DaylightSavingsMode.WITH_CLOCK_SHIFT, plot);
     // Create outline plot, without clock shift
-    riseSetData.setUsesDaylightTime(false);
-    bands = createBands("Without Clock-Shift");
-    renderer = createOutlineRenderer();
-    addBandsToPlot(bands, plot, renderer);
+    createBandsInPlot(DaylightSavingsMode.WITHOUT_CLOCK_SHIFT, plot);
 
     adjustForChartOrientation(chartOrientation);
 
-  }
-
-  private XYItemRenderer createDifferenceRenderer()
-  {
-    XYItemRenderer renderer;
-    renderer = new XYDifferenceRenderer(daylightColor, daylightColor, false);
-    renderer.setBaseStroke(new BasicStroke(0.2f));
-    renderer.setSeriesPaint(0, Color.WHITE);
-    renderer.setSeriesPaint(1, Color.WHITE);
-    return renderer;
   }
 
   private void createDSTMarker(final XYPlot plot)
@@ -339,16 +381,6 @@ public class DaylightChart
     axis.setTickUnit(new DateTickUnit(DateTickUnit.MONTH, 1), true, true);
     //
     plot.setDomainAxis(axis);
-  }
-
-  private XYItemRenderer createOutlineRenderer()
-  {
-    XYItemRenderer renderer;
-    renderer = new XYLineAndShapeRenderer(true, false);
-    renderer.setBaseStroke(new BasicStroke(0.6f));
-    renderer.setSeriesPaint(0, Color.WHITE);
-    renderer.setSeriesPaint(1, Color.WHITE);
-    return renderer;
   }
 
   private void createTitles()

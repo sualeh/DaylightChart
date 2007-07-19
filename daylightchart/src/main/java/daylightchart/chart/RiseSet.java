@@ -27,7 +27,6 @@ import java.io.Serializable;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.joda.time.LocalTime;
-import org.joda.time.MutableDateTime;
 
 import daylightchart.location.Location;
 
@@ -81,27 +80,15 @@ final class RiseSet
     if (sunset.getHourOfDay() < 12)
     {
       return new RiseSet[] {
-          new RiseSet(riseSet.getLocation(),
-                      riseSet.getDate(),
-                      new Hour(sunrise),
-                      new Hour(beforeMidnight)),
-          new RiseSet(riseSet.getLocation(),
-                      riseSet.getDate(),
-                      new Hour(afterMidnight),
-                      new Hour(sunset))
+          riseSet.copy(sunrise.toLocalTime(), beforeMidnight.toLocalTime()),
+          riseSet.copy(afterMidnight.toLocalTime(), sunset.toLocalTime())
       };
     }
     else if (sunrise.getHourOfDay() > 12)
     {
       return new RiseSet[] {
-          new RiseSet(riseSet.getLocation(),
-                      riseSet.getDate(),
-                      new Hour(afterMidnight),
-                      new Hour(sunset)),
-          new RiseSet(riseSet.getLocation(),
-                      riseSet.getDate(),
-                      new Hour(sunrise),
-                      new Hour(beforeMidnight))
+          riseSet.copy(afterMidnight.toLocalTime(), sunset.toLocalTime()),
+          riseSet.copy(sunrise.toLocalTime(), beforeMidnight.toLocalTime())
       };
     }
     else
@@ -112,20 +99,11 @@ final class RiseSet
     }
   }
 
-  private static LocalDateTime toLocalDateTime(final LocalDate date,
-                                               final Hour hour)
-  {
-    final MutableDateTime mutableDate = date.toDateTime((LocalTime) null)
-      .toMutableDateTime();
-    mutableDate.setHourOfDay(hour.getLocalTime().getHourOfDay());
-    mutableDate.setMinuteOfHour(hour.getLocalTime().getMinuteOfHour());
-    return mutableDate.toDateTime().toLocalDateTime();
-  }
-
   private final Location location;
   private final LocalDate date;
-  private final Hour sunrise;
-  private final Hour sunset;
+  private final boolean inDaylightSavings;
+  private final LocalTime sunrise;
+  private final LocalTime sunset;
 
   /**
    * Sunrise and sunset at a given location, and a given date.
@@ -141,13 +119,52 @@ final class RiseSet
    */
   RiseSet(final Location location,
           final LocalDate date,
-          final Hour sunrise,
-          final Hour sunset)
+          final boolean inDaylightSavings,
+          final LocalTime sunrise,
+          final LocalTime sunset)
   {
     this.location = location;
     this.date = date;
+    this.inDaylightSavings = inDaylightSavings;
     this.sunrise = sunrise;
     this.sunset = sunset;
+  }
+
+  public RiseSet copy(final boolean adjustedForDaylightSavings)
+  {
+    if (adjustedForDaylightSavings || !isInDaylightSavings())
+    {
+      return this;
+    }
+    else
+    {
+      return new RiseSet(this.location, this.date, false, this.sunrise
+        .minusHours(1), this.sunset.minusHours(1));
+    }
+  }
+
+  public RiseSet copy(final LocalTime sunrise, final LocalTime sunset)
+  {
+    return new RiseSet(location, date, inDaylightSavings, sunrise, sunset);
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see java.lang.Object#toString()
+   */
+  @Override
+  public String toString()
+  {
+    if (location == null)
+    {
+      return "";
+    }
+    else
+    {
+      return location.getDescription() + ": " + date + " - sunrise " + sunrise
+             + " sunset " + sunset;
+    }
   }
 
   /**
@@ -177,7 +194,7 @@ final class RiseSet
    */
   LocalDateTime getSunrise()
   {
-    return toLocalDateTime(date, sunrise);
+    return date.toDateTime(sunrise).toLocalDateTime();
   }
 
   /**
@@ -187,31 +204,17 @@ final class RiseSet
    */
   LocalDateTime getSunset()
   {
-    return toLocalDateTime(date, sunset);
+    return date.toDateTime(sunset).toLocalDateTime();
   }
 
   /**
-   * Sets whether the daylight time is on.
+   * Whether this rise/ set pair is using daylight savings time.
    * 
-   * @param usesDaylightTime
-   *        Whether the daylight time is on
+   * @return is in daylight savings time
    */
-  void setUsesDaylightTime(final boolean usesDaylightTime)
+  boolean isInDaylightSavings()
   {
-    sunrise.setInDaylightSavings(usesDaylightTime);
-    sunset.setInDaylightSavings(usesDaylightTime);
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see java.lang.Object#toString()
-   */
-  @Override
-  public String toString()
-  {
-    return location.getDescription() + ": " + date + " - sunrise " + sunrise
-           + " sunset " + sunset;
+    return inDaylightSavings;
   }
 
 }

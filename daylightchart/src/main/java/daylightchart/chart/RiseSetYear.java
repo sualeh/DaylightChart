@@ -23,6 +23,7 @@ package daylightchart.chart;
 
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
@@ -57,6 +58,11 @@ final class RiseSetYear
       usesDaylightTime = timeZone.useDaylightTime();
     }
     riseSets = new ArrayList<RiseSet>();
+  }
+
+  void addRiseSet(final RiseSet riseSet)
+  {
+    riseSets.add(riseSet);
   }
 
   /**
@@ -106,9 +112,22 @@ final class RiseSetYear
    * 
    * @return List of rise/ set timings.
    */
-  List<RiseSet> getRiseSets()
+  List<RiseSet> getRiseSets(boolean adjustedForDaylightSavings)
   {
-    return riseSets;
+    List<RiseSet> copiedRiseSets;
+    if (!adjustedForDaylightSavings)
+    {
+      copiedRiseSets = new ArrayList<RiseSet>();
+      for (final RiseSet riseSet: riseSets)
+      {
+        copiedRiseSets.add(riseSet.copy(adjustedForDaylightSavings));
+      }
+    }
+    else
+    {
+      copiedRiseSets = riseSets;
+    }
+    return Collections.unmodifiableList(copiedRiseSets);
   }
 
   /**
@@ -121,19 +140,14 @@ final class RiseSetYear
     return year;
   }
 
-  /**
-   * Whether the location uses DST rules.
-   * 
-   * @param usesDaylightTime
-   *        Whether the location uses DST rules.
-   */
-  void setUsesDaylightTime(final boolean usesDaylightTime)
+  void setDstEnd(final LocalDate dstEnd)
   {
-    this.usesDaylightTime = usesDaylightTime;
-    for (final RiseSet riseSet: riseSets)
-    {
-      riseSet.setUsesDaylightTime(usesDaylightTime);
-    }
+    this.dstEnd = dstEnd;
+  }
+
+  void setDstStart(final LocalDate dstStart)
+  {
+    this.dstStart = dstStart;
   }
 
   /**
@@ -144,21 +158,6 @@ final class RiseSetYear
   boolean usesDaylightTime()
   {
     return usesDaylightTime;
-  }
-
-  void addRiseSet(final RiseSet riseSet)
-  {
-    riseSets.add(riseSet);
-  }
-
-  void setDstEnd(final LocalDate dstEnd)
-  {
-    this.dstEnd = dstEnd;
-  }
-
-  void setDstStart(final LocalDate dstStart)
-  {
-    this.dstStart = dstStart;
   }
 
 }

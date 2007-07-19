@@ -28,6 +28,7 @@ import java.util.TimeZone;
 
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
+import org.pointlocation6709.Utility;
 
 import daylightchart.astronomical.SunAlgorithm;
 import daylightchart.astronomical.SunAlgorithmFactory;
@@ -83,7 +84,6 @@ public final class RiseSetFactory
     }
     final boolean useDaylightTime = timeZone.useDaylightTime();
     boolean wasDaylightSavings = false;
-    riseSetYear.setUsesDaylightTime(useDaylightTime);
     for (final LocalDate date: yearsDates)
     {
       final boolean inDaylightSavings = timeZone.inDaylightTime(date
@@ -101,20 +101,28 @@ public final class RiseSetFactory
       }
       wasDaylightSavings = inDaylightSavings;
       // Calculate sunsrise and sunset
-      final Hour[] riseSet = calcRiseSet(sunAlgorithm, location, date);
-      final Hour sunrise = riseSet[0];
-      sunrise.setInDaylightSavings(useDaylightTime && inDaylightSavings);
-      final Hour sunset = riseSet[1];
-      sunset.setInDaylightSavings(useDaylightTime && inDaylightSavings);
+      final LocalTime[] riseSet = calcRiseSet(sunAlgorithm, location, date);
+      LocalTime sunrise = riseSet[0];
+      LocalTime sunset = riseSet[1];
+      if (useDaylightTime && inDaylightSavings)
+      {
+        sunrise = sunrise.plusHours(1);
+        sunset = sunset.plusHours(1);
+      }
       //
-      riseSetYear.addRiseSet(new RiseSet(location, date, sunrise, sunset));
+      riseSetYear
+        .addRiseSet(new RiseSet(location,
+                                date,
+                                (useDaylightTime && inDaylightSavings),
+                                sunrise,
+                                sunset));
     }
     return riseSetYear;
   }
 
-  private static Hour[] calcRiseSet(final SunAlgorithm sunAlgorithm,
-                                    final Location location,
-                                    final LocalDate date)
+  private static LocalTime[] calcRiseSet(final SunAlgorithm sunAlgorithm,
+                                         final Location location,
+                                         final LocalDate date)
   {
     if (location != null)
     {
@@ -132,8 +140,8 @@ public final class RiseSetFactory
     final double[] riseSet = sunAlgorithm
       .calcRiseSet(SunAlgorithm.SUNRISE_SUNSET);
 
-    return new Hour[] {
-        new Hour(riseSet[0]), new Hour(riseSet[1])
+    return new LocalTime[] {
+        toLocalTime(riseSet[0]), toLocalTime(riseSet[1])
     };
   }
 
@@ -152,6 +160,17 @@ public final class RiseSetFactory
       date = date.plusDays(1);
     } while (!(date.getMonthOfYear() == 1 && date.getDayOfMonth() == 1));
     return dates;
+  }
+
+  private static LocalTime toLocalTime(final double hour)
+  {
+    double dayHour = hour % 24D;
+    if (dayHour < 0)
+    {
+      dayHour = dayHour + hour;
+    }
+    final int[] fields = Utility.sexagesimalSplit(dayHour);
+    return new LocalTime(fields[0], fields[1], fields[2]);
   }
 
   private RiseSetFactory()
