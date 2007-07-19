@@ -22,14 +22,19 @@
 package daylightchart.gui;
 
 
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
+import java.awt.datatransfer.Transferable;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.KeyStroke;
 
-import daylightchart.location.Location;
-
 import sf.util.ui.GuiAction;
+import daylightchart.location.Location;
+import daylightchart.location.parser.FormatterException;
+import daylightchart.location.parser.LocationFormatter;
 
 enum LocationsListOperation
 {
@@ -42,7 +47,13 @@ enum LocationsListOperation
     Messages.getString("DaylightChartGui.Menu.Actions.EditLocation"), "/icons/edit_location.gif", "control E"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
   /** Delete location. */
   delete(
-    Messages.getString("DaylightChartGui.Menu.Actions.DeleteLocation"), "/icons/delete_location.gif", "shift DELETE"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+    Messages.getString("DaylightChartGui.Menu.Actions.DeleteLocation"), "/icons/delete_location.gif", "shift DELETE"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+  /** Copy location. */
+  copy(
+    Messages.getString("DaylightChartGui.Menu.Actions.CopyLocation"), "/icons/copy_location.gif", "ctrl C"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$    
+  /** Paste location. */
+  paste(
+    Messages.getString("DaylightChartGui.Menu.Actions.PasteLocation"), "/icons/paste_location.gif", "ctrl V"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
   private final String iconResource;
   private final String text;
@@ -71,11 +82,27 @@ enum LocationsListOperation
     action.addActionListener(new ActionListener()
     {
       public void actionPerformed(@SuppressWarnings("unused")
-      final ActionEvent e)
+      final ActionEvent event)
       {
         final Location selectedLocation = locationsList.getSelectedLocation();
-        final Location editedLocation = LocationDialog
-          .showLocationDialog(locationsList, LocationsListOperation.this);
+        final Location editedLocation;
+        switch (LocationsListOperation.this)
+        {
+          case add:
+          case edit:
+          case delete:
+            editedLocation = LocationDialog
+              .showLocationDialog(locationsList, LocationsListOperation.this);
+            break;
+          case copy:
+          case paste:
+            editedLocation = null;
+            break;
+          default:
+            editedLocation = null;
+            break;
+        }
+
         if (editedLocation != null)
         {
           switch (LocationsListOperation.this)
@@ -88,10 +115,47 @@ enum LocationsListOperation
               break;
             case delete:
               locationsList.removeLocation(selectedLocation);
+              break;
+            default:
+              break;
+          }
+        }
+        else
+        {
+          switch (LocationsListOperation.this)
+          {
+            case copy:
+              copyLocationToClipboard(selectedLocation);
+              break;
+            case paste:
+              locationsList.addLocation(editedLocation);
+              break;
+            default:
+              break;
           }
         }
       }
+
+      private void copyLocationToClipboard(final Location selectedLocation)
+      {
+        String selectedLocationString;
+        try
+        {
+          selectedLocationString = LocationFormatter
+            .formatLocation(selectedLocation);
+        }
+        catch (FormatterException e)
+        {
+          selectedLocationString = "";
+        }
+        Clipboard systemClipboard = Toolkit.getDefaultToolkit()
+          .getSystemClipboard();
+        Transferable transferable = new StringSelection(selectedLocationString);
+        systemClipboard.setContents(transferable, null);
+      }
+
     });
+
     return action;
   }
 

@@ -56,6 +56,7 @@ import daylightchart.gui.actions.CloseCurrentTabAction;
 import daylightchart.gui.actions.OnlineHelpAction;
 import daylightchart.gui.actions.OpenLocationsFileAction;
 import daylightchart.gui.actions.PrintChartAction;
+import daylightchart.gui.actions.ResetAllAction;
 import daylightchart.gui.actions.SaveChartAction;
 import daylightchart.gui.actions.SaveLocationsFileAction;
 import daylightchart.location.Location;
@@ -88,6 +89,9 @@ public final class DaylightChartGui
 
   /**
    * Creates a new instance of a Daylight Chart main window.
+   * 
+   * @param location
+   *        Location for a single chart window, or null for the full UI
    */
   public DaylightChartGui(final Location location)
   {
@@ -331,8 +335,7 @@ public final class DaylightChartGui
     final JMenuItem chartOptionsMenuItem = new JMenuItem(Messages
       .getString("DaylightChartGui.Menu.Options.ChartOptions")); //$NON-NLS-1$
 
-    final JMenuItem resetAll = new JMenuItem(Messages
-      .getString("DaylightChartGui.Menu.Options.ResetAll")); //$NON-NLS-1$
+    final GuiAction resetAll = new ResetAllAction(this);
 
     menu.add(chartOptionsMenuItem);
     menu.addSeparator();
@@ -456,24 +459,6 @@ public final class DaylightChartGui
           // Save preferences
           UserPreferences.setOptions(options);
         }
-      }
-    });
-
-    resetAll.addActionListener(new ActionListener()
-    {
-      public void actionPerformed(@SuppressWarnings("unused")
-      final ActionEvent actionevent)
-      {
-        // Clear all preferences
-        UserPreferences.clear();
-
-        // Dispose this window
-        final JFrame mainWindow = DaylightChartGui.this;
-        mainWindow.setVisible(false);
-        mainWindow.dispose();
-
-        // Open a new window
-        new DaylightChartGui().setVisible(true);
       }
     });
 
