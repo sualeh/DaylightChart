@@ -272,8 +272,8 @@ public class DaylightChart
         // Create a new wrap band if necessary
         if (wrapBand == null)
         {
-          wrapBand = new DaylightBand(daylightSavingsMode + ", #"
-                                      + bands.size());
+          wrapBand = new DaylightBand(daylightSavingsMode.getDescription()
+                                      + ", #" + bands.size());
           bands.add(wrapBand);
         }
         // Split the daylight hours across two series
