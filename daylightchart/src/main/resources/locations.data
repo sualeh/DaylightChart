@@ -58,6 +58,7 @@ London;GB;Europe/London;+5130-00010/
 Los Angeles, CA;US;America/Los_Angeles;+3403-11815/
 Lucknow;IN;Asia/Calcutta;+2650+08054/
 Luleå;SE;Europe/Stockholm;+6536+02210/
+MacMurdo;AQ;Antarctica/DumontDUrville;-7751+16637/
 Madras;IN;Asia/Calcutta;+1305+08017/
 Madrid;ES;Europe/Madrid;+4024-00341/
 Malindi;KE;Africa/Nairobi;-0314+04005/
@@ -65,6 +66,7 @@ Mamoudzou;YT;Indian/Mayotte;-1247+04514/
 Manama;BH;Asia/Bahrain;+2613+05034/
 Manchester;GB;Europe/London;+5330-00215/
 Minneapolis, MN;US;America/Chicago;+4458-09315/
+Mirnyy;AQ;Antarctica/Mawson;-6633+09301/
 Mombasa;KE;Africa/Nairobi;-0403+03940/
 Montreal;CA;America/Montreal;+4531-07334/
 Morogoro;TZ;Africa/Dar_es_Salaam;-0649+03740/
@@ -97,6 +99,7 @@ Tampa, FL;US;America/New_York;+2757-08227/
 Tanga;TZ;Africa/Dar_es_Salaam;-0507+03905/
 Toamasina;MG;Indian/Antananarivo;-1810+04923/
 Toronto;CA;America/New_York;+4339-07923/
+Ushuaia;AR;America/Argentina/Ushuaia;-5448-06818/
 Victoria;HK;Asia/Hong_Kong;+2215+11413/
 Washington, DC;US;America/New_York;+3854-07702/
 Winnipeg;CA;Canada/Central;+4953-09706/

@@ -81,7 +81,10 @@ final class DaylightBand
    */
   void add(final RiseSet riseSet)
   {
-    riseSets.add(riseSet);
+    if (riseSet != null && riseSet.getSunrise().isBefore(riseSet.getSunset()))
+    {
+      riseSets.add(riseSet);
+    }
   }
 
   /**
