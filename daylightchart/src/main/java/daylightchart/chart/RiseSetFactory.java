@@ -101,28 +101,50 @@ public final class RiseSetFactory
       }
       wasDaylightSavings = inDaylightSavings;
       // Calculate sunsrise and sunset
-      final LocalTime[] riseSet = calcRiseSet(sunAlgorithm, location, date);
-      LocalTime sunrise = riseSet[0];
-      LocalTime sunset = riseSet[1];
+      final double[] sunriseSunset = calcRiseSet(sunAlgorithm, location, date);
+      LocalTime sunrise = toLocalTime(sunriseSunset[0]);
+      LocalTime sunset = toLocalTime(sunriseSunset[1]);
       if (useDaylightTime && inDaylightSavings)
       {
         sunrise = sunrise.plusHours(1);
         sunset = sunset.plusHours(1);
       }
-      //
-      riseSetYear
-        .addRiseSet(new RiseSet(location,
-                                date,
-                                (useDaylightTime && inDaylightSavings),
-                                sunrise,
-                                sunset));
+
+      RiseSet riseSet;
+      if (sunriseSunset[0] == Double.POSITIVE_INFINITY
+          && sunriseSunset[1] == Double.POSITIVE_INFINITY)
+      {
+        riseSet = new RiseSet(location,
+                              date,
+                              false,
+                              new LocalTime(0, 0, 0, 1),
+                              new LocalTime(23, 59, 59, 999));
+      }
+      else if (sunriseSunset[0] == Double.NEGATIVE_INFINITY
+               && sunriseSunset[1] == Double.NEGATIVE_INFINITY)
+      {
+        riseSet = new RiseSet(location,
+                              date,
+                              false,
+                              new LocalTime(12, 0, 0, 0),
+                              new LocalTime(12, 0, 0, 0));
+      }
+      else
+      {
+        riseSet = new RiseSet(location,
+                              date,
+                              (useDaylightTime && inDaylightSavings),
+                              sunrise,
+                              sunset);
+      }
+      riseSetYear.addRiseSet(riseSet);
     }
     return riseSetYear;
   }
 
-  private static LocalTime[] calcRiseSet(final SunAlgorithm sunAlgorithm,
-                                         final Location location,
-                                         final LocalDate date)
+  private static double[] calcRiseSet(final SunAlgorithm sunAlgorithm,
+                                      final Location location,
+                                      final LocalDate date)
   {
     if (location != null)
     {
@@ -139,10 +161,10 @@ public final class RiseSetFactory
 
     final double[] riseSet = sunAlgorithm
       .calcRiseSet(SunAlgorithm.SUNRISE_SUNSET);
+    System.out.println(location.getDescription() + ": " + date + " - sunrise "
+                       + riseSet[0] + " sunset " + riseSet[1]);
 
-    return new LocalTime[] {
-        toLocalTime(riseSet[0]), toLocalTime(riseSet[1])
-    };
+    return riseSet;
   }
 
   /**
