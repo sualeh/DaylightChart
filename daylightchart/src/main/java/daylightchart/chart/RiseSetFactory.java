@@ -32,6 +32,7 @@ import org.pointlocation6709.Utility;
 
 import daylightchart.astronomical.SunAlgorithm;
 import daylightchart.astronomical.SunAlgorithmFactory;
+import daylightchart.chart.RiseSet.RiseSetType;
 import daylightchart.location.Location;
 import daylightchart.location.parser.DefaultTimezones;
 
@@ -114,20 +115,12 @@ public final class RiseSetFactory
       if (sunriseSunset[0] == Double.POSITIVE_INFINITY
           && sunriseSunset[1] == Double.POSITIVE_INFINITY)
       {
-        riseSet = new RiseSet(location,
-                              date,
-                              false,
-                              new LocalTime(0, 0, 0, 1),
-                              new LocalTime(23, 59, 59, 999));
+        riseSet = new RiseSet(location, date, RiseSetType.all_daylight);
       }
       else if (sunriseSunset[0] == Double.NEGATIVE_INFINITY
                && sunriseSunset[1] == Double.NEGATIVE_INFINITY)
       {
-        riseSet = new RiseSet(location,
-                              date,
-                              false,
-                              new LocalTime(12, 0, 0, 0),
-                              new LocalTime(12, 0, 0, 0));
+        riseSet = new RiseSet(location, date, RiseSetType.all_nighttime);
       }
       else
       {
@@ -161,8 +154,8 @@ public final class RiseSetFactory
 
     final double[] riseSet = sunAlgorithm
       .calcRiseSet(SunAlgorithm.SUNRISE_SUNSET);
-    System.out.println(location.getDescription() + ": " + date + " - sunrise "
-                       + riseSet[0] + " sunset " + riseSet[1]);
+    System.out.println(location + ": " + date + " - sunrise " + riseSet[0]
+                       + " sunset " + riseSet[1]);
 
     return riseSet;
   }

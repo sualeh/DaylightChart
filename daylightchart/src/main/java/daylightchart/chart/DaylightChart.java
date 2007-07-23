@@ -52,6 +52,7 @@ import org.jfree.ui.RectangleAnchor;
 import org.jfree.ui.RectangleInsets;
 import org.jfree.ui.TextAnchor;
 
+import daylightchart.chart.RiseSet.RiseSetType;
 import daylightchart.location.Location;
 import daylightchart.options.Options;
 import daylightchart.options.chart.ChartOptions;
@@ -80,6 +81,17 @@ public class DaylightChart
     {
       this.description = description;
       this.adjustedForDaylightSavings = adjustedForDaylightSavings;
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see java.lang.Enum#toString()
+     */
+    @Override
+    public String toString()
+    {
+      return description;
     }
 
     String getDescription()
@@ -256,11 +268,7 @@ public class DaylightChart
   {
     final List<DaylightBand> bands = new ArrayList<DaylightBand>();
 
-    final DaylightBand baseBand = new DaylightBand(daylightSavingsMode
-      .getDescription()
-                                                   + ", #" + bands.size());
-    bands.add(baseBand);
-
+    DaylightBand baseBand = null;
     DaylightBand wrapBand = null;
 
     for (final RiseSet riseSet: riseSetData.getRiseSets(daylightSavingsMode
@@ -272,10 +280,18 @@ public class DaylightChart
         // Create a new wrap band if necessary
         if (wrapBand == null)
         {
-          wrapBand = new DaylightBand(daylightSavingsMode.getDescription()
-                                      + ", #" + bands.size());
+          wrapBand = new DaylightBand(daylightSavingsMode + ", #"
+                                      + bands.size());
           bands.add(wrapBand);
         }
+
+        if (baseBand == null)
+        {
+          baseBand = new DaylightBand(daylightSavingsMode + ", #"
+                                      + bands.size());
+          bands.add(baseBand);
+        }
+
         // Split the daylight hours across two series
         baseBand.add(riseSets[0]);
         wrapBand.add(riseSets[1]);
@@ -288,8 +304,24 @@ public class DaylightChart
           wrapBand = null;
         }
 
+        if (baseBand == null
+            && riseSet.getRiseSetType() != RiseSetType.all_nighttime)
+        {
+          baseBand = new DaylightBand(daylightSavingsMode + ", #"
+                                      + bands.size());
+          bands.add(baseBand);
+        }
+        else if (baseBand != null
+                 && riseSet.getRiseSetType() == RiseSetType.all_nighttime)
+        {
+          baseBand = null;
+        }
+
         // Add sunset and sunrise as usual
-        baseBand.add(riseSet);
+        if (baseBand != null)
+        {
+          baseBand.add(riseSet);
+        }
       }
     }
 

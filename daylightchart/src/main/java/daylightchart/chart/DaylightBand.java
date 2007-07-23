@@ -32,6 +32,8 @@ import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.data.time.TimeSeriesDataItem;
 import org.joda.time.LocalDateTime;
 
+import daylightchart.chart.RiseSet.RiseSetType;
+
 /**
  * One daylight band, consisting of a sunrise series and a sunset
  * series.
@@ -81,7 +83,8 @@ final class DaylightBand
    */
   void add(final RiseSet riseSet)
   {
-    if (riseSet != null && riseSet.getSunrise().isBefore(riseSet.getSunset()))
+    if (riseSet != null && riseSet.getSunrise().isBefore(riseSet.getSunset())
+        && riseSet.getRiseSetType() != RiseSetType.all_nighttime)
     {
       riseSets.add(riseSet);
     }
