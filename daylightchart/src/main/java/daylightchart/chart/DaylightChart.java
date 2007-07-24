@@ -304,6 +304,8 @@ public class DaylightChart
           wrapBand = null;
         }
 
+        // Create a new band if we are entering a period of
+        // all-night-time from a period where there was daylight
         if (baseBand == null
             && riseSet.getRiseSetType() != RiseSetType.all_nighttime)
         {
@@ -311,8 +313,11 @@ public class DaylightChart
                                       + bands.size());
           bands.add(baseBand);
         }
-        else if (baseBand != null
-                 && riseSet.getRiseSetType() == RiseSetType.all_nighttime)
+        else
+        // Close the band if we are entering a period of
+        // all-night-time
+        if (baseBand != null
+            && riseSet.getRiseSetType() == RiseSetType.all_nighttime)
         {
           baseBand = null;
         }

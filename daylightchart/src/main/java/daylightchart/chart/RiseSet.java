@@ -42,9 +42,16 @@ final class RiseSet
   enum RiseSetType
   {
     normal,
+    partial,
     all_daylight,
     all_nighttime;
   }
+
+  public static final LocalTime JUST_BEFORE_MIDNIGHT = LocalTime.MIDNIGHT
+    .minusMillis(1);
+
+  public static final LocalTime JUST_AFTER_MIDNIGHT = LocalTime.MIDNIGHT
+    .plusMillis(1);
 
   private static final long serialVersionUID = 3092668888760029582L;
 
@@ -65,21 +72,22 @@ final class RiseSet
     final LocalDateTime sunrise = riseSet.getSunrise();
     final LocalDateTime sunset = riseSet.getSunset();
 
-    final LocalTime beforeMidnight = new LocalTime(23, 59, 59, 999);
-    final LocalTime afterMidnight = new LocalTime(0, 0, 0, 1);
-
     if (sunset.getHourOfDay() < 12)
     {
       return new RiseSet[] {
-          riseSet.copy(sunrise.toLocalTime(), beforeMidnight),
-          riseSet.copy(afterMidnight, sunset.toLocalTime())
+          riseSet.withNewRiseSetTimes(sunrise.toLocalTime(),
+                                      JUST_BEFORE_MIDNIGHT),
+          riseSet
+            .withNewRiseSetTimes(JUST_AFTER_MIDNIGHT, sunset.toLocalTime())
       };
     }
     else if (sunrise.getHourOfDay() > 12)
     {
       return new RiseSet[] {
-          riseSet.copy(afterMidnight, sunset.toLocalTime()),
-          riseSet.copy(sunrise.toLocalTime(), beforeMidnight)
+          riseSet
+            .withNewRiseSetTimes(JUST_AFTER_MIDNIGHT, sunset.toLocalTime()),
+          riseSet.withNewRiseSetTimes(sunrise.toLocalTime(),
+                                      JUST_BEFORE_MIDNIGHT)
       };
     }
     else
@@ -103,10 +111,21 @@ final class RiseSet
           final LocalTime sunrise,
           final LocalTime sunset)
   {
-    riseSetType = RiseSetType.normal;
     this.location = location;
     this.date = date;
     this.inDaylightSavings = inDaylightSavings;
+
+    if (sunrise.equals(JUST_AFTER_MIDNIGHT)
+        && !sunset.equals(JUST_BEFORE_MIDNIGHT)
+        || !sunrise.equals(JUST_AFTER_MIDNIGHT)
+        && sunset.equals(JUST_BEFORE_MIDNIGHT))
+    {
+      riseSetType = RiseSetType.partial;
+    }
+    else
+    {
+      riseSetType = RiseSetType.normal;
+    }
     this.sunrise = sunrise;
     this.sunset = sunset;
   }
@@ -134,39 +153,16 @@ final class RiseSet
     switch (riseSetType)
     {
       case all_daylight:
-        sunrise = new LocalTime(0, 0, 0, 1);
-        sunset = new LocalTime(23, 59, 59, 999);
+        sunrise = JUST_AFTER_MIDNIGHT;
+        sunset = JUST_BEFORE_MIDNIGHT;
         break;
       case all_nighttime:
-        sunrise = new LocalTime(0, 0, 0, 1);
-        sunset = new LocalTime(23, 59, 59, 999);
+        sunrise = JUST_AFTER_MIDNIGHT;
+        sunset = JUST_BEFORE_MIDNIGHT;
         break;
       default:
         throw new IllegalArgumentException("Bad rise/ set type provided");
     }
-  }
-
-  public RiseSet copy(final boolean adjustedForDaylightSavings)
-  {
-    if (adjustedForDaylightSavings || !isInDaylightSavings())
-    {
-      return this;
-    }
-    else
-    {
-      return new RiseSet(location, date, false, sunrise.minusHours(1), sunset
-        .minusHours(1));
-    }
-  }
-
-  public RiseSet copy(final LocalTime sunrise, final LocalTime sunset)
-  {
-    return new RiseSet(location, date, inDaylightSavings, sunrise, sunset);
-  }
-
-  public RiseSetType getRiseSetType()
-  {
-    return riseSetType;
   }
 
   /**
@@ -183,9 +179,46 @@ final class RiseSet
     }
     else
     {
-      return location.getDescription() + ": " + date + " - sunrise " + sunrise
-             + " sunset " + sunset;
+      return location.getDescription() + ", " + date + " - " + riseSetType
+             + ": sunrise " + sunrise + " sunset " + sunset;
     }
+  }
+
+  /**
+   * Gets a copy of of this rise/ set, with times adjusted for daylight
+   * saving time.
+   * 
+   * @param adjustedForDaylightSavings
+   *        Whether to adjust the times.
+   * @return Adjusted copy
+   */
+  public RiseSet withAdjustmentForDaylightSavings(final boolean adjustedForDaylightSavings)
+  {
+    if (adjustedForDaylightSavings || !isInDaylightSavings())
+    {
+      return this;
+    }
+    else
+    {
+      return new RiseSet(location, date, false, sunrise.minusHours(1), sunset
+        .minusHours(1));
+    }
+  }
+
+  /**
+   * Gets a copy of this rise/ set, with different sunrise and sunset
+   * times.
+   * 
+   * @param sunrise
+   *        Sunrise
+   * @param sunset
+   *        Sunset
+   * @return New rise/ set
+   */
+  public RiseSet withNewRiseSetTimes(final LocalTime sunrise,
+                                     final LocalTime sunset)
+  {
+    return new RiseSet(location, date, inDaylightSavings, sunrise, sunset);
   }
 
   /**
@@ -206,6 +239,16 @@ final class RiseSet
   Location getLocation()
   {
     return location;
+  }
+
+  /**
+   * Gets the rise/ set type.
+   * 
+   * @return Rise/ set type
+   */
+  RiseSetType getRiseSetType()
+  {
+    return riseSetType;
   }
 
   /**

@@ -120,7 +120,7 @@ final class RiseSetYear
       copiedRiseSets = new ArrayList<RiseSet>();
       for (final RiseSet riseSet: riseSets)
       {
-        copiedRiseSets.add(riseSet.copy(adjustedForDaylightSavings));
+        copiedRiseSets.add(riseSet.withAdjustmentForDaylightSavings(adjustedForDaylightSavings));
       }
     }
     else
