@@ -22,16 +22,21 @@
 package daylightchart.chart;
 
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.io.Serializable;
 
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.joda.time.LocalTime;
+import org.pointlocation6709.Utility;
 
 import daylightchart.location.Location;
 
 /**
- * Sunrise and sunset at a given location, and a given date.
+ * Sunrise and sunset at a given location, and a given date. RiseSet is
+ * calculated as part of the rise/ set year, and then may be split for
+ * creating the daylight bands.
  * 
  * @author Sualeh Fatehi
  */
@@ -60,10 +65,10 @@ final class RiseSet
   private static final long serialVersionUID = 3092668888760029582L;
 
   /**
-   * Splits the given RiseSet at midnight.
+   * Splits the given rise/ set at midnight.
    * 
    * @param riseSet
-   *        RiseSet to split
+   *        Rise/ set to split
    * @return Split RiseSet(s)
    */
   static RiseSet[] splitAtMidnight(final RiseSet riseSet)
@@ -112,6 +117,54 @@ final class RiseSet
   RiseSet(final Location location,
           final LocalDate date,
           final boolean inDaylightSavings,
+          final double sunrise,
+          final double sunset)
+  {
+    this.location = location;
+    this.date = date;
+    this.inDaylightSavings = inDaylightSavings;
+
+    boolean hasSunrise = !Double.isInfinite(sunrise);
+    boolean hasSunset = !Double.isInfinite(sunset);
+    if (sunrise == Double.POSITIVE_INFINITY
+        && sunset == Double.POSITIVE_INFINITY)
+    {
+      riseSetType = RiseSetType.all_daylight;
+    }
+    else if (sunrise == Double.NEGATIVE_INFINITY
+             && sunset == Double.NEGATIVE_INFINITY)
+    {
+      riseSetType = RiseSetType.all_nighttime;
+    }
+    else if ((hasSunrise && !hasSunset) || (!hasSunrise && hasSunset))
+    {
+      riseSetType = RiseSetType.partial;
+    }
+    else
+    {
+      riseSetType = RiseSetType.normal;
+    }
+
+    switch (riseSetType)
+    {
+      case all_daylight:
+      case all_nighttime:
+        this.sunrise = JUST_AFTER_MIDNIGHT;
+        this.sunset = JUST_BEFORE_MIDNIGHT;
+        break;
+      case normal:
+      case partial:
+      default:
+        this.sunrise = toLocalTime(sunrise);
+        this.sunset = toLocalTime(sunset);
+        break;
+    }
+
+  }
+
+  RiseSet(final Location location,
+          final LocalDate date,
+          final boolean inDaylightSavings,
           final LocalTime sunrise,
           final LocalTime sunset)
   {
@@ -135,6 +188,7 @@ final class RiseSet
     {
       riseSetType = RiseSetType.normal;
     }
+
     this.sunrise = sunrise;
     this.sunset = sunset;
   }
@@ -188,8 +242,15 @@ final class RiseSet
     }
     else
     {
-      return location.getDescription() + ", " + date + " - " + riseSetType
-             + ": sunrise " + sunrise + " sunset " + sunset;
+      ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+      new PrintStream(outputStream, true)
+        .printf("%s, %s: (%s) sunrise %s sunset %s",
+                location.getDescription(),
+                date,
+                riseSetType,
+                sunrise.toString("HH:mm:ss"),
+                sunset.toString("HH:mm:ss"));
+      return outputStream.toString();
     }
   }
 
@@ -287,6 +348,17 @@ final class RiseSet
   RiseSet withNewRiseSetTimes(final LocalTime sunrise, final LocalTime sunset)
   {
     return new RiseSet(location, date, inDaylightSavings, sunrise, sunset);
+  }
+
+  private LocalTime toLocalTime(final double hour)
+  {
+    double dayHour = hour % 24D;
+    if (dayHour < 0)
+    {
+      dayHour = dayHour + hour;
+    }
+    final int[] fields = Utility.sexagesimalSplit(dayHour);
+    return new LocalTime(fields[0], fields[1], fields[2]);
   }
 
 }

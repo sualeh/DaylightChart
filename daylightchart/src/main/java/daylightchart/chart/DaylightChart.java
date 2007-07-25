@@ -26,7 +26,6 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -42,9 +41,6 @@ import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.plot.IntervalMarker;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.renderer.xy.XYDifferenceRenderer;
-import org.jfree.chart.renderer.xy.XYItemRenderer;
-import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.chart.title.TextTitle;
 import org.jfree.data.time.Day;
 import org.jfree.ui.Layer;
@@ -52,7 +48,6 @@ import org.jfree.ui.RectangleAnchor;
 import org.jfree.ui.RectangleInsets;
 import org.jfree.ui.TextAnchor;
 
-import daylightchart.chart.RiseSet.RiseSetType;
 import daylightchart.location.Location;
 import daylightchart.options.Options;
 import daylightchart.options.chart.ChartOptions;
@@ -68,87 +63,12 @@ public class DaylightChart
   implements ChartOptionsListener
 {
 
-  private enum DaylightSavingsMode
-  {
-    WITH_CLOCK_SHIFT("With Clock Shift", true),
-    WITHOUT_CLOCK_SHIFT("Without Clock Shift", false);
-
-    private final boolean adjustedForDaylightSavings;
-    private final String description;
-
-    private DaylightSavingsMode(final String description,
-                                final boolean adjustedForDaylightSavings)
-    {
-      this.description = description;
-      this.adjustedForDaylightSavings = adjustedForDaylightSavings;
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * @see java.lang.Enum#toString()
-     */
-    @Override
-    public String toString()
-    {
-      return description;
-    }
-
-    String getDescription()
-    {
-      return description;
-    }
-
-    XYItemRenderer getRenderer()
-    {
-      XYItemRenderer renderer;
-      switch (this)
-      {
-        case WITH_CLOCK_SHIFT:
-          renderer = createDifferenceRenderer();
-          break;
-        case WITHOUT_CLOCK_SHIFT:
-          renderer = createOutlineRenderer();
-          break;
-        default:
-          renderer = null;
-          break;
-      }
-      return renderer;
-    }
-
-    boolean isAdjustedForDaylightSavings()
-    {
-      return adjustedForDaylightSavings;
-    }
-
-    private XYItemRenderer createDifferenceRenderer()
-    {
-      XYItemRenderer renderer;
-      renderer = new XYDifferenceRenderer(daylightColor, daylightColor, false);
-      renderer.setBaseStroke(new BasicStroke(0.2f));
-      renderer.setSeriesPaint(0, Color.WHITE);
-      renderer.setSeriesPaint(1, Color.WHITE);
-      return renderer;
-    }
-
-    private XYItemRenderer createOutlineRenderer()
-    {
-      XYItemRenderer renderer;
-      renderer = new XYLineAndShapeRenderer(true, false);
-      renderer.setBaseStroke(new BasicStroke(0.6f));
-      renderer.setSeriesPaint(0, Color.WHITE);
-      renderer.setSeriesPaint(1, Color.WHITE);
-      return renderer;
-    }
-  }
-
   private static final long serialVersionUID = 1223227216177061127L;
 
   private static final Logger LOGGER = Logger.getLogger(DaylightChart.class
     .getName());
 
-  private static final Color daylightColor = new Color(0xFF, 0xFF, 0x40, 190);
+  static final Color daylightColor = new Color(0xFF, 0xFF, 0x40, 190);
   private static final Color nightColor = new Color(75, 11, 91, 190);
   private static final Font chartFont = new Font("Helvetica", Font.PLAIN, 12);
 
@@ -187,7 +107,7 @@ public class DaylightChart
       chartOrientation = options.getChartOrientation();
     }
     // Calculate rise and set timings for the whole year
-    riseSetData = RiseSetFactory.createRiseSetYear(location,
+    riseSetData = RiseSetUtility.createRiseSetYear(location,
                                                    year,
                                                    timeZoneOption);
     createChart(chartOrientation);
@@ -263,70 +183,8 @@ public class DaylightChart
   private void createBandsInPlot(final DaylightSavingsMode daylightSavingsMode,
                                  final XYPlot plot)
   {
-    final List<DaylightBand> bands = new ArrayList<DaylightBand>();
-
-    DaylightBand baseBand = null;
-    DaylightBand wrapBand = null;
-
-    for (final RiseSet riseSet: riseSetData.getRiseSets(daylightSavingsMode
-      .isAdjustedForDaylightSavings()))
-    {
-      final RiseSet[] riseSets = RiseSet.splitAtMidnight(riseSet);
-      if (riseSets.length == 2)
-      {
-        // Create a new wrap band if necessary
-        if (wrapBand == null)
-        {
-          wrapBand = new DaylightBand(daylightSavingsMode + ", #"
-                                      + bands.size());
-          bands.add(wrapBand);
-        }
-
-        if (baseBand == null)
-        {
-          baseBand = new DaylightBand(daylightSavingsMode + ", #"
-                                      + bands.size());
-          bands.add(baseBand);
-        }
-
-        // Split the daylight hours across two series
-        baseBand.add(riseSets[0]);
-        wrapBand.add(riseSets[1]);
-      }
-      else if (riseSets.length == 1)
-      {
-        // End the wrap band, if necessary
-        if (wrapBand != null)
-        {
-          wrapBand = null;
-        }
-
-        // Create a new band if we are entering a period of
-        // all-night-time from a period where there was daylight
-        if (baseBand == null
-            && riseSet.getRiseSetType() != RiseSetType.all_nighttime)
-        {
-          baseBand = new DaylightBand(daylightSavingsMode + ", #"
-                                      + bands.size());
-          bands.add(baseBand);
-        }
-        else
-        // Close the band if we are entering a period of
-        // all-night-time
-        if (baseBand != null
-            && riseSet.getRiseSetType() == RiseSetType.all_nighttime)
-        {
-          baseBand = null;
-        }
-
-        // Add sunset and sunrise as usual
-        if (baseBand != null)
-        {
-          baseBand.add(riseSet);
-        }
-      }
-    }
-
+    final List<DaylightBand> bands = RiseSetUtility
+      .createDaylightBands(riseSetData, daylightSavingsMode);
     for (final DaylightBand band: bands)
     {
       LOGGER.log(Level.FINE, band.toString());
@@ -362,9 +220,9 @@ public class DaylightChart
     }
 
     // Create daylight plot, clock-shift taken into account
-    createBandsInPlot(DaylightSavingsMode.WITH_CLOCK_SHIFT, plot);
+    createBandsInPlot(DaylightSavingsMode.with_clock_shift, plot);
     // Create outline plot, without clock shift
-    createBandsInPlot(DaylightSavingsMode.WITHOUT_CLOCK_SHIFT, plot);
+    createBandsInPlot(DaylightSavingsMode.without_clock_shift, plot);
 
     adjustForChartOrientation(chartOrientation);
 
@@ -413,6 +271,9 @@ public class DaylightChart
     axis.setDateFormatOverride(new SimpleDateFormat("MMM"));
     axis.setVerticalTickLabels(true);
     axis.setTickUnit(new DateTickUnit(DateTickUnit.MONTH, 1), true, true);
+    // Fix the axis range for all the months in the year
+    int dateYear = riseSetData.getYear() - 1900;
+    axis.setRange(new Date(dateYear, 0, 1), new Date(dateYear, 11, 1));
     //
     plot.setDomainAxis(axis);
   }
