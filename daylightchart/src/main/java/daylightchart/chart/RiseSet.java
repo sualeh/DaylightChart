@@ -41,9 +41,13 @@ final class RiseSet
 
   enum RiseSetType
   {
+    /** Normal day. */
     normal,
+    /** Partial day - the sun never rises or never sets. */
     partial,
+    /** All daylight, the sun never sets. */
     all_daylight,
+    /** All night time, the sun never rises. */
     all_nighttime;
   }
 
@@ -122,6 +126,11 @@ final class RiseSet
     {
       riseSetType = RiseSetType.partial;
     }
+    else if (sunrise.equals(JUST_AFTER_MIDNIGHT)
+             && sunset.equals(JUST_BEFORE_MIDNIGHT))
+    {
+      throw new IllegalArgumentException("Bad rise/ set type provided");
+    }
     else
     {
       riseSetType = RiseSetType.normal;
@@ -185,43 +194,6 @@ final class RiseSet
   }
 
   /**
-   * Gets a copy of of this rise/ set, with times adjusted for daylight
-   * saving time.
-   * 
-   * @param adjustedForDaylightSavings
-   *        Whether to adjust the times.
-   * @return Adjusted copy
-   */
-  public RiseSet withAdjustmentForDaylightSavings(final boolean adjustedForDaylightSavings)
-  {
-    if (adjustedForDaylightSavings || !isInDaylightSavings())
-    {
-      return this;
-    }
-    else
-    {
-      return new RiseSet(location, date, false, sunrise.minusHours(1), sunset
-        .minusHours(1));
-    }
-  }
-
-  /**
-   * Gets a copy of this rise/ set, with different sunrise and sunset
-   * times.
-   * 
-   * @param sunrise
-   *        Sunrise
-   * @param sunset
-   *        Sunset
-   * @return New rise/ set
-   */
-  public RiseSet withNewRiseSetTimes(final LocalTime sunrise,
-                                     final LocalTime sunset)
-  {
-    return new RiseSet(location, date, inDaylightSavings, sunrise, sunset);
-  }
-
-  /**
    * Date.
    * 
    * @return Date
@@ -279,6 +251,42 @@ final class RiseSet
   boolean isInDaylightSavings()
   {
     return inDaylightSavings;
+  }
+
+  /**
+   * Gets a copy of of this rise/ set, with times adjusted for daylight
+   * saving time.
+   * 
+   * @param adjustedForDaylightSavings
+   *        Whether to adjust the times.
+   * @return Adjusted copy
+   */
+  RiseSet withAdjustmentForDaylightSavings(final boolean adjustedForDaylightSavings)
+  {
+    if (adjustedForDaylightSavings || !isInDaylightSavings())
+    {
+      return this;
+    }
+    else
+    {
+      return new RiseSet(location, date, false, sunrise.minusHours(1), sunset
+        .minusHours(1));
+    }
+  }
+
+  /**
+   * Gets a copy of this rise/ set, with different sunrise and sunset
+   * times.
+   * 
+   * @param sunrise
+   *        Sunrise
+   * @param sunset
+   *        Sunset
+   * @return New rise/ set
+   */
+  RiseSet withNewRiseSetTimes(final LocalTime sunrise, final LocalTime sunset)
+  {
+    return new RiseSet(location, date, inDaylightSavings, sunrise, sunset);
   }
 
 }
