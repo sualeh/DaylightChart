@@ -47,10 +47,10 @@ final class RiseSet
     all_nighttime;
   }
 
-  public static final LocalTime JUST_BEFORE_MIDNIGHT = LocalTime.MIDNIGHT
+  private static final LocalTime JUST_BEFORE_MIDNIGHT = LocalTime.MIDNIGHT
     .minusMillis(1);
 
-  public static final LocalTime JUST_AFTER_MIDNIGHT = LocalTime.MIDNIGHT
+  private static final LocalTime JUST_AFTER_MIDNIGHT = LocalTime.MIDNIGHT
     .plusMillis(1);
 
   private static final long serialVersionUID = 3092668888760029582L;
@@ -72,7 +72,7 @@ final class RiseSet
     final LocalDateTime sunrise = riseSet.getSunrise();
     final LocalDateTime sunset = riseSet.getSunset();
 
-    if (sunset.getHourOfDay() < 12)
+    if (sunset.getHourOfDay() < 9)
     {
       return new RiseSet[] {
           riseSet.withNewRiseSetTimes(sunrise.toLocalTime(),
@@ -81,7 +81,7 @@ final class RiseSet
             .withNewRiseSetTimes(JUST_AFTER_MIDNIGHT, sunset.toLocalTime())
       };
     }
-    else if (sunrise.getHourOfDay() > 12)
+    else if (sunrise.getHourOfDay() > 15)
     {
       return new RiseSet[] {
           riseSet

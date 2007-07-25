@@ -258,10 +258,7 @@ public class DaylightChart
   }
 
   /**
-   * Creates a data-set for the sunrise and sunset times for the whole
-   * year.
-   * 
-   * @return A data-set for the sunrise and sunset times.
+   * Creates bands for the sunrise and sunset times for the whole year.
    */
   private void createBandsInPlot(final DaylightSavingsMode daylightSavingsMode,
                                  final XYPlot plot)
