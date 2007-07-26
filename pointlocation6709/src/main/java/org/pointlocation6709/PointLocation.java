@@ -216,7 +216,7 @@ public final class PointLocation
   @Override
   public String toString()
   {
-    String string = latitude.toString() + " - " + longitude.toString();
+    String string = latitude.toString() + ", " + longitude.toString();
     if (altitude != 0)
     {
       string = string + ": " + altitude;

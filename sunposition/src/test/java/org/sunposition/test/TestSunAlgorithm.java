@@ -22,10 +22,13 @@
 package org.sunposition.test;
 
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.joda.time.LocalDate;
+import org.joda.time.LocalTime;
+import org.joda.time.Minutes;
 import org.junit.Test;
+import org.pointlocation6709.Utility;
 import org.pointlocation6709.parser.ParserException;
 import org.sunposition.calculation.SunPositionAlgorithm;
 import org.sunposition.calculation.SunPositionAlgorithmFactory;
@@ -35,9 +38,6 @@ import org.sunposition.calculation.SunPositionAlgorithmFactory;
  */
 public class TestSunAlgorithm
 {
-
-  private static final double ONE_MINUTE = 1 / 60D;
-  private static final double DELTA = 0.5 * ONE_MINUTE;
 
   private final SunPositionAlgorithm mSunAlgorithm = SunPositionAlgorithmFactory
     .getInstance();
@@ -56,16 +56,22 @@ public class TestSunAlgorithm
   public void aberdeen()
     throws ParserException
   {
+    final SimpleLocation location = new SimpleLocation("Aberdeen;GB;Europe/London;+5710-00204/");
+    final LocalDate date = new LocalDate(2001, 12, 2);
+    System.out.println("Testing: " + location + "; " + date);
 
-    final String locationString = "Aberdeen;GB;Europe/London;+5710-00204/";
-    final SimpleLocation location = new SimpleLocation(locationString);
-    final double riseset[] = calcRiseSet(new LocalDate(2001, 12, 2), location);
+    final double riseset[] = calcRiseSet(date, location);
 
-    assertEquals(8 + 24 * ONE_MINUTE, riseset[SunPositionAlgorithm.RISE], DELTA);
-    assertEquals(12 + 3 + 31 * ONE_MINUTE,
-                 riseset[SunPositionAlgorithm.SET],
-                 DELTA);
-
+    assertTimeEquals(location.getLocation(),
+                     SunPositionAlgorithm.RISE,
+                     8,
+                     24,
+                     riseset);
+    assertTimeEquals(location.getLocation(),
+                     SunPositionAlgorithm.SET,
+                     15,
+                     31,
+                     riseset);
   }
 
   /**
@@ -80,16 +86,22 @@ public class TestSunAlgorithm
   public void bakersfield()
     throws ParserException
   {
+    final SimpleLocation location = new SimpleLocation("Bakersfield, CA;US;America/Los_Angeles;+3523-11901/");
+    final LocalDate date = new LocalDate(2003, 6, 24);
+    System.out.println("Testing: " + location + "; " + date);
 
-    final String locationString = "Bakersfield, CA;US;America/Los_Angeles;+3523-11901/";
-    final SimpleLocation location = new SimpleLocation(locationString);
-    final double riseset[] = calcRiseSet(new LocalDate(2003, 6, 24), location);
+    final double riseset[] = calcRiseSet(date, location);
 
-    assertEquals(4 + 42 * ONE_MINUTE, riseset[SunPositionAlgorithm.RISE], DELTA);
-    assertEquals(12 + 7 + 15 * ONE_MINUTE,
-                 riseset[SunPositionAlgorithm.SET],
-                 DELTA);
-
+    assertTimeEquals(location.getLocation(),
+                     SunPositionAlgorithm.RISE,
+                     4,
+                     42,
+                     riseset);
+    assertTimeEquals(location.getLocation(),
+                     SunPositionAlgorithm.SET,
+                     19,
+                     15,
+                     riseset);
   }
 
   /**
@@ -104,16 +116,52 @@ public class TestSunAlgorithm
   public void geneva()
     throws ParserException
   {
+    final SimpleLocation location = new SimpleLocation("Geneva;Switzerland;Europe/Zurich;+4612+00609/");
+    final LocalDate date = new LocalDate(2001, 11, 28);
+    System.out.println("Testing: " + location + "; " + date);
 
-    final String locationString = "Geneva;Switzerland;Europe/Zurich;+4612+00609/";
-    final SimpleLocation location = new SimpleLocation(locationString);
-    final double riseset[] = calcRiseSet(new LocalDate(2001, 11, 28), location);
+    final double riseset[] = calcRiseSet(date, location);
 
-    assertEquals(7 + 54 * ONE_MINUTE, riseset[SunPositionAlgorithm.RISE], DELTA);
-    assertEquals(12 + 4 + 53 * ONE_MINUTE,
-                 riseset[SunPositionAlgorithm.SET],
-                 DELTA);
+    assertTimeEquals(location.getLocation(),
+                     SunPositionAlgorithm.RISE,
+                     7,
+                     54,
+                     riseset);
+    assertTimeEquals(location.getLocation(),
+                     SunPositionAlgorithm.SET,
+                     16,
+                     53,
+                     riseset);
+  }
 
+  /**
+   * Geneva
+   * <ol>
+   * <li>N/E quadrant of the globe</li>
+   * </ol>
+   * 
+   * @throws ParserException
+   */
+  @Test
+  public void luleå()
+    throws ParserException
+  {
+    final SimpleLocation location = new SimpleLocation("Luleå;SE;Europe/Stockholm;+6536+02210/");
+    final LocalDate date = new LocalDate(2007, 6, 23);
+    System.out.println("Testing: " + location + "; " + date);
+
+    final double riseset[] = calcRiseSet(date, location);
+
+    assertTimeEquals(location.getLocation(),
+                     SunPositionAlgorithm.RISE,
+                     0,
+                     56,
+                     riseset);
+    assertTimeEquals(location.getLocation(),
+                     SunPositionAlgorithm.SET,
+                     23,
+                     4,
+                     riseset);
   }
 
   /**
@@ -128,16 +176,22 @@ public class TestSunAlgorithm
   public void nairobi()
     throws ParserException
   {
+    final SimpleLocation location = new SimpleLocation("Nairobi;Kenya;Africa/Nairobi;-0117+03649/");
+    final LocalDate date = new LocalDate(2003, 6, 24);
+    System.out.println("Testing: " + location + "; " + date);
 
-    final String locationString = "Nairobi;Kenya;Africa/Nairobi;-0117+03649/";
-    final SimpleLocation location = new SimpleLocation(locationString);
-    final double riseset[] = calcRiseSet(new LocalDate(2003, 6, 24), location);
+    final double riseset[] = calcRiseSet(date, location);
 
-    assertEquals(6 + 33 * ONE_MINUTE, riseset[SunPositionAlgorithm.RISE], DELTA);
-    assertEquals(12 + 6 + 36 * ONE_MINUTE,
-                 riseset[SunPositionAlgorithm.SET],
-                 DELTA);
-
+    assertTimeEquals(location.getLocation(),
+                     SunPositionAlgorithm.RISE,
+                     6,
+                     33,
+                     riseset);
+    assertTimeEquals(location.getLocation(),
+                     SunPositionAlgorithm.SET,
+                     18,
+                     36,
+                     riseset);
   }
 
   /**
@@ -153,14 +207,44 @@ public class TestSunAlgorithm
   public void sydney()
     throws ParserException
   {
+    final SimpleLocation location = new SimpleLocation("Sydney;Australia;Australia/Sydney;-3352+15113/");
+    final LocalDate date = new LocalDate(2001, 12, 2);
+    System.out.println("Testing: " + location + "; " + date);
 
-    final String locationString = "Sydney;Australia;Australia/Sydney;-3352+15113/";
-    final SimpleLocation location = new SimpleLocation(locationString);
-    final double riseset[] = calcRiseSet(new LocalDate(2001, 12, 2), location);
+    final double riseset[] = calcRiseSet(date, location);
 
-    assertEquals(4 + 37 * ONE_MINUTE, riseset[SunPositionAlgorithm.RISE], DELTA);
-    assertEquals(18 + 52 * ONE_MINUTE, riseset[SunPositionAlgorithm.SET], DELTA);
+    assertTimeEquals(location.getLocation(),
+                     SunPositionAlgorithm.RISE,
+                     4,
+                     37,
+                     riseset);
+    assertTimeEquals(location.getLocation(),
+                     SunPositionAlgorithm.SET,
+                     18,
+                     52,
+                     riseset);
+  }
 
+  private void assertTimeEquals(final String location,
+                                final int type,
+                                final int expectedHour,
+                                final int expectedMinute,
+                                final double riseset[])
+  {
+    final int MINUTES_DELTA = 3;
+
+    final double actualHours = riseset[type];
+    final String typeString = type == SunPositionAlgorithm.SET? "sunset"
+                                                              : "sunrise";
+
+    final LocalTime expectedTime = new LocalTime(expectedHour, expectedMinute);
+    final LocalTime actualTime = toLocalTime(actualHours);
+    final Minutes minutes = Minutes.minutesBetween(expectedTime, actualTime);
+
+    String message = location + " " + typeString + ": expected " + expectedTime
+                     + "; actual " + actualTime;
+    System.out.println(message);
+    assertTrue(message, Math.abs(minutes.getMinutes()) <= MINUTES_DELTA);
   }
 
   private double[] calcRiseSet(final LocalDate date,
@@ -172,6 +256,17 @@ public class TestSunAlgorithm
       .getDayOfMonth());
 
     return mSunAlgorithm.calcRiseSet(SunPositionAlgorithm.SUNRISE_SUNSET);
+  }
+
+  private LocalTime toLocalTime(final double hour)
+  {
+    double dayHour = hour % 24D;
+    if (dayHour < 0)
+    {
+      dayHour = dayHour + hour;
+    }
+    final int[] fields = Utility.sexagesimalSplit(dayHour);
+    return new LocalTime(fields[0], fields[1], fields[2]);
   }
 
 }
