@@ -19,7 +19,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * 
  */
-package daylightchart.astronomical;
+package org.sunposition.calculation;
 
 
 /**
@@ -42,7 +42,7 @@ package daylightchart.astronomical;
  * @author Sualeh Fatehi
  */
 final class CobbledSunCalc
-  implements SunAlgorithm
+  implements SunPositionAlgorithm
 {
 
   private static final double DEGREESTORADIANS = Math.PI / 180D;
@@ -571,13 +571,25 @@ final class CobbledSunCalc
   }
 
   /**
-   * Day, 1 to 31.
+   * {@inheritDoc}
    * 
-   * @param day
-   *        Day.
+   * @see org.sunposition.calculation.SunPositionAlgorithm#setDate(int, int,
+   *      int)
    */
-  public void setDay(final int day)
+  public void setDate(final int year, final int month, final int day)
   {
+    if (year < 1500 || year > 3000)
+    {
+      throw new IllegalArgumentException("Out of range: " + year);
+    }
+    this.year = year;
+
+    if (month < 1 || month > 12)
+    {
+      throw new IllegalArgumentException("Out of range: " + month);
+    }
+    this.month = month;
+
     if (day < 1 || day > 31)
     {
       throw new IllegalArgumentException("Day out of range: " + day);
@@ -586,48 +598,24 @@ final class CobbledSunCalc
   }
 
   /**
-   * Latitude in degrees, North positive.
+   * {@inheritDoc}
    * 
-   * @param latitude
-   *        Latitude.
+   * @see org.sunposition.calculation.SunPositionAlgorithm#setLocation(double,
+   *      double)
    */
-  public void setLatitude(final double latitude)
+  public void setLocation(final double latitude, final double longitude)
   {
     if (Math.abs(latitude) > 90)
     {
       throw new IllegalArgumentException("Out of range: " + latitude);
     }
     this.latitude = latitude;
-  }
 
-  /**
-   * Longitude in degrees, East positive.
-   * 
-   * @param longitude
-   *        Longitude.
-   */
-  public void setLongitude(final double longitude)
-  {
     if (Math.abs(longitude) > 180)
     {
       throw new IllegalArgumentException("Out of range: " + longitude);
     }
     this.longitude = longitude;
-  }
-
-  /**
-   * Month, 1 to 12.
-   * 
-   * @param month
-   *        Month.
-   */
-  public void setMonth(final int month)
-  {
-    if (month < 1 || month > 12)
-    {
-      throw new IllegalArgumentException("Out of range: " + month);
-    }
-    this.month = month;
   }
 
   /**
@@ -643,21 +631,6 @@ final class CobbledSunCalc
       throw new IllegalArgumentException("Out of range: " + timeZoneOffset);
     }
     timezoneOffset = timeZoneOffset;
-  }
-
-  /**
-   * Four digit year.
-   * 
-   * @param year
-   *        Year.
-   */
-  public void setYear(final int year)
-  {
-    if (year < 1500 || year > 3000)
-    {
-      throw new IllegalArgumentException("Out of range: " + year);
-    }
-    this.year = year;
   }
 
   /**

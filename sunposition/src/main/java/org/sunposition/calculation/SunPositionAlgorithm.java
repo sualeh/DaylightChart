@@ -19,7 +19,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * 
  */
-package daylightchart.astronomical;
+package org.sunposition.calculation;
 
 
 /**
@@ -50,7 +50,7 @@ package daylightchart.astronomical;
  * 
  * @author Sualeh Fatehi
  */
-public interface SunAlgorithm
+public interface SunPositionAlgorithm
 {
 
   /*
@@ -135,39 +135,29 @@ public interface SunAlgorithm
    *         <li> EQUATIONOFTIME</li>
    *         </ol>
    */
-  double[] calcSolarEphemeris(final double hour);
+  double[] calcSolarEphemeris(double hour);
 
   /**
    * Day, 1 to 31.
    * 
+   * @param year
+   *        Four digit year.
+   * @param month
+   *        Month, 1 to 12.
    * @param day
-   *        Day.
+   *        Day, 1 to 31.
    */
-  void setDay(final int day);
+  void setDate(int year, int month, int day);
 
   /**
-   * Latitude in degrees, North positive.
+   * Location.
    * 
    * @param latitude
-   *        Latitude.
-   */
-  void setLatitude(final double latitude);
-
-  /**
-   * Longitude in degrees, East positive.
-   * 
+   *        Latitude in degrees, North positive.
    * @param longitude
-   *        Longitude.
+   *        Longitude in degrees, East positive.
    */
-  void setLongitude(final double longitude);
-
-  /**
-   * Month, 1 to 12.
-   * 
-   * @param month
-   *        Month.
-   */
-  void setMonth(final int month);
+  void setLocation(double latitude, double longitude);
 
   /**
    * Time zone offset from GMT, in hours.
@@ -175,14 +165,6 @@ public interface SunAlgorithm
    * @param timeZoneOffset
    *        Time zone offset.
    */
-  void setTimeZoneOffset(final double timeZoneOffset);
-
-  /**
-   * Four digit year.
-   * 
-   * @param year
-   *        Year.
-   */
-  void setYear(final int year);
+  void setTimeZoneOffset(double timeZoneOffset);
 
 }

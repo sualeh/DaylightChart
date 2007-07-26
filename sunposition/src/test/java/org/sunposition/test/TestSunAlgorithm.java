@@ -19,23 +19,19 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * 
  */
-package daylightchart.test;
+package org.sunposition.test;
 
 
 import static org.junit.Assert.assertEquals;
 
 import org.joda.time.LocalDate;
 import org.junit.Test;
-
-import daylightchart.astronomical.SunAlgorithm;
-import daylightchart.astronomical.SunAlgorithmFactory;
-import daylightchart.location.Location;
-import daylightchart.location.parser.DefaultTimezones;
-import daylightchart.location.parser.LocationParser;
-import daylightchart.location.parser.ParserException;
+import org.pointlocation6709.parser.ParserException;
+import org.sunposition.calculation.SunPositionAlgorithm;
+import org.sunposition.calculation.SunPositionAlgorithmFactory;
 
 /**
- * Location tests.
+ * SimpleLocation tests.
  */
 public class TestSunAlgorithm
 {
@@ -43,7 +39,8 @@ public class TestSunAlgorithm
   private static final double ONE_MINUTE = 1 / 60D;
   private static final double DELTA = 0.5 * ONE_MINUTE;
 
-  private final SunAlgorithm mSunAlgorithm = SunAlgorithmFactory.getInstance();
+  private final SunPositionAlgorithm mSunAlgorithm = SunPositionAlgorithmFactory
+    .getInstance();
 
   /**
    * Aberdeen
@@ -60,12 +57,14 @@ public class TestSunAlgorithm
     throws ParserException
   {
 
-    final String strLoc = "Aberdeen;GB;Europe/London;+5710-00204/";
-    final Location location = LocationParser.parseLocation(strLoc);
+    final String locationString = "Aberdeen;GB;Europe/London;+5710-00204/";
+    final SimpleLocation location = new SimpleLocation(locationString);
     final double riseset[] = calcRiseSet(new LocalDate(2001, 12, 2), location);
 
-    assertEquals(8 + 24 * ONE_MINUTE, riseset[SunAlgorithm.RISE], DELTA);
-    assertEquals(12 + 3 + 31 * ONE_MINUTE, riseset[SunAlgorithm.SET], DELTA);
+    assertEquals(8 + 24 * ONE_MINUTE, riseset[SunPositionAlgorithm.RISE], DELTA);
+    assertEquals(12 + 3 + 31 * ONE_MINUTE,
+                 riseset[SunPositionAlgorithm.SET],
+                 DELTA);
 
   }
 
@@ -82,12 +81,14 @@ public class TestSunAlgorithm
     throws ParserException
   {
 
-    final String strLoc = "Bakersfield, CA;US;America/Los_Angeles;+3523-11901/";
-    final Location location = LocationParser.parseLocation(strLoc);
+    final String locationString = "Bakersfield, CA;US;America/Los_Angeles;+3523-11901/";
+    final SimpleLocation location = new SimpleLocation(locationString);
     final double riseset[] = calcRiseSet(new LocalDate(2003, 6, 24), location);
 
-    assertEquals(4 + 42 * ONE_MINUTE, riseset[SunAlgorithm.RISE], DELTA);
-    assertEquals(12 + 7 + 15 * ONE_MINUTE, riseset[SunAlgorithm.SET], DELTA);
+    assertEquals(4 + 42 * ONE_MINUTE, riseset[SunPositionAlgorithm.RISE], DELTA);
+    assertEquals(12 + 7 + 15 * ONE_MINUTE,
+                 riseset[SunPositionAlgorithm.SET],
+                 DELTA);
 
   }
 
@@ -104,12 +105,14 @@ public class TestSunAlgorithm
     throws ParserException
   {
 
-    final String strLoc = "Geneva;Switzerland;Europe/Zurich;+4612+00609/";
-    final Location location = LocationParser.parseLocation(strLoc);
+    final String locationString = "Geneva;Switzerland;Europe/Zurich;+4612+00609/";
+    final SimpleLocation location = new SimpleLocation(locationString);
     final double riseset[] = calcRiseSet(new LocalDate(2001, 11, 28), location);
 
-    assertEquals(7 + 54 * ONE_MINUTE, riseset[SunAlgorithm.RISE], DELTA);
-    assertEquals(12 + 4 + 53 * ONE_MINUTE, riseset[SunAlgorithm.SET], DELTA);
+    assertEquals(7 + 54 * ONE_MINUTE, riseset[SunPositionAlgorithm.RISE], DELTA);
+    assertEquals(12 + 4 + 53 * ONE_MINUTE,
+                 riseset[SunPositionAlgorithm.SET],
+                 DELTA);
 
   }
 
@@ -126,12 +129,14 @@ public class TestSunAlgorithm
     throws ParserException
   {
 
-    final String strLoc = "Nairobi;Kenya;Africa/Nairobi;-0117+03649/";
-    final Location location = LocationParser.parseLocation(strLoc);
+    final String locationString = "Nairobi;Kenya;Africa/Nairobi;-0117+03649/";
+    final SimpleLocation location = new SimpleLocation(locationString);
     final double riseset[] = calcRiseSet(new LocalDate(2003, 6, 24), location);
 
-    assertEquals(6 + 33 * ONE_MINUTE, riseset[SunAlgorithm.RISE], DELTA);
-    assertEquals(12 + 6 + 36 * ONE_MINUTE, riseset[SunAlgorithm.SET], DELTA);
+    assertEquals(6 + 33 * ONE_MINUTE, riseset[SunPositionAlgorithm.RISE], DELTA);
+    assertEquals(12 + 6 + 36 * ONE_MINUTE,
+                 riseset[SunPositionAlgorithm.SET],
+                 DELTA);
 
   }
 
@@ -149,28 +154,24 @@ public class TestSunAlgorithm
     throws ParserException
   {
 
-    final String strLoc = "Sydney;Australia;Australia/Sydney;-3352+15113/";
-    final Location location = LocationParser.parseLocation(strLoc);
+    final String locationString = "Sydney;Australia;Australia/Sydney;-3352+15113/";
+    final SimpleLocation location = new SimpleLocation(locationString);
     final double riseset[] = calcRiseSet(new LocalDate(2001, 12, 2), location);
 
-    assertEquals(4 + 37 * ONE_MINUTE, riseset[SunAlgorithm.RISE], DELTA);
-    assertEquals(18 + 52 * ONE_MINUTE, riseset[SunAlgorithm.SET], DELTA);
+    assertEquals(4 + 37 * ONE_MINUTE, riseset[SunPositionAlgorithm.RISE], DELTA);
+    assertEquals(18 + 52 * ONE_MINUTE, riseset[SunPositionAlgorithm.SET], DELTA);
 
   }
 
-  private double[] calcRiseSet(final LocalDate date, final Location location)
+  private double[] calcRiseSet(final LocalDate date,
+                               final SimpleLocation location)
   {
-    mSunAlgorithm.setLatitude(location.getPointLocation().getLatitude()
-      .getDegrees());
-    mSunAlgorithm.setLongitude(location.getPointLocation().getLongitude()
-      .getDegrees());
-    mSunAlgorithm.setTimeZoneOffset(DefaultTimezones
-      .getStandardTimeZoneOffsetHours(location.getTimeZoneId()));
-    mSunAlgorithm.setYear(date.getYear());
-    mSunAlgorithm.setMonth(date.getMonthOfYear());
-    mSunAlgorithm.setDay(date.getDayOfMonth());
+    mSunAlgorithm.setLocation(location.getLatitude(), location.getLongitude());
+    mSunAlgorithm.setTimeZoneOffset(location.getTimeZoneOffset());
+    mSunAlgorithm.setDate(date.getYear(), date.getMonthOfYear(), date
+      .getDayOfMonth());
 
-    return mSunAlgorithm.calcRiseSet(SunAlgorithm.SUNRISE_SUNSET);
+    return mSunAlgorithm.calcRiseSet(SunPositionAlgorithm.SUNRISE_SUNSET);
   }
 
 }

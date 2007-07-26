@@ -19,30 +19,35 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * 
  */
-package daylightchart.astronomical;
+package org.sunposition;
 
+
+import java.util.logging.Logger;
 
 /**
- * Create an instance of a sunrise/ sunset algorithm.
+ * Main window.
  * 
  * @author Sualeh Fatehi
  */
-public final class SunAlgorithmFactory
+public final class Main
 {
 
+  private static final Logger LOGGER = Logger.getLogger(Main.class.getName());
+
   /**
-   * Create an instance of a sunrise/ sunset algorithm.
+   * Main window.
    * 
-   * @return Instance of a sunrise/ sunset algorithm.
+   * @param args
+   *        Arguments
    */
-  public static SunAlgorithm getInstance()
+  public static void main(final String[] args)
   {
-    return new CobbledSunCalc();
+
   }
 
-  private SunAlgorithmFactory()
+  private Main()
   {
-    // Prevent instantiation
+    // No-op
   }
 
 }

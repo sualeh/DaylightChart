@@ -19,48 +19,30 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * 
  */
-package daylightchart.gui.actions;
+package org.sunposition.calculation;
 
-
-import java.awt.Component;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.JOptionPane;
-
-import org.sunposition.Version;
-
-import sf.util.ui.GuiAction;
-import daylightchart.gui.Messages;
 
 /**
- * Shows Help-About.
+ * Create an instance of a sunrise/ sunset algorithm.
  * 
- * @author sfatehi
+ * @author Sualeh Fatehi
  */
-public final class AboutAction
-  extends GuiAction
+public final class SunPositionAlgorithmFactory
 {
 
-  private static final long serialVersionUID = 4002590686393404496L;
-
   /**
-   * Shows Help-About.
+   * Create an instance of a sunrise/ sunset algorithm.
    * 
-   * @param parent
-   *        Main window.
+   * @return Instance of a sunrise/ sunset algorithm.
    */
-  public AboutAction(final Component parent)
+  public static SunPositionAlgorithm getInstance()
   {
-    super(Messages.getString("DaylightChartGui.Menu.Help.About") //$NON-NLS-1$
-    );
-    addActionListener(new ActionListener()
-    {
-      public void actionPerformed(@SuppressWarnings("unused")
-      final ActionEvent actionevent)
-      {
-        JOptionPane.showMessageDialog(parent, Version.about());
-      }
-    });
+    return new CobbledSunCalc();
   }
+
+  private SunPositionAlgorithmFactory()
+  {
+    // Prevent instantiation
+  }
+
 }

@@ -152,8 +152,25 @@ final class RiseSet
         this.sunrise = JUST_AFTER_MIDNIGHT;
         this.sunset = JUST_BEFORE_MIDNIGHT;
         break;
-      case normal:
       case partial:
+        if (hasSunrise)
+        {
+          this.sunrise = toLocalTime(sunrise);
+        }
+        else
+        {
+          this.sunrise = JUST_AFTER_MIDNIGHT;
+        }
+        if (hasSunrise)
+        {
+          this.sunset = toLocalTime(sunset);
+        }
+        else
+        {
+          this.sunset = JUST_BEFORE_MIDNIGHT;
+        }
+        break;
+      case normal:
       default:
         this.sunrise = toLocalTime(sunrise);
         this.sunset = toLocalTime(sunset);

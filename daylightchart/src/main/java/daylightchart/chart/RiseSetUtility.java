@@ -28,9 +28,9 @@ import java.util.TimeZone;
 
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
+import org.sunposition.calculation.SunPositionAlgorithm;
+import org.sunposition.calculation.SunPositionAlgorithmFactory;
 
-import daylightchart.astronomical.SunAlgorithm;
-import daylightchart.astronomical.SunAlgorithmFactory;
 import daylightchart.chart.RiseSet.RiseSetType;
 import daylightchart.location.Location;
 import daylightchart.location.parser.DefaultTimezones;
@@ -160,7 +160,8 @@ public final class RiseSetUtility
     final boolean useDaylightTime = timeZone.useDaylightTime();
     boolean wasDaylightSavings = false;
 
-    final SunAlgorithm sunAlgorithm = SunAlgorithmFactory.getInstance();
+    final SunPositionAlgorithm sunAlgorithm = SunPositionAlgorithmFactory
+      .getInstance();
     final RiseSetYear riseSetYear = new RiseSetYear(location, year);
     for (final LocalDate date: getYearsDates(year))
     {
@@ -210,24 +211,21 @@ public final class RiseSetUtility
 
   }
 
-  private static double[] calcRiseSet(final SunAlgorithm sunAlgorithm,
+  private static double[] calcRiseSet(final SunPositionAlgorithm sunAlgorithm,
                                       final Location location,
                                       final LocalDate date)
   {
     if (location != null)
     {
-      sunAlgorithm.setLatitude(location.getPointLocation().getLatitude()
-        .getDegrees());
-      sunAlgorithm.setLongitude(location.getPointLocation().getLongitude()
-        .getDegrees());
+      sunAlgorithm.setLocation(location.getPointLocation().getLatitude()
+        .getDegrees(), location.getPointLocation().getLongitude().getDegrees());
       sunAlgorithm.setTimeZoneOffset(DefaultTimezones
         .getStandardTimeZoneOffsetHours(location.getTimeZoneId()));
     }
-    sunAlgorithm.setYear(date.getYear());
-    sunAlgorithm.setMonth(date.getMonthOfYear());
-    sunAlgorithm.setDay(date.getDayOfMonth());
+    sunAlgorithm.setDate(date.getYear(), date.getMonthOfYear(), date
+      .getDayOfMonth());
 
-    return sunAlgorithm.calcRiseSet(SunAlgorithm.SUNRISE_SUNSET);
+    return sunAlgorithm.calcRiseSet(SunPositionAlgorithm.SUNRISE_SUNSET);
   }
 
   /**
