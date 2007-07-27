@@ -54,23 +54,6 @@ public interface SunPositionAlgorithm
 {
 
   /*
-   * The solar ephemeris calculation returns values in a double[]
-   * vector. Use these constants to access elements of the array.
-   */
-  /** Constant indexing a field in the solar ephemeris result. */
-  int DECLINATION = 0;
-  /** Constant indexing a field in the solar ephemeris result. */
-  int RIGHTASCENSION = 1;
-  /** Constant indexing a field in the solar ephemeris result. */
-  int HOURANGLE = 2;
-  /** Constant indexing a field in the solar ephemeris result. */
-  int AZIMUTH = 3;
-  /** Constant indexing a field in the solar ephemeris result. */
-  int ALTITUDE = 4;
-  /** Constant indexing a field in the solar ephemeris result. */
-  int EQUATIONOFTIME = 5;
-
-  /*
    * The sunrise algorithm return values in an array. Use these
    * constants to access elements of the array.
    */
@@ -120,22 +103,22 @@ public interface SunPositionAlgorithm
   double[] calcRiseSet(final double dblHorizon);
 
   /**
-   * Calculate solar ephemeris.
+   * Calculate equation of time, in minutes.
    * 
    * @param hour
    *        Hour past midnight (for the current day).
-   * @return Solar ephemerides, as an array. Use one of the following
-   *         values to index elements of the array. <br>
-   *         <ol>
-   *         <li> DECLINATION </li>
-   *         <li> RIGHTASCENSION </li>
-   *         <li> HOURANGLE </li>
-   *         <li> AZIMUTH </li>
-   *         <li> ALTITUDE </li>
-   *         <li> EQUATIONOFTIME</li>
-   *         </ol>
+   * @return Equation of time, in minutes
    */
-  double[] calcSolarEphemeris(double hour);
+  double getEquationOfTime(double hour);
+
+  /**
+   * Calculate solar declination angle, in degrees.
+   * 
+   * @param hour
+   *        Hour past midnight (for the current day).
+   * @return Solar declination angle, in degrees
+   */
+  double getSolarDeclination(double hour);
 
   /**
    * Day, 1 to 31.

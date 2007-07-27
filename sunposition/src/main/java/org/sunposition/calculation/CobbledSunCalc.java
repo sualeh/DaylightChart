@@ -22,8 +22,6 @@
 package org.sunposition.calculation;
 
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
 
 /**
  * <p>
@@ -44,150 +42,28 @@ import java.io.PrintStream;
  * 
  * @author Sualeh Fatehi
  */
-final class CobbledSunCalc
-  implements SunPositionAlgorithm
+class CobbledSunCalc
+  extends BaseSunPositionAlgorithm
 {
 
   private static final double DEGREESTORADIANS = Math.PI / 180D;
 
-  /**
-   * Cosine of an angle expressed in degrees.
-   * 
-   * @param degrees
-   *        Degrees.
-   * @return Cosine of the angle.
+  /*
+   * The solar ephemeris calculation returns values in a double[]
+   * vector. Use these constants to access elements of the array.
    */
-  private static double cos(final double degrees)
-  {
-    return Math.cos(degrees * DEGREESTORADIANS);
-  }
-
-  /**
-   * Rounds towards zero.
-   * 
-   * @param number
-   *        Value to round.
-   * @return Value rounded towards zero (returned as double).
-   */
-  private static double frac(final double number)
-  {
-    double result;
-
-    result = number - trunc(number);
-    if (result < 0.0)
-    {
-      result += 1.0;
-    }
-
-    return result;
-  }
-
-  /**
-   * Checks if an event is in the valid range.
-   * 
-   * @param eventOccurence
-   *        The event to check.
-   * @return Boolean for valid.
-   */
-  private static boolean isEvent(final double eventOccurence)
-  {
-    return eventOccurence != ABOVE_HORIZON && eventOccurence != BELOW_HORIZON;
-  }
-
-  /**
-   * Modulus function that always returns a positive value. For example,
-   * mod(-3, 24) is 21.
-   * 
-   * @param numerator
-   *        Numerator.
-   * @param denominator
-   *        Denominator.
-   * @return Modulus of the numerator and denominator.
-   */
-  private static double mod(final double numerator, final double denominator)
-  {
-    double result;
-
-    result = Math.IEEEremainder(numerator, denominator);
-    if (result < 0)
-    {
-      result += denominator;
-    }
-
-    return result;
-  }
-
-  /**
-   * Angle to convert to within a range of 0 to 360 degrees. Modulus
-   * function that always returns a positive value.
-   * 
-   * @param angle
-   *        Angle to convert.
-   * @return Angle within a range of 0 to 360 degrees.
-   */
-  private static double range360(final double angle)
-  {
-    return mod(angle, 360D);
-  }
-
-  /**
-   * Sine of an angle expressed in degrees.
-   * 
-   * @param degrees
-   *        Degrees.
-   * @return Sine of the angle.
-   */
-  private static double sin(final double degrees)
-  {
-    return Math.sin(degrees * DEGREESTORADIANS);
-  }
-
-  /**
-   * Tangent of an angle expressed in degrees.
-   * 
-   * @param degrees
-   *        Degrees.
-   * @return Tangent of the angle.
-   */
-  private static double tan(final double degrees)
-  {
-    return Math.tan(degrees * DEGREESTORADIANS);
-  }
-
-  /**
-   * Returns the integer nearest to zero. (This behaves differently than
-   * Math.floor() for negative values.)
-   * 
-   * @param number
-   *        The number to convert
-   * @return Integer number nearest zero (returned as double).
-   */
-  private static int trunc(final double number)
-  {
-    int result = (int) Math.floor(Math.abs(number));
-    if (number < 0.0)
-    {
-      result = -result;
-    }
-    return result;
-  }
-
-  /** Day, 1 to 31. */
-  private int day;
-  /** Month, 1 to 12. */
-  private int month;
-  /** Four digit year. */
-  private int year;
-
-  /** Location name. */
-  private String locationName;
-  /** Latitude in degrees, North positive. */
-  private double latitude;
-  /** Longitude in degrees, East positive. */
-  private double longitude;
-
-  /** Timezone offset from GMT, in hours. */
-  private double timezoneOffset;
+  /** Constant indexing a field in the solar ephemeris result. */
+  private int DECLINATION = 0;
+  /** Constant indexing a field in the solar ephemeris result. */
+  private int RIGHTASCENSION = 1;
+  /** Constant indexing a field in the solar ephemeris result. */
+  private int HOURANGLE = 2;
+  /** Constant indexing a field in the solar ephemeris result. */
+  private int AZIMUTH = 3;
+  /** Constant indexing a field in the solar ephemeris result. */
+  private int ALTITUDE = 4;
+  /** Constant indexing a field in the solar ephemeris result. */
+  private int EQUATIONOFTIME = 5;
 
   /**
    * <p>
@@ -394,6 +270,28 @@ final class CobbledSunCalc
   }
 
   /**
+   * {@inheritDoc}
+   * 
+   * @see org.sunposition.calculation.SunPositionAlgorithm#getEquationOfTime(double)
+   */
+  public double getEquationOfTime(double hour)
+  {
+    double[] ephemerides = calcSolarEphemeris(hour);
+    return ephemerides[EQUATIONOFTIME];
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see org.sunposition.calculation.SunPositionAlgorithm#getSolarDeclination(double)
+   */
+  public double getSolarDeclination(double hour)
+  {
+    double[] ephemerides = calcSolarEphemeris(hour);
+    return ephemerides[DECLINATION];
+  }
+
+  /**
    * Calculate solar ephemeris.
    * 
    * @param hour
@@ -411,7 +309,7 @@ final class CobbledSunCalc
    *         href="http://www.srrb.noaa.gov/highlights/sunrise/program.txt">
    *         NOAA calculations </a>
    */
-  public double[] calcSolarEphemeris(final double hour)
+  private double[] calcSolarEphemeris(final double hour)
   {
 
     final double J2000_OFFSET = 2451545.5;
@@ -576,99 +474,125 @@ final class CobbledSunCalc
   }
 
   /**
-   * {@inheritDoc}
+   * Cosine of an angle expressed in degrees.
    * 
-   * @see org.sunposition.calculation.SunPositionAlgorithm#setDate(int,
-   *      int, int)
+   * @param degrees
+   *        Degrees.
+   * @return Cosine of the angle.
    */
-  public void setDate(final int year, final int month, final int day)
+  protected double cos(final double degrees)
   {
-    if (year < 1500 || year > 3000)
-    {
-      throw new IllegalArgumentException("Out of range: " + year);
-    }
-    this.year = year;
-
-    if (month < 1 || month > 12)
-    {
-      throw new IllegalArgumentException("Out of range: " + month);
-    }
-    this.month = month;
-
-    if (day < 1 || day > 31)
-    {
-      throw new IllegalArgumentException("Day out of range: " + day);
-    }
-    this.day = day;
+    return Math.cos(degrees * DEGREESTORADIANS);
   }
 
   /**
-   * {@inheritDoc}
+   * Rounds towards zero.
    * 
-   * @see org.sunposition.calculation.SunPositionAlgorithm#setLocation(String,
-   *      double, double)
+   * @param number
+   *        Value to round.
+   * @return Value rounded towards zero (returned as double).
    */
-  public void setLocation(final String locationName,
-                          final double latitude,
-                          final double longitude)
+  protected double frac(final double number)
   {
+    double result;
 
-    this.locationName = locationName;
-
-    if (Math.abs(latitude) > 90)
+    result = number - trunc(number);
+    if (result < 0.0)
     {
-      throw new IllegalArgumentException("Out of range: " + latitude);
+      result += 1.0;
     }
-    this.latitude = latitude;
 
-    if (Math.abs(longitude) > 180)
-    {
-      throw new IllegalArgumentException("Out of range: " + longitude);
-    }
-    this.longitude = longitude;
+    return result;
   }
 
   /**
-   * Time zone offset from GMT, in hours.
+   * Checks if an event is in the valid range.
    * 
-   * @param timeZoneOffset
-   *        Time zone offset.
+   * @param eventOccurence
+   *        The event to check.
+   * @return Boolean for valid.
    */
-  public void setTimeZoneOffset(final double timeZoneOffset)
+  protected boolean isEvent(final double eventOccurence)
   {
-    if (Math.abs(timeZoneOffset) > 13)
-    {
-      throw new IllegalArgumentException("Out of range: " + timeZoneOffset);
-    }
-    timezoneOffset = timeZoneOffset;
+    return eventOccurence != ABOVE_HORIZON && eventOccurence != BELOW_HORIZON;
   }
 
   /**
-   * {@inheritDoc}
+   * Modulus function that always returns a positive value. For example,
+   * mod(-3, 24) is 21.
    * 
-   * @see java.lang.Object#toString()
+   * @param numerator
+   *        Numerator.
+   * @param denominator
+   *        Denominator.
+   * @return Modulus of the numerator and denominator.
    */
-  @Override
-  public String toString()
+  protected double mod(final double numerator, final double denominator)
   {
+    double result;
 
-    double riseset[];
+    result = Math.IEEEremainder(numerator, denominator);
+    if (result < 0)
+    {
+      result += denominator;
+    }
 
-    riseset = calcRiseSet(SUNRISE_SUNSET);
+    return result;
+  }
 
-    final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-    new PrintStream(outputStream, true)
-      .printf("%s %5.2f, %5.2f; date=%i-%i-%i;time zone=%5.2f sunrise %s sunset %s",
-              locationName,
-              latitude,
-              longitude,
-              year,
-              month,
-              day,
-              timezoneOffset,
-              fmt60(riseset[RISE]),
-              fmt60(riseset[SET]));
-    return outputStream.toString();
+  /**
+   * Angle to convert to within a range of 0 to 360 degrees. Modulus
+   * function that always returns a positive value.
+   * 
+   * @param angle
+   *        Angle to convert.
+   * @return Angle within a range of 0 to 360 degrees.
+   */
+  protected double range360(final double angle)
+  {
+    return mod(angle, 360D);
+  }
+
+  /**
+   * Sine of an angle expressed in degrees.
+   * 
+   * @param degrees
+   *        Degrees.
+   * @return Sine of the angle.
+   */
+  protected double sin(final double degrees)
+  {
+    return Math.sin(degrees * DEGREESTORADIANS);
+  }
+
+  /**
+   * Tangent of an angle expressed in degrees.
+   * 
+   * @param degrees
+   *        Degrees.
+   * @return Tangent of the angle.
+   */
+  protected double tan(final double degrees)
+  {
+    return Math.tan(degrees * DEGREESTORADIANS);
+  }
+
+  /**
+   * Returns the integer nearest to zero. (This behaves differently than
+   * Math.floor() for negative values.)
+   * 
+   * @param number
+   *        The number to convert
+   * @return Integer number nearest zero (returned as double).
+   */
+  protected int trunc(final double number)
+  {
+    int result = (int) Math.floor(Math.abs(number));
+    if (number < 0.0)
+    {
+      result = -result;
+    }
+    return result;
   }
 
   private String fmt60(double number)
