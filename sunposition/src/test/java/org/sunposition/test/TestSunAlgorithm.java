@@ -265,7 +265,7 @@ public class TestSunAlgorithm
     double dayHour = hour % 24D;
     if (dayHour < 0)
     {
-      dayHour = dayHour + hour;
+      dayHour = dayHour + 24D;
     }
     final int[] fields = Utility.sexagesimalSplit(dayHour);
     return new LocalTime(fields[0], fields[1], fields[2]);

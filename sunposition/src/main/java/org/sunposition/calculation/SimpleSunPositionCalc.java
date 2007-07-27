@@ -61,9 +61,10 @@ final class SimpleSunPositionCalc
 
     // Fractional year, in radians
     final LocalDate date = new LocalDate(year, month, day);
-    final double hour = 12;
-    final double gamma = 2D * Math.PI
-                         * (date.getDayOfYear() - 1 + (hour - 12D) / 24D)
+    final double hour = 24;
+    final double gamma = 2D
+                         * Math.PI
+                         * ((double) date.getDayOfYear() - 1D + (hour - 12D) / 24D)
                          / 365D;
 
     // Equation of time, in minutes
