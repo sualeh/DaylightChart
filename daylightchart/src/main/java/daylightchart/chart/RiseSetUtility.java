@@ -217,8 +217,9 @@ public final class RiseSetUtility
   {
     if (location != null)
     {
-      sunAlgorithm.setLocation(location.getPointLocation().getLatitude()
-        .getDegrees(), location.getPointLocation().getLongitude().getDegrees());
+      sunAlgorithm.setLocation(location.getDescription(), location
+        .getPointLocation().getLatitude().getDegrees(), location
+        .getPointLocation().getLongitude().getDegrees());
       sunAlgorithm.setTimeZoneOffset(DefaultTimezones
         .getStandardTimeZoneOffsetHours(location.getTimeZoneId()));
     }
