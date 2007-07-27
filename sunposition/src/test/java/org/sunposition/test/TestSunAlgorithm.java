@@ -27,7 +27,6 @@ import static org.junit.Assert.assertTrue;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
 import org.joda.time.Minutes;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.pointlocation6709.Utility;
 import org.pointlocation6709.parser.ParserException;
@@ -133,7 +132,7 @@ public class TestSunAlgorithm
   }
 
   /**
-   * Geneva
+   * Luleå
    * <ol>
    * <li>N/E quadrant of the globe</li>
    * </ol>
@@ -141,7 +140,7 @@ public class TestSunAlgorithm
    * @throws ParserException
    */
   @Test
-  @Ignore("Fixing other errors first")
+  // @Ignore("Fixing other errors first")
   public void luleå()
     throws ParserException
   {
@@ -152,13 +151,13 @@ public class TestSunAlgorithm
 
     assertTimeEquals(location.getLocation(),
                      SunPositionAlgorithm.RISE,
-                     0,
-                     56,
+                     22,
+                     2,
                      riseset);
     assertTimeEquals(location.getLocation(),
                      SunPositionAlgorithm.SET,
                      23,
-                     4,
+                     7,
                      riseset);
   }
 
