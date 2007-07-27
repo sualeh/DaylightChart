@@ -45,18 +45,12 @@ final class SimpleSunPositionCalc
     final double eqtime = getEquationOfTime(hour);
 
     // Solar declination angle, in radians
-    final double decl = Math.toRadians(getSolarDeclination(hour));
+    final double decl = getSolarDeclination(hour);
 
     // Hour angle, in degrees
-    final double zenith = Math.toRadians(90 + horizon);
-    final double latitudeRad = Math.toRadians(latitude);
-    final double ha = Math.toDegrees(Math.acos(Math.cos(zenith)
-                                               / (Math.cos(latitudeRad) * Math
-                                                 .cos(decl))
-                                               - Math.tan(latitudeRad)
-                                               * Math.tan(decl)));
-    System.out.printf(this.toString() + ": Hour angle: %4.2f%n", Math
-      .toDegrees(decl));
+    final double ha = Math.toDegrees(Math.acos(cosD(90 + horizon)
+                                               / (cosD(latitude) * cosD(decl))
+                                               - tanD(latitude) * tanD(decl)));
 
     // Sunrise and sunset
     final double sunrise = (720D + 4D * (longitude - ha) - eqtime) / 60D;
@@ -69,26 +63,11 @@ final class SimpleSunPositionCalc
   }
 
   /**
-   * Get the fractional year, in degrees.
-   * 
-   * @param hour
-   *        Hour.
-   * @return Fractional year
-   */
-  private double getFractionalYear(final double hour)
-  {
-    final LocalDate date = new LocalDate(year, month, day);
-    final double fractionalYear = ((double) date.getDayOfYear() - 1D + (hour - 12D) / 24D) / 365D;
-    final double gamma = 360 * fractionalYear;
-    return gamma;
-  }
-
-  /**
    * {@inheritDoc}
    * 
    * @see org.sunposition.calculation.SunPositionAlgorithm#getEquationOfTime(double)
    */
-  public double getEquationOfTime(double hour)
+  public double getEquationOfTime(final double hour)
   {
     // Fractional year, in radians
     final double gamma = Math.toRadians(getFractionalYear(hour));
@@ -102,13 +81,12 @@ final class SimpleSunPositionCalc
     return eqtime;
   }
 
-  public double getHourAngle(double hour)
-  {
-    // TODO Auto-generated method stub
-    return 0;
-  }
-
-  public double getSolarDeclination(double hour)
+  /**
+   * {@inheritDoc}
+   * 
+   * @see org.sunposition.calculation.SunPositionAlgorithm#getSolarDeclination(double)
+   */
+  public double getSolarDeclination(final double hour)
   {
     // Fractional year, in radians
     final double gamma = Math.toRadians(getFractionalYear(hour));
@@ -120,6 +98,21 @@ final class SimpleSunPositionCalc
                         * Math.cos(3D * gamma) + 0.00148 * Math.sin(3D * gamma);
 
     return Math.toDegrees(decl);
+  }
+
+  /**
+   * Get the fractional year, in degrees.
+   * 
+   * @param hour
+   *        Hour.
+   * @return Fractional year
+   */
+  private double getFractionalYear(final double hour)
+  {
+    final LocalDate date = new LocalDate(year, month, day);
+    final double fractionalYear = (date.getDayOfYear() - 1D + (hour - 12D) / 24D) / 365D;
+    final double gamma = 360 * fractionalYear;
+    return gamma;
   }
 
 }
