@@ -41,6 +41,8 @@ final class SimpleSunPositionCalc
   /** Four digit year. */
   private int year;
 
+  /** Location name. */
+  private String locationName;
   /** Latitude in degrees, North positive. */
   private double latitude;
   /** Longitude in degrees, East positive. */
@@ -88,8 +90,8 @@ final class SimpleSunPositionCalc
                                                * Math.tan(decl)));
 
     // Sunrise and sunset
-    double sunrise = (720D + 4D * (longitude - ha) - eqtime) / 60D;
-    double sunset = (720D + 4D * (longitude + ha) - eqtime) / 60D;
+    final double sunrise = (720D + 4D * (longitude - ha) - eqtime) / 60D;
+    final double sunset = (720D + 4D * (longitude + ha) - eqtime) / 60D;
 
     return new double[] {
         sunrise, sunset
@@ -137,11 +139,15 @@ final class SimpleSunPositionCalc
   /**
    * {@inheritDoc}
    * 
-   * @see org.sunposition.calculation.SunPositionAlgorithm#setLocation(double,
-   *      double)
+   * @see org.sunposition.calculation.SunPositionAlgorithm#setLocation(String,
+   *      double, double)
    */
-  public void setLocation(final double latitude, final double longitude)
+  public void setLocation(final String locationName,
+                          final double latitude,
+                          final double longitude)
   {
+    this.locationName = locationName;
+
     if (Math.abs(latitude) > 90)
     {
       throw new IllegalArgumentException("Out of range: " + latitude);
@@ -181,7 +187,8 @@ final class SimpleSunPositionCalc
   {
     final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
     new PrintStream(outputStream, true)
-      .printf("location=%5.2f, %5.2f; date=%i-%i-%i;time zone=%5.2f",
+      .printf("%s %5.2f, %5.2f; date=%i-%i-%i;time zone=%5.2f",
+              locationName,
               latitude,
               longitude,
               timezoneOffset,

@@ -152,12 +152,14 @@ public interface SunPositionAlgorithm
   /**
    * Location.
    * 
+   * @param locationName
+   *        Location name.
    * @param latitude
    *        Latitude in degrees, North positive.
    * @param longitude
    *        Longitude in degrees, East positive.
    */
-  void setLocation(double latitude, double longitude);
+  void setLocation(String locationName, double latitude, double longitude);
 
   /**
    * Time zone offset from GMT, in hours.

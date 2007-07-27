@@ -22,6 +22,9 @@
 package org.sunposition.calculation;
 
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+
 /**
  * <p>
  * Computes the times of sunrise and sunset for a specified date and
@@ -176,6 +179,8 @@ final class CobbledSunCalc
   /** Four digit year. */
   private int year;
 
+  /** Location name. */
+  private String locationName;
   /** Latitude in degrees, North positive. */
   private double latitude;
   /** Longitude in degrees, East positive. */
@@ -573,8 +578,8 @@ final class CobbledSunCalc
   /**
    * {@inheritDoc}
    * 
-   * @see org.sunposition.calculation.SunPositionAlgorithm#setDate(int, int,
-   *      int)
+   * @see org.sunposition.calculation.SunPositionAlgorithm#setDate(int,
+   *      int, int)
    */
   public void setDate(final int year, final int month, final int day)
   {
@@ -600,11 +605,16 @@ final class CobbledSunCalc
   /**
    * {@inheritDoc}
    * 
-   * @see org.sunposition.calculation.SunPositionAlgorithm#setLocation(double,
-   *      double)
+   * @see org.sunposition.calculation.SunPositionAlgorithm#setLocation(String,
+   *      double, double)
    */
-  public void setLocation(final double latitude, final double longitude)
+  public void setLocation(final String locationName,
+                          final double latitude,
+                          final double longitude)
   {
+
+    this.locationName = locationName;
+
     if (Math.abs(latitude) > 90)
     {
       throw new IllegalArgumentException("Out of range: " + latitude);
@@ -642,18 +652,23 @@ final class CobbledSunCalc
   public String toString()
   {
 
-    String value;
     double riseset[];
 
     riseset = calcRiseSet(SUNRISE_SUNSET);
 
-    value = "latitude=" + latitude + ";" + "longitude=" + longitude + ";"
-            + "timezone=" + timezoneOffset + ";" + "date=" + year + "." + month
-            + "." + day + ";" + "rise=" + fmt60(riseset[RISE]) + ";" + "set="
-            + fmt60(riseset[SET]) + ";" + "";
-
-    return value;
-
+    final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+    new PrintStream(outputStream, true)
+      .printf("%s %5.2f, %5.2f; date=%i-%i-%i;time zone=%5.2f sunrise %s sunset %s",
+              locationName,
+              latitude,
+              longitude,
+              year,
+              month,
+              day,
+              timezoneOffset,
+              fmt60(riseset[RISE]),
+              fmt60(riseset[SET]));
+    return outputStream.toString();
   }
 
   private String fmt60(double number)
