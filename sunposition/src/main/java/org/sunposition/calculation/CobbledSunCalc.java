@@ -22,7 +22,6 @@
 package org.sunposition.calculation;
 
 
-
 /**
  * <p>
  * Computes the times of sunrise and sunset for a specified date and
@@ -150,9 +149,9 @@ class CobbledSunCalc
     int numroots;
     double DX;
 
-    sinHorizon = sin(horizon);
+    sinHorizon = sinD(horizon);
 
-    YMinus = sin(calcSolarEphemeris(0.0)[ALTITUDE]) - sinHorizon;
+    YMinus = sinD(calcSolarEphemeris(0.0)[ALTITUDE]) - sinHorizon;
 
     if (YMinus > 0.0)
     {
@@ -168,9 +167,9 @@ class CobbledSunCalc
     for (hour = 1.0; hour <= 24.0; hour += 2.0, YMinus = YPlus)
     {
 
-      YThis = sin(calcSolarEphemeris(hour)[ALTITUDE]) - sinHorizon;
+      YThis = sinD(calcSolarEphemeris(hour)[ALTITUDE]) - sinHorizon;
 
-      YPlus = sin(calcSolarEphemeris(hour + 1.0)[ALTITUDE]) - sinHorizon;
+      YPlus = sinD(calcSolarEphemeris(hour + 1.0)[ALTITUDE]) - sinHorizon;
 
       /*
        * Quadratic interpolation through the three points: [-1, YMinus],
@@ -362,14 +361,14 @@ class CobbledSunCalc
     q = range360(280.46645 + (36000.76983 + 0.0003032 * t) * t);
 
     // Equation of Center for the Sun
-    C = (1.914602 - (0.004817 - 0.000014 * t) * t) * sin(g)
-        + (0.019993 - 0.000101 * t) * sin(2D * g) + 0.000289 * sin(3D * g);
+    C = (1.914602 - (0.004817 - 0.000014 * t) * t) * sinD(g)
+        + (0.019993 - 0.000101 * t) * sinD(2D * g) + 0.000289 * sinD(3D * g);
 
     // Sun's Geocentric Apparent Ecliptic Longitude adjusted for
     // aberration (degrees)
     L = q + C;
 
-    alpha = L - 2.466 * sin(2D * L) + 0.053 * sin(4D * L);
+    alpha = L - 2.466 * sinD(2D * L) + 0.053 * sinD(4D * L);
 
     /* Mean Obliquity of the Ecliptic (epsilon) (degrees) */
     e = 23.0 + (26.0 + (21.448 - t * (46.8150 + t * (0.00059 - t * 0.001813))) / 60.0) / 60.0;
@@ -385,7 +384,7 @@ class CobbledSunCalc
      * respectively.
      */
     // Declination (theta) (degrees)
-    declination = Math.atan(tan(e) * sin(alpha));
+    declination = Math.atan(tanD(e) * sinD(alpha));
     declination /= DEGREESTORADIANS; // convert radians to degrees
     epherimides[DECLINATION] = declination;
 
@@ -403,7 +402,7 @@ class CobbledSunCalc
     // Right Ascension (hours)
     // ra is always in the same quadrant as ecliptic longitude, so we
     // use atan2
-    RA = Math.atan2(cos(e) * sin(L), cos(L));
+    RA = Math.atan2(cosD(e) * sinD(L), cosD(L));
     RA /= DEGREESTORADIANS; // convert radians to degrees
     RA = range360(RA) / 15D; // convert degrees to hours
     epherimides[RIGHTASCENSION] = RA;
@@ -429,8 +428,8 @@ class CobbledSunCalc
      * and nautical twilight is when the sun is at altitude -6 degrees).
      */
     // Altitude, or elevation (degrees)
-    altitude = Math.asin(sin(latitude) * sin(declination) + cos(latitude)
-                         * cos(declination) * cos(tau));
+    altitude = Math.asin(sinD(latitude) * sinD(declination) + cosD(latitude)
+                         * cosD(declination) * cosD(tau));
     altitude /= DEGREESTORADIANS; // convert radians to degrees
     epherimides[ALTITUDE] = altitude;
 
@@ -441,8 +440,8 @@ class CobbledSunCalc
      * degrees, and west to be 270 degrees.
      */
     // Azimuth (degrees)
-    azimuth = Math.acos((sin(altitude) * sin(latitude) - sin(declination))
-                        / (cos(altitude) * cos(latitude)));
+    azimuth = Math.acos((sinD(altitude) * sinD(latitude) - sinD(declination))
+                        / (cosD(altitude) * cosD(latitude)));
     azimuth /= DEGREESTORADIANS; // convert radians to degrees
     if (azimuth * tau < 0)
     {
@@ -471,18 +470,6 @@ class CobbledSunCalc
     // SD = 0.2666 / R
 
     return epherimides;
-  }
-
-  /**
-   * Cosine of an angle expressed in degrees.
-   * 
-   * @param degrees
-   *        Degrees.
-   * @return Cosine of the angle.
-   */
-  protected double cos(final double degrees)
-  {
-    return Math.cos(degrees * DEGREESTORADIANS);
   }
 
   /**
@@ -551,30 +538,6 @@ class CobbledSunCalc
   protected double range360(final double angle)
   {
     return mod(angle, 360D);
-  }
-
-  /**
-   * Sine of an angle expressed in degrees.
-   * 
-   * @param degrees
-   *        Degrees.
-   * @return Sine of the angle.
-   */
-  protected double sin(final double degrees)
-  {
-    return Math.sin(degrees * DEGREESTORADIANS);
-  }
-
-  /**
-   * Tangent of an angle expressed in degrees.
-   * 
-   * @param degrees
-   *        Degrees.
-   * @return Tangent of the angle.
-   */
-  protected double tan(final double degrees)
-  {
-    return Math.tan(degrees * DEGREESTORADIANS);
   }
 
   /**

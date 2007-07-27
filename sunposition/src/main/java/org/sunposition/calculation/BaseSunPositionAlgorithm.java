@@ -173,4 +173,40 @@ abstract class BaseSunPositionAlgorithm
     return new LocalTime(fields[0], fields[1], fields[2]);
   }
 
+  /**
+   * Cosine of an angle expressed in degrees.
+   * 
+   * @param degrees
+   *        Degrees.
+   * @return Cosine of the angle.
+   */
+  protected double cosD(final double degrees)
+  {
+    return Math.cos(Math.toRadians(degrees));
+  }
+
+  /**
+   * Sine of an angle expressed in degrees.
+   * 
+   * @param degrees
+   *        Degrees.
+   * @return Sine of the angle.
+   */
+  protected double sinD(final double degrees)
+  {
+    return Math.sin(Math.toRadians(degrees));
+  }
+
+  /**
+   * Tangent of an angle expressed in degrees.
+   * 
+   * @param degrees
+   *        Degrees.
+   * @return Tangent of the angle.
+   */
+  protected double tanD(final double degrees)
+  {
+    return Math.tan(Math.toRadians(degrees));
+  }
+
 }
