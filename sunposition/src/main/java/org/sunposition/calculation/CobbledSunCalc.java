@@ -217,12 +217,11 @@ class CobbledSunCalc
       timeSet = BELOW_HORIZON;
     } // end if
 
-    for (hour = 1.0; hour <= 24.0; hour += 2.0, YMinus = YPlus)
+    for (hour = -timezoneOffset; hour <= -timezoneOffset + 24; hour += 1)
     {
-
       YThis = sinD(calcSolarEphemerides(hour).getAltitude()) - sinHorizon;
-
-      YPlus = sinD(calcSolarEphemerides(hour + 1.0).getAltitude()) - sinHorizon;
+      YPlus = sinD(calcSolarEphemerides(hour + 1).getAltitude()) - sinHorizon;
+      YMinus = sinD(calcSolarEphemerides(hour - 1).getAltitude()) - sinHorizon;
 
       /*
        * Quadratic interpolation through the three points: [-1, YMinus],
