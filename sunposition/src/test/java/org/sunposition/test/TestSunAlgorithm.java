@@ -225,7 +225,7 @@ public class TestSunAlgorithm
                                 final int expectedMinute,
                                 final double riseset[])
   {
-    final int MINUTES_DELTA = 3;
+    final int MINUTES_DELTA = 1;
 
     final double actualHours = riseset[type];
     final String typeString = type == SunPositionAlgorithm.SET? "sunset"
