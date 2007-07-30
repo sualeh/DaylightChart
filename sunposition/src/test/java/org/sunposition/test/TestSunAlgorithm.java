@@ -140,7 +140,6 @@ public class TestSunAlgorithm
    * @throws ParserException
    */
   @Test
-  // @Ignore("Fixing other errors first")
   public void luleå()
     throws ParserException
   {
@@ -151,8 +150,8 @@ public class TestSunAlgorithm
 
     assertTimeEquals(location.getLocation(),
                      SunPositionAlgorithm.RISE,
-                     22,
-                     2,
+                     23,
+                     58,
                      riseset);
     assertTimeEquals(location.getLocation(),
                      SunPositionAlgorithm.SET,
