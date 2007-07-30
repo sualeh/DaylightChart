@@ -269,28 +269,6 @@ class CobbledSunCalc
   }
 
   /**
-   * {@inheritDoc}
-   * 
-   * @see org.sunposition.calculation.SunPositionAlgorithm#getEquationOfTime(double)
-   */
-  public double getEquationOfTime(double hour)
-  {
-    double[] ephemerides = calcSolarEphemeris(hour);
-    return ephemerides[EQUATIONOFTIME];
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see org.sunposition.calculation.SunPositionAlgorithm#getSolarDeclination(double)
-   */
-  public double getSolarDeclination(double hour)
-  {
-    double[] ephemerides = calcSolarEphemeris(hour);
-    return ephemerides[DECLINATION];
-  }
-
-  /**
    * Calculate solar ephemeris.
    * 
    * @param hour

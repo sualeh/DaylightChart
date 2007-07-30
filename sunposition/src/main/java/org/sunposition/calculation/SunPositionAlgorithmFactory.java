@@ -37,7 +37,7 @@ public final class SunPositionAlgorithmFactory
    */
   public static SunPositionAlgorithm getInstance()
   {
-    return new SimpleSunPositionCalc();
+    return new CobbledSunCalc();
   }
 
   private SunPositionAlgorithmFactory()

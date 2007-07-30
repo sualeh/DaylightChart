@@ -129,19 +129,13 @@ abstract class BaseSunPositionAlgorithm
   public String toString()
   {
 
-    double eqtime;
-    double decl;
     double riseset[];
     try
     {
-      eqtime = getEquationOfTime(12);
-      decl = getSolarDeclination(12);
       riseset = calcRiseSet(SUNRISE_SUNSET);
     }
     catch (RuntimeException e)
     {
-      eqtime = Double.NaN;
-      decl = Double.NaN;
       riseset = new double[] {
           Double.NaN, Double.NaN
       };
@@ -149,14 +143,12 @@ abstract class BaseSunPositionAlgorithm
 
     final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
     new PrintStream(outputStream, true)
-      .printf("%s %5.2f, %5.2f; date=%s; time zone=%5.2f%n equation of time = %5.3f%n solar declination = %5.3f%n sunrise %s%n sunset %s",
+      .printf("%s %5.2f, %5.2f; date=%s; time zone=%5.2f%n sunrise %s%n sunset %s",
               locationName,
               latitude,
               longitude,
               new LocalDate(year, month, day),
               timezoneOffset,
-              eqtime,
-              decl,
               toLocalTime(riseset[RISE]),
               toLocalTime(riseset[SET]));
     return outputStream.toString();

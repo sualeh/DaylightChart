@@ -103,24 +103,6 @@ public interface SunPositionAlgorithm
   double[] calcRiseSet(final double dblHorizon);
 
   /**
-   * Calculate equation of time, in minutes.
-   * 
-   * @param hour
-   *        Hour past midnight (for the current day).
-   * @return Equation of time, in minutes
-   */
-  double getEquationOfTime(double hour);
-
-  /**
-   * Calculate solar declination angle, in degrees.
-   * 
-   * @param hour
-   *        Hour past midnight (for the current day).
-   * @return Solar declination angle, in degrees
-   */
-  double getSolarDeclination(double hour);
-
-  /**
    * Day, 1 to 31.
    * 
    * @param year

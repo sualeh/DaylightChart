@@ -39,7 +39,7 @@ final class SimpleSunPositionCalc
   public double[] calcRiseSet(final double horizon)
   {
 
-    final double hour = 24;
+    final double hour = 12;
 
     // Equation of time, in minutes
     final double eqtime = getEquationOfTime(hour);
