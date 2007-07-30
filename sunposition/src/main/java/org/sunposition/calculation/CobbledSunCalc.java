@@ -568,7 +568,12 @@ class CobbledSunCalc
    */
   protected double range360(final double angle)
   {
-    return mod(angle, 360D);
+    double rangeAngle = mod(angle, 360D);
+    if (rangeAngle < 0)
+    {
+      rangeAngle = rangeAngle + 360;
+    }
+    return rangeAngle;
   }
 
   /**
@@ -587,30 +592,6 @@ class CobbledSunCalc
       result = -result;
     }
     return result;
-  }
-
-  private String fmt60(double number)
-  {
-    String fmt60 = "";
-
-    if (number < 0)
-    {
-      fmt60 += "-";
-    }
-
-    /* degrees or hours */
-    number = Math.abs(number);
-    fmt60 += trunc(number);
-
-    /* minutes */
-    number = frac(number) * 60;
-    fmt60 += "," + trunc(number);
-
-    /* seconds */
-    number = frac(number) * 60;
-    fmt60 += "," + number;
-
-    return fmt60;
   }
 
 }
