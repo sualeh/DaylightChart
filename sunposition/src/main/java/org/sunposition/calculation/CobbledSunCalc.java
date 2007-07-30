@@ -25,8 +25,8 @@ package org.sunposition.calculation;
 /**
  * <p>
  * Computes the times of sunrise and sunset for a specified date and
- * location. Also finds the sun's co-ordinates and ephemeris for a given
- * hour.
+ * location. Also finds the sun's co-ordinates and ephemerides for a
+ * given hour.
  * </p>
  * <p>
  * Algorithms from "Astronomy on the Personal Computer" by Oliver
@@ -55,19 +55,9 @@ class CobbledSunCalc
     private double altitude;
     private double equationOfTime;
 
-    public double getDeclination()
+    public double getAltitude()
     {
-      return declination;
-    }
-
-    public double getRightAscension()
-    {
-      return rightAscension;
-    }
-
-    public double getHourAngle()
-    {
-      return hourAngle;
+      return altitude;
     }
 
     public double getAzimuth()
@@ -75,9 +65,9 @@ class CobbledSunCalc
       return azimuth;
     }
 
-    public double getAltitude()
+    public double getDeclination()
     {
-      return altitude;
+      return declination;
     }
 
     public double getEquationOfTime()
@@ -85,34 +75,44 @@ class CobbledSunCalc
       return equationOfTime;
     }
 
-    void setDeclination(double declination)
+    public double getHourAngle()
     {
-      this.declination = declination;
+      return hourAngle;
     }
 
-    void setRightAscension(double rightAscension)
+    public double getRightAscension()
     {
-      this.rightAscension = rightAscension;
+      return rightAscension;
     }
 
-    void setHourAngle(double hourAngle)
-    {
-      this.hourAngle = hourAngle;
-    }
-
-    void setAzimuth(double azimuth)
-    {
-      this.azimuth = azimuth;
-    }
-
-    void setAltitude(double altitude)
+    void setAltitude(final double altitude)
     {
       this.altitude = altitude;
     }
 
-    void setEquationOfTime(double equationOfTime)
+    void setAzimuth(final double azimuth)
+    {
+      this.azimuth = azimuth;
+    }
+
+    void setDeclination(final double declination)
+    {
+      this.declination = declination;
+    }
+
+    void setEquationOfTime(final double equationOfTime)
     {
       this.equationOfTime = equationOfTime;
+    }
+
+    void setHourAngle(final double hourAngle)
+    {
+      this.hourAngle = hourAngle;
+    }
+
+    void setRightAscension(final double rightAscension)
+    {
+      this.rightAscension = rightAscension;
     }
 
   }
@@ -186,7 +186,6 @@ class CobbledSunCalc
   public double[] calcRiseSet(final double horizon)
   {
 
-    final double sinHorizon;
     double timeRise;
     double timeSet;
     double hour;
@@ -199,14 +198,13 @@ class CobbledSunCalc
     double discriminant;
     double root1;
     double root2;
-    int numroots;
+    int numRoots;
     double DX;
 
-    sinHorizon = sinD(horizon);
+    final double sinHorizon = sinD(horizon);
+    YMinus = sinD(calcSolarEphemerides(0).getAltitude()) - sinHorizon;
 
-    YMinus = sinD(calcSolarEphemerides(0.0).getAltitude()) - sinHorizon;
-
-    if (YMinus > 0.0)
+    if (YMinus > 0)
     {
       timeRise = ABOVE_HORIZON;
       timeSet = ABOVE_HORIZON;
@@ -215,7 +213,7 @@ class CobbledSunCalc
     {
       timeRise = BELOW_HORIZON;
       timeSet = BELOW_HORIZON;
-    } // end if
+    }
 
     for (hour = -timezoneOffset; hour <= -timezoneOffset + 24; hour += 1)
     {
@@ -228,29 +226,29 @@ class CobbledSunCalc
        * [0, YThis], [+1, yNext] (These must not lie on a straight
        * line.)
        */
-      root1 = 0.0;
-      root2 = 0.0;
-      numroots = 0;
+      root1 = 0;
+      root2 = 0;
+      numRoots = 0;
       A = 0.5 * (YMinus + YPlus) - YThis;
       B = 0.5 * (YPlus - YMinus);
       C = YThis;
       XExtreme = -B / (2D * A);
       YExtreme = (A * XExtreme + B) * XExtreme + C;
       discriminant = B * B - 4D * A * C;
-      if (discriminant >= 0.0)
+      if (discriminant >= 0)
       { /* intersects x-axis? */
         DX = 0.5 * Math.sqrt(discriminant) / Math.abs(A);
         root1 = XExtreme - DX;
         root2 = XExtreme + DX;
-        if (Math.abs(root1) <= +1.0)
+        if (Math.abs(root1) <= 1)
         {
-          numroots++;
+          numRoots++;
         }
-        if (Math.abs(root2) <= +1.0)
+        if (Math.abs(root2) <= 1)
         {
-          numroots++;
+          numRoots++;
         }
-        if (root1 < -1.0)
+        if (root1 < -1)
         {
           root1 = root2;
         }
@@ -265,13 +263,13 @@ class CobbledSunCalc
        * 2) - this determines whether a 2-root event is a rise-set or a
        * set-rise.
        */
-      switch (numroots)
+      switch (numRoots)
       {
         case 0: /* No root at this hour */
           break;
 
         case 1: /* Found either a rise or a set */
-          if (YMinus < 0.0)
+          if (YMinus < 0)
           {
             timeRise = hour + root1;
           }
@@ -282,7 +280,7 @@ class CobbledSunCalc
           break;
 
         case 2: /* Found both a rise and a set */
-          if (YExtreme < 0.0)
+          if (YExtreme < 0)
           {
             timeRise = hour + root2;
             timeSet = hour + root1;
@@ -308,11 +306,11 @@ class CobbledSunCalc
 
     if (isEvent(timeRise))
     {
-      timeRise = mod(timeRise, 24.0);
+      timeRise = modPositive(timeRise, 24);
     }
     if (isEvent(timeSet))
     {
-      timeSet = mod(timeSet, 24.0);
+      timeSet = modPositive(timeSet, 24);
     }
 
     return new double[] {
@@ -509,7 +507,7 @@ class CobbledSunCalc
    *        Value to round.
    * @return Value rounded towards zero (returned as double).
    */
-  protected double frac(final double number)
+  private double frac(final double number)
   {
     double result;
 
@@ -529,7 +527,7 @@ class CobbledSunCalc
    *        The event to check.
    * @return Boolean for valid.
    */
-  protected boolean isEvent(final double eventOccurence)
+  private boolean isEvent(final double eventOccurence)
   {
     return eventOccurence != ABOVE_HORIZON && eventOccurence != BELOW_HORIZON;
   }
@@ -544,16 +542,13 @@ class CobbledSunCalc
    *        Denominator.
    * @return Modulus of the numerator and denominator.
    */
-  protected double mod(final double numerator, final double denominator)
+  private double modPositive(final double numerator, final double denominator)
   {
-    double result;
-
-    result = Math.IEEEremainder(numerator, denominator);
+    double result = Math.IEEEremainder(numerator, denominator);
     if (result < 0)
     {
       result += denominator;
     }
-
     return result;
   }
 
@@ -565,14 +560,9 @@ class CobbledSunCalc
    *        Angle to convert.
    * @return Angle within a range of 0 to 360 degrees.
    */
-  protected double range360(final double angle)
+  private double range360(final double angle)
   {
-    double rangeAngle = mod(angle, 360D);
-    if (rangeAngle < 0)
-    {
-      rangeAngle = rangeAngle + 360;
-    }
-    return rangeAngle;
+    return modPositive(angle, 360D);
   }
 
   /**
@@ -583,7 +573,7 @@ class CobbledSunCalc
    *        The number to convert
    * @return Integer number nearest zero (returned as double).
    */
-  protected int trunc(final double number)
+  private int trunc(final double number)
   {
     int result = (int) Math.floor(Math.abs(number));
     if (number < 0.0)
