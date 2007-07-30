@@ -45,24 +45,77 @@ class CobbledSunCalc
   extends BaseSunPositionAlgorithm
 {
 
-  private static final double DEGREESTORADIANS = Math.PI / 180D;
+  private class SolarEphemerides
+  {
 
-  /*
-   * The solar ephemeris calculation returns values in a double[]
-   * vector. Use these constants to access elements of the array.
-   */
-  /** Constant indexing a field in the solar ephemeris result. */
-  private int DECLINATION = 0;
-  /** Constant indexing a field in the solar ephemeris result. */
-  private int RIGHTASCENSION = 1;
-  /** Constant indexing a field in the solar ephemeris result. */
-  private int HOURANGLE = 2;
-  /** Constant indexing a field in the solar ephemeris result. */
-  private int AZIMUTH = 3;
-  /** Constant indexing a field in the solar ephemeris result. */
-  private int ALTITUDE = 4;
-  /** Constant indexing a field in the solar ephemeris result. */
-  private int EQUATIONOFTIME = 5;
+    private double declination;
+    private double rightAscension;
+    private double hourAngle;
+    private double azimuth;
+    private double altitude;
+    private double equationOfTime;
+
+    public double getDeclination()
+    {
+      return declination;
+    }
+
+    public double getRightAscension()
+    {
+      return rightAscension;
+    }
+
+    public double getHourAngle()
+    {
+      return hourAngle;
+    }
+
+    public double getAzimuth()
+    {
+      return azimuth;
+    }
+
+    public double getAltitude()
+    {
+      return altitude;
+    }
+
+    public double getEquationOfTime()
+    {
+      return equationOfTime;
+    }
+
+    void setDeclination(double declination)
+    {
+      this.declination = declination;
+    }
+
+    void setRightAscension(double rightAscension)
+    {
+      this.rightAscension = rightAscension;
+    }
+
+    void setHourAngle(double hourAngle)
+    {
+      this.hourAngle = hourAngle;
+    }
+
+    void setAzimuth(double azimuth)
+    {
+      this.azimuth = azimuth;
+    }
+
+    void setAltitude(double altitude)
+    {
+      this.altitude = altitude;
+    }
+
+    void setEquationOfTime(double equationOfTime)
+    {
+      this.equationOfTime = equationOfTime;
+    }
+
+  }
 
   /**
    * <p>
@@ -151,7 +204,7 @@ class CobbledSunCalc
 
     sinHorizon = sinD(horizon);
 
-    YMinus = sinD(calcSolarEphemeris(0.0)[ALTITUDE]) - sinHorizon;
+    YMinus = sinD(calcSolarEphemerides(0.0).getAltitude()) - sinHorizon;
 
     if (YMinus > 0.0)
     {
@@ -167,9 +220,9 @@ class CobbledSunCalc
     for (hour = 1.0; hour <= 24.0; hour += 2.0, YMinus = YPlus)
     {
 
-      YThis = sinD(calcSolarEphemeris(hour)[ALTITUDE]) - sinHorizon;
+      YThis = sinD(calcSolarEphemerides(hour).getAltitude()) - sinHorizon;
 
-      YPlus = sinD(calcSolarEphemeris(hour + 1.0)[ALTITUDE]) - sinHorizon;
+      YPlus = sinD(calcSolarEphemerides(hour + 1.0).getAltitude()) - sinHorizon;
 
       /*
        * Quadratic interpolation through the three points: [-1, YMinus],
@@ -286,7 +339,7 @@ class CobbledSunCalc
    *         href="http://www.srrb.noaa.gov/highlights/sunrise/program.txt">
    *         NOAA calculations </a>
    */
-  private double[] calcSolarEphemeris(final double hour)
+  private SolarEphemerides calcSolarEphemerides(final double hour)
   {
 
     final double J2000_OFFSET = 2451545.5;
@@ -310,7 +363,7 @@ class CobbledSunCalc
     final double tau;
     double altitude;
     double azimuth;
-    final double[] epherimides = new double[6];
+    final SolarEphemerides epherimides = new SolarEphemerides();
 
     // Universal Time
     UT = hour - timezoneOffset;
@@ -363,8 +416,8 @@ class CobbledSunCalc
      */
     // Declination (theta) (degrees)
     declination = Math.atan(tanD(e) * sinD(alpha));
-    declination /= DEGREESTORADIANS; // convert radians to degrees
-    epherimides[DECLINATION] = declination;
+    declination = Math.toDegrees(declination);
+    epherimides.setDeclination(declination);
 
     /*
      * Right ascension is one element of the astronomical coordinate
@@ -381,9 +434,9 @@ class CobbledSunCalc
     // ra is always in the same quadrant as ecliptic longitude, so we
     // use atan2
     RA = Math.atan2(cosD(e) * sinD(L), cosD(L));
-    RA /= DEGREESTORADIANS; // convert radians to degrees
+    RA = Math.toDegrees(RA);
     RA = range360(RA) / 15D; // convert degrees to hours
-    epherimides[RIGHTASCENSION] = RA;
+    epherimides.setRightAscension(RA);
 
     /*
      * Hour angle is the sidereal time that has elapsed since the object
@@ -392,7 +445,7 @@ class CobbledSunCalc
      */
     // Hour Angle (degrees)
     tau = 15D * (LMST - RA);
-    epherimides[HOURANGLE] = tau;
+    epherimides.setHourAngle(tau);
 
     /*
      * Altitude is the angular distance from the observer's horizon,
@@ -408,8 +461,8 @@ class CobbledSunCalc
     // Altitude, or elevation (degrees)
     altitude = Math.asin(sinD(latitude) * sinD(declination) + cosD(latitude)
                          * cosD(declination) * cosD(tau));
-    altitude /= DEGREESTORADIANS; // convert radians to degrees
-    epherimides[ALTITUDE] = altitude;
+    altitude = Math.toDegrees(altitude);
+    epherimides.setAltitude(altitude);
 
     /*
      * Azimuth is the angular distance measured clockwise around the
@@ -420,12 +473,12 @@ class CobbledSunCalc
     // Azimuth (degrees)
     azimuth = Math.acos((sinD(altitude) * sinD(latitude) - sinD(declination))
                         / (cosD(altitude) * cosD(latitude)));
-    azimuth /= DEGREESTORADIANS; // convert radians to degrees
+    azimuth = Math.toDegrees(azimuth);
     if (azimuth * tau < 0)
     {
       azimuth *= -1;
     }
-    epherimides[AZIMUTH] = azimuth;
+    epherimides.setAzimuth(azimuth);
 
     /*
      * Equation of time is the correction, in minutes and seconds, to be
@@ -434,7 +487,7 @@ class CobbledSunCalc
      */
     // Equation of Time (minutes)
     EqT = (q / 15D - RA) * 60D;
-    epherimides[EQUATIONOFTIME] = EqT;
+    epherimides.setEquationOfTime(EqT);
 
     // The Sun's ecliptic latitude, b, can be approximated by
     // b = 0.
