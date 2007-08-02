@@ -22,9 +22,14 @@
 package daylightchart.chart;
 
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TimeZone;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
@@ -42,6 +47,9 @@ import daylightchart.location.parser.DefaultTimezones;
  */
 public final class RiseSetUtility
 {
+  private static final Logger LOGGER = Logger.getLogger(RiseSetUtility.class
+    .getName());
+
   /**
    * Creates daylight bands for plotting.
    * 
@@ -181,11 +189,27 @@ public final class RiseSetUtility
       wasDaylightSavings = inDaylightSavings;
 
       final double[] sunriseSunset = calcRiseSet(sunAlgorithm, location, date);
-      System.out.printf("%s, %s: sunrise %2.3f sunset %2.3f%n",
-                        location,
-                        date,
-                        sunriseSunset[0],
-                        sunriseSunset[1]);
+
+      {
+        ByteArrayOutputStream outputStream = null;
+        try
+        {
+          outputStream = new ByteArrayOutputStream();
+          new PrintStream(outputStream, true)
+            .printf("%s, %s: sunrise %2.3f sunset %2.3f%n",
+                    location,
+                    date,
+                    sunriseSunset[0],
+                    sunriseSunset[1]);
+          outputStream.close();
+          LOGGER.log(Level.FINE, outputStream.toString());
+        }
+        catch (IOException e)
+        {
+          // Ignore
+        }
+      }
+
       if (useDaylightTime && inDaylightSavings)
       {
         if (!Double.isInfinite(sunriseSunset[0]))
@@ -205,7 +229,6 @@ public final class RiseSetUtility
                                     sunriseSunset[1]);
       riseSetYear.addRiseSet(riseSet);
     }
-    System.out.println();
 
     return riseSetYear;
 

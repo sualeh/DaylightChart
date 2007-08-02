@@ -188,7 +188,6 @@ public class DaylightChart
     for (final DaylightBand band: bands)
     {
       LOGGER.log(Level.FINE, band.toString());
-      System.out.println(band);
       final int currentDatasetNumber = plot.getDatasetCount();
       plot.setDataset(currentDatasetNumber, band.getTimeSeriesCollection());
       plot.setRenderer(currentDatasetNumber, daylightSavingsMode.getRenderer());
