@@ -1,0 +1,36 @@
+<!DOCTYPE document PUBLIC "-//Apache Software Foundation//DTD XDOC 1.0//EN"
+  "http://maven.apache.org/dtd/xdoc_1_0.dtd">
+<document>
+  <properties>
+    <title>Sun Position Calculations - Readme</title>
+    <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
+  </properties>
+  <body>
+    <section name="Getting Started">
+      <subsection name="About">
+        Sun Position Calculations is an LGPL licensed Java library for calculating sunrise
+        and sunset times for any location in the world.
+      </subsection>
+    </section>
+    <section name="Building From the Source Code">
+      <subsection name="Maven Build">
+        <p>
+          Sun Position Calculations uses Maven 2.0 to build, run unit
+          tests, and create the project web-site. Download
+          <a href="http://maven.apache.org/">Maven 2.0</a>,
+          and run <code>mvn compile</code> to build the library.
+        </p>
+      </subsection>
+      <subsection name="Eclipse">
+        <p>
+          Before importing the Sun Position Calculations project into Eclipse, make sure that
+          you have a successful Maven build. Maven will download all the
+          dependencies needed to build Sun Position Calculations. You will need to define
+          one Eclipse Java Classpath Variable,
+          <code>M2_REPO</code>
+          to point to the Maven 2.0 repository.
+        </p>
+      </subsection>
+    </section>
+  </body>
+</document>
