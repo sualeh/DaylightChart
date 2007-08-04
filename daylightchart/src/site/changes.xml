@@ -6,6 +6,103 @@
   </properties>
   <body>
     <release
+      version="1.7"
+      date="2007-08-04">
+      <action
+        dev="Sualeh Fatehi"
+        type="fix">
+        Fixing gridlines on the chart.
+      </action>
+    </release>
+    <release
+      version="1.6"
+      date="2007-07-30">
+      <action
+        dev="Sualeh Fatehi"
+        type="fix">
+        Fixing reset all option. This option now closes the current window, and
+        opens a new one, so that all tabs are closed, and all menus are reset.
+      </action>
+      <action
+        dev="Sualeh Fatehi"
+        type="add">
+        Adding options for chart orientation.
+      </action>
+      <action
+        dev="Sualeh Fatehi"
+        type="add">
+        Adding new command line option for a chart for a single location.
+      </action>
+      <action
+        dev="Sualeh Fatehi"
+        type="add">
+        Adding new copy and paste actions for the locations list.
+      </action>
+    </release>
+    <release
+      version="1.5"
+      date="2007-06-15">
+      <action
+        dev="Sualeh Fatehi"
+        type="fix">
+        Fixing distribution.
+      </action>
+    </release>
+    <release
+      version="1.4"
+      date="2007-06-09">
+      <action
+        dev="Sualeh Fatehi"
+        type="add">
+        Location editor to add, edit, and delete locations.
+      </action>
+      <action
+        dev="Sualeh Fatehi"
+        type="add">
+        Icons and toolbars in the main window.
+      </action>
+    </release>
+    <release
+      version="1.3"
+      date="2007-05-15">
+      <action
+        dev="Sualeh Fatehi"
+        type="add">
+        Charts are shown in tabs.
+      </action>
+      <action
+        dev="Sualeh Fatehi"
+        type="add">
+        New Windows executable to launch daylight time.
+      </action>
+      <action
+        dev="Sualeh Fatehi"
+        type="add">
+        Now remembers the locations sort order, and whether to use the time zone
+        for the chart.
+      </action>
+    </release>
+    <release
+      version="1.2"
+      date="2007-04-30">
+      <action
+        dev="Sualeh Fatehi"
+        type="fix">
+        Now makes a best guess at the time zone for locations loaded in from GNS
+        Country Files and GNIS Files.
+      </action>
+      <action
+        dev="Sualeh Fatehi"
+        type="add">
+        New menu option to see online help.
+      </action>
+      <action
+        dev="Sualeh Fatehi"
+        type="add">
+        New option to see daylight chart with local time.
+      </action>
+    </release>
+    <release
       version="1.0"
       date="2007-04-15">
       <action
@@ -32,94 +129,6 @@
         type="add">
         The ability in load in GNIS Files.
       </action>
-    </release>
-    <release
-      version="1.2"
-      date="2007-04-30">
-      <action
-        dev="Sualeh Fatehi"
-        type="fix">
-        Now makes a best guess at the time zone for locations loaded in from GNS
-        Country Files and GNIS Files.
-      </action>
-      <action
-        dev="Sualeh Fatehi"
-        type="add">
-        New menu option to see online help.
-      </action>
-      <action
-        dev="Sualeh Fatehi"
-        type="add">
-        New option to see daylight chart with local time.
-      </action>
-    </release>
-    <release
-      version="1.3"
-      date="2007-05-15">
-      <action
-        dev="Sualeh Fatehi"
-        type="add">
-        Charts are shown in tabs.
-      </action>
-      <action
-        dev="Sualeh Fatehi"
-        type="add">
-        New Windows executable to launch daylight time.
-      </action>
-      <action
-        dev="Sualeh Fatehi"
-        type="add">
-        Now remembers the locations sort order, and whether to use the time zone
-        for the chart.
-      </action>
-    </release>
-    <release
-      version="1.4"
-      date="2007-06-09">
-      <action
-        dev="Sualeh Fatehi"
-        type="add">
-        Location editor to add, edit, and delete locations.
-      </action>
-      <action
-        dev="Sualeh Fatehi"
-        type="add">
-        Icons and toolbars in the main window.
-      </action>
-    </release>
-    <release
-      version="1.5"
-      date="2007-06-15">
-      <action
-        dev="Sualeh Fatehi"
-        type="fix">
-        Fixing distribution.
-      </action>
-    </release>
-    <release
-      version="1.6"
-      date="2007-07-30">
-      <action
-        dev="Sualeh Fatehi"
-        type="fix">
-        Fixing reset all option. This option now closes the current window, and
-        opens a new one, so that all tabs are closed, and all menus are reset.
-      </action>
-      <action
-        dev="Sualeh Fatehi"
-        type="add">
-        Adding options for chart orientation.
-      </action>    
-      <action
-        dev="Sualeh Fatehi"
-        type="add">
-        Adding new command line option for a chart for a single location.
-      </action>     
-      <action
-        dev="Sualeh Fatehi"
-        type="add">
-        Adding new copy and paste actions for the locations list.
-      </action>             
     </release>
   </body>
 </document>

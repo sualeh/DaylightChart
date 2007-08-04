@@ -41,6 +41,7 @@ import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.plot.IntervalMarker;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.renderer.xy.StandardXYItemRenderer;
 import org.jfree.chart.title.TextTitle;
 import org.jfree.data.time.Day;
 import org.jfree.ui.Layer;
@@ -206,6 +207,8 @@ public class DaylightChart
 
     final XYPlot plot = getXYPlot();
 
+    // Set the first renderer, so that the grid lines can be shown
+    plot.setRenderer(new StandardXYItemRenderer());
     plot.setBackgroundPaint(nightColor);
 
     plot.setAxisOffset(new RectangleInsets(5.0, 5.0, 5.0, 5.0));

@@ -4,7 +4,7 @@
   <groupId>daylightchart</groupId>
   <artifactId>daylightchart-all</artifactId>
   <packaging>pom</packaging>
-  <version>1.6</version>
+  <version>1.7</version>
   <name>Daylight Chart [All]</name>
   <description>Daylight Chart shows sunrise and sunset times in an attractive chart, for any location in the world. The effect of daylight savings time is also displayed. Charts can be exported to image files.</description>
   <url>http://sourceforge.net/projects/daylightchart</url>
