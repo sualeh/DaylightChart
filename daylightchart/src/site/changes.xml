@@ -13,6 +13,11 @@
         type="fix">
         Fixing gridlines on the chart.
       </action>
+      <action
+        dev="Sualeh Fatehi"
+        type="fix">
+        Fixing months axis, so December shows.
+      </action>
     </release>
     <release
       version="1.6"
