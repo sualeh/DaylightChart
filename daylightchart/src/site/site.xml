@@ -28,14 +28,20 @@
         name="About Daylight Chart"
         href="index.html" />
       <item
-        name="About Point Location 6709"
+        name="Point Location 6709"
         href="http://daylightchart.sourceforge.net/pointlocation6709/index.html" />
+      <item
+        name="Sun Position Calculations"
+        href="http://daylightchart.sourceforge.net/sunpostion/index.html" />
       <item
         name="Donations"
         href="http://sourceforge.net/donate/index.php?group_id=193171" />
       <item
         name="Download"
         href="http://sourceforge.net/project/showfiles.php?group_id=193171" />
+      <item
+        name="Screenshot"
+        href="screenshot.jpg" />
       <item
         name="Change History"
         href="changes-report.html" />
