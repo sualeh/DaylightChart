@@ -22,7 +22,6 @@
 package daylightchart.gui;
 
 
-import java.awt.Dimension;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -41,7 +40,7 @@ import org.jfree.chart.ChartUtilities;
 import sf.util.ui.Actions;
 import sf.util.ui.CloseTabIcon;
 import sf.util.ui.ExtensionFileFilter;
-
+import daylightchart.chart.ChartConfiguration;
 import daylightchart.chart.DaylightChart;
 import daylightchart.location.Location;
 import daylightchart.location.parser.LocationFormatter;
@@ -77,7 +76,7 @@ public class LocationsTabbedPane
 
     final ChartPanel chartPanel = new ChartPanel(chart);
     chartPanel.setName(location.toString());
-    chartPanel.setPreferredSize(new Dimension(700, 525));
+    chartPanel.setPreferredSize(new ChartConfiguration().getChartDimension());
 
     addTab(location.toString(),
            new CloseTabIcon(),

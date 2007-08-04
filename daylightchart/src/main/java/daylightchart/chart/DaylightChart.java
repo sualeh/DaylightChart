@@ -25,7 +25,6 @@ package daylightchart.chart;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -259,7 +258,7 @@ public class DaylightChart
     final DateAxis axis = new DateAxis();
     axis.setLowerMargin(0.0f);
     axis.setUpperMargin(0.0f);
-    axis.setTickLabelFont(chartFont.deriveFont(Font.PLAIN, 12));
+    axis.setTickLabelFont(chartFont.deriveFont(Font.PLAIN, 10));
     // Fix the axis range for all the hours in the day
     axis.setRange(new Date(70, 0, 1), new Date(70, 0, 2));
     //
@@ -273,8 +272,8 @@ public class DaylightChart
     axis.setTickMarkPosition(DateTickMarkPosition.START);
     axis.setLowerMargin(0.0f);
     axis.setUpperMargin(0.0f);
-    axis.setTickLabelFont(chartFont.deriveFont(Font.PLAIN, 12));
-    axis.setDateFormatOverride(new SimpleDateFormat("MMM"));
+    axis.setTickLabelFont(chartFont.deriveFont(Font.PLAIN, 10));
+    axis.setDateFormatOverride(new ChartConfiguration().getMonthsFormat());
     axis.setVerticalTickLabels(true);
     axis.setTickUnit(new DateTickUnit(DateTickUnit.MONTH, 1), true, true);
     // Fix the axis range for all the months in the year

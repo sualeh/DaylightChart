@@ -23,7 +23,6 @@ package daylightchart.gui;
 
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -48,6 +47,7 @@ import org.jfree.chart.editor.ChartEditor;
 
 import sf.util.ui.ExitAction;
 import sf.util.ui.GuiAction;
+import daylightchart.chart.ChartConfiguration;
 import daylightchart.chart.ChartOrientation;
 import daylightchart.chart.DaylightChart;
 import daylightchart.chart.TimeZoneOption;
@@ -139,7 +139,7 @@ public final class DaylightChartGui
                                                                        .getInstance()
                                                                        .get(Calendar.YEAR),
                                                                      new Options()));
-      chartPanel.setPreferredSize(new Dimension(700, 525));
+      chartPanel.setPreferredSize(new ChartConfiguration().getChartDimension());
       setContentPane(chartPanel);
     }
 

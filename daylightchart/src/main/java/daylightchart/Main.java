@@ -64,12 +64,11 @@ public final class Main
   {
 
     // Parse command line
-    final CommandLineParser parser1 = new CommandLineParser();
-    parser1.addOption(new BooleanOption(Option.NO_SHORT_FORM, OPTION_NOPREFS));
-    parser1.addOption(new StringOption(Option.NO_SHORT_FORM,
-                                       OPTION_LOCATION,
-                                       null));
-    final CommandLineParser parser = parser1;
+    final CommandLineParser parser = new CommandLineParser();
+    parser.addOption(new BooleanOption(Option.NO_SHORT_FORM, OPTION_NOPREFS));
+    parser.addOption(new StringOption(Option.NO_SHORT_FORM,
+                                      OPTION_LOCATION,
+                                      null));
     parser.parse(args);
     final boolean noPrefs = parser.getBooleanOptionValue(OPTION_NOPREFS);
     final String locationString = parser.getStringOptionValue(OPTION_LOCATION);
