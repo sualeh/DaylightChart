@@ -11,6 +11,10 @@
 	<groupId>sunposition</groupId>
 	<artifactId>sunposition</artifactId>
 	<name>Sun Position Calculations</name>
+	<description>
+		Sun Position Calculations is an LGPL licensed Java library for calculating
+		sunrise and sunset times for any location in the world.
+	</description>
 	<licenses>
 		<license>
 			<name>GNU Lesser General Public License</name>
