@@ -209,6 +209,9 @@ public class DaylightChart
 
     // Set the first renderer, so that the grid lines can be shown
     plot.setRenderer(new StandardXYItemRenderer());
+    plot.setDomainGridlinePaint(Color.white);
+    plot.setRangeGridlinePaint(Color.white);
+
     plot.setBackgroundPaint(nightColor);
 
     plot.setAxisOffset(new RectangleInsets(5.0, 5.0, 5.0, 5.0));
@@ -263,6 +266,7 @@ public class DaylightChart
     plot.setRangeAxis(axis);
   }
 
+  @SuppressWarnings("deprecation")
   private void createMonthsAxis(final XYPlot plot)
   {
     final DateAxis axis = new DateAxis();
@@ -275,7 +279,7 @@ public class DaylightChart
     axis.setTickUnit(new DateTickUnit(DateTickUnit.MONTH, 1), true, true);
     // Fix the axis range for all the months in the year
     int dateYear = riseSetData.getYear() - 1900;
-    axis.setRange(new Date(dateYear, 0, 1), new Date(dateYear, 11, 1));
+    axis.setRange(new Date(dateYear, 0, 1), new Date(dateYear, 11, 31));
     //
     plot.setDomainAxis(axis);
   }
