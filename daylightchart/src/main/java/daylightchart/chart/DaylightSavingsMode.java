@@ -35,7 +35,9 @@ enum DaylightSavingsMode
   /** With clock shift. */
   with_clock_shift("With clock shift", true),
   /** Without clock shift. */
-  without_clock_shift("Without clock shift", false);
+  without_clock_shift("Without clock shift", false),
+  /** Twilight. */
+  twilight("Twilight", true);
 
   private final boolean adjustedForDaylightSavings;
   private final String description;
@@ -69,10 +71,13 @@ enum DaylightSavingsMode
     switch (this)
     {
       case with_clock_shift:
-        renderer = createDifferenceRenderer();
+        renderer = createDifferenceRenderer(ChartConfiguration.daylightColor);
         break;
       case without_clock_shift:
         renderer = createOutlineRenderer();
+        break;
+      case twilight:
+        renderer = createDifferenceRenderer(ChartConfiguration.twilightColor);
         break;
       default:
         renderer = null;
@@ -86,12 +91,10 @@ enum DaylightSavingsMode
     return adjustedForDaylightSavings;
   }
 
-  private XYItemRenderer createDifferenceRenderer()
+  private XYItemRenderer createDifferenceRenderer(final Color color)
   {
     XYItemRenderer renderer;
-    renderer = new XYDifferenceRenderer(DaylightChart.daylightColor,
-                                        DaylightChart.daylightColor,
-                                        false);
+    renderer = new XYDifferenceRenderer(color, color, false);
     renderer.setBaseStroke(new BasicStroke(0.2f));
     renderer.setSeriesPaint(0, Color.WHITE);
     renderer.setSeriesPaint(1, Color.WHITE);

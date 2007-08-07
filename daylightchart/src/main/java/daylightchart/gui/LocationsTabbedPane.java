@@ -76,7 +76,7 @@ public class LocationsTabbedPane
 
     final ChartPanel chartPanel = new ChartPanel(chart);
     chartPanel.setName(location.toString());
-    chartPanel.setPreferredSize(new ChartConfiguration().getChartDimension());
+    chartPanel.setPreferredSize(ChartConfiguration.chartDimension);
 
     addTab(location.toString(),
            new CloseTabIcon(),

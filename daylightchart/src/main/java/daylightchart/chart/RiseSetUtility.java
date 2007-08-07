@@ -47,19 +47,22 @@ import daylightchart.location.parser.DefaultTimezones;
  */
 public final class RiseSetUtility
 {
+
   private static final Logger LOGGER = Logger.getLogger(RiseSetUtility.class
     .getName());
 
+  private static final SunPositionAlgorithm sunAlgorithm = SunPositionAlgorithmFactory
+    .getInstance();
+
   /**
    * Creates daylight bands for plotting.
-   * 
-   * @param riseSetData
-   *        The full years rise/ set data
+   * @param riseSetData TODO
    * @param daylightSavingsMode
    *        The daylight savings mode
+   * 
    * @return List of daylight bands
    */
-  public static List<DaylightBand> createDaylightBands(final RiseSetYear riseSetData,
+  public static List<DaylightBand> createDaylightBands(List<RiseSet> riseSetData,
                                                        final DaylightSavingsMode daylightSavingsMode)
   {
     final List<DaylightBand> bands = new ArrayList<DaylightBand>();
@@ -67,8 +70,7 @@ public final class RiseSetUtility
     DaylightBand baseBand = null;
     DaylightBand wrapBand = null;
 
-    for (final RiseSet riseSet: riseSetData.getRiseSets(daylightSavingsMode
-      .isAdjustedForDaylightSavings()))
+    for (final RiseSet riseSet: riseSetData)
     {
       final RiseSet[] riseSets = RiseSet.splitAtMidnight(riseSet);
       if (riseSets.length == 2)
@@ -168,8 +170,6 @@ public final class RiseSetUtility
     final boolean useDaylightTime = timeZone.useDaylightTime();
     boolean wasDaylightSavings = false;
 
-    final SunPositionAlgorithm sunAlgorithm = SunPositionAlgorithmFactory
-      .getInstance();
     final RiseSetYear riseSetYear = new RiseSetYear(location, year);
     for (final LocalDate date: getYearsDates(year))
     {
@@ -188,55 +188,31 @@ public final class RiseSetUtility
       }
       wasDaylightSavings = inDaylightSavings;
 
-      final double[] sunriseSunset = calcRiseSet(sunAlgorithm, location, date);
-
-      {
-        ByteArrayOutputStream outputStream = null;
-        try
-        {
-          outputStream = new ByteArrayOutputStream();
-          new PrintStream(outputStream, true)
-            .printf("%s, %s: sunrise %2.3f sunset %2.3f%n",
-                    location,
-                    date,
-                    sunriseSunset[0],
-                    sunriseSunset[1]);
-          outputStream.close();
-          LOGGER.log(Level.FINE, outputStream.toString());
-        }
-        catch (IOException e)
-        {
-          // Ignore
-        }
-      }
-
-      if (useDaylightTime && inDaylightSavings)
-      {
-        if (!Double.isInfinite(sunriseSunset[0]))
-        {
-          sunriseSunset[0] = sunriseSunset[0] + 1;
-        }
-        if (!Double.isInfinite(sunriseSunset[1]))
-        {
-          sunriseSunset[1] = sunriseSunset[1] + 1;
-        }
-      }
-
-      RiseSet riseSet = new RiseSet(location,
-                                    date,
-                                    (useDaylightTime && inDaylightSavings),
-                                    sunriseSunset[0],
-                                    sunriseSunset[1]);
+      RiseSet riseSet = calculateRiseSet(location,
+                                         date,
+                                         useDaylightTime,
+                                         inDaylightSavings,
+                                         SunPositionAlgorithm.SUNRISE_SUNSET);
       riseSetYear.addRiseSet(riseSet);
+
+      RiseSet twilights = calculateRiseSet(location,
+                                           date,
+                                           useDaylightTime,
+                                           inDaylightSavings,
+                                           SunPositionAlgorithm.CIVIL_TWILIGHT);
+      riseSetYear.addTwilight(twilights);
+
     }
 
     return riseSetYear;
 
   }
 
-  private static double[] calcRiseSet(final SunPositionAlgorithm sunAlgorithm,
-                                      final Location location,
-                                      final LocalDate date)
+  private static RiseSet calculateRiseSet(final Location location,
+                                          final LocalDate date,
+                                          final boolean useDaylightTime,
+                                          final boolean inDaylightSavings,
+                                          double horizon)
   {
     if (location != null)
     {
@@ -248,8 +224,46 @@ public final class RiseSetUtility
     }
     sunAlgorithm.setDate(date.getYear(), date.getMonthOfYear(), date
       .getDayOfMonth());
+    final double[] sunriseSunset = sunAlgorithm.calcRiseSet(horizon);
 
-    return sunAlgorithm.calcRiseSet(SunPositionAlgorithm.SUNRISE_SUNSET);
+    {
+      ByteArrayOutputStream outputStream = null;
+      try
+      {
+        outputStream = new ByteArrayOutputStream();
+        new PrintStream(outputStream, true)
+          .printf("%s, %s: sunrise %2.3f sunset %2.3f%n",
+                  location,
+                  date,
+                  sunriseSunset[0],
+                  sunriseSunset[1]);
+        outputStream.close();
+        LOGGER.log(Level.FINE, outputStream.toString());
+      }
+      catch (IOException e)
+      {
+        // Ignore
+      }
+    }
+
+    if (useDaylightTime && inDaylightSavings)
+    {
+      if (!Double.isInfinite(sunriseSunset[0]))
+      {
+        sunriseSunset[0] = sunriseSunset[0] + 1;
+      }
+      if (!Double.isInfinite(sunriseSunset[1]))
+      {
+        sunriseSunset[1] = sunriseSunset[1] + 1;
+      }
+    }
+
+    return new RiseSet(location,
+                       date,
+                       (useDaylightTime && inDaylightSavings),
+                       sunriseSunset[0],
+                       sunriseSunset[1]);
+
   }
 
   /**

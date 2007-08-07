@@ -139,7 +139,7 @@ public final class DaylightChartGui
                                                                        .getInstance()
                                                                        .get(Calendar.YEAR),
                                                                      new Options()));
-      chartPanel.setPreferredSize(new ChartConfiguration().getChartDimension());
+      chartPanel.setPreferredSize(ChartConfiguration.chartDimension);
       setContentPane(chartPanel);
     }
 

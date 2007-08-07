@@ -68,9 +68,7 @@ public class DaylightChart
   private static final Logger LOGGER = Logger.getLogger(DaylightChart.class
     .getName());
 
-  static final Color daylightColor = new Color(0xFF, 0xFF, 0x40, 190);
-  private static final Color nightColor = new Color(75, 11, 91, 190);
-  private static final Font chartFont = new Font("Helvetica", Font.PLAIN, 12);
+  private static final Font chartFont = ChartConfiguration.chartFont;
 
   private final RiseSetYear riseSetData;
 
@@ -183,8 +181,19 @@ public class DaylightChart
   private void createBandsInPlot(final DaylightSavingsMode daylightSavingsMode,
                                  final XYPlot plot)
   {
-    final List<DaylightBand> bands = RiseSetUtility
-      .createDaylightBands(riseSetData, daylightSavingsMode);
+    final List<DaylightBand> bands;
+    if (daylightSavingsMode == DaylightSavingsMode.twilight)
+    {
+      bands = RiseSetUtility.createDaylightBands(riseSetData.getTwilights(),
+                                                 daylightSavingsMode);
+    }
+    else
+    {
+      bands = RiseSetUtility
+        .createDaylightBands(riseSetData.getRiseSets(daylightSavingsMode
+          .isAdjustedForDaylightSavings()), daylightSavingsMode);
+    }
+
     for (final DaylightBand band: bands)
     {
       LOGGER.log(Level.FINE, band.toString());
@@ -211,7 +220,7 @@ public class DaylightChart
     plot.setDomainGridlinePaint(Color.white);
     plot.setRangeGridlinePaint(Color.white);
 
-    plot.setBackgroundPaint(nightColor);
+    plot.setBackgroundPaint(ChartConfiguration.nightColor);
 
     plot.setAxisOffset(new RectangleInsets(5.0, 5.0, 5.0, 5.0));
     createMonthsAxis(plot);
@@ -223,6 +232,8 @@ public class DaylightChart
       createDSTMarker(plot);
     }
 
+    // Create daylight plot, for twilight, clock-shift taken into account
+    createBandsInPlot(DaylightSavingsMode.twilight, plot);
     // Create daylight plot, clock-shift taken into account
     createBandsInPlot(DaylightSavingsMode.with_clock_shift, plot);
     // Create outline plot, without clock shift
@@ -240,7 +251,7 @@ public class DaylightChart
       .getFirstMillisecond();
     final IntervalMarker dstMarker = new IntervalMarker(intervalStart,
                                                         intervalEnd,
-                                                        nightColor,
+                                                        ChartConfiguration.nightColor,
                                                         new BasicStroke(0.0f),
                                                         null,
                                                         null,
@@ -273,11 +284,11 @@ public class DaylightChart
     axis.setLowerMargin(0.0f);
     axis.setUpperMargin(0.0f);
     axis.setTickLabelFont(chartFont.deriveFont(Font.PLAIN, 12));
-    axis.setDateFormatOverride(new ChartConfiguration().getMonthsFormat());
+    axis.setDateFormatOverride(ChartConfiguration.monthsFormat);
     axis.setVerticalTickLabels(true);
     axis.setTickUnit(new DateTickUnit(DateTickUnit.MONTH, 1), true, true);
     // Fix the axis range for all the months in the year
-    int dateYear = riseSetData.getYear() - 1900;
+    final int dateYear = riseSetData.getYear() - 1900;
     axis.setRange(new Date(dateYear, 0, 1), new Date(dateYear, 11, 31));
     //
     plot.setDomainAxis(axis);

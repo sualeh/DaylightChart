@@ -47,6 +47,7 @@ final class RiseSetYear
   private LocalDate dstStart;
   private LocalDate dstEnd;
   private final List<RiseSet> riseSets;
+  private final List<RiseSet> twilights;
 
   RiseSetYear(final Location location, final int year)
   {
@@ -58,11 +59,17 @@ final class RiseSetYear
       usesDaylightTime = timeZone.useDaylightTime();
     }
     riseSets = new ArrayList<RiseSet>();
+    twilights = new ArrayList<RiseSet>();
   }
 
   void addRiseSet(final RiseSet riseSet)
   {
     riseSets.add(riseSet);
+  }
+
+  void addTwilight(final RiseSet riseSet)
+  {
+    twilights.add(riseSet);
   }
 
   /**
@@ -120,7 +127,8 @@ final class RiseSetYear
       copiedRiseSets = new ArrayList<RiseSet>();
       for (final RiseSet riseSet: riseSets)
       {
-        copiedRiseSets.add(riseSet.withAdjustmentForDaylightSavings(adjustedForDaylightSavings));
+        copiedRiseSets.add(riseSet
+          .withAdjustmentForDaylightSavings(adjustedForDaylightSavings));
       }
     }
     else
@@ -128,6 +136,16 @@ final class RiseSetYear
       copiedRiseSets = riseSets;
     }
     return Collections.unmodifiableList(copiedRiseSets);
+  }
+
+  /**
+   * Gets a list of twiligbt timings.
+   * 
+   * @return List of rise/ set timings.
+   */
+  List<RiseSet> getTwilights()
+  {
+    return Collections.unmodifiableList(twilights);
   }
 
   /**
