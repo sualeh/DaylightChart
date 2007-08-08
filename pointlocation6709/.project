@@ -1,12 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-  <name>Point Location 6709</name>
-  <projects/>
-  <buildSpec>
-    <buildCommand>
-      <name>org.eclipse.jdt.core.javabuilder</name>
-    </buildCommand>
-  </buildSpec>
-  <natures>
-    <nature>org.eclipse.jdt.core.javanature</nature>
-  </natures>
+	<name>Point Location 6709</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>org.eclipse.jdt.core.javabuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>org.eclipse.jdt.core.javanature</nature>
+	</natures>
+	<linkedResources>
+		<link>
+			<name>parent</name>
+			<type>2</type>
+			<locationURI>..</locationURI>
+		</link>
+	</linkedResources>
 </projectDescription>
