@@ -26,6 +26,7 @@ import java.io.Serializable;
 
 import daylightchart.chart.ChartOrientation;
 import daylightchart.chart.TimeZoneOption;
+import daylightchart.chart.Twilight;
 import daylightchart.location.LocationsSortOrder;
 import daylightchart.options.chart.ChartOptions;
 
@@ -44,6 +45,7 @@ public class Options
   private TimeZoneOption timeZoneOption;
   private ChartOptions chartOptions;
   private ChartOrientation chartOrientation;
+  private Twilight twilight;
 
   /**
    * Default options.
@@ -54,6 +56,7 @@ public class Options
     timeZoneOption = TimeZoneOption.USE_TIME_ZONE;
     chartOptions = new ChartOptions();
     chartOrientation = ChartOrientation.standard;
+    twilight = Twilight.civil;
   }
 
   /**
@@ -91,6 +94,16 @@ public class Options
   }
 
   /**
+   * Gets the twilight display setting for the chart.
+   * 
+   * @return Twilight setting
+   */
+  public Twilight getTwilight()
+  {
+    return twilight;
+  }
+
+  /**
    * @param chartOptions
    *        the chartOptions to set
    */
@@ -110,7 +123,10 @@ public class Options
    */
   public void setChartOrientation(final ChartOrientation chartOrientation)
   {
-    this.chartOrientation = chartOrientation;
+    if (chartOrientation != null)
+    {
+      this.chartOrientation = chartOrientation;
+    }
   }
 
   /**
@@ -134,6 +150,20 @@ public class Options
     if (timeZoneOption != null)
     {
       this.timeZoneOption = timeZoneOption;
+    }
+  }
+
+  /**
+   * Sets the twilight display setting for the chart.
+   * 
+   * @param twilight
+   *        Twilight setting
+   */
+  public void setTwilight(final Twilight twilight)
+  {
+    if (twilight != null)
+    {
+      this.twilight = twilight;
     }
   }
 

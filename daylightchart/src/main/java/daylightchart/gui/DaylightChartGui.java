@@ -25,20 +25,15 @@ package daylightchart.gui;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.util.Calendar;
 import java.util.List;
 
-import javax.swing.ButtonGroup;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JSplitPane;
 import javax.swing.JToolBar;
 
@@ -48,19 +43,20 @@ import org.jfree.chart.editor.ChartEditor;
 import sf.util.ui.ExitAction;
 import sf.util.ui.GuiAction;
 import daylightchart.chart.ChartConfiguration;
-import daylightchart.chart.ChartOrientation;
 import daylightchart.chart.DaylightChart;
-import daylightchart.chart.TimeZoneOption;
 import daylightchart.gui.actions.AboutAction;
+import daylightchart.gui.actions.ChartOrientationChoiceAction;
 import daylightchart.gui.actions.CloseCurrentTabAction;
+import daylightchart.gui.actions.LocationsSortChoiceAction;
 import daylightchart.gui.actions.OnlineHelpAction;
 import daylightchart.gui.actions.OpenLocationsFileAction;
 import daylightchart.gui.actions.PrintChartAction;
 import daylightchart.gui.actions.ResetAllAction;
 import daylightchart.gui.actions.SaveChartAction;
 import daylightchart.gui.actions.SaveLocationsFileAction;
+import daylightchart.gui.actions.TimeZoneOptionChoiceAction;
+import daylightchart.gui.actions.TwilightChoiceAction;
 import daylightchart.location.Location;
-import daylightchart.location.LocationsSortOrder;
 import daylightchart.options.Options;
 import daylightchart.options.UserPreferences;
 import daylightchart.options.chart.ChartOptions;
@@ -172,6 +168,15 @@ public final class DaylightChartGui
   }
 
   /**
+   * Sorts the locations list on the GUI.
+   */
+  public void sortLocations()
+  {
+    locationsList.sortLocations();
+    this.repaint();
+  }
+
+  /**
    * Add a new location tab.
    * 
    * @param location
@@ -260,184 +265,26 @@ public final class DaylightChartGui
                                  final JToolBar toolBar)
   {
 
-    String text;
-    Icon icon;
-    boolean isSelected;
-
     final Options options = UserPreferences.getOptions();
 
     final JMenu menu = new JMenu(Messages
       .getString("DaylightChartGui.Menu.Options")); //$NON-NLS-1$
     menu.setMnemonic('O');
 
-    final ButtonGroup sortingMenuItems = new ButtonGroup();
-
-    text = Messages.getString("DaylightChartGui.Menu.Options.SortByLatitude"); //$NON-NLS-1$
-    icon = new ImageIcon(DaylightChartGui.class
-      .getResource("/icons/sort_by_latitude.gif")); //$NON-NLS-1$
-    isSelected = options.getLocationsSortOrder() == LocationsSortOrder.BY_LATITUDE;
-    final JRadioButtonMenuItem sortByLatitude = new JRadioButtonMenuItem(text,
-                                                                         icon,
-                                                                         isSelected);
-    sortByLatitude.setSelectedIcon(new ImageIcon(DaylightChartGui.class
-      .getResource("/icons/sort_by_latitude_dim.gif"))); //$NON-NLS-1$
-    sortingMenuItems.add(sortByLatitude);
-    menu.add(sortByLatitude);
-
-    text = Messages.getString("DaylightChartGui.Menu.Options.SortByName"); //$NON-NLS-1$
-    icon = new ImageIcon(DaylightChartGui.class
-      .getResource("/icons/sort_by_name.gif")); //$NON-NLS-1$
-    isSelected = options.getLocationsSortOrder() == LocationsSortOrder.BY_NAME;
-    final JRadioButtonMenuItem sortByName = new JRadioButtonMenuItem(text,
-                                                                     icon,
-                                                                     isSelected);
-    sortByName.setSelectedIcon(new ImageIcon(DaylightChartGui.class
-      .getResource("/icons/sort_by_name_dim.gif"))); //$NON-NLS-1$
-    sortingMenuItems.add(sortByName);
-    menu.add(sortByName);
-
+    LocationsSortChoiceAction.addAllToMenu(this, menu);
     menu.addSeparator();
 
-    final ButtonGroup timeZoneMenuItems = new ButtonGroup();
-    final JRadioButtonMenuItem useLocalTime = new JRadioButtonMenuItem(Messages
-                                                                         .getString("DaylightChartGui.Menu.Options.UseLocalTime"), options.getTimeZoneOption() == TimeZoneOption.USE_LOCAL_TIME); //$NON-NLS-1$
-    timeZoneMenuItems.add(useLocalTime);
-    menu.add(useLocalTime);
-    final JRadioButtonMenuItem useTimeZone = new JRadioButtonMenuItem(Messages
-                                                                        .getString("DaylightChartGui.Menu.Options.UseTimeZone"), options.getTimeZoneOption() == TimeZoneOption.USE_TIME_ZONE); //$NON-NLS-1$
-    timeZoneMenuItems.add(useTimeZone);
-    menu.add(useTimeZone);
-
+    TimeZoneOptionChoiceAction.addAllToMenu(menu);
     menu.addSeparator();
 
-    final ButtonGroup chartOrientationMenuItems = new ButtonGroup();
-    final JRadioButtonMenuItem orientationStandard = new JRadioButtonMenuItem(Messages
-                                                                                .getString("DaylightChartGui.Menu.Options.Orientation.Standard"), //$NON-NLS-1$
-                                                                              options
-                                                                                .getChartOrientation() == ChartOrientation.standard);
-    chartOrientationMenuItems.add(orientationStandard);
-    menu.add(orientationStandard);
-    final JRadioButtonMenuItem orientationConventional = new JRadioButtonMenuItem(Messages
-                                                                                    .getString("DaylightChartGui.Menu.Options.Orientation.Conventional"), //$NON-NLS-1$
-                                                                                  options
-                                                                                    .getChartOrientation() == ChartOrientation.conventional);
-    chartOrientationMenuItems.add(orientationConventional);
-    menu.add(orientationConventional);
-    final JRadioButtonMenuItem orientationVertical = new JRadioButtonMenuItem(Messages
-                                                                                .getString("DaylightChartGui.Menu.Options.Orientation.Vertical"), //$NON-NLS-1$
-                                                                              options
-                                                                                .getChartOrientation() == ChartOrientation.vertical);
-    chartOrientationMenuItems.add(orientationVertical);
-    menu.add(orientationVertical);
+    ChartOrientationChoiceAction.addAllToMenu(menu);
+    menu.addSeparator();
 
+    TwilightChoiceAction.addAllToMenu(menu);
     menu.addSeparator();
 
     final JMenuItem chartOptionsMenuItem = new JMenuItem(Messages
       .getString("DaylightChartGui.Menu.Options.ChartOptions")); //$NON-NLS-1$
-
-    final GuiAction resetAll = new ResetAllAction(this);
-
-    menu.add(chartOptionsMenuItem);
-    menu.addSeparator();
-    menu.add(resetAll);
-
-    sortByName.addItemListener(new ItemListener()
-    {
-      public void itemStateChanged(final ItemEvent e)
-      {
-        if (e.getStateChange() == ItemEvent.SELECTED)
-        {
-          final Options options = UserPreferences.getOptions();
-          options.setLocationsSortOrder(LocationsSortOrder.BY_NAME);
-          UserPreferences.setOptions(options);
-
-          locationsList.sortLocations();
-          DaylightChartGui.this.repaint();
-        }
-      }
-    });
-
-    sortByLatitude.addItemListener(new ItemListener()
-    {
-      public void itemStateChanged(final ItemEvent e)
-      {
-        if (e.getStateChange() == ItemEvent.SELECTED)
-        {
-          final Options options = UserPreferences.getOptions();
-          options.setLocationsSortOrder(LocationsSortOrder.BY_LATITUDE);
-          UserPreferences.setOptions(options);
-
-          locationsList.sortLocations();
-          DaylightChartGui.this.repaint();
-        }
-      }
-    });
-
-    useTimeZone.addItemListener(new ItemListener()
-    {
-      public void itemStateChanged(final ItemEvent e)
-      {
-        if (e.getStateChange() == ItemEvent.SELECTED)
-        {
-          final Options options = UserPreferences.getOptions();
-          options.setTimeZoneOption(TimeZoneOption.USE_TIME_ZONE);
-          UserPreferences.setOptions(options);
-        }
-      }
-    });
-
-    useLocalTime.addItemListener(new ItemListener()
-    {
-      public void itemStateChanged(final ItemEvent e)
-      {
-        if (e.getStateChange() == ItemEvent.SELECTED)
-        {
-          final Options options = UserPreferences.getOptions();
-          options.setTimeZoneOption(TimeZoneOption.USE_LOCAL_TIME);
-          UserPreferences.setOptions(options);
-        }
-      }
-    });
-
-    orientationStandard.addItemListener(new ItemListener()
-    {
-      public void itemStateChanged(final ItemEvent e)
-      {
-        if (e.getStateChange() == ItemEvent.SELECTED)
-        {
-          final Options options = UserPreferences.getOptions();
-          options.setChartOrientation(ChartOrientation.standard);
-          UserPreferences.setOptions(options);
-        }
-      }
-    });
-
-    orientationConventional.addItemListener(new ItemListener()
-    {
-      public void itemStateChanged(final ItemEvent e)
-      {
-        if (e.getStateChange() == ItemEvent.SELECTED)
-        {
-          final Options options = UserPreferences.getOptions();
-          options.setChartOrientation(ChartOrientation.conventional);
-          UserPreferences.setOptions(options);
-        }
-      }
-    });
-
-    orientationVertical.addItemListener(new ItemListener()
-    {
-      public void itemStateChanged(final ItemEvent e)
-      {
-        if (e.getStateChange() == ItemEvent.SELECTED)
-        {
-          final Options options = UserPreferences.getOptions();
-          options.setChartOrientation(ChartOrientation.vertical);
-          UserPreferences.setOptions(options);
-        }
-      }
-    });
-
     chartOptionsMenuItem.addActionListener(new ActionListener()
     {
       public void actionPerformed(@SuppressWarnings("unused")
@@ -462,6 +309,14 @@ public final class DaylightChartGui
       }
     });
 
+    final GuiAction resetAll = new ResetAllAction(this);
+
+    menu.add(chartOptionsMenuItem);
+    menu.addSeparator();
+    menu.add(resetAll);
+
     menuBar.add(menu);
+
   }
+
 }

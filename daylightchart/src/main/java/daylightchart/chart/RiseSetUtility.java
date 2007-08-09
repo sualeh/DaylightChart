@@ -39,6 +39,7 @@ import org.sunposition.calculation.SunPositionAlgorithmFactory;
 import daylightchart.chart.RiseSet.RiseSetType;
 import daylightchart.location.Location;
 import daylightchart.location.parser.DefaultTimezones;
+import daylightchart.options.Options;
 
 /**
  * Calculator for sunrise and sunset times for a year.
@@ -63,7 +64,7 @@ public final class RiseSetUtility
    *        The daylight savings mode
    * @return List of daylight bands
    */
-  public static List<DaylightBand> createDaylightBands(List<RiseSet> riseSetData,
+  public static List<DaylightBand> createDaylightBands(final List<RiseSet> riseSetData,
                                                        final DaylightSavingsMode daylightSavingsMode)
   {
     final List<DaylightBand> bands = new ArrayList<DaylightBand>();
@@ -139,18 +140,19 @@ public final class RiseSetUtility
    *        Location
    * @param year
    *        Year
-   * @param timeZoneOption
-   *        Time zone option
+   * @param options
+   *        Options
    * @return Full years sunset and sunrise times for a location
    */
   public static RiseSetYear createRiseSetYear(final Location location,
                                               final int year,
-                                              final TimeZoneOption timeZoneOption)
+                                              final Options options)
   {
 
     final TimeZone timeZone;
     if (location != null)
     {
+      final TimeZoneOption timeZoneOption = options.getTimeZoneOption();
       final String timeZoneId;
       if (timeZoneOption != null
           && timeZoneOption == TimeZoneOption.USE_TIME_ZONE)
@@ -189,19 +191,23 @@ public final class RiseSetUtility
       }
       wasDaylightSavings = inDaylightSavings;
 
-      RiseSet riseSet = calculateRiseSet(location,
-                                         date,
-                                         useDaylightTime,
-                                         inDaylightSavings,
-                                         SunPositionAlgorithm.SUNRISE_SUNSET);
+      final RiseSet riseSet = calculateRiseSet(location,
+                                               date,
+                                               useDaylightTime,
+                                               inDaylightSavings,
+                                               SunPositionAlgorithm.SUNRISE_SUNSET);
       riseSetYear.addRiseSet(riseSet);
 
-      RiseSet twilights = calculateRiseSet(location,
-                                           date,
-                                           useDaylightTime,
-                                           inDaylightSavings,
-                                           SunPositionAlgorithm.CIVIL_TWILIGHT);
-      riseSetYear.addTwilight(twilights);
+      Twilight twilight = options.getTwilight();
+      if (twilight != null && twilight != Twilight.none)
+      {
+        final RiseSet twilights = calculateRiseSet(location,
+                                                   date,
+                                                   useDaylightTime,
+                                                   inDaylightSavings,
+                                                   twilight.getHorizon());
+        riseSetYear.addTwilight(twilights);
+      }
 
     }
 
@@ -214,7 +220,7 @@ public final class RiseSetUtility
                                           final LocalDate date,
                                           final boolean useDaylightTime,
                                           final boolean inDaylightSavings,
-                                          double horizon)
+                                          final double horizon)
   {
     if (location != null)
     {
@@ -242,7 +248,7 @@ public final class RiseSetUtility
         outputStream.close();
         LOGGER.log(Level.FINE, outputStream.toString());
       }
-      catch (IOException e)
+      catch (final IOException e)
       {
         // Ignore
       }

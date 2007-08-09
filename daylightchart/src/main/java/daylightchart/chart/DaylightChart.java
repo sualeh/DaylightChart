@@ -97,17 +97,13 @@ public class DaylightChart
   {
     super(new XYPlot());
 
-    TimeZoneOption timeZoneOption = TimeZoneOption.USE_TIME_ZONE;
     ChartOrientation chartOrientation = ChartOrientation.standard;
     if (options != null)
     {
-      timeZoneOption = options.getTimeZoneOption();
       chartOrientation = options.getChartOrientation();
     }
     // Calculate rise and set timings for the whole year
-    riseSetData = RiseSetUtility.createRiseSetYear(location,
-                                                   year,
-                                                   timeZoneOption);
+    riseSetData = RiseSetUtility.createRiseSetYear(location, year, options);
     createChart(chartOrientation);
   }
 
@@ -232,7 +228,8 @@ public class DaylightChart
       createDSTMarker(plot);
     }
 
-    // Create daylight plot, for twilight, clock-shift taken into account
+    // Create daylight plot, for twilight, clock-shift taken into
+    // account
     createBandsInPlot(DaylightSavingsMode.twilight, plot);
     // Create daylight plot, clock-shift taken into account
     createBandsInPlot(DaylightSavingsMode.with_clock_shift, plot);
