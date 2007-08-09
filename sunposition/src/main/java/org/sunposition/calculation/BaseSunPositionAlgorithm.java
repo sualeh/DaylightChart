@@ -25,9 +25,9 @@ package org.sunposition.calculation;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
-import org.joda.time.LocalDate;
-import org.joda.time.LocalTime;
-import org.pointlocation6709.Utility;
+// import org.joda.time.LocalDate;
+// import org.joda.time.LocalTime;
+// import org.pointlocation6709.Utility;
 
 /**
  * @author Sualeh Fatehi
@@ -125,6 +125,7 @@ abstract class BaseSunPositionAlgorithm
    * 
    * @see java.lang.Object#toString()
    */
+  @SuppressWarnings("boxing")
   @Override
   public String toString()
   {
@@ -134,7 +135,7 @@ abstract class BaseSunPositionAlgorithm
     {
       riseset = calcRiseSet(SUNRISE_SUNSET);
     }
-    catch (RuntimeException e)
+    catch (final RuntimeException e)
     {
       riseset = new double[] {
           Double.NaN, Double.NaN
@@ -143,26 +144,17 @@ abstract class BaseSunPositionAlgorithm
 
     final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
     new PrintStream(outputStream, true)
-      .printf("%s %5.2f, %5.2f; date=%s; time zone=%5.2f%n sunrise %s%n sunset %s",
+      .printf("%s %5.2f, %5.2f; date=%4d-%2d-%2d; time zone=%5.2f%n sunrise %s%n sunset %s",
               locationName,
               latitude,
               longitude,
-              new LocalDate(year, month, day),
+              year,
+              month,
+              day,
               timezoneOffset,
               toLocalTime(riseset[RISE]),
               toLocalTime(riseset[SET]));
     return outputStream.toString();
-  }
-
-  private LocalTime toLocalTime(final double hour)
-  {
-    double dayHour = hour % 24D;
-    if (dayHour < 0)
-    {
-      dayHour = dayHour + 24;
-    }
-    final int[] fields = Utility.sexagesimalSplit(dayHour);
-    return new LocalTime(fields[0], fields[1], fields[2]);
   }
 
   /**
@@ -199,6 +191,21 @@ abstract class BaseSunPositionAlgorithm
   protected double tanD(final double degrees)
   {
     return Math.tan(Math.toRadians(degrees));
+  }
+
+  private String toLocalTime(final double hour)
+  {
+    double dayHour = hour % 24D;
+    if (dayHour < 0)
+    {
+      dayHour = dayHour + 24;
+    }
+    // Calculate absolute integer units
+    final int timeHour = (int) Math.floor(Math.abs(dayHour));
+    final int timeMinutes = (int) Math
+      .round((Math.abs(dayHour) - dayHour) * 60D);
+    return (timeHour < 10? "0": "") + timeHour + ":"
+           + (timeMinutes < 10? "0": "") + timeMinutes;
   }
 
 }
