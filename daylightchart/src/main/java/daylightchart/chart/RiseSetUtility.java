@@ -56,10 +56,11 @@ public final class RiseSetUtility
 
   /**
    * Creates daylight bands for plotting.
-   * @param riseSetData TODO
+   * 
+   * @param riseSetData
+   *        TODO
    * @param daylightSavingsMode
    *        The daylight savings mode
-   * 
    * @return List of daylight bands
    */
   public static List<DaylightBand> createDaylightBands(List<RiseSet> riseSetData,
@@ -208,6 +209,7 @@ public final class RiseSetUtility
 
   }
 
+  @SuppressWarnings("boxing")
   private static RiseSet calculateRiseSet(final Location location,
                                           final LocalDate date,
                                           final boolean useDaylightTime,
