@@ -26,11 +26,13 @@
 			<groupId>pointlocation6709</groupId>
 			<artifactId>pointlocation6709</artifactId>
 			<version>2.0</version>
+      <scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>joda-time</groupId>
 			<artifactId>joda-time</artifactId>
 			<version>1.4</version>
+      <scope>test</scope>
 		</dependency>
 	</dependencies>
 	<build>
