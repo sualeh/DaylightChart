@@ -59,7 +59,7 @@ public final class RiseSetUtility
    * Creates daylight bands for plotting.
    * 
    * @param riseSetData
-   *        TODO
+   *        Rise/ set data for the year
    * @param daylightSavingsMode
    *        The daylight savings mode
    * @return List of daylight bands

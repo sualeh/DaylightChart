@@ -45,7 +45,7 @@ public final class ExitAction
    * @param frame
    *        Main window
    * @param text
-   *        TODO
+   *        Text for the action
    */
   public ExitAction(final JFrame frame, final String text)
   {
