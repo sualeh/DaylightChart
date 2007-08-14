@@ -18,9 +18,9 @@ public final class ChartConfiguration
   public static final Dimension chartDimension = new Dimension(770, 570);
   public static final DateFormat monthsFormat = new SimpleDateFormat("MMM");
 
-  public static final Color daylightColor = new Color(0xFF, 0xFF, 0x60, 170);
-  public static final Color twilightColor = new Color(0xFF, 0xFF, 0xA0, 130);
-  public static final Color nightColor = new Color(75, 11, 91, 150);
+  public static final Color daylightColor = new Color(0xFF, 0xFF, 0x60, 200);
+  public static final Color twilightColor = new Color(0xFF, 0xFF, 0xFF, 60);
+  public static final Color nightColor = new Color(75, 11, 91, 190);
   public static final Font chartFont = new Font("Helvetica", Font.PLAIN, 12);
 
 }
