@@ -23,28 +23,27 @@ package daylightchart.gui;
 
 
 import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.Calendar;
 import java.util.List;
 
 import javax.swing.ImageIcon;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JSplitPane;
 import javax.swing.JToolBar;
 
 import org.jfree.chart.ChartPanel;
-import org.jfree.chart.editor.ChartEditor;
 
 import sf.util.ui.ExitAction;
 import sf.util.ui.GuiAction;
 import daylightchart.chart.ChartConfiguration;
 import daylightchart.chart.DaylightChart;
 import daylightchart.gui.actions.AboutAction;
+import daylightchart.gui.actions.ChartOptionsAction;
 import daylightchart.gui.actions.ChartOrientationChoiceAction;
 import daylightchart.gui.actions.CloseCurrentTabAction;
 import daylightchart.gui.actions.LocationsSortChoiceAction;
@@ -59,7 +58,6 @@ import daylightchart.gui.actions.TwilightChoiceAction;
 import daylightchart.location.Location;
 import daylightchart.options.Options;
 import daylightchart.options.UserPreferences;
-import daylightchart.options.chart.ChartOptions;
 
 /**
  * Provides an GUI for daylight charts.
@@ -265,8 +263,6 @@ public final class DaylightChartGui
                                  final JToolBar toolBar)
   {
 
-    final Options options = UserPreferences.getOptions();
-
     final JMenu menu = new JMenu(Messages
       .getString("DaylightChartGui.Menu.Options")); //$NON-NLS-1$
     menu.setMnemonic('O');
@@ -283,40 +279,31 @@ public final class DaylightChartGui
     TwilightChoiceAction.addAllToMenu(menu);
     menu.addSeparator();
 
-    final JMenuItem chartOptionsMenuItem = new JMenuItem(Messages
-      .getString("DaylightChartGui.Menu.Options.ChartOptions")); //$NON-NLS-1$
-    chartOptionsMenuItem.addActionListener(new ActionListener()
+    final JCheckBoxMenuItem showLegendMenuItem = new JCheckBoxMenuItem(Messages
+      .getString("DaylightChartGui.Menu.Options.ShowChartLegend")); //$NON-NLS-1$
+    showLegendMenuItem.setState(UserPreferences.getOptions().isShowChartLegend());
+    showLegendMenuItem.addItemListener(new ItemListener()
     {
-      public void actionPerformed(@SuppressWarnings("unused")
-      final ActionEvent actionevent)
+      public void itemStateChanged(ItemEvent e)
       {
-        final Options options = UserPreferences.getOptions();
-        final ChartOptions chartOptions = options.getChartOptions();
-
-        final ChartEditor chartEditor = chartOptions.getChartEditor();
-        final int confirmValue = JOptionPane
-          .showConfirmDialog(DaylightChartGui.this, chartEditor, Messages
-            .getString("DaylightChartGui.Menu.Options.ChartOptions"), //$NON-NLS-1$
-                             JOptionPane.OK_CANCEL_OPTION,
-                             JOptionPane.PLAIN_MESSAGE);
-        if (confirmValue == JOptionPane.OK_OPTION)
+        if (e.getStateChange() == ItemEvent.SELECTED)
         {
-          // Get chart options from the editor
-          chartOptions.copyFromChartEditor(chartEditor);
-          // Save preferences
+          final Options options = UserPreferences.getOptions();
+          options.setShowChartLegend(!options.isShowChartLegend());
           UserPreferences.setOptions(options);
         }
       }
     });
+    menu.add(showLegendMenuItem);
+
+    final ChartOptionsAction chartOptionsAction = new ChartOptionsAction(this);
+    menu.add(chartOptionsAction);
+    menu.addSeparator();
 
     final GuiAction resetAll = new ResetAllAction(this);
-
-    menu.add(chartOptionsMenuItem);
-    menu.addSeparator();
     menu.add(resetAll);
 
     menuBar.add(menu);
 
   }
-
 }

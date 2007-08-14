@@ -22,56 +22,62 @@
 package daylightchart.gui.actions;
 
 
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JFrame;
-import javax.swing.KeyStroke;
+import javax.swing.JOptionPane;
+
+import org.jfree.chart.editor.ChartEditor;
 
 import sf.util.ui.GuiAction;
-import daylightchart.gui.DaylightChartGui;
 import daylightchart.gui.Messages;
+import daylightchart.options.Options;
 import daylightchart.options.UserPreferences;
+import daylightchart.options.chart.ChartOptions;
 
 /**
- * Closes current tab.
+ * Shows Chart options.
  * 
  * @author sfatehi
  */
-public final class ResetAllAction
+public final class ChartOptionsAction
   extends GuiAction
 {
 
   private static final long serialVersionUID = 4002590686393404496L;
 
   /**
-   * Closes current tab.
+   * Shows Help-About.
    * 
-   * @param locationsTabbedPane
-   *        Tabbed pane
+   * @param parent
+   *        Main window.
    */
-  public ResetAllAction(final DaylightChartGui daylightChartGui)
+  public ChartOptionsAction(final Component parent)
   {
-    super(Messages.getString("DaylightChartGui.Menu.Options.ResetAll"), //$NON-NLS-1$  
-          "/icons/reset_all.gif"); //$NON-NLS-1$ 
-    setShortcutKey(KeyStroke.getKeyStroke("control shift alt R"));
+    super(Messages.getString("DaylightChartGui.Menu.Options.ChartOptions")); //$NON-NLS-1$
     addActionListener(new ActionListener()
     {
       public void actionPerformed(@SuppressWarnings("unused")
       final ActionEvent actionevent)
       {
-        // Clear all preferences
-        UserPreferences.clear();
+        final Options options = UserPreferences.getOptions();
+        final ChartOptions chartOptions = options.getChartOptions();
 
-        // Dispose this window
-        final JFrame mainWindow = daylightChartGui;
-        mainWindow.setVisible(false);
-        mainWindow.dispose();
-
-        // Open a new window
-        new DaylightChartGui().setVisible(true);
+        final ChartEditor chartEditor = chartOptions.getChartEditor();
+        final int confirmValue = JOptionPane
+          .showConfirmDialog(parent, chartEditor, Messages
+            .getString("DaylightChartGui.Menu.Options.ChartOptions"), //$NON-NLS-1$
+                             JOptionPane.OK_CANCEL_OPTION,
+                             JOptionPane.PLAIN_MESSAGE);
+        if (confirmValue == JOptionPane.OK_OPTION)
+        {
+          // Get chart options from the editor
+          chartOptions.copyFromChartEditor(chartEditor);
+          // Save preferences
+          UserPreferences.setOptions(options);
+        }
       }
     });
   }
-
 }
