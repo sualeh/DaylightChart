@@ -326,7 +326,6 @@ public class DaylightChart
 
   private void createLegend(final Options options, final Font font)
   {
-
     removeLegend();
 
     if (options.isShowChartLegend())
