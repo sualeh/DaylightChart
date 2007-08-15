@@ -34,6 +34,21 @@ import org.jfree.chart.LegendItemSource;
 final class DaylightChartLegendItemSource
   implements LegendItemSource
 {
+
+  private final Twilight twilight;
+
+  DaylightChartLegendItemSource(Twilight twilight)
+  {
+    if (twilight == null)
+    {
+      this.twilight = Twilight.none;
+    }
+    else
+    {
+      this.twilight = twilight;
+    }
+  }
+
   public LegendItemCollection getLegendItems()
   {
     final LegendItemCollection legendItemCollection = new LegendItemCollection();
@@ -44,6 +59,11 @@ final class DaylightChartLegendItemSource
     for (final DaylightSavingsMode daylightSavingsMode: DaylightSavingsMode
       .values())
     {
+      if (daylightSavingsMode == DaylightSavingsMode.twilight
+          && twilight == Twilight.none)
+      {
+        continue;
+      }
       legendItemCollection.add(getLegendItem(daylightSavingsMode));
     }
 
@@ -82,7 +102,7 @@ final class DaylightChartLegendItemSource
         legendItem = createLegendItem("Without DST", Color.white, true);
         break;
       case twilight:
-        legendItem = createLegendItem("Twilight",
+        legendItem = createLegendItem(twilight.getLabel(),
                                       ChartConfiguration.twilightColor,
                                       false);
         break;

@@ -27,6 +27,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -44,6 +45,7 @@ import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.StandardXYItemRenderer;
 import org.jfree.chart.title.LegendTitle;
 import org.jfree.chart.title.TextTitle;
+import org.jfree.chart.title.Title;
 import org.jfree.data.time.Day;
 import org.jfree.ui.Layer;
 import org.jfree.ui.RectangleAnchor;
@@ -233,6 +235,8 @@ public class DaylightChart
 
     createTitles(options.getChartOptions(), ChartConfiguration.chartFont
       .deriveFont(Font.BOLD, 18));
+    createLegend(options, ChartConfiguration.chartFont.deriveFont(Font.PLAIN,
+                                                                  12));
 
   }
 
@@ -295,13 +299,18 @@ public class DaylightChart
 
     // Clear all titles and subtitles
     setTitle((TextTitle) null);
-    clearSubtitles();
+    for (Iterator iterator = getSubtitles().iterator(); iterator.hasNext();)
+    {
+      Title subtitle = (Title) iterator.next();
+      if (subtitle instanceof TextTitle)
+      {
+        removeSubtitle(subtitle);
+      }
+    }
 
     // Build new titles and legend
     final Location location = riseSetData.getLocation();
     final boolean showTitle = chartOptions.getTitleOptions().getShowTitle();
-    final boolean showChartLegend = chartOptions.isShowChartLegend();
-
     if (location != null && showTitle)
     {
       final TextTitle title = new TextTitle(location.toString(), titleFont);
@@ -313,12 +322,21 @@ public class DaylightChart
       subtitle.setPaint(title.getPaint());
       addSubtitle(subtitle);
     }
-    if (showChartLegend)
-    {
-      final LegendItemSource legendItemSource = new DaylightChartLegendItemSource();
-      final LegendTitle legendTitle = new LegendTitle(legendItemSource);
-      addSubtitle(legendTitle);
-    }
-
   }
+
+  private void createLegend(final Options options, final Font font)
+  {
+
+    removeLegend();
+
+    if (options.isShowChartLegend())
+    {
+      final LegendItemSource legendItemSource = new DaylightChartLegendItemSource(options
+        .getTwilight());
+      final LegendTitle legendTitle = new LegendTitle(legendItemSource);
+      legendTitle.setItemFont(font);
+      addLegend(legendTitle);
+    }
+  }
+
 }
