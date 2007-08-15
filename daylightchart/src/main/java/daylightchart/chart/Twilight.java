@@ -31,13 +31,13 @@ public enum Twilight
 {
 
   /** None. */
-  none(0),
+  none(-5D / 6D),
   /** Civil. */
-  civil(-6.0),
+  civil(-6D),
   /** Nautical. */
-  nautical(-12.0),
+  nautical(-12D),
   /** Astronomical. */
-  astronomical(-18.0);
+  astronomical(-18D);
 
   private final double horizon;
 

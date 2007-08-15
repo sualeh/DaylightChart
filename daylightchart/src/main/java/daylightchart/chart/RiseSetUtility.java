@@ -199,7 +199,7 @@ public final class RiseSetUtility
       riseSetYear.addRiseSet(riseSet);
 
       Twilight twilight = options.getTwilight();
-      if (twilight != null && twilight != Twilight.none)
+      if (twilight != null)
       {
         final RiseSet twilights = calculateRiseSet(location,
                                                    date,
