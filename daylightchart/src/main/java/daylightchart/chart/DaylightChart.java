@@ -49,6 +49,7 @@ import org.jfree.chart.title.Title;
 import org.jfree.data.time.Day;
 import org.jfree.ui.Layer;
 import org.jfree.ui.RectangleAnchor;
+import org.jfree.ui.RectangleEdge;
 import org.jfree.ui.RectangleInsets;
 import org.jfree.ui.TextAnchor;
 
@@ -334,6 +335,7 @@ public class DaylightChart
         .getTwilight());
       final LegendTitle legendTitle = new LegendTitle(legendItemSource);
       legendTitle.setItemFont(font);
+      legendTitle.setPosition(RectangleEdge.BOTTOM);
       addLegend(legendTitle);
     }
   }
