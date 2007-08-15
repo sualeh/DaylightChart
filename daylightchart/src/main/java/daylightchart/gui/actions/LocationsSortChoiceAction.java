@@ -26,6 +26,33 @@ public class LocationsSortChoiceAction
   private static final long serialVersionUID = -8217342421085173266L;
 
   /**
+   * Adds all choices for the enum to the menu bar.
+   * 
+   * @param mainWindow
+   *        Main GUI window
+   * @param menuBar
+   *        Menu bar to add to
+   */
+  public static void addAllToMenu(final DaylightChartGui mainWindow,
+                                  final JMenu menu)
+  {
+    if (menu == null)
+    {
+      throw new IllegalArgumentException("No menu specified");
+    }
+
+    final ButtonGroup group = new ButtonGroup();
+    for (final LocationsSortOrder locationsSortOrder: LocationsSortOrder
+      .values())
+    {
+      final LocationsSortChoiceAction locationsSortChoiceAction = new LocationsSortChoiceAction(mainWindow,
+                                                                                                locationsSortOrder,
+                                                                                                group);
+      menu.add(locationsSortChoiceAction.toMenuItem());
+    }
+  }
+
+  /**
    * Creates a locations sort order choice.
    * 
    * @param mainWindow
@@ -76,32 +103,6 @@ public class LocationsSortChoiceAction
         }
       }
     });
-  }
-
-  /**
-   * Adds all choices for the enum to the menu bar.
-   * 
-   * @param mainWindow
-   *        Main GUI window
-   * @param menuBar
-   *        Menu bar to add to
-   */
-  public static void addAllToMenu(final DaylightChartGui mainWindow,
-                                  final JMenu menu)
-  {
-    if (menu == null)
-    {
-      throw new IllegalArgumentException("No menu specified");
-    }
-
-    ButtonGroup group = new ButtonGroup();
-    for (LocationsSortOrder locationsSortOrder: LocationsSortOrder.values())
-    {
-      LocationsSortChoiceAction locationsSortChoiceAction = new LocationsSortChoiceAction(mainWindow,
-                                                                                          locationsSortOrder,
-                                                                                          group);
-      menu.add(locationsSortChoiceAction.toMenuItem());
-    }
   }
 
 }

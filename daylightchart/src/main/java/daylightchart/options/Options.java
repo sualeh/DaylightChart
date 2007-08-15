@@ -46,7 +46,6 @@ public class Options
   private ChartOptions chartOptions;
   private ChartOrientation chartOrientation;
   private Twilight twilight;
-  private boolean showChartLegend;
 
   /**
    * Default options.
@@ -58,7 +57,6 @@ public class Options
     chartOptions = new ChartOptions();
     chartOrientation = ChartOrientation.standard;
     twilight = Twilight.civil;
-    showChartLegend = true;
   }
 
   /**
@@ -106,16 +104,6 @@ public class Options
   }
 
   /**
-   * Whether to show the chart legend.
-   * 
-   * @return Whether to show the chart legend
-   */
-  public boolean isShowChartLegend()
-  {
-    return showChartLegend;
-  }
-
-  /**
    * @param chartOptions
    *        the chartOptions to set
    */
@@ -151,17 +139,6 @@ public class Options
     {
       this.locationsSortOrder = locationsSortOrder;
     }
-  }
-
-  /**
-   * Whether to show the chart legend.
-   * 
-   * @param showChartLegend
-   *        Whether to show the chart legend
-   */
-  public void setShowChartLegend(final boolean showChartLegend)
-  {
-    this.showChartLegend = showChartLegend;
   }
 
   /**

@@ -79,7 +79,7 @@ public final class Main
       {
         location = LocationParser.parseLocation(locationString);
       }
-      catch (ParserException e)
+      catch (final ParserException e)
       {
         location = null;
       }

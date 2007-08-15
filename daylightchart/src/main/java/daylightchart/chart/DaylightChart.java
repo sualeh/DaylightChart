@@ -32,6 +32,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.LegendItemCollection;
+import org.jfree.chart.LegendItemSource;
 import org.jfree.chart.axis.AxisLocation;
 import org.jfree.chart.axis.DateAxis;
 import org.jfree.chart.axis.DateTickMarkPosition;
@@ -41,6 +43,7 @@ import org.jfree.chart.plot.IntervalMarker;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.StandardXYItemRenderer;
+import org.jfree.chart.title.LegendTitle;
 import org.jfree.chart.title.TextTitle;
 import org.jfree.data.time.Day;
 import org.jfree.ui.Layer;
@@ -67,8 +70,6 @@ public class DaylightChart
 
   private static final Logger LOGGER = Logger.getLogger(DaylightChart.class
     .getName());
-
-  private static final Font chartFont = ChartConfiguration.chartFont;
 
   private final RiseSetYear riseSetData;
 
@@ -97,14 +98,9 @@ public class DaylightChart
   {
     super(new XYPlot());
 
-    ChartOrientation chartOrientation = ChartOrientation.standard;
-    if (options != null)
-    {
-      chartOrientation = options.getChartOrientation();
-    }
     // Calculate rise and set timings for the whole year
     riseSetData = RiseSetUtility.createRiseSetYear(location, year, options);
-    createChart(chartOrientation);
+    createChart(options);
   }
 
   /**
@@ -114,22 +110,17 @@ public class DaylightChart
    */
   public void afterSettingChartOptions(final ChartOptions chartOptions)
   {
-    // Fix title and subtitles
-    if (chartOptions.getTitleOptions().getShowTitle())
+    Font titleFont;
+    final TextTitle title = getTitle();
+    if (title != null)
     {
-      setTitle(riseSetData.getLocation().toString());
-      final TextTitle title = getTitle();
-      Font subtitleFont = title.getFont();
-      subtitleFont = subtitleFont.deriveFont(Font.PLAIN);
-      final TextTitle subtitle = (TextTitle) getSubtitle(0);
-      subtitle.setFont(subtitleFont);
-      subtitle.setPaint(title.getPaint());
+      titleFont = title.getFont();
     }
     else
     {
-      setTitle((TextTitle) null);
-      clearSubtitles();
+      titleFont = ChartConfiguration.chartFont;
     }
+    createTitles(chartOptions, titleFont.deriveFont(Font.BOLD, 18));
   }
 
   /**
@@ -202,10 +193,8 @@ public class DaylightChart
   /**
    * Creates the daylight chart.
    */
-  private void createChart(final ChartOrientation chartOrientation)
+  private void createChart(final Options options)
   {
-
-    createTitles();
 
     setBackgroundPaint(Color.white);
 
@@ -236,7 +225,15 @@ public class DaylightChart
     // Create outline plot, without clock shift
     createBandsInPlot(DaylightSavingsMode.without_clock_shift, plot);
 
+    ChartOrientation chartOrientation = ChartOrientation.standard;
+    if (options != null)
+    {
+      chartOrientation = options.getChartOrientation();
+    }
     adjustForChartOrientation(chartOrientation);
+
+    createTitles(options.getChartOptions(), ChartConfiguration.chartFont
+      .deriveFont(Font.BOLD, 18));
 
   }
 
@@ -266,7 +263,8 @@ public class DaylightChart
     final DateAxis axis = new DateAxis();
     axis.setLowerMargin(0.0f);
     axis.setUpperMargin(0.0f);
-    axis.setTickLabelFont(chartFont.deriveFont(Font.PLAIN, 12));
+    axis.setTickLabelFont(ChartConfiguration.chartFont.deriveFont(Font.PLAIN,
+                                                                  12));
     // Fix the axis range for all the hours in the day
     axis.setRange(new Date(70, 0, 1), new Date(70, 0, 2));
     //
@@ -280,7 +278,8 @@ public class DaylightChart
     axis.setTickMarkPosition(DateTickMarkPosition.START);
     axis.setLowerMargin(0.0f);
     axis.setUpperMargin(0.0f);
-    axis.setTickLabelFont(chartFont.deriveFont(Font.PLAIN, 12));
+    axis.setTickLabelFont(ChartConfiguration.chartFont.deriveFont(Font.PLAIN,
+                                                                  12));
     axis.setDateFormatOverride(ChartConfiguration.monthsFormat);
     axis.setVerticalTickLabels(true);
     axis.setTickUnit(new DateTickUnit(DateTickUnit.MONTH, 1), true, true);
@@ -291,22 +290,49 @@ public class DaylightChart
     plot.setDomainAxis(axis);
   }
 
-  private void createTitles()
+  private void createTitles(final ChartOptions chartOptions,
+                            final Font titleFont)
   {
-    TextTitle title;
 
+    // Clear all titles and subtitles
+    setTitle((TextTitle) null);
+    clearSubtitles();
+
+    // Build new titles and legend
     final Location location = riseSetData.getLocation();
-    if (location != null)
+    final boolean showTitle = chartOptions.getTitleOptions().getShowTitle();
+    final boolean showChartLegend = chartOptions.isShowChartLegend();
+
+    if (location != null && showTitle)
     {
-      title = new TextTitle(location.toString(), chartFont
-        .deriveFont(Font.BOLD, 18));
+      final TextTitle title = new TextTitle(location.toString(), titleFont);
       setTitle(title);
 
-      clearSubtitles();
-      title = new TextTitle(location.getDetails(), chartFont
-        .deriveFont(Font.PLAIN, 18));
-      addSubtitle(title);
+      final Font subtitleFont = titleFont.deriveFont(Font.PLAIN);
+      final TextTitle subtitle = new TextTitle(location.getDetails(),
+                                               subtitleFont);
+      subtitle.setPaint(title.getPaint());
+      addSubtitle(subtitle);
     }
-  }
+    if (showChartLegend)
+    {
+      final LegendItemSource legendItemSource = new LegendItemSource()
+      {
+        public LegendItemCollection getLegendItems()
+        {
+          LegendItemCollection legendItemCollection = new LegendItemCollection();
+          for (DaylightSavingsMode daylightSavingsMode: DaylightSavingsMode
+            .values())
+          {
+            legendItemCollection.add(daylightSavingsMode.getLegendItem());
+          }
+          return legendItemCollection;
+        }
+      };
+      final LegendTitle legendTitle = new LegendTitle(legendItemSource);
+      legendTitle.setBackgroundPaint(ChartConfiguration.legendColor);
+      addSubtitle(legendTitle);
+    }
 
+  }
 }

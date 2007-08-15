@@ -198,7 +198,7 @@ public final class RiseSetUtility
                                                SunPositionAlgorithm.SUNRISE_SUNSET);
       riseSetYear.addRiseSet(riseSet);
 
-      Twilight twilight = options.getTwilight();
+      final Twilight twilight = options.getTwilight();
       if (twilight != null)
       {
         final RiseSet twilights = calculateRiseSet(location,

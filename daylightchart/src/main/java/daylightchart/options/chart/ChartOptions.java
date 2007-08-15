@@ -42,6 +42,8 @@ public class ChartOptions
   //
   private final PlotOptions plotOptions;
   private final TitleOptions titleOptions;
+  //
+  private boolean showChartLegend;
 
   /**
    * Constructor.
@@ -50,6 +52,7 @@ public class ChartOptions
   {
     plotOptions = new PlotOptions();
     titleOptions = new TitleOptions();
+    showChartLegend = true;
   }
 
   /**
@@ -100,6 +103,16 @@ public class ChartOptions
   }
 
   /**
+   * Whether to show the chart legend.
+   * 
+   * @return Whether to show the chart legend
+   */
+  public boolean isShowChartLegend()
+  {
+    return showChartLegend;
+  }
+
+  /**
    * @param antiAlias
    *        the antiAlias to set
    */
@@ -115,6 +128,17 @@ public class ChartOptions
   public final void setBackgroundPaint(final Paint backgroundPaint)
   {
     this.backgroundPaint = backgroundPaint;
+  }
+
+  /**
+   * Whether to show the chart legend.
+   * 
+   * @param showChartLegend
+   *        Whether to show the chart legend
+   */
+  public void setShowChartLegend(final boolean showChartLegend)
+  {
+    this.showChartLegend = showChartLegend;
   }
 
   /**
@@ -141,5 +165,4 @@ public class ChartOptions
       ((ChartOptionsListener) chart).afterSettingChartOptions(this);
     }
   }
-
 }

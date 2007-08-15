@@ -25,6 +25,28 @@ public class TimeZoneOptionChoiceAction
   private static final long serialVersionUID = -8217342421085173266L;
 
   /**
+   * Adds all choices for the enum to the menu bar.
+   * 
+   * @param menuBar
+   *        Menu bar to add to
+   */
+  public static void addAllToMenu(final JMenu menu)
+  {
+    if (menu == null)
+    {
+      throw new IllegalArgumentException("No menu specified");
+    }
+
+    final ButtonGroup group = new ButtonGroup();
+    for (final TimeZoneOption timeZoneOption: TimeZoneOption.values())
+    {
+      final TimeZoneOptionChoiceAction timeZoneOptionChoiceAction = new TimeZoneOptionChoiceAction(timeZoneOption,
+                                                                                                   group);
+      menu.add(timeZoneOptionChoiceAction.toMenuItem());
+    }
+  }
+
+  /**
    * Creates a locations sort order choice.
    * 
    * @param timeZoneOption
@@ -65,28 +87,6 @@ public class TimeZoneOptionChoiceAction
         }
       }
     });
-  }
-
-  /**
-   * Adds all choices for the enum to the menu bar.
-   * 
-   * @param menuBar
-   *        Menu bar to add to
-   */
-  public static void addAllToMenu(final JMenu menu)
-  {
-    if (menu == null)
-    {
-      throw new IllegalArgumentException("No menu specified");
-    }
-
-    ButtonGroup group = new ButtonGroup();
-    for (TimeZoneOption timeZoneOption: TimeZoneOption.values())
-    {
-      TimeZoneOptionChoiceAction timeZoneOptionChoiceAction = new TimeZoneOptionChoiceAction(timeZoneOption,
-                                                                                             group);
-      menu.add(timeZoneOptionChoiceAction.toMenuItem());
-    }
   }
 
 }

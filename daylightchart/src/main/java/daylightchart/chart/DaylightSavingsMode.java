@@ -24,7 +24,9 @@ package daylightchart.chart;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Rectangle;
 
+import org.jfree.chart.LegendItem;
 import org.jfree.chart.renderer.xy.XYDifferenceRenderer;
 import org.jfree.chart.renderer.xy.XYItemRenderer;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
@@ -65,6 +67,42 @@ enum DaylightSavingsMode
     return description;
   }
 
+  LegendItem getLegendItem()
+  {
+    LegendItem legendItem;
+    switch (this)
+    {
+      case with_clock_shift:
+        legendItem = new LegendItem(/* label */"Daylight", /* description */
+        null,
+        /* toolTipText */null, /* urlText */
+        null,
+        /* shape */new Rectangle(20, 20),/* fillPaint */
+        ChartConfiguration.daylightColor);
+        break;
+      case without_clock_shift:
+        legendItem = new LegendItem(/* label */"Without DST", /* description */
+        null,
+        /* toolTipText */null, /* urlText */
+        null,
+        /* shape */new Rectangle(20, 20),/* fillPaint */
+        Color.white);
+        break;
+      case twilight:
+        legendItem = new LegendItem(/* label */"Twilight", /* description */
+        null,
+        /* toolTipText */null, /* urlText */
+        null,
+        /* shape */new Rectangle(20, 20),/* fillPaint */
+        ChartConfiguration.twilightColor);
+        break;
+      default:
+        legendItem = null;
+        break;
+    }
+    return legendItem;
+  }
+
   XYItemRenderer getRenderer()
   {
     XYItemRenderer renderer;
@@ -95,9 +133,9 @@ enum DaylightSavingsMode
   {
     XYItemRenderer renderer;
     renderer = new XYDifferenceRenderer(color, color, false);
-    renderer.setBaseStroke(new BasicStroke(0.2f));
-    renderer.setSeriesPaint(0, Color.WHITE);
-    renderer.setSeriesPaint(1, Color.WHITE);
+    renderer.setBaseStroke(new BasicStroke(0.1f));
+    renderer.setSeriesPaint(0, color);
+    renderer.setSeriesPaint(1, color);
     return renderer;
   }
 
@@ -105,9 +143,9 @@ enum DaylightSavingsMode
   {
     XYItemRenderer renderer;
     renderer = new XYLineAndShapeRenderer(true, false);
-    renderer.setBaseStroke(new BasicStroke(0.6f));
-    renderer.setSeriesPaint(0, Color.WHITE);
-    renderer.setSeriesPaint(1, Color.WHITE);
+    renderer.setBaseStroke(new BasicStroke(0.8f));
+    renderer.setSeriesPaint(0, Color.white);
+    renderer.setSeriesPaint(1, Color.white);
     return renderer;
   }
 

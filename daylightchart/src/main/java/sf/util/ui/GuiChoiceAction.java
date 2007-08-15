@@ -61,13 +61,6 @@ public class GuiChoiceAction
   private final EventListenerList listeners = new EventListenerList();
 
   /**
-   * Create an empty object, so that subclasses can set the fields.
-   */
-  protected GuiChoiceAction()
-  {
-  }
-
-  /**
    * Creates a new action.
    * 
    * @param text
@@ -131,13 +124,10 @@ public class GuiChoiceAction
   }
 
   /**
-   * @param selectedIconResource
-   * @return
+   * Create an empty object, so that subclasses can set the fields.
    */
-  protected Icon loadIcon(final String selectedIconResource)
+  protected GuiChoiceAction()
   {
-    return new ImageIcon(GuiChoiceAction.class
-      .getResource(selectedIconResource));
   }
 
   /**
@@ -173,14 +163,14 @@ public class GuiChoiceAction
     listeners.add(ItemListener.class, l);
   }
 
-  public String getDescription()
-  {
-    return description;
-  }
-
   public Icon getDefaultIcon()
   {
     return defaultIcon;
+  }
+
+  public String getDescription()
+  {
+    return description;
   }
 
   public ButtonGroup getGroup()
@@ -209,12 +199,23 @@ public class GuiChoiceAction
                                                                    defaultIcon,
                                                                    isSelected);
     menuItem.setSelectedIcon(selectedIcon);
-    for (ItemListener itemListener: listeners.getListeners(ItemListener.class))
+    for (final ItemListener itemListener: listeners
+      .getListeners(ItemListener.class))
     {
       menuItem.addItemListener(itemListener);
     }
     group.add(menuItem);
     return menuItem;
+  }
+
+  /**
+   * @param selectedIconResource
+   * @return
+   */
+  protected Icon loadIcon(final String selectedIconResource)
+  {
+    return new ImageIcon(GuiChoiceAction.class
+      .getResource(selectedIconResource));
   }
 
 }

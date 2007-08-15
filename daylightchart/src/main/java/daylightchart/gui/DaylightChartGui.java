@@ -58,6 +58,7 @@ import daylightchart.gui.actions.TwilightChoiceAction;
 import daylightchart.location.Location;
 import daylightchart.options.Options;
 import daylightchart.options.UserPreferences;
+import daylightchart.options.chart.ChartOptions;
 
 /**
  * Provides an GUI for daylight charts.
@@ -281,15 +282,17 @@ public final class DaylightChartGui
 
     final JCheckBoxMenuItem showLegendMenuItem = new JCheckBoxMenuItem(Messages
       .getString("DaylightChartGui.Menu.Options.ShowChartLegend")); //$NON-NLS-1$
-    showLegendMenuItem.setState(UserPreferences.getOptions().isShowChartLegend());
+    showLegendMenuItem.setState(UserPreferences.getOptions().getChartOptions()
+      .isShowChartLegend());
     showLegendMenuItem.addItemListener(new ItemListener()
     {
-      public void itemStateChanged(ItemEvent e)
+      public void itemStateChanged(final ItemEvent e)
       {
         if (e.getStateChange() == ItemEvent.SELECTED)
         {
           final Options options = UserPreferences.getOptions();
-          options.setShowChartLegend(!options.isShowChartLegend());
+          final ChartOptions chartOptions = options.getChartOptions();
+          chartOptions.setShowChartLegend(!chartOptions.isShowChartLegend());
           UserPreferences.setOptions(options);
         }
       }

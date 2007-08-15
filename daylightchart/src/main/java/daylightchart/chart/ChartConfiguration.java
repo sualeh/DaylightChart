@@ -22,5 +22,6 @@ public final class ChartConfiguration
   public static final Color twilightColor = new Color(0xFF, 0xFF, 0xFF, 60);
   public static final Color nightColor = new Color(75, 11, 91, 190);
   public static final Font chartFont = new Font("Helvetica", Font.PLAIN, 12);
+  public static final Color legendColor = new Color(0xF0, 0xF0, 0xF0);
 
 }

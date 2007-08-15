@@ -136,7 +136,7 @@ final class RiseSet
     {
       riseSetType = RiseSetType.all_nighttime;
     }
-    else if ((hasSunrise && !hasSunset) || (!hasSunrise && hasSunset))
+    else if (hasSunrise && !hasSunset || !hasSunrise && hasSunset)
     {
       riseSetType = RiseSetType.partial;
     }
@@ -259,7 +259,7 @@ final class RiseSet
     }
     else
     {
-      ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+      final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
       new PrintStream(outputStream, true)
         .printf("%s, %s: (%s) sunrise %s sunset %s",
                 location.getDescription(),
