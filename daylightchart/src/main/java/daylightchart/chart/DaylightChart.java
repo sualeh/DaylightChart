@@ -32,7 +32,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.LegendItemCollection;
 import org.jfree.chart.LegendItemSource;
 import org.jfree.chart.axis.AxisLocation;
 import org.jfree.chart.axis.DateAxis;
@@ -316,21 +315,8 @@ public class DaylightChart
     }
     if (showChartLegend)
     {
-      final LegendItemSource legendItemSource = new LegendItemSource()
-      {
-        public LegendItemCollection getLegendItems()
-        {
-          LegendItemCollection legendItemCollection = new LegendItemCollection();
-          for (DaylightSavingsMode daylightSavingsMode: DaylightSavingsMode
-            .values())
-          {
-            legendItemCollection.add(daylightSavingsMode.getLegendItem());
-          }
-          return legendItemCollection;
-        }
-      };
+      final LegendItemSource legendItemSource = new DaylightChartLegendItemSource();
       final LegendTitle legendTitle = new LegendTitle(legendItemSource);
-      legendTitle.setBackgroundPaint(ChartConfiguration.legendColor);
       addSubtitle(legendTitle);
     }
 

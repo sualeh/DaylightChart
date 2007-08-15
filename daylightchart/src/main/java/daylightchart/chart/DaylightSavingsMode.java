@@ -24,9 +24,7 @@ package daylightchart.chart;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.Rectangle;
 
-import org.jfree.chart.LegendItem;
 import org.jfree.chart.renderer.xy.XYDifferenceRenderer;
 import org.jfree.chart.renderer.xy.XYItemRenderer;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
@@ -65,42 +63,6 @@ enum DaylightSavingsMode
   String getDescription()
   {
     return description;
-  }
-
-  LegendItem getLegendItem()
-  {
-    LegendItem legendItem;
-    switch (this)
-    {
-      case with_clock_shift:
-        legendItem = new LegendItem(/* label */"Daylight", /* description */
-        null,
-        /* toolTipText */null, /* urlText */
-        null,
-        /* shape */new Rectangle(20, 20),/* fillPaint */
-        ChartConfiguration.daylightColor);
-        break;
-      case without_clock_shift:
-        legendItem = new LegendItem(/* label */"Without DST", /* description */
-        null,
-        /* toolTipText */null, /* urlText */
-        null,
-        /* shape */new Rectangle(20, 20),/* fillPaint */
-        Color.white);
-        break;
-      case twilight:
-        legendItem = new LegendItem(/* label */"Twilight", /* description */
-        null,
-        /* toolTipText */null, /* urlText */
-        null,
-        /* shape */new Rectangle(20, 20),/* fillPaint */
-        ChartConfiguration.twilightColor);
-        break;
-      default:
-        legendItem = null;
-        break;
-    }
-    return legendItem;
   }
 
   XYItemRenderer getRenderer()
