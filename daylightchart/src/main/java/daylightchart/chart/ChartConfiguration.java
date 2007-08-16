@@ -15,7 +15,7 @@ import java.text.SimpleDateFormat;
 public final class ChartConfiguration
 {
 
-  public static final Dimension chartDimension = new Dimension(770, 570);
+  public static final Dimension chartDimension = new Dimension(770, 600);
   public static final DateFormat monthsFormat = new SimpleDateFormat("MMM");
 
   public static final Color daylightColor = new Color(0xFF, 0xFF, 0x60, 200);

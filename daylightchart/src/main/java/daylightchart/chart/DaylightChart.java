@@ -331,8 +331,7 @@ public class DaylightChart
 
     if (options.isShowChartLegend())
     {
-      final LegendItemSource legendItemSource = new DaylightChartLegendItemSource(options
-        .getTwilight());
+      final LegendItemSource legendItemSource = new DaylightChartLegendItemSource(options);
       final LegendTitle legendTitle = new LegendTitle(legendItemSource);
       legendTitle.setItemFont(font);
       legendTitle.setPosition(RectangleEdge.BOTTOM);
