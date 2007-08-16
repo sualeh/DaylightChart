@@ -48,9 +48,12 @@ final class DaylightChartLegendItemSource
   {
     final LegendItemCollection legendItemCollection = new LegendItemCollection();
 
-    legendItemCollection.add(createLegendItem("Night",
-                                              ChartConfiguration.nightColor,
+    Paint configuredNightColor = options.getChartOptions().getPlotOptions()
+      .getBackgroundPaint();
+    legendItemCollection.add(createLegendItem(resolveLegendLabel(null),
+                                              configuredNightColor,
                                               false));
+
     for (final DaylightSavingsMode daylightSavingsMode: DaylightSavingsMode
       .values())
     {
@@ -85,19 +88,20 @@ final class DaylightChartLegendItemSource
 
   private LegendItem getLegendItem(final DaylightSavingsMode daylightSavingsMode)
   {
+    String legendLabel = resolveLegendLabel(daylightSavingsMode);
     LegendItem legendItem;
     switch (daylightSavingsMode)
     {
       case with_clock_shift:
-        legendItem = createLegendItem("Daylight",
+        legendItem = createLegendItem(legendLabel,
                                       ChartConfiguration.daylightColor,
                                       false);
         break;
       case without_clock_shift:
-        legendItem = createLegendItem("Without DST", Color.white, true);
+        legendItem = createLegendItem(legendLabel, Color.white, true);
         break;
       case twilight:
-        legendItem = createLegendItem(options.getTwilight().getLabel(),
+        legendItem = createLegendItem(legendLabel,
                                       ChartConfiguration.twilightColor,
                                       false);
         break;
@@ -108,4 +112,42 @@ final class DaylightChartLegendItemSource
     return legendItem;
   }
 
+  private String resolveLegendLabel(final DaylightSavingsMode daylightSavingsMode)
+  {
+
+    String legendLabel;
+    switch (daylightSavingsMode)
+    {
+      case with_clock_shift:
+        legendLabel = Messages.getString("DaylightChart.Legend.Daylight"); //$NON-NLS-1$
+        break;
+      case without_clock_shift:
+        legendLabel = Messages.getString("DaylightChart.Legend.WithoutDST"); //$NON-NLS-1$
+        break;
+      case twilight:
+        Twilight twilight = options.getTwilight();
+        switch (twilight)
+        {
+          case civil:
+            legendLabel = Messages
+              .getString("DaylightChart.Legend.Twilight.Civil"); //$NON-NLS-1$
+            break;
+          case nautical:
+            legendLabel = Messages
+              .getString("DaylightChart.Legend.Twilight.Nautical"); //$NON-NLS-1$
+            break;
+          case astronomical:
+            legendLabel = Messages
+              .getString("DaylightChart.Legend.Twilight.Nautical"); //$NON-NLS-1$
+            break;
+          default:
+            legendLabel = Messages.getString("DaylightChart.Legend.Twilight"); //$NON-NLS-1$;
+        }
+        break;
+      default:
+        legendLabel = Messages.getString("DaylightChart.Legend.Night"); //$NON-NLS-1$
+        break;
+    }
+    return legendLabel;
+  }
 }
