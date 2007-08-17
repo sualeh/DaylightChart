@@ -291,11 +291,11 @@ public final class Location
     return description;
   }
 
-  private void readObject(final ObjectInputStream aInputStream)
+  private void readObject(final ObjectInputStream objectInputStream)
     throws ClassNotFoundException, IOException
   {
     // Perform the default deserialization first
-    aInputStream.defaultReadObject();
+    objectInputStream.defaultReadObject();
 
     // Set transient fields
     setTransientFields();

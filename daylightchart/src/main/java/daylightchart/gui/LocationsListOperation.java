@@ -99,15 +99,17 @@ enum LocationsListOperation
         switch (LocationsListOperation.this)
         {
           case add:
+            // fall-through
           case edit:
+            // fall-through
           case delete:
             editedLocation = LocationDialog
               .showLocationDialog(locationsList, LocationsListOperation.this);
             break;
           case copy:
+            // fall-through
           case paste:
-            editedLocation = null;
-            break;
+            // fall-through
           default:
             editedLocation = null;
             break;

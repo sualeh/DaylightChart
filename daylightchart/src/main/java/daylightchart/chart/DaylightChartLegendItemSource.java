@@ -144,7 +144,7 @@ final class DaylightChartLegendItemSource
               break;
             case astronomical:
               legendLabel = Messages
-                .getString("DaylightChart.Legend.Twilight.Nautical"); //$NON-NLS-1$
+                .getString("DaylightChart.Legend.Twilight.Astronomical"); //$NON-NLS-1$
               break;
             default:
               legendLabel = Messages.getString("DaylightChart.Legend.Twilight"); //$NON-NLS-1$;

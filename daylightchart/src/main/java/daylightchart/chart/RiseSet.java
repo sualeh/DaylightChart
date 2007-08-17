@@ -230,18 +230,16 @@ final class RiseSet
     this.location = location;
     this.date = date;
     inDaylightSavings = false;
-    switch (riseSetType)
+
+    if (riseSetType == RiseSetType.all_daylight
+        || riseSetType == RiseSetType.all_nighttime)
     {
-      case all_daylight:
-        sunrise = JUST_AFTER_MIDNIGHT;
-        sunset = JUST_BEFORE_MIDNIGHT;
-        break;
-      case all_nighttime:
-        sunrise = JUST_AFTER_MIDNIGHT;
-        sunset = JUST_BEFORE_MIDNIGHT;
-        break;
-      default:
-        throw new IllegalArgumentException("Bad rise/ set type provided");
+      sunrise = JUST_AFTER_MIDNIGHT;
+      sunset = JUST_BEFORE_MIDNIGHT;
+    }
+    else
+    {
+      throw new IllegalArgumentException("Bad rise/ set type provided");
     }
   }
 

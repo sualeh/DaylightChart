@@ -101,17 +101,8 @@ public class DaylightChart
     super(new XYPlot());
 
     // Calculate rise and set timings for the whole year
-    final Options options1;
-    if (options == null)
-    {
-      options1 = new Options();
-    }
-    else
-    {
-      options1 = options;
-    }
-    riseSetData = RiseSetUtility.createRiseSetYear(location, year, options1);
-    createChart(options1);
+    riseSetData = RiseSetUtility.createRiseSetYear(location, year, options);
+    createChart(options);
   }
 
   /**
@@ -243,10 +234,20 @@ public class DaylightChart
     }
     adjustForChartOrientation(chartOrientation);
 
-    createTitles(options.getChartOptions(), ChartConfiguration.chartFont
+    final Options optionsNotNull;
+    if (options == null)
+    {
+      optionsNotNull = new Options();
+    }
+    else
+    {
+      optionsNotNull = options;
+    }
+    createTitles(optionsNotNull.getChartOptions(), ChartConfiguration.chartFont
       .deriveFont(Font.BOLD, 18));
-    createLegend(options, ChartConfiguration.chartFont.deriveFont(Font.PLAIN,
-                                                                  12));
+
+    createLegend(optionsNotNull, ChartConfiguration.chartFont
+      .deriveFont(Font.PLAIN, 12));
 
   }
 

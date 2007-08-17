@@ -25,7 +25,6 @@ package sf.util.ui;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemListener;
-import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -43,10 +42,7 @@ import org.apache.commons.lang.StringUtils;
  * @author sfatehi
  */
 public class GuiChoiceAction
-  implements Serializable
 {
-
-  private static final long serialVersionUID = 2667827621916360389L;
 
   private static final Logger LOGGER = Logger.getLogger(GuiChoiceAction.class
     .getName());
