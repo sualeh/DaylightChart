@@ -45,7 +45,7 @@ class CobbledSunCalc
   extends BaseSunPositionAlgorithm
 {
 
-  private class SolarEphemerides
+  private static class SolarEphemerides
   {
 
     private double declination;
