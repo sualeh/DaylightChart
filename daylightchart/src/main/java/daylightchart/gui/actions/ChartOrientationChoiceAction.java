@@ -22,13 +22,34 @@ public class ChartOrientationChoiceAction
   extends GuiChoiceAction
 {
 
+  private static final class GuiActionListener
+    implements ItemListener
+  {
+    private final ChartOrientation chartOrientation;
+
+    private GuiActionListener(final ChartOrientation chartOrientation)
+    {
+      this.chartOrientation = chartOrientation;
+    }
+
+    public void itemStateChanged(final ItemEvent e)
+    {
+      if (e.getStateChange() == ItemEvent.SELECTED)
+      {
+        final Options options = UserPreferences.getOptions();
+        options.setChartOrientation(chartOrientation);
+        UserPreferences.setOptions(options);
+      }
+    }
+  }
+
   private static final long serialVersionUID = -8217342421085173266L;
 
   /**
    * Adds all choices for the enum to the menu bar.
    * 
-   * @param menuBar
-   *        Menu bar to add to
+   * @param menu
+   *        Menu to add to
    */
   public static void addAllToMenu(final JMenu menu)
   {
@@ -82,18 +103,7 @@ public class ChartOrientationChoiceAction
         break;
     }
 
-    addItemListener(new ItemListener()
-    {
-      public void itemStateChanged(final ItemEvent e)
-      {
-        if (e.getStateChange() == ItemEvent.SELECTED)
-        {
-          final Options options = UserPreferences.getOptions();
-          options.setChartOrientation(chartOrientation);
-          UserPreferences.setOptions(options);
-        }
-      }
-    });
+    addItemListener(new GuiActionListener(chartOrientation));
   }
 
 }

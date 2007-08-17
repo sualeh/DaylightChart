@@ -54,6 +54,70 @@ public final class OpenLocationsFileAction
   extends GuiAction
 {
 
+  private static final class GuiActionListener
+    implements ActionListener
+  {
+    private final DaylightChartGui mainWindow;
+
+    private GuiActionListener(final DaylightChartGui mainWindow)
+    {
+      this.mainWindow = mainWindow;
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+     */
+    public void actionPerformed(@SuppressWarnings("unused")
+    final ActionEvent actionevent)
+    {
+      final List<FileFilter> fileFilters = new ArrayList<FileFilter>();
+      fileFilters.add(new ExtensionFileFilter("Data files", ".data"));
+      fileFilters.add(new ExtensionFileFilter("Text files", ".txt"));
+      final File selectedFile = Actions
+        .showOpenDialog(mainWindow,
+                        Messages
+                          .getString("DaylightChartGui.Menu.File.LoadLocations"),
+                        fileFilters,
+                        new File(UserPreferences.getDataFileDirectory(),
+                                 "locations.data"),
+                        Messages
+                          .getString("DaylightChartGui.Message.Error.CannotOpenFile"));
+
+      mainWindow.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+
+      try
+      {
+        final List<Location> locationsList = LocationsLoader.load(selectedFile);
+        if (locationsList == null || locationsList.size() == 0)
+        {
+          LOGGER.log(Level.WARNING, Messages
+            .getString("DaylightChartGui.Message.Error.CannotOpenFile")); //$NON-NLS-1$
+          JOptionPane
+            .showMessageDialog(mainWindow,
+                               selectedFile
+                                   + "\n" //$NON-NLS-1$
+                                   + Messages
+                                     .getString("DaylightChartGui.Message.Error.CannotOpenFile")); //$NON-NLS-1$
+        }
+        else
+        {
+          mainWindow.setLocations(locationsList);
+          UserPreferences.setDataFileDirectory(selectedFile.getParentFile());
+        }
+      }
+      catch (final RuntimeException e)
+      {
+        // We catch exceptions, because otherwise the cursor may get
+        // stuck in busy mode
+        LOGGER.log(Level.WARNING, "Could not load locations");
+      }
+
+      mainWindow.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+    }
+  }
+
   private static final long serialVersionUID = -177214864870181893L;
 
   private static final Logger LOGGER = Logger
@@ -72,62 +136,7 @@ public final class OpenLocationsFileAction
           "/icons/load_locations.gif" //$NON-NLS-1$
     );
     setShortcutKey(KeyStroke.getKeyStroke("control O"));
-    addActionListener(new ActionListener()
-    {
-      /**
-       * {@inheritDoc}
-       * 
-       * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-       */
-      public void actionPerformed(@SuppressWarnings("unused")
-      final ActionEvent actionevent)
-      {
-        final List<FileFilter> fileFilters = new ArrayList<FileFilter>();
-        fileFilters.add(new ExtensionFileFilter("Data files", ".data"));
-        fileFilters.add(new ExtensionFileFilter("Text files", ".txt"));
-        final File selectedFile = Actions
-          .showOpenDialog(mainWindow,
-                          Messages
-                            .getString("DaylightChartGui.Menu.File.LoadLocations"),
-                          fileFilters,
-                          new File(UserPreferences.getDataFileDirectory(),
-                                   "locations.data"),
-                          Messages
-                            .getString("DaylightChartGui.Message.Error.CannotOpenFile"));
-
-        mainWindow.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-
-        try
-        {
-          final List<Location> locationsList = LocationsLoader
-            .load(selectedFile);
-          if (locationsList == null || locationsList.size() == 0)
-          {
-            LOGGER.log(Level.WARNING, Messages
-              .getString("DaylightChartGui.Message.Error.CannotOpenFile")); //$NON-NLS-1$
-            JOptionPane
-              .showMessageDialog(mainWindow,
-                                 selectedFile
-                                     + "\n" //$NON-NLS-1$
-                                     + Messages
-                                       .getString("DaylightChartGui.Message.Error.CannotOpenFile")); //$NON-NLS-1$
-          }
-          else
-          {
-            mainWindow.setLocations(locationsList);
-            UserPreferences.setDataFileDirectory(selectedFile.getParentFile());
-          }
-        }
-        catch (final RuntimeException e)
-        {
-          // We catch exceptions, because otherwise the cursor may get
-          // stuck in busy mode
-          LOGGER.log(Level.WARNING, "Could not load locations");
-        }
-
-        mainWindow.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-      }
-    });
+    addActionListener(new GuiActionListener(mainWindow));
 
   }
 }

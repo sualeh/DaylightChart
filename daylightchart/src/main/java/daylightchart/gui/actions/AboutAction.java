@@ -41,6 +41,23 @@ public final class AboutAction
   extends GuiAction
 {
 
+  private static final class GuiActionListener
+    implements ActionListener
+  {
+    private final Component parent;
+
+    private GuiActionListener(final Component parent)
+    {
+      this.parent = parent;
+    }
+
+    public void actionPerformed(@SuppressWarnings("unused")
+    final ActionEvent actionevent)
+    {
+      JOptionPane.showMessageDialog(parent, Version.about());
+    }
+  }
+
   private static final long serialVersionUID = 4002590686393404496L;
 
   /**
@@ -53,13 +70,6 @@ public final class AboutAction
   {
     super(Messages.getString("DaylightChartGui.Menu.Help.About") //$NON-NLS-1$
     );
-    addActionListener(new ActionListener()
-    {
-      public void actionPerformed(@SuppressWarnings("unused")
-      final ActionEvent actionevent)
-      {
-        JOptionPane.showMessageDialog(parent, Version.about());
-      }
-    });
+    addActionListener(new GuiActionListener(parent));
   }
 }

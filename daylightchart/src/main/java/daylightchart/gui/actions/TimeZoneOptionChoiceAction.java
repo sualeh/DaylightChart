@@ -22,13 +22,34 @@ public class TimeZoneOptionChoiceAction
   extends GuiChoiceAction
 {
 
+  private static final class GuiActionListener
+    implements ItemListener
+  {
+    private final TimeZoneOption timeZoneOption;
+
+    private GuiActionListener(final TimeZoneOption timeZoneOption)
+    {
+      this.timeZoneOption = timeZoneOption;
+    }
+
+    public void itemStateChanged(final ItemEvent e)
+    {
+      if (e.getStateChange() == ItemEvent.SELECTED)
+      {
+        final Options options = UserPreferences.getOptions();
+        options.setTimeZoneOption(timeZoneOption);
+        UserPreferences.setOptions(options);
+      }
+    }
+  }
+
   private static final long serialVersionUID = -8217342421085173266L;
 
   /**
    * Adds all choices for the enum to the menu bar.
    * 
-   * @param menuBar
-   *        Menu bar to add to
+   * @param menu
+   *        Menu to add to
    */
   public static void addAllToMenu(final JMenu menu)
   {
@@ -75,18 +96,7 @@ public class TimeZoneOptionChoiceAction
         break;
     }
 
-    addItemListener(new ItemListener()
-    {
-      public void itemStateChanged(final ItemEvent e)
-      {
-        if (e.getStateChange() == ItemEvent.SELECTED)
-        {
-          final Options options = UserPreferences.getOptions();
-          options.setTimeZoneOption(timeZoneOption);
-          UserPreferences.setOptions(options);
-        }
-      }
-    });
+    addItemListener(new GuiActionListener(timeZoneOption));
   }
 
 }

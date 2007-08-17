@@ -42,36 +42,46 @@ public final class ResetAllAction
   extends GuiAction
 {
 
+  private static final class GuiActionListener
+    implements ActionListener
+  {
+    private final DaylightChartGui daylightChartGui;
+
+    private GuiActionListener(final DaylightChartGui daylightChartGui)
+    {
+      this.daylightChartGui = daylightChartGui;
+    }
+
+    public void actionPerformed(@SuppressWarnings("unused")
+    final ActionEvent actionevent)
+    {
+      // Clear all preferences
+      UserPreferences.clear();
+
+      // Dispose this window
+      final JFrame mainWindow = daylightChartGui;
+      mainWindow.setVisible(false);
+      mainWindow.dispose();
+
+      // Open a new window
+      new DaylightChartGui().setVisible(true);
+    }
+  }
+
   private static final long serialVersionUID = 4002590686393404496L;
 
   /**
    * Closes current tab.
    * 
-   * @param locationsTabbedPane
-   *        Tabbed pane
+   * @param daylightChartGui
+   *        Main window
    */
   public ResetAllAction(final DaylightChartGui daylightChartGui)
   {
     super(Messages.getString("DaylightChartGui.Menu.Options.ResetAll"), //$NON-NLS-1$  
           "/icons/reset_all.gif"); //$NON-NLS-1$ 
     setShortcutKey(KeyStroke.getKeyStroke("control shift alt R"));
-    addActionListener(new ActionListener()
-    {
-      public void actionPerformed(@SuppressWarnings("unused")
-      final ActionEvent actionevent)
-      {
-        // Clear all preferences
-        UserPreferences.clear();
-
-        // Dispose this window
-        final JFrame mainWindow = daylightChartGui;
-        mainWindow.setVisible(false);
-        mainWindow.dispose();
-
-        // Open a new window
-        new DaylightChartGui().setVisible(true);
-      }
-    });
+    addActionListener(new GuiActionListener(daylightChartGui));
   }
 
 }

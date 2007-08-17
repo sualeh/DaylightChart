@@ -52,6 +52,60 @@ public final class SaveLocationsFileAction
   extends GuiAction
 {
 
+  private static final class GuiActionListener
+    implements ActionListener
+  {
+    private final DaylightChartGui mainWindow;
+
+    private GuiActionListener(final DaylightChartGui mainWindow)
+    {
+      this.mainWindow = mainWindow;
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+     */
+    public void actionPerformed(@SuppressWarnings("unused")
+    final ActionEvent actionevent)
+    {
+      final List<FileFilter> fileFilters = new ArrayList<FileFilter>();
+      fileFilters.add(new ExtensionFileFilter("Data files", ".data"));
+      fileFilters.add(new ExtensionFileFilter("Text files", ".txt"));
+      final File selectedFile = Actions
+        .showSaveDialog(mainWindow,
+                        Messages
+                          .getString("DaylightChartGui.Menu.File.SaveLocations"),
+                        fileFilters,
+                        new File(UserPreferences.getDataFileDirectory(),
+                                 "locations.data"),
+                        Messages
+                          .getString("DaylightChartGui.Message.Confirm.FileOverwrite")); //$NON-NLS-1$
+      if (selectedFile != null)
+      {
+        try
+        {
+          LocationFormatter.formatLocations(mainWindow.getLocations(),
+                                            selectedFile);
+
+          // Save last selected directory
+          UserPreferences.setDataFileDirectory(selectedFile.getParentFile());
+        }
+        catch (final Exception e)
+        {
+          LOGGER.log(Level.WARNING, Messages
+            .getString("DaylightChartGui.Message.Error.CannotSaveFile"), e); //$NON-NLS-1$
+          JOptionPane.showMessageDialog(mainWindow, Messages
+            .getString("DaylightChartGui.Message.Error.CannotSaveFile") + "\n" //$NON-NLS-1$ //$NON-NLS-2$
+                                                    + selectedFile, Messages
+            .getString("DaylightChartGui.Menu.File.SaveFile"), //$NON-NLS-1$
+                                        JOptionPane.OK_OPTION);
+        }
+      }
+    }
+  }
+
   private static final long serialVersionUID = 1173685118494564955L;
 
   private static final Logger LOGGER = Logger
@@ -70,54 +124,7 @@ public final class SaveLocationsFileAction
           "/icons/save_locations.gif" //$NON-NLS-1$
     );
     setShortcutKey(KeyStroke.getKeyStroke("control alt S"));
-    addActionListener(new ActionListener()
-    {
-      /**
-       * {@inheritDoc}
-       * 
-       * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-       */
-      public void actionPerformed(@SuppressWarnings("unused")
-      final ActionEvent actionevent)
-      {
-        final List<FileFilter> fileFilters = new ArrayList<FileFilter>();
-        fileFilters.add(new ExtensionFileFilter("Data files", ".data"));
-        fileFilters.add(new ExtensionFileFilter("Text files", ".txt"));
-        final File selectedFile = Actions
-          .showSaveDialog(mainWindow,
-                          Messages
-                            .getString("DaylightChartGui.Menu.File.SaveLocations"),
-                          fileFilters,
-                          new File(UserPreferences.getDataFileDirectory(),
-                                   "locations.data"),
-                          Messages
-                            .getString("DaylightChartGui.Message.Confirm.FileOverwrite")); //$NON-NLS-1$
-        if (selectedFile != null)
-        {
-          try
-          {
-            LocationFormatter.formatLocations(mainWindow.getLocations(),
-                                              selectedFile);
-
-            // Save last selected directory
-            UserPreferences.setDataFileDirectory(selectedFile.getParentFile());
-          }
-          catch (final Exception e)
-          {
-            LOGGER.log(Level.WARNING, Messages
-              .getString("DaylightChartGui.Message.Error.CannotSaveFile"), e); //$NON-NLS-1$
-            JOptionPane
-              .showMessageDialog(mainWindow,
-                                 Messages
-                                   .getString("DaylightChartGui.Message.Error.CannotSaveFile") + "\n" //$NON-NLS-1$ //$NON-NLS-2$
-                                     + selectedFile,
-                                 Messages
-                                   .getString("DaylightChartGui.Menu.File.SaveFile"), //$NON-NLS-1$
-                                 JOptionPane.OK_OPTION);
-          }
-        }
-      }
-    });
+    addActionListener(new GuiActionListener(mainWindow));
   }
 
 }

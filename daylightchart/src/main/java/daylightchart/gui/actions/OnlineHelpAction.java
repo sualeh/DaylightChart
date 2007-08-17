@@ -40,6 +40,17 @@ public final class OnlineHelpAction
   extends GuiAction
 {
 
+  private static final class GuiActionListener
+    implements ActionListener
+  {
+    public void actionPerformed(@SuppressWarnings("unused")
+    final ActionEvent actionevent)
+    {
+      BareBonesBrowserLaunch
+        .openURL("http://daylightchart.sourceforge.net/readme.html"); //$NON-NLS-1$
+    }
+  }
+
   private static final long serialVersionUID = 4002590686393404496L;
 
   /**
@@ -51,15 +62,7 @@ public final class OnlineHelpAction
           "/icons/help.gif" //$NON-NLS-1$ 
     );
     setShortcutKey(KeyStroke.getKeyStroke("F1"));
-    addActionListener(new ActionListener()
-    {
-      public void actionPerformed(@SuppressWarnings("unused")
-      final ActionEvent actionevent)
-      {
-        BareBonesBrowserLaunch
-          .openURL("http://daylightchart.sourceforge.net/readme.html"); //$NON-NLS-1$
-      }
-    });
+    addActionListener(new GuiActionListener());
   }
 
 }

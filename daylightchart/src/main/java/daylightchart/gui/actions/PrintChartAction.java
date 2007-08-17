@@ -41,6 +41,23 @@ public final class PrintChartAction
   extends GuiAction
 {
 
+  private static final class GuiActionListener
+    implements ActionListener
+  {
+    private final LocationsTabbedPane locationsTabbedPane;
+
+    private GuiActionListener(final LocationsTabbedPane locationsTabbedPane)
+    {
+      this.locationsTabbedPane = locationsTabbedPane;
+    }
+
+    public void actionPerformed(@SuppressWarnings("unused")
+    final ActionEvent actionevent)
+    {
+      locationsTabbedPane.printSelectedChart();
+    }
+  }
+
   private static final long serialVersionUID = 4002590686393404496L;
 
   /**
@@ -55,14 +72,7 @@ public final class PrintChartAction
           "/icons/print_chart.gif" //$NON-NLS-1$ 
     );
     setShortcutKey(KeyStroke.getKeyStroke("control P"));
-    addActionListener(new ActionListener()
-    {
-      public void actionPerformed(@SuppressWarnings("unused")
-      final ActionEvent actionevent)
-      {
-        locationsTabbedPane.printSelectedChart();
-      }
-    });
+    addActionListener(new GuiActionListener(locationsTabbedPane));
   }
 
 }

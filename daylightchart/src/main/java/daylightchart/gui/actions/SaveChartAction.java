@@ -41,6 +41,23 @@ public final class SaveChartAction
   extends GuiAction
 {
 
+  private static final class GuiActionListener
+    implements ActionListener
+  {
+    private final LocationsTabbedPane locationsTabbedPane;
+
+    private GuiActionListener(final LocationsTabbedPane locationsTabbedPane)
+    {
+      this.locationsTabbedPane = locationsTabbedPane;
+    }
+
+    public void actionPerformed(@SuppressWarnings("unused")
+    final ActionEvent actionevent)
+    {
+      locationsTabbedPane.saveSelectedChart();
+    }
+  }
+
   private static final long serialVersionUID = 5749903957626188378L;
 
   /**
@@ -55,14 +72,7 @@ public final class SaveChartAction
           "/icons/save_chart.gif" //$NON-NLS-1$ 
     );
     setShortcutKey(KeyStroke.getKeyStroke("control S"));
-    addActionListener(new ActionListener()
-    {
-      public void actionPerformed(@SuppressWarnings("unused")
-      final ActionEvent actionevent)
-      {
-        locationsTabbedPane.saveSelectedChart();
-      }
-    });
+    addActionListener(new GuiActionListener(locationsTabbedPane));
   }
 
 }

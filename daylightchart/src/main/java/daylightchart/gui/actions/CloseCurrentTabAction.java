@@ -39,6 +39,26 @@ public final class CloseCurrentTabAction
   extends GuiAction
 {
 
+  private static final class GuiActionListener
+    implements ActionListener
+  {
+    private final LocationsTabbedPane locationsTabbedPane;
+
+    private GuiActionListener(final LocationsTabbedPane locationsTabbedPane)
+    {
+      this.locationsTabbedPane = locationsTabbedPane;
+    }
+
+    public void actionPerformed(@SuppressWarnings("unused")
+    final ActionEvent actionevent)
+    {
+      if (locationsTabbedPane.getTabCount() > 0)
+      {
+        locationsTabbedPane.remove(locationsTabbedPane.getSelectedComponent());
+      }
+    }
+  }
+
   private static final long serialVersionUID = 4002590686393404496L;
 
   /**
@@ -51,17 +71,6 @@ public final class CloseCurrentTabAction
   {
     super("Close Current Tab");
     setShortcutKey(KeyStroke.getKeyStroke("control W"));
-    addActionListener(new ActionListener()
-    {
-      public void actionPerformed(@SuppressWarnings("unused")
-      final ActionEvent actionevent)
-      {
-        if (locationsTabbedPane.getTabCount() > 0)
-        {
-          locationsTabbedPane
-            .remove(locationsTabbedPane.getSelectedComponent());
-        }
-      }
-    });
+    addActionListener(new GuiActionListener(locationsTabbedPane));
   }
 }

@@ -45,6 +45,38 @@ public final class ChartOptionsAction
   extends GuiAction
 {
 
+  private static final class GuiActionListener
+    implements ActionListener
+  {
+    private final Component parent;
+
+    private GuiActionListener(final Component parent)
+    {
+      this.parent = parent;
+    }
+
+    public void actionPerformed(@SuppressWarnings("unused")
+    final ActionEvent actionevent)
+    {
+      final Options options = UserPreferences.getOptions();
+      final ChartOptions chartOptions = options.getChartOptions();
+
+      final ChartEditor chartEditor = chartOptions.getChartEditor();
+      final int confirmValue = JOptionPane
+        .showConfirmDialog(parent, chartEditor, Messages
+          .getString("DaylightChartGui.Menu.Options.ChartOptions"), //$NON-NLS-1$
+                           JOptionPane.OK_CANCEL_OPTION,
+                           JOptionPane.PLAIN_MESSAGE);
+      if (confirmValue == JOptionPane.OK_OPTION)
+      {
+        // Get chart options from the editor
+        chartOptions.copyFromChartEditor(chartEditor);
+        // Save preferences
+        UserPreferences.setOptions(options);
+      }
+    }
+  }
+
   private static final long serialVersionUID = 4002590686393404496L;
 
   /**
@@ -56,28 +88,6 @@ public final class ChartOptionsAction
   public ChartOptionsAction(final Component parent)
   {
     super(Messages.getString("DaylightChartGui.Menu.Options.ChartOptions")); //$NON-NLS-1$
-    addActionListener(new ActionListener()
-    {
-      public void actionPerformed(@SuppressWarnings("unused")
-      final ActionEvent actionevent)
-      {
-        final Options options = UserPreferences.getOptions();
-        final ChartOptions chartOptions = options.getChartOptions();
-
-        final ChartEditor chartEditor = chartOptions.getChartEditor();
-        final int confirmValue = JOptionPane
-          .showConfirmDialog(parent, chartEditor, Messages
-            .getString("DaylightChartGui.Menu.Options.ChartOptions"), //$NON-NLS-1$
-                             JOptionPane.OK_CANCEL_OPTION,
-                             JOptionPane.PLAIN_MESSAGE);
-        if (confirmValue == JOptionPane.OK_OPTION)
-        {
-          // Get chart options from the editor
-          chartOptions.copyFromChartEditor(chartEditor);
-          // Save preferences
-          UserPreferences.setOptions(options);
-        }
-      }
-    });
+    addActionListener(new GuiActionListener(parent));
   }
 }

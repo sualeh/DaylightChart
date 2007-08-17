@@ -23,6 +23,32 @@ public class LocationsSortChoiceAction
   extends GuiChoiceAction
 {
 
+  private static final class GuiActionListener
+    implements ItemListener
+  {
+    private final LocationsSortOrder locationsSortOrder;
+    private final DaylightChartGui mainWindow;
+
+    private GuiActionListener(final LocationsSortOrder locationsSortOrder,
+                              final DaylightChartGui mainWindow)
+    {
+      this.locationsSortOrder = locationsSortOrder;
+      this.mainWindow = mainWindow;
+    }
+
+    public void itemStateChanged(final ItemEvent e)
+    {
+      if (e.getStateChange() == ItemEvent.SELECTED)
+      {
+        final Options options = UserPreferences.getOptions();
+        options.setLocationsSortOrder(locationsSortOrder);
+        UserPreferences.setOptions(options);
+
+        mainWindow.sortLocations();
+      }
+    }
+  }
+
   private static final long serialVersionUID = -8217342421085173266L;
 
   /**
@@ -30,8 +56,8 @@ public class LocationsSortChoiceAction
    * 
    * @param mainWindow
    *        Main GUI window
-   * @param menuBar
-   *        Menu bar to add to
+   * @param menu
+   *        Menu to add to
    */
   public static void addAllToMenu(final DaylightChartGui mainWindow,
                                   final JMenu menu)
@@ -89,20 +115,7 @@ public class LocationsSortChoiceAction
         break;
     }
 
-    addItemListener(new ItemListener()
-    {
-      public void itemStateChanged(final ItemEvent e)
-      {
-        if (e.getStateChange() == ItemEvent.SELECTED)
-        {
-          final Options options = UserPreferences.getOptions();
-          options.setLocationsSortOrder(locationsSortOrder);
-          UserPreferences.setOptions(options);
-
-          mainWindow.sortLocations();
-        }
-      }
-    });
+    addItemListener(new GuiActionListener(locationsSortOrder, mainWindow));
   }
 
 }
