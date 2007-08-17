@@ -20,6 +20,8 @@
 package org.pointlocation6709;
 
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.Serializable;
 
 /**
@@ -56,6 +58,7 @@ public class Angle
      * 
      * @see java.lang.Enum#toString()
      */
+    @Override
     public String toString()
     {
       return symbol;
@@ -325,6 +328,16 @@ public class Angle
                                          " is out of range, +/-" + range +
                                          Field.DEGREES);
     }
+  }
+
+  private void readObject(final ObjectInputStream objectInputStream)
+    throws ClassNotFoundException, IOException
+  {
+    // Perform the default deserialization first
+    objectInputStream.defaultReadObject();
+
+    // Set transient fields
+    sexagesimalDegreeParts = Utility.sexagesimalSplit(getDegrees());
   }
 
 }

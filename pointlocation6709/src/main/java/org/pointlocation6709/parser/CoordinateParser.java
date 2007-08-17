@@ -244,7 +244,7 @@ public final class CoordinateParser
       {
         try
         {
-          angleFields.add(new Integer(Integer.parseInt(degreePart.trim())));
+          angleFields.add(Integer.valueOf(degreePart.trim()));
         }
         catch (final NumberFormatException e)
         {
