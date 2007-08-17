@@ -275,6 +275,20 @@ public class DaylightChart
     plot.setRangeAxis(axis);
   }
 
+  private void createLegend(final Options options, final Font font)
+  {
+    removeLegend();
+
+    if (options.isShowChartLegend())
+    {
+      final LegendItemSource legendItemSource = new DaylightChartLegendItemSource(options);
+      final LegendTitle legendTitle = new LegendTitle(legendItemSource);
+      legendTitle.setItemFont(font);
+      legendTitle.setPosition(RectangleEdge.BOTTOM);
+      addLegend(legendTitle);
+    }
+  }
+
   @SuppressWarnings("deprecation")
   private void createMonthsAxis(final XYPlot plot)
   {
@@ -300,9 +314,10 @@ public class DaylightChart
 
     // Clear all titles and subtitles
     setTitle((TextTitle) null);
-    for (Iterator iterator = getSubtitles().iterator(); iterator.hasNext();)
+    for (final Iterator iterator = getSubtitles().iterator(); iterator
+      .hasNext();)
     {
-      Title subtitle = (Title) iterator.next();
+      final Title subtitle = (Title) iterator.next();
       if (subtitle instanceof TextTitle)
       {
         removeSubtitle(subtitle);
@@ -322,20 +337,6 @@ public class DaylightChart
                                                subtitleFont);
       subtitle.setPaint(title.getPaint());
       addSubtitle(subtitle);
-    }
-  }
-
-  private void createLegend(final Options options, final Font font)
-  {
-    removeLegend();
-
-    if (options.isShowChartLegend())
-    {
-      final LegendItemSource legendItemSource = new DaylightChartLegendItemSource(options);
-      final LegendTitle legendTitle = new LegendTitle(legendItemSource);
-      legendTitle.setItemFont(font);
-      legendTitle.setPosition(RectangleEdge.BOTTOM);
-      addLegend(legendTitle);
     }
   }
 

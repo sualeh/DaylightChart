@@ -48,14 +48,14 @@ public enum Twilight
     this.horizon = horizon;
   }
 
-  public String getLabel()
-  {
-    return label;
-  }
-
   public double getHorizon()
   {
     return horizon;
+  }
+
+  public String getLabel()
+  {
+    return label;
   }
 
 }

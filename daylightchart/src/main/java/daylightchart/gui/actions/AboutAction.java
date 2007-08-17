@@ -28,9 +28,8 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JOptionPane;
 
-import org.sunposition.Version;
-
 import sf.util.ui.GuiAction;
+import daylightchart.Version;
 import daylightchart.gui.Messages;
 
 /**

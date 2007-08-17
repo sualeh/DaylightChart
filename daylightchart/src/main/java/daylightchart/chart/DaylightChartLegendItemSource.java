@@ -48,8 +48,8 @@ final class DaylightChartLegendItemSource
   {
     final LegendItemCollection legendItemCollection = new LegendItemCollection();
 
-    Paint configuredNightColor = options.getChartOptions().getPlotOptions()
-      .getBackgroundPaint();
+    final Paint configuredNightColor = options.getChartOptions()
+      .getPlotOptions().getBackgroundPaint();
     legendItemCollection.add(createLegendItem(resolveLegendLabel(null),
                                               configuredNightColor,
                                               false));
@@ -88,7 +88,7 @@ final class DaylightChartLegendItemSource
 
   private LegendItem getLegendItem(final DaylightSavingsMode daylightSavingsMode)
   {
-    String legendLabel = resolveLegendLabel(daylightSavingsMode);
+    final String legendLabel = resolveLegendLabel(daylightSavingsMode);
     LegendItem legendItem;
     switch (daylightSavingsMode)
     {
@@ -131,7 +131,7 @@ final class DaylightChartLegendItemSource
           legendLabel = Messages.getString("DaylightChart.Legend.WithoutDST"); //$NON-NLS-1$
           break;
         case twilight:
-          Twilight twilight = options.getTwilight();
+          final Twilight twilight = options.getTwilight();
           switch (twilight)
           {
             case civil:

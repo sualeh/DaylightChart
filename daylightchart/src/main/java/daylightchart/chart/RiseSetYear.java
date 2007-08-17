@@ -26,7 +26,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.util.TimeZone;
 
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
@@ -53,11 +52,6 @@ final class RiseSetYear
   {
     this.location = location;
     this.year = year;
-    if (location != null)
-    {
-      final TimeZone timeZone = TimeZone.getTimeZone(location.getTimeZoneId());
-      usesDaylightTime = timeZone.useDaylightTime();
-    }
     riseSets = new ArrayList<RiseSet>();
     twilights = new ArrayList<RiseSet>();
   }
@@ -166,6 +160,11 @@ final class RiseSetYear
   void setDstStart(final LocalDate dstStart)
   {
     this.dstStart = dstStart;
+  }
+
+  void setUsesDaylightTime(final boolean usesDaylightTime)
+  {
+    this.usesDaylightTime = usesDaylightTime;
   }
 
   /**

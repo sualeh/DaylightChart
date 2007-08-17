@@ -148,11 +148,10 @@ public final class RiseSetUtility
                                               final int year,
                                               final Options options)
   {
-
+    final TimeZoneOption timeZoneOption = options.getTimeZoneOption();
     final TimeZone timeZone;
     if (location != null)
     {
-      final TimeZoneOption timeZoneOption = options.getTimeZoneOption();
       final String timeZoneId;
       if (timeZoneOption != null
           && timeZoneOption == TimeZoneOption.USE_TIME_ZONE)
@@ -170,10 +169,12 @@ public final class RiseSetUtility
     {
       timeZone = TimeZone.getDefault();
     }
-    final boolean useDaylightTime = timeZone.useDaylightTime();
+    final boolean useDaylightTime = timeZone.useDaylightTime()
+                                    && timeZoneOption != TimeZoneOption.USE_LOCAL_TIME;
     boolean wasDaylightSavings = false;
 
     final RiseSetYear riseSetYear = new RiseSetYear(location, year);
+    riseSetYear.setUsesDaylightTime(useDaylightTime);
     for (final LocalDate date: getYearsDates(year))
     {
       final boolean inDaylightSavings = timeZone.inDaylightTime(date
