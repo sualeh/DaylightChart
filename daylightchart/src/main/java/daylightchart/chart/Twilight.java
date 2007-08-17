@@ -31,31 +31,24 @@ public enum Twilight
 {
 
   /** None. */
-  none("No Twilight", -5D / 6D),
+  none(-5D / 6D),
   /** Civil. */
-  civil("Civil Twilight", -6D),
+  civil(-6D),
   /** Nautical. */
-  nautical("Nautical Twilight", -12D),
+  nautical(-12D),
   /** Astronomical. */
-  astronomical("Astronomical Twilight", -18D);
+  astronomical(-18D);
 
-  private final String label;
   private final double horizon;
 
-  private Twilight(final String label, final double horizon)
+  private Twilight(final double horizon)
   {
-    this.label = label;
     this.horizon = horizon;
   }
 
-  public double getHorizon()
+  double getHorizon()
   {
     return horizon;
-  }
-
-  public String getLabel()
-  {
-    return label;
   }
 
 }

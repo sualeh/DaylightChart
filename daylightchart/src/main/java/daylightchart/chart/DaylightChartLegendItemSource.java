@@ -44,6 +44,11 @@ final class DaylightChartLegendItemSource
     this.options = options;
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see org.jfree.chart.LegendItemSource#getLegendItems()
+   */
   public LegendItemCollection getLegendItems()
   {
     final LegendItemCollection legendItemCollection = new LegendItemCollection();
