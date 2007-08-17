@@ -127,12 +127,12 @@ public final class DaylightChartGui
     {
       locationsTabbedPane = null;
       locationsList = null;
-
+      final Options options = UserPreferences.getOptions();
       final ChartPanel chartPanel = new ChartPanel(new DaylightChart(location,
                                                                      Calendar
                                                                        .getInstance()
                                                                        .get(Calendar.YEAR),
-                                                                     new Options()));
+                                                                     options));
       chartPanel.setPreferredSize(ChartConfiguration.chartDimension);
       setContentPane(chartPanel);
     }
@@ -287,12 +287,9 @@ public final class DaylightChartGui
     {
       public void itemStateChanged(final ItemEvent e)
       {
-        if (e.getStateChange() == ItemEvent.SELECTED)
-        {
-          final Options options = UserPreferences.getOptions();
-          options.setShowChartLegend(!options.isShowChartLegend());
-          UserPreferences.setOptions(options);
-        }
+        final Options options = UserPreferences.getOptions();
+        options.setShowChartLegend(e.getStateChange() == ItemEvent.SELECTED);
+        UserPreferences.setOptions(options);
       }
     });
     menu.add(showLegendMenuItem);
