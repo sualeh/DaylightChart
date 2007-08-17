@@ -116,37 +116,44 @@ final class DaylightChartLegendItemSource
   {
 
     String legendLabel;
-    switch (daylightSavingsMode)
+    if (daylightSavingsMode == null)
     {
-      case with_clock_shift:
-        legendLabel = Messages.getString("DaylightChart.Legend.Daylight"); //$NON-NLS-1$
-        break;
-      case without_clock_shift:
-        legendLabel = Messages.getString("DaylightChart.Legend.WithoutDST"); //$NON-NLS-1$
-        break;
-      case twilight:
-        Twilight twilight = options.getTwilight();
-        switch (twilight)
-        {
-          case civil:
-            legendLabel = Messages
-              .getString("DaylightChart.Legend.Twilight.Civil"); //$NON-NLS-1$
-            break;
-          case nautical:
-            legendLabel = Messages
-              .getString("DaylightChart.Legend.Twilight.Nautical"); //$NON-NLS-1$
-            break;
-          case astronomical:
-            legendLabel = Messages
-              .getString("DaylightChart.Legend.Twilight.Nautical"); //$NON-NLS-1$
-            break;
-          default:
-            legendLabel = Messages.getString("DaylightChart.Legend.Twilight"); //$NON-NLS-1$;
-        }
-        break;
-      default:
-        legendLabel = Messages.getString("DaylightChart.Legend.Night"); //$NON-NLS-1$
-        break;
+      legendLabel = Messages.getString("DaylightChart.Legend.Night"); //$NON-NLS-1$
+    }
+    else
+    {
+      switch (daylightSavingsMode)
+      {
+        case with_clock_shift:
+          legendLabel = Messages.getString("DaylightChart.Legend.Daylight"); //$NON-NLS-1$
+          break;
+        case without_clock_shift:
+          legendLabel = Messages.getString("DaylightChart.Legend.WithoutDST"); //$NON-NLS-1$
+          break;
+        case twilight:
+          Twilight twilight = options.getTwilight();
+          switch (twilight)
+          {
+            case civil:
+              legendLabel = Messages
+                .getString("DaylightChart.Legend.Twilight.Civil"); //$NON-NLS-1$
+              break;
+            case nautical:
+              legendLabel = Messages
+                .getString("DaylightChart.Legend.Twilight.Nautical"); //$NON-NLS-1$
+              break;
+            case astronomical:
+              legendLabel = Messages
+                .getString("DaylightChart.Legend.Twilight.Nautical"); //$NON-NLS-1$
+              break;
+            default:
+              legendLabel = Messages.getString("DaylightChart.Legend.Twilight"); //$NON-NLS-1$;
+          }
+          break;
+        default:
+          legendLabel = "";
+          break;
+      }
     }
     return legendLabel;
   }
