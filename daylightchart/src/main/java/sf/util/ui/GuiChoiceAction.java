@@ -22,12 +22,9 @@
 package sf.util.ui;
 
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ItemListener;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
+import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -43,9 +40,6 @@ import org.apache.commons.lang.StringUtils;
  */
 public class GuiChoiceAction
 {
-
-  private static final Logger LOGGER = Logger.getLogger(GuiChoiceAction.class
-    .getName());
 
   protected String text;
   protected String description;
@@ -127,28 +121,6 @@ public class GuiChoiceAction
   }
 
   /**
-   * {@inheritDoc}
-   * 
-   * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-   */
-  public void actionPerformed(final ActionEvent e)
-  {
-    try
-    {
-      final ActionListener[] actionListeners = listeners
-        .getListeners(ActionListener.class);
-      for (final ActionListener actionListener: actionListeners)
-      {
-        actionListener.actionPerformed(e);
-      }
-    }
-    catch (final Exception ex)
-    {
-      LOGGER.log(Level.WARNING, "Cannot perform action", ex);
-    }
-  }
-
-  /**
    * Adds an item listener
    * 
    * @param l
@@ -159,36 +131,76 @@ public class GuiChoiceAction
     listeners.add(ItemListener.class, l);
   }
 
+  /**
+   * Returns the default icon.
+   * 
+   * @return Default <code>Icon</code>
+   * @see AbstractButton#getIcon
+   */
   public Icon getDefaultIcon()
   {
     return defaultIcon;
   }
 
+  /**
+   * Returns the description.
+   * 
+   * @return Description
+   */
   public String getDescription()
   {
     return description;
   }
 
+  /**
+   * Returns the button group.
+   * 
+   * @return Button group
+   */
   public ButtonGroup getGroup()
   {
     return group;
   }
 
+  /**
+   * Returns the selected icon.
+   * 
+   * @return Selected <code>Icon</code>
+   * @see AbstractButton#getSelectedIcon()
+   */
   public Icon getSelectedIcon()
   {
     return selectedIcon;
   }
 
+  /**
+   * Returns the text.
+   * 
+   * @return Text
+   */
   public String getText()
   {
     return text;
   }
 
+  /**
+   * Returns the state of the button. True if the toggle button is
+   * selected, false if it's not.
+   * 
+   * @return true if the toggle button is selected, otherwise false
+   * @see AbstractButton#isSelected()
+   */
   public boolean isSelected()
   {
     return isSelected;
   }
 
+  /**
+   * Converts the choice action definition into a radio button menu
+   * item.
+   * 
+   * @return Radio button menu item equivalent
+   */
   public JRadioButtonMenuItem toMenuItem()
   {
     final JRadioButtonMenuItem menuItem = new JRadioButtonMenuItem(text,
@@ -204,10 +216,6 @@ public class GuiChoiceAction
     return menuItem;
   }
 
-  /**
-   * @param selectedIconResource
-   * @return
-   */
   protected Icon loadIcon(final String selectedIconResource)
   {
     return new ImageIcon(GuiChoiceAction.class
