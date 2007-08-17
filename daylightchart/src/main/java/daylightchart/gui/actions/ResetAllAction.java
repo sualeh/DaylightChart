@@ -52,6 +52,11 @@ public final class ResetAllAction
       this.daylightChartGui = daylightChartGui;
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+     */
     public void actionPerformed(@SuppressWarnings("unused")
     final ActionEvent actionevent)
     {

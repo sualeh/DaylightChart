@@ -51,6 +51,11 @@ public final class PrintChartAction
       this.locationsTabbedPane = locationsTabbedPane;
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+     */
     public void actionPerformed(@SuppressWarnings("unused")
     final ActionEvent actionevent)
     {

@@ -32,6 +32,11 @@ public class ChartOrientationChoiceAction
       this.chartOrientation = chartOrientation;
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * @see java.awt.event.ItemListener#itemStateChanged(java.awt.event.ItemEvent)
+     */
     public void itemStateChanged(final ItemEvent e)
     {
       if (e.getStateChange() == ItemEvent.SELECTED)

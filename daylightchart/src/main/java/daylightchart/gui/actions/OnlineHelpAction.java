@@ -43,6 +43,11 @@ public final class OnlineHelpAction
   private static final class GuiActionListener
     implements ActionListener
   {
+    /**
+     * {@inheritDoc}
+     * 
+     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+     */
     public void actionPerformed(@SuppressWarnings("unused")
     final ActionEvent actionevent)
     {
