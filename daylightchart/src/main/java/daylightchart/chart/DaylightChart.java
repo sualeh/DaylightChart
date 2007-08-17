@@ -101,8 +101,17 @@ public class DaylightChart
     super(new XYPlot());
 
     // Calculate rise and set timings for the whole year
-    riseSetData = RiseSetUtility.createRiseSetYear(location, year, options);
-    createChart(options);
+    final Options options1;
+    if (options == null)
+    {
+      options1 = new Options();
+    }
+    else
+    {
+      options1 = options;
+    }
+    riseSetData = RiseSetUtility.createRiseSetYear(location, year, options1);
+    createChart(options1);
   }
 
   /**

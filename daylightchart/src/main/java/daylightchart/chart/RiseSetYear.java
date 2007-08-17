@@ -22,6 +22,7 @@
 package daylightchart.chart;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -38,7 +39,10 @@ import daylightchart.location.Location;
  * @author Sualeh Fatehi
  */
 final class RiseSetYear
+  implements Serializable
 {
+
+  private static final long serialVersionUID = -7055404819725658424L;
 
   private final Location location;
   private final int year;

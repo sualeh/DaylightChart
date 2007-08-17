@@ -22,6 +22,8 @@
 package daylightchart.location;
 
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.TimeZone;
 import java.util.logging.Level;
@@ -53,8 +55,8 @@ public final class Location
   private final PointLocation pointLocation;
   private final String timeZoneId;
 
-  private final transient String description;
-  private final transient String details;
+  private transient String description;
+  private transient String details;
 
   /**
    * Copy constructor. Copies the value of a provided location.
@@ -113,23 +115,7 @@ public final class Location
     this.pointLocation = pointLocation;
 
     // Set transient fields
-    final StringBuilder descriptionBuilder = new StringBuilder();
-    if (this.city.length() > 0)
-    {
-      descriptionBuilder.append(city);
-    }
-    if (country != Country.UNKNOWN)
-    {
-      if (descriptionBuilder.length() > 0)
-      {
-        descriptionBuilder.append(", ");
-      }
-      descriptionBuilder.append(country);
-    }
-    description = descriptionBuilder.toString();
-
-    final TimeZone timeZone = TimeZone.getTimeZone(timeZoneId);
-    details = getPointLocation().toString() + ", " + timeZone.getDisplayName();
+    setTransientFields();
 
     // Now that all fields are set, validate
     validateTimeZone();
@@ -303,6 +289,40 @@ public final class Location
   public String toString()
   {
     return description;
+  }
+
+  private void readObject(final ObjectInputStream aInputStream)
+    throws ClassNotFoundException, IOException
+  {
+    // Perform the default deserialization first
+    aInputStream.defaultReadObject();
+
+    // Set transient fields
+    setTransientFields();
+
+    // Now that all fields are set, validate
+    validateTimeZone();
+  }
+
+  private void setTransientFields()
+  {
+    final StringBuilder descriptionBuilder = new StringBuilder();
+    if (city.length() > 0)
+    {
+      descriptionBuilder.append(city);
+    }
+    if (country != Country.UNKNOWN)
+    {
+      if (descriptionBuilder.length() > 0)
+      {
+        descriptionBuilder.append(", ");
+      }
+      descriptionBuilder.append(country);
+    }
+    description = descriptionBuilder.toString();
+
+    final TimeZone timeZone = TimeZone.getTimeZone(timeZoneId);
+    details = getPointLocation().toString() + ", " + timeZone.getDisplayName();
   }
 
   private void validateTimeZone()
