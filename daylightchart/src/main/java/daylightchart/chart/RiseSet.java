@@ -22,9 +22,9 @@
 package daylightchart.chart;
 
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
+import java.io.PrintWriter;
 import java.io.Serializable;
+import java.io.StringWriter;
 
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
@@ -111,28 +111,32 @@ final class RiseSet
   private final Location location;
   private final LocalDate date;
   private final boolean inDaylightSavings;
+  private final double sunriseRaw; // For debugging
+  private final double sunsetRaw; // For debugging
   private final LocalTime sunrise;
   private final LocalTime sunset;
 
   RiseSet(final Location location,
           final LocalDate date,
           final boolean inDaylightSavings,
-          final double sunrise,
-          final double sunset)
+          final double sunriseRaw,
+          final double sunsetRaw)
   {
     this.location = location;
     this.date = date;
     this.inDaylightSavings = inDaylightSavings;
+    this.sunriseRaw = sunriseRaw;
+    this.sunsetRaw = sunsetRaw;
 
-    boolean hasSunrise = !Double.isInfinite(sunrise);
-    boolean hasSunset = !Double.isInfinite(sunset);
-    if (sunrise == Double.POSITIVE_INFINITY
-        && sunset == Double.POSITIVE_INFINITY)
+    boolean hasSunrise = !Double.isInfinite(sunriseRaw);
+    boolean hasSunset = !Double.isInfinite(sunsetRaw);
+    if (sunriseRaw == Double.POSITIVE_INFINITY
+        && sunsetRaw == Double.POSITIVE_INFINITY)
     {
       riseSetType = RiseSetType.all_daylight;
     }
-    else if (sunrise == Double.NEGATIVE_INFINITY
-             && sunset == Double.NEGATIVE_INFINITY)
+    else if (sunriseRaw == Double.NEGATIVE_INFINITY
+             && sunsetRaw == Double.NEGATIVE_INFINITY)
     {
       riseSetType = RiseSetType.all_nighttime;
     }
@@ -149,31 +153,31 @@ final class RiseSet
     {
       case all_daylight:
       case all_nighttime:
-        this.sunrise = JUST_AFTER_MIDNIGHT;
-        this.sunset = JUST_BEFORE_MIDNIGHT;
+        sunrise = JUST_AFTER_MIDNIGHT;
+        sunset = JUST_BEFORE_MIDNIGHT;
         break;
       case partial:
         if (hasSunrise)
         {
-          this.sunrise = toLocalTime(sunrise);
+          sunrise = toLocalTime(sunriseRaw);
         }
         else
         {
-          this.sunrise = JUST_AFTER_MIDNIGHT;
+          sunrise = JUST_AFTER_MIDNIGHT;
         }
         if (hasSunrise)
         {
-          this.sunset = toLocalTime(sunset);
+          sunset = toLocalTime(sunsetRaw);
         }
         else
         {
-          this.sunset = JUST_BEFORE_MIDNIGHT;
+          sunset = JUST_BEFORE_MIDNIGHT;
         }
         break;
       case normal:
       default:
-        this.sunrise = toLocalTime(sunrise);
-        this.sunset = toLocalTime(sunset);
+        sunrise = toLocalTime(sunriseRaw);
+        sunset = toLocalTime(sunsetRaw);
         break;
     }
 
@@ -188,6 +192,8 @@ final class RiseSet
     this.location = location;
     this.date = date;
     this.inDaylightSavings = inDaylightSavings;
+    sunriseRaw = Double.NaN;
+    sunsetRaw = Double.NaN;
 
     if (sunrise.equals(JUST_AFTER_MIDNIGHT)
         && !sunset.equals(JUST_BEFORE_MIDNIGHT)
@@ -230,6 +236,8 @@ final class RiseSet
     this.location = location;
     this.date = date;
     inDaylightSavings = false;
+    sunriseRaw = Double.NaN;
+    sunsetRaw = Double.NaN;
 
     if (riseSetType == RiseSetType.all_daylight
         || riseSetType == RiseSetType.all_nighttime)
@@ -257,15 +265,12 @@ final class RiseSet
     }
     else
     {
-      final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-      new PrintStream(outputStream, true)
-        .printf("%s, %s: (%s) sunrise %s sunset %s",
-                location.getDescription(),
-                date,
-                riseSetType,
-                sunrise.toString("HH:mm:ss"),
-                sunset.toString("HH:mm:ss"));
-      return outputStream.toString();
+      final StringWriter writer = new StringWriter();
+      new PrintWriter(writer, true)
+        .printf("%s, %s: (%s) sunrise %06.3f %s sunset %05.3f %s", location
+          .getDescription(), date, riseSetType, sunriseRaw, sunrise
+          .toString("HH:mm:ss"), sunsetRaw, sunset.toString("HH:mm:ss"));
+      return writer.toString();
     }
   }
 

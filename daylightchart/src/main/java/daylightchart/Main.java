@@ -36,6 +36,7 @@ import sf.util.CommandLineParser.StringOption;
 import com.jgoodies.looks.plastic.PlasticLookAndFeel;
 import com.jgoodies.looks.plastic.theme.LightGray;
 
+import daylightchart.chart.RiseSetUtility;
 import daylightchart.gui.DaylightChartGui;
 import daylightchart.location.Location;
 import daylightchart.location.parser.LocationParser;
@@ -52,7 +53,8 @@ public final class Main
 
   private static final Logger LOGGER = Logger.getLogger(Main.class.getName());
 
-  private static final String OPTION_NOPREFS = "noprefs";
+  private static final String OPTION_DEBUG_CALCULATIONS = "debug-calcs";
+  private static final String OPTION_NO_PREFERENCES = "noprefs";
   private static final String OPTION_LOCATION = "location";
 
   /**
@@ -68,12 +70,18 @@ public final class Main
 
     // Parse command line
     final CommandLineParser parser = new CommandLineParser();
-    parser.addOption(new BooleanOption(Option.NO_SHORT_FORM, OPTION_NOPREFS));
+    parser.addOption(new BooleanOption(Option.NO_SHORT_FORM,
+                                       OPTION_DEBUG_CALCULATIONS));
+    parser.addOption(new BooleanOption(Option.NO_SHORT_FORM,
+                                       OPTION_NO_PREFERENCES));
     parser.addOption(new StringOption(Option.NO_SHORT_FORM,
                                       OPTION_LOCATION,
                                       null));
     parser.parse(args);
-    final boolean noPrefs = parser.getBooleanOptionValue(OPTION_NOPREFS);
+    final boolean debugCalculations = parser
+      .getBooleanOptionValue(OPTION_DEBUG_CALCULATIONS);
+    final boolean noPreferences = parser
+      .getBooleanOptionValue(OPTION_NO_PREFERENCES);
     final String locationString = parser.getStringOptionValue(OPTION_LOCATION);
     Location location = null;
     if (locationString != null)
@@ -88,20 +96,27 @@ public final class Main
       }
     }
 
-    UserPreferences.setSavePreferences(!noPrefs);
+    UserPreferences.setSavePreferences(!noPreferences);
 
-    // Set UI look and feel
-    try
+    if (debugCalculations && location != null)
     {
-      PlasticLookAndFeel.setPlasticTheme(new LightGray());
-      UIManager.setLookAndFeel(new PlasticLookAndFeel());
+      RiseSetUtility.debugCalculations(location);
     }
-    catch (final Exception e)
+    else
     {
-      LOGGER.log(Level.WARNING, "Cannot set look and feel");
-    }
+      // Set UI look and feel
+      try
+      {
+        PlasticLookAndFeel.setPlasticTheme(new LightGray());
+        UIManager.setLookAndFeel(new PlasticLookAndFeel());
+      }
+      catch (final Exception e)
+      {
+        LOGGER.log(Level.WARNING, "Cannot set look and feel");
+      }
 
-    new DaylightChartGui(location).setVisible(true);
+      new DaylightChartGui(location).setVisible(true);
+    }
 
   }
 
