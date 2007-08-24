@@ -23,7 +23,6 @@ package daylightchart.chart;
 
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -173,6 +172,12 @@ public final class RiseSetUtility
                                     && timeZoneOption != TimeZoneOption.USE_LOCAL_TIME;
     boolean wasDaylightSavings = false;
 
+    // Create the log streams
+    final ByteArrayOutputStream outputRiseSetRaw = new ByteArrayOutputStream();
+    final ByteArrayOutputStream outputTwilightRaw = new ByteArrayOutputStream();
+    final ByteArrayOutputStream outputRiseSet = new ByteArrayOutputStream();
+    final ByteArrayOutputStream outputTwilight = new ByteArrayOutputStream();
+
     final RiseSetYear riseSetYear = new RiseSetYear(location, year);
     riseSetYear.setUsesDaylightTime(useDaylightTime);
     for (final LocalDate date: getYearsDates(year))
@@ -196,7 +201,11 @@ public final class RiseSetUtility
                                                date,
                                                useDaylightTime,
                                                inDaylightSavings,
-                                               SunPositionAlgorithm.SUNRISE_SUNSET);
+                                               Twilight.none,
+                                               new PrintStream(outputRiseSetRaw,
+                                                               true),
+                                               new PrintStream(outputRiseSet,
+                                                               true));
       riseSetYear.addRiseSet(riseSet);
 
       final Twilight twilight = options.getTwilight();
@@ -206,11 +215,22 @@ public final class RiseSetUtility
                                                    date,
                                                    useDaylightTime,
                                                    inDaylightSavings,
-                                                   twilight.getHorizon());
+                                                   twilight,
+                                                   new PrintStream(outputTwilightRaw,
+                                                                   true),
+                                                   new PrintStream(outputTwilight,
+                                                                   true));
         riseSetYear.addTwilight(twilights);
       }
 
     }
+
+    LOGGER.log(Level.FINE, "Sunrise and sunset times:\n"
+                           + outputRiseSetRaw.toString());
+    LOGGER.log(Level.FINE, "Sunrise and sunset times:\n"
+                           + outputRiseSet.toString());
+    LOGGER.log(Level.FINE, "Twilight times:\n" + outputTwilightRaw.toString());
+    LOGGER.log(Level.FINE, "Twilight times:\n" + outputTwilight.toString());
 
     return riseSetYear;
 
@@ -221,7 +241,9 @@ public final class RiseSetUtility
                                           final LocalDate date,
                                           final boolean useDaylightTime,
                                           final boolean inDaylightSavings,
-                                          final double horizon)
+                                          final Twilight twilight,
+                                          final PrintStream logStreamRaw,
+                                          final PrintStream logStream)
   {
     if (location != null)
     {
@@ -233,27 +255,15 @@ public final class RiseSetUtility
     }
     sunAlgorithm.setDate(date.getYear(), date.getMonthOfYear(), date
       .getDayOfMonth());
-    final double[] sunriseSunset = sunAlgorithm.calcRiseSet(horizon);
+    final double[] sunriseSunset = sunAlgorithm.calcRiseSet(twilight
+      .getHorizon());
 
-    {
-      ByteArrayOutputStream outputStream = null;
-      try
-      {
-        outputStream = new ByteArrayOutputStream();
-        new PrintStream(outputStream, true)
-          .printf("%s, %s: sunrise %2.3f sunset %2.3f%n",
-                  location,
-                  date,
-                  sunriseSunset[0],
-                  sunriseSunset[1]);
-        outputStream.close();
-        LOGGER.log(Level.FINE, outputStream.toString());
-      }
-      catch (final IOException e)
-      {
-        // Ignore
-      }
-    }
+    logStreamRaw.printf("%s, %s: twilight - %s: sunrise %2.3f sunset %2.3f%n",
+                        location,
+                        date,
+                        twilight,
+                        sunriseSunset[0],
+                        sunriseSunset[1]);
 
     if (useDaylightTime && inDaylightSavings)
     {
@@ -267,11 +277,13 @@ public final class RiseSetUtility
       }
     }
 
-    return new RiseSet(location,
-                       date,
-                       (useDaylightTime && inDaylightSavings),
-                       sunriseSunset[0],
-                       sunriseSunset[1]);
+    final RiseSet riseSet = new RiseSet(location,
+                                        date,
+                                        (useDaylightTime && inDaylightSavings),
+                                        sunriseSunset[0],
+                                        sunriseSunset[1]);
+    logStream.printf("%s twilight - %s%n", riseSet, twilight);
+    return riseSet;
 
   }
 

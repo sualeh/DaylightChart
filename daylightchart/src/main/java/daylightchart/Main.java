@@ -28,6 +28,7 @@ import java.util.logging.Logger;
 import javax.swing.UIManager;
 
 import sf.util.CommandLineParser;
+import sf.util.CommandLineUtility;
 import sf.util.CommandLineParser.BooleanOption;
 import sf.util.CommandLineParser.Option;
 import sf.util.CommandLineParser.StringOption;
@@ -62,6 +63,8 @@ public final class Main
    */
   public static void main(final String[] args)
   {
+
+    CommandLineUtility.setLogLevel(args);
 
     // Parse command line
     final CommandLineParser parser = new CommandLineParser();
