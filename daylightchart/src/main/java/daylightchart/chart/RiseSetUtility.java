@@ -230,18 +230,25 @@ public final class RiseSetUtility
       .createRiseSetYear(location, year, new Options());
 
     // Print rise sets
-    StringWriter debugWriter = new StringWriter();
-    PrintWriter writer = new PrintWriter(debugWriter, true);
     List<RiseSet> riseSets = riseSetData.getRiseSets(daylightSavingsMode
       .isAdjustedForDaylightSavings());
-    for (RiseSet riseSet: riseSets)
+    debugPrintList(riseSets);
+
+    List<DaylightBand> daylightBands = RiseSetUtility
+      .createDaylightBands(riseSets, daylightSavingsMode);
+    debugPrintList(daylightBands);
+  }
+
+  private static void debugPrintList(List list)
+  {
+    StringWriter debugWriter = new StringWriter();
+    PrintWriter writer = new PrintWriter(debugWriter, true);
+    for (Object listItem: list)
     {
-      writer.printf("%s%n", riseSet);
+      writer.printf("%s%n", listItem);
     }
     writer.close();
     LOGGER.log(Level.FINE, debugWriter.toString());
-
-    RiseSetUtility.createDaylightBands(riseSets, daylightSavingsMode);
   }
 
   @SuppressWarnings("boxing")

@@ -217,41 +217,6 @@ final class RiseSet
   }
 
   /**
-   * Sunrise and sunset at a given location, and a given date.
-   * 
-   * @param location
-   *        Location
-   * @param date
-   *        Date
-   * @param sunrise
-   *        Sunrise time
-   * @param sunset
-   *        Sunset time
-   */
-  RiseSet(final Location location,
-          final LocalDate date,
-          final RiseSetType riseSetType)
-  {
-    this.riseSetType = riseSetType;
-    this.location = location;
-    this.date = date;
-    inDaylightSavings = false;
-    sunriseRaw = Double.NaN;
-    sunsetRaw = Double.NaN;
-
-    if (riseSetType == RiseSetType.all_daylight
-        || riseSetType == RiseSetType.all_nighttime)
-    {
-      sunrise = JUST_AFTER_MIDNIGHT;
-      sunset = JUST_BEFORE_MIDNIGHT;
-    }
-    else
-    {
-      throw new IllegalArgumentException("Bad rise/ set type provided");
-    }
-  }
-
-  /**
    * {@inheritDoc}
    * 
    * @see java.lang.Object#toString()
