@@ -53,6 +53,10 @@ import org.jfree.ui.RectangleEdge;
 import org.jfree.ui.RectangleInsets;
 import org.jfree.ui.TextAnchor;
 
+import daylightchart.chart.calculation.DaylightBand;
+import daylightchart.chart.calculation.DaylightSavingsMode;
+import daylightchart.chart.calculation.RiseSetUtility;
+import daylightchart.chart.calculation.RiseSetYear;
 import daylightchart.location.Location;
 import daylightchart.options.Options;
 import daylightchart.options.chart.ChartOptions;

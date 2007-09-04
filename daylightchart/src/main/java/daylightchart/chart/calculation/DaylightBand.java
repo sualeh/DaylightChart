@@ -19,7 +19,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * 
  */
-package daylightchart.chart;
+package daylightchart.chart.calculation;
 
 
 import java.util.ArrayList;
@@ -32,7 +32,7 @@ import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.data.time.TimeSeriesDataItem;
 import org.joda.time.LocalDateTime;
 
-import daylightchart.chart.RiseSet.RiseSetType;
+import daylightchart.chart.calculation.RiseSet.RiseSetType;
 
 /**
  * One daylight band, consisting of a sunrise series and a sunset
@@ -40,7 +40,7 @@ import daylightchart.chart.RiseSet.RiseSetType;
  * 
  * @author sfatehi
  */
-final class DaylightBand
+public final class DaylightBand
 {
 
   private final String name;
@@ -56,6 +56,30 @@ final class DaylightBand
   {
     this.name = name;
     riseSets = new ArrayList<RiseSet>();
+  }
+
+  /**
+   * Get the band as a collection.
+   * 
+   * @return Time series collection
+   */
+  public TimeSeriesCollection getTimeSeriesCollection()
+  {
+    final TimeSeries sunriseSeries = new TimeSeries("Sunrise " + name);
+    final TimeSeries sunsetSeries = new TimeSeries("Sunset " + name);
+    for (final RiseSet riseSet: riseSets)
+    {
+      final LocalDateTime sunrise = riseSet.getSunrise();
+      final LocalDateTime sunset = riseSet.getSunset();
+      sunriseSeries.add(toTimeSeriesDataItem(sunrise));
+      sunsetSeries.add(toTimeSeriesDataItem(sunset));
+    }
+
+    final TimeSeriesCollection band = new TimeSeriesCollection();
+    band.addSeries(sunriseSeries);
+    band.addSeries(sunsetSeries);
+
+    return band;
   }
 
   /**
@@ -88,30 +112,6 @@ final class DaylightBand
     {
       riseSets.add(riseSet);
     }
-  }
-
-  /**
-   * Get the band as a collection.
-   * 
-   * @return Time series collection
-   */
-  TimeSeriesCollection getTimeSeriesCollection()
-  {
-    final TimeSeries sunriseSeries = new TimeSeries("Sunrise " + name);
-    final TimeSeries sunsetSeries = new TimeSeries("Sunset " + name);
-    for (final RiseSet riseSet: riseSets)
-    {
-      final LocalDateTime sunrise = riseSet.getSunrise();
-      final LocalDateTime sunset = riseSet.getSunset();
-      sunriseSeries.add(toTimeSeriesDataItem(sunrise));
-      sunsetSeries.add(toTimeSeriesDataItem(sunset));
-    }
-
-    final TimeSeriesCollection band = new TimeSeriesCollection();
-    band.addSeries(sunriseSeries);
-    band.addSeries(sunsetSeries);
-
-    return band;
   }
 
   /**

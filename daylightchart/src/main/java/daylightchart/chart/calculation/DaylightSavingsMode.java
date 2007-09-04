@@ -19,7 +19,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * 
  */
-package daylightchart.chart;
+package daylightchart.chart.calculation;
 
 
 import java.awt.BasicStroke;
@@ -29,7 +29,9 @@ import org.jfree.chart.renderer.xy.XYDifferenceRenderer;
 import org.jfree.chart.renderer.xy.XYItemRenderer;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 
-enum DaylightSavingsMode
+import daylightchart.chart.ChartConfiguration;
+
+public enum DaylightSavingsMode
 {
 
   /** With clock shift. */
@@ -49,23 +51,7 @@ enum DaylightSavingsMode
     this.adjustedForDaylightSavings = adjustedForDaylightSavings;
   }
 
-  /**
-   * {@inheritDoc}
-   * 
-   * @see java.lang.Enum#toString()
-   */
-  @Override
-  public String toString()
-  {
-    return description;
-  }
-
-  String getDescription()
-  {
-    return description;
-  }
-
-  XYItemRenderer getRenderer()
+  public XYItemRenderer getRenderer()
   {
     XYItemRenderer renderer;
     switch (this)
@@ -86,9 +72,25 @@ enum DaylightSavingsMode
     return renderer;
   }
 
-  boolean isAdjustedForDaylightSavings()
+  public boolean isAdjustedForDaylightSavings()
   {
     return adjustedForDaylightSavings;
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see java.lang.Enum#toString()
+   */
+  @Override
+  public String toString()
+  {
+    return description;
+  }
+
+  String getDescription()
+  {
+    return description;
   }
 
   private XYItemRenderer createDifferenceRenderer(final Color color)

@@ -19,7 +19,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * 
  */
-package daylightchart.chart;
+package daylightchart.chart.calculation;
 
 
 import java.io.Serializable;
@@ -38,7 +38,7 @@ import daylightchart.location.Location;
  * 
  * @author Sualeh Fatehi
  */
-final class RiseSetYear
+public final class RiseSetYear
   implements Serializable
 {
 
@@ -49,25 +49,15 @@ final class RiseSetYear
   private boolean usesDaylightTime;
   private LocalDate dstStart;
   private LocalDate dstEnd;
-  private final List<RiseSet> riseSets;
-  private final List<RiseSet> twilights;
+  private final List<RiseSetTuple> riseSets;
+  private final List<RiseSetTuple> twilights;
 
   RiseSetYear(final Location location, final int year)
   {
     this.location = location;
     this.year = year;
-    riseSets = new ArrayList<RiseSet>();
-    twilights = new ArrayList<RiseSet>();
-  }
-
-  void addRiseSet(final RiseSet riseSet)
-  {
-    riseSets.add(riseSet);
-  }
-
-  void addTwilight(final RiseSet riseSet)
-  {
-    twilights.add(riseSet);
+    riseSets = new ArrayList<RiseSetTuple>();
+    twilights = new ArrayList<RiseSetTuple>();
   }
 
   /**
@@ -75,7 +65,7 @@ final class RiseSetYear
    * 
    * @return End of DST.
    */
-  Date getDstEndDate()
+  public Date getDstEndDate()
   {
     Date dstEndDate = null;
     if (usesDaylightTime && dstEnd != null)
@@ -91,7 +81,7 @@ final class RiseSetYear
    * 
    * @return Start of DST.
    */
-  Date getDstStartDate()
+  public Date getDstStartDate()
   {
     Date dstStartDate = null;
     if (usesDaylightTime && dstStart != null)
@@ -107,7 +97,7 @@ final class RiseSetYear
    * 
    * @return Location.
    */
-  Location getLocation()
+  public Location getLocation()
   {
     return location;
   }
@@ -117,21 +107,27 @@ final class RiseSetYear
    * 
    * @return List of rise/ set timings.
    */
-  List<RiseSet> getRiseSets(boolean adjustedForDaylightSavings)
+  public List<RiseSet> getRiseSets(boolean adjustedForDaylightSavings)
   {
     List<RiseSet> copiedRiseSets;
     if (!adjustedForDaylightSavings)
     {
       copiedRiseSets = new ArrayList<RiseSet>();
-      for (final RiseSet riseSet: riseSets)
+      for (final RiseSetTuple riseSetTuple: riseSets)
       {
+        final RiseSet riseSet = new RiseSet(riseSetTuple);
         copiedRiseSets.add(riseSet
           .withAdjustmentForDaylightSavings(adjustedForDaylightSavings));
       }
     }
     else
     {
-      copiedRiseSets = riseSets;
+      copiedRiseSets = new ArrayList<RiseSet>();
+      for (final RiseSetTuple riseSetTuple: riseSets)
+      {
+        final RiseSet riseSet = new RiseSet(riseSetTuple);
+        copiedRiseSets.add(riseSet);
+      }
     }
     return Collections.unmodifiableList(copiedRiseSets);
   }
@@ -141,9 +137,16 @@ final class RiseSetYear
    * 
    * @return List of rise/ set timings.
    */
-  List<RiseSet> getTwilights()
+  public List<RiseSet> getTwilights()
   {
-    return Collections.unmodifiableList(twilights);
+    List<RiseSet> copiedRiseSets;
+    copiedRiseSets = new ArrayList<RiseSet>();
+    for (final RiseSetTuple riseSetTuple: twilights)
+    {
+      final RiseSet riseSet = new RiseSet(riseSetTuple);
+      copiedRiseSets.add(riseSet);
+    }
+    return Collections.unmodifiableList(copiedRiseSets);
   }
 
   /**
@@ -151,9 +154,29 @@ final class RiseSetYear
    * 
    * @return Year.
    */
-  int getYear()
+  public int getYear()
   {
     return year;
+  }
+
+  /**
+   * Whether the location uses DST rules.
+   * 
+   * @return Whether the location uses DST rules.
+   */
+  public boolean usesDaylightTime()
+  {
+    return usesDaylightTime;
+  }
+
+  void addRiseSet(final RiseSetTuple riseSet)
+  {
+    riseSets.add(riseSet);
+  }
+
+  void addTwilight(final RiseSetTuple riseSet)
+  {
+    twilights.add(riseSet);
   }
 
   void setDstEnd(final LocalDate dstEnd)
@@ -169,16 +192,6 @@ final class RiseSetYear
   void setUsesDaylightTime(final boolean usesDaylightTime)
   {
     this.usesDaylightTime = usesDaylightTime;
-  }
-
-  /**
-   * Whether the location uses DST rules.
-   * 
-   * @return Whether the location uses DST rules.
-   */
-  boolean usesDaylightTime()
-  {
-    return usesDaylightTime;
   }
 
 }

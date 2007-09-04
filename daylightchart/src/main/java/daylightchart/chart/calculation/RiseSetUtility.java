@@ -19,7 +19,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * 
  */
-package daylightchart.chart;
+package daylightchart.chart.calculation;
 
 
 import java.io.PrintWriter;
@@ -32,11 +32,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
 import org.joda.time.LocalTime;
 import org.sunposition.calculation.SunPositionAlgorithm;
 import org.sunposition.calculation.SunPositionAlgorithmFactory;
 
-import daylightchart.chart.RiseSet.RiseSetType;
+import daylightchart.chart.TimeZoneOption;
+import daylightchart.chart.calculation.RiseSet.RiseSetType;
 import daylightchart.location.Location;
 import daylightchart.location.parser.DefaultTimezones;
 import daylightchart.options.Options;
@@ -74,7 +76,7 @@ public final class RiseSetUtility
 
     for (final RiseSet riseSet: riseSetData)
     {
-      final RiseSet[] riseSets = RiseSet.splitAtMidnight(riseSet);
+      final RiseSet[] riseSets = splitAtMidnight(riseSet);
       if (riseSets.length == 2)
       {
         // Create a new wrap band if necessary
@@ -192,21 +194,21 @@ public final class RiseSetUtility
       }
       wasDaylightSavings = inDaylightSavings;
 
-      final RiseSet riseSet = calculateRiseSet(location,
-                                               date,
-                                               useDaylightTime,
-                                               inDaylightSavings,
-                                               Twilight.none);
+      final RiseSetTuple riseSet = calculateRiseSet(location,
+                                                    date,
+                                                    useDaylightTime,
+                                                    inDaylightSavings,
+                                                    Twilight.none);
       riseSetYear.addRiseSet(riseSet);
 
       final Twilight twilight = options.getTwilight();
       if (twilight != null)
       {
-        final RiseSet twilights = calculateRiseSet(location,
-                                                   date,
-                                                   useDaylightTime,
-                                                   inDaylightSavings,
-                                                   twilight);
+        final RiseSetTuple twilights = calculateRiseSet(location,
+                                                        date,
+                                                        useDaylightTime,
+                                                        inDaylightSavings,
+                                                        twilight);
         riseSetYear.addTwilight(twilights);
       }
 
@@ -230,33 +232,64 @@ public final class RiseSetUtility
       .createRiseSetYear(location, year, new Options());
 
     // Print rise sets
-    List<RiseSet> riseSets = riseSetData.getRiseSets(daylightSavingsMode
+    final List<RiseSet> riseSets = riseSetData.getRiseSets(daylightSavingsMode
       .isAdjustedForDaylightSavings());
     debugPrintList(riseSets);
 
-    List<DaylightBand> daylightBands = RiseSetUtility
+    final List<DaylightBand> daylightBands = RiseSetUtility
       .createDaylightBands(riseSets, daylightSavingsMode);
     debugPrintList(daylightBands);
   }
 
-  private static void debugPrintList(List list)
+  /**
+   * Splits the given rise/ set at midnight.
+   * 
+   * @param riseSet
+   *        Rise/ set to split
+   * @return Split RiseSet(s)
+   */
+  static RiseSet[] splitAtMidnight(final RiseSet riseSet)
   {
-    StringWriter debugWriter = new StringWriter();
-    PrintWriter writer = new PrintWriter(debugWriter, true);
-    for (Object listItem: list)
+    if (riseSet == null)
     {
-      writer.printf("%s%n", listItem);
+      return new RiseSet[0];
     }
-    writer.close();
-    LOGGER.log(Level.FINE, debugWriter.toString());
+
+    final LocalDateTime sunrise = riseSet.getSunrise();
+    final LocalDateTime sunset = riseSet.getSunset();
+
+    if (sunset.getHourOfDay() < 9)
+    {
+      return new RiseSet[] {
+          riseSet.withNewRiseSetTimes(sunrise.toLocalTime(),
+                                      RiseSet.JUST_BEFORE_MIDNIGHT),
+          riseSet.withNewRiseSetTimes(RiseSet.JUST_AFTER_MIDNIGHT, sunset
+            .toLocalTime())
+      };
+    }
+    else if (sunrise.getHourOfDay() > 15)
+    {
+      return new RiseSet[] {
+          riseSet.withNewRiseSetTimes(RiseSet.JUST_AFTER_MIDNIGHT, sunset
+            .toLocalTime()),
+          riseSet.withNewRiseSetTimes(sunrise.toLocalTime(),
+                                      RiseSet.JUST_BEFORE_MIDNIGHT)
+      };
+    }
+    else
+    {
+      return new RiseSet[] {
+        riseSet
+      };
+    }
   }
 
   @SuppressWarnings("boxing")
-  private static RiseSet calculateRiseSet(final Location location,
-                                          final LocalDate date,
-                                          final boolean useDaylightTime,
-                                          final boolean inDaylightSavings,
-                                          final Twilight twilight)
+  private static RiseSetTuple calculateRiseSet(final Location location,
+                                               final LocalDate date,
+                                               final boolean useDaylightTime,
+                                               final boolean inDaylightSavings,
+                                               final Twilight twilight)
   {
     if (location != null)
     {
@@ -283,13 +316,25 @@ public final class RiseSetUtility
       }
     }
 
-    final RiseSet riseSet = new RiseSet(location,
-                                        date,
-                                        (useDaylightTime && inDaylightSavings),
-                                        sunriseSunset[0],
-                                        sunriseSunset[1]);
+    final RiseSetTuple riseSet = new RiseSetTuple(location,
+                                                  date,
+                                                  (useDaylightTime && inDaylightSavings),
+                                                  sunriseSunset[0],
+                                                  sunriseSunset[1]);
     return riseSet;
 
+  }
+
+  private static void debugPrintList(final List list)
+  {
+    final StringWriter debugWriter = new StringWriter();
+    final PrintWriter writer = new PrintWriter(debugWriter, true);
+    for (final Object listItem: list)
+    {
+      writer.printf("%s%n", listItem);
+    }
+    writer.close();
+    LOGGER.log(Level.FINE, debugWriter.toString());
   }
 
   /**
@@ -313,5 +358,4 @@ public final class RiseSetUtility
   {
 
   }
-
 }

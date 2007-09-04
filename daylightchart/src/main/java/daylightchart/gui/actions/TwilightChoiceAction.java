@@ -8,7 +8,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.JMenu;
 
 import sf.util.ui.GuiChoiceAction;
-import daylightchart.chart.Twilight;
+import daylightchart.chart.calculation.Twilight;
 import daylightchart.gui.Messages;
 import daylightchart.options.Options;
 import daylightchart.options.UserPreferences;

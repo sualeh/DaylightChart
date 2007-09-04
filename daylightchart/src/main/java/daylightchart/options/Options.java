@@ -26,7 +26,7 @@ import java.io.Serializable;
 
 import daylightchart.chart.ChartOrientation;
 import daylightchart.chart.TimeZoneOption;
-import daylightchart.chart.Twilight;
+import daylightchart.chart.calculation.Twilight;
 import daylightchart.location.LocationsSortOrder;
 import daylightchart.options.chart.ChartOptions;
 

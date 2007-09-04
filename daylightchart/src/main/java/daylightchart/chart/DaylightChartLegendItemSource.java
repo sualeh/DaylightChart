@@ -31,6 +31,8 @@ import org.jfree.chart.LegendItem;
 import org.jfree.chart.LegendItemCollection;
 import org.jfree.chart.LegendItemSource;
 
+import daylightchart.chart.calculation.DaylightSavingsMode;
+import daylightchart.chart.calculation.Twilight;
 import daylightchart.options.Options;
 
 final class DaylightChartLegendItemSource
