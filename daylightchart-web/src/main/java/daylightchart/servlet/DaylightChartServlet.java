@@ -35,7 +35,7 @@ import org.pointlocation6709.PointLocation;
 import org.pointlocation6709.parser.CoordinateParser;
 import org.pointlocation6709.parser.ParserException;
 
-import daylightchart.chart.DaylightChart;
+import daylightchart.daylightchart.chart.DaylightChart;
 import daylightchart.location.Country;
 import daylightchart.location.Location;
 import daylightchart.location.parser.Countries;
