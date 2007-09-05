@@ -53,9 +53,9 @@ import org.jfree.ui.RectangleEdge;
 import org.jfree.ui.RectangleInsets;
 import org.jfree.ui.TextAnchor;
 
-import daylightchart.chart.calculation.DaylightBand;
-import daylightchart.chart.calculation.RiseSetUtility;
-import daylightchart.chart.calculation.RiseSetYear;
+import daylightchart.calculation.DaylightBand;
+import daylightchart.calculation.RiseSetUtility;
+import daylightchart.calculation.RiseSetYear;
 import daylightchart.location.Location;
 import daylightchart.options.Options;
 import daylightchart.options.chart.ChartOptions;
@@ -175,10 +175,12 @@ public class DaylightChart
     final List<DaylightBand> bands = riseSetData.getBands();
     for (final DaylightBand band: bands)
     {
+      final DaylightChartBand chartBand = new DaylightChartBand(band);
       LOGGER.log(Level.FINE, band.toString());
       final int currentDatasetNumber = plot.getDatasetCount();
-      plot.setDataset(currentDatasetNumber, band.getTimeSeriesCollection());
-      plot.setRenderer(currentDatasetNumber, band.getRenderer());
+      plot
+        .setDataset(currentDatasetNumber, chartBand.getTimeSeriesCollection());
+      plot.setRenderer(currentDatasetNumber, chartBand.getRenderer());
     }
   }
 

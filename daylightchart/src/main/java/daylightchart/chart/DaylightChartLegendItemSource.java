@@ -31,8 +31,8 @@ import org.jfree.chart.LegendItem;
 import org.jfree.chart.LegendItemCollection;
 import org.jfree.chart.LegendItemSource;
 
-import daylightchart.chart.calculation.DaylightSavingsMode;
-import daylightchart.chart.calculation.Twilight;
+import daylightchart.calculation.DaylightBandType;
+import daylightchart.calculation.Twilight;
 import daylightchart.options.Options;
 
 final class DaylightChartLegendItemSource
@@ -61,10 +61,9 @@ final class DaylightChartLegendItemSource
                                               configuredNightColor,
                                               false));
 
-    for (final DaylightSavingsMode daylightSavingsMode: DaylightSavingsMode
-      .values())
+    for (final DaylightBandType daylightSavingsMode: DaylightBandType.values())
     {
-      if (daylightSavingsMode == DaylightSavingsMode.twilight
+      if (daylightSavingsMode == DaylightBandType.twilight
           && options.getTwilight() == Twilight.none)
       {
         continue;
@@ -93,7 +92,7 @@ final class DaylightChartLegendItemSource
     return legendItem;
   }
 
-  private LegendItem getLegendItem(final DaylightSavingsMode daylightSavingsMode)
+  private LegendItem getLegendItem(final DaylightBandType daylightSavingsMode)
   {
     final String legendLabel = resolveLegendLabel(daylightSavingsMode);
     LegendItem legendItem;
@@ -119,7 +118,7 @@ final class DaylightChartLegendItemSource
     return legendItem;
   }
 
-  private String resolveLegendLabel(final DaylightSavingsMode daylightSavingsMode)
+  private String resolveLegendLabel(final DaylightBandType daylightSavingsMode)
   {
 
     String legendLabel;

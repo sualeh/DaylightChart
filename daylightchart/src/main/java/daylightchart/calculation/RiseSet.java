@@ -19,7 +19,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * 
  */
-package daylightchart.chart.calculation;
+package daylightchart.calculation;
 
 
 import java.io.PrintWriter;
@@ -40,7 +40,7 @@ import daylightchart.location.Location;
  * 
  * @author Sualeh Fatehi
  */
-final class RiseSet
+public final class RiseSet
   implements Serializable
 {
 
@@ -166,6 +166,26 @@ final class RiseSet
   }
 
   /**
+   * Sunrise time.
+   * 
+   * @return Sunrise time
+   */
+  public LocalDateTime getSunrise()
+  {
+    return date.toDateTime(sunrise).toLocalDateTime();
+  }
+
+  /**
+   * Sunset time.
+   * 
+   * @return Sunset time
+   */
+  public LocalDateTime getSunset()
+  {
+    return date.toDateTime(sunset).toLocalDateTime();
+  }
+
+  /**
    * {@inheritDoc}
    * 
    * @see java.lang.Object#toString()
@@ -218,26 +238,6 @@ final class RiseSet
   RiseSetType getRiseSetType()
   {
     return riseSetType;
-  }
-
-  /**
-   * Sunrise time.
-   * 
-   * @return Sunrise time
-   */
-  LocalDateTime getSunrise()
-  {
-    return date.toDateTime(sunrise).toLocalDateTime();
-  }
-
-  /**
-   * Sunset time.
-   * 
-   * @return Sunset time
-   */
-  LocalDateTime getSunset()
-  {
-    return date.toDateTime(sunset).toLocalDateTime();
   }
 
   /**

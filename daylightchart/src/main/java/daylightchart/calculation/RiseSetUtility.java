@@ -19,7 +19,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * 
  */
-package daylightchart.chart.calculation;
+package daylightchart.calculation;
 
 
 import java.io.PrintWriter;
@@ -37,8 +37,8 @@ import org.joda.time.LocalTime;
 import org.sunposition.calculation.SunPositionAlgorithm;
 import org.sunposition.calculation.SunPositionAlgorithmFactory;
 
+import daylightchart.calculation.RiseSet.RiseSetType;
 import daylightchart.chart.TimeZoneOption;
-import daylightchart.chart.calculation.RiseSet.RiseSetType;
 import daylightchart.location.Location;
 import daylightchart.location.parser.DefaultTimezones;
 import daylightchart.options.Options;
@@ -138,11 +138,11 @@ public final class RiseSetUtility
 
     // Create daylight plot, for twilight, clock-shift taken into
     // account
-    createBands(riseSetYear, DaylightSavingsMode.twilight);
+    createBands(riseSetYear, DaylightBandType.twilight);
     // Create daylight plot, clock-shift taken into account
-    createBands(riseSetYear, DaylightSavingsMode.with_clock_shift);
+    createBands(riseSetYear, DaylightBandType.with_clock_shift);
     // Create outline plot, without clock shift
-    createBands(riseSetYear, DaylightSavingsMode.without_clock_shift);
+    createBands(riseSetYear, DaylightBandType.without_clock_shift);
 
     return riseSetYear;
 
@@ -156,7 +156,7 @@ public final class RiseSetUtility
    */
   public static void debugCalculations(final Location location)
   {
-    final DaylightSavingsMode daylightSavingsMode = DaylightSavingsMode.without_clock_shift;
+    final DaylightBandType daylightSavingsMode = DaylightBandType.without_clock_shift;
     final int year = Calendar.getInstance().get(Calendar.YEAR);
     final RiseSetYear riseSetData = RiseSetUtility
       .createRiseSetYear(location, year, new Options());
@@ -172,10 +172,10 @@ public final class RiseSetUtility
   }
 
   static void createBands(final RiseSetYear riseSetYear,
-                          final DaylightSavingsMode daylightSavingsMode)
+                          final DaylightBandType daylightSavingsMode)
   {
     final List<DaylightBand> bands;
-    if (daylightSavingsMode == DaylightSavingsMode.twilight)
+    if (daylightSavingsMode == DaylightBandType.twilight)
     {
       bands = RiseSetUtility.createDaylightBands(riseSetYear.getTwilights(),
                                                  daylightSavingsMode);
@@ -200,7 +200,7 @@ public final class RiseSetUtility
    * @return List of daylight bands
    */
   static List<DaylightBand> createDaylightBands(final List<RiseSet> riseSetData,
-                                                final DaylightSavingsMode daylightSavingsMode)
+                                                final DaylightBandType daylightSavingsMode)
   {
     final List<DaylightBand> bands = new ArrayList<DaylightBand>();
 
