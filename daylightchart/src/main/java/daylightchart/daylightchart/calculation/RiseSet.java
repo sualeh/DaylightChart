@@ -41,7 +41,7 @@ import daylightchart.location.Location;
  * @author Sualeh Fatehi
  */
 public final class RiseSet
-  implements Serializable
+  implements Serializable, Comparable<RiseSet>
 {
 
   static final LocalTime JUST_BEFORE_MIDNIGHT = LocalTime.MIDNIGHT
@@ -151,6 +151,16 @@ public final class RiseSet
 
     this.sunrise = sunrise;
     this.sunset = sunset;
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see java.lang.Comparable#compareTo(java.lang.Object)
+   */
+  public int compareTo(final RiseSet o)
+  {
+    return date.compareTo(o.getDate());
   }
 
   /**

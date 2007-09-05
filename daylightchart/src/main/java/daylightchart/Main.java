@@ -22,6 +22,7 @@
 package daylightchart;
 
 
+import java.io.OutputStreamWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -100,7 +101,8 @@ public final class Main
 
     if (debugCalculations && location != null)
     {
-      RiseSetUtility.debugCalculations(location);
+      RiseSetUtility.writeCalculations(new OutputStreamWriter(System.out),
+                                       location);
     }
     else
     {

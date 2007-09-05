@@ -115,56 +115,6 @@ public final class RiseSetYear
   }
 
   /**
-   * Gets a list of rise/ set timings.
-   * 
-   * @param adjustedForDaylightSavings
-   *        Whether the times need to be adjusted for daylight savings
-   *        time
-   * @return List of rise/ set timings.
-   */
-  public List<RiseSet> getRiseSets(boolean adjustedForDaylightSavings)
-  {
-    List<RiseSet> copiedRiseSets;
-    if (!adjustedForDaylightSavings)
-    {
-      copiedRiseSets = new ArrayList<RiseSet>();
-      for (final RawRiseSet riseSetTuple: riseSets)
-      {
-        final RiseSet riseSet = new RiseSet(riseSetTuple);
-        copiedRiseSets.add(riseSet
-          .withAdjustmentForDaylightSavings(adjustedForDaylightSavings));
-      }
-    }
-    else
-    {
-      copiedRiseSets = new ArrayList<RiseSet>();
-      for (final RawRiseSet riseSetTuple: riseSets)
-      {
-        final RiseSet riseSet = new RiseSet(riseSetTuple);
-        copiedRiseSets.add(riseSet);
-      }
-    }
-    return Collections.unmodifiableList(copiedRiseSets);
-  }
-
-  /**
-   * Gets a list of twilight timings.
-   * 
-   * @return List of rise/ set timings.
-   */
-  public List<RiseSet> getTwilights()
-  {
-    List<RiseSet> copiedRiseSets;
-    copiedRiseSets = new ArrayList<RiseSet>();
-    for (final RawRiseSet riseSetTuple: twilights)
-    {
-      final RiseSet riseSet = new RiseSet(riseSetTuple);
-      copiedRiseSets.add(riseSet);
-    }
-    return Collections.unmodifiableList(copiedRiseSets);
-  }
-
-  /**
    * Gets the year.
    * 
    * @return Year.
@@ -197,6 +147,71 @@ public final class RiseSetYear
   void addTwilight(final RawRiseSet riseSet)
   {
     twilights.add(riseSet);
+  }
+
+  List<RawRiseSet> getRawRiseSets()
+  {
+    return Collections.unmodifiableList(riseSets);
+  }
+
+  /**
+   * Gets a list of twilight timings.
+   * 
+   * @return List of rise/ set timings.
+   */
+  List<RawRiseSet> getRawTwilights()
+  {
+    return Collections.unmodifiableList(twilights);
+  }
+
+  /**
+   * Gets a list of rise/ set timings.
+   * 
+   * @param adjustedForDaylightSavings
+   *        Whether the times need to be adjusted for daylight savings
+   *        time
+   * @return List of rise/ set timings.
+   */
+  List<RiseSet> getRiseSets(boolean adjustedForDaylightSavings)
+  {
+    List<RiseSet> copiedRiseSets;
+    if (!adjustedForDaylightSavings)
+    {
+      copiedRiseSets = new ArrayList<RiseSet>();
+      for (final RawRiseSet riseSetTuple: riseSets)
+      {
+        final RiseSet riseSet = new RiseSet(riseSetTuple);
+        copiedRiseSets.add(riseSet
+          .withAdjustmentForDaylightSavings(adjustedForDaylightSavings));
+      }
+    }
+    else
+    {
+      copiedRiseSets = new ArrayList<RiseSet>();
+      for (final RawRiseSet riseSetTuple: riseSets)
+      {
+        final RiseSet riseSet = new RiseSet(riseSetTuple);
+        copiedRiseSets.add(riseSet);
+      }
+    }
+    return Collections.unmodifiableList(copiedRiseSets);
+  }
+
+  /**
+   * Gets a list of twilight timings.
+   * 
+   * @return List of rise/ set timings.
+   */
+  List<RiseSet> getTwilights()
+  {
+    List<RiseSet> copiedRiseSets;
+    copiedRiseSets = new ArrayList<RiseSet>();
+    for (final RawRiseSet riseSetTuple: twilights)
+    {
+      final RiseSet riseSet = new RiseSet(riseSetTuple);
+      copiedRiseSets.add(riseSet);
+    }
+    return Collections.unmodifiableList(copiedRiseSets);
   }
 
   void setDstEnd(final LocalDate dstEnd)

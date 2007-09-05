@@ -36,7 +36,7 @@ import daylightchart.location.Location;
  * @author Sualeh Fatehi
  */
 final class RawRiseSet
-  implements Serializable
+  implements Serializable, Comparable<RawRiseSet>
 {
 
   private static final long serialVersionUID = 3946758175409716163L;
@@ -59,6 +59,16 @@ final class RawRiseSet
 
     this.sunrise = sunrise;
     this.sunset = sunset;
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see java.lang.Comparable#compareTo(java.lang.Object)
+   */
+  public int compareTo(final RawRiseSet o)
+  {
+    return date.compareTo(o.getDate());
   }
 
   /**

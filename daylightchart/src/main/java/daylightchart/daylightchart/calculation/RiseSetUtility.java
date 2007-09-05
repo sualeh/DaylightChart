@@ -23,12 +23,11 @@ package daylightchart.daylightchart.calculation;
 
 
 import java.io.PrintWriter;
-import java.io.StringWriter;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.TimeZone;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.joda.time.LocalDate;
@@ -152,21 +151,59 @@ public final class RiseSetUtility
    * @param location
    *        Location to debug
    */
-  public static void debugCalculations(final Location location)
+  public static void writeCalculations(final Writer writer,
+                                       final Location location)
   {
-    final DaylightBandType daylightSavingsMode = DaylightBandType.without_clock_shift;
+    if (writer == null || location == null)
+    {
+      return;
+    }
+
     final int year = Calendar.getInstance().get(Calendar.YEAR);
-    final RiseSetYear riseSetData = RiseSetUtility
+    final RiseSetYear riseSetYear = RiseSetUtility
       .createRiseSetYear(location, year, new Options());
 
-    // Print rise sets
-    final List<RiseSet> riseSets = riseSetData.getRiseSets(daylightSavingsMode
-      .isAdjustedForDaylightSavings());
-    debugPrintList(riseSets);
-
-    final List<DaylightBand> daylightBands = RiseSetUtility
-      .createDaylightBands(riseSets, daylightSavingsMode);
-    debugPrintList(daylightBands);
+    final PrintWriter printWriter = new PrintWriter(writer, true);
+    // Header
+    printWriter.printf("Location\t%s%nDate\t%s%n%n", location, year);
+    // Bands
+    printWriter.printf("\t\t\t\t\t");
+    final List<DaylightBand> bands = riseSetYear.getBands();
+    for (final DaylightBand band: bands)
+    {
+      printWriter.printf("Band\t%s\t", band.getName());
+    }
+    printWriter.println();
+    // Data rows
+    printWriter.println("Date\tSunrise\tSunset\tTwilight Rise\tTwilight Set");
+    final List<RawRiseSet> rawRiseSets = riseSetYear.getRawRiseSets();
+    final List<RawRiseSet> rawTwilights = riseSetYear.getRawTwilights();
+    for (int i = 0; i < rawRiseSets.size(); i++)
+    {
+      final RawRiseSet rawRiseSet = rawRiseSets.get(i);
+      final RawRiseSet rawTwilight = rawTwilights.get(i);
+      printWriter.printf("%s\t%6.3f\t%6.3f\t%6.3f\t%6.3f",
+                         rawRiseSet.getDate(),
+                         rawRiseSet.getSunrise(),
+                         rawRiseSet.getSunset(),
+                         rawTwilight.getSunrise(),
+                         rawTwilight.getSunset());
+      for (final DaylightBand band: bands)
+      {
+        final RiseSet riseSet = band.get(rawRiseSet.getDate());
+        if (riseSet == null)
+        {
+          printWriter.print("\t\t");
+        }
+        else
+        {
+          printWriter.printf("\t%s\t%s",
+                             riseSet.getSunrise().toLocalTime(),
+                             riseSet.getSunset().toLocalTime());
+        }
+      }
+      printWriter.println();
+    }
   }
 
   static void createBands(final RiseSetYear riseSetYear,
@@ -345,18 +382,6 @@ public final class RiseSetUtility
                                               sunriseSunset[1]);
     return riseSet;
 
-  }
-
-  private static void debugPrintList(final List list)
-  {
-    final StringWriter debugWriter = new StringWriter();
-    final PrintWriter writer = new PrintWriter(debugWriter, true);
-    for (final Object listItem: list)
-    {
-      writer.printf("%s%n", listItem);
-    }
-    writer.close();
-    LOGGER.log(Level.FINE, debugWriter.toString());
   }
 
   /**

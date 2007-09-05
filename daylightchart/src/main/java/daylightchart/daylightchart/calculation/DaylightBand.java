@@ -26,7 +26,9 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.joda.time.LocalDate;
 
@@ -41,7 +43,7 @@ public final class DaylightBand
 
   private final DaylightBandType bandType;
   private final int bandNumber;
-  private final List<RiseSet> riseSets;
+  private final Map<LocalDate, RiseSet> riseSetMap;
 
   /**
    * Create a new daylight band.
@@ -53,7 +55,7 @@ public final class DaylightBand
   {
     this.bandType = bandType;
     this.bandNumber = bandNumber;
-    riseSets = new ArrayList<RiseSet>();
+    riseSetMap = new HashMap<LocalDate, RiseSet>();
   }
 
   /**
@@ -83,7 +85,9 @@ public final class DaylightBand
    */
   public List<RiseSet> getRiseSets()
   {
-    return Collections.unmodifiableList(riseSets);
+    final List<RiseSet> riseSets = new ArrayList<RiseSet>(riseSetMap.values());
+    Collections.sort(riseSets);
+    return riseSets;
   }
 
   /**
@@ -95,8 +99,8 @@ public final class DaylightBand
   public String toString()
   {
     final String name = getName();
-    final LocalDate startDate = riseSets.get(0).getDate();
-    final LocalDate endDate = riseSets.get(riseSets.size() - 1).getDate();
+    final LocalDate startDate = riseSetMap.get(0).getDate();
+    final LocalDate endDate = riseSetMap.get(riseSetMap.size() - 1).getDate();
 
     final StringWriter writer = new StringWriter();
     new PrintWriter(writer, true).printf("%s, starting %s ending %s",
@@ -117,8 +121,13 @@ public final class DaylightBand
     if (riseSet != null && riseSet.getSunrise().isBefore(riseSet.getSunset())
         && riseSet.getRiseSetType() != RiseSetType.all_nighttime)
     {
-      riseSets.add(riseSet);
+      riseSetMap.put(riseSet.getDate(), riseSet);
     }
+  }
+
+  RiseSet get(final LocalDate date)
+  {
+    return riseSetMap.get(date);
   }
 
 }
