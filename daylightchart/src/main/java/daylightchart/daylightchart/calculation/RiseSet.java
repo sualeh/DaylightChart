@@ -19,7 +19,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * 
  */
-package daylightchart.calculation;
+package daylightchart.daylightchart.calculation;
 
 
 import java.io.PrintWriter;
@@ -44,18 +44,6 @@ public final class RiseSet
   implements Serializable
 {
 
-  enum RiseSetType
-  {
-    /** Normal day. */
-    normal,
-    /** Partial day - the sun never rises or never sets. */
-    partial,
-    /** All daylight, the sun never sets. */
-    all_daylight,
-    /** All night time, the sun never rises. */
-    all_nighttime;
-  }
-
   static final LocalTime JUST_BEFORE_MIDNIGHT = LocalTime.MIDNIGHT
     .minusMillis(1);
 
@@ -70,45 +58,14 @@ public final class RiseSet
   private final LocalTime sunrise;
   private final LocalTime sunset;
 
-  RiseSet(final Location location,
-          final LocalDate date,
-          final boolean inDaylightSavings,
-          final LocalTime sunrise,
-          final LocalTime sunset)
+  RiseSet(final RawRiseSet rawRiseSet)
   {
-    this.location = location;
-    this.date = date;
-    this.inDaylightSavings = inDaylightSavings;
+    location = rawRiseSet.getLocation();
+    date = rawRiseSet.getDate();
+    inDaylightSavings = rawRiseSet.isInDaylightSavings();
 
-    if (sunrise.equals(JUST_AFTER_MIDNIGHT)
-        && !sunset.equals(JUST_BEFORE_MIDNIGHT)
-        || !sunrise.equals(JUST_AFTER_MIDNIGHT)
-        && sunset.equals(JUST_BEFORE_MIDNIGHT))
-    {
-      riseSetType = RiseSetType.partial;
-    }
-    else if (sunrise.equals(JUST_AFTER_MIDNIGHT)
-             && sunset.equals(JUST_BEFORE_MIDNIGHT))
-    {
-      throw new IllegalArgumentException("Bad rise/ set type provided");
-    }
-    else
-    {
-      riseSetType = RiseSetType.normal;
-    }
-
-    this.sunrise = sunrise;
-    this.sunset = sunset;
-  }
-
-  RiseSet(final RiseSetTuple riseSetTuple)
-  {
-    location = riseSetTuple.getLocation();
-    date = riseSetTuple.getDate();
-    inDaylightSavings = riseSetTuple.isInDaylightSavings();
-
-    final double sunriseRaw = riseSetTuple.getSunrise();
-    final double sunsetRaw = riseSetTuple.getSunset();
+    final double sunriseRaw = rawRiseSet.getSunrise();
+    final double sunsetRaw = rawRiseSet.getSunset();
 
     boolean hasSunrise = !Double.isInfinite(sunriseRaw);
     boolean hasSunset = !Double.isInfinite(sunsetRaw);
@@ -165,6 +122,57 @@ public final class RiseSet
 
   }
 
+  private RiseSet(final Location location,
+                  final LocalDate date,
+                  final boolean inDaylightSavings,
+                  final LocalTime sunrise,
+                  final LocalTime sunset)
+  {
+    this.location = location;
+    this.date = date;
+    this.inDaylightSavings = inDaylightSavings;
+
+    if (sunrise.equals(JUST_AFTER_MIDNIGHT)
+        && !sunset.equals(JUST_BEFORE_MIDNIGHT)
+        || !sunrise.equals(JUST_AFTER_MIDNIGHT)
+        && sunset.equals(JUST_BEFORE_MIDNIGHT))
+    {
+      riseSetType = RiseSetType.partial;
+    }
+    else if (sunrise.equals(JUST_AFTER_MIDNIGHT)
+             && sunset.equals(JUST_BEFORE_MIDNIGHT))
+    {
+      throw new IllegalArgumentException("Bad rise/ set type provided");
+    }
+    else
+    {
+      riseSetType = RiseSetType.normal;
+    }
+
+    this.sunrise = sunrise;
+    this.sunset = sunset;
+  }
+
+  /**
+   * Date.
+   * 
+   * @return Date
+   */
+  public LocalDate getDate()
+  {
+    return date;
+  }
+
+  /**
+   * Location.
+   * 
+   * @return Location
+   */
+  public Location getLocation()
+  {
+    return location;
+  }
+
   /**
    * Sunrise time.
    * 
@@ -208,26 +216,6 @@ public final class RiseSet
                                            sunset.toString("HH:mm:ss"));
       return writer.toString();
     }
-  }
-
-  /**
-   * Date.
-   * 
-   * @return Date
-   */
-  LocalDate getDate()
-  {
-    return date;
-  }
-
-  /**
-   * Location.
-   * 
-   * @return Location
-   */
-  Location getLocation()
-  {
-    return location;
   }
 
   /**

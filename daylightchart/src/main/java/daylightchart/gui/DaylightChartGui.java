@@ -40,8 +40,8 @@ import org.jfree.chart.ChartPanel;
 
 import sf.util.ui.ExitAction;
 import sf.util.ui.GuiAction;
-import daylightchart.chart.ChartConfiguration;
-import daylightchart.chart.DaylightChart;
+import daylightchart.daylightchart.chart.ChartConfiguration;
+import daylightchart.daylightchart.chart.DaylightChart;
 import daylightchart.gui.actions.AboutAction;
 import daylightchart.gui.actions.ChartOptionsAction;
 import daylightchart.gui.actions.ChartOrientationChoiceAction;

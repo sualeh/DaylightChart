@@ -39,7 +39,7 @@ import java.util.logging.Logger;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
-import daylightchart.chart.DaylightChart;
+import daylightchart.daylightchart.chart.DaylightChart;
 import daylightchart.location.Location;
 import daylightchart.location.LocationsSortOrder;
 import daylightchart.location.parser.FormatterException;

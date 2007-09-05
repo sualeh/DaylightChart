@@ -1,4 +1,4 @@
-package daylightchart.chart;
+package daylightchart.daylightchart.chart;
 
 
 import java.awt.BasicStroke;
@@ -14,9 +14,9 @@ import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.data.time.TimeSeriesDataItem;
 import org.joda.time.LocalDateTime;
 
-import daylightchart.calculation.DaylightBand;
-import daylightchart.calculation.DaylightBandType;
-import daylightchart.calculation.RiseSet;
+import daylightchart.daylightchart.calculation.DaylightBand;
+import daylightchart.daylightchart.calculation.DaylightBandType;
+import daylightchart.daylightchart.calculation.RiseSet;
 
 public class DaylightChartBand
 {

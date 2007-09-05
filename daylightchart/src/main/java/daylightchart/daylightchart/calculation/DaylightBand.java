@@ -19,7 +19,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * 
  */
-package daylightchart.calculation;
+package daylightchart.daylightchart.calculation;
 
 
 import java.io.PrintWriter;
@@ -29,8 +29,6 @@ import java.util.Collections;
 import java.util.List;
 
 import org.joda.time.LocalDate;
-
-import daylightchart.calculation.RiseSet.RiseSetType;
 
 /**
  * One daylight band, consisting of a sunrise series and a sunset
@@ -58,16 +56,31 @@ public final class DaylightBand
     riseSets = new ArrayList<RiseSet>();
   }
 
+  /**
+   * Type of the band.
+   * 
+   * @return Type
+   */
   public DaylightBandType getDaylightBandType()
   {
     return bandType;
   }
 
+  /**
+   * Name of the band.
+   * 
+   * @return Name
+   */
   public String getName()
   {
     return bandType + ", #" + bandNumber;
   }
 
+  /**
+   * Get all the rise/ sets in the band
+   * 
+   * @return Rise/ sets list
+   */
   public List<RiseSet> getRiseSets()
   {
     return Collections.unmodifiableList(riseSets);

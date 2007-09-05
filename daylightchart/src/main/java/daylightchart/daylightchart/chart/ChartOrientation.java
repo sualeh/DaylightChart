@@ -19,44 +19,22 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * 
  */
-package daylightchart.chart;
+package daylightchart.daylightchart.chart;
 
-
-import java.util.MissingResourceException;
-import java.util.ResourceBundle;
 
 /**
- * Message bundle accessor.
+ * Orientation of the chart.
  * 
  * @author Sualeh Fatehi
  */
-public class Messages
+public enum ChartOrientation
 {
-  private static final String BUNDLE_NAME = "daylightchart.chart.messages"; //$NON-NLS-1$
 
-  private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle
-    .getBundle(BUNDLE_NAME);
+  /** Standard. */
+  standard,
+  /** Conventional. */
+  conventional,
+  /** Vertical. */
+  vertical;
 
-  /**
-   * Gets a string from a resource bundle.
-   * 
-   * @param key
-   *        Key to look up.
-   * @return Strings
-   */
-  public static String getString(final String key)
-  {
-    try
-    {
-      return RESOURCE_BUNDLE.getString(key);
-    }
-    catch (final MissingResourceException e)
-    {
-      return '!' + key + '!';
-    }
-  }
-
-  private Messages()
-  {
-  }
 }

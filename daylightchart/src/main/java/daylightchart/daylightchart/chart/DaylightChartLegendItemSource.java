@@ -19,7 +19,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * 
  */
-package daylightchart.chart;
+package daylightchart.daylightchart.chart;
 
 
 import java.awt.BasicStroke;
@@ -31,8 +31,8 @@ import org.jfree.chart.LegendItem;
 import org.jfree.chart.LegendItemCollection;
 import org.jfree.chart.LegendItemSource;
 
-import daylightchart.calculation.DaylightBandType;
-import daylightchart.calculation.Twilight;
+import daylightchart.daylightchart.calculation.DaylightBandType;
+import daylightchart.daylightchart.calculation.Twilight;
 import daylightchart.options.Options;
 
 final class DaylightChartLegendItemSource

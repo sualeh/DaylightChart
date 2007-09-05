@@ -19,7 +19,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * 
  */
-package daylightchart.calculation;
+package daylightchart.daylightchart.calculation;
 
 
 import java.io.PrintWriter;
@@ -37,8 +37,7 @@ import org.joda.time.LocalTime;
 import org.sunposition.calculation.SunPositionAlgorithm;
 import org.sunposition.calculation.SunPositionAlgorithmFactory;
 
-import daylightchart.calculation.RiseSet.RiseSetType;
-import daylightchart.chart.TimeZoneOption;
+import daylightchart.daylightchart.chart.TimeZoneOption;
 import daylightchart.location.Location;
 import daylightchart.location.parser.DefaultTimezones;
 import daylightchart.options.Options;
@@ -116,32 +115,31 @@ public final class RiseSetUtility
       }
       wasDaylightSavings = inDaylightSavings;
 
-      final RiseSetTuple riseSet = calculateRiseSet(location,
-                                                    date,
-                                                    useDaylightTime,
-                                                    inDaylightSavings,
-                                                    Twilight.none);
+      final RawRiseSet riseSet = calculateRiseSet(location,
+                                                  date,
+                                                  useDaylightTime,
+                                                  inDaylightSavings,
+                                                  Twilight.none);
       riseSetYear.addRiseSet(riseSet);
 
       final Twilight twilight = options.getTwilight();
       if (twilight != null)
       {
-        final RiseSetTuple twilights = calculateRiseSet(location,
-                                                        date,
-                                                        useDaylightTime,
-                                                        inDaylightSavings,
-                                                        twilight);
+        final RawRiseSet twilights = calculateRiseSet(location,
+                                                      date,
+                                                      useDaylightTime,
+                                                      inDaylightSavings,
+                                                      twilight);
         riseSetYear.addTwilight(twilights);
       }
 
     }
 
-    // Create daylight plot, for twilight, clock-shift taken into
-    // account
+    // Create band for twilight, clock-shift taken into account
     createBands(riseSetYear, DaylightBandType.twilight);
-    // Create daylight plot, clock-shift taken into account
+    // Create band, clock-shift taken into account
     createBands(riseSetYear, DaylightBandType.with_clock_shift);
-    // Create outline plot, without clock shift
+    // Create band, without clock shift
     createBands(riseSetYear, DaylightBandType.without_clock_shift);
 
     return riseSetYear;
@@ -309,11 +307,11 @@ public final class RiseSetUtility
   }
 
   @SuppressWarnings("boxing")
-  private static RiseSetTuple calculateRiseSet(final Location location,
-                                               final LocalDate date,
-                                               final boolean useDaylightTime,
-                                               final boolean inDaylightSavings,
-                                               final Twilight twilight)
+  private static RawRiseSet calculateRiseSet(final Location location,
+                                             final LocalDate date,
+                                             final boolean useDaylightTime,
+                                             final boolean inDaylightSavings,
+                                             final Twilight twilight)
   {
     if (location != null)
     {
@@ -340,11 +338,11 @@ public final class RiseSetUtility
       }
     }
 
-    final RiseSetTuple riseSet = new RiseSetTuple(location,
-                                                  date,
-                                                  (useDaylightTime && inDaylightSavings),
-                                                  sunriseSunset[0],
-                                                  sunriseSunset[1]);
+    final RawRiseSet riseSet = new RawRiseSet(location,
+                                              date,
+                                              (useDaylightTime && inDaylightSavings),
+                                              sunriseSunset[0],
+                                              sunriseSunset[1]);
     return riseSet;
 
   }

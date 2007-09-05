@@ -24,9 +24,9 @@ package daylightchart.options;
 
 import java.io.Serializable;
 
-import daylightchart.calculation.Twilight;
-import daylightchart.chart.ChartOrientation;
-import daylightchart.chart.TimeZoneOption;
+import daylightchart.daylightchart.calculation.Twilight;
+import daylightchart.daylightchart.chart.ChartOrientation;
+import daylightchart.daylightchart.chart.TimeZoneOption;
 import daylightchart.location.LocationsSortOrder;
 import daylightchart.options.chart.ChartOptions;
 

@@ -36,7 +36,7 @@ import sf.util.CommandLineParser.StringOption;
 import com.jgoodies.looks.plastic.PlasticLookAndFeel;
 import com.jgoodies.looks.plastic.theme.LightGray;
 
-import daylightchart.calculation.RiseSetUtility;
+import daylightchart.daylightchart.calculation.RiseSetUtility;
 import daylightchart.gui.DaylightChartGui;
 import daylightchart.location.Location;
 import daylightchart.location.parser.LocationParser;

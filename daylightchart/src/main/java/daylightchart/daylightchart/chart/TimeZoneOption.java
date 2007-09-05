@@ -19,22 +19,20 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * 
  */
-package daylightchart.chart;
+package daylightchart.daylightchart.chart;
 
 
 /**
- * Orientation of the chart.
+ * Time option for charting.
  * 
- * @author Sualeh Fatehi
+ * @author sfatehi
  */
-public enum ChartOrientation
+public enum TimeZoneOption
 {
 
-  /** Standard. */
-  standard,
-  /** Conventional. */
-  conventional,
-  /** Vertical. */
-  vertical;
+  /** Use local time for the time - do not correct for time zone, and DST */
+  USE_LOCAL_TIME,
+  /** Use time zone for the time - correct for time zone, and DST */
+  USE_TIME_ZONE;
 
 }

@@ -19,7 +19,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * 
  */
-package daylightchart.calculation;
+package daylightchart.daylightchart.calculation;
 
 
 import java.io.PrintWriter;
@@ -31,17 +31,15 @@ import org.joda.time.LocalDate;
 import daylightchart.location.Location;
 
 /**
- * Sunrise and sunset at a given location, and a given date. RiseSet is
- * calculated as part of the rise/ set year, and then may be split for
- * creating the daylight bands.
+ * Sunrise and sunset at a given location, and a given date.
  * 
  * @author Sualeh Fatehi
  */
-final class RiseSetTuple
+final class RawRiseSet
   implements Serializable
 {
 
-  private static final long serialVersionUID = 3092668888760029582L;
+  private static final long serialVersionUID = 3946758175409716163L;
 
   private final Location location;
   private final LocalDate date;
@@ -49,11 +47,11 @@ final class RiseSetTuple
   private final double sunrise;
   private final double sunset;
 
-  RiseSetTuple(final Location location,
-               final LocalDate date,
-               final boolean inDaylightSavings,
-               final double sunrise,
-               final double sunset)
+  RawRiseSet(final Location location,
+             final LocalDate date,
+             final boolean inDaylightSavings,
+             final double sunrise,
+             final double sunset)
   {
     this.location = location;
     this.date = date;

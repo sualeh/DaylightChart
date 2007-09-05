@@ -8,7 +8,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.JMenu;
 
 import sf.util.ui.GuiChoiceAction;
-import daylightchart.chart.TimeZoneOption;
+import daylightchart.daylightchart.chart.TimeZoneOption;
 import daylightchart.gui.Messages;
 import daylightchart.options.Options;
 import daylightchart.options.UserPreferences;

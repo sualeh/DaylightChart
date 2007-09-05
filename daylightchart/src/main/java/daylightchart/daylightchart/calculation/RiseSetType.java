@@ -19,20 +19,17 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * 
  */
-package daylightchart.chart;
+package daylightchart.daylightchart.calculation;
 
 
-/**
- * Time option for charting.
- * 
- * @author sfatehi
- */
-public enum TimeZoneOption
+enum RiseSetType
 {
-
-  /** Use local time for the time - do not correct for time zone, and DST */
-  USE_LOCAL_TIME,
-  /** Use time zone for the time - correct for time zone, and DST */
-  USE_TIME_ZONE;
-
+  /** Normal day. */
+  normal,
+  /** Partial day - the sun never rises or never sets. */
+  partial,
+  /** All daylight, the sun never sets. */
+  all_daylight,
+  /** All night time, the sun never rises. */
+  all_nighttime;
 }

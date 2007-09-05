@@ -19,7 +19,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * 
  */
-package daylightchart.calculation;
+package daylightchart.daylightchart.calculation;
 
 
 import java.io.Serializable;
@@ -49,19 +49,24 @@ public final class RiseSetYear
   private boolean usesDaylightTime;
   private LocalDate dstStart;
   private LocalDate dstEnd;
-  private final List<RiseSetTuple> riseSets;
-  private final List<RiseSetTuple> twilights;
+  private final List<RawRiseSet> riseSets;
+  private final List<RawRiseSet> twilights;
   private final List<DaylightBand> bands;
 
   RiseSetYear(final Location location, final int year)
   {
     this.location = location;
     this.year = year;
-    riseSets = new ArrayList<RiseSetTuple>();
-    twilights = new ArrayList<RiseSetTuple>();
+    riseSets = new ArrayList<RawRiseSet>();
+    twilights = new ArrayList<RawRiseSet>();
     bands = new ArrayList<DaylightBand>();
   }
 
+  /**
+   * Gets all the daylight bands.
+   * 
+   * @return Daylight bands
+   */
   public List<DaylightBand> getBands()
   {
     return bands;
@@ -112,6 +117,9 @@ public final class RiseSetYear
   /**
    * Gets a list of rise/ set timings.
    * 
+   * @param adjustedForDaylightSavings
+   *        Whether the times need to be adjusted for daylight savings
+   *        time
    * @return List of rise/ set timings.
    */
   public List<RiseSet> getRiseSets(boolean adjustedForDaylightSavings)
@@ -120,7 +128,7 @@ public final class RiseSetYear
     if (!adjustedForDaylightSavings)
     {
       copiedRiseSets = new ArrayList<RiseSet>();
-      for (final RiseSetTuple riseSetTuple: riseSets)
+      for (final RawRiseSet riseSetTuple: riseSets)
       {
         final RiseSet riseSet = new RiseSet(riseSetTuple);
         copiedRiseSets.add(riseSet
@@ -130,7 +138,7 @@ public final class RiseSetYear
     else
     {
       copiedRiseSets = new ArrayList<RiseSet>();
-      for (final RiseSetTuple riseSetTuple: riseSets)
+      for (final RawRiseSet riseSetTuple: riseSets)
       {
         final RiseSet riseSet = new RiseSet(riseSetTuple);
         copiedRiseSets.add(riseSet);
@@ -140,7 +148,7 @@ public final class RiseSetYear
   }
 
   /**
-   * Gets a list of twiligbt timings.
+   * Gets a list of twilight timings.
    * 
    * @return List of rise/ set timings.
    */
@@ -148,7 +156,7 @@ public final class RiseSetYear
   {
     List<RiseSet> copiedRiseSets;
     copiedRiseSets = new ArrayList<RiseSet>();
-    for (final RiseSetTuple riseSetTuple: twilights)
+    for (final RawRiseSet riseSetTuple: twilights)
     {
       final RiseSet riseSet = new RiseSet(riseSetTuple);
       copiedRiseSets.add(riseSet);
@@ -181,12 +189,12 @@ public final class RiseSetYear
     this.bands.addAll(bands);
   }
 
-  void addRiseSet(final RiseSetTuple riseSet)
+  void addRiseSet(final RawRiseSet riseSet)
   {
     riseSets.add(riseSet);
   }
 
-  void addTwilight(final RiseSetTuple riseSet)
+  void addTwilight(final RawRiseSet riseSet)
   {
     twilights.add(riseSet);
   }
