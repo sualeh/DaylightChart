@@ -58,84 +58,6 @@ public final class RiseSetUtility
     .getInstance();
 
   /**
-   * Creates daylight bands for plotting.
-   * 
-   * @param riseSetData
-   *        Rise/ set data for the year
-   * @param daylightSavingsMode
-   *        The daylight savings mode
-   * @return List of daylight bands
-   */
-  public static List<DaylightBand> createDaylightBands(final List<RiseSet> riseSetData,
-                                                       final DaylightSavingsMode daylightSavingsMode)
-  {
-    final List<DaylightBand> bands = new ArrayList<DaylightBand>();
-
-    DaylightBand baseBand = null;
-    DaylightBand wrapBand = null;
-
-    for (final RiseSet riseSet: riseSetData)
-    {
-      final RiseSet[] riseSets = splitAtMidnight(riseSet);
-      if (riseSets.length == 2)
-      {
-        // Create a new wrap band if necessary
-        if (wrapBand == null)
-        {
-          wrapBand = new DaylightBand(daylightSavingsMode + ", #"
-                                      + bands.size());
-          bands.add(wrapBand);
-        }
-
-        if (baseBand == null)
-        {
-          baseBand = new DaylightBand(daylightSavingsMode + ", #"
-                                      + bands.size());
-          bands.add(baseBand);
-        }
-
-        // Split the daylight hours across two series
-        baseBand.add(riseSets[0]);
-        wrapBand.add(riseSets[1]);
-      }
-      else if (riseSets.length == 1)
-      {
-        // End the wrap band, if necessary
-        if (wrapBand != null)
-        {
-          wrapBand = null;
-        }
-
-        // Create a new band if we are entering a period of
-        // all-night-time from a period where there was daylight
-        if (baseBand == null
-            && riseSet.getRiseSetType() != RiseSetType.all_nighttime)
-        {
-          baseBand = new DaylightBand(daylightSavingsMode + ", #"
-                                      + bands.size());
-          bands.add(baseBand);
-        }
-        else
-        // Close the band if we are entering a period of all-night-time
-        if (baseBand != null
-            && riseSet.getRiseSetType() == RiseSetType.all_nighttime)
-        {
-          baseBand = null;
-        }
-
-        // Add sunset and sunrise as usual
-        if (baseBand != null)
-        {
-          baseBand.add(riseSet);
-        }
-      }
-    }
-
-    return bands;
-
-  }
-
-  /**
    * Calculator for sunrise and sunset times for a year.
    * 
    * @param location
@@ -214,6 +136,14 @@ public final class RiseSetUtility
 
     }
 
+    // Create daylight plot, for twilight, clock-shift taken into
+    // account
+    createBands(riseSetYear, DaylightSavingsMode.twilight);
+    // Create daylight plot, clock-shift taken into account
+    createBands(riseSetYear, DaylightSavingsMode.with_clock_shift);
+    // Create outline plot, without clock shift
+    createBands(riseSetYear, DaylightSavingsMode.without_clock_shift);
+
     return riseSetYear;
 
   }
@@ -239,6 +169,100 @@ public final class RiseSetUtility
     final List<DaylightBand> daylightBands = RiseSetUtility
       .createDaylightBands(riseSets, daylightSavingsMode);
     debugPrintList(daylightBands);
+  }
+
+  static void createBands(final RiseSetYear riseSetYear,
+                          final DaylightSavingsMode daylightSavingsMode)
+  {
+    final List<DaylightBand> bands;
+    if (daylightSavingsMode == DaylightSavingsMode.twilight)
+    {
+      bands = RiseSetUtility.createDaylightBands(riseSetYear.getTwilights(),
+                                                 daylightSavingsMode);
+    }
+    else
+    {
+      bands = RiseSetUtility
+        .createDaylightBands(riseSetYear.getRiseSets(daylightSavingsMode
+          .isAdjustedForDaylightSavings()), daylightSavingsMode);
+    }
+
+    riseSetYear.addDaylightBands(bands);
+  }
+
+  /**
+   * Creates daylight bands for plotting.
+   * 
+   * @param riseSetData
+   *        Rise/ set data for the year
+   * @param daylightSavingsMode
+   *        The daylight savings mode
+   * @return List of daylight bands
+   */
+  static List<DaylightBand> createDaylightBands(final List<RiseSet> riseSetData,
+                                                final DaylightSavingsMode daylightSavingsMode)
+  {
+    final List<DaylightBand> bands = new ArrayList<DaylightBand>();
+
+    DaylightBand baseBand = null;
+    DaylightBand wrapBand = null;
+
+    for (final RiseSet riseSet: riseSetData)
+    {
+      final RiseSet[] riseSets = splitAtMidnight(riseSet);
+      if (riseSets.length == 2)
+      {
+        // Create a new wrap band if necessary
+        if (wrapBand == null)
+        {
+          wrapBand = new DaylightBand(daylightSavingsMode, bands.size());
+          bands.add(wrapBand);
+        }
+
+        if (baseBand == null)
+        {
+          baseBand = new DaylightBand(daylightSavingsMode, bands.size());
+          bands.add(baseBand);
+        }
+
+        // Split the daylight hours across two series
+        baseBand.add(riseSets[0]);
+        wrapBand.add(riseSets[1]);
+      }
+      else if (riseSets.length == 1)
+      {
+        // End the wrap band, if necessary
+        if (wrapBand != null)
+        {
+          wrapBand = null;
+        }
+
+        // Create a new band if we are entering a period of
+        // all-night-time from a period where there was daylight
+        if (baseBand == null
+            && riseSet.getRiseSetType() != RiseSetType.all_nighttime)
+        {
+          baseBand = new DaylightBand(daylightSavingsMode, bands.size());
+          bands.add(baseBand);
+        }
+        else
+        // Close the band if we are entering a period of all-night-time
+        if (baseBand != null
+            && riseSet.getRiseSetType() == RiseSetType.all_nighttime)
+        {
+          baseBand = null;
+        }
+
+        // Add sunset and sunrise as usual
+        if (baseBand != null)
+        {
+          baseBand.add(riseSet);
+        }
+      }
+    }
+
+    return bands;
+
   }
 
   /**

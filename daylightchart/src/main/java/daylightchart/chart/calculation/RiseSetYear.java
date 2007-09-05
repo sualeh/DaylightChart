@@ -51,6 +51,7 @@ public final class RiseSetYear
   private LocalDate dstEnd;
   private final List<RiseSetTuple> riseSets;
   private final List<RiseSetTuple> twilights;
+  private final List<DaylightBand> bands;
 
   RiseSetYear(final Location location, final int year)
   {
@@ -58,6 +59,12 @@ public final class RiseSetYear
     this.year = year;
     riseSets = new ArrayList<RiseSetTuple>();
     twilights = new ArrayList<RiseSetTuple>();
+    bands = new ArrayList<DaylightBand>();
+  }
+
+  public List<DaylightBand> getBands()
+  {
+    return bands;
   }
 
   /**
@@ -167,6 +174,11 @@ public final class RiseSetYear
   public boolean usesDaylightTime()
   {
     return usesDaylightTime;
+  }
+
+  void addDaylightBands(final List<DaylightBand> bands)
+  {
+    this.bands.addAll(bands);
   }
 
   void addRiseSet(final RiseSetTuple riseSet)

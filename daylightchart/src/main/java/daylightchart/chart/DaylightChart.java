@@ -54,7 +54,6 @@ import org.jfree.ui.RectangleInsets;
 import org.jfree.ui.TextAnchor;
 
 import daylightchart.chart.calculation.DaylightBand;
-import daylightchart.chart.calculation.DaylightSavingsMode;
 import daylightchart.chart.calculation.RiseSetUtility;
 import daylightchart.chart.calculation.RiseSetYear;
 import daylightchart.location.Location;
@@ -171,28 +170,15 @@ public class DaylightChart
   /**
    * Creates bands for the sunrise and sunset times for the whole year.
    */
-  private void createBandsInPlot(final DaylightSavingsMode daylightSavingsMode,
-                                 final XYPlot plot)
+  private void createBandsInPlot(final XYPlot plot)
   {
-    final List<DaylightBand> bands;
-    if (daylightSavingsMode == DaylightSavingsMode.twilight)
-    {
-      bands = RiseSetUtility.createDaylightBands(riseSetData.getTwilights(),
-                                                 daylightSavingsMode);
-    }
-    else
-    {
-      bands = RiseSetUtility
-        .createDaylightBands(riseSetData.getRiseSets(daylightSavingsMode
-          .isAdjustedForDaylightSavings()), daylightSavingsMode);
-    }
-
+    final List<DaylightBand> bands = riseSetData.getBands();
     for (final DaylightBand band: bands)
     {
       LOGGER.log(Level.FINE, band.toString());
       final int currentDatasetNumber = plot.getDatasetCount();
       plot.setDataset(currentDatasetNumber, band.getTimeSeriesCollection());
-      plot.setRenderer(currentDatasetNumber, daylightSavingsMode.getRenderer());
+      plot.setRenderer(currentDatasetNumber, band.getRenderer());
     }
   }
 
@@ -223,13 +209,7 @@ public class DaylightChart
       createDSTMarker(plot);
     }
 
-    // Create daylight plot, for twilight, clock-shift taken into
-    // account
-    createBandsInPlot(DaylightSavingsMode.twilight, plot);
-    // Create daylight plot, clock-shift taken into account
-    createBandsInPlot(DaylightSavingsMode.with_clock_shift, plot);
-    // Create outline plot, without clock shift
-    createBandsInPlot(DaylightSavingsMode.without_clock_shift, plot);
+    createBandsInPlot(plot);
 
     ChartOrientation chartOrientation = ChartOrientation.standard;
     if (options != null)

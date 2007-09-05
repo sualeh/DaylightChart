@@ -25,6 +25,7 @@ package daylightchart.chart.calculation;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jfree.chart.renderer.xy.XYItemRenderer;
 import org.jfree.data.time.Day;
 import org.jfree.data.time.Minute;
 import org.jfree.data.time.TimeSeries;
@@ -43,7 +44,8 @@ import daylightchart.chart.calculation.RiseSet.RiseSetType;
 public final class DaylightBand
 {
 
-  private final String name;
+  private final DaylightSavingsMode daylightSavingsMode;
+  private final int bandNumber;
   private final List<RiseSet> riseSets;
 
   /**
@@ -52,10 +54,17 @@ public final class DaylightBand
    * @param name
    *        Name of the band.
    */
-  DaylightBand(final String name)
+  DaylightBand(final DaylightSavingsMode daylightSavingsMode,
+               final int bandNumber)
   {
-    this.name = name;
+    this.daylightSavingsMode = daylightSavingsMode;
+    this.bandNumber = bandNumber;
     riseSets = new ArrayList<RiseSet>();
+  }
+
+  public XYItemRenderer getRenderer()
+  {
+    return daylightSavingsMode.getRenderer();
   }
 
   /**
@@ -65,6 +74,7 @@ public final class DaylightBand
    */
   public TimeSeriesCollection getTimeSeriesCollection()
   {
+    final String name = getName();
     final TimeSeries sunriseSeries = new TimeSeries("Sunrise " + name);
     final TimeSeries sunsetSeries = new TimeSeries("Sunset " + name);
     for (final RiseSet riseSet: riseSets)
@@ -91,7 +101,7 @@ public final class DaylightBand
   public String toString()
   {
     final StringBuffer buffer = new StringBuffer();
-    buffer.append(name).append("\n");
+    buffer.append(getName()).append("\n");
     for (final RiseSet riseSet: riseSets)
     {
       buffer.append("  ").append(riseSet).append("\n");
@@ -112,6 +122,11 @@ public final class DaylightBand
     {
       riseSets.add(riseSet);
     }
+  }
+
+  private String getName()
+  {
+    return daylightSavingsMode + ", #" + bandNumber;
   }
 
   /**
