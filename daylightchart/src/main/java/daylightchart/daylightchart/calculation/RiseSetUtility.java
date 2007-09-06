@@ -27,6 +27,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Writer;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -152,9 +153,12 @@ public final class RiseSetUtility
   /**
    * Debug calculations.
    * 
+   * @param writer
+   *        Writer to write to
    * @param location
    *        Location to debug
    */
+  @SuppressWarnings("boxing")
   public static void writeCalculations(final Writer writer,
                                        final Location location)
   {
@@ -162,6 +166,9 @@ public final class RiseSetUtility
     {
       return;
     }
+
+    DecimalFormat format = new DecimalFormat("00.000");
+    format.setMaximumFractionDigits(3);
 
     final int year = Calendar.getInstance().get(Calendar.YEAR);
     final RiseSetYear riseSetYear = RiseSetUtility
@@ -186,12 +193,12 @@ public final class RiseSetUtility
     {
       final RawRiseSet rawRiseSet = rawRiseSets.get(i);
       final RawRiseSet rawTwilight = rawTwilights.get(i);
-      printWriter.printf("%s\t%6.3f\t%6.3f\t%6.3f\t%6.3f",
+      printWriter.printf("%s\t%s\t%s\t%s\t%s",
                          rawRiseSet.getDate(),
-                         rawRiseSet.getSunrise(),
-                         rawRiseSet.getSunset(),
-                         rawTwilight.getSunrise(),
-                         rawTwilight.getSunset());
+                         format.format(rawRiseSet.getSunrise()),
+                         format.format(rawRiseSet.getSunset()),
+                         format.format(rawTwilight.getSunrise()),
+                         format.format(rawTwilight.getSunset()));
       for (final DaylightBand band: bands)
       {
         final RiseSet riseSet = band.get(rawRiseSet.getDate());
@@ -201,9 +208,9 @@ public final class RiseSetUtility
         }
         else
         {
-          printWriter.printf("\t%s\t%s",
-                             riseSet.getSunrise().toLocalTime(),
-                             riseSet.getSunset().toLocalTime());
+          printWriter.printf("\t%s\t%s", riseSet.getSunrise().toLocalTime()
+            .toString("HH:mm:ss"), riseSet.getSunset().toLocalTime()
+            .toString("HH:mm:ss"));
         }
       }
       printWriter.println();
@@ -410,6 +417,13 @@ public final class RiseSetUtility
 
   }
 
+  /**
+   * Writes chart calculations to a file.
+   * 
+   * @param location
+   *        Location
+   * @return File that was written
+   */
   public static File writeCalculationsToFile(Location location)
   {
     try
@@ -426,4 +440,5 @@ public final class RiseSetUtility
       return null;
     }
   }
+
 }
