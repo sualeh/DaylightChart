@@ -22,12 +22,16 @@
 package daylightchart.daylightchart.calculation;
 
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.TimeZone;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.joda.time.LocalDate;
@@ -404,5 +408,22 @@ public final class RiseSetUtility
   private RiseSetUtility()
   {
 
+  }
+
+  public static File writeCalculationsToFile(Location location)
+  {
+    try
+    {
+      File file = new File(location.getDescription() + ".txt");
+      FileWriter writer = new FileWriter(file);
+      writeCalculations(writer, location);
+      return file;
+    }
+    catch (IOException e)
+    {
+      LOGGER.log(Level.WARNING, "Cannot write calculations for location "
+                                + location, e);
+      return null;
+    }
   }
 }
