@@ -98,15 +98,17 @@ public final class DaylightBand
   @Override
   public String toString()
   {
-    final String name = getName();
-    final LocalDate startDate = riseSetMap.get(0).getDate();
-    final LocalDate endDate = riseSetMap.get(riseSetMap.size() - 1).getDate();
-
     final StringWriter writer = new StringWriter();
-    new PrintWriter(writer, true).printf("%s, starting %s ending %s",
-                                         name,
-                                         startDate,
-                                         endDate);
+    final PrintWriter printWriter = new PrintWriter(writer, true);
+
+    printWriter.printf("%s", getName());
+    if (riseSetMap.size() > 0)
+    {
+      List<LocalDate> dates = new ArrayList<LocalDate>(riseSetMap.keySet());
+      final LocalDate startDate = dates.get(0);
+      final LocalDate endDate = dates.get(riseSetMap.size() - 1);
+      printWriter.printf(", starting %s ending %s", startDate, endDate);
+    }
     return writer.toString();
   }
 
