@@ -76,6 +76,7 @@ final class RawRiseSet
    * 
    * @see java.lang.Object#toString()
    */
+  @SuppressWarnings("boxing")
   @Override
   public String toString()
   {
