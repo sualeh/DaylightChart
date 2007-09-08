@@ -284,6 +284,20 @@ public final class RiseSet
     return new RiseSet(location, date, inDaylightSavings, sunrise, sunset);
   }
 
+  /**
+   * Gets a copy of this rise/ set, with different date times.
+   * 
+   * @param sunrise
+   *        Sunrise
+   * @param sunset
+   *        Sunset
+   * @return New rise/ set
+   */
+  RiseSet withNewRiseSetDate(final LocalDate date)
+  {
+    return new RiseSet(location, date, inDaylightSavings, sunrise, sunset);
+  }
+
   private LocalTime toLocalTime(final double hour)
   {
     double dayHour = hour % 24D;

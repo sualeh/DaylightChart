@@ -30,11 +30,13 @@ import java.io.Writer;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Iterator;
 import java.util.List;
 import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.apache.commons.lang.ArrayUtils;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.joda.time.LocalTime;
@@ -158,16 +160,35 @@ public final class RiseSetUtility
    * @param location
    *        Location to debug
    */
-  @SuppressWarnings("boxing")
   public static void writeCalculations(final Writer writer,
                                        final Location location)
+  {
+    RiseSetUtility.writeCalculations(writer,
+                                     location,
+                                     DaylightBandType.with_clock_shift);
+  }
+
+  /**
+   * Debug calculations.
+   * 
+   * @param writer
+   *        Writer to write to
+   * @param location
+   *        Location to debug
+   * @param daylightBandType
+   *        Types of band type to write to
+   */
+  @SuppressWarnings("boxing")
+  public static void writeCalculations(final Writer writer,
+                                       final Location location,
+                                       final DaylightBandType... daylightBandType)
   {
     if (writer == null || location == null)
     {
       return;
     }
 
-    DecimalFormat format = new DecimalFormat("00.000");
+    final DecimalFormat format = new DecimalFormat("00.000");
     format.setMaximumFractionDigits(3);
 
     final int year = Calendar.getInstance().get(Calendar.YEAR);
@@ -178,27 +199,46 @@ public final class RiseSetUtility
     // Header
     printWriter.printf("Location\t%s%nDate\t%s%n%n", location, year);
     // Bands
-    printWriter.printf("\t\t\t\t\t");
     final List<DaylightBand> bands = riseSetYear.getBands();
+    for (Iterator<DaylightBand> iterator = bands.iterator(); iterator.hasNext();)
+    {
+      DaylightBand band = (DaylightBand) iterator.next();
+      if (!ArrayUtils.contains(daylightBandType, band.getDaylightBandType()))
+      {
+        iterator.remove();
+      }
+    }
+    printWriter.printf("\t\t\t");
+    if (ArrayUtils.contains(daylightBandType, DaylightBandType.twilight))
+    {
+      printWriter.println("\t\t");
+    }
     for (final DaylightBand band: bands)
     {
       printWriter.printf("Band\t%s\t", band.getName());
     }
     printWriter.println();
     // Data rows
-    printWriter.println("Date\tSunrise\tSunset\tTwilight Rise\tTwilight Set");
+    printWriter.println("Date\tSunrise\tSunset");
+    if (ArrayUtils.contains(daylightBandType, DaylightBandType.twilight))
+    {
+      printWriter.println("\\tTwilight Rise\\tTwilight Set");
+    }
     final List<RawRiseSet> rawRiseSets = riseSetYear.getRawRiseSets();
     final List<RawRiseSet> rawTwilights = riseSetYear.getRawTwilights();
     for (int i = 0; i < rawRiseSets.size(); i++)
     {
       final RawRiseSet rawRiseSet = rawRiseSets.get(i);
-      final RawRiseSet rawTwilight = rawTwilights.get(i);
-      printWriter.printf("%s\t%s\t%s\t%s\t%s",
-                         rawRiseSet.getDate(),
-                         format.format(rawRiseSet.getSunrise()),
-                         format.format(rawRiseSet.getSunset()),
-                         format.format(rawTwilight.getSunrise()),
-                         format.format(rawTwilight.getSunset()));
+      printWriter
+        .printf("%s\t%s\t%s", rawRiseSet.getDate(), format.format(rawRiseSet
+          .getSunrise()), format.format(rawRiseSet.getSunset()));
+      if (ArrayUtils.contains(daylightBandType, DaylightBandType.twilight))
+      {
+        final RawRiseSet rawTwilight = rawTwilights.get(i);
+        printWriter.printf("\t%s\t%s",
+                           format.format(rawTwilight.getSunrise()),
+                           format.format(rawTwilight.getSunset()));
+      }
       for (final DaylightBand band: bands)
       {
         final RiseSet riseSet = band.get(rawRiseSet.getDate());
@@ -214,6 +254,30 @@ public final class RiseSetUtility
         }
       }
       printWriter.println();
+    }
+  }
+
+  /**
+   * Writes chart calculations to a file.
+   * 
+   * @param location
+   *        Location
+   * @return File that was written
+   */
+  public static File writeCalculationsToFile(final Location location)
+  {
+    try
+    {
+      final File file = new File(location.getDescription() + ".txt");
+      final FileWriter writer = new FileWriter(file);
+      RiseSetUtility.writeCalculations(writer, location);
+      return file;
+    }
+    catch (final IOException e)
+    {
+      LOGGER.log(Level.WARNING, "Cannot write calculations for location "
+                                + location, e);
+      return null;
     }
   }
 
@@ -253,8 +317,20 @@ public final class RiseSetUtility
     DaylightBand baseBand = null;
     DaylightBand wrapBand = null;
 
-    for (final RiseSet riseSet: riseSetData)
+    for (int i = 0; i < riseSetData.size(); i++)
     {
+      RiseSet riseSet = riseSetData.get(i);
+      RiseSet riseSetYesterday = null;
+      if (i > 0)
+      {
+        riseSetYesterday = riseSetData.get(i - 1);
+      }
+      RiseSet riseSetTomorrow = null;
+      if (i < riseSetData.size() - 1)
+      {
+        riseSetTomorrow = riseSetData.get(i + 1);
+      }
+
       final RiseSet[] riseSets = splitAtMidnight(riseSet);
       if (riseSets.length == 2)
       {
@@ -274,12 +350,32 @@ public final class RiseSetUtility
         // Split the daylight hours across two series
         baseBand.add(riseSets[0]);
         wrapBand.add(riseSets[1]);
+
+        // Add a special "smoothing" value to the wrap band, if
+        // necessary
+        if (riseSetYesterday != null
+            && riseSetYesterday.getRiseSetType() == RiseSetType.all_daylight)
+        {
+          wrapBand.add(riseSets[1].withNewRiseSetDate(riseSetYesterday
+            .getDate()));
+        }
       }
       else if (riseSets.length == 1)
       {
         // End the wrap band, if necessary
         if (wrapBand != null)
         {
+          // Add a special "smoothing" value to the wrap band, if
+          // necessary
+          if (riseSetTomorrow != null
+              && riseSetTomorrow.getRiseSetType() == RiseSetType.all_daylight)
+          {
+            if (wrapBand.size() > 0)
+            {
+              wrapBand.add(wrapBand.getLastRiseSet()
+                .withNewRiseSetDate(riseSetTomorrow.getDate()));
+            }
+          }
           wrapBand = null;
         }
 
@@ -415,30 +511,6 @@ public final class RiseSetUtility
   private RiseSetUtility()
   {
 
-  }
-
-  /**
-   * Writes chart calculations to a file.
-   * 
-   * @param location
-   *        Location
-   * @return File that was written
-   */
-  public static File writeCalculationsToFile(Location location)
-  {
-    try
-    {
-      File file = new File(location.getDescription() + ".txt");
-      FileWriter writer = new FileWriter(file);
-      writeCalculations(writer, location);
-      return file;
-    }
-    catch (IOException e)
-    {
-      LOGGER.log(Level.WARNING, "Cannot write calculations for location "
-                                + location, e);
-      return null;
-    }
   }
 
 }

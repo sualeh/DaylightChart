@@ -69,7 +69,7 @@ public final class RiseSetYear
    */
   public List<DaylightBand> getBands()
   {
-    return bands;
+    return new ArrayList<DaylightBand>(bands);
   }
 
   /**

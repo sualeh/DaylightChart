@@ -104,12 +104,42 @@ public final class DaylightBand
     printWriter.printf("%s", getName());
     if (riseSetMap.size() > 0)
     {
-      List<LocalDate> dates = new ArrayList<LocalDate>(riseSetMap.keySet());
-      final LocalDate startDate = dates.get(0);
-      final LocalDate endDate = dates.get(riseSetMap.size() - 1);
-      printWriter.printf(", starting %s ending %s", startDate, endDate);
+      printWriter.printf(", starting %s ending %s",
+                         getFirstRiseSet().getDate(),
+                         getLastRiseSet().getDate());
     }
     return writer.toString();
+  }
+
+  public RiseSet getFirstRiseSet()
+  {
+    if (riseSetMap.size() > 0)
+    {
+      List<RiseSet> riseSets = getRiseSets();
+      return riseSets.get(0);
+    }
+    else
+    {
+      return null;
+    }
+  }
+
+  public RiseSet getLastRiseSet()
+  {
+    if (riseSetMap.size() > 0)
+    {
+      List<RiseSet> riseSets = getRiseSets();
+      return riseSets.get(riseSets.size() - 1);
+    }
+    else
+    {
+      return null;
+    }
+  }
+
+  public int size()
+  {
+    return riseSetMap.size();
   }
 
   /**
