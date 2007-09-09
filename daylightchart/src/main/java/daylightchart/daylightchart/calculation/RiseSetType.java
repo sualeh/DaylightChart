@@ -28,6 +28,8 @@ enum RiseSetType
   normal,
   /** Partial day - the sun never rises or never sets. */
   partial,
+  /** Partial day due to a split. */
+  split,
   /** All daylight, the sun never sets. */
   all_daylight,
   /** All night time, the sun never rises. */

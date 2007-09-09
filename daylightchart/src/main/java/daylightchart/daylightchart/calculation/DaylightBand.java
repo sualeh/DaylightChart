@@ -151,7 +151,8 @@ public final class DaylightBand
   void add(final RiseSet riseSet)
   {
     if (riseSet != null && riseSet.getSunrise().isBefore(riseSet.getSunset())
-        && riseSet.getRiseSetType() != RiseSetType.all_nighttime)
+        && riseSet.getRiseSetType() != RiseSetType.all_nighttime
+        && riseSet.getRiseSetType() != RiseSetType.partial)
     {
       riseSetMap.put(riseSet.getDate(), riseSet);
     }

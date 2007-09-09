@@ -319,7 +319,8 @@ public final class RiseSetUtility
     final LocalDateTime sunrise = riseSet.getSunrise();
     final LocalDateTime sunset = riseSet.getSunset();
 
-    if (sunset.getHourOfDay() < 9)
+    if (riseSet.getRiseSetType() != RiseSetType.partial
+        && sunset.getHourOfDay() < 9)
     {
       return new RiseSet[] {
           riseSet.withNewRiseSetTimes(sunrise.toLocalTime(),
@@ -328,7 +329,8 @@ public final class RiseSetUtility
             .toLocalTime())
       };
     }
-    else if (sunrise.getHourOfDay() > 15)
+    else if (riseSet.getRiseSetType() != RiseSetType.partial
+             && sunrise.getHourOfDay() > 15)
     {
       return new RiseSet[] {
           riseSet.withNewRiseSetTimes(RiseSet.JUST_AFTER_MIDNIGHT, sunset
@@ -416,7 +418,7 @@ public final class RiseSetUtility
   {
     writeCalculations(writer,
                       location,
-                      Twilight.nautical,
+                      Twilight.astronomical,
                       DaylightBandType.twilight);
   }
 

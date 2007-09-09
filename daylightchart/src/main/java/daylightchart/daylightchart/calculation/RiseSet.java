@@ -137,7 +137,7 @@ public final class RiseSet
         || !sunrise.equals(JUST_AFTER_MIDNIGHT)
         && sunset.equals(JUST_BEFORE_MIDNIGHT))
     {
-      riseSetType = RiseSetType.partial;
+      riseSetType = RiseSetType.split;
     }
     else if (sunrise.equals(JUST_AFTER_MIDNIGHT)
              && sunset.equals(JUST_BEFORE_MIDNIGHT))
