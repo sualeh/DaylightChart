@@ -101,7 +101,7 @@ public final class Main
 
     if (debugCalculations && location != null)
     {
-      File file = RiseSetUtility.writeCalculationsToFile(location);
+      final File file = RiseSetUtility.writeCalculationsToFile(location);
       System.out.println("Calculations written to " + file.getAbsolutePath());
     }
     else
