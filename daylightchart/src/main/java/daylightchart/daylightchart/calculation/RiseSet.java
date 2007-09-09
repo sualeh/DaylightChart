@@ -190,7 +190,7 @@ public final class RiseSet
    */
   public LocalDateTime getSunrise()
   {
-    return date.toDateTime(sunrise).toLocalDateTime();
+    return createLocalDateTime(date, sunrise);
   }
 
   /**
@@ -200,7 +200,7 @@ public final class RiseSet
    */
   public LocalDateTime getSunset()
   {
-    return date.toDateTime(sunset).toLocalDateTime();
+    return createLocalDateTime(date, sunset);
   }
 
   /**
@@ -270,6 +270,20 @@ public final class RiseSet
   }
 
   /**
+   * Gets a copy of this rise/ set, with different date times.
+   * 
+   * @param sunrise
+   *        Sunrise
+   * @param sunset
+   *        Sunset
+   * @return New rise/ set
+   */
+  RiseSet withNewRiseSetDate(final LocalDate date)
+  {
+    return new RiseSet(location, date, inDaylightSavings, sunrise, sunset);
+  }
+
+  /**
    * Gets a copy of this rise/ set, with different sunrise and sunset
    * times.
    * 
@@ -284,18 +298,12 @@ public final class RiseSet
     return new RiseSet(location, date, inDaylightSavings, sunrise, sunset);
   }
 
-  /**
-   * Gets a copy of this rise/ set, with different date times.
-   * 
-   * @param sunrise
-   *        Sunrise
-   * @param sunset
-   *        Sunset
-   * @return New rise/ set
-   */
-  RiseSet withNewRiseSetDate(final LocalDate date)
+  private LocalDateTime createLocalDateTime(final LocalDate date,
+                                            final LocalTime time)
   {
-    return new RiseSet(location, date, inDaylightSavings, sunrise, sunset);
+    return new LocalDateTime(date.getYear(), date.getMonthOfYear(), date
+      .getDayOfMonth(), time.getHourOfDay(), time.getMinuteOfHour(), time
+      .getSecondOfMinute(), time.getMillisOfSecond());
   }
 
   private LocalTime toLocalTime(final double hour)
