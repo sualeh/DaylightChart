@@ -165,7 +165,7 @@ public final class RiseSetUtility
     {
       final File file = new File(location.getDescription() + ".txt");
       final FileWriter writer = new FileWriter(file);
-      RiseSetUtility.writeCalculations(writer, location);
+      writeCalculations(writer, location);
       return file;
     }
     catch (final IOException e)
@@ -414,9 +414,10 @@ public final class RiseSetUtility
   private static void writeCalculations(final Writer writer,
                                         final Location location)
   {
-    RiseSetUtility.writeCalculations(writer,
-                                     location,
-                                     DaylightBandType.twilight);
+    writeCalculations(writer,
+                      location,
+                      Twilight.nautical,
+                      DaylightBandType.twilight);
   }
 
   /**
@@ -432,6 +433,7 @@ public final class RiseSetUtility
   @SuppressWarnings("boxing")
   private static void writeCalculations(final Writer writer,
                                         final Location location,
+                                        final Twilight twilight,
                                         final DaylightBandType... daylightBandType)
   {
     if (writer == null || location == null)
@@ -443,8 +445,9 @@ public final class RiseSetUtility
     format.setMaximumFractionDigits(3);
 
     final int year = Calendar.getInstance().get(Calendar.YEAR);
-    final RiseSetYear riseSetYear = RiseSetUtility
-      .createRiseSetYear(location, year, new Options());
+    final Options options = new Options();
+    options.setTwilight(twilight);
+    final RiseSetYear riseSetYear = createRiseSetYear(location, year, options);
 
     final PrintWriter printWriter = new PrintWriter(writer, true);
     // Header
