@@ -153,111 +153,6 @@ public final class RiseSetUtility
   }
 
   /**
-   * Debug calculations.
-   * 
-   * @param writer
-   *        Writer to write to
-   * @param location
-   *        Location to debug
-   */
-  public static void writeCalculations(final Writer writer,
-                                       final Location location)
-  {
-    RiseSetUtility.writeCalculations(writer,
-                                     location,
-                                     DaylightBandType.with_clock_shift);
-  }
-
-  /**
-   * Debug calculations.
-   * 
-   * @param writer
-   *        Writer to write to
-   * @param location
-   *        Location to debug
-   * @param daylightBandType
-   *        Types of band type to write to
-   */
-  @SuppressWarnings("boxing")
-  public static void writeCalculations(final Writer writer,
-                                       final Location location,
-                                       final DaylightBandType... daylightBandType)
-  {
-    if (writer == null || location == null)
-    {
-      return;
-    }
-
-    final DecimalFormat format = new DecimalFormat("00.000");
-    format.setMaximumFractionDigits(3);
-
-    final int year = Calendar.getInstance().get(Calendar.YEAR);
-    final RiseSetYear riseSetYear = RiseSetUtility
-      .createRiseSetYear(location, year, new Options());
-
-    final PrintWriter printWriter = new PrintWriter(writer, true);
-    // Header
-    printWriter.printf("Location\t%s%nDate\t%s%n%n", location, year);
-    // Bands
-    final List<DaylightBand> bands = riseSetYear.getBands();
-    for (Iterator<DaylightBand> iterator = bands.iterator(); iterator.hasNext();)
-    {
-      DaylightBand band = (DaylightBand) iterator.next();
-      if (!ArrayUtils.contains(daylightBandType, band.getDaylightBandType()))
-      {
-        iterator.remove();
-      }
-    }
-    printWriter.printf("\t\t\t");
-    if (ArrayUtils.contains(daylightBandType, DaylightBandType.twilight))
-    {
-      printWriter.println("\t\t");
-    }
-    for (final DaylightBand band: bands)
-    {
-      printWriter.printf("Band\t%s\t", band.getName());
-    }
-    printWriter.println();
-    // Data rows
-    printWriter.println("Date\tSunrise\tSunset");
-    if (ArrayUtils.contains(daylightBandType, DaylightBandType.twilight))
-    {
-      printWriter.println("\\tTwilight Rise\\tTwilight Set");
-    }
-    final List<RawRiseSet> rawRiseSets = riseSetYear.getRawRiseSets();
-    final List<RawRiseSet> rawTwilights = riseSetYear.getRawTwilights();
-    for (int i = 0; i < rawRiseSets.size(); i++)
-    {
-      final RawRiseSet rawRiseSet = rawRiseSets.get(i);
-      printWriter
-        .printf("%s\t%s\t%s", rawRiseSet.getDate(), format.format(rawRiseSet
-          .getSunrise()), format.format(rawRiseSet.getSunset()));
-      if (ArrayUtils.contains(daylightBandType, DaylightBandType.twilight))
-      {
-        final RawRiseSet rawTwilight = rawTwilights.get(i);
-        printWriter.printf("\t%s\t%s",
-                           format.format(rawTwilight.getSunrise()),
-                           format.format(rawTwilight.getSunset()));
-      }
-      for (final DaylightBand band: bands)
-      {
-        final RiseSet riseSet = band.get(rawRiseSet.getDate());
-        if (riseSet == null)
-        {
-          printWriter.print("\t\t");
-        }
-        else
-        {
-          printWriter.printf("\t%s\t%s", riseSet.getSunrise().toLocalTime()
-            .toString("HH:mm:ss"), riseSet.getSunset().toLocalTime()
-            .toString("HH:mm:ss"));
-        }
-      }
-      printWriter.println();
-    }
-  }
-
-  /**
    * Writes chart calculations to a file.
    * 
    * @param location
@@ -319,7 +214,7 @@ public final class RiseSetUtility
 
     for (int i = 0; i < riseSetData.size(); i++)
     {
-      RiseSet riseSet = riseSetData.get(i);
+      final RiseSet riseSet = riseSetData.get(i);
       RiseSet riseSetYesterday = null;
       if (i > 0)
       {
@@ -506,6 +401,116 @@ public final class RiseSetUtility
       date = date.plusDays(1);
     } while (!(date.getMonthOfYear() == 1 && date.getDayOfMonth() == 1));
     return dates;
+  }
+
+  /**
+   * Debug calculations.
+   * 
+   * @param writer
+   *        Writer to write to
+   * @param location
+   *        Location to debug
+   */
+  private static void writeCalculations(final Writer writer,
+                                        final Location location)
+  {
+    RiseSetUtility.writeCalculations(writer,
+                                     location,
+                                     DaylightBandType.twilight);
+  }
+
+  /**
+   * Debug calculations.
+   * 
+   * @param writer
+   *        Writer to write to
+   * @param location
+   *        Location to debug
+   * @param daylightBandType
+   *        Types of band type to write to
+   */
+  @SuppressWarnings("boxing")
+  private static void writeCalculations(final Writer writer,
+                                        final Location location,
+                                        final DaylightBandType... daylightBandType)
+  {
+    if (writer == null || location == null)
+    {
+      return;
+    }
+
+    final DecimalFormat format = new DecimalFormat("00.000");
+    format.setMaximumFractionDigits(3);
+
+    final int year = Calendar.getInstance().get(Calendar.YEAR);
+    final RiseSetYear riseSetYear = RiseSetUtility
+      .createRiseSetYear(location, year, new Options());
+
+    final PrintWriter printWriter = new PrintWriter(writer, true);
+    // Header
+    printWriter.printf("Location\t%s%nDate\t%s%n%n", location, year);
+    // Bands
+    final List<DaylightBand> bands = riseSetYear.getBands();
+    for (final Iterator<DaylightBand> iterator = bands.iterator(); iterator
+      .hasNext();)
+    {
+      final DaylightBand band = iterator.next();
+      if (!ArrayUtils.contains(daylightBandType, band.getDaylightBandType()))
+      {
+        iterator.remove();
+      }
+    }
+    printWriter.printf("\t\t\t");
+    if (ArrayUtils.contains(daylightBandType, DaylightBandType.twilight))
+    {
+      printWriter.printf("\t\t");
+    }
+    for (final DaylightBand band: bands)
+    {
+      printWriter.printf("Band\t%s\t", band.getName());
+    }
+    printWriter.println();
+    // Data rows
+    printWriter.print("Date\tSunrise\tSunset");
+    if (ArrayUtils.contains(daylightBandType, DaylightBandType.twilight))
+    {
+      printWriter.println("\tTwilight Rise\tTwilight Set");
+    }
+    else
+    {
+      printWriter.println();
+    }
+    final List<RawRiseSet> rawRiseSets = riseSetYear.getRawRiseSets();
+    final List<RawRiseSet> rawTwilights = riseSetYear.getRawTwilights();
+    for (int i = 0; i < rawRiseSets.size(); i++)
+    {
+      final RawRiseSet rawRiseSet = rawRiseSets.get(i);
+      printWriter
+        .printf("%s\t%s\t%s", rawRiseSet.getDate(), format.format(rawRiseSet
+          .getSunrise()), format.format(rawRiseSet.getSunset()));
+      if (ArrayUtils.contains(daylightBandType, DaylightBandType.twilight))
+      {
+        final RawRiseSet rawTwilight = rawTwilights.get(i);
+        printWriter.printf("\t%s\t%s",
+                           format.format(rawTwilight.getSunrise()),
+                           format.format(rawTwilight.getSunset()));
+      }
+      for (final DaylightBand band: bands)
+      {
+        final RiseSet riseSet = band.get(rawRiseSet.getDate());
+        if (riseSet == null)
+        {
+          printWriter.print("\t\t");
+        }
+        else
+        {
+          printWriter.printf("\t%s\t%s", riseSet.getSunrise().toLocalTime()
+            .toString("HH:mm:ss"), riseSet.getSunset().toLocalTime()
+            .toString("HH:mm:ss"));
+        }
+      }
+      printWriter.println();
+    }
   }
 
   private RiseSetUtility()
