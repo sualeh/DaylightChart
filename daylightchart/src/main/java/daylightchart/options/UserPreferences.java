@@ -197,6 +197,7 @@ public final class UserPreferences
   {
     System.out.println("User preferences:");
     UserPreferences.preferences.exportNode(System.out);
+    UserPreferences.clear();
   }
 
   /**
@@ -335,5 +336,4 @@ public final class UserPreferences
   {
     // Prevent external instantiation
   }
-
 }
