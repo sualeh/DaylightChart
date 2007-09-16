@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>Point Location 6709</name>
-	<comment></comment>
+	<name>pointlocation6709</name>
+	<comment>Point Location 6709 is an LGPL licensed Java library for parsing
+		and formatting geographic point locations in ISO 6709:1983
+		format.</comment>
 	<projects>
 	</projects>
 	<buildSpec>
@@ -20,11 +22,4 @@
 		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>org.maven.ide.eclipse.maven2Nature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>parent</name>
-			<type>2</type>
-			<locationURI>..</locationURI>
-		</link>
-	</linkedResources>
 </projectDescription>

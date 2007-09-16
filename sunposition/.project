@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>Sun Position Calculations</name>
-	<comment></comment>
+	<name>sunposition</name>
+	<comment>Sun Position Calculations is an LGPL licensed Java library for calculating
+		sunrise and sunset times for any location in the world.</comment>
 	<projects>
-		<project>Point Location 6709</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

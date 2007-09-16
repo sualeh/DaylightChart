@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>Daylight Chart - Web</name>
+	<name>daylightchart-web</name>
 	<comment>Daylight Chart shows sunrise and sunset times in an attractive chart, for any location in the world. The effect of daylight savings time is also displayed. Charts can be exported to image files.</comment>
 	<projects>
-		<project>Daylight Chart</project>
-		<project>Point Location 6709</project>
-		<project>Sun Position Calculations</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
