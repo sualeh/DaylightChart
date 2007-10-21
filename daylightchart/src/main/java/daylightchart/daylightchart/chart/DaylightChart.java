@@ -27,7 +27,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -304,16 +303,15 @@ public class DaylightChart
     plot.setDomainAxis(axis);
   }
 
+  @SuppressWarnings("unchecked")
   private void createTitles(final ChartOptions chartOptions,
                             final Font titleFont)
   {
 
     // Clear all titles and subtitles
     setTitle((TextTitle) null);
-    for (final Iterator iterator = getSubtitles().iterator(); iterator
-      .hasNext();)
+    for (Title subtitle: (List<Title>) getSubtitles())
     {
-      final Title subtitle = (Title) iterator.next();
       if (subtitle instanceof TextTitle)
       {
         removeSubtitle(subtitle);

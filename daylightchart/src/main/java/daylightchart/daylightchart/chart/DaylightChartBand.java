@@ -18,6 +18,11 @@ import daylightchart.daylightchart.calculation.DaylightBand;
 import daylightchart.daylightchart.calculation.DaylightBandType;
 import daylightchart.daylightchart.calculation.RiseSet;
 
+/**
+ * Adapter for daylight bands to add charting functionality.
+ * 
+ * @author Sualeh Fatehi
+ */
 public class DaylightChartBand
 {
 
