@@ -102,7 +102,8 @@ public final class RiseSetUtility
                                     && timeZoneOption != TimeZoneOption.USE_LOCAL_TIME;
     boolean wasDaylightSavings = false;
 
-    final RiseSetYear riseSetYear = new RiseSetYear(location, year);
+    final Twilight twilight = options.getTwilight();
+    final RiseSetYear riseSetYear = new RiseSetYear(location, twilight, year);
     riseSetYear.setUsesDaylightTime(useDaylightTime);
     for (final LocalDate date: getYearsDates(year))
     {
@@ -128,7 +129,6 @@ public final class RiseSetUtility
                                                   Twilight.none);
       riseSetYear.addRiseSet(riseSet);
 
-      final Twilight twilight = options.getTwilight();
       if (twilight != null)
       {
         final RawRiseSet twilights = calculateRiseSet(location,

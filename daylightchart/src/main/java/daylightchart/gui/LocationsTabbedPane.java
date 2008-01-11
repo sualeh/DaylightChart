@@ -22,26 +22,13 @@
 package daylightchart.gui;
 
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-import java.util.logging.Level;
+import java.awt.Panel;
 import java.util.logging.Logger;
 
-import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
-import javax.swing.filechooser.FileFilter;
 
-import org.jfree.chart.ChartPanel;
-import org.jfree.chart.ChartUtilities;
-
-import sf.util.ui.Actions;
 import sf.util.ui.CloseTabIcon;
-import sf.util.ui.ExtensionFileFilter;
-import daylightchart.daylightchart.chart.ChartConfiguration;
-import daylightchart.daylightchart.chart.DaylightChart;
+import daylightchart.daylightchart.layout.DaylightChartReport;
 import daylightchart.location.Location;
 import daylightchart.location.parser.LocationFormatter;
 import daylightchart.options.Options;
@@ -69,87 +56,22 @@ public class LocationsTabbedPane
    */
   public void addLocationTab(final Location location)
   {
-    final Options options = UserPreferences.getOptions();
-    final DaylightChart chart = new DaylightChart(location, Calendar
-      .getInstance().get(Calendar.YEAR), options);
-    options.getChartOptions().updateChart(chart);
 
-    final ChartPanel chartPanel = new ChartPanel(chart);
-    chartPanel.setName(location.toString());
-    chartPanel.setPreferredSize(ChartConfiguration.chartDimension);
+    final Options options = UserPreferences.getOptions();
+    final DaylightChartReport daylightChartReport = new DaylightChartReport(location);
+    daylightChartReport.renderDaylightChartReport(options);
+
+    // Render the report into PDF
+
+    // Open the PDF file in PDF Renderer
+    // https://pdf-renderer.dev.java.net/
+    final Panel pdfRendererPanel = new Panel();
 
     addTab(location.toString(),
            new CloseTabIcon(),
-           chartPanel,
+           pdfRendererPanel,
            LocationFormatter.getToolTip(location));
     setSelectedIndex(getTabCount() - 1);
-  }
-
-  /**
-   * Prints the selected chart.
-   */
-  public void printSelectedChart()
-  {
-    getSelectedChart().createChartPrintJob();
-  }
-
-  /**
-   * Saves the selected chart.
-   */
-  public void saveSelectedChart()
-  {
-    final ChartPanel chartPanel = getSelectedChart();
-    final List<FileFilter> fileFilters = new ArrayList<FileFilter>();
-    fileFilters
-      .add(new ExtensionFileFilter("Portable Network Graphics (*.png)", ".png")); //$NON-NLS-1$ //$NON-NLS-2$
-    fileFilters.add(new ExtensionFileFilter("JPEG (*.jpg)", ".jpg")); //$NON-NLS-1$ //$NON-NLS-2$
-    final File selectedFile = Actions
-      .showSaveDialog(chartPanel, Messages
-        .getString("DaylightChartGui.Menu.File.SaveChart"), //$NON-NLS-1$
-                      fileFilters,
-                      new File(UserPreferences.getDataFileDirectory(),
-                               chartPanel.getName()),
-                      Messages
-                        .getString("DaylightChartGui.Message.Confirm.FileOverwrite")); //$NON-NLS-1$
-    if (selectedFile != null)
-    {
-      try
-      {
-        final String extension = ExtensionFileFilter.getExtension(selectedFile);
-        if (extension.equals(".png")) //$NON-NLS-1$
-        {
-          ChartUtilities.saveChartAsPNG(selectedFile,
-                                        chartPanel.getChart(),
-                                        chartPanel.getWidth(),
-                                        chartPanel.getHeight());
-        }
-        else if (extension.equals(".jpg")) //$NON-NLS-1$
-        {
-          ChartUtilities.saveChartAsJPEG(selectedFile,
-                                         chartPanel.getChart(),
-                                         chartPanel.getWidth(),
-                                         chartPanel.getHeight());
-        }
-
-        // Save last selected directory
-        UserPreferences.setDataFileDirectory(selectedFile.getParentFile());
-      }
-      catch (final IOException e)
-      {
-        LOGGER.log(Level.WARNING, Messages
-          .getString("DaylightChartGui.Message.Error.CannotSaveFile"), e); //$NON-NLS-1$
-        JOptionPane.showMessageDialog(chartPanel, Messages
-          .getString("DaylightChartGui.Message.Error.CannotSaveFile") + "\n" //$NON-NLS-1$ //$NON-NLS-2$
-                                                  + selectedFile, Messages
-          .getString("DaylightChartGui.Message.Error.CannotSaveFile"), //$NON-NLS-1$
-                                      JOptionPane.OK_OPTION);
-      }
-    }
-  }
-
-  private ChartPanel getSelectedChart()
-  {
-    return (ChartPanel) getSelectedComponent();
   }
 
 }

@@ -82,7 +82,8 @@ public class DaylightChart
    */
   public DaylightChart()
   {
-    this(null, Calendar.getInstance().get(Calendar.YEAR), new Options());
+    this(RiseSetUtility.createRiseSetYear(null, Calendar.getInstance()
+      .get(Calendar.YEAR), new Options()), new Options());
     setTitle("");
   }
 
@@ -96,14 +97,10 @@ public class DaylightChart
    * @param options
    *        Options
    */
-  public DaylightChart(final Location location,
-                       final int year,
-                       final Options options)
+  public DaylightChart(final RiseSetYear riseSetData, final Options options)
   {
     super(new XYPlot());
-
-    // Calculate rise and set timings for the whole year
-    riseSetData = RiseSetUtility.createRiseSetYear(location, year, options);
+    this.riseSetData = riseSetData;
     createChart(options);
   }
 
@@ -310,7 +307,7 @@ public class DaylightChart
 
     // Clear all titles and subtitles
     setTitle((TextTitle) null);
-    for (Title subtitle: (List<Title>) getSubtitles())
+    for (final Title subtitle: (List<Title>) getSubtitles())
     {
       if (subtitle instanceof TextTitle)
       {

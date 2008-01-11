@@ -25,7 +25,6 @@ package daylightchart.gui;
 import java.awt.BorderLayout;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.util.Calendar;
 import java.util.List;
 
 import javax.swing.ImageIcon;
@@ -36,12 +35,8 @@ import javax.swing.JMenuBar;
 import javax.swing.JSplitPane;
 import javax.swing.JToolBar;
 
-import org.jfree.chart.ChartPanel;
-
 import sf.util.ui.ExitAction;
 import sf.util.ui.GuiAction;
-import daylightchart.daylightchart.chart.ChartConfiguration;
-import daylightchart.daylightchart.chart.DaylightChart;
 import daylightchart.gui.actions.AboutAction;
 import daylightchart.gui.actions.ChartOptionsAction;
 import daylightchart.gui.actions.ChartOrientationChoiceAction;
@@ -49,9 +44,7 @@ import daylightchart.gui.actions.CloseCurrentTabAction;
 import daylightchart.gui.actions.LocationsSortChoiceAction;
 import daylightchart.gui.actions.OnlineHelpAction;
 import daylightchart.gui.actions.OpenLocationsFileAction;
-import daylightchart.gui.actions.PrintChartAction;
 import daylightchart.gui.actions.ResetAllAction;
-import daylightchart.gui.actions.SaveChartAction;
 import daylightchart.gui.actions.SaveLocationsFileAction;
 import daylightchart.gui.actions.TimeZoneOptionChoiceAction;
 import daylightchart.gui.actions.TwilightChoiceAction;
@@ -78,17 +71,6 @@ public final class DaylightChartGui
    */
   public DaylightChartGui()
   {
-    this(null);
-  }
-
-  /**
-   * Creates a new instance of a Daylight Chart main window.
-   * 
-   * @param location
-   *        Location for a single chart window, or null for the full UI
-   */
-  public DaylightChartGui(final Location location)
-  {
 
     setIconImage(new ImageIcon(DaylightChartGui.class.getResource("/icon.png")) //$NON-NLS-1$
       .getImage());
@@ -96,46 +78,30 @@ public final class DaylightChartGui
     setTitle("Daylight Chart"); //$NON-NLS-1$
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-    if (location == null)
-    {
-      // Create basic UI
-      locationsTabbedPane = new LocationsTabbedPane();
-      locationsList = new LocationsList(this);
+    // Create basic UI
+    locationsTabbedPane = new LocationsTabbedPane();
+    locationsList = new LocationsList(this);
 
-      final JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
-                                                  locationsList,
-                                                  locationsTabbedPane);
-      splitPane.setOneTouchExpandable(true);
-      getContentPane().add(splitPane);
+    final JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
+                                                locationsList,
+                                                locationsTabbedPane);
+    splitPane.setOneTouchExpandable(true);
+    getContentPane().add(splitPane);
 
-      // Create menus and toolbars
-      final JMenuBar menuBar = new JMenuBar();
-      setJMenuBar(menuBar);
-      final JToolBar toolBar = new JToolBar();
-      toolBar.setRollover(true);
-      add(toolBar, BorderLayout.NORTH);
+    // Create menus and toolbars
+    final JMenuBar menuBar = new JMenuBar();
+    setJMenuBar(menuBar);
+    final JToolBar toolBar = new JToolBar();
+    toolBar.setRollover(true);
+    add(toolBar, BorderLayout.NORTH);
 
-      createFileMenu(menuBar, toolBar);
-      createActions(menuBar, toolBar);
-      createOptionsMenu(menuBar, toolBar);
-      createHelpMenu(menuBar, toolBar);
+    createFileMenu(menuBar, toolBar);
+    createActions(menuBar, toolBar);
+    createOptionsMenu(menuBar, toolBar);
+    createHelpMenu(menuBar, toolBar);
 
-      // Open the first location
-      addLocationTab(locationsList.getSelectedLocation());
-    }
-    else
-    {
-      locationsTabbedPane = null;
-      locationsList = null;
-      final Options options = UserPreferences.getOptions();
-      final ChartPanel chartPanel = new ChartPanel(new DaylightChart(location,
-                                                                     Calendar
-                                                                       .getInstance()
-                                                                       .get(Calendar.YEAR),
-                                                                     options));
-      chartPanel.setPreferredSize(ChartConfiguration.chartDimension);
-      setContentPane(chartPanel);
-    }
+    // Open the first location
+    addLocationTab(locationsList.getSelectedLocation());
 
     pack();
   }
@@ -211,8 +177,6 @@ public final class DaylightChartGui
 
     final OpenLocationsFileAction openLocationsFile = new OpenLocationsFileAction(this);
     final SaveLocationsFileAction saveLocationsFile = new SaveLocationsFileAction(this);
-    final SaveChartAction saveChart = new SaveChartAction(locationsTabbedPane);
-    final PrintChartAction printChart = new PrintChartAction(locationsTabbedPane);
 
     final ExitAction exit = new ExitAction(this, Messages
       .getString("DaylightChartGui.Menu.File.Exit")); //$NON-NLS-1$
@@ -224,17 +188,11 @@ public final class DaylightChartGui
     menu.add(openLocationsFile);
     menu.add(saveLocationsFile);
     menu.addSeparator();
-    menu.add(saveChart);
-    menu.add(printChart);
-    menu.addSeparator();
     menu.add(exit);
     menuBar.add(menu);
 
     toolBar.add(openLocationsFile);
     toolBar.add(saveLocationsFile);
-    toolBar.addSeparator();
-    toolBar.add(saveChart);
-    toolBar.add(printChart);
     toolBar.addSeparator();
 
   }

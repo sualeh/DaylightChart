@@ -37,7 +37,6 @@ import javax.swing.filechooser.FileFilter;
 import sf.util.ui.Actions;
 import sf.util.ui.ExtensionFileFilter;
 import sf.util.ui.GuiAction;
-
 import daylightchart.gui.DaylightChartGui;
 import daylightchart.gui.Messages;
 import daylightchart.location.parser.LocationFormatter;
