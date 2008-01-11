@@ -19,7 +19,6 @@
  */
 package daylightchart.servlet;
 
-
 import java.io.IOException;
 import java.util.Calendar;
 
@@ -35,6 +34,8 @@ import org.pointlocation6709.PointLocation;
 import org.pointlocation6709.parser.CoordinateParser;
 import org.pointlocation6709.parser.ParserException;
 
+import daylightchart.daylightchart.calculation.RiseSetUtility;
+import daylightchart.daylightchart.calculation.RiseSetYear;
 import daylightchart.daylightchart.chart.DaylightChart;
 import daylightchart.location.Country;
 import daylightchart.location.Location;
@@ -48,62 +49,55 @@ import daylightchart.options.Options;
  * @author Sualeh Fatehi
  */
 public class DaylightChartServlet
-  extends HttpServlet
+    extends HttpServlet
 {
 
   private static final long serialVersionUID = 3184265489619614766L;
 
   @Override
-  protected void doGet(final HttpServletRequest request,
-                       final HttpServletResponse response)
+  protected void doGet(final HttpServletRequest request, final HttpServletResponse response)
     throws ServletException, IOException
   {
     doPost(request, response);
   }
 
   @Override
-  protected void doPost(final HttpServletRequest request,
-                        final HttpServletResponse response)
+  protected void doPost(final HttpServletRequest request, final HttpServletResponse response)
     throws ServletException, IOException
   {
-    try
-    {
+    try {
       // Create the chart
       final Location location = getRequestedLocation(request);
-      final DaylightChart daylightChart = new DaylightChart(location, Calendar
-        .getInstance().get(Calendar.YEAR), new Options());
+      Options options = new Options();
+      RiseSetYear riseSetData = RiseSetUtility.createRiseSetYear(
+          location,
+          Calendar.getInstance().get(Calendar.YEAR),
+          options);
+      final DaylightChart chart = new DaylightChart(riseSetData, options);
 
       // Get the image width
       int width;
-      try
-      {
+      try {
         width = Integer.parseInt(request.getParameter("width"));
       }
-      catch (final NumberFormatException e)
-      {
+      catch (final NumberFormatException e) {
         width = 700;
       }
 
       // Get the image height
       int height;
-      try
-      {
+      try {
         height = Integer.parseInt(request.getParameter("height"));
       }
-      catch (final NumberFormatException e)
-      {
+      catch (final NumberFormatException e) {
         height = 495;
       }
 
       response.setContentType("image/jpeg");
-      ChartUtilities.writeChartAsJPEG(response.getOutputStream(),
-                                      daylightChart,
-                                      width,
-                                      height);
+      ChartUtilities.writeChartAsJPEG(response.getOutputStream(), chart, width, height);
 
     }
-    catch (final RuntimeException e)
-    {
+    catch (final RuntimeException e) {
       throw new ServletException(e);
     }
 
@@ -118,84 +112,65 @@ public class DaylightChartServlet
    * @throws ServletException
    *         On an exception
    */
-  private Location getRequestedLocation(final HttpServletRequest request)
-    throws ServletException
+  private Location getRequestedLocation(final HttpServletRequest request) throws ServletException
   {
-    try
-    {
+    try {
       // Get the city
       String city = request.getParameter("city");
-      if (city == null || city.trim().length() == 0)
-      {
+      if (city == null || city.trim().length() == 0) {
         city = "";
       }
 
       // Get the country
       String countryString = request.getParameter("country");
-      if (countryString == null || countryString.trim().length() == 0)
-      {
+      if (countryString == null || countryString.trim().length() == 0) {
         countryString = "";
       }
       Country country = Countries.lookupCountry(countryString);
-      if (country == null)
-      {
+      if (country == null) {
         country = Country.UNKNOWN;
       }
 
       // Get the latitude
       String latitudeValue = request.getParameter("latitude");
-      if (latitudeValue == null || latitudeValue.length() == 0)
-      {
+      if (latitudeValue == null || latitudeValue.length() == 0) {
         latitudeValue = request.getParameter("lat");
       }
-      if (latitudeValue == null || latitudeValue.length() == 0)
-      {
+      if (latitudeValue == null || latitudeValue.length() == 0) {
         throw new ServletException("Latitude not provided");
       }
-      else
-      {
+      else {
         latitudeValue = latitudeValue.trim();
       }
-      if (!latitudeValue.matches("[+-].*"))
-      {
+      if (!latitudeValue.matches("[+-].*")) {
         latitudeValue = "+" + latitudeValue;
       }
       final Latitude latitude = CoordinateParser.parseLatitude(latitudeValue);
 
       // Get the longitude
       String longitudeValue = request.getParameter("longitude");
-      if (longitudeValue == null || longitudeValue.length() == 0)
-      {
+      if (longitudeValue == null || longitudeValue.length() == 0) {
         longitudeValue = request.getParameter("lng");
       }
-      if (longitudeValue == null || longitudeValue.length() == 0)
-      {
+      if (longitudeValue == null || longitudeValue.length() == 0) {
         throw new ServletException("Longitude not provided");
       }
-      else
-      {
+      else {
         longitudeValue = longitudeValue.trim();
       }
-      if (!longitudeValue.matches("[+-].*"))
-      {
+      if (!longitudeValue.matches("[+-].*")) {
         longitudeValue = "+" + longitudeValue;
       }
-      final Longitude longitude = CoordinateParser
-        .parseLongitude(longitudeValue);
+      final Longitude longitude = CoordinateParser.parseLongitude(longitudeValue);
 
       // Create the chart
       final PointLocation pointLocation = new PointLocation(latitude, longitude);
-      final String timeZoneId = DefaultTimezones
-        .attemptTimeZoneMatch(city, country, pointLocation.getLongitude());
-      final Location location = new Location(city,
-                                             country,
-                                             timeZoneId,
-                                             pointLocation);
+      final String timeZoneId = DefaultTimezones.attemptTimeZoneMatch(city, country, pointLocation.getLongitude());
+      final Location location = new Location(city, country, timeZoneId, pointLocation);
       return location;
     }
 
-    catch (final ParserException e)
-    {
+    catch (final ParserException e) {
       throw new ServletException(e);
     }
   }
