@@ -38,6 +38,8 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JToolBar;
 
+import org.joda.time.LocalDateTime;
+
 import sf.util.ui.BareBonesBrowserLaunch;
 import sf.util.ui.ExitAction;
 import sf.util.ui.GuiAction;
@@ -68,12 +70,21 @@ public final class DaylightChartGui
   private final static long serialVersionUID = 3760840181833283637L;
 
   private final LocationsList locationsList;
+  private File workingDirectory;
 
   /**
    * Creates a new instance of a Daylight Chart main window.
    */
   public DaylightChartGui()
   {
+
+    workingDirectory = new File(System.getProperty("java.io.tmpdir"));
+    if (!workingDirectory.exists() || !workingDirectory.isDirectory()
+        || !workingDirectory.canWrite())
+    {
+      throw new RuntimeException("Cannot use temporary directory, "
+                                 + workingDirectory);
+    }
 
     setIconImage(new ImageIcon(DaylightChartGui.class.getResource("/icon.png")) //$NON-NLS-1$
       .getImage());
@@ -98,6 +109,7 @@ public final class DaylightChartGui
     createOptionsMenu(menuBar, toolBar);
     createHelpMenu(menuBar, toolBar);
 
+    // Prevent resizing of the window beyond a certain point
     addComponentListener(new ComponentAdapter()
     {
       public void componentResized(ComponentEvent event)
@@ -144,7 +156,7 @@ public final class DaylightChartGui
   }
 
   /**
-   * Add a new location tab.
+   * Add a new location tab in the browser.
    * 
    * @param location
    *        Location.
@@ -154,7 +166,11 @@ public final class DaylightChartGui
     final Options options = UserPreferences.getOptions();
     final DaylightChartReport daylightChartReport = new DaylightChartReport(location,
                                                                             options);
-    File reportFile = new File("C:\\Users\\Sualeh Fatehi\\Documents\\_Projects\\DaylightChart\\file.html");
+    File reportFile = new File(workingDirectory, location.getDescription()
+                                                 + "."
+                                                 + new LocalDateTime()
+                                                   .toString("yyyyMMddhhmm")
+                                                 + ".html");
     daylightChartReport.write(reportFile);
     try
     {
