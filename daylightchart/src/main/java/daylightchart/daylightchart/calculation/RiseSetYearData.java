@@ -118,6 +118,20 @@ public final class RiseSetYearData
     return location;
   }
 
+  public List<RiseSetData> getRiseSetData()
+  {
+    final List<RiseSetData> riseSetData = new ArrayList<RiseSetData>();
+    final List<RiseSet> riseSets = getRiseSets(true);
+    final List<RiseSet> twilights = getTwilights();
+    for (int i = 0; i < riseSets.size(); i++)
+    {
+      final RiseSet riseSet = riseSets.get(i);
+      final RiseSet twilight = twilights.get(i);
+      riseSetData.add(new RiseSetData(riseSet, twilight));
+    }
+    return riseSetData;
+  }
+
   /**
    * Gets the twilight type.
    * 
@@ -241,19 +255,5 @@ public final class RiseSetYearData
   void setUsesDaylightTime(final boolean usesDaylightTime)
   {
     this.usesDaylightTime = usesDaylightTime;
-  }
-
-  public List<RiseSetData> getRiseSetData()
-  {
-    List<RiseSetData> riseSetData = new ArrayList<RiseSetData>();
-    List<RiseSet> riseSets = getRiseSets(true);
-    List<RiseSet> twilights = getTwilights();
-    for (int i = 0; i < riseSets.size(); i++)
-    {
-      RiseSet riseSet = riseSets.get(i);
-      RiseSet twilight = twilights.get(i);
-      riseSetData.add(new RiseSetData(riseSet, twilight));
-    }
-    return riseSetData;
   }
 }

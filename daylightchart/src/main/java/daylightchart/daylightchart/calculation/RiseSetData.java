@@ -9,10 +9,15 @@ public final class RiseSetData
   private final RiseSet riseSet;
   private final RiseSet twilight;
 
-  RiseSetData(RiseSet riseSet, RiseSet twilight)
+  RiseSetData(final RiseSet riseSet, final RiseSet twilight)
   {
     this.riseSet = riseSet;
     this.twilight = twilight;
+  }
+
+  public LocalDate getDate()
+  {
+    return riseSet.getDate();
   }
 
   public LocalDateTime getSunrise()
@@ -33,11 +38,6 @@ public final class RiseSetData
   public LocalDateTime getTwilightSet()
   {
     return twilight.getSunset();
-  }
-
-  public LocalDate getDate()
-  {
-    return riseSet.getDate();
   }
 
 }

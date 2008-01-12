@@ -70,21 +70,12 @@ public final class DaylightChartGui
   private final static long serialVersionUID = 3760840181833283637L;
 
   private final LocationsList locationsList;
-  private File workingDirectory;
 
   /**
    * Creates a new instance of a Daylight Chart main window.
    */
   public DaylightChartGui()
   {
-
-    workingDirectory = new File(System.getProperty("java.io.tmpdir"));
-    if (!workingDirectory.exists() || !workingDirectory.isDirectory()
-        || !workingDirectory.canWrite())
-    {
-      throw new RuntimeException("Cannot use temporary directory, "
-                                 + workingDirectory);
-    }
 
     setIconImage(new ImageIcon(DaylightChartGui.class.getResource("/icon.png")) //$NON-NLS-1$
       .getImage());
@@ -112,7 +103,8 @@ public final class DaylightChartGui
     // Prevent resizing of the window beyond a certain point
     addComponentListener(new ComponentAdapter()
     {
-      public void componentResized(ComponentEvent event)
+      @Override
+      public void componentResized(final ComponentEvent event)
       {
         setSize(Math.max(300, getWidth()), Math.max(500, getHeight()));
       }
@@ -166,17 +158,17 @@ public final class DaylightChartGui
     final Options options = UserPreferences.getOptions();
     final DaylightChartReport daylightChartReport = new DaylightChartReport(location,
                                                                             options);
-    File reportFile = new File(workingDirectory, location.getDescription()
-                                                 + "."
-                                                 + new LocalDateTime()
-                                                   .toString("yyyyMMddhhmm")
-                                                 + ".html");
+    String reportFilename = location.getDescription() + "."
+                            + new LocalDateTime().toString("yyyyMMddhhmm")
+                            + ".html";
+    final File reportFile = new File(options.getWorkingDirectory(),
+                                     reportFilename);
     daylightChartReport.write(reportFile);
     try
     {
       BareBonesBrowserLaunch.openURL(reportFile.toURL().toString());
     }
-    catch (MalformedURLException e)
+    catch (final MalformedURLException e)
     {
       // TODO Auto-generated catch block
       e.printStackTrace();

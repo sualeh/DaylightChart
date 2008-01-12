@@ -22,6 +22,7 @@
 package daylightchart.options;
 
 
+import java.io.File;
 import java.io.Serializable;
 
 import daylightchart.daylightchart.calculation.Twilight;
@@ -47,6 +48,7 @@ public class Options
   private ChartOrientation chartOrientation;
   private Twilight twilight;
   private boolean showChartLegend;
+  private File workingDirectory;
 
   /**
    * Default options.
@@ -59,6 +61,7 @@ public class Options
     chartOrientation = ChartOrientation.standard;
     twilight = Twilight.civil;
     showChartLegend = true;
+    workingDirectory = new File(System.getProperty("java.io.tmpdir"));
   }
 
   /**
@@ -103,6 +106,14 @@ public class Options
   public Twilight getTwilight()
   {
     return twilight;
+  }
+
+  /**
+   * @return the workingDirectory
+   */
+  public File getWorkingDirectory()
+  {
+    return workingDirectory;
   }
 
   /**
@@ -188,6 +199,24 @@ public class Options
     {
       this.twilight = twilight;
     }
+  }
+
+  /**
+   * @param workingDirectory
+   *        the workingDirectory to set
+   */
+  public void setWorkingDirectory(final File workingDirectory)
+  {
+    if (isWorkingDirectoryValid(workingDirectory))
+    {
+      this.workingDirectory = workingDirectory;
+    }
+  }
+
+  private boolean isWorkingDirectoryValid(final File newWorkingDirectory)
+  {
+    return newWorkingDirectory.exists() && newWorkingDirectory.isDirectory()
+           && newWorkingDirectory.canWrite();
   }
 
 }

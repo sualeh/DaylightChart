@@ -74,8 +74,8 @@ public final class RiseSetUtility
    * @return Full years sunset and sunrise times for a location
    */
   public static RiseSetYearData createRiseSetYear(final Location location,
-                                              final int year,
-                                              final Options options)
+                                                  final int year,
+                                                  final Options options)
   {
     final TimeZoneOption timeZoneOption = options.getTimeZoneOption();
     final TimeZone timeZone;
@@ -103,7 +103,9 @@ public final class RiseSetUtility
     boolean wasDaylightSavings = false;
 
     final Twilight twilight = options.getTwilight();
-    final RiseSetYearData riseSetYear = new RiseSetYearData(location, twilight, year);
+    final RiseSetYearData riseSetYear = new RiseSetYearData(location,
+                                                            twilight,
+                                                            year);
     riseSetYear.setUsesDaylightTime(useDaylightTime);
     for (final LocalDate date: getYearsDates(year))
     {
@@ -449,7 +451,9 @@ public final class RiseSetUtility
     final int year = Calendar.getInstance().get(Calendar.YEAR);
     final Options options = new Options();
     options.setTwilight(twilight);
-    final RiseSetYearData riseSetYear = createRiseSetYear(location, year, options);
+    final RiseSetYearData riseSetYear = createRiseSetYear(location,
+                                                          year,
+                                                          options);
 
     final PrintWriter printWriter = new PrintWriter(writer, true);
     // Header

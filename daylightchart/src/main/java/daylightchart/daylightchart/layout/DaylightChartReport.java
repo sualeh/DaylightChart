@@ -31,17 +31,17 @@ public class DaylightChartReport
   public DaylightChartReport(final Location location, final Options options)
   {
     this.location = location;
-    this.jasperPrint = renderDaylightChartReport(options);
+    jasperPrint = renderDaylightChartReport(options);
   }
 
-  public void write(File file)
+  public void write(final File file)
   {
     try
     {
       JasperExportManager.exportReportToHtmlFile(jasperPrint, file
         .getAbsolutePath());
     }
-    catch (JRException e)
+    catch (final JRException e)
     {
       // TODO Auto-generated catch block
       e.printStackTrace();
@@ -72,7 +72,7 @@ public class DaylightChartReport
       parameters.put("location", location);
       parameters.put("daylight_chart", new JFreeChartRenderer(chart));
       // 3. Create data set
-      JRDataSource dataSource = new JRBeanCollectionDataSource(riseSetData
+      final JRDataSource dataSource = new JRBeanCollectionDataSource(riseSetData
         .getRiseSetData());
 
       // Render the report into PDF
