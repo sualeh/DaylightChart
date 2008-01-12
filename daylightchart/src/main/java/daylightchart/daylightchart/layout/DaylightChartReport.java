@@ -1,19 +1,23 @@
 package daylightchart.daylightchart.layout;
 
 
+import java.io.File;
 import java.io.InputStream;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.renderers.JFreeChartRenderer;
 import daylightchart.daylightchart.calculation.RiseSetUtility;
-import daylightchart.daylightchart.calculation.RiseSetYear;
+import daylightchart.daylightchart.calculation.RiseSetYearData;
 import daylightchart.daylightchart.chart.DaylightChart;
 import daylightchart.location.Location;
 import daylightchart.options.Options;
@@ -22,20 +26,35 @@ public class DaylightChartReport
 {
 
   private final Location location;
+  private final JasperPrint jasperPrint;
 
-  public DaylightChartReport(final Location location)
+  public DaylightChartReport(final Location location, final Options options)
   {
     this.location = location;
+    this.jasperPrint = renderDaylightChartReport(options);
   }
 
-  public void renderDaylightChartReport(final Options options)
+  public void write(File file)
   {
+    try
+    {
+      JasperExportManager.exportReportToPdfFile(jasperPrint, file
+        .getAbsolutePath());
+    }
+    catch (JRException e)
+    {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+  }
 
+  private JasperPrint renderDaylightChartReport(final Options options)
+  {
     try
     {
       // Calculate rise and set timings for the whole year, and generate
       // chart
-      final RiseSetYear riseSetData = RiseSetUtility
+      final RiseSetYearData riseSetData = RiseSetUtility
         .createRiseSetYear(location,
                            Calendar.getInstance().get(Calendar.YEAR),
                            options);
@@ -45,25 +64,26 @@ public class DaylightChartReport
       // Generate JasperReport for the chart
       // 1. Load compiled report
       final InputStream reportStream = DaylightChartReport.class
-        .getResourceAsStream("DaylightChartReport.jasper");
+        .getResourceAsStream("/DaylightChartReport.jasper");
       final JasperReport jasperReport = (JasperReport) JRLoader
         .loadObject(reportStream);
       // 2. Prepare parameters
       final Map<String, Object> parameters = new HashMap<String, Object>();
       parameters.put("location", location);
       parameters.put("daylight_chart", new JFreeChartRenderer(chart));
+      // 3. Create data set
+      JRDataSource dataSource = new JRBeanCollectionDataSource(riseSetData
+        .getRiseSetData());
 
       // Render the report into PDF
-      final JasperPrint jasperPrint = JasperFillManager
-        .fillReport(jasperReport, parameters);
-
+      return JasperFillManager.fillReport(jasperReport, parameters, dataSource);
     }
     catch (final JRException e)
     {
       // TODO Auto-generated catch block
       e.printStackTrace();
+      return null;
     }
-
   }
 
 }

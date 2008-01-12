@@ -73,7 +73,7 @@ public final class RiseSetUtility
    *        Options
    * @return Full years sunset and sunrise times for a location
    */
-  public static RiseSetYear createRiseSetYear(final Location location,
+  public static RiseSetYearData createRiseSetYear(final Location location,
                                               final int year,
                                               final Options options)
   {
@@ -103,7 +103,7 @@ public final class RiseSetUtility
     boolean wasDaylightSavings = false;
 
     final Twilight twilight = options.getTwilight();
-    final RiseSetYear riseSetYear = new RiseSetYear(location, twilight, year);
+    final RiseSetYearData riseSetYear = new RiseSetYearData(location, twilight, year);
     riseSetYear.setUsesDaylightTime(useDaylightTime);
     for (final LocalDate date: getYearsDates(year))
     {
@@ -176,7 +176,7 @@ public final class RiseSetUtility
     }
   }
 
-  static void createBands(final RiseSetYear riseSetYear,
+  static void createBands(final RiseSetYearData riseSetYear,
                           final DaylightBandType daylightSavingsMode)
   {
     final List<DaylightBand> bands;
@@ -449,7 +449,7 @@ public final class RiseSetUtility
     final int year = Calendar.getInstance().get(Calendar.YEAR);
     final Options options = new Options();
     options.setTwilight(twilight);
-    final RiseSetYear riseSetYear = createRiseSetYear(location, year, options);
+    final RiseSetYearData riseSetYear = createRiseSetYear(location, year, options);
 
     final PrintWriter printWriter = new PrintWriter(writer, true);
     // Header

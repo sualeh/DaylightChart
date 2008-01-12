@@ -23,6 +23,7 @@ package daylightchart.gui;
 
 
 import java.awt.Panel;
+import java.io.File;
 import java.util.logging.Logger;
 
 import javax.swing.JTabbedPane;
@@ -58,8 +59,10 @@ public class LocationsTabbedPane
   {
 
     final Options options = UserPreferences.getOptions();
-    final DaylightChartReport daylightChartReport = new DaylightChartReport(location);
-    daylightChartReport.renderDaylightChartReport(options);
+    final DaylightChartReport daylightChartReport = new DaylightChartReport(location,
+                                                                            options);
+    daylightChartReport
+      .write(new File("C:\\Users\\Sualeh Fatehi\\Documents\\_Projects\\DaylightChart\\file.pdf"));
 
     // Render the report into PDF
 

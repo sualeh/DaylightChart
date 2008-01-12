@@ -54,7 +54,7 @@ import org.jfree.ui.TextAnchor;
 
 import daylightchart.daylightchart.calculation.DaylightBand;
 import daylightchart.daylightchart.calculation.RiseSetUtility;
-import daylightchart.daylightchart.calculation.RiseSetYear;
+import daylightchart.daylightchart.calculation.RiseSetYearData;
 import daylightchart.location.Location;
 import daylightchart.options.Options;
 import daylightchart.options.chart.ChartOptions;
@@ -75,7 +75,7 @@ public class DaylightChart
   private static final Logger LOGGER = Logger.getLogger(DaylightChart.class
     .getName());
 
-  private final RiseSetYear riseSetData;
+  private final RiseSetYearData riseSetData;
 
   /**
    * Create an empty chart, just to get the default chart options.
@@ -97,7 +97,7 @@ public class DaylightChart
    * @param options
    *        Options
    */
-  public DaylightChart(final RiseSetYear riseSetData, final Options options)
+  public DaylightChart(final RiseSetYearData riseSetData, final Options options)
   {
     super(new XYPlot());
     this.riseSetData = riseSetData;

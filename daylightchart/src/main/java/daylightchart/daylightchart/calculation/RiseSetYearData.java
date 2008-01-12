@@ -38,7 +38,7 @@ import daylightchart.location.Location;
  * 
  * @author Sualeh Fatehi
  */
-public final class RiseSetYear
+public final class RiseSetYearData
   implements Serializable
 {
 
@@ -54,7 +54,9 @@ public final class RiseSetYear
   private final List<RawRiseSet> twilights;
   private final List<DaylightBand> bands;
 
-  RiseSetYear(final Location location, final Twilight twilight, final int year)
+  RiseSetYearData(final Location location,
+                  final Twilight twilight,
+                  final int year)
   {
     this.location = location;
     this.year = year;
@@ -241,4 +243,17 @@ public final class RiseSetYear
     this.usesDaylightTime = usesDaylightTime;
   }
 
+  public List<RiseSetData> getRiseSetData()
+  {
+    List<RiseSetData> riseSetData = new ArrayList<RiseSetData>();
+    List<RiseSet> riseSets = getRiseSets(true);
+    List<RiseSet> twilights = getTwilights();
+    for (int i = 0; i < riseSets.size(); i++)
+    {
+      RiseSet riseSet = riseSets.get(i);
+      RiseSet twilight = twilights.get(i);
+      riseSetData.add(new RiseSetData(riseSet, twilight));
+    }
+    return riseSetData;
+  }
 }
