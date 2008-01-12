@@ -38,7 +38,7 @@ public class DaylightChartReport
   {
     try
     {
-      JasperExportManager.exportReportToPdfFile(jasperPrint, file
+      JasperExportManager.exportReportToHtmlFile(jasperPrint, file
         .getAbsolutePath());
     }
     catch (JRException e)

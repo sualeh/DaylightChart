@@ -1,32 +1,111 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created using an evaluation version of JasperAssistant (http://www.jasperassistant.com) -->
+<!-- Created using JasperAssistant (http://www.jasperassistant.com) -->
 <!DOCTYPE jasperReport PUBLIC "-//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
 
-<jasperReport name="DaylightChartReport" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="30" bottomMargin="30" isTitleNewPage="true">
-	<style name="TableData" isDefault="false" isStyledText="true" isBlankWhenNull="true" fontName="Verdana" fontSize="10" isPdfEmbedded="true"/>
+<jasperReport name="DaylightChartReport" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="30" bottomMargin="30" isTitleNewPage="true">
+	<reportFont name="TableHeader" isDefault="false" fontName="Verdana" size="12" isBold="true" pdfFontName="Helvetica" isPdfEmbedded="true"/>
+	<reportFont name="TableData" isDefault="false" fontName="Verdana" size="12" isBold="false" pdfFontName="Helvetica" isPdfEmbedded="true"/>
 	<style name="Title" isDefault="false" isStyledText="true" isBlankWhenNull="true" fontName="Verdana" fontSize="20" isPdfEmbedded="true"/>
 	<parameter name="location" class="daylightchart.location.Location"/>
 	<parameter name="daylight_chart" class="net.sf.jasperreports.engine.JRRenderable" isForPrompting="false">
 		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
 	</parameter>
+	<field name="date" class="org.joda.time.LocalDate"/>
+	<field name="sunrise" class="org.joda.time.LocalDateTime"/>
+	<field name="sunset" class="org.joda.time.LocalDateTime"/>
+	<field name="twilightRise" class="org.joda.time.LocalDateTime"/>
+	<field name="twilightSet" class="org.joda.time.LocalDateTime"/>
 	<title>
-		<band height="750">
+		<band height="530">
 			<staticText>
-				<reportElement style="Title" x="0" y="0" width="555" height="60"/>
+				<reportElement style="Title" x="0" y="0" width="802" height="60"/>
 				<textElement textAlignment="Center"/>
 				<text><![CDATA[Daylight Chart
 for]]></text>
 			</staticText>
-			<textField hyperlinkType="None">
-				<reportElement style="Title" x="0" y="60" width="555" height="30"/>
-				<textElement textAlignment="Center"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$P{location}.getDetails()]]></textFieldExpression>
-			</textField>
 			<image hyperlinkType="None">
-				<reportElement x="0" y="121" width="555" height="500"/>
+				<reportElement x="0" y="63" width="802" height="467"/>
 				<graphicElement/>
 				<imageExpression class="net.sf.jasperreports.engine.JRRenderable"><![CDATA[$P{daylight_chart}]]></imageExpression>
 			</image>
 		</band>
 	</title>
+	<columnHeader>
+		<band height="20">
+			<staticText>
+				<reportElement x="0" y="0" width="124" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font reportFont="TableHeader" fontName="Verdana" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="124" y="0" width="124" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font reportFont="TableHeader" fontName="Verdana" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Twilight - Rise]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="248" y="0" width="124" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font reportFont="TableHeader" fontName="Verdana" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Sunrise]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="372" y="0" width="124" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font reportFont="TableHeader" fontName="Verdana" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Sunset]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="496" y="0" width="124" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font reportFont="TableHeader" fontName="Verdana" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Twilight - Set]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20">
+			<textField hyperlinkType="None">
+				<reportElement x="0" y="0" width="124" height="20"/>
+				<textElement>
+					<font reportFont="TableData" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{date}.toString()]]></textFieldExpression>
+			</textField>
+			<textField hyperlinkType="None">
+				<reportElement x="124" y="0" width="124" height="20"/>
+				<textElement>
+					<font reportFont="TableData" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{twilightRise}.toString("hh:mm a")]]></textFieldExpression>
+			</textField>
+			<textField hyperlinkType="None">
+				<reportElement x="248" y="0" width="124" height="20"/>
+				<textElement>
+					<font reportFont="TableData" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{sunrise}.toString("hh:mm a")]]></textFieldExpression>
+			</textField>
+			<textField hyperlinkType="None">
+				<reportElement x="372" y="0" width="124" height="20"/>
+				<textElement>
+					<font reportFont="TableData" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{sunset}.toString("hh:mm a")]]></textFieldExpression>
+			</textField>
+			<textField hyperlinkType="None">
+				<reportElement x="496" y="0" width="124" height="20"/>
+				<textElement>
+					<font reportFont="TableData" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{twilightSet}.toString("hh:mm a")]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
 </jasperReport>

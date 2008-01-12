@@ -279,7 +279,7 @@ public class LocationsList
       locationsList.setSelectedIndex(0);
       location = (Location) locationsList.getSelectedValue();
     }
-    parent.addLocationTab(location);
+    parent.openLocationInBrowser(location);
   }
 
 }

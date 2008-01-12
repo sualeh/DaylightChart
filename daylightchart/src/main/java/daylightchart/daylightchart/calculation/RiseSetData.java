@@ -32,7 +32,7 @@ public final class RiseSetData
 
   public LocalDateTime getTwilightSet()
   {
-    return twilight.getSunrise();
+    return twilight.getSunset();
   }
 
   public LocalDate getDate()

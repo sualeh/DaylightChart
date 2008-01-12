@@ -23,8 +23,12 @@ package daylightchart.gui;
 
 
 import java.awt.BorderLayout;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.io.File;
+import java.net.MalformedURLException;
 import java.util.List;
 
 import javax.swing.ImageIcon;
@@ -32,15 +36,15 @@ import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
-import javax.swing.JSplitPane;
 import javax.swing.JToolBar;
 
+import sf.util.ui.BareBonesBrowserLaunch;
 import sf.util.ui.ExitAction;
 import sf.util.ui.GuiAction;
+import daylightchart.daylightchart.layout.DaylightChartReport;
 import daylightchart.gui.actions.AboutAction;
 import daylightchart.gui.actions.ChartOptionsAction;
 import daylightchart.gui.actions.ChartOrientationChoiceAction;
-import daylightchart.gui.actions.CloseCurrentTabAction;
 import daylightchart.gui.actions.LocationsSortChoiceAction;
 import daylightchart.gui.actions.OnlineHelpAction;
 import daylightchart.gui.actions.OpenLocationsFileAction;
@@ -64,7 +68,6 @@ public final class DaylightChartGui
   private final static long serialVersionUID = 3760840181833283637L;
 
   private final LocationsList locationsList;
-  private final LocationsTabbedPane locationsTabbedPane;
 
   /**
    * Creates a new instance of a Daylight Chart main window.
@@ -79,14 +82,9 @@ public final class DaylightChartGui
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
     // Create basic UI
-    locationsTabbedPane = new LocationsTabbedPane();
     locationsList = new LocationsList(this);
-
-    final JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
-                                                locationsList,
-                                                locationsTabbedPane);
-    splitPane.setOneTouchExpandable(true);
-    getContentPane().add(splitPane);
+    locationsList.setSize(200, 400);
+    getContentPane().add(locationsList);
 
     // Create menus and toolbars
     final JMenuBar menuBar = new JMenuBar();
@@ -100,8 +98,13 @@ public final class DaylightChartGui
     createOptionsMenu(menuBar, toolBar);
     createHelpMenu(menuBar, toolBar);
 
-    // Open the first location
-    addLocationTab(locationsList.getSelectedLocation());
+    addComponentListener(new ComponentAdapter()
+    {
+      public void componentResized(ComponentEvent event)
+      {
+        setSize(Math.max(300, getWidth()), Math.max(500, getHeight()));
+      }
+    });
 
     pack();
   }
@@ -146,9 +149,22 @@ public final class DaylightChartGui
    * @param location
    *        Location.
    */
-  void addLocationTab(final Location location)
+  void openLocationInBrowser(final Location location)
   {
-    locationsTabbedPane.addLocationTab(location);
+    final Options options = UserPreferences.getOptions();
+    final DaylightChartReport daylightChartReport = new DaylightChartReport(location,
+                                                                            options);
+    File reportFile = new File("C:\\Users\\Sualeh Fatehi\\Documents\\_Projects\\DaylightChart\\file.html");
+    daylightChartReport.write(reportFile);
+    try
+    {
+      BareBonesBrowserLaunch.openURL(reportFile.toURL().toString());
+    }
+    catch (MalformedURLException e)
+    {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
   }
 
   private void createActions(final JMenuBar menuBar,
@@ -165,9 +181,6 @@ public final class DaylightChartGui
       final GuiAction action = operation.getAction(locationsList);
       menu.add(action);
     }
-
-    menu.addSeparator();
-    menu.add(new CloseCurrentTabAction(locationsTabbedPane));
 
     menuBar.add(menu);
   }
