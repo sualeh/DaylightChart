@@ -38,6 +38,57 @@ import javax.swing.filechooser.FileFilter;
 public class Actions
 {
 
+  public static final class SelectedFile
+  {
+    private final File file;
+    private final FileFilter fileFilter;
+    private final boolean isSelected;
+
+    SelectedFile(final File file, final FileFilter fileFilter)
+    {
+      this.file = file;
+      this.fileFilter = fileFilter;
+      isSelected = file != null;
+    }
+
+    public File getDirectory()
+    {
+      if (file == null)
+      {
+        return null;
+      }
+      else
+      {
+        return file.getParentFile();
+      }
+    }
+
+    /**
+     * @return the file
+     */
+    public File getFile()
+    {
+      return file;
+    }
+
+    /**
+     * @return the fileFilter
+     */
+    public FileFilter getFileFilter()
+    {
+      return fileFilter;
+    }
+
+    /**
+     * @return the isSelected
+     */
+    public boolean isSelected()
+    {
+      return isSelected;
+    }
+
+  }
+
   /**
    * Shows an open file dialog, and returns the selected file. Checks if
    * the file is readable.
@@ -105,11 +156,11 @@ public class Actions
    *        Message to confirm overwrite
    * @return Selected file, or null if no file is selected.
    */
-  public static File showSaveDialog(final Component parent,
-                                    final String dialogTitle,
-                                    final List<FileFilter> fileFilters,
-                                    final File suggestedFile,
-                                    final String overwriteMessage)
+  public static SelectedFile showSaveDialog(final Component parent,
+                                            final String dialogTitle,
+                                            final List<FileFilter> fileFilters,
+                                            final File suggestedFile,
+                                            final String overwriteMessage)
   {
     final JFileChooser fileDialog = new JFileChooser();
     fileDialog.setDialogTitle(dialogTitle);
@@ -148,7 +199,7 @@ public class Actions
         }
       }
     }
-    return selectedFile;
+    return new SelectedFile(selectedFile, fileDialog.getFileFilter());
   }
 
   private static File addExtension(final JFileChooser fileDialog,
@@ -174,5 +225,4 @@ public class Actions
   {
     // Prevent instantiation
   }
-
 }

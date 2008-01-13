@@ -40,8 +40,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JToolBar;
 
 import sf.util.ui.GuiAction;
+import daylightchart.daylightchart.layout.DaylightChartReport;
 import daylightchart.location.Location;
 import daylightchart.location.parser.LocationFormatter;
+import daylightchart.options.Options;
 import daylightchart.options.UserPreferences;
 
 /**
@@ -177,6 +179,19 @@ public class LocationsList
   public DaylightChartGui getMainWindow()
   {
     return parent;
+  }
+
+  /**
+   * Get the currently selected location.
+   * 
+   * @return Currently selected location.
+   */
+  public DaylightChartReport getSelectedDaylightChartReport()
+  {
+    final Options options = UserPreferences.getOptions();
+    final DaylightChartReport daylightChartReport = new DaylightChartReport(getSelectedLocation(),
+                                                                            options);
+    return daylightChartReport;
   }
 
   /**

@@ -30,6 +30,8 @@ import java.awt.event.ItemListener;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.ImageIcon;
 import javax.swing.JCheckBoxMenuItem;
@@ -43,6 +45,7 @@ import org.joda.time.LocalDateTime;
 import sf.util.ui.BareBonesBrowserLaunch;
 import sf.util.ui.ExitAction;
 import sf.util.ui.GuiAction;
+import daylightchart.daylightchart.layout.ChartFileType;
 import daylightchart.daylightchart.layout.DaylightChartReport;
 import daylightchart.gui.actions.AboutAction;
 import daylightchart.gui.actions.ChartOptionsAction;
@@ -51,6 +54,7 @@ import daylightchart.gui.actions.LocationsSortChoiceAction;
 import daylightchart.gui.actions.OnlineHelpAction;
 import daylightchart.gui.actions.OpenLocationsFileAction;
 import daylightchart.gui.actions.ResetAllAction;
+import daylightchart.gui.actions.SaveChartAction;
 import daylightchart.gui.actions.SaveLocationsFileAction;
 import daylightchart.gui.actions.TimeZoneOptionChoiceAction;
 import daylightchart.gui.actions.TwilightChoiceAction;
@@ -68,6 +72,9 @@ public final class DaylightChartGui
 {
 
   private final static long serialVersionUID = 3760840181833283637L;
+
+  private static final Logger LOGGER = Logger.getLogger(DaylightChartGui.class
+    .getName());
 
   private final LocationsList locationsList;
 
@@ -123,6 +130,16 @@ public final class DaylightChartGui
     return locationsList.getLocations();
   }
 
+  public DaylightChartReport getSelectedDaylightChartReport()
+  {
+    return locationsList.getSelectedDaylightChartReport();
+  }
+
+  public Location getSelectedLocation()
+  {
+    return locationsList.getSelectedLocation();
+  }
+
   /**
    * Sets the locations list on the GUI.
    * 
@@ -156,22 +173,20 @@ public final class DaylightChartGui
   void openLocationInBrowser(final Location location)
   {
     final Options options = UserPreferences.getOptions();
-    final DaylightChartReport daylightChartReport = new DaylightChartReport(location,
-                                                                            options);
-    String reportFilename = location.getDescription() + "."
-                            + new LocalDateTime().toString("yyyyMMddhhmm")
-                            + ".html";
+    final String reportFilename = location.getDescription()
+                                  + "."
+                                  + new LocalDateTime()
+                                    .toString("yyyyMMddhhmm") + ".html";
     final File reportFile = new File(options.getWorkingDirectory(),
                                      reportFilename);
-    daylightChartReport.write(reportFile);
+    getSelectedDaylightChartReport().write(reportFile, ChartFileType.html);
     try
     {
       BareBonesBrowserLaunch.openURL(reportFile.toURL().toString());
     }
     catch (final MalformedURLException e)
     {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
+      LOGGER.log(Level.WARNING, "Cannot convert file name to URL", e);
     }
   }
 
@@ -198,6 +213,7 @@ public final class DaylightChartGui
 
     final OpenLocationsFileAction openLocationsFile = new OpenLocationsFileAction(this);
     final SaveLocationsFileAction saveLocationsFile = new SaveLocationsFileAction(this);
+    final SaveChartAction saveChart = new SaveChartAction(this);
 
     final ExitAction exit = new ExitAction(this, Messages
       .getString("DaylightChartGui.Menu.File.Exit")); //$NON-NLS-1$
@@ -208,6 +224,8 @@ public final class DaylightChartGui
 
     menu.add(openLocationsFile);
     menu.add(saveLocationsFile);
+    menu.addSeparator();
+    menu.add(saveChart);
     menu.addSeparator();
     menu.add(exit);
     menuBar.add(menu);

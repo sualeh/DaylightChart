@@ -51,7 +51,8 @@ public class TestGNSCountryFiles
     final InputStream dataStream = this.getClass().getClassLoader()
       .getResourceAsStream("lo.txt");
     final InputStreamReader reader = new InputStreamReader(dataStream);
-    List<Location> locations = GNSCountryFilesParser.parseLocations(reader);
+    final List<Location> locations = GNSCountryFilesParser
+      .parseLocations(reader);
 
     assertEquals(4574, locations.size());
   }
@@ -65,7 +66,8 @@ public class TestGNSCountryFiles
     final InputStream dataStream = this.getClass().getClassLoader()
       .getResourceAsStream("ar.txt");
     final InputStreamReader reader = new InputStreamReader(dataStream);
-    List<Location> locations = GNSCountryFilesParser.parseLocations(reader);
+    final List<Location> locations = GNSCountryFilesParser
+      .parseLocations(reader);
 
     assertEquals(5467, locations.size());
   }
@@ -79,7 +81,7 @@ public class TestGNSCountryFiles
     final InputStream dataStream = this.getClass().getClassLoader()
       .getResourceAsStream("IN_DECI.txt");
     final InputStreamReader reader = new InputStreamReader(dataStream);
-    List<Location> locations = GNISFilesParser.parseLocations(reader);
+    final List<Location> locations = GNISFilesParser.parseLocations(reader);
 
     assertEquals(3451, locations.size());
   }

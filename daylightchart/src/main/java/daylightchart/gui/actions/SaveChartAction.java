@@ -34,13 +34,15 @@ import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 import javax.swing.filechooser.FileFilter;
 
+import org.joda.time.LocalDateTime;
+
 import sf.util.ui.Actions;
 import sf.util.ui.ExtensionFileFilter;
 import sf.util.ui.GuiAction;
 import sf.util.ui.Actions.SelectedFile;
+import daylightchart.daylightchart.layout.ChartFileType;
 import daylightchart.gui.DaylightChartGui;
 import daylightchart.gui.Messages;
-import daylightchart.location.parser.LocationFormatter;
 import daylightchart.options.UserPreferences;
 
 /**
@@ -48,7 +50,7 @@ import daylightchart.options.UserPreferences;
  * 
  * @author sfatehi
  */
-public final class SaveLocationsFileAction
+public final class SaveChartAction
   extends GuiAction
 {
 
@@ -71,23 +73,37 @@ public final class SaveLocationsFileAction
     final ActionEvent actionevent)
     {
       final List<FileFilter> fileFilters = new ArrayList<FileFilter>();
-      fileFilters.add(new ExtensionFileFilter("Data files", ".data"));
-      fileFilters.add(new ExtensionFileFilter("Text files", ".txt"));
+      for (final ChartFileType chartFileType: ChartFileType.values())
+      {
+        fileFilters.add(new ExtensionFileFilter(chartFileType.getDescription(),
+                                                chartFileType
+                                                  .getFileExtension()));
+      }
+      final String reportFilename = mainWindow.getSelectedLocation()
+        .getDescription()
+                                    + "."
+                                    + new LocalDateTime()
+                                      .toString("yyyyMMddhhmm") + ".pdf";
       final SelectedFile selectedFile = Actions
         .showSaveDialog(mainWindow,
                         Messages
-                          .getString("DaylightChartGui.Menu.File.SaveLocations"),
+                          .getString("DaylightChartGui.Menu.File.SaveChart"),
                         fileFilters,
                         new File(UserPreferences.getDataFileDirectory(),
-                                 "locations.data"),
+                                 reportFilename),
                         Messages
                           .getString("DaylightChartGui.Message.Confirm.FileOverwrite")); //$NON-NLS-1$
       if (selectedFile.isSelected())
       {
         try
         {
-          LocationFormatter.formatLocations(mainWindow.getLocations(),
-                                            selectedFile.getFile());
+          final ExtensionFileFilter fileFilter = (ExtensionFileFilter) selectedFile
+            .getFileFilter();
+          final ChartFileType chartFileType = ChartFileType
+            .fromExtension(fileFilter.getExtension());
+          mainWindow.getSelectedDaylightChartReport().write(selectedFile
+                                                              .getFile(),
+                                                            chartFileType);
 
           // Save last selected directory
           UserPreferences.setDataFileDirectory(selectedFile.getDirectory());
@@ -108,8 +124,8 @@ public final class SaveLocationsFileAction
 
   private static final long serialVersionUID = 1173685118494564955L;
 
-  private static final Logger LOGGER = Logger
-    .getLogger(SaveLocationsFileAction.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(SaveChartAction.class
+    .getName());
 
   /**
    * Saves locations into a file.
@@ -117,13 +133,13 @@ public final class SaveLocationsFileAction
    * @param mainWindow
    *        Main window.
    */
-  public SaveLocationsFileAction(final DaylightChartGui mainWindow)
+  public SaveChartAction(final DaylightChartGui mainWindow)
   {
 
-    super(Messages.getString("DaylightChartGui.Menu.File.SaveLocations"), //$NON-NLS-1$ 
-          "/icons/save_locations.gif" //$NON-NLS-1$
+    super(Messages.getString("DaylightChartGui.Menu.File.SaveChart"), //$NON-NLS-1$ 
+          "/icons/save_chart.gif" //$NON-NLS-1$
     );
-    setShortcutKey(KeyStroke.getKeyStroke("control alt S"));
+    setShortcutKey(KeyStroke.getKeyStroke("control S"));
     addActionListener(new GuiActionListener(mainWindow));
   }
 
