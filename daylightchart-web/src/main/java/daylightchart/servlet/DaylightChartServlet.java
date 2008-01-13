@@ -35,7 +35,7 @@ import org.pointlocation6709.parser.CoordinateParser;
 import org.pointlocation6709.parser.ParserException;
 
 import daylightchart.daylightchart.calculation.RiseSetUtility;
-import daylightchart.daylightchart.calculation.RiseSetYear;
+import daylightchart.daylightchart.calculation.RiseSetYearData;
 import daylightchart.daylightchart.chart.DaylightChart;
 import daylightchart.location.Country;
 import daylightchart.location.Location;
@@ -69,7 +69,7 @@ public class DaylightChartServlet
       // Create the chart
       final Location location = getRequestedLocation(request);
       Options options = new Options();
-      RiseSetYear riseSetData = RiseSetUtility.createRiseSetYear(
+      RiseSetYearData riseSetData = RiseSetUtility.createRiseSetYear(
           location,
           Calendar.getInstance().get(Calendar.YEAR),
           options);
