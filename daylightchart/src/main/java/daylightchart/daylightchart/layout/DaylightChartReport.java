@@ -153,4 +153,20 @@ public class DaylightChartReport
     }
   }
 
+  /**
+   * @return the location
+   */
+  public Location getLocation()
+  {
+    return location;
+  }
+
+  /**
+   * @return the chart
+   */
+  public DaylightChart getChart()
+  {
+    return chart;
+  }
+
 }

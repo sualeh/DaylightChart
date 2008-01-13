@@ -23,14 +23,9 @@ package daylightchart.gui;
 
 
 import java.awt.BorderLayout;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.io.File;
-import java.net.MalformedURLException;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.ImageIcon;
@@ -38,21 +33,23 @@ import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JSplitPane;
 import javax.swing.JToolBar;
 
-import org.joda.time.LocalDateTime;
+import org.jfree.chart.ChartPanel;
 
-import sf.util.ui.BareBonesBrowserLaunch;
 import sf.util.ui.ExitAction;
 import sf.util.ui.GuiAction;
-import daylightchart.daylightchart.layout.ChartFileType;
+import daylightchart.daylightchart.chart.ChartConfiguration;
 import daylightchart.daylightchart.layout.DaylightChartReport;
 import daylightchart.gui.actions.AboutAction;
 import daylightchart.gui.actions.ChartOptionsAction;
 import daylightchart.gui.actions.ChartOrientationChoiceAction;
+import daylightchart.gui.actions.CloseCurrentTabAction;
 import daylightchart.gui.actions.LocationsSortChoiceAction;
 import daylightchart.gui.actions.OnlineHelpAction;
 import daylightchart.gui.actions.OpenLocationsFileAction;
+import daylightchart.gui.actions.PrintChartAction;
 import daylightchart.gui.actions.ResetAllAction;
 import daylightchart.gui.actions.SaveChartAction;
 import daylightchart.gui.actions.SaveLocationsFileAction;
@@ -77,11 +74,23 @@ public final class DaylightChartGui
     .getName());
 
   private final LocationsList locationsList;
+  private final LocationsTabbedPane locationsTabbedPane;
 
   /**
    * Creates a new instance of a Daylight Chart main window.
    */
   public DaylightChartGui()
+  {
+    this(null);
+  }
+
+  /**
+   * Creates a new instance of a Daylight Chart main window.
+   * 
+   * @param location
+   *        Location for a single chart window, or null for the full UI
+   */
+  public DaylightChartGui(final Location location)
   {
 
     setIconImage(new ImageIcon(DaylightChartGui.class.getResource("/icon.png")) //$NON-NLS-1$
@@ -90,32 +99,45 @@ public final class DaylightChartGui
     setTitle("Daylight Chart"); //$NON-NLS-1$
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-    // Create basic UI
-    locationsList = new LocationsList(this);
-    locationsList.setSize(200, 400);
-    getContentPane().add(locationsList);
-
-    // Create menus and toolbars
-    final JMenuBar menuBar = new JMenuBar();
-    setJMenuBar(menuBar);
-    final JToolBar toolBar = new JToolBar();
-    toolBar.setRollover(true);
-    add(toolBar, BorderLayout.NORTH);
-
-    createFileMenu(menuBar, toolBar);
-    createActions(menuBar, toolBar);
-    createOptionsMenu(menuBar, toolBar);
-    createHelpMenu(menuBar, toolBar);
-
-    // Prevent resizing of the window beyond a certain point
-    addComponentListener(new ComponentAdapter()
+    if (location == null)
     {
-      @Override
-      public void componentResized(final ComponentEvent event)
-      {
-        setSize(Math.max(300, getWidth()), Math.max(500, getHeight()));
-      }
-    });
+      // Create basic UI
+      locationsTabbedPane = new LocationsTabbedPane();
+      locationsList = new LocationsList(this);
+
+      final JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
+                                                  locationsList,
+                                                  locationsTabbedPane);
+      splitPane.setOneTouchExpandable(true);
+      getContentPane().add(splitPane);
+
+      // Create menus and toolbars
+      final JMenuBar menuBar = new JMenuBar();
+      setJMenuBar(menuBar);
+      final JToolBar toolBar = new JToolBar();
+      toolBar.setRollover(true);
+      add(toolBar, BorderLayout.NORTH);
+
+      createFileMenu(menuBar, toolBar);
+      createActions(menuBar, toolBar);
+      createOptionsMenu(menuBar, toolBar);
+      createHelpMenu(menuBar, toolBar);
+
+      // Open the first location
+      addLocationTab(locationsList.getSelectedDaylightChartReport());
+    }
+    else
+    {
+      locationsTabbedPane = null;
+      locationsList = null;
+      final Options options = UserPreferences.getOptions();
+      DaylightChartReport daylightChartReport = new DaylightChartReport(location,
+                                                                        options);
+      final ChartPanel chartPanel = new ChartPanel(daylightChartReport
+        .getChart());
+      chartPanel.setPreferredSize(ChartConfiguration.chartDimension);
+      setContentPane(chartPanel);
+    }
 
     pack();
   }
@@ -165,29 +187,14 @@ public final class DaylightChartGui
   }
 
   /**
-   * Add a new location tab in the browser.
+   * Add a new location tab.
    * 
    * @param location
    *        Location.
    */
-  void openLocationInBrowser(final Location location)
+  void addLocationTab(final DaylightChartReport daylightChartReport)
   {
-    final Options options = UserPreferences.getOptions();
-    final String reportFilename = location.getDescription()
-                                  + "."
-                                  + new LocalDateTime()
-                                    .toString("yyyyMMddhhmm") + ".html";
-    final File reportFile = new File(options.getWorkingDirectory(),
-                                     reportFilename);
-    getSelectedDaylightChartReport().write(reportFile, ChartFileType.html);
-    try
-    {
-      BareBonesBrowserLaunch.openURL(reportFile.toURL().toString());
-    }
-    catch (final MalformedURLException e)
-    {
-      LOGGER.log(Level.WARNING, "Cannot convert file name to URL", e);
-    }
+    locationsTabbedPane.addLocationTab(daylightChartReport);
   }
 
   private void createActions(final JMenuBar menuBar,
@@ -205,6 +212,9 @@ public final class DaylightChartGui
       menu.add(action);
     }
 
+    menu.addSeparator();
+    menu.add(new CloseCurrentTabAction(locationsTabbedPane));
+
     menuBar.add(menu);
   }
 
@@ -214,6 +224,7 @@ public final class DaylightChartGui
     final OpenLocationsFileAction openLocationsFile = new OpenLocationsFileAction(this);
     final SaveLocationsFileAction saveLocationsFile = new SaveLocationsFileAction(this);
     final SaveChartAction saveChart = new SaveChartAction(this);
+    final PrintChartAction printChart = new PrintChartAction(locationsTabbedPane);
 
     final ExitAction exit = new ExitAction(this, Messages
       .getString("DaylightChartGui.Menu.File.Exit")); //$NON-NLS-1$
@@ -226,12 +237,16 @@ public final class DaylightChartGui
     menu.add(saveLocationsFile);
     menu.addSeparator();
     menu.add(saveChart);
+    menu.add(printChart);
     menu.addSeparator();
     menu.add(exit);
     menuBar.add(menu);
 
     toolBar.add(openLocationsFile);
     toolBar.add(saveLocationsFile);
+    toolBar.addSeparator();
+    toolBar.add(saveChart);
+    toolBar.add(printChart);
     toolBar.addSeparator();
 
   }

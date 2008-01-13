@@ -111,7 +111,7 @@ public class LocationsList
       {
         if (!e.isConsumed() && e.getClickCount() == 2)
         {
-          openNewLocationTab(parent);
+          addLocationTab(parent);
           e.consume();
         }
         if (e.getButton() == MouseEvent.BUTTON2
@@ -137,7 +137,7 @@ public class LocationsList
       {
         if (e.getKeyChar() == KeyEvent.VK_ENTER)
         {
-          openNewLocationTab(parent);
+          addLocationTab(parent);
         }
         e.consume();
       }
@@ -286,15 +286,13 @@ public class LocationsList
     }
   }
 
-  private void openNewLocationTab(final DaylightChartGui parent)
+  private void addLocationTab(final DaylightChartGui parent)
   {
-    Location location = (Location) locationsList.getSelectedValue();
-    if (location == null)
+    if (locationsList.getSelectedIndex() == -1)
     {
       locationsList.setSelectedIndex(0);
-      location = (Location) locationsList.getSelectedValue();
     }
-    parent.openLocationInBrowser(location);
+    parent.addLocationTab(getSelectedDaylightChartReport());
   }
 
 }
