@@ -59,14 +59,13 @@ public final class UserPreferences
   private static final Logger LOGGER = Logger.getLogger(UserPreferences.class
     .getName());
 
-  private static boolean savePreferences = true;
-
   private static final String keyLocations = "daylightchart.locations";
   private static final String keyOptions = "daylightchart.options";
   private static final String keyDataFileDirectory = "daylightchart.dataFileDirectory";
 
   private static final Preferences preferences = Preferences
     .userNodeForPackage(UserPreferences.class);
+  private static boolean savePreferences = true;
 
   /**
    * Clears all user preferences.
