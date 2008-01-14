@@ -131,8 +131,8 @@ public final class DaylightChartGui
       locationsTabbedPane = null;
       locationsList = null;
       final Options options = UserPreferences.getOptions();
-      DaylightChartReport daylightChartReport = new DaylightChartReport(location,
-                                                                        options);
+      final DaylightChartReport daylightChartReport = new DaylightChartReport(location,
+                                                                              options);
       final ChartPanel chartPanel = new ChartPanel(daylightChartReport
         .getChart());
       chartPanel.setPreferredSize(ChartConfiguration.chartDimension);

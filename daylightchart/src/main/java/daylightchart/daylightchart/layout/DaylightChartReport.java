@@ -75,6 +75,22 @@ public class DaylightChartReport
     jasperPrint = renderDaylightChartReport(riseSetData, options);
   }
 
+  /**
+   * @return the chart
+   */
+  public DaylightChart getChart()
+  {
+    return chart;
+  }
+
+  /**
+   * @return the location
+   */
+  public Location getLocation()
+  {
+    return location;
+  }
+
   public void write(final File file, final ChartFileType chartFileType)
   {
     if (chartFileType == null)
@@ -151,22 +167,6 @@ public class DaylightChartReport
       e.printStackTrace();
       return null;
     }
-  }
-
-  /**
-   * @return the location
-   */
-  public Location getLocation()
-  {
-    return location;
-  }
-
-  /**
-   * @return the chart
-   */
-  public DaylightChart getChart()
-  {
-    return chart;
   }
 
 }

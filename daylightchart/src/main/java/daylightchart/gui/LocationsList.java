@@ -275,6 +275,15 @@ public class LocationsList
     setLocations(locations);
   }
 
+  private void addLocationTab(final DaylightChartGui parent)
+  {
+    if (locationsList.getSelectedIndex() == -1)
+    {
+      locationsList.setSelectedIndex(0);
+    }
+    parent.addLocationTab(getSelectedDaylightChartReport());
+  }
+
   private void createActions(final JToolBar toolBar, final JPopupMenu popupMenu)
   {
     for (final LocationsListOperation operation: LocationsListOperation
@@ -284,15 +293,6 @@ public class LocationsList
       toolBar.add(action);
       popupMenu.add(action);
     }
-  }
-
-  private void addLocationTab(final DaylightChartGui parent)
-  {
-    if (locationsList.getSelectedIndex() == -1)
-    {
-      locationsList.setSelectedIndex(0);
-    }
-    parent.addLocationTab(getSelectedDaylightChartReport());
   }
 
 }
