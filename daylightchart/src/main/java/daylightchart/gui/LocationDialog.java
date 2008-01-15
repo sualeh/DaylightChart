@@ -60,6 +60,7 @@ import daylightchart.location.Country;
 import daylightchart.location.Location;
 import daylightchart.location.parser.Countries;
 import daylightchart.location.parser.DefaultTimezones;
+import daylightchart.location.parser.TimeZoneDisplay;
 
 /**
  * This class is used for the display of the location editor. The user
@@ -167,7 +168,7 @@ public class LocationDialog
   private final JComboBox countries;
   private final JTextField latitudeValue;
   private final JTextField longitudeValue;
-  private final JTextField timeZone;
+  private final JComboBox timeZone;
 
   private final JButton ok;
   private final JButton cancel;
@@ -189,8 +190,8 @@ public class LocationDialog
     countries = new JComboBox(new Vector<Country>(Countries.getAllCountries()));
     latitudeValue = new JTextField();
     longitudeValue = new JTextField();
-    timeZone = new JTextField();
-    timeZone.setEditable(false);
+    timeZone = new JComboBox(new Vector<TimeZoneDisplay>(DefaultTimezones
+      .getAllTimeZonesForDisplay()));
 
     ok = new JButton(Messages.getString("DaylightChartGui.LocationEditor.Ok")); //$NON-NLS-1$
     cancel = new JButton(Messages
@@ -230,7 +231,9 @@ public class LocationDialog
 
           if (isCurrentLocationValid())
           {
-            setTimeZoneId(getTimeZoneId());
+            String timeZoneId = DefaultTimezones
+              .attemptTimeZoneMatch(getCity(), getCountry(), getLongitude());
+            setTimeZoneId(timeZoneId);
           }
         }
       }
@@ -351,9 +354,7 @@ public class LocationDialog
 
   private String getTimeZoneId()
   {
-    return DefaultTimezones.attemptTimeZoneMatch(getCity(),
-                                                 getCountry(),
-                                                 getLongitude());
+    return ((TimeZoneDisplay) timeZone.getSelectedItem()).getTimeZoneId();
   }
 
   private boolean isCurrentLocationValid()
@@ -420,7 +421,8 @@ public class LocationDialog
 
   private void setTimeZoneId(final String timeZoneId)
   {
-    timeZone.setText(TimeZone.getTimeZone(timeZoneId).getDisplayName());
+    timeZone.setSelectedItem(new TimeZoneDisplay(TimeZone
+      .getTimeZone(timeZoneId)));
   }
 
   private void showError(final Component component)

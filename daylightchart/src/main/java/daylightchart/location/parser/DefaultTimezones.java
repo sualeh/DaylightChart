@@ -36,7 +36,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 import java.util.TimeZone;
+import java.util.TreeSet;
 import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -60,6 +62,7 @@ public final class DefaultTimezones
 
   private static final Map<Country, List<String>> defaultTimezones = new HashMap<Country, List<String>>();
   private static final Map<String, List<String>> allTimezoneIds = new HashMap<String, List<String>>();
+  private static final Set<TimeZoneDisplay> allTimezones = new TreeSet<TimeZoneDisplay>();
 
   /**
    * Loads default time zones from the internal database. These are
@@ -151,6 +154,8 @@ public final class DefaultTimezones
       {
         continue;
       }
+      final TimeZone timeZone = TimeZone.getTimeZone(timeZoneId);
+      allTimezones.add(new TimeZoneDisplay(timeZone));
       final List<String> timeZoneIdParts = splitTimeZoneId(timeZoneId);
       if (timeZoneIdParts.size() > 0)
       {
@@ -261,6 +266,13 @@ public final class DefaultTimezones
     timeZoneId = timeZoneId + numberFormat.format(hourFields[0]) + ":"
                  + numberFormat.format(hourFields[1]);
     return timeZoneId;
+  }
+
+  public static List<TimeZoneDisplay> getAllTimeZonesForDisplay()
+  {
+    ArrayList<TimeZoneDisplay> allTimeZonesList = new ArrayList<TimeZoneDisplay>(allTimezones);
+    Collections.sort(allTimeZonesList);
+    return allTimeZonesList;
   }
 
   /**
