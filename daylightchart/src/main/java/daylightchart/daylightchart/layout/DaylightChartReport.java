@@ -42,6 +42,7 @@ import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.renderers.JFreeChartRenderer;
 
 import org.jfree.chart.ChartUtilities;
+import org.joda.time.LocalDateTime;
 
 import daylightchart.daylightchart.calculation.RiseSetUtility;
 import daylightchart.daylightchart.calculation.RiseSetYearData;
@@ -89,6 +90,13 @@ public class DaylightChartReport
   public Location getLocation()
   {
     return location;
+  }
+
+  public String getReportFileName(final ChartFileType chartFileType)
+  {
+    return location.getDescription() + "."
+           + new LocalDateTime().toString("yyyyMMddhhmm")
+           + chartFileType.getFileExtension();
   }
 
   public void write(final File file, final ChartFileType chartFileType)

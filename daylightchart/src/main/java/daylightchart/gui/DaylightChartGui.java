@@ -25,7 +25,10 @@ package daylightchart.gui;
 import java.awt.BorderLayout;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.io.File;
+import java.net.MalformedURLException;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.ImageIcon;
@@ -38,9 +41,11 @@ import javax.swing.JToolBar;
 
 import org.jfree.chart.ChartPanel;
 
+import sf.util.ui.BareBonesBrowserLaunch;
 import sf.util.ui.ExitAction;
 import sf.util.ui.GuiAction;
 import daylightchart.daylightchart.chart.ChartConfiguration;
+import daylightchart.daylightchart.layout.ChartFileType;
 import daylightchart.daylightchart.layout.DaylightChartReport;
 import daylightchart.gui.actions.AboutAction;
 import daylightchart.gui.actions.ChartOptionsAction;
@@ -75,13 +80,14 @@ public final class DaylightChartGui
 
   private final LocationsList locationsList;
   private final LocationsTabbedPane locationsTabbedPane;
+  private final boolean slimUi;
 
   /**
    * Creates a new instance of a Daylight Chart main window.
    */
   public DaylightChartGui()
   {
-    this(null);
+    this(null, false);
   }
 
   /**
@@ -89,9 +95,13 @@ public final class DaylightChartGui
    * 
    * @param location
    *        Location for a single chart window, or null for the full UI
+   * @param slimUi
+   *        Whether to use a slim user interface
    */
-  public DaylightChartGui(final Location location)
+  public DaylightChartGui(final Location location, final boolean slimUi)
   {
+
+    this.slimUi = slimUi;
 
     setIconImage(new ImageIcon(DaylightChartGui.class.getResource("/icon.png")) //$NON-NLS-1$
       .getImage());
@@ -105,11 +115,18 @@ public final class DaylightChartGui
       locationsTabbedPane = new LocationsTabbedPane();
       locationsList = new LocationsList(this);
 
-      final JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
-                                                  locationsList,
-                                                  locationsTabbedPane);
-      splitPane.setOneTouchExpandable(true);
-      getContentPane().add(splitPane);
+      if (slimUi)
+      {
+        getContentPane().add(locationsList);
+      }
+      else
+      {
+        final JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
+                                                    locationsList,
+                                                    locationsTabbedPane);
+        splitPane.setOneTouchExpandable(true);
+        getContentPane().add(splitPane);
+      }
 
       // Create menus and toolbars
       final JMenuBar menuBar = new JMenuBar();
@@ -194,7 +211,25 @@ public final class DaylightChartGui
    */
   void addLocationTab(final DaylightChartReport daylightChartReport)
   {
-    locationsTabbedPane.addLocationTab(daylightChartReport);
+    if (slimUi)
+    {
+      File reportFile = new File(UserPreferences.getDataFileDirectory(),
+                                 daylightChartReport
+                                   .getReportFileName(ChartFileType.html));
+      daylightChartReport.write(reportFile, ChartFileType.html);
+      try
+      {
+        BareBonesBrowserLaunch.openURL(reportFile.toURL().toString());
+      }
+      catch (MalformedURLException e)
+      {
+        LOGGER.log(Level.FINE, "Cannot open file " + reportFile, e);
+      }
+    }
+    else
+    {
+      locationsTabbedPane.addLocationTab(daylightChartReport);
+    }
   }
 
   private void createActions(final JMenuBar menuBar,

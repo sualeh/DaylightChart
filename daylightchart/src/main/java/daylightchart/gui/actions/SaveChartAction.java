@@ -34,13 +34,12 @@ import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 import javax.swing.filechooser.FileFilter;
 
-import org.joda.time.LocalDateTime;
-
 import sf.util.ui.Actions;
 import sf.util.ui.ExtensionFileFilter;
 import sf.util.ui.GuiAction;
 import sf.util.ui.Actions.SelectedFile;
 import daylightchart.daylightchart.layout.ChartFileType;
+import daylightchart.daylightchart.layout.DaylightChartReport;
 import daylightchart.gui.DaylightChartGui;
 import daylightchart.gui.Messages;
 import daylightchart.options.UserPreferences;
@@ -72,6 +71,8 @@ public final class SaveChartAction
     public void actionPerformed(@SuppressWarnings("unused")
     final ActionEvent actionevent)
     {
+      DaylightChartReport daylightChartReport = mainWindow
+        .getSelectedDaylightChartReport();
       final List<FileFilter> fileFilters = new ArrayList<FileFilter>();
       for (final ChartFileType chartFileType: ChartFileType.values())
       {
@@ -79,11 +80,8 @@ public final class SaveChartAction
                                                 chartFileType
                                                   .getFileExtension()));
       }
-      final String reportFilename = mainWindow.getSelectedLocation()
-        .getDescription()
-                                    + "."
-                                    + new LocalDateTime()
-                                      .toString("yyyyMMddhhmm") + ".pdf";
+      final String reportFilename = daylightChartReport
+        .getReportFileName(ChartFileType.pdf);
       final SelectedFile selectedFile = Actions
         .showSaveDialog(mainWindow,
                         Messages
@@ -101,9 +99,7 @@ public final class SaveChartAction
             .getFileFilter();
           final ChartFileType chartFileType = ChartFileType
             .fromExtension(fileFilter.getExtension());
-          mainWindow.getSelectedDaylightChartReport().write(selectedFile
-                                                              .getFile(),
-                                                            chartFileType);
+          daylightChartReport.write(selectedFile.getFile(), chartFileType);
 
           // Save last selected directory
           UserPreferences.setDataFileDirectory(selectedFile.getDirectory());
