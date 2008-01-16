@@ -31,8 +31,26 @@ public enum TimeZoneOption
 {
 
   /** Use local time for the time - do not correct for time zone, and DST */
-  USE_LOCAL_TIME,
+  USE_LOCAL_TIME("Use local time"),
   /** Use time zone for the time - correct for time zone, and DST */
-  USE_TIME_ZONE;
+  USE_TIME_ZONE("Use time zone");
+
+  private final String description;
+
+  private TimeZoneOption(final String description)
+  {
+    this.description = description;
+  }
+
+  public String getDescription()
+  {
+    return description;
+  }
+
+  @Override
+  public String toString()
+  {
+    return description;
+  }
 
 }

@@ -102,7 +102,7 @@ public final class RiseSetUtility
                                     && timeZoneOption != TimeZoneOption.USE_LOCAL_TIME;
     boolean wasDaylightSavings = false;
 
-    final Twilight twilight = options.getTwilight();
+    final TwilightType twilight = options.getTwilight();
     final RiseSetYearData riseSetYear = new RiseSetYearData(location,
                                                             twilight,
                                                             year);
@@ -128,7 +128,7 @@ public final class RiseSetUtility
                                                   date,
                                                   useDaylightTime,
                                                   inDaylightSavings,
-                                                  Twilight.none);
+                                                  TwilightType.none);
       riseSetYear.addRiseSet(riseSet);
 
       if (twilight != null)
@@ -354,7 +354,7 @@ public final class RiseSetUtility
                                              final LocalDate date,
                                              final boolean useDaylightTime,
                                              final boolean inDaylightSavings,
-                                             final Twilight twilight)
+                                             final TwilightType twilight)
   {
     if (location != null)
     {
@@ -420,7 +420,7 @@ public final class RiseSetUtility
   {
     writeCalculations(writer,
                       location,
-                      Twilight.astronomical,
+                      TwilightType.astronomical,
                       DaylightBandType.twilight);
   }
 
@@ -437,7 +437,7 @@ public final class RiseSetUtility
   @SuppressWarnings("boxing")
   private static void writeCalculations(final Writer writer,
                                         final Location location,
-                                        final Twilight twilight,
+                                        final TwilightType twilight,
                                         final DaylightBandType... daylightBandType)
   {
     if (writer == null || location == null)

@@ -48,17 +48,14 @@ import daylightchart.daylightchart.layout.ChartFileType;
 import daylightchart.daylightchart.layout.DaylightChartReport;
 import daylightchart.gui.actions.AboutAction;
 import daylightchart.gui.actions.ChartOptionsAction;
-import daylightchart.gui.actions.ChartOrientationChoiceAction;
 import daylightchart.gui.actions.CloseCurrentTabAction;
-import daylightchart.gui.actions.LocationsSortChoiceAction;
 import daylightchart.gui.actions.OnlineHelpAction;
 import daylightchart.gui.actions.OpenLocationsFileAction;
+import daylightchart.gui.actions.OptionsAction;
 import daylightchart.gui.actions.PrintChartAction;
 import daylightchart.gui.actions.ResetAllAction;
 import daylightchart.gui.actions.SaveChartAction;
 import daylightchart.gui.actions.SaveLocationsFileAction;
-import daylightchart.gui.actions.TimeZoneOptionChoiceAction;
-import daylightchart.gui.actions.TwilightChoiceAction;
 import daylightchart.location.Location;
 import daylightchart.options.Options;
 import daylightchart.options.UserPreferences;
@@ -329,32 +326,8 @@ public final class DaylightChartGui
       .getString("DaylightChartGui.Menu.Options")); //$NON-NLS-1$
     menu.setMnemonic('O');
 
-    LocationsSortChoiceAction.addAllToMenu(this, menu);
-    menu.addSeparator();
-
-    TimeZoneOptionChoiceAction.addAllToMenu(menu);
-    menu.addSeparator();
-
-    ChartOrientationChoiceAction.addAllToMenu(menu);
-    menu.addSeparator();
-
-    TwilightChoiceAction.addAllToMenu(menu);
-    menu.addSeparator();
-
-    final JCheckBoxMenuItem showLegendMenuItem = new JCheckBoxMenuItem(Messages
-      .getString("DaylightChartGui.Menu.Options.ShowChartLegend")); //$NON-NLS-1$
-    showLegendMenuItem.setState(UserPreferences.getOptions()
-      .isShowChartLegend());
-    showLegendMenuItem.addItemListener(new ItemListener()
-    {
-      public void itemStateChanged(final ItemEvent e)
-      {
-        final Options options = UserPreferences.getOptions();
-        options.setShowChartLegend(e.getStateChange() == ItemEvent.SELECTED);
-        UserPreferences.setOptions(options);
-      }
-    });
-    menu.add(showLegendMenuItem);
+    final GuiAction options = new OptionsAction(this);
+    menu.add(options);
 
     final ChartOptionsAction chartOptionsAction = new ChartOptionsAction(this);
     menu.add(chartOptionsAction);

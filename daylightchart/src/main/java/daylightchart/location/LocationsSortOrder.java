@@ -35,36 +35,42 @@ public enum LocationsSortOrder
   implements Comparator<Location>
 {
 
-  /** Sort locations by name. */
-  BY_NAME,
-  /** Sort locations by latitude. */
-  BY_LATITUDE;
+  BY_NAME("By name")
+  {
+    public int compare(final Location location1, final Location location2)
+    {
+      return location1.getDescription().toLowerCase().compareTo(location2
+        .getDescription().toLowerCase());
+    }
+  },
+  BY_LATITUDE("By latitude")
+  {
+    public int compare(final Location location1, final Location location2)
+    {
+      final Latitude latitude1 = location1.getPointLocation().getLatitude();
+      final Latitude latitude2 = location2.getPointLocation().getLatitude();
+      return (int) Math.signum(latitude2.getRadians() - latitude1.getRadians());
+    }
+  };
 
   private static final long serialVersionUID = 4483200154586111166L;
 
-  /**
-   * {@inheritDoc}
-   * 
-   * @see java.util.Comparator#compare(java.lang.Object,
-   *      java.lang.Object)
-   */
-  public int compare(final Location location1, final Location location2)
+  private final String description;
+
+  private LocationsSortOrder(final String description)
   {
-    int comparison = 0;
-    switch (this)
-    {
-      case BY_LATITUDE:
-        final Latitude latitude1 = location1.getPointLocation().getLatitude();
-        final Latitude latitude2 = location2.getPointLocation().getLatitude();
-        comparison = (int) Math.signum(latitude2.getRadians()
-                                       - latitude1.getRadians());
-        break;
-      case BY_NAME:
-        comparison = location1.getDescription().toLowerCase()
-          .compareTo(location2.getDescription().toLowerCase());
-        break;
-    }
-    return comparison;
+    this.description = description;
+  }
+
+  public String getDescription()
+  {
+    return description;
+  }
+
+  @Override
+  public String toString()
+  {
+    return description;
   }
 
 }

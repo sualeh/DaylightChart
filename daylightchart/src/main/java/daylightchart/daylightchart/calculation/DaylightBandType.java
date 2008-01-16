@@ -34,8 +34,8 @@ public enum DaylightBandType
   with_clock_shift("With clock shift", true),
   /** Without clock shift. */
   without_clock_shift("Without clock shift", false),
-  /** Twilight. */
-  twilight("Twilight", true);
+  /** TwilightType. */
+  twilight("TwilightType", true);
 
   private final boolean adjustedForDaylightSavings;
   private final String description;

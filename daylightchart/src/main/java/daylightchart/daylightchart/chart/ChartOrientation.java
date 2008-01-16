@@ -30,11 +30,26 @@ package daylightchart.daylightchart.chart;
 public enum ChartOrientation
 {
 
-  /** Standard. */
-  standard,
-  /** Conventional. */
-  conventional,
-  /** Vertical. */
-  vertical;
+  standard("Standard"),
+  conventional("Conventional"),
+  vertical("Vertical");
+
+  private final String description;
+
+  private ChartOrientation(final String description)
+  {
+    this.description = description;
+  }
+
+  public String getDescription()
+  {
+    return description;
+  }
+
+  @Override
+  public String toString()
+  {
+    return description;
+  }
 
 }

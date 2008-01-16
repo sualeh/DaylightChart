@@ -24,7 +24,7 @@ package daylightchart.options;
 
 import java.io.Serializable;
 
-import daylightchart.daylightchart.calculation.Twilight;
+import daylightchart.daylightchart.calculation.TwilightType;
 import daylightchart.daylightchart.chart.ChartOrientation;
 import daylightchart.daylightchart.chart.TimeZoneOption;
 import daylightchart.location.LocationsSortOrder;
@@ -45,7 +45,7 @@ public class Options
   private TimeZoneOption timeZoneOption;
   private ChartOptions chartOptions;
   private ChartOrientation chartOrientation;
-  private Twilight twilight;
+  private TwilightType twilight;
   private boolean showChartLegend;
 
   /**
@@ -57,7 +57,7 @@ public class Options
     timeZoneOption = TimeZoneOption.USE_TIME_ZONE;
     chartOptions = new ChartOptions();
     chartOrientation = ChartOrientation.standard;
-    twilight = Twilight.civil;
+    twilight = TwilightType.civil;
     showChartLegend = true;
   }
 
@@ -98,9 +98,9 @@ public class Options
   /**
    * Gets the twilight display setting for the chart.
    * 
-   * @return Twilight setting
+   * @return TwilightType setting
    */
-  public Twilight getTwilight()
+  public TwilightType getTwilight()
   {
     return twilight;
   }
@@ -180,9 +180,9 @@ public class Options
    * Sets the twilight display setting for the chart.
    * 
    * @param twilight
-   *        Twilight setting
+   *        TwilightType setting
    */
-  public void setTwilight(final Twilight twilight)
+  public void setTwilight(final TwilightType twilight)
   {
     if (twilight != null)
     {

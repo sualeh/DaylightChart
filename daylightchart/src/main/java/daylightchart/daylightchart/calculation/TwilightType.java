@@ -23,32 +23,42 @@ package daylightchart.daylightchart.calculation;
 
 
 /**
- * Orientation of the chart.
+ * Twilight type.
  * 
  * @author Sualeh Fatehi
  */
-public enum Twilight
+public enum TwilightType
 {
 
-  /** None. */
-  none(-5D / 6D),
-  /** Civil. */
-  civil(-6D),
-  /** Nautical. */
-  nautical(-12D),
-  /** Astronomical. */
-  astronomical(-18D);
+  none("None", -5D / 6D),
+  civil("Civil", -6D),
+  nautical("Nautical", -12D),
+  astronomical("Astronomical", -18D);
 
   private final double horizon;
 
-  private Twilight(final double horizon)
+  private TwilightType(final String description, final double horizon)
   {
+    this.description = description;
     this.horizon = horizon;
   }
 
   double getHorizon()
   {
     return horizon;
+  }
+
+  private final String description;
+
+  public String getDescription()
+  {
+    return description;
+  }
+
+  @Override
+  public String toString()
+  {
+    return description;
   }
 
 }

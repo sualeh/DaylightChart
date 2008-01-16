@@ -49,13 +49,13 @@ public final class RiseSetYearData
   private boolean usesDaylightTime;
   private LocalDate dstStart;
   private LocalDate dstEnd;
-  private final Twilight twilight;
+  private final TwilightType twilight;
   private final List<RawRiseSet> riseSets;
   private final List<RawRiseSet> twilights;
   private final List<DaylightBand> bands;
 
   RiseSetYearData(final Location location,
-                  final Twilight twilight,
+                  final TwilightType twilight,
                   final int year)
   {
     this.location = location;
@@ -135,9 +135,9 @@ public final class RiseSetYearData
   /**
    * Gets the twilight type.
    * 
-   * @return Twilight type.
+   * @return TwilightType type.
    */
-  public Twilight getTwilight()
+  public TwilightType getTwilight()
   {
     return twilight;
   }

@@ -32,7 +32,7 @@ import org.jfree.chart.LegendItemCollection;
 import org.jfree.chart.LegendItemSource;
 
 import daylightchart.daylightchart.calculation.DaylightBandType;
-import daylightchart.daylightchart.calculation.Twilight;
+import daylightchart.daylightchart.calculation.TwilightType;
 import daylightchart.options.Options;
 
 final class DaylightChartLegendItemSource
@@ -64,7 +64,7 @@ final class DaylightChartLegendItemSource
     for (final DaylightBandType daylightSavingsMode: DaylightBandType.values())
     {
       if (daylightSavingsMode == DaylightBandType.twilight
-          && options.getTwilight() == Twilight.none)
+          && options.getTwilight() == TwilightType.none)
       {
         continue;
       }
@@ -137,7 +137,7 @@ final class DaylightChartLegendItemSource
           legendLabel = Messages.getString("DaylightChart.Legend.WithoutDST"); //$NON-NLS-1$
           break;
         case twilight:
-          final Twilight twilight = options.getTwilight();
+          final TwilightType twilight = options.getTwilight();
           switch (twilight)
           {
             case civil:
