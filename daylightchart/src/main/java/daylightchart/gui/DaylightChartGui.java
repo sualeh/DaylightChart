@@ -28,7 +28,9 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.File;
+import java.net.MalformedURLException;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.ImageIcon;
@@ -41,6 +43,7 @@ import javax.swing.JToolBar;
 
 import org.jfree.chart.ChartPanel;
 
+import sf.util.ui.BareBonesBrowserLaunch;
 import sf.util.ui.ExitAction;
 import sf.util.ui.GuiAction;
 import daylightchart.daylightchart.chart.ChartConfiguration;
@@ -229,14 +232,14 @@ public final class DaylightChartGui
                                        daylightChartReport
                                          .getReportFileName(ChartFileType.html));
       daylightChartReport.write(reportFile, ChartFileType.html);
-// try
-// {
-// BareBonesBrowserLaunch.openURL(reportFile.toURL().toString());
-// }
-// catch (final MalformedURLException e)
-// {
-// LOGGER.log(Level.FINE, "Cannot open file " + reportFile, e);
-// }
+      try
+      {
+        BareBonesBrowserLaunch.openURL(reportFile.toURL().toString());
+      }
+      catch (final MalformedURLException e)
+      {
+        LOGGER.log(Level.FINE, "Cannot open file " + reportFile, e);
+      }
     }
     else
     {

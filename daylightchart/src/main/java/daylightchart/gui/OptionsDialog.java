@@ -109,7 +109,7 @@ public class OptionsDialog
       final Object source = event.getSource();
       if (source == ok)
       {
-        options = getOptionsFromDialog();
+        setOptionsFromDialog();
       }
       dispose();
     }
@@ -205,7 +205,7 @@ public class OptionsDialog
   {
     if (options == null)
     {
-      return;
+      throw new IllegalArgumentException("Cannot use null options");
     }
 
     listLocationsSortOrder.setSelectedItem(options.getLocationsSortOrder());
@@ -235,10 +235,8 @@ public class OptionsDialog
     rootPane.getInputMap(JComponent.WHEN_FOCUSED).put(stroke, action);
   }
 
-  private Options getOptionsFromDialog()
+  private void setOptionsFromDialog()
   {
-    Options options = new Options();
-
     options.setLocationsSortOrder((LocationsSortOrder) listLocationsSortOrder
       .getSelectedItem());
     options.setTimeZoneOption((TimeZoneOption) listTimeZoneOption
@@ -247,8 +245,6 @@ public class OptionsDialog
       .getSelectedItem());
     options.setTwilightType((TwilightType) listTwilightType.getSelectedItem());
     options.setShowChartLegend(checkShowChartLegend.isSelected());
-
-    return options;
   }
 
   public Options getOptions()
