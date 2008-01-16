@@ -22,11 +22,11 @@
 package daylightchart.gui.actions;
 
 
-import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import sf.util.ui.GuiAction;
+import daylightchart.gui.DaylightChartGui;
 import daylightchart.gui.Messages;
 import daylightchart.gui.OptionsDialog;
 import daylightchart.options.Options;
@@ -44,9 +44,9 @@ public final class OptionsAction
   private static final class GuiActionListener
     implements ActionListener
   {
-    private final Frame mainWindow;
+    private final DaylightChartGui mainWindow;
 
-    private GuiActionListener(final Frame mainWindow)
+    private GuiActionListener(final DaylightChartGui mainWindow)
     {
       this.mainWindow = mainWindow;
     }
@@ -62,6 +62,7 @@ public final class OptionsAction
       Options options = UserPreferences.getOptions();
       options = OptionsDialog.showOptionsDialog(mainWindow, options);
       UserPreferences.setOptions(options);
+      mainWindow.sortLocations();
     }
   }
 
@@ -73,9 +74,10 @@ public final class OptionsAction
    * @param parent
    *        Main window.
    */
-  public OptionsAction(final Frame mainWindow)
+  public OptionsAction(final DaylightChartGui mainWindow)
   {
     super(Messages.getString("DaylightChartGui.Menu.Options.Options")); //$NON-NLS-1$
     addActionListener(new GuiActionListener(mainWindow));
   }
+
 }
