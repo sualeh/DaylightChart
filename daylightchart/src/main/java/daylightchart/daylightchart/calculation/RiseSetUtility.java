@@ -128,7 +128,7 @@ public final class RiseSetUtility
                                                   date,
                                                   useDaylightTime,
                                                   inDaylightSavings,
-                                                  TwilightType.none);
+                                                  TwilightType.NONE);
       riseSetYear.addRiseSet(riseSet);
 
       if (twilight != null)
@@ -420,7 +420,7 @@ public final class RiseSetUtility
   {
     writeCalculations(writer,
                       location,
-                      TwilightType.astronomical,
+                      TwilightType.ASTRONOMICAL,
                       DaylightBandType.twilight);
   }
 

@@ -56,8 +56,8 @@ public class Options
     locationsSortOrder = LocationsSortOrder.BY_NAME;
     timeZoneOption = TimeZoneOption.USE_TIME_ZONE;
     chartOptions = new ChartOptions();
-    chartOrientation = ChartOrientation.standard;
-    twilight = TwilightType.civil;
+    chartOrientation = ChartOrientation.STANDARD;
+    twilight = TwilightType.CIVIL;
     showChartLegend = true;
   }
 

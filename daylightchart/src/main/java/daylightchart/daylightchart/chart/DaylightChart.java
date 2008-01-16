@@ -148,13 +148,13 @@ public class DaylightChart
 
     switch (chartOrientation)
     {
-      case standard:
+      case STANDARD:
         hoursAxis.setInverted(true);
         plot.setDomainAxisLocation(AxisLocation.TOP_OR_LEFT);
         break;
-      case conventional:
+      case CONVENTIONAL:
         break;
-      case vertical:
+      case VERTICAL:
         plot.setOrientation(PlotOrientation.HORIZONTAL);
         monthsAxis.setInverted(true);
         break;
@@ -209,7 +209,7 @@ public class DaylightChart
 
     createBandsInPlot(plot);
 
-    ChartOrientation chartOrientation = ChartOrientation.standard;
+    ChartOrientation chartOrientation = ChartOrientation.STANDARD;
     if (options != null)
     {
       chartOrientation = options.getChartOrientation();

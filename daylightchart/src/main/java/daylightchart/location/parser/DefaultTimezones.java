@@ -234,7 +234,7 @@ public final class DefaultTimezones
   }
 
   /**
-   * Create a standard GMT-based timezone id.
+   * Create a STANDARD GMT-based timezone id.
    * 
    * @param longitude
    *        Longitude
@@ -276,7 +276,7 @@ public final class DefaultTimezones
   }
 
   /**
-   * Calculates the standard time zone offset, in hours.
+   * Calculates the STANDARD time zone offset, in hours.
    * 
    * @param timeZoneId
    *        Time zone id
@@ -320,7 +320,7 @@ public final class DefaultTimezones
   }
 
   /**
-   * Create a standard GMT-based timezone id.
+   * Create a STANDARD GMT-based timezone id.
    * 
    * @param tzOffsetHours
    *        Time zone offset, in hours

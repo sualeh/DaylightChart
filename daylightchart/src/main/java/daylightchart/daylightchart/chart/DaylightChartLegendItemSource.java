@@ -64,7 +64,7 @@ final class DaylightChartLegendItemSource
     for (final DaylightBandType daylightSavingsMode: DaylightBandType.values())
     {
       if (daylightSavingsMode == DaylightBandType.twilight
-          && options.getTwilightType() == TwilightType.none)
+          && options.getTwilightType() == TwilightType.NONE)
       {
         continue;
       }
@@ -140,15 +140,15 @@ final class DaylightChartLegendItemSource
           final TwilightType twilight = options.getTwilightType();
           switch (twilight)
           {
-            case civil:
+            case CIVIL:
               legendLabel = Messages
                 .getString("DaylightChart.Legend.Twilight.Civil"); //$NON-NLS-1$
               break;
-            case nautical:
+            case NAUTICAL:
               legendLabel = Messages
                 .getString("DaylightChart.Legend.Twilight.Nautical"); //$NON-NLS-1$
               break;
-            case astronomical:
+            case ASTRONOMICAL:
               legendLabel = Messages
                 .getString("DaylightChart.Legend.Twilight.Astronomical"); //$NON-NLS-1$
               break;
