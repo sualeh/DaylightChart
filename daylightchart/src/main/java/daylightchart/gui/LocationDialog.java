@@ -261,10 +261,16 @@ public class LocationDialog
 
     if (operation == LocationsListOperation.delete)
     {
-      latitudeValue.setEditable(false);
-      longitudeValue.setEditable(false);
       city.setEditable(false);
+      city.setEnabled(false);
+      countries.setEditable(false);
       countries.setEnabled(false);
+      latitudeValue.setEditable(false);
+      latitudeValue.setEnabled(false);
+      longitudeValue.setEditable(false);
+      longitudeValue.setEnabled(false);
+      timeZone.setEditable(false);
+      timeZone.setEnabled(false);
     }
     if (operation != LocationsListOperation.add)
     {
