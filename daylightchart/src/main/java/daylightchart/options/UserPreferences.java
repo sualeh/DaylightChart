@@ -62,6 +62,7 @@ public final class UserPreferences
   private static final String keyLocations = "daylightchart.locations";
   private static final String keyOptions = "daylightchart.options";
   private static final String keyDataFileDirectory = "daylightchart.dataFileDirectory";
+  private static final String keySlimUi = "daylightchart.slimUi";
 
   private static final Preferences preferences = Preferences
     .userNodeForPackage(UserPreferences.class);
@@ -91,6 +92,17 @@ public final class UserPreferences
   {
     final String dataFileDirectory = preferences.get(keyDataFileDirectory, ".");
     return new File(dataFileDirectory);
+  }
+
+  /**
+   * Get the the slim UI option.
+   * 
+   * @return Directory for data files
+   */
+  public static boolean isSlimUi()
+  {
+    final boolean slimUi = preferences.getBoolean(keySlimUi, false);
+    return slimUi;
   }
 
   /**
@@ -212,6 +224,21 @@ public final class UserPreferences
       return;
     }
     preferences.put(keyDataFileDirectory, dataFileDirectory.getAbsolutePath());
+  }
+
+  /**
+   * Set the slim UI perference.
+   * 
+   * @param slimUi
+   *        Whether to use a slim UI
+   */
+  public static void setSlimUi(final boolean slimUi)
+  {
+    if (!savePreferences)
+    {
+      return;
+    }
+    preferences.putBoolean(keySlimUi, slimUi);
   }
 
   /**

@@ -63,17 +63,25 @@ public final class ResetAllAction
       // Clear all preferences
       UserPreferences.clear();
 
-      // Dispose this window
-      final JFrame mainWindow = daylightChartGui;
-      mainWindow.setVisible(false);
-      mainWindow.dispose();
-
-      // Open a new window
-      new DaylightChartGui().setVisible(true);
+      final boolean slimUi = daylightChartGui.isSlimUi();
+      resetAll(daylightChartGui, slimUi);
     }
+
   }
 
   private static final long serialVersionUID = 4002590686393404496L;
+
+  public static void resetAll(final DaylightChartGui daylightChartGui,
+                              final boolean slimUi)
+  {
+    // Dispose this window
+    final JFrame mainWindow = daylightChartGui;
+    mainWindow.setVisible(false);
+    mainWindow.dispose();
+
+    // Open a new window
+    new DaylightChartGui(slimUi).setVisible(true);
+  }
 
   /**
    * Closes current tab.

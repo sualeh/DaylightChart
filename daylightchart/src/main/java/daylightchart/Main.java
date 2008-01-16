@@ -83,7 +83,7 @@ public final class Main
     parser.parse(args);
     final boolean debugCalculations = parser
       .getBooleanOptionValue(OPTION_DEBUG_CALCULATIONS);
-    final boolean slimUi = parser.getBooleanOptionValue(OPTION_SLIMUI);
+    boolean slimUi = parser.getBooleanOptionValue(OPTION_SLIMUI);
     final boolean noPreferences = parser
       .getBooleanOptionValue(OPTION_NO_PREFERENCES);
     final String locationString = parser.getStringOptionValue(OPTION_LOCATION);
@@ -120,6 +120,11 @@ public final class Main
         LOGGER.log(Level.WARNING, "Cannot set look and feel");
       }
 
+      if (!slimUi)
+      {
+        slimUi = UserPreferences.isSlimUi();
+      }
+      UserPreferences.setSlimUi(slimUi);
       new DaylightChartGui(location, slimUi).setVisible(true);
     }
   }

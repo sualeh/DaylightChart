@@ -87,9 +87,9 @@ public final class DaylightChartGui
   /**
    * Creates a new instance of a Daylight Chart main window.
    */
-  public DaylightChartGui()
+  public DaylightChartGui(final boolean slimUi)
   {
-    this(null, false);
+    this(null, slimUi);
   }
 
   /**
@@ -122,7 +122,8 @@ public final class DaylightChartGui
         getContentPane().add(locationsList);
         addComponentListener(new ComponentAdapter()
         {
-          public void componentResized(ComponentEvent event)
+          @Override
+          public void componentResized(final ComponentEvent event)
           {
             setSize(Math.max(300, getWidth()), Math.max(500, getHeight()));
           }
@@ -189,6 +190,14 @@ public final class DaylightChartGui
   }
 
   /**
+   * @return the slimUi
+   */
+  public boolean isSlimUi()
+  {
+    return slimUi;
+  }
+
+  /**
    * Sets the locations list on the GUI.
    * 
    * @param locations
@@ -222,15 +231,15 @@ public final class DaylightChartGui
   {
     if (slimUi)
     {
-      File reportFile = new File(UserPreferences.getDataFileDirectory(),
-                                 daylightChartReport
-                                   .getReportFileName(ChartFileType.html));
+      final File reportFile = new File(UserPreferences.getDataFileDirectory(),
+                                       daylightChartReport
+                                         .getReportFileName(ChartFileType.html));
       daylightChartReport.write(reportFile, ChartFileType.html);
       try
       {
         BareBonesBrowserLaunch.openURL(reportFile.toURL().toString());
       }
-      catch (MalformedURLException e)
+      catch (final MalformedURLException e)
       {
         LOGGER.log(Level.FINE, "Cannot open file " + reportFile, e);
       }
@@ -353,6 +362,20 @@ public final class DaylightChartGui
     final ChartOptionsAction chartOptionsAction = new ChartOptionsAction(this);
     menu.add(chartOptionsAction);
     menu.addSeparator();
+
+    final JCheckBoxMenuItem slimUiMenuItem = new JCheckBoxMenuItem(Messages
+      .getString("DaylightChartGui.Menu.Options.SlimUi")); //$NON-NLS-1$
+    slimUiMenuItem.setState(isSlimUi());
+    slimUiMenuItem.addItemListener(new ItemListener()
+    {
+      public void itemStateChanged(final ItemEvent e)
+      {
+        boolean slimUi = (e.getStateChange() == ItemEvent.SELECTED);
+        UserPreferences.setSlimUi(slimUi);
+        ResetAllAction.resetAll(DaylightChartGui.this, slimUi);
+      }
+    });
+    menu.add(slimUiMenuItem);
 
     final GuiAction resetAll = new ResetAllAction(this);
     menu.add(resetAll);
