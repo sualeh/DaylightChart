@@ -67,6 +67,8 @@ public final class UserPreferences
   private static final Preferences preferences = Preferences
     .userNodeForPackage(UserPreferences.class);
   private static boolean savePreferences = true;
+  private static File workingDirectory = new File(System
+    .getProperty("java.io.tmpdir"));
 
   /**
    * Clears all user preferences.
@@ -92,17 +94,6 @@ public final class UserPreferences
   {
     final String dataFileDirectory = preferences.get(keyDataFileDirectory, ".");
     return new File(dataFileDirectory);
-  }
-
-  /**
-   * Get the the slim UI option.
-   * 
-   * @return Directory for data files
-   */
-  public static boolean isSlimUi()
-  {
-    final boolean slimUi = preferences.getBoolean(keySlimUi, false);
-    return slimUi;
   }
 
   /**
@@ -196,6 +187,17 @@ public final class UserPreferences
   }
 
   /**
+   * Get the the slim UI option.
+   * 
+   * @return Directory for data files
+   */
+  public static boolean isSlimUi()
+  {
+    final boolean slimUi = preferences.getBoolean(keySlimUi, false);
+    return slimUi;
+  }
+
+  /**
    * Main method. Lists all user preferences.
    * 
    * @param args
@@ -224,21 +226,6 @@ public final class UserPreferences
       return;
     }
     preferences.put(keyDataFileDirectory, dataFileDirectory.getAbsolutePath());
-  }
-
-  /**
-   * Set the slim UI perference.
-   * 
-   * @param slimUi
-   *        Whether to use a slim UI
-   */
-  public static void setSlimUi(final boolean slimUi)
-  {
-    if (!savePreferences)
-    {
-      return;
-    }
-    preferences.putBoolean(keySlimUi, slimUi);
   }
 
   /**
@@ -324,6 +311,21 @@ public final class UserPreferences
   }
 
   /**
+   * Set the slim UI perference.
+   * 
+   * @param slimUi
+   *        Whether to use a slim UI
+   */
+  public static void setSlimUi(final boolean slimUi)
+  {
+    if (!savePreferences)
+    {
+      return;
+    }
+    preferences.putBoolean(keySlimUi, slimUi);
+  }
+
+  /**
    * Sorts locations by current preferences.
    * 
    * @param locations
@@ -362,4 +364,28 @@ public final class UserPreferences
   {
     // Prevent external instantiation
   }
+
+  /**
+   * @return the workingDirectory
+   */
+  public static File getWorkingDirectory()
+  {
+    return workingDirectory;
+  }
+
+  /**
+   * @param workingDirectory
+   *        the workingDirectory to set
+   */
+  public static void setWorkingDirectory(final File workingDirectory)
+  {
+    boolean isWorkingDirectoryValid = workingDirectory.exists()
+                                      && workingDirectory.isDirectory()
+                                      && workingDirectory.canWrite();
+    if (isWorkingDirectoryValid)
+    {
+      UserPreferences.workingDirectory = workingDirectory;
+    }
+  }
+
 }
