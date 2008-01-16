@@ -180,8 +180,6 @@ public class LocationDialog
   {
 
     super(locationsList.getMainWindow(), operation.getText(), true);
-    setSize(350, 230);
-    setResizable(false);
     disposeOnEscapeKey();
 
     this.operation = operation;
@@ -244,7 +242,7 @@ public class LocationDialog
     city.addFocusListener(focusListener);
     countries.addFocusListener(focusListener);
 
-    final FormLayout layout = new FormLayout("right:p, 3dlu, p"); //$NON-NLS-1$
+    final FormLayout layout = new FormLayout("right:pref, 3dlu, min"); //$NON-NLS-1$
     final DefaultFormBuilder builder = new DefaultFormBuilder(layout);
     builder.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
     builder
@@ -275,6 +273,7 @@ public class LocationDialog
 
     pack();
     setLocationRelativeTo(locationsList.getMainWindow());
+    setResizable(false);
     setVisible(true);
   }
 
