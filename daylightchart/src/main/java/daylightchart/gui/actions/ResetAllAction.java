@@ -64,14 +64,14 @@ public final class ResetAllAction
       UserPreferences.clear();
 
       final boolean slimUi = daylightChartGui.isSlimUi();
-      resetAll(daylightChartGui, slimUi);
+      restart(daylightChartGui, slimUi);
     }
 
   }
 
   private static final long serialVersionUID = 4002590686393404496L;
 
-  public static void resetAll(final DaylightChartGui daylightChartGui,
+  public static void restart(final DaylightChartGui daylightChartGui,
                               final boolean slimUi)
   {
     // Dispose this window

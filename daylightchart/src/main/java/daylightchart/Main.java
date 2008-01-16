@@ -55,7 +55,7 @@ public final class Main
   private static final Logger LOGGER = Logger.getLogger(Main.class.getName());
 
   private static final String OPTION_DEBUG_CALCULATIONS = "debug-calcs";
-  private static final String OPTION_SLIMUI = "slimui";
+  private static final String OPTION_SLIMUI = "slim";
   private static final String OPTION_NO_PREFERENCES = "noprefs";
   private static final String OPTION_LOCATION = "location";
 
