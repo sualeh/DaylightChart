@@ -25,6 +25,8 @@ package daylightchart.location.parser;
 import java.io.Serializable;
 import java.util.TimeZone;
 
+import org.apache.commons.lang.StringUtils;
+
 public final class TimeZoneDisplay
   implements Serializable, Comparable<TimeZoneDisplay>
 {
@@ -33,6 +35,7 @@ public final class TimeZoneDisplay
 
   private final String timeZoneId;
   private final String timeZoneDisplayName;
+  private final String description;
 
   public TimeZoneDisplay(final TimeZone timeZone)
   {
@@ -42,6 +45,7 @@ public final class TimeZoneDisplay
     }
     timeZoneId = timeZone.getID();
     timeZoneDisplayName = timeZone.getDisplayName();
+    description = createDescription();
   }
 
   public int compareTo(final TimeZoneDisplay other)
@@ -123,7 +127,20 @@ public final class TimeZoneDisplay
   @Override
   public String toString()
   {
-    return timeZoneDisplayName + " (" + timeZoneId + ")";
+    return description;
+  }
+
+  private String createDescription()
+  {
+    String string = timeZoneDisplayName;
+    if (string.contains("("))
+    {
+      string = string.substring(0, string.indexOf('('));
+      string = string.trim();
+    }
+    string = string + " (" + timeZoneId + ")";
+    string = StringUtils.abbreviate(string, 50);
+    return string;
   }
 
 }

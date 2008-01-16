@@ -71,7 +71,7 @@ public final class SaveChartAction
     public void actionPerformed(@SuppressWarnings("unused")
     final ActionEvent actionevent)
     {
-      DaylightChartReport daylightChartReport = mainWindow
+      final DaylightChartReport daylightChartReport = mainWindow
         .getSelectedDaylightChartReport();
       final List<FileFilter> fileFilters = new ArrayList<FileFilter>();
       for (final ChartFileType chartFileType: ChartFileType.values())

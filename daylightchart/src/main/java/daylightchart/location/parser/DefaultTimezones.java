@@ -270,7 +270,7 @@ public final class DefaultTimezones
 
   public static List<TimeZoneDisplay> getAllTimeZonesForDisplay()
   {
-    ArrayList<TimeZoneDisplay> allTimeZonesList = new ArrayList<TimeZoneDisplay>(allTimezones);
+    final ArrayList<TimeZoneDisplay> allTimeZonesList = new ArrayList<TimeZoneDisplay>(allTimezones);
     Collections.sort(allTimeZonesList);
     return allTimeZonesList;
   }

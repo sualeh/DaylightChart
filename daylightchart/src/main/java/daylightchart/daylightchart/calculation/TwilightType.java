@@ -31,24 +31,19 @@ public enum TwilightType
 {
 
   NONE("None", -5D / 6D),
-  CIVIL("Civil", -6D),
-  NAUTICAL("Nautical", -12D),
-  ASTRONOMICAL("Astronomical", -18D);
+  CIVIL("Civil twilight", -6D),
+  NAUTICAL("Nautical twilight", -12D),
+  ASTRONOMICAL("Astronomical twilight", -18D);
 
   private final double horizon;
+
+  private final String description;
 
   private TwilightType(final String description, final double horizon)
   {
     this.description = description;
     this.horizon = horizon;
   }
-
-  double getHorizon()
-  {
-    return horizon;
-  }
-
-  private final String description;
 
   public String getDescription()
   {
@@ -59,6 +54,11 @@ public enum TwilightType
   public String toString()
   {
     return description;
+  }
+
+  double getHorizon()
+  {
+    return horizon;
   }
 
 }

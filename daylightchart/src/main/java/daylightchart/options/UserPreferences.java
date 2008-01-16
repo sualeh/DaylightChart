@@ -177,6 +177,14 @@ public final class UserPreferences
   }
 
   /**
+   * @return the workingDirectory
+   */
+  public static File getWorkingDirectory()
+  {
+    return workingDirectory;
+  }
+
+  /**
    * Whether to save preferences.
    * 
    * @return Whether to save preferences.
@@ -326,6 +334,21 @@ public final class UserPreferences
   }
 
   /**
+   * @param workingDirectory
+   *        the workingDirectory to set
+   */
+  public static void setWorkingDirectory(final File workingDirectory)
+  {
+    final boolean isWorkingDirectoryValid = workingDirectory.exists()
+                                            && workingDirectory.isDirectory()
+                                            && workingDirectory.canWrite();
+    if (isWorkingDirectoryValid)
+    {
+      UserPreferences.workingDirectory = workingDirectory;
+    }
+  }
+
+  /**
    * Sorts locations by current preferences.
    * 
    * @param locations
@@ -363,29 +386,6 @@ public final class UserPreferences
   private UserPreferences()
   {
     // Prevent external instantiation
-  }
-
-  /**
-   * @return the workingDirectory
-   */
-  public static File getWorkingDirectory()
-  {
-    return workingDirectory;
-  }
-
-  /**
-   * @param workingDirectory
-   *        the workingDirectory to set
-   */
-  public static void setWorkingDirectory(final File workingDirectory)
-  {
-    boolean isWorkingDirectoryValid = workingDirectory.exists()
-                                      && workingDirectory.isDirectory()
-                                      && workingDirectory.canWrite();
-    if (isWorkingDirectoryValid)
-    {
-      UserPreferences.workingDirectory = workingDirectory;
-    }
   }
 
 }

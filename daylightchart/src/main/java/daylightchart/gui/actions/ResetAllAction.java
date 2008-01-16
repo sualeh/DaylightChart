@@ -72,7 +72,7 @@ public final class ResetAllAction
   private static final long serialVersionUID = 4002590686393404496L;
 
   public static void restart(final DaylightChartGui daylightChartGui,
-                              final boolean slimUi)
+                             final boolean slimUi)
   {
     // Dispose this window
     final JFrame mainWindow = daylightChartGui;

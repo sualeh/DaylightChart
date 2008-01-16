@@ -124,8 +124,6 @@ public class OptionsDialog
   private static final Logger LOGGER = Logger.getLogger(OptionsDialog.class
     .getName());
 
-  private Options options;
-
   /**
    * Show a dialog for options.
    */
@@ -136,13 +134,20 @@ public class OptionsDialog
     return dialog.getOptions();
   }
 
+  private static <E extends Enum<E>> JComboBox enumDropDown(final Class<E> e)
+  {
+    return new JComboBox(new Vector<E>(EnumSet.allOf(e)));
+  }
+
+  private Options options;
   private final JComboBox listLocationsSortOrder;
   private final JComboBox listTimeZoneOption;
   private final JComboBox listChartOrientation;
   private final JComboBox listTwilightType;
-  private final JCheckBox checkShowChartLegend;
 
+  private final JCheckBox checkShowChartLegend;
   private final JButton ok;
+
   private final JButton cancel;
 
   private OptionsDialog(final Frame mainWindow, final Options options)
@@ -196,25 +201,9 @@ public class OptionsDialog
     setVisible(true);
   }
 
-  private static <E extends Enum<E>> JComboBox enumDropDown(Class<E> e)
+  public Options getOptions()
   {
-    return new JComboBox(new Vector<E>(EnumSet.allOf(e)));
-  }
-
-  private void setOptions(final Options options)
-  {
-    if (options == null)
-    {
-      throw new IllegalArgumentException("Cannot use null options");
-    }
-
-    listLocationsSortOrder.setSelectedItem(options.getLocationsSortOrder());
-    listTimeZoneOption.setSelectedItem(options.getTimeZoneOption());
-    listChartOrientation.setSelectedItem(options.getChartOrientation());
-    listTwilightType.setSelectedItem(options.getTwilightType());
-    checkShowChartLegend.setSelected(options.isShowChartLegend());
-
-    this.options = options;
+    return options;
   }
 
   private void disposeOnEscapeKey()
@@ -235,6 +224,22 @@ public class OptionsDialog
     rootPane.getInputMap(JComponent.WHEN_FOCUSED).put(stroke, action);
   }
 
+  private void setOptions(final Options options)
+  {
+    if (options == null)
+    {
+      throw new IllegalArgumentException("Cannot use null options");
+    }
+
+    listLocationsSortOrder.setSelectedItem(options.getLocationsSortOrder());
+    listTimeZoneOption.setSelectedItem(options.getTimeZoneOption());
+    listChartOrientation.setSelectedItem(options.getChartOrientation());
+    listTwilightType.setSelectedItem(options.getTwilightType());
+    checkShowChartLegend.setSelected(options.isShowChartLegend());
+
+    this.options = options;
+  }
+
   private void setOptionsFromDialog()
   {
     options.setLocationsSortOrder((LocationsSortOrder) listLocationsSortOrder
@@ -245,11 +250,6 @@ public class OptionsDialog
       .getSelectedItem());
     options.setTwilightType((TwilightType) listTwilightType.getSelectedItem());
     options.setShowChartLegend(checkShowChartLegend.isSelected());
-  }
-
-  public Options getOptions()
-  {
-    return options;
   }
 
 }

@@ -43,29 +43,33 @@ public final class LauncherMain
    * Any remaining options will be collected and passed to the main()
    * method of the launch class.
    */
-  public static void main(String[] args)
+  public static void main(final String[] args)
   {
 
-    List<String> launchOptions = new ArrayList<String>();
+    final List<String> launchOptions = new ArrayList<String>();
 
     if (args.length == 0)
+    {
       fail("No class to launch was specified.  This should be the first parameter.");
+    }
 
-    String launchClass = args[0];
+    final String launchClass = args[0];
 
     int cursor = 1;
 
     while (cursor < args.length)
     {
 
-      String arg = args[cursor];
+      final String arg = args[cursor];
 
       if (arg.equals("--addclasspath"))
       {
         if (cursor + 1 == args.length)
+        {
           fail("--addclasspath argument was not followed by the name of the directory to add to the classpath.");
+        }
 
-        String dir = args[cursor + 1];
+        final String dir = args[cursor + 1];
 
         add(dir);
 
@@ -81,7 +85,7 @@ public final class LauncherMain
           fail("--addjardir argument was not followed by the name of a directory to search for JARs.");
         }
 
-        String dir = args[cursor + 1];
+        final String dir = args[cursor + 1];
 
         search(dir);
 
@@ -94,26 +98,56 @@ public final class LauncherMain
       cursor++;
     }
 
-    String[] newArgs = launchOptions.toArray(new String[launchOptions.size()]);
+    final String[] newArgs = launchOptions.toArray(new String[launchOptions
+      .size()]);
 
     launch(launchClass, newArgs);
   }
 
-  private static void launch(String launchClassName, String[] args)
+  private static void add(final String directoryName)
+  {
+    final File dir = toDir(directoryName);
+
+    if (dir == null)
+    {
+      return;
+    }
+
+    addToClasspath(dir);
+  }
+
+  private static void addToClasspath(final File jar)
+  {
+    final URL url = toURL(jar);
+
+    if (url != null)
+    {
+      _classpath.add(url);
+    }
+  }
+
+  private static void fail(final String message)
+  {
+    System.err.println("Launcher failure: " + message);
+
+    System.exit(-1);
+  }
+
+  private static void launch(final String launchClassName, final String[] args)
   {
 
-    URL[] classpathURLs = _classpath.toArray(new URL[_classpath.size()]);
+    final URL[] classpathURLs = _classpath.toArray(new URL[_classpath.size()]);
 
     try
     {
-      URLClassLoader newLoader = new URLClassLoader(classpathURLs, Thread
+      final URLClassLoader newLoader = new URLClassLoader(classpathURLs, Thread
         .currentThread().getContextClassLoader());
 
       Thread.currentThread().setContextClassLoader(newLoader);
 
-      Class launchClass = newLoader.loadClass(launchClassName);
+      final Class launchClass = newLoader.loadClass(launchClassName);
 
-      Method main = launchClass.getMethod("main", new Class[] {
+      final Method main = launchClass.getMethod("main", new Class[] {
         String[].class
       });
 
@@ -121,16 +155,16 @@ public final class LauncherMain
         args
       });
     }
-    catch (ClassNotFoundException ex)
+    catch (final ClassNotFoundException ex)
     {
       fail(String.format("Class '%s' not found.", launchClassName));
     }
-    catch (NoSuchMethodException ex)
+    catch (final NoSuchMethodException ex)
     {
       fail(String.format("Class '%s' does not contain a main() method.",
                          launchClassName));
     }
-    catch (Exception ex)
+    catch (final Exception ex)
     {
       fail(String.format("Error invoking method main() of %s: %s",
                          launchClassName,
@@ -138,18 +172,36 @@ public final class LauncherMain
     }
   }
 
-  private static void add(String directoryName)
+  private static void search(final String directoryName)
   {
-    File dir = toDir(directoryName);
 
-    if (dir == null) return;
+    final File dir = toDir(directoryName);
 
-    addToClasspath(dir);
+    if (dir == null)
+    {
+      return;
+    }
+
+    final File[] jars = dir.listFiles(new FilenameFilter()
+    {
+
+      public boolean accept(File dir, String name)
+      {
+        return name.endsWith(".jar");
+      }
+
+    });
+
+    for (final File jar: jars)
+    {
+      addToClasspath(jar);
+    }
+
   }
 
-  private static File toDir(String directoryName)
+  private static File toDir(final String directoryName)
   {
-    File dir = new File(directoryName);
+    final File dir = new File(directoryName);
 
     if (!dir.exists())
     {
@@ -168,57 +220,19 @@ public final class LauncherMain
     return dir;
   }
 
-  private static void search(String directoryName)
-  {
-
-    File dir = toDir(directoryName);
-
-    if (dir == null) return;
-
-    File[] jars = dir.listFiles(new FilenameFilter()
-    {
-
-      public boolean accept(File dir, String name)
-      {
-        return name.endsWith(".jar");
-      }
-
-    });
-
-    for (File jar: jars)
-    {
-      addToClasspath(jar);
-    }
-
-  }
-
-  private static void addToClasspath(File jar)
-  {
-    URL url = toURL(jar);
-
-    if (url != null) _classpath.add(url);
-  }
-
-  private static URL toURL(File file)
+  private static URL toURL(final File file)
   {
     try
     {
       return file.toURL();
     }
-    catch (MalformedURLException ex)
+    catch (final MalformedURLException ex)
     {
       System.err.printf("Error converting %s to a URL: %s\n", file, ex
         .getMessage());
 
       return null;
     }
-  }
-
-  private static void fail(String message)
-  {
-    System.err.println("Launcher failure: " + message);
-
-    System.exit(-1);
   }
 
 }

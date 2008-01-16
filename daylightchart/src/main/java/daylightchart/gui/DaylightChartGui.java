@@ -334,6 +334,10 @@ public final class DaylightChartGui
 
     final ChartOptionsAction chartOptionsAction = new ChartOptionsAction(this);
     menu.add(chartOptionsAction);
+
+    final GuiAction resetAll = new ResetAllAction(this);
+    menu.add(resetAll);
+
     menu.addSeparator();
 
     final JCheckBoxMenuItem slimUiMenuItem = new JCheckBoxMenuItem(Messages
@@ -343,15 +347,12 @@ public final class DaylightChartGui
     {
       public void itemStateChanged(final ItemEvent e)
       {
-        boolean slimUi = (e.getStateChange() == ItemEvent.SELECTED);
+        final boolean slimUi = e.getStateChange() == ItemEvent.SELECTED;
         UserPreferences.setSlimUi(slimUi);
         ResetAllAction.restart(DaylightChartGui.this, slimUi);
       }
     });
     menu.add(slimUiMenuItem);
-
-    final GuiAction resetAll = new ResetAllAction(this);
-    menu.add(resetAll);
 
     menuBar.add(menu);
 

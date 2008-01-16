@@ -35,7 +35,7 @@ public enum LocationsSortOrder
   implements Comparator<Location>
 {
 
-  BY_NAME("By name")
+  BY_NAME("Sort locations by name")
   {
     public int compare(final Location location1, final Location location2)
     {
@@ -43,7 +43,7 @@ public enum LocationsSortOrder
         .getDescription().toLowerCase());
     }
   },
-  BY_LATITUDE("By latitude")
+  BY_LATITUDE("Sort locations by latitude")
   {
     public int compare(final Location location1, final Location location2)
     {
