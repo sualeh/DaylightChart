@@ -27,6 +27,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -88,8 +89,10 @@ public final class OpenLocationsFileAction
 
       try
       {
-        final List<Location> locationsList = LocationsLoader.load(selectedFile);
-        if (locationsList == null || locationsList.size() == 0)
+        final List<Location> locations = LocationsLoader.load(selectedFile);
+        Collections.sort(locations, mainWindow.getOptions()
+          .getLocationsSortOrder());
+        if (locations == null || locations.size() == 0)
         {
           LOGGER.log(Level.WARNING, Messages
             .getString("DaylightChartGui.Message.Error.CannotOpenFile")); //$NON-NLS-1$
@@ -102,7 +105,7 @@ public final class OpenLocationsFileAction
         }
         else
         {
-          mainWindow.setLocations(locationsList);
+          mainWindow.setLocations(locations);
           UserPreferences.setDataFileDirectory(selectedFile.getParentFile());
         }
       }

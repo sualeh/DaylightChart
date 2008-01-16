@@ -22,7 +22,6 @@
 package daylightchart.gui.actions;
 
 
-import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -31,6 +30,7 @@ import javax.swing.JOptionPane;
 import org.jfree.chart.editor.ChartEditor;
 
 import sf.util.ui.GuiAction;
+import daylightchart.gui.DaylightChartGui;
 import daylightchart.gui.Messages;
 import daylightchart.options.Options;
 import daylightchart.options.UserPreferences;
@@ -48,11 +48,11 @@ public final class ChartOptionsAction
   private static final class GuiActionListener
     implements ActionListener
   {
-    private final Component parent;
+    private final DaylightChartGui mainWindow;
 
-    private GuiActionListener(final Component parent)
+    private GuiActionListener(final DaylightChartGui mainWindow)
     {
-      this.parent = parent;
+      this.mainWindow = mainWindow;
     }
 
     /**
@@ -63,12 +63,12 @@ public final class ChartOptionsAction
     public void actionPerformed(@SuppressWarnings("unused")
     final ActionEvent actionevent)
     {
-      final Options options = UserPreferences.getOptions();
+      final Options options = mainWindow.getOptions();
       final ChartOptions chartOptions = options.getChartOptions();
 
       final ChartEditor chartEditor = chartOptions.getChartEditor();
       final int confirmValue = JOptionPane
-        .showConfirmDialog(parent, chartEditor, Messages
+        .showConfirmDialog(mainWindow, chartEditor, Messages
           .getString("DaylightChartGui.Menu.Options.ChartOptions"), //$NON-NLS-1$
                            JOptionPane.OK_CANCEL_OPTION,
                            JOptionPane.PLAIN_MESSAGE);
@@ -90,9 +90,9 @@ public final class ChartOptionsAction
    * @param parent
    *        Main window.
    */
-  public ChartOptionsAction(final Component parent)
+  public ChartOptionsAction(final DaylightChartGui mainWindow)
   {
     super(Messages.getString("DaylightChartGui.Menu.Options.ChartOptions")); //$NON-NLS-1$
-    addActionListener(new GuiActionListener(parent));
+    addActionListener(new GuiActionListener(mainWindow));
   }
 }

@@ -32,7 +32,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.io.Reader;
-import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -41,7 +40,6 @@ import java.util.prefs.Preferences;
 
 import daylightchart.daylightchart.chart.DaylightChart;
 import daylightchart.location.Location;
-import daylightchart.location.LocationsSortOrder;
 import daylightchart.location.parser.FormatterException;
 import daylightchart.location.parser.LocationFormatter;
 import daylightchart.location.parser.LocationParser;
@@ -141,10 +139,7 @@ public final class UserPreferences
       }
     }
 
-    UserPreferences.sortLocations(locations);
-
     return locations;
-
   }
 
   /**
@@ -346,23 +341,6 @@ public final class UserPreferences
     {
       UserPreferences.workingDirectory = workingDirectory;
     }
-  }
-
-  /**
-   * Sorts locations by current preferences.
-   * 
-   * @param locations
-   *        Locations to sort
-   */
-  public static void sortLocations(final List<Location> locations)
-  {
-    if (!savePreferences)
-    {
-      return;
-    }
-    final LocationsSortOrder locationsSortOrder = getOptions()
-      .getLocationsSortOrder();
-    Collections.sort(locations, locationsSortOrder);
   }
 
   /**

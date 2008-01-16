@@ -59,7 +59,7 @@ public final class OptionsAction
     public void actionPerformed(@SuppressWarnings("unused")
     final ActionEvent actionevent)
     {
-      Options options = UserPreferences.getOptions();
+      Options options = mainWindow.getOptions();
       options = OptionsDialog.showOptionsDialog(mainWindow, options);
       UserPreferences.setOptions(options);
       mainWindow.sortLocations();

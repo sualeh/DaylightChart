@@ -35,7 +35,6 @@ import daylightchart.daylightchart.layout.DaylightChartReport;
 import daylightchart.location.Location;
 import daylightchart.location.parser.LocationFormatter;
 import daylightchart.options.Options;
-import daylightchart.options.UserPreferences;
 
 /**
  * Tabbed pane for location charts.
@@ -50,6 +49,12 @@ public class LocationsTabbedPane
 
   private static final Logger LOGGER = Logger
     .getLogger(LocationsTabbedPane.class.getName());
+  private final DaylightChartGui mainWindow;
+
+  LocationsTabbedPane(final DaylightChartGui mainWindow)
+  {
+    this.mainWindow = mainWindow;
+  }
 
   /**
    * Add a new tab for the location.
@@ -59,7 +64,7 @@ public class LocationsTabbedPane
    */
   public void addLocationTab(final DaylightChartReport daylightChartReport)
   {
-    final Options options = UserPreferences.getOptions();
+    final Options options = mainWindow.getOptions();
     final Location location = daylightChartReport.getLocation();
     final DaylightChart chart = daylightChartReport.getChart();
     options.getChartOptions().updateChart(chart);

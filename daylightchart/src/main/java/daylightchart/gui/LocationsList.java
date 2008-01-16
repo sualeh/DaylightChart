@@ -29,6 +29,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Vector;
 
@@ -57,7 +58,7 @@ public class LocationsList
 
   private static final long serialVersionUID = -6884483130453983685L;
 
-  private final DaylightChartGui parent;
+  private final DaylightChartGui mainWindow;
   private final JList locationsList;
   private List<Location> locations;
 
@@ -72,7 +73,7 @@ public class LocationsList
 
     super(new BorderLayout());
 
-    this.parent = parent;
+    mainWindow = parent;
 
     final JToolBar toolBar = new JToolBar();
     toolBar.setRollover(true);
@@ -143,7 +144,10 @@ public class LocationsList
       }
     });
 
-    setLocations(UserPreferences.getLocations());
+    final List<Location> locations = UserPreferences.getLocations();
+    Collections
+      .sort(locations, mainWindow.getOptions().getLocationsSortOrder());
+    setLocations(locations);
   }
 
   /**
@@ -178,7 +182,7 @@ public class LocationsList
    */
   public DaylightChartGui getMainWindow()
   {
-    return parent;
+    return mainWindow;
   }
 
   /**
@@ -188,7 +192,7 @@ public class LocationsList
    */
   public DaylightChartReport getSelectedDaylightChartReport()
   {
-    final Options options = UserPreferences.getOptions();
+    final Options options = mainWindow.getOptions();
     final DaylightChartReport daylightChartReport = new DaylightChartReport(getSelectedLocation(),
                                                                             options);
     return daylightChartReport;
@@ -248,7 +252,8 @@ public class LocationsList
   {
     if (locations != null && locations.size() > 0)
     {
-      UserPreferences.sortLocations(locations);
+      Collections.sort(locations, mainWindow.getOptions()
+        .getLocationsSortOrder());
       this.locations = locations;
       locationsList.setListData(new Vector<Location>(locations));
       locationsList.setSelectedIndex(0);

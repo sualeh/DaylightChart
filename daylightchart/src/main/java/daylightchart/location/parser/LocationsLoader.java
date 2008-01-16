@@ -26,7 +26,6 @@ import java.io.File;
 import java.util.List;
 
 import daylightchart.location.Location;
-import daylightchart.options.UserPreferences;
 
 /**
  * Loads locations from a file of any supported format.
@@ -97,8 +96,6 @@ public final class LocationsLoader
     {
       locations = null;
     }
-
-    UserPreferences.sortLocations(locations);
 
     return locations;
   }
