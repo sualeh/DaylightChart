@@ -109,7 +109,7 @@ public class OptionsDialog
       final Object source = event.getSource();
       if (source == ok)
       {
-        options = getOptions();
+        options = getOptionsFromDialog();
       }
       dispose();
     }
@@ -123,6 +123,8 @@ public class OptionsDialog
 
   private static final Logger LOGGER = Logger.getLogger(OptionsDialog.class
     .getName());
+
+  private Options options;
 
   /**
    * Show a dialog for options.
@@ -138,12 +140,10 @@ public class OptionsDialog
   private final JComboBox listTimeZoneOption;
   private final JComboBox listChartOrientation;
   private final JComboBox listTwilightType;
-  private final JCheckBox checkShowLegend;
+  private final JCheckBox checkShowChartLegend;
 
   private final JButton ok;
   private final JButton cancel;
-
-  private Options options;
 
   private OptionsDialog(final Frame mainWindow, final Options options)
   {
@@ -155,7 +155,7 @@ public class OptionsDialog
     listTimeZoneOption = enumDropDown(TimeZoneOption.class);
     listChartOrientation = enumDropDown(ChartOrientation.class);
     listTwilightType = enumDropDown(TwilightType.class);
-    checkShowLegend = new JCheckBox();
+    checkShowChartLegend = new JCheckBox();
 
     ok = new JButton(Messages.getString("DaylightChartGui.OptionsEditor.Ok")); //$NON-NLS-1$
     cancel = new JButton(Messages
@@ -181,8 +181,8 @@ public class OptionsDialog
                 .getString("DaylightChartGui.OptionsEditor.ChartOrientation"), listChartOrientation); //$NON-NLS-1$
     builder
       .append(Messages.getString("DaylightChartGui.OptionsEditor.TwilightType"), listTwilightType); //$NON-NLS-1$
-    builder.append(Messages
-      .getString("DaylightChartGui.OptionsEditor.ShowLegend"), checkShowLegend); //$NON-NLS-1$
+    builder
+      .append(Messages.getString("DaylightChartGui.OptionsEditor.ShowLegend"), checkShowChartLegend); //$NON-NLS-1$
     builder.append(ButtonBarFactory.buildOKCancelBar(ok, cancel), 3);
 
     getContentPane().add(builder.getPanel());
@@ -203,6 +203,17 @@ public class OptionsDialog
 
   private void setOptions(final Options options)
   {
+    if (options == null)
+    {
+      return;
+    }
+
+    listLocationsSortOrder.setSelectedItem(options.getLocationsSortOrder());
+    listTimeZoneOption.setSelectedItem(options.getTimeZoneOption());
+    listChartOrientation.setSelectedItem(options.getChartOrientation());
+    listTwilightType.setSelectedItem(options.getTwilightType());
+    checkShowChartLegend.setSelected(options.isShowChartLegend());
+
     this.options = options;
   }
 
@@ -224,9 +235,25 @@ public class OptionsDialog
     rootPane.getInputMap(JComponent.WHEN_FOCUSED).put(stroke, action);
   }
 
-  private Options getOptions()
+  private Options getOptionsFromDialog()
   {
-    return null;
+    Options options = new Options();
+
+    options.setLocationsSortOrder((LocationsSortOrder) listLocationsSortOrder
+      .getSelectedItem());
+    options.setTimeZoneOption((TimeZoneOption) listTimeZoneOption
+      .getSelectedItem());
+    options.setChartOrientation((ChartOrientation) listChartOrientation
+      .getSelectedItem());
+    options.setTwilightType((TwilightType) listTwilightType.getSelectedItem());
+    options.setShowChartLegend(checkShowChartLegend.isSelected());
+
+    return options;
+  }
+
+  public Options getOptions()
+  {
+    return options;
   }
 
 }

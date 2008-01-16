@@ -263,15 +263,33 @@ public class AxisOptions
   void setAxisProperties(final Axis axis)
   {
     axis.setLabel(label);
-    axis.setLabelFont(labelFont);
-    axis.setLabelPaint(labelPaint);
-    axis.setLabelInsets(labelInsets);
+    if (labelFont != null)
+    {
+      axis.setLabelFont(labelFont);
+    }
+    if (labelPaint != null)
+    {
+      axis.setLabelPaint(labelPaint);
+    }
+    if (labelInsets != null)
+    {
+      axis.setLabelInsets(labelInsets);
+    }
     //
     axis.setTickMarksVisible(tickMarksVisible);
     axis.setTickLabelsVisible(tickLabelsVisible);
-    axis.setTickLabelFont(tickLabelFont);
-    axis.setTickLabelPaint(tickLabelPaint);
-    axis.setTickLabelInsets(tickLabelInsets);
+    if (tickLabelFont != null)
+    {
+      axis.setTickLabelFont(tickLabelFont);
+    }
+    if (tickLabelPaint != null)
+    {
+      axis.setTickLabelPaint(tickLabelPaint);
+    }
+    if (tickLabelInsets != null)
+    {
+      axis.setTickLabelInsets(tickLabelInsets);
+    }
   }
 
 }

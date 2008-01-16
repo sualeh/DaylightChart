@@ -64,7 +64,7 @@ final class DaylightChartLegendItemSource
     for (final DaylightBandType daylightSavingsMode: DaylightBandType.values())
     {
       if (daylightSavingsMode == DaylightBandType.twilight
-          && options.getTwilight() == TwilightType.none)
+          && options.getTwilightType() == TwilightType.none)
       {
         continue;
       }
@@ -137,7 +137,7 @@ final class DaylightChartLegendItemSource
           legendLabel = Messages.getString("DaylightChart.Legend.WithoutDST"); //$NON-NLS-1$
           break;
         case twilight:
-          final TwilightType twilight = options.getTwilight();
+          final TwilightType twilight = options.getTwilightType();
           switch (twilight)
           {
             case civil:

@@ -206,7 +206,10 @@ public class PlotOptions
     plot.setBackgroundPaint(backgroundPaint);
     plot.setOutlinePaint(outlinePaint);
     plot.setOutlineStroke(outlineStroke);
-    plot.setInsets(insets);
+    if (insets != null)
+    {
+      plot.setInsets(insets);
+    }
 
     // Update axes
     Axis domainAxis = null;

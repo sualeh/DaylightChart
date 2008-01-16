@@ -100,7 +100,7 @@ public class Options
    * 
    * @return TwilightType setting
    */
-  public TwilightType getTwilight()
+  public TwilightType getTwilightType()
   {
     return twilight;
   }
@@ -182,7 +182,7 @@ public class Options
    * @param twilight
    *        TwilightType setting
    */
-  public void setTwilight(final TwilightType twilight)
+  public void setTwilightType(final TwilightType twilight)
   {
     if (twilight != null)
     {

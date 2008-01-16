@@ -102,7 +102,7 @@ public final class RiseSetUtility
                                     && timeZoneOption != TimeZoneOption.USE_LOCAL_TIME;
     boolean wasDaylightSavings = false;
 
-    final TwilightType twilight = options.getTwilight();
+    final TwilightType twilight = options.getTwilightType();
     final RiseSetYearData riseSetYear = new RiseSetYearData(location,
                                                             twilight,
                                                             year);
@@ -450,7 +450,7 @@ public final class RiseSetUtility
 
     final int year = Calendar.getInstance().get(Calendar.YEAR);
     final Options options = new Options();
-    options.setTwilight(twilight);
+    options.setTwilightType(twilight);
     final RiseSetYearData riseSetYear = createRiseSetYear(location,
                                                           year,
                                                           options);
