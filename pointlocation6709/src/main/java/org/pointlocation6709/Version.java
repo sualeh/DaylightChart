@@ -33,7 +33,7 @@ public final class Version
 {
 
   private static final String PRODUCTNAME = "Point Location 6709"; //$NON-NLS-1$
-  private static final String VERSION = "2.3"; //$NON-NLS-1$
+  private static final String VERSION = "2.4"; //$NON-NLS-1$
 
   /**
    * Information about this product.
