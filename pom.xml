@@ -143,6 +143,6 @@
     </plugins>
   </reporting>
   <properties>
-    <daylightchart.version>2.4</daylightchart.version>
+    <daylightchart.version>2.5</daylightchart.version>
   </properties>
 </project>
