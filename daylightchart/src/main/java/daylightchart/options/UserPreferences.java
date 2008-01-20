@@ -59,7 +59,7 @@ public final class UserPreferences
 
   private static final String keyLocations = "daylightchart.locations";
   private static final String keyOptions = "daylightchart.options";
-  private static final String keyDataFileDirectory = "daylightchart.dataFileDirectory";
+  private static final String keyWorkingDirectory = "daylightchart.workingDirectory";
   private static final String keySlimUi = "daylightchart.slimUi";
 
   private static final Preferences preferences = Preferences
@@ -70,9 +70,13 @@ public final class UserPreferences
 
   static
   {
-    setScratchDirectory(new File(System.getProperty("java.io.tmpdir"), "."));
-    setSettingsDirectory(new File(System.getProperty("user.home", "."),
-                                  ".daylightchart"));
+    scratchDirectory = new File(System.getProperty("java.io.tmpdir"), ".");
+    validateDirectory(scratchDirectory);
+
+    settingsDirectory = new File(System.getProperty("user.home", "."),
+                                 ".daylightchart");
+    settingsDirectory.mkdirs();
+    validateDirectory(settingsDirectory);
   }
 
   /**
@@ -103,10 +107,10 @@ public final class UserPreferences
    * 
    * @return Directory for data files
    */
-  public static File getDataFileDirectory()
+  public static File getWorkingDirectory()
   {
-    final String dataFileDirectory = preferences.get(keyDataFileDirectory, ".");
-    return new File(dataFileDirectory);
+    final String workingDirectory = preferences.get(keyWorkingDirectory, ".");
+    return new File(workingDirectory);
   }
 
   /**
@@ -232,33 +236,19 @@ public final class UserPreferences
   }
 
   /**
-   * @param settingsDirectory
-   *        the applicationSettingsDirectory to set
-   */
-  public static void setSettingsDirectory(final File settingsDirectory)
-  {
-    final boolean isDirectoryValid = settingsDirectory.exists()
-                                     && settingsDirectory.isDirectory()
-                                     && settingsDirectory.canWrite();
-    if (isDirectoryValid)
-    {
-      UserPreferences.settingsDirectory = settingsDirectory;
-    }
-  }
-
-  /**
    * Set the default directory for data files.
    * 
-   * @param dataFileDirectory
+   * @param workingDirectory
    *        Default directory for data files
    */
-  public static void setDataFileDirectory(final File dataFileDirectory)
+  public static void setWorkingDirectory(final File workingDirectory)
   {
     if (!savePreferences)
     {
       return;
     }
-    preferences.put(keyDataFileDirectory, dataFileDirectory.getAbsolutePath());
+    validateDirectory(workingDirectory);
+    preferences.put(keyWorkingDirectory, workingDirectory.getAbsolutePath());
   }
 
   /**
@@ -286,9 +276,9 @@ public final class UserPreferences
         }
       }
       // Create a new locations file
-      settingsDirectory.mkdirs();
-      final File locationsDataFile = File
-        .createTempFile("daylightchart.locations.", ".data", settingsDirectory);
+      final File locationsDataFile = File.createTempFile("locations.",
+                                                         ".data",
+                                                         settingsDirectory);
       LocationFormatter.formatLocations(locations, locationsDataFile);
       preferences.put(keyLocations, locationsDataFile.getAbsolutePath());
     }
@@ -345,17 +335,18 @@ public final class UserPreferences
   }
 
   /**
-   * @param scratchDirectory
+   * @param directory
    *        the workingDirectory to set
    */
-  public static void setScratchDirectory(final File scratchDirectory)
+  private static void validateDirectory(final File directory)
   {
-    final boolean isDirectoryValid = scratchDirectory.exists()
-                                     && scratchDirectory.isDirectory()
-                                     && scratchDirectory.canWrite();
-    if (isDirectoryValid)
+    final boolean isDirectoryValid = directory != null && directory.exists()
+                                     && directory.isDirectory()
+                                     && directory.canWrite();
+    if (!isDirectoryValid)
     {
-      UserPreferences.scratchDirectory = scratchDirectory;
+      throw new IllegalArgumentException("Directory is not writable - "
+                                         + directory);
     }
   }
 

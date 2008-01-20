@@ -78,7 +78,7 @@ public final class SaveLocationsFileAction
                         Messages
                           .getString("DaylightChartGui.Menu.File.SaveLocations"),
                         fileFilters,
-                        new File(UserPreferences.getDataFileDirectory(),
+                        new File(UserPreferences.getWorkingDirectory(),
                                  "locations.data"),
                         Messages
                           .getString("DaylightChartGui.Message.Confirm.FileOverwrite")); //$NON-NLS-1$
@@ -90,7 +90,7 @@ public final class SaveLocationsFileAction
                                             selectedFile.getFile());
 
           // Save last selected directory
-          UserPreferences.setDataFileDirectory(selectedFile.getDirectory());
+          UserPreferences.setWorkingDirectory(selectedFile.getDirectory());
         }
         catch (final Exception e)
         {
