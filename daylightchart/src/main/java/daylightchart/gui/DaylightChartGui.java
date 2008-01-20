@@ -237,7 +237,7 @@ public final class DaylightChartGui
   {
     if (slimUi)
     {
-      final File reportFile = new File(UserPreferences.getWorkingDirectory(),
+      final File reportFile = new File(UserPreferences.getScratchDirectory(),
                                        daylightChartReport
                                          .getReportFileName(ChartFileType.html));
       daylightChartReport.write(reportFile, ChartFileType.html);

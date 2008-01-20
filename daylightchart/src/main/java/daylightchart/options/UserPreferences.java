@@ -65,8 +65,15 @@ public final class UserPreferences
   private static final Preferences preferences = Preferences
     .userNodeForPackage(UserPreferences.class);
   private static boolean savePreferences = true;
-  private static File workingDirectory = new File(System
-    .getProperty("java.io.tmpdir"));
+  private static File scratchDirectory = null;
+  private static File settingsDirectory = null;
+
+  static
+  {
+    setScratchDirectory(new File(System.getProperty("java.io.tmpdir"), "."));
+    setSettingsDirectory(new File(System.getProperty("user.home", "."),
+                                  ".daylightchart"));
+  }
 
   /**
    * Clears all user preferences.
@@ -81,6 +88,14 @@ public final class UserPreferences
     {
       LOGGER.log(Level.WARNING, "Could clear preferences", e);
     }
+  }
+
+  /**
+   * @return the applicationSettingsDirectory
+   */
+  public static File getSettingsDirectory()
+  {
+    return settingsDirectory;
   }
 
   /**
@@ -174,9 +189,9 @@ public final class UserPreferences
   /**
    * @return the workingDirectory
    */
-  public static File getWorkingDirectory()
+  public static File getScratchDirectory()
   {
-    return workingDirectory;
+    return scratchDirectory;
   }
 
   /**
@@ -212,8 +227,23 @@ public final class UserPreferences
     throws Exception
   {
     System.out.println("User preferences:");
-    UserPreferences.preferences.exportNode(System.out);
+    UserPreferences.preferences.exportSubtree(System.out);
     UserPreferences.clear();
+  }
+
+  /**
+   * @param settingsDirectory
+   *        the applicationSettingsDirectory to set
+   */
+  public static void setSettingsDirectory(final File settingsDirectory)
+  {
+    final boolean isDirectoryValid = settingsDirectory.exists()
+                                     && settingsDirectory.isDirectory()
+                                     && settingsDirectory.canWrite();
+    if (isDirectoryValid)
+    {
+      UserPreferences.settingsDirectory = settingsDirectory;
+    }
   }
 
   /**
@@ -256,8 +286,9 @@ public final class UserPreferences
         }
       }
       // Create a new locations file
+      settingsDirectory.mkdirs();
       final File locationsDataFile = File
-        .createTempFile("daylightchart.locations.", ".data");
+        .createTempFile("daylightchart.locations.", ".data", settingsDirectory);
       LocationFormatter.formatLocations(locations, locationsDataFile);
       preferences.put(keyLocations, locationsDataFile.getAbsolutePath());
     }
@@ -314,6 +345,21 @@ public final class UserPreferences
   }
 
   /**
+   * @param scratchDirectory
+   *        the workingDirectory to set
+   */
+  public static void setScratchDirectory(final File scratchDirectory)
+  {
+    final boolean isDirectoryValid = scratchDirectory.exists()
+                                     && scratchDirectory.isDirectory()
+                                     && scratchDirectory.canWrite();
+    if (isDirectoryValid)
+    {
+      UserPreferences.scratchDirectory = scratchDirectory;
+    }
+  }
+
+  /**
    * Set the slim UI perference.
    * 
    * @param slimUi
@@ -326,21 +372,6 @@ public final class UserPreferences
       return;
     }
     preferences.putBoolean(keySlimUi, slimUi);
-  }
-
-  /**
-   * @param workingDirectory
-   *        the workingDirectory to set
-   */
-  public static void setWorkingDirectory(final File workingDirectory)
-  {
-    final boolean isWorkingDirectoryValid = workingDirectory.exists()
-                                            && workingDirectory.isDirectory()
-                                            && workingDirectory.canWrite();
-    if (isWorkingDirectoryValid)
-    {
-      UserPreferences.workingDirectory = workingDirectory;
-    }
   }
 
   /**
