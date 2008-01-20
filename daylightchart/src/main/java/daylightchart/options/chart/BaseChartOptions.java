@@ -24,6 +24,8 @@ package daylightchart.options.chart;
 
 import java.io.Serializable;
 
+import org.apache.commons.lang.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.DateAxis;
 import org.jfree.chart.editor.ChartEditor;
@@ -80,6 +82,13 @@ public abstract class BaseChartOptions
   {
     updateChart(chart);
     return ChartEditorManager.getChartEditor(chart);
+  }
+
+  @Override
+  public String toString()
+  {
+    return ReflectionToStringBuilder.toString(this,
+                                              ToStringStyle.MULTI_LINE_STYLE);
   }
 
   /**
