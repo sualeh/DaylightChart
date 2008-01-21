@@ -23,8 +23,6 @@ package daylightchart.gui;
 
 
 import java.awt.BorderLayout;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.File;
@@ -117,14 +115,6 @@ public final class DaylightChartGui
       if (slimUi)
       {
         getContentPane().add(locationsList);
-        addComponentListener(new ComponentAdapter()
-        {
-          @Override
-          public void componentResized(final ComponentEvent event)
-          {
-            setSize(Math.max(300, getWidth()), Math.max(500, getHeight()));
-          }
-        });
       }
       else
       {

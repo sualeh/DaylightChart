@@ -84,6 +84,7 @@ public class LocationsList
     createActions(toolBar, popupMenu);
 
     locationsList = new JList();
+    locationsList.setVisibleRowCount(20);
     add(new JScrollPane(locationsList));
     locationsList.setCellRenderer(new DefaultListCellRenderer()
     {
