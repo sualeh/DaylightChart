@@ -22,11 +22,23 @@
 package daylightchart.options;
 
 
+import java.io.File;
+import java.io.InputStream;
 import java.io.Serializable;
+
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
+
+import org.apache.commons.lang.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
 
 import daylightchart.daylightchart.calculation.TwilightType;
 import daylightchart.daylightchart.chart.ChartOrientation;
 import daylightchart.daylightchart.chart.TimeZoneOption;
+import daylightchart.daylightchart.layout.DaylightChartReport;
 import daylightchart.location.LocationsSortOrder;
 import daylightchart.options.chart.ChartOptions;
 
@@ -43,10 +55,17 @@ public class Options
 
   private LocationsSortOrder locationsSortOrder;
   private TimeZoneOption timeZoneOption;
-  private ChartOptions chartOptions;
   private ChartOrientation chartOrientation;
   private TwilightType twilight;
   private boolean showChartLegend;
+  //
+  private ChartOptions chartOptions;
+  //
+  private File workingDirectory;
+  //
+  private JasperReport jasperReport;
+  // 
+  private boolean slimUi;
 
   /**
    * Default options.
@@ -59,11 +78,10 @@ public class Options
     chartOrientation = ChartOrientation.STANDARD;
     twilight = TwilightType.CIVIL;
     showChartLegend = true;
+
+    loadDefaultJasperReport();
   }
 
-  /**
-   * @return the chartOptions
-   */
   public final ChartOptions getChartOptions()
   {
     return chartOptions;
@@ -77,6 +95,11 @@ public class Options
   public ChartOrientation getChartOrientation()
   {
     return chartOrientation;
+  }
+
+  public JasperReport getJasperReport()
+  {
+    return jasperReport;
   }
 
   /**
@@ -105,6 +128,18 @@ public class Options
     return twilight;
   }
 
+  public File getWorkingDirectory()
+  {
+    if (isDirectoryValid(workingDirectory))
+    {
+      return workingDirectory;
+    }
+    else
+    {
+      return new File(".");
+    }
+  }
+
   /**
    * Whether to show the chart legend.
    * 
@@ -113,6 +148,14 @@ public class Options
   public boolean isShowChartLegend()
   {
     return showChartLegend;
+  }
+
+  /**
+   * @return the slimUi
+   */
+  public boolean isSlimUi()
+  {
+    return slimUi;
   }
 
   /**
@@ -165,6 +208,15 @@ public class Options
   }
 
   /**
+   * @param slimUi
+   *        the slimUi to set
+   */
+  public void setSlimUi(final boolean slimUi)
+  {
+    this.slimUi = slimUi;
+  }
+
+  /**
    * @param timeZoneOption
    *        the timeZoneOption to set
    */
@@ -190,4 +242,42 @@ public class Options
     }
   }
 
+  public void setWorkingDirectory(final File workingDirectory)
+  {
+    if (isDirectoryValid(workingDirectory))
+    {
+      this.workingDirectory = workingDirectory;
+    }
+  }
+
+  @Override
+  public String toString()
+  {
+    return ReflectionToStringBuilder.toString(this,
+                                              ToStringStyle.MULTI_LINE_STYLE);
+  }
+
+  private boolean isDirectoryValid(final File directory)
+  {
+    return directory != null && directory.exists() && directory.isDirectory()
+           && directory.canWrite();
+  }
+
+  private void loadDefaultJasperReport()
+  {
+    try
+    {
+      // Generate JasperReport for the chart
+      // 1. Load report
+      final InputStream reportStream = DaylightChartReport.class
+        .getResourceAsStream("/DaylightChartReport.jrxml");
+      final JasperDesign jasperDesign = JRXmlLoader.load(reportStream);
+      // 2. Compile report
+      jasperReport = JasperCompileManager.compileReport(jasperDesign);
+    }
+    catch (final JRException e)
+    {
+      throw new IllegalArgumentException("Cannot compile JRXML file");
+    }
+  }
 }

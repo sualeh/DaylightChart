@@ -122,9 +122,9 @@ public final class Main
 
       if (!slimUi)
       {
-        slimUi = UserPreferences.isSlimUi();
+        slimUi = UserPreferences.getOptions().isSlimUi();
       }
-      UserPreferences.setSlimUi(slimUi);
+      UserPreferences.getOptions().setSlimUi(slimUi);
       new DaylightChartGui(location, slimUi).setVisible(true);
     }
   }

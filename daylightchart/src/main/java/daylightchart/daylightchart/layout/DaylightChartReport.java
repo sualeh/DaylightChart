@@ -24,7 +24,6 @@ package daylightchart.daylightchart.layout;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
@@ -38,7 +37,6 @@ import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
-import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.renderers.JFreeChartRenderer;
 
 import org.jfree.chart.ChartUtilities;
@@ -154,10 +152,7 @@ public class DaylightChartReport
 
       // Generate JasperReport for the chart
       // 1. Load compiled report
-      final InputStream reportStream = DaylightChartReport.class
-        .getResourceAsStream("/DaylightChartReport.jasper");
-      final JasperReport jasperReport = (JasperReport) JRLoader
-        .loadObject(reportStream);
+      final JasperReport jasperReport = options.getJasperReport();
       // 2. Prepare parameters
       final Map<String, Object> parameters = new HashMap<String, Object>();
       parameters.put("location", location);

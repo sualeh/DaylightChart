@@ -22,9 +22,9 @@
 package daylightchart.options;
 
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -35,8 +35,6 @@ import java.io.Reader;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.prefs.BackingStoreException;
-import java.util.prefs.Preferences;
 
 import daylightchart.daylightchart.chart.DaylightChart;
 import daylightchart.location.Location;
@@ -57,16 +55,16 @@ public final class UserPreferences
   private static final Logger LOGGER = Logger.getLogger(UserPreferences.class
     .getName());
 
-  private static final String keyLocations = "daylightchart.locations";
-  private static final String keyOptions = "daylightchart.options";
-  private static final String keyWorkingDirectory = "daylightchart.workingDirectory";
-  private static final String keySlimUi = "daylightchart.slimUi";
-
-  private static final Preferences preferences = Preferences
-    .userNodeForPackage(UserPreferences.class);
   private static boolean savePreferences = true;
-  private static File scratchDirectory = null;
-  private static File settingsDirectory = null;
+
+  private static final File scratchDirectory;
+  private static final File settingsDirectory;
+
+  private static final File locationsDataFile;
+  private static final File optionsFile;
+
+  private static List<Location> locations;
+  private static Options options;
 
   static
   {
@@ -77,6 +75,12 @@ public final class UserPreferences
                                  ".daylightchart");
     settingsDirectory.mkdirs();
     validateDirectory(settingsDirectory);
+
+    locationsDataFile = new File(settingsDirectory, "locations.data");
+    optionsFile = new File(settingsDirectory, "options.ser");
+
+    locations = loadLocations();
+    options = loadOptions();
   }
 
   /**
@@ -84,33 +88,7 @@ public final class UserPreferences
    */
   public static void clear()
   {
-    try
-    {
-      preferences.clear();
-    }
-    catch (final BackingStoreException e)
-    {
-      LOGGER.log(Level.WARNING, "Could clear preferences", e);
-    }
-  }
-
-  /**
-   * @return the applicationSettingsDirectory
-   */
-  public static File getSettingsDirectory()
-  {
-    return settingsDirectory;
-  }
-
-  /**
-   * Get the default directory for data files.
-   * 
-   * @return Directory for data files
-   */
-  public static File getWorkingDirectory()
-  {
-    final String workingDirectory = preferences.get(keyWorkingDirectory, ".");
-    return new File(workingDirectory);
+    // TODO: Delete all settings files
   }
 
   /**
@@ -120,22 +98,166 @@ public final class UserPreferences
    */
   public static List<Location> getLocations()
   {
+    return locations;
+  }
 
-    List<Location> locations = null;
+  /**
+   * Gets the options for the current user.
+   * 
+   * @return Options
+   */
+  public static Options getOptions()
+  {
+    return options;
+  }
 
-    final String locationsDataFileName = preferences.get(keyLocations, null);
-    if (locationsDataFileName != null)
+  /**
+   * @return the workingDirectory
+   */
+  public static File getScratchDirectory()
+  {
+    return scratchDirectory;
+  }
+
+  /**
+   * @return the applicationSettingsDirectory
+   */
+  public static File getSettingsDirectory()
+  {
+    settingsDirectory.mkdirs();
+    return settingsDirectory;
+  }
+
+  /**
+   * Whether to save preferences.
+   * 
+   * @return Whether to save preferences.
+   */
+  public static boolean isSavePreferences()
+  {
+    return savePreferences;
+  }
+
+  /**
+   * Main method. Lists all user preferences.
+   * 
+   * @param args
+   *        Command line arguments
+   * @throws Exception
+   *         On an exception
+   */
+  public static void main(final String[] args)
+    throws Exception
+  {
+    UserPreferences.clear();
+  }
+
+  /**
+   * Sets the locations for the current user.
+   * 
+   * @param locations
+   *        Locations
+   */
+  public static void setLocations(final List<Location> locations)
+  {
+    if (locations == null)
     {
-      try
+      return;
+    }
+
+    UserPreferences.locations = locations;
+
+    if (!savePreferences)
+    {
+      return;
+    }
+    try
+    {
+      if (locationsDataFile.exists())
       {
-        final File locationsDataFile = new File(locationsDataFileName);
-        locations = LocationParser.parseLocations(locationsDataFile);
+        locationsDataFile.delete();
       }
-      catch (final ParserException e)
-      {
-        LOGGER.log(Level.WARNING, "Could get locations", e);
-        locations = null;
-      }
+      LocationFormatter.formatLocations(locations, locationsDataFile);
+    }
+    catch (final FormatterException e)
+    {
+      LOGGER.log(Level.WARNING, "Could not save user locations list", e);
+    }
+  }
+
+  /**
+   * Sets the options for the current user.
+   * 
+   * @param options
+   *        Options
+   */
+  public static void setOptions(final Options options)
+  {
+    if (options == null)
+    {
+      return;
+    }
+
+    UserPreferences.options = options;
+
+    if (!savePreferences)
+    {
+      return;
+    }
+
+    try
+    {
+      final ObjectOutput out = new ObjectOutputStream(new FileOutputStream(optionsFile));
+      out.writeObject(options);
+      out.close();
+    }
+    catch (final IOException e)
+    {
+      LOGGER.log(Level.WARNING, "Could save options", e);
+    }
+
+  }
+
+  /**
+   * Whether to save preferences.
+   * 
+   * @param savePreferences
+   *        Whether to save preferences.
+   */
+  public static void setSavePreferences(final boolean savePreferences)
+  {
+    UserPreferences.savePreferences = savePreferences;
+  }
+
+  /**
+   * Creates a chart options instance.
+   * 
+   * @return Chart options
+   */
+  private static Options getDefaultDaylightChartOptions()
+  {
+    final ChartOptions chartOptions = new ChartOptions();
+    chartOptions.copyFromChart(new DaylightChart());
+
+    final Options options = new Options();
+    options.setChartOptions(chartOptions);
+
+    // Save the defaults
+    setOptions(options);
+    return options;
+  }
+
+  private static List<Location> loadLocations()
+  {
+    List<Location> locations;
+    try
+    {
+      locations = LocationParser.parseLocations(locationsDataFile);
+    }
+    catch (final ParserException e)
+    {
+      LOGGER.log(Level.WARNING, "Could get locations", e);
+      locations = null;
     }
 
     if (locations == null)
@@ -161,177 +283,27 @@ public final class UserPreferences
     return locations;
   }
 
-  /**
-   * Gets the options for the current user.
-   * 
-   * @return Options
-   */
-  public static Options getOptions()
+  private static Options loadOptions()
   {
     Options options = null;
-    final byte[] bytes = preferences.getByteArray(keyOptions, new byte[0]);
     try
     {
-      // Deserialize from a byte array
-      final ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(bytes));
+      final ObjectInputStream in = new ObjectInputStream(new FileInputStream(optionsFile));
       options = (Options) in.readObject();
       in.close();
     }
-    catch (final ClassNotFoundException e)
-    {
-      LOGGER.log(Level.WARNING, "Could get chart options", e);
-      options = getDefaultDaylightChartOptions();
-    }
-    catch (final IOException e)
-    {
-      LOGGER.log(Level.FINE, "Could get chart options", e);
-      options = getDefaultDaylightChartOptions();
-    }
-    return options;
-  }
-
-  /**
-   * @return the workingDirectory
-   */
-  public static File getScratchDirectory()
-  {
-    return scratchDirectory;
-  }
-
-  /**
-   * Whether to save preferences.
-   * 
-   * @return Whether to save preferences.
-   */
-  public static boolean isSavePreferences()
-  {
-    return savePreferences;
-  }
-
-  /**
-   * Get the the slim UI option.
-   * 
-   * @return Directory for data files
-   */
-  public static boolean isSlimUi()
-  {
-    final boolean slimUi = preferences.getBoolean(keySlimUi, false);
-    return slimUi;
-  }
-
-  /**
-   * Main method. Lists all user preferences.
-   * 
-   * @param args
-   *        Command line arguments
-   * @throws Exception
-   *         On an exception
-   */
-  public static void main(final String[] args)
-    throws Exception
-  {
-    System.out.println("User preferences:");
-    UserPreferences.preferences.exportSubtree(System.out);
-    UserPreferences.clear();
-  }
-
-  /**
-   * Set the default directory for data files.
-   * 
-   * @param workingDirectory
-   *        Default directory for data files
-   */
-  public static void setWorkingDirectory(final File workingDirectory)
-  {
-    if (!savePreferences)
-    {
-      return;
-    }
-    validateDirectory(workingDirectory);
-    preferences.put(keyWorkingDirectory, workingDirectory.getAbsolutePath());
-  }
-
-  /**
-   * Sets the locations for the current user.
-   * 
-   * @param locations
-   *        Locations
-   */
-  public static void setLocations(final List<Location> locations)
-  {
-    if (!savePreferences)
-    {
-      return;
-    }
-    try
-    {
-      // Delete previous locations file
-      final String previousFileName = preferences.get(keyLocations, null);
-      if (previousFileName != null)
-      {
-        final File previousFile = new File(previousFileName);
-        if (previousFile.exists())
-        {
-          previousFile.delete();
-        }
-      }
-      // Create a new locations file
-      final File locationsDataFile = File.createTempFile("locations.",
-                                                         ".data",
-                                                         settingsDirectory);
-      LocationFormatter.formatLocations(locations, locationsDataFile);
-      preferences.put(keyLocations, locationsDataFile.getAbsolutePath());
-    }
-    catch (final FormatterException e)
-    {
-      LOGGER.log(Level.WARNING, "Could not save user locations list", e);
-    }
-    catch (final IOException e)
-    {
-      LOGGER.log(Level.WARNING, "Could not save user locations list", e);
-    }
-  }
-
-  /**
-   * Sets the options for the current user.
-   * 
-   * @param options
-   *        Options
-   */
-  public static void setOptions(final Options options)
-  {
-    if (!savePreferences)
-    {
-      return;
-    }
-    byte[] bytes;
-    try
-    {
-      // Serialize to a byte array
-      final ByteArrayOutputStream bos = new ByteArrayOutputStream();
-      final ObjectOutput out = new ObjectOutputStream(bos);
-      out.writeObject(options);
-      out.close();
-      // Get the bytes of the serialized object
-      bytes = bos.toByteArray();
-    }
     catch (final Exception e)
     {
-      LOGGER.log(Level.WARNING, "Could set chart options", e);
-      bytes = new byte[0];
+      LOGGER.log(Level.WARNING, "Could get options", e);
+      options = null;
     }
-    preferences.putByteArray(keyOptions, bytes);
-  }
 
-  /**
-   * Whether to save preferences.
-   * 
-   * @param savePreferences
-   *        Whether to save preferences.
-   */
-  public static void setSavePreferences(final boolean savePreferences)
-  {
-    UserPreferences.savePreferences = savePreferences;
+    if (options == null)
+    {
+      options = getDefaultDaylightChartOptions();
+    }
+
+    return options;
   }
 
   /**
@@ -348,39 +320,6 @@ public final class UserPreferences
       throw new IllegalArgumentException("Directory is not writable - "
                                          + directory);
     }
-  }
-
-  /**
-   * Set the slim UI perference.
-   * 
-   * @param slimUi
-   *        Whether to use a slim UI
-   */
-  public static void setSlimUi(final boolean slimUi)
-  {
-    if (!savePreferences)
-    {
-      return;
-    }
-    preferences.putBoolean(keySlimUi, slimUi);
-  }
-
-  /**
-   * Creates a chart options instance.
-   * 
-   * @return Chart options
-   */
-  private static Options getDefaultDaylightChartOptions()
-  {
-    final ChartOptions chartOptions = new ChartOptions();
-    chartOptions.copyFromChart(new DaylightChart());
-
-    final Options options = new Options();
-    options.setChartOptions(chartOptions);
-
-    // Save the defaults
-    setOptions(options);
-    return options;
   }
 
   private UserPreferences()

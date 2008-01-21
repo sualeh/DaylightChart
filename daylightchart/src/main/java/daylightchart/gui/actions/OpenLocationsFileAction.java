@@ -80,8 +80,8 @@ public final class OpenLocationsFileAction
                         Messages
                           .getString("DaylightChartGui.Menu.File.LoadLocations"),
                         fileFilters,
-                        new File(UserPreferences.getWorkingDirectory(),
-                                 "locations.data"),
+                        new File(UserPreferences.getOptions()
+                          .getWorkingDirectory(), "locations.data"),
                         Messages
                           .getString("DaylightChartGui.Message.Error.CannotOpenFile"));
 
@@ -106,7 +106,8 @@ public final class OpenLocationsFileAction
         else
         {
           mainWindow.setLocations(locations);
-          UserPreferences.setWorkingDirectory(selectedFile.getParentFile());
+          UserPreferences.getOptions().setWorkingDirectory(selectedFile
+            .getParentFile());
         }
       }
       catch (final RuntimeException e)

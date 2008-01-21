@@ -17,19 +17,6 @@
   <build>
     <plugins>
       <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>jasperreports-maven-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>jasperreports-compile</id>
-            <phase>compile</phase>
-            <goals>
-              <goal>compile-reports</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
         <artifactId>maven-jar-plugin</artifactId>
         <configuration>
           <archive>

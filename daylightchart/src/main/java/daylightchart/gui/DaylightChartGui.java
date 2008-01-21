@@ -357,7 +357,7 @@ public final class DaylightChartGui
       public void itemStateChanged(final ItemEvent e)
       {
         final boolean slimUi = e.getStateChange() == ItemEvent.SELECTED;
-        UserPreferences.setSlimUi(slimUi);
+        UserPreferences.getOptions().setSlimUi(slimUi);
         ResetAllAction.restart(DaylightChartGui.this, slimUi);
       }
     });
