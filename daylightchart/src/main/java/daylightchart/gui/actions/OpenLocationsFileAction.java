@@ -106,8 +106,7 @@ public final class OpenLocationsFileAction
         else
         {
           mainWindow.setLocations(locations);
-          UserPreferences.getOptions().setWorkingDirectory(selectedFile
-            .getParentFile());
+          UserPreferences.setWorkingDirectory(selectedFile.getParentFile());
         }
       }
       catch (final RuntimeException e)

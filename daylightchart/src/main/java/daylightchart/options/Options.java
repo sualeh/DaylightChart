@@ -211,7 +211,7 @@ public class Options
    * @param slimUi
    *        the slimUi to set
    */
-  public void setSlimUi(final boolean slimUi)
+  void setSlimUi(final boolean slimUi)
   {
     this.slimUi = slimUi;
   }
@@ -242,7 +242,7 @@ public class Options
     }
   }
 
-  public void setWorkingDirectory(final File workingDirectory)
+  void setWorkingDirectory(final File workingDirectory)
   {
     if (isDirectoryValid(workingDirectory))
     {

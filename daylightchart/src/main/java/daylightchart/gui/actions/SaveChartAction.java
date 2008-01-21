@@ -102,8 +102,7 @@ public final class SaveChartAction
           daylightChartReport.write(selectedFile.getFile(), chartFileType);
 
           // Save last selected directory
-          UserPreferences.getOptions().setWorkingDirectory(selectedFile
-            .getDirectory());
+          UserPreferences.setWorkingDirectory(selectedFile.getDirectory());
         }
         catch (final Exception e)
         {

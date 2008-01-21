@@ -83,12 +83,34 @@ public final class UserPreferences
     options = loadOptions();
   }
 
+  public static void setWorkingDirectory(final File workingDirectory)
+  {
+    options.setWorkingDirectory(workingDirectory);
+    saveOptions(options);
+  }
+
+  public static void setSlimUi(final boolean slimUi)
+  {
+    options.setSlimUi(slimUi);
+    saveOptions(options);
+  }
+
   /**
    * Clears all user preferences.
    */
   public static void clear()
   {
-    // TODO: Delete all settings files
+    if (optionsFile.exists())
+    {
+      optionsFile.delete();
+    }
+    options = loadOptions();
+
+    if (locationsDataFile.exists())
+    {
+      locationsDataFile.delete();
+    }
+    locations = loadLocations();
   }
 
   /**
@@ -199,7 +221,11 @@ public final class UserPreferences
     }
 
     UserPreferences.options = options;
+    saveOptions(options);
+  }
 
+  private static void saveOptions(final Options options)
+  {
     if (!savePreferences)
     {
       return;
@@ -215,7 +241,6 @@ public final class UserPreferences
     {
       LOGGER.log(Level.WARNING, "Could save options", e);
     }
-
   }
 
   /**

@@ -80,7 +80,6 @@ public final class DaylightChartGui
   private final LocationsList locationsList;
   private final LocationsTabbedPane locationsTabbedPane;
   private final boolean slimUi;
-  private final Options options;
 
   /**
    * Creates a new instance of a Daylight Chart main window.
@@ -109,7 +108,6 @@ public final class DaylightChartGui
     setTitle("Daylight Chart"); //$NON-NLS-1$
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-    options = UserPreferences.getOptions();
     if (location == null)
     {
       // Create basic UI
@@ -157,7 +155,8 @@ public final class DaylightChartGui
       locationsTabbedPane = null;
       locationsList = null;
       final DaylightChartReport daylightChartReport = new DaylightChartReport(location,
-                                                                              options);
+                                                                              UserPreferences
+                                                                                .getOptions());
       final ChartPanel chartPanel = new ChartPanel(daylightChartReport
         .getChart());
       chartPanel.setPreferredSize(ChartConfiguration.chartDimension);
@@ -182,7 +181,7 @@ public final class DaylightChartGui
    */
   public Options getOptions()
   {
-    return options;
+    return UserPreferences.getOptions();
   }
 
   public DaylightChartReport getSelectedDaylightChartReport()
@@ -357,7 +356,7 @@ public final class DaylightChartGui
       public void itemStateChanged(final ItemEvent e)
       {
         final boolean slimUi = e.getStateChange() == ItemEvent.SELECTED;
-        UserPreferences.getOptions().setSlimUi(slimUi);
+        UserPreferences.setSlimUi(slimUi);
         ResetAllAction.restart(DaylightChartGui.this, slimUi);
       }
     });

@@ -90,8 +90,7 @@ public final class SaveLocationsFileAction
                                             selectedFile.getFile());
 
           // Save last selected directory
-          UserPreferences.getOptions().setWorkingDirectory(selectedFile
-            .getDirectory());
+          UserPreferences.setWorkingDirectory(selectedFile.getDirectory());
         }
         catch (final Exception e)
         {
