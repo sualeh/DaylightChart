@@ -208,15 +208,6 @@ public class Options
   }
 
   /**
-   * @param slimUi
-   *        the slimUi to set
-   */
-  void setSlimUi(final boolean slimUi)
-  {
-    this.slimUi = slimUi;
-  }
-
-  /**
    * @param timeZoneOption
    *        the timeZoneOption to set
    */
@@ -242,19 +233,28 @@ public class Options
     }
   }
 
+  @Override
+  public String toString()
+  {
+    return ReflectionToStringBuilder.toString(this,
+                                              ToStringStyle.MULTI_LINE_STYLE);
+  }
+
+  /**
+   * @param slimUi
+   *        the slimUi to set
+   */
+  void setSlimUi(final boolean slimUi)
+  {
+    this.slimUi = slimUi;
+  }
+
   void setWorkingDirectory(final File workingDirectory)
   {
     if (isDirectoryValid(workingDirectory))
     {
       this.workingDirectory = workingDirectory;
     }
-  }
-
-  @Override
-  public String toString()
-  {
-    return ReflectionToStringBuilder.toString(this,
-                                              ToStringStyle.MULTI_LINE_STYLE);
   }
 
   private boolean isDirectoryValid(final File directory)

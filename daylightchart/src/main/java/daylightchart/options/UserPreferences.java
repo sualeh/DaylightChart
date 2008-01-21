@@ -83,18 +83,6 @@ public final class UserPreferences
     options = loadOptions();
   }
 
-  public static void setWorkingDirectory(final File workingDirectory)
-  {
-    options.setWorkingDirectory(workingDirectory);
-    saveOptions(options);
-  }
-
-  public static void setSlimUi(final boolean slimUi)
-  {
-    options.setSlimUi(slimUi);
-    saveOptions(options);
-  }
-
   /**
    * Clears all user preferences.
    */
@@ -224,25 +212,6 @@ public final class UserPreferences
     saveOptions(options);
   }
 
-  private static void saveOptions(final Options options)
-  {
-    if (!savePreferences)
-    {
-      return;
-    }
-
-    try
-    {
-      final ObjectOutput out = new ObjectOutputStream(new FileOutputStream(optionsFile));
-      out.writeObject(options);
-      out.close();
-    }
-    catch (final IOException e)
-    {
-      LOGGER.log(Level.WARNING, "Could save options", e);
-    }
-  }
-
   /**
    * Whether to save preferences.
    * 
@@ -252,6 +221,18 @@ public final class UserPreferences
   public static void setSavePreferences(final boolean savePreferences)
   {
     UserPreferences.savePreferences = savePreferences;
+  }
+
+  public static void setSlimUi(final boolean slimUi)
+  {
+    options.setSlimUi(slimUi);
+    saveOptions(options);
+  }
+
+  public static void setWorkingDirectory(final File workingDirectory)
+  {
+    options.setWorkingDirectory(workingDirectory);
+    saveOptions(options);
   }
 
   /**
@@ -329,6 +310,25 @@ public final class UserPreferences
     }
 
     return options;
+  }
+
+  private static void saveOptions(final Options options)
+  {
+    if (!savePreferences)
+    {
+      return;
+    }
+
+    try
+    {
+      final ObjectOutput out = new ObjectOutputStream(new FileOutputStream(optionsFile));
+      out.writeObject(options);
+      out.close();
+    }
+    catch (final IOException e)
+    {
+      LOGGER.log(Level.WARNING, "Could save options", e);
+    }
   }
 
   /**
