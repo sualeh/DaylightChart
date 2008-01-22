@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created using JasperAssistant (http://www.jasperassistant.com) -->
+<!DOCTYPE jasperReport PUBLIC "-//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+
+<jasperReport name="DaylightChartReport" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="30" bottomMargin="30" isTitleNewPage="true">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<reportFont name="TableHeader" isDefault="false" fontName="Verdana" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="true"/>
+	<reportFont name="TableData" isDefault="false" fontName="Verdana" size="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="true"/>
+	<reportFont name="HeaderFooter" isDefault="false" fontName="Verdana" size="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="true"/>
+	<parameter name="location" class="daylightchart.location.Location"/>
+	<parameter name="daylight_chart" class="net.sf.jasperreports.engine.JRRenderable" isForPrompting="false">
+		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<field name="date" class="org.joda.time.LocalDate"/>
+	<field name="sunrise" class="org.joda.time.LocalDateTime"/>
+	<field name="sunset" class="org.joda.time.LocalDateTime"/>
+	<field name="twilightRise" class="org.joda.time.LocalDateTime"/>
+	<field name="twilightSet" class="org.joda.time.LocalDateTime"/>
+	<title>
+		<band height="530">
+			<image hyperlinkType="None">
+				<reportElement key="image" x="0" y="0" width="802" height="530"/>
+				<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000" rightBorder="None" rightBorderColor="#000000"/>
+				<graphicElement/>
+				<imageExpression class="net.sf.jasperreports.engine.JRRenderable"><![CDATA[$P{daylight_chart}]]></imageExpression>
+			</image>
+		</band>
+	</title>
+</jasperReport>
