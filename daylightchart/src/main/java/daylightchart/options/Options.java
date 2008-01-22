@@ -23,14 +23,9 @@ package daylightchart.options;
 
 
 import java.io.File;
-import java.io.InputStream;
 import java.io.Serializable;
 
-import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.design.JasperDesign;
-import net.sf.jasperreports.engine.xml.JRXmlLoader;
 
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
@@ -38,7 +33,6 @@ import org.apache.commons.lang.builder.ToStringStyle;
 import daylightchart.daylightchart.calculation.TwilightType;
 import daylightchart.daylightchart.chart.ChartOrientation;
 import daylightchart.daylightchart.chart.TimeZoneOption;
-import daylightchart.daylightchart.layout.DaylightChartReport;
 import daylightchart.location.LocationsSortOrder;
 import daylightchart.options.chart.ChartOptions;
 
@@ -56,7 +50,7 @@ public class Options
   private LocationsSortOrder locationsSortOrder;
   private TimeZoneOption timeZoneOption;
   private ChartOrientation chartOrientation;
-  private TwilightType twilight;
+  private TwilightType twilightType;
   private boolean showChartLegend;
   //
   private ChartOptions chartOptions;
@@ -76,10 +70,10 @@ public class Options
     timeZoneOption = TimeZoneOption.USE_TIME_ZONE;
     chartOptions = new ChartOptions();
     chartOrientation = ChartOrientation.STANDARD;
-    twilight = TwilightType.CIVIL;
+    twilightType = TwilightType.CIVIL;
     showChartLegend = true;
 
-    loadDefaultJasperReport();
+    jasperReport = UserPreferences.loadDefaultJasperReport();
   }
 
   public final ChartOptions getChartOptions()
@@ -125,7 +119,7 @@ public class Options
    */
   public TwilightType getTwilightType()
   {
-    return twilight;
+    return twilightType;
   }
 
   public File getWorkingDirectory()
@@ -185,6 +179,15 @@ public class Options
   }
 
   /**
+   * @param jasperReport
+   *        the jasperReport to set
+   */
+  public void setJasperReport(final JasperReport jasperReport)
+  {
+    this.jasperReport = jasperReport;
+  }
+
+  /**
    * @param locationsSortOrder
    *        the locationsSortOrder to set
    */
@@ -229,7 +232,7 @@ public class Options
   {
     if (twilight != null)
     {
-      this.twilight = twilight;
+      twilightType = twilight;
     }
   }
 
@@ -263,21 +266,4 @@ public class Options
            && directory.canWrite();
   }
 
-  private void loadDefaultJasperReport()
-  {
-    try
-    {
-      // Generate JasperReport for the chart
-      // 1. Load report
-      final InputStream reportStream = DaylightChartReport.class
-        .getResourceAsStream("/DaylightChartReport.jrxml");
-      final JasperDesign jasperDesign = JRXmlLoader.load(reportStream);
-      // 2. Compile report
-      jasperReport = JasperCompileManager.compileReport(jasperDesign);
-    }
-    catch (final JRException e)
-    {
-      throw new IllegalArgumentException("Cannot compile JRXML file");
-    }
-  }
 }

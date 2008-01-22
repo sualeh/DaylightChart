@@ -22,8 +22,10 @@
 package daylightchart.options;
 
 
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -36,7 +38,13 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import daylightchart.daylightchart.chart.DaylightChart;
+import daylightchart.daylightchart.layout.DaylightChartReport;
 import daylightchart.location.Location;
 import daylightchart.location.parser.FormatterException;
 import daylightchart.location.parser.LocationFormatter;
@@ -138,6 +146,30 @@ public final class UserPreferences
     return settingsDirectory;
   }
 
+  public static boolean importReport(final File reportFile)
+  {
+    boolean imported = false;
+    if (reportFile != null && reportFile.exists() && reportFile.canRead())
+    {
+      try
+      {
+        final InputStream reportStream = new BufferedInputStream(new FileInputStream(reportFile));
+        final JasperReport jasperReport = compileReport(reportStream);
+        if (jasperReport != null)
+        {
+          options.setJasperReport(jasperReport);
+          setOptions(options); // Save options
+          imported = true;
+        }
+      }
+      catch (final FileNotFoundException e)
+      {
+        LOGGER.log(Level.WARNING, "Cannot load JasperReport", e);
+      }
+    }
+    return imported;
+  }
+
   /**
    * Whether to save preferences.
    * 
@@ -233,6 +265,39 @@ public final class UserPreferences
   {
     options.setWorkingDirectory(workingDirectory);
     saveOptions(options);
+  }
+
+  static JasperReport compileReport(final InputStream reportStream)
+  {
+    try
+    {
+      if (reportStream == null)
+      {
+        return null;
+      }
+      final JasperDesign jasperDesign = JRXmlLoader.load(reportStream);
+      final JasperReport jasperReport = JasperCompileManager
+        .compileReport(jasperDesign);
+      return jasperReport;
+    }
+    catch (final JRException e)
+    {
+      LOGGER.log(Level.WARNING, "Cannot load JasperReport", e);
+      return null;
+    }
+  }
+
+  static JasperReport loadDefaultJasperReport()
+  {
+    final InputStream reportStream = DaylightChartReport.class
+      .getResourceAsStream("/DaylightChartReport.jrxml");
+    final JasperReport jasperReport = UserPreferences
+      .compileReport(reportStream);
+    if (jasperReport == null)
+    {
+      throw new RuntimeException("Cannot load default report");
+    }
+    return jasperReport;
   }
 
   /**

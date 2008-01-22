@@ -52,6 +52,7 @@ import daylightchart.gui.actions.ChartOptionsAction;
 import daylightchart.gui.actions.CloseCurrentTabAction;
 import daylightchart.gui.actions.OnlineHelpAction;
 import daylightchart.gui.actions.OpenLocationsFileAction;
+import daylightchart.gui.actions.OpenReportFileAction;
 import daylightchart.gui.actions.OptionsAction;
 import daylightchart.gui.actions.PrintChartAction;
 import daylightchart.gui.actions.ResetAllAction;
@@ -273,6 +274,7 @@ public final class DaylightChartGui
     final SaveLocationsFileAction saveLocationsFile = new SaveLocationsFileAction(this);
     final SaveChartAction saveChart = new SaveChartAction(this);
     final PrintChartAction printChart = new PrintChartAction(locationsTabbedPane);
+    final OpenReportFileAction openReportFile = new OpenReportFileAction(this);
 
     final ExitAction exit = new ExitAction(this, Messages
       .getString("DaylightChartGui.Menu.File.Exit")); //$NON-NLS-1$
@@ -286,6 +288,8 @@ public final class DaylightChartGui
     menu.addSeparator();
     menu.add(saveChart);
     menu.add(printChart);
+    menu.addSeparator();
+    menu.add(openReportFile);
     menu.addSeparator();
     menu.add(exit);
     menuBar.add(menu);
