@@ -6,6 +6,76 @@
   </properties>
   <body>
     <release
+      version="2.5"
+      date="2008-01-23">
+      <action
+        dev="Sualeh Fatehi"
+        type="add">
+        Moved all configuration to the .daylightchart directory in the user's
+        home directory.
+      </action>
+      <action
+        dev="Sualeh Fatehi"
+        type="add">
+        Added the ability to import and export (that is, cusotmize) the report
+        definition for PDF and HTML formats.
+      </action>
+    </release>
+    <release
+      version="2.4"
+      date="2008-01-16">
+      <action
+        dev="Sualeh Fatehi"
+        type="add">
+        Added a new "slim" mode that shows the main user interface in an
+        advanced mode.
+      </action>
+      <action
+        dev="Sualeh Fatehi"
+        type="add">
+        The location dialog now allows you to change the time zone.
+      </action>
+    </release>
+    <release
+      version="2.3"
+      date="2008-01-14">
+      <action
+        dev="Sualeh Fatehi"
+        type="fix">
+        Fixed Unix launch.
+      </action>
+      <action
+        dev="Sualeh Fatehi"
+        type="fix">
+        Tweaked PDF and HTML export.
+      </action>
+      <action
+        dev="Sualeh Fatehi"
+        type="fix">
+        Changed copyright notices in the source.
+      </action>
+    </release>
+    <release
+      version="2.2"
+      date="2008-01-12">
+      <action
+        dev="Sualeh Fatehi"
+        type="add">
+        Added the ability to save a daylight chart as an Adobe Acrobat PDF, or
+        as a web page (HTML). These new formats have details on the twilight and
+        sunrise and sunset times.
+      </action>
+    </release>
+    <release
+      version="2.1"
+      date="2007-09-09">
+      <action
+        dev="Sualeh Fatehi"
+        type="add">
+        Smoothening of the charts, and spike removal.
+      </action>
+    </release>
+    <release
       version="2.0"
       date="2007-08-14">
       <action
