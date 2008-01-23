@@ -52,7 +52,7 @@ public final class OnlineHelpAction
     final ActionEvent actionevent)
     {
       BareBonesBrowserLaunch
-        .openURL("http://daylightchart.sourceforge.net/readme.html"); //$NON-NLS-1$
+        .openURL("http://daylightchart.sourceforge.net/howto.html"); //$NON-NLS-1$
     }
   }
 
