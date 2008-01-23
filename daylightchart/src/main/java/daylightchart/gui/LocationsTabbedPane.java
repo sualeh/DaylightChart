@@ -22,8 +22,6 @@
 package daylightchart.gui;
 
 
-import java.util.logging.Logger;
-
 import javax.swing.JTabbedPane;
 
 import org.jfree.chart.ChartPanel;
@@ -47,8 +45,6 @@ public class LocationsTabbedPane
 
   private static final long serialVersionUID = -2086804705336786590L;
 
-  private static final Logger LOGGER = Logger
-    .getLogger(LocationsTabbedPane.class.getName());
   private final DaylightChartGui mainWindow;
 
   LocationsTabbedPane(final DaylightChartGui mainWindow)

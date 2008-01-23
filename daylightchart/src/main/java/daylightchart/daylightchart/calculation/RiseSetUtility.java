@@ -265,13 +265,11 @@ public final class RiseSetUtility
           // Add a special "smoothing" value to the wrap band, if
           // necessary
           if (riseSetTomorrow != null
-              && riseSetTomorrow.getRiseSetType() == RiseSetType.all_daylight)
+              && riseSetTomorrow.getRiseSetType() == RiseSetType.all_daylight
+              && wrapBand.size() > 0)
           {
-            if (wrapBand.size() > 0)
-            {
-              wrapBand.add(wrapBand.getLastRiseSet()
-                .withNewRiseSetDate(riseSetTomorrow.getDate()));
-            }
+            wrapBand.add(wrapBand.getLastRiseSet()
+              .withNewRiseSetDate(riseSetTomorrow.getDate()));
           }
           wrapBand = null;
         }

@@ -30,7 +30,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.EnumSet;
 import java.util.Vector;
-import java.util.logging.Logger;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -116,13 +115,7 @@ public class OptionsDialog
 
   }
 
-  /**
-   * 
-   */
   private static final long serialVersionUID = -8756602036694384557L;
-
-  private static final Logger LOGGER = Logger.getLogger(OptionsDialog.class
-    .getName());
 
   /**
    * Show a dialog for options.

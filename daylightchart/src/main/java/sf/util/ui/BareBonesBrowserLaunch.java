@@ -12,16 +12,9 @@
 package sf.util.ui;
 
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.lang.reflect.Method;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
 
 /**
  * The Bare Bones Browser Launch solution, is intended for those with
@@ -38,36 +31,6 @@ public class BareBonesBrowserLaunch
 {
 
   private static final String errMsg = "Error attempting to launch web browser";
-
-  /**
-   * Quick test for the Bare Bones Browser Launch.
-   * 
-   * @param args
-   *        None.
-   */
-  public static void main(final String[] args)
-  {
-    final JFrame frame = new JFrame();
-    final JPanel panel = new JPanel();
-    final JTextField urlField = new JTextField("http://www.centerkey.com");
-    final JButton webButton = new JButton("Web Trip");
-    webButton.addActionListener(new ActionListener()
-    {
-      public void actionPerformed(@SuppressWarnings("unused")
-      final ActionEvent e)
-      {
-        BareBonesBrowserLaunch.openURL(urlField.getText().trim());
-      }
-    });
-    frame.setTitle("Bare Bones Browser Launch");
-    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    panel.add(new JLabel("URL:"));
-    panel.add(urlField);
-    panel.add(webButton);
-    frame.getContentPane().add(panel);
-    frame.pack();
-    frame.setVisible(true);
-  }
 
   /**
    * This is a fire and forget method -- no further communication or

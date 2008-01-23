@@ -24,7 +24,6 @@ package sf.util.ui;
 
 import java.awt.event.ItemListener;
 
-import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -135,7 +134,7 @@ public class GuiChoiceAction
    * Returns the default icon.
    * 
    * @return Default <code>Icon</code>
-   * @see AbstractButton#getIcon
+   * @see javax.swing.AbstractButton#getIcon
    */
   public Icon getDefaultIcon()
   {
@@ -166,7 +165,7 @@ public class GuiChoiceAction
    * Returns the selected icon.
    * 
    * @return Selected <code>Icon</code>
-   * @see AbstractButton#getSelectedIcon()
+   * @see javax.swing.AbstractButton#getSelectedIcon()
    */
   public Icon getSelectedIcon()
   {
@@ -188,7 +187,7 @@ public class GuiChoiceAction
    * selected, false if it's not.
    * 
    * @return true if the toggle button is selected, otherwise false
-   * @see AbstractButton#isSelected()
+   * @see javax.swing.AbstractButton#isSelected()
    */
   public boolean isSelected()
   {
