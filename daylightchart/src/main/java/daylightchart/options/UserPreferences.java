@@ -26,13 +26,10 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
 import java.io.Reader;
 import java.util.List;
 import java.util.logging.Level;
@@ -43,6 +40,9 @@ import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
+
+import com.thoughtworks.xstream.XStream;
+
 import daylightchart.daylightchart.chart.DaylightChart;
 import daylightchart.daylightchart.layout.DaylightChartReport;
 import daylightchart.location.Location;
@@ -85,7 +85,7 @@ public final class UserPreferences
     validateDirectory(settingsDirectory);
 
     locationsDataFile = new File(settingsDirectory, "locations.data");
-    optionsFile = new File(settingsDirectory, "options.ser");
+    optionsFile = new File(settingsDirectory, "options.xml");
 
     locations = loadLocations();
     options = loadOptions();
@@ -359,9 +359,8 @@ public final class UserPreferences
     Options options = null;
     try
     {
-      final ObjectInputStream in = new ObjectInputStream(new FileInputStream(optionsFile));
-      options = (Options) in.readObject();
-      in.close();
+      XStream xStream = new XStream();
+      options = (Options) xStream.fromXML(new FileReader(optionsFile));
     }
     catch (final Exception e)
     {
@@ -386,11 +385,10 @@ public final class UserPreferences
 
     try
     {
-      final ObjectOutput out = new ObjectOutputStream(new FileOutputStream(optionsFile));
-      out.writeObject(options);
-      out.close();
+      XStream xStream = new XStream();
+      xStream.toXML(options, new FileWriter(optionsFile));
     }
-    catch (final IOException e)
+    catch (final Exception e)
     {
       LOGGER.log(Level.WARNING, "Could save options", e);
     }
