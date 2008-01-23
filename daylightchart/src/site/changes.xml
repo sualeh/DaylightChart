@@ -17,7 +17,7 @@
       <action
         dev="Sualeh Fatehi"
         type="add">
-        Added the ability to import and export (that is, cusotmize) the report
+        Added the ability to import and export (that is, customize) the report
         definition for PDF and HTML formats.
       </action>
     </release>
