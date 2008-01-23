@@ -31,20 +31,20 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.JOptionPane;
-import javax.swing.KeyStroke;
 import javax.swing.filechooser.FileFilter;
 
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.xml.JRXmlWriter;
 import sf.util.ui.Actions;
 import sf.util.ui.ExtensionFileFilter;
 import sf.util.ui.GuiAction;
 import sf.util.ui.Actions.SelectedFile;
 import daylightchart.gui.DaylightChartGui;
 import daylightchart.gui.Messages;
-import daylightchart.location.parser.LocationFormatter;
 import daylightchart.options.UserPreferences;
 
 /**
- * Saves locations into a file.
+ * Saves report into a file.
  * 
  * @author sfatehi
  */
@@ -71,23 +71,24 @@ public final class SaveReportFileAction
     final ActionEvent actionevent)
     {
       final List<FileFilter> fileFilters = new ArrayList<FileFilter>();
-      fileFilters.add(new ExtensionFileFilter("Data files", ".data"));
-      fileFilters.add(new ExtensionFileFilter("Text files", ".txt"));
+      fileFilters.add(new ExtensionFileFilter("Report design files", ".jrxml"));
       final SelectedFile selectedFile = Actions
         .showSaveDialog(mainWindow,
                         Messages
-                          .getString("DaylightChartGui.Menu.File.SaveLocations"),
+                          .getString("DaylightChartGui.Menu.File.SaveReport"),
                         fileFilters,
                         new File(UserPreferences.getOptions()
-                          .getWorkingDirectory(), "locations.data"),
+                          .getWorkingDirectory(), "DaylightChartReport.jrxml"),
                         Messages
                           .getString("DaylightChartGui.Message.Confirm.FileOverwrite")); //$NON-NLS-1$
       if (selectedFile.isSelected())
       {
         try
         {
-          LocationFormatter.formatLocations(mainWindow.getLocations(),
-                                            selectedFile.getFile());
+          JasperReport jasperReport = UserPreferences.getOptions()
+            .getJasperReport();
+          JRXmlWriter.writeReport(jasperReport, selectedFile.getFile()
+            .getAbsolutePath(), "UTF-8");
 
           // Save last selected directory
           UserPreferences.setWorkingDirectory(selectedFile.getDirectory());
@@ -120,10 +121,9 @@ public final class SaveReportFileAction
   public SaveReportFileAction(final DaylightChartGui mainWindow)
   {
 
-    super(Messages.getString("DaylightChartGui.Menu.File.SaveLocations"), //$NON-NLS-1$ 
+    super(Messages.getString("DaylightChartGui.Menu.File.SaveReport"), //$NON-NLS-1$ 
           "/icons/save_locations.gif" //$NON-NLS-1$
     );
-    setShortcutKey(KeyStroke.getKeyStroke("control alt S"));
     addActionListener(new GuiActionListener(mainWindow));
   }
 
