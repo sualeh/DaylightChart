@@ -8,19 +8,30 @@
   <body>
     <section name="Getting Started">
       <subsection name="About">
-        Daylight Chart is a program to display sunrise and sunset charts for a whole year
-        at any location in the world. Charts can be customized, saved, and printed.
+        Daylight Chart is a program to display sunrise and sunset charts for a
+        whole year at any location in the world. Charts can be customized,
+        saved, and printed.
       </subsection>
       <subsection name="Running">
-        <p>The steps for running Daylight Chart are:
-        </p>
+        <p>The steps for running Daylight Chart are:</p>
         <ol>
-          <li>Download and install <a href="http://www.java.com/en/download/index.jsp">Java</a>
-          on your computer, if you do not already have it.</li>
-          <li>Download <a href="http://sourceforge.net/project/showfiles.php?group_id=193171">Daylight Chart</a>.
-          Just one download file is needed - daylightchart-2.4-distrib.zip.</li>
-          <li>Unzip the downloaded zip file into any folder on your computer,
-          keeping the internal folder structure intact.</li>
+          <li>
+            Download and install
+            <a href="http://www.java.com/en/download/index.jsp">Java</a>
+            on your computer, if you do not already have it.
+          </li>
+          <li>
+            Download
+            <a
+              href="http://sourceforge.net/project/showfiles.php?group_id=193171">
+              Daylight Chart
+            </a>
+            . Just one download file is needed - daylightchart-2.4-distrib.zip.
+          </li>
+          <li>
+            Unzip the downloaded zip file into any folder on your computer,
+            keeping the internal folder structure intact.
+          </li>
           <li>Run the "daylightchart" command.</li>
         </ol>
       </subsection>
@@ -30,36 +41,65 @@
         <p>
           Daylight Chart has an option to save the locations list. This list
           will be saved in the Daylight Chart Locations List Format. It can be
-          edited in any standard text editor, and loaded back into Daylight Chart.
+          edited in any standard text editor, and loaded back into Daylight
+          Chart.
         </p>
         <p>
-          In addition to the Daylight Chart Locations List Format, the
-          Daylight Chart program also supports loading of locations in the
-          <a href="http://earth-info.nga.mil/gns/html/cntry_files.html">GNS Country Files</a>
-          format. However, the data in the GNS Country Files does not contain daylight savings
-          time information, so Daylight Chart will make a best guess of the time zone.
+          In addition to the Daylight Chart Locations List Format, the Daylight
+          Chart program also supports loading of locations in the
+          <a href="http://earth-info.nga.mil/gns/html/cntry_files.html">
+            GNS Country Files
+          </a>
+          format. However, the data in the GNS Country Files does not contain
+          daylight savings time information, so Daylight Chart will make a best
+          guess of the time zone.
         </p>
         <p>
           The Daylight Chart program can load populated places in the USA in the
-          <a href="http://geonames.usgs.gov/domestic/download_data.htm">GNIS file</a> format.
-          The data in the GNIS files does not contain daylight savings
-          time information,  so Daylight Chart will make a best guess of the time zone.
+          <a href="http://geonames.usgs.gov/domestic/download_data.htm">
+            GNIS file
+          </a>
+          format. The data in the GNIS files does not contain daylight savings
+          time information, so Daylight Chart will make a best guess of the time
+          zone.
+        </p>
+      </subsection>
+      <subsection name="Import and Export Reports">
+        <p>
+          Daylight Chart has an option to import and export reports. Report
+          definitions are used to layout the Daylight Chart chart and data for
+          the Adobe Acrobat PDF and HTML file formats.
+        </p>
+        <p>
+          To customize a report, first export the report definition to a file.
+          Then, modify the report definition using
+          <a
+            href="http://www.jasperforge.org/jaspersoft/opensource/business_intelligence/ireport/">
+            iReport
+          </a>
+          . Next, you can import the modified report definition. The next time
+          that you save the Daylight Chart chart in the the Adobe Acrobat PDF or
+          HTML file formats, it will use the new report.
         </p>
       </subsection>
     </section>
     <section name="Building From the Source Code">
       <subsection name="Maven Build">
         <p>
-          Daylight Chart uses Maven 2.0 to build, run unit
-          tests, and create the project web-site. Download
-          <a href="http://maven.apache.org/">Maven 2.0</a>,
-          and run <code>mvn install</code> to build.
+          Daylight Chart uses Maven 2.0 to build, run unit tests, and create the
+          project web-site. Download
+          <a href="http://maven.apache.org/">Maven 2.0</a>
+          , and run
+          <code>mvn install</code>
+          to build. Then, use
+          <code>mvn eclipse:eclipse</code>
+          to regenerate the Eclipse project files.
         </p>
       </subsection>
       <subsection name="Eclipse">
         <p>
-          Before importing the Daylight Chart project into Eclipse, make sure that
-          you have a successful Maven build. Maven will download all the
+          Before importing the Daylight Chart project into Eclipse, make sure
+          that you have a successful Maven build. Maven will download all the
           dependencies needed to build Daylight Chart. You will need to define
           one Eclipse Java Classpath Variable,
           <code>M2_REPO</code>
@@ -68,18 +108,10 @@
       </subsection>
       <subsection name="Dependencies">
         <p>
-        Daylight Chart depends on
-        <a href="http://sourceforge.net/projects/daylightchart/pointlocation6709">
-        Point Location 6709</a>,
-        <a href="http://www.antlr.org/">ANTLR</a>,
-        <a href="http://joda-time.sourceforge.net">Joda Time</a>,
-        <a href="https://looks.dev.java.net/">JGoodies Looks</a>,
-        <a href="http://www.jfree.org/jfreechart/">JFreeChart</a> and <a href="http://www.jfree.org/jcommon/">JCommon</a>.
-        Please ensure that all of these jars are on your classpath when you run Daylight Chart.
-        </p>
-        <p>
-        All of the dependencies are distributed in their unmodified binary form. Please refer to their individual
-        licenses for license terms.
+          All of the
+          <a href="dependencies.html">dependencies</a>
+          are distributed in their unmodified binary form. Please refer to their
+          individual licenses for license terms.
         </p>
       </subsection>
     </section>
