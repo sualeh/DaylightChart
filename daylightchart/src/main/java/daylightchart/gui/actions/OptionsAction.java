@@ -25,6 +25,8 @@ package daylightchart.gui.actions;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.KeyStroke;
+
 import sf.util.ui.GuiAction;
 import daylightchart.gui.DaylightChartGui;
 import daylightchart.gui.Messages;
@@ -79,6 +81,7 @@ public final class OptionsAction
     super(Messages.getString("DaylightChartGui.Menu.Options.Options"), //$NON-NLS-1$ 
           "/icons/options.gif" //$NON-NLS-1$
     );
+    setShortcutKey(KeyStroke.getKeyStroke("control alt O"));
     addActionListener(new GuiActionListener(mainWindow));
   }
 

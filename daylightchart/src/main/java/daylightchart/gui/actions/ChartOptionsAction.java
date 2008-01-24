@@ -26,6 +26,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JOptionPane;
+import javax.swing.KeyStroke;
 
 import org.jfree.chart.editor.ChartEditor;
 
@@ -95,6 +96,7 @@ public final class ChartOptionsAction
     super(Messages.getString("DaylightChartGui.Menu.Options.ChartOptions"), //$NON-NLS-1$ 
           "/icons/chart_options.gif" //$NON-NLS-1$
     );
+    setShortcutKey(KeyStroke.getKeyStroke("control alt C"));
     addActionListener(new GuiActionListener(mainWindow));
   }
 }
