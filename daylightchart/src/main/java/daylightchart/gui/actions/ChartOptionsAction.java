@@ -92,7 +92,9 @@ public final class ChartOptionsAction
    */
   public ChartOptionsAction(final DaylightChartGui mainWindow)
   {
-    super(Messages.getString("DaylightChartGui.Menu.Options.ChartOptions")); //$NON-NLS-1$
+    super(Messages.getString("DaylightChartGui.Menu.Options.ChartOptions"), //$NON-NLS-1$ 
+          "/icons/chart_options.gif" //$NON-NLS-1$
+    );
     addActionListener(new GuiActionListener(mainWindow));
   }
 }

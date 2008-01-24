@@ -74,7 +74,9 @@ public final class CloseCurrentTabAction
    */
   public CloseCurrentTabAction(final LocationsTabbedPane locationsTabbedPane)
   {
-    super("Close Current Tab");
+    super("Close Current Tab", //$NON-NLS-1$ 
+          "/icons/close_tab.gif" //$NON-NLS-1$
+    );
     setShortcutKey(KeyStroke.getKeyStroke("control W"));
     addActionListener(new GuiActionListener(locationsTabbedPane));
   }

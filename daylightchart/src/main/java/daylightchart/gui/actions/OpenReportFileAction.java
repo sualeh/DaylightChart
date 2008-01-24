@@ -123,7 +123,7 @@ public final class OpenReportFileAction
   {
 
     super(Messages.getString("DaylightChartGui.Menu.File.LoadReport"),//$NON-NLS-1$
-          "/icons/load_locations.gif" //$NON-NLS-1$
+          "/icons/import.gif" //$NON-NLS-1$
     );
     addActionListener(new GuiActionListener(mainWindow));
   }

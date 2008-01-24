@@ -73,7 +73,8 @@ public final class AboutAction
    */
   public AboutAction(final Component parent)
   {
-    super(Messages.getString("DaylightChartGui.Menu.Help.About") //$NON-NLS-1$
+    super(Messages.getString("DaylightChartGui.Menu.Help.About"), //$NON-NLS-1$
+          "/icons/help_about.gif" //$NON-NLS-1$
     );
     addActionListener(new GuiActionListener(parent));
   }

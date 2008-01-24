@@ -133,7 +133,7 @@ public final class SaveChartAction
   {
 
     super(Messages.getString("DaylightChartGui.Menu.File.SaveChart"), //$NON-NLS-1$ 
-          "/icons/save_chart.gif" //$NON-NLS-1$
+          "/icons/save.gif" //$NON-NLS-1$
     );
     setShortcutKey(KeyStroke.getKeyStroke("control S"));
     addActionListener(new GuiActionListener(mainWindow));

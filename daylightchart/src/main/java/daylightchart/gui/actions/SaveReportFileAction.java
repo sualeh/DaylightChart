@@ -122,7 +122,7 @@ public final class SaveReportFileAction
   {
 
     super(Messages.getString("DaylightChartGui.Menu.File.SaveReport"), //$NON-NLS-1$ 
-          "/icons/save_locations.gif" //$NON-NLS-1$
+          "/icons/export.gif" //$NON-NLS-1$
     );
     addActionListener(new GuiActionListener(mainWindow));
   }

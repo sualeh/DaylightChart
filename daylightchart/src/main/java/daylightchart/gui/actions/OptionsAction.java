@@ -76,7 +76,9 @@ public final class OptionsAction
    */
   public OptionsAction(final DaylightChartGui mainWindow)
   {
-    super(Messages.getString("DaylightChartGui.Menu.Options.Options")); //$NON-NLS-1$
+    super(Messages.getString("DaylightChartGui.Menu.Options.Options"), //$NON-NLS-1$ 
+          "/icons/options.gif" //$NON-NLS-1$
+    );
     addActionListener(new GuiActionListener(mainWindow));
   }
 
