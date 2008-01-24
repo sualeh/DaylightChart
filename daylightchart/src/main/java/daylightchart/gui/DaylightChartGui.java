@@ -271,12 +271,12 @@ public final class DaylightChartGui
   private void createFileMenu(final JMenuBar menuBar, final JToolBar toolBar)
   {
 
-    final OpenLocationsFileAction openLocationsFile = new OpenLocationsFileAction(this);
-    final SaveLocationsFileAction saveLocationsFile = new SaveLocationsFileAction(this);
-    final SaveChartAction saveChart = new SaveChartAction(this);
-    final PrintChartAction printChart = new PrintChartAction(locationsTabbedPane);
-    final OpenReportFileAction openReportFile = new OpenReportFileAction(this);
-    final SaveReportFileAction saveReportFile = new SaveReportFileAction(this);
+    final GuiAction openLocationsFile = new OpenLocationsFileAction(this);
+    final GuiAction saveLocationsFile = new SaveLocationsFileAction(this);
+    final GuiAction saveChart = new SaveChartAction(this);
+    final GuiAction printChart = new PrintChartAction(locationsTabbedPane);
+    final GuiAction openReportFile = new OpenReportFileAction(this);
+    final GuiAction saveReportFile = new SaveReportFileAction(this);
 
     final ExitAction exit = new ExitAction(this, Messages
       .getString("DaylightChartGui.Menu.File.Exit")); //$NON-NLS-1$
@@ -309,8 +309,8 @@ public final class DaylightChartGui
   private void createHelpMenu(final JMenuBar menuBar, final JToolBar toolBar)
   {
 
-    final OnlineHelpAction onlineHelp = new OnlineHelpAction();
-    final AboutAction about = new AboutAction(DaylightChartGui.this);
+    final GuiAction onlineHelp = new OnlineHelpAction();
+    final GuiAction about = new AboutAction(DaylightChartGui.this);
 
     final JMenu menuHelp = new JMenu(Messages
       .getString("DaylightChartGui.Menu.Help")); //$NON-NLS-1$
@@ -337,8 +337,8 @@ public final class DaylightChartGui
     final GuiAction options = new OptionsAction(this);
     menu.add(options);
 
-    final ChartOptionsAction chartOptionsAction = new ChartOptionsAction(this);
-    menu.add(chartOptionsAction);
+    final GuiAction chartOptions = new ChartOptionsAction(this);
+    menu.add(chartOptions);
 
     final GuiAction resetAll = new ResetAllAction(this);
     menu.add(resetAll);
@@ -361,6 +361,9 @@ public final class DaylightChartGui
 
     menuBar.add(menu);
 
+    toolBar.add(options);
+    toolBar.add(chartOptions);
+    toolBar.addSeparator();
   }
 
 }
