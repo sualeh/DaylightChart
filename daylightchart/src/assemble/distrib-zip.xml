@@ -24,6 +24,13 @@
       </includes>
     </fileSet>
     <fileSet>
+      <directory>target/licenses</directory>
+      <outputDirectory>licenses</outputDirectory>
+      <includes>
+        <include>*.html</include>
+      </includes>
+    </fileSet>
+    <fileSet>
       <directory>src/main/resources</directory>
       <outputDirectory></outputDirectory>
       <includes>

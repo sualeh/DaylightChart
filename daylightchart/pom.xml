@@ -50,6 +50,9 @@
                 <get
                   src="http://xstream.codehaus.org/license.html"
                   dest="${licenses.dir}/LICENSE.XStream.html" />
+                <get
+                  src="https://jgoodies.dev.java.net/"
+                  dest="${licenses.dir}/LICENSE.JGoodies.html" />
               </tasks>
             </configuration>
             <goals>
