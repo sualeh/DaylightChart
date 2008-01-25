@@ -28,31 +28,40 @@
                 <mkdir dir="${licenses.dir}"/>
                 <get
                   src="http://www.antlr.org/license.html"
-                  dest="${licenses.dir}/LICENSE.antlr.html" />
+                  dest="${licenses.dir}/LICENSE.antlr.html"
+                  usetimestamp="true" />
                 <get
                   src="http://commons.apache.org/license.html"
-                  dest="${licenses.dir}/LICENSE.ApacheCommons.html" />
+                  dest="${licenses.dir}/LICENSE.ApacheCommons.html"
+                  usetimestamp="true" />
                 <get
                   src="http://joda-time.sourceforge.net/license.html"
-                  dest="${licenses.dir}/LICENSE.JodaTime.html" />
+                  dest="${licenses.dir}/LICENSE.JodaTime.html"
+                  usetimestamp="true" />
                 <get
                   src="http://www.lowagie.com/iText/lgpl.txt"
-                  dest="${licenses.dir}/LICENSE.iText.html" />
+                  dest="${licenses.dir}/LICENSE.iText.html"
+                  usetimestamp="true" />
                 <get
                   src="http://www.object-refinery.com/lgpl.html"
-                  dest="${licenses.dir}/LICENSE.JFreeChart.html" />
+                  dest="${licenses.dir}/LICENSE.JFreeChart.html"
+                  usetimestamp="true" />
                 <get
                   src="http://xml.apache.org/xalan-j/#license1.1"
-                  dest="${licenses.dir}/LICENSE.ApacheXML.html" />
+                  dest="${licenses.dir}/LICENSE.ApacheXML.html"
+                  usetimestamp="true" />
                 <get
                   src="http://www.eclipse.org/legal/epl-v10.html"
-                  dest="${licenses.dir}/LICENSE.JDTCompiler.html" />
+                  dest="${licenses.dir}/LICENSE.JDTCompiler.html"
+                  usetimestamp="true" />
                 <get
                   src="http://xstream.codehaus.org/license.html"
-                  dest="${licenses.dir}/LICENSE.XStream.html" />
+                  dest="${licenses.dir}/LICENSE.XStream.html"
+                  usetimestamp="true" />
                 <get
                   src="https://jgoodies.dev.java.net/"
-                  dest="${licenses.dir}/LICENSE.JGoodies.html" />
+                  dest="${licenses.dir}/LICENSE.JGoodies.html"
+                  usetimestamp="true" />
               </tasks>
             </configuration>
             <goals>
@@ -106,6 +115,41 @@
             </configuration>
           </execution>
         </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>site</phase>
+            <configuration>
+              <tasks>
+                <property name="daylightchart.home" location=".."/>
+                <move
+                  file="${daylightchart.home}/pointlocation6709/target/site"
+                  tofile="target/site/pointlocation6709"/>
+                <move
+                  file="${daylightchart.home}/sunposition/target/site"
+                  tofile="target/site/sunposition"/>
+              </tasks>
+            </configuration>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>
+        </executions>
+        <dependencies>
+          <dependency>
+              <groupId>org.apache.ant</groupId>
+              <artifactId>ant</artifactId>
+              <version>1.7.0</version>
+          </dependency>
+          <dependency>
+              <groupId>org.apache.ant</groupId>
+              <artifactId>ant-apache-regexp</artifactId>
+              <version>1.7.0</version>
+          </dependency>
+        </dependencies>
       </plugin>
     </plugins>
   </build>
