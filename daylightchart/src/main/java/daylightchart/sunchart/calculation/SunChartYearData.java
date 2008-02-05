@@ -1,0 +1,105 @@
+/* 
+ * 
+ * Daylight Chart
+ * http://sourceforge.net/projects/daylightchart
+ * Copyright (c) 2007-2008, Sualeh Fatehi.
+ * 
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ * 
+ */
+package daylightchart.sunchart.calculation;
+
+
+import java.io.Serializable;
+import java.util.List;
+
+import daylightchart.location.Location;
+
+/**
+ * A full year's sunrise and sunset times for a location.
+ * 
+ * @author Sualeh Fatehi
+ */
+public final class SunChartYearData
+  implements Serializable
+{
+
+  private static final long serialVersionUID = -7055404819725658424L;
+
+  private final Location location;
+  private final int year;
+  private boolean usesDaylightTime;
+  private final Equinox equinox;
+  private List<SunPosition> sunPositions;
+
+  SunChartYearData(final Location location, final int year)
+  {
+    this.location = location;
+    this.year = year;
+    equinox = new Equinox(year);
+  }
+
+  /**
+   * Location.
+   * 
+   * @return Location.
+   */
+  public Location getLocation()
+  {
+    return location;
+  }
+
+  /**
+   * @return the sunPositions
+   */
+  public List<SunPosition> getSunPositions()
+  {
+    return sunPositions;
+  }
+
+  /**
+   * Gets the year.
+   * 
+   * @return Year.
+   */
+  public int getYear()
+  {
+    return year;
+  }
+
+  /**
+   * Whether the location uses DST rules.
+   * 
+   * @return Whether the location uses DST rules.
+   */
+  public boolean usesDaylightTime()
+  {
+    return usesDaylightTime;
+  }
+
+  /**
+   * @param sunPositions
+   *        the sunPositions to set
+   */
+  void setSunPositions(final List<SunPosition> sunPositions)
+  {
+    this.sunPositions = sunPositions;
+  }
+
+  void setUsesDaylightTime(final boolean usesDaylightTime)
+  {
+    this.usesDaylightTime = usesDaylightTime;
+  }
+}

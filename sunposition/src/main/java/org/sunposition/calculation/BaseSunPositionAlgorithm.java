@@ -25,10 +25,6 @@ package org.sunposition.calculation;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
-// import org.joda.time.LocalDate;
-// import org.joda.time.LocalTime;
-// import org.pointlocation6709.Utility;
-
 /**
  * @author Sualeh Fatehi
  */

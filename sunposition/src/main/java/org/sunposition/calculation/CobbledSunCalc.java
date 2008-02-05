@@ -43,9 +43,11 @@ package org.sunposition.calculation;
  */
 class CobbledSunCalc
   extends BaseSunPositionAlgorithm
+  implements ExtendedSunPositionAlgorithm
 {
 
   private static class SolarEphemerides
+    implements ExtendedSunPositionAlgorithm.SolarEphemerides
   {
 
     private double declination;
@@ -55,31 +57,61 @@ class CobbledSunCalc
     private double altitude;
     private double equationOfTime;
 
+    /**
+     * {@inheritDoc}
+     * 
+     * @see org.sunposition.calculation.SolarEphemerides#getAltitude()
+     */
     public double getAltitude()
     {
       return altitude;
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * @see org.sunposition.calculation.SolarEphemerides#getAzimuth()
+     */
     public double getAzimuth()
     {
       return azimuth;
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * @see org.sunposition.calculation.SolarEphemerides#getDeclination()
+     */
     public double getDeclination()
     {
       return declination;
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * @see org.sunposition.calculation.SolarEphemerides#getEquationOfTime()
+     */
     public double getEquationOfTime()
     {
       return equationOfTime;
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * @see org.sunposition.calculation.SolarEphemerides#getHourAngle()
+     */
     public double getHourAngle()
     {
       return hourAngle;
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * @see org.sunposition.calculation.SolarEphemerides#getRightAscension()
+     */
     public double getRightAscension()
     {
       return rightAscension;
@@ -206,13 +238,13 @@ class CobbledSunCalc
 
     if (YMinus > 0)
     {
-      timeRise = ABOVE_HORIZON;
-      timeSet = ABOVE_HORIZON;
+      timeRise = SunPositionAlgorithm.ABOVE_HORIZON;
+      timeSet = SunPositionAlgorithm.ABOVE_HORIZON;
     }
     else
     {
-      timeRise = BELOW_HORIZON;
-      timeSet = BELOW_HORIZON;
+      timeRise = SunPositionAlgorithm.BELOW_HORIZON;
+      timeSet = SunPositionAlgorithm.BELOW_HORIZON;
     }
 
     for (hour = -timezoneOffset; hour <= -timezoneOffset + 24; hour += 1)
@@ -336,7 +368,7 @@ class CobbledSunCalc
    *         href="http://www.srrb.noaa.gov/highlights/sunrise/program.txt">
    *         NOAA calculations </a>
    */
-  private SolarEphemerides calcSolarEphemerides(final double hour)
+  public ExtendedSunPositionAlgorithm.SolarEphemerides calcSolarEphemerides(final double hour)
   {
 
     final double J2000_OFFSET = 2451545.5;
@@ -529,7 +561,8 @@ class CobbledSunCalc
    */
   private boolean isEvent(final double eventOccurence)
   {
-    return eventOccurence != ABOVE_HORIZON && eventOccurence != BELOW_HORIZON;
+    return eventOccurence != SunPositionAlgorithm.ABOVE_HORIZON
+           && eventOccurence != SunPositionAlgorithm.BELOW_HORIZON;
   }
 
   /**
@@ -581,6 +614,53 @@ class CobbledSunCalc
       result = -result;
     }
     return result;
+  }
+
+  private static void printE(int year)
+  {
+    double m, ve, ss, ae, ws;
+    m = ((double) year - 2000) / 1000;
+    ve = 2451623.80984 + 365242.37404 * m + 0.05169 * m * m - 0.00411 * m * m
+         * m - 0.00057 * m * m * m * m;
+    display_date(ve);
+    ss = 2451716.56767 + 365241.62603 * m + 0.00325 * m * m + 0.00888 * m * m
+         * m - 0.00030 * m * m * m * m;
+    display_date(ss);
+    ae = 2451810.21715 + 365242.01767 * m - 0.11575 * m * m + 0.00337 * m * m
+         * m + 0.00078 * m * m * m * m;
+    display_date(ae);
+    ws = 2451900.05952 + 365242.74049 * m - 0.06223 * m * m - 0.00823 * m * m
+         * m + 0.00032 * m * m * m * m;
+    display_date(ws);
+  }
+
+  private static void display_date(double jdn)
+  {
+    double p = Math.floor(jdn + 0.5);
+    double s1 = p + 68569;
+    double n = Math.floor(4 * s1 / 146097);
+    double s2 = s1 - Math.floor((146097 * n + 3) / 4);
+    double i = Math.floor(4000 * (s2 + 1) / 1461001);
+    double s3 = s2 - Math.floor(1461 * i / 4) + 31;
+    double q = Math.floor(80 * s3 / 2447);
+    double e = s3 - Math.floor(2447 * q / 80);
+    double s4 = Math.floor(q / 11);
+    double mm = q + 2 - 12 * s4;
+    double yy = 100 * (n - 49) + i + s4;
+    double dd = e + jdn - p + 0.5;
+
+    double hrs, min, sec, tm = dd;
+
+    dd = Math.floor(tm);
+    tm = 24 * (tm - dd);
+    hrs = Math.floor(tm);
+    tm = 60 * (tm - hrs);
+    min = Math.floor(tm);
+    tm = 60 * (tm - min);
+    sec = Math.round(tm);
+
+    System.out.print((int) yy + "/" + (int) mm + "/" + (int) dd + " "
+                     + (int) hrs + ":" + (int) min + ":" + (int) sec + "\t");
   }
 
 }

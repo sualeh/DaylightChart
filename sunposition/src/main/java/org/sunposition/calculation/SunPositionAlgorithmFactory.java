@@ -40,6 +40,16 @@ public final class SunPositionAlgorithmFactory
     return new CobbledSunCalc();
   }
 
+  /**
+   * Create an instance of a sunrise/ sunset algorithm.
+   * 
+   * @return Instance of a sunrise/ sunset algorithm.
+   */
+  public static ExtendedSunPositionAlgorithm getExtendedSunPositionAlgorithmInstance()
+  {
+    return new CobbledSunCalc();
+  }
+
   private SunPositionAlgorithmFactory()
   {
     // Prevent instantiation

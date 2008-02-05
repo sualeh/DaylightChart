@@ -22,7 +22,6 @@
 package daylightchart;
 
 
-import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -37,7 +36,6 @@ import sf.util.CommandLineParser.StringOption;
 import com.jgoodies.looks.plastic.PlasticLookAndFeel;
 import com.jgoodies.looks.plastic.theme.LightGray;
 
-import daylightchart.daylightchart.calculation.RiseSetUtility;
 import daylightchart.gui.DaylightChartGui;
 import daylightchart.location.Location;
 import daylightchart.location.parser.LocationParser;
@@ -54,7 +52,6 @@ public final class Main
 
   private static final Logger LOGGER = Logger.getLogger(Main.class.getName());
 
-  private static final String OPTION_DEBUG_CALCULATIONS = "debug-calcs";
   private static final String OPTION_SLIMUI = "slim";
   private static final String OPTION_NO_PREFERENCES = "noprefs";
   private static final String OPTION_LOCATION = "location";
@@ -72,8 +69,6 @@ public final class Main
 
     // Parse command line
     final CommandLineParser parser = new CommandLineParser();
-    parser.addOption(new BooleanOption(Option.NO_SHORT_FORM,
-                                       OPTION_DEBUG_CALCULATIONS));
     parser.addOption(new BooleanOption(Option.NO_SHORT_FORM, OPTION_SLIMUI));
     parser.addOption(new BooleanOption(Option.NO_SHORT_FORM,
                                        OPTION_NO_PREFERENCES));
@@ -81,8 +76,6 @@ public final class Main
                                       OPTION_LOCATION,
                                       null));
     parser.parse(args);
-    final boolean debugCalculations = parser
-      .getBooleanOptionValue(OPTION_DEBUG_CALCULATIONS);
     boolean slimUi = parser.getBooleanOptionValue(OPTION_SLIMUI);
     final boolean noPreferences = parser
       .getBooleanOptionValue(OPTION_NO_PREFERENCES);
@@ -102,31 +95,24 @@ public final class Main
 
     UserPreferences.setSavePreferences(!noPreferences);
 
-    if (debugCalculations && location != null)
+    // Set UI look and feel
+    try
     {
-      final File file = RiseSetUtility.writeCalculationsToFile(location);
-      System.out.println("Calculations written to " + file.getAbsolutePath());
+      PlasticLookAndFeel.setPlasticTheme(new LightGray());
+      UIManager.setLookAndFeel(new PlasticLookAndFeel());
     }
-    else
+    catch (final Exception e)
     {
-      // Set UI look and feel
-      try
-      {
-        PlasticLookAndFeel.setPlasticTheme(new LightGray());
-        UIManager.setLookAndFeel(new PlasticLookAndFeel());
-      }
-      catch (final Exception e)
-      {
-        LOGGER.log(Level.WARNING, "Cannot set look and feel");
-      }
+      LOGGER.log(Level.WARNING, "Cannot set look and feel");
+    }
 
-      if (!slimUi)
-      {
-        slimUi = UserPreferences.getOptions().isSlimUi();
-      }
-      UserPreferences.setSlimUi(slimUi);
-      new DaylightChartGui(location, slimUi).setVisible(true);
+    if (!slimUi)
+    {
+      slimUi = UserPreferences.getOptions().isSlimUi();
     }
+    UserPreferences.setSlimUi(slimUi);
+    new DaylightChartGui(location, slimUi).setVisible(true);
+
   }
 
   private Main()

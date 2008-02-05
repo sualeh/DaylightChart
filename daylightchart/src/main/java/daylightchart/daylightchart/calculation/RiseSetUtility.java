@@ -46,6 +46,7 @@ import org.sunposition.calculation.SunPositionAlgorithmFactory;
 import daylightchart.daylightchart.chart.TimeZoneOption;
 import daylightchart.location.Location;
 import daylightchart.location.parser.DefaultTimezones;
+import daylightchart.location.parser.LocationParser;
 import daylightchart.options.Options;
 
 /**
@@ -152,6 +153,23 @@ public final class RiseSetUtility
 
     return riseSetYear;
 
+  }
+
+  /**
+   * Shows the calculations.
+   * 
+   * @param args
+   *        Location
+   * @throws Exception
+   *         On an exception
+   */
+  public static void main(final String[] args)
+    throws Exception
+  {
+    final String locationString = args[0];
+    final Location location = LocationParser.parseLocation(locationString);
+    final File file = RiseSetUtility.writeCalculationsToFile(location);
+    System.out.println("Calculations written to " + file.getAbsolutePath());
   }
 
   /**

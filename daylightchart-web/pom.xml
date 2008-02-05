@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>daylightchart</groupId>
 		<artifactId>daylightchart-all</artifactId>
-		<version>${daylightchart.version}</version>
+		<version>3.0</version>
 	</parent>
 	<artifactId>daylightchart-web</artifactId>
 	<packaging>war</packaging>
@@ -14,7 +14,7 @@
 		<dependency>
 			<groupId>daylightchart</groupId>
 			<artifactId>daylightchart</artifactId>
-			<version>${daylightchart.version}</version>
+			<version>3.0</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
