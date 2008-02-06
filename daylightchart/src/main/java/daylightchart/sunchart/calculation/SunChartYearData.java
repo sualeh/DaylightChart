@@ -23,6 +23,7 @@ package daylightchart.sunchart.calculation;
 
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import daylightchart.location.Location;
@@ -42,13 +43,14 @@ public final class SunChartYearData
   private final int year;
   private boolean usesDaylightTime;
   private final Equinox equinox;
-  private List<SunPosition> sunPositions;
+  private final List<SunPositions> sunPositionsList;
 
   SunChartYearData(final Location location, final int year)
   {
     this.location = location;
     this.year = year;
     equinox = new Equinox(year);
+    sunPositionsList = new ArrayList<SunPositions>();
   }
 
   /**
@@ -64,9 +66,9 @@ public final class SunChartYearData
   /**
    * @return the sunPositions
    */
-  public List<SunPosition> getSunPositions()
+  public List<SunPositions> getSunPositionsList()
   {
-    return sunPositions;
+    return sunPositionsList;
   }
 
   /**
@@ -93,13 +95,14 @@ public final class SunChartYearData
    * @param sunPositions
    *        the sunPositions to set
    */
-  void setSunPositions(final List<SunPosition> sunPositions)
+  void add(final SunPositions sunPositions)
   {
-    this.sunPositions = sunPositions;
+    sunPositionsList.add(sunPositions);
   }
 
   void setUsesDaylightTime(final boolean usesDaylightTime)
   {
     this.usesDaylightTime = usesDaylightTime;
   }
+
 }

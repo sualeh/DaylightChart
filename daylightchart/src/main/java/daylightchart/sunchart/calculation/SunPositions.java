@@ -2,6 +2,9 @@ package daylightchart.sunchart.calculation;
 
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import org.apache.commons.lang.builder.CompareToBuilder;
 import org.apache.commons.lang.builder.EqualsBuilder;
@@ -9,26 +12,30 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 import org.joda.time.LocalDate;
-import org.joda.time.LocalDateTime;
-import org.joda.time.LocalTime;
-import org.sunposition.calculation.ExtendedSunPositionAlgorithm.SolarEphemerides;
 
-public class SunPosition
-  implements Serializable, Comparable<SunPosition>
+public class SunPositions
+  implements Serializable, Comparable<SunPositions>
 {
 
-  private static final long serialVersionUID = -7394558865293598834L;
+  private static final long serialVersionUID = -6448204793272141613L;
 
-  private final LocalDateTime dateTime;
-  private final double azimuth;
-  private final double altitude;
+  private final LocalDate date;
+  private final List<SunPosition> sunPositions;
 
-  public SunPosition(final LocalDateTime dateTime,
-                     final SolarEphemerides solarEphemerides)
+  public SunPositions(final LocalDate date)
   {
-    this.dateTime = dateTime;
-    azimuth = solarEphemerides.getAzimuth();
-    altitude = solarEphemerides.getAltitude();
+    this.date = date;
+    sunPositions = new ArrayList<SunPosition>();
+  }
+
+  public void add(final SunPosition sunPosition)
+  {
+    if (sunPosition == null || !sunPosition.getDate().equals(date))
+    {
+      throw new IllegalArgumentException("Cannot add " + sunPosition);
+    }
+    sunPositions.add(sunPosition);
+    Collections.sort(sunPositions);
   }
 
   /**
@@ -36,7 +43,7 @@ public class SunPosition
    * 
    * @see java.lang.Comparable#compareTo(java.lang.Object)
    */
-  public int compareTo(final SunPosition o)
+  public int compareTo(final SunPositions o)
   {
     return CompareToBuilder.reflectionCompare(this, o);
   }
@@ -53,43 +60,19 @@ public class SunPosition
   }
 
   /**
-   * @return the altitude
-   */
-  public double getAltitude()
-  {
-    return altitude;
-  }
-
-  /**
-   * @return the azimuth
-   */
-  public double getAzimuth()
-  {
-    return azimuth;
-  }
-
-  /**
    * @return the date
    */
   public LocalDate getDate()
   {
-    return dateTime.toLocalDate();
+    return date;
   }
 
   /**
-   * @return the dateTime
+   * @return the sunPositions
    */
-  public LocalDateTime getDateTime()
+  public List<SunPosition> getSunPositions()
   {
-    return dateTime;
-  }
-
-  /**
-   * @return the time
-   */
-  public LocalTime getTime()
-  {
-    return dateTime.toLocalTime();
+    return sunPositions;
   }
 
   /**

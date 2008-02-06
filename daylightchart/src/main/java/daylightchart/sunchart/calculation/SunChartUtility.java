@@ -30,6 +30,7 @@ import java.io.Writer;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -74,22 +75,23 @@ public final class SunChartUtility
   {
     final SunChartYearData sunChartYear = new SunChartYearData(location, year);
 
-    final List<SunPosition> sunPositions = new ArrayList<SunPosition>();
-    for (final LocalDateTime dateTime: getYearsDates(year))
+    for (final LocalDate date: getYearsDates(year))
     {
-      sunAlgorithm.setDate(dateTime.getYear(),
-                           dateTime.getMonthOfYear(),
-                           dateTime.getDayOfMonth());
-      final double hour = dateTime.getHourOfDay() + dateTime.getMinuteOfHour()
-                          / 60D;
-      final SolarEphemerides solarEphemerides = sunAlgorithm
-        .calcSolarEphemerides(hour);
-      final SunPosition sunPosition = new SunPosition(dateTime,
-                                                      solarEphemerides);
-      sunPositions.add(sunPosition);
+      final SunPositions sunPositions = new SunPositions(date);
+      sunAlgorithm.setDate(date.getYear(), date.getMonthOfYear(), date
+        .getDayOfMonth());
+      for (int hour = 0; hour < 24; hour++)
+      {
+        final SolarEphemerides solarEphemerides = sunAlgorithm
+          .calcSolarEphemerides(hour);
+        final LocalDateTime dateTime = new LocalDateTime(date.getYear(), date
+          .getMonthOfYear(), date.getDayOfMonth(), hour, 0, 0);
+        final SunPosition sunPosition = new SunPosition(dateTime,
+                                                        solarEphemerides);
+        sunPositions.add(sunPosition);
+      }
+      sunChartYear.add(sunPositions);
     }
-    sunChartYear.setSunPositions(sunPositions);
-
     return sunChartYear;
   }
 
@@ -139,9 +141,9 @@ public final class SunChartUtility
    * 
    * @return All the dates for the year
    */
-  private static List<LocalDateTime> getYearsDates(final int year)
+  private static List<LocalDate> getYearsDates(final int year)
   {
-    final List<LocalDateTime> dates = new ArrayList<LocalDateTime>();
+    final List<LocalDate> dates = new ArrayList<LocalDate>();
     final Equinox equinox = new Equinox(year);
     for (int month = 1; month <= 12; month++)
     {
@@ -164,8 +166,7 @@ public final class SunChartUtility
           date = new LocalDate(year, month, 15);
           break;
       }
-      dates.add(new LocalDateTime(date.getYear(), date.getMonthOfYear(), date
-        .getDayOfMonth(), 12, 0, 0));
+      dates.add(date);
     }
     return dates;
   }
@@ -189,13 +190,21 @@ public final class SunChartUtility
     // Header
     printWriter.printf("Location\t%s%nDate\t%s%n%n", location, year);
     // Data rows
-    printWriter.println("Date\tAltitude\tAzimuth");
-    final List<SunPosition> sunPositions = sunChartYear.getSunPositions();
-    for (final SunPosition sunPosition: sunPositions)
+    final List<SunPositions> sunPositionsList = sunChartYear
+      .getSunPositionsList();
+    for (final SunPositions sunPositions: sunPositionsList)
     {
-      printWriter.printf("%s\t%s\t%s%n", sunPosition.getDateTime()
-        .toLocalDate(), Angle.fromDegrees(sunPosition.getAltitude()), Angle
-        .fromDegrees(sunPosition.getAzimuth()));
+      printWriter.println("Date\tTime\tAltitude\tAzimuth");
+      List<SunPosition> sunPositionList = sunPositions.getSunPositions();
+      for (Iterator iterator = sunPositionList.iterator(); iterator.hasNext();)
+      {
+        SunPosition sunPosition = (SunPosition) iterator.next();
+        printWriter.printf("%s\t%s\t%s\t%s%n", sunPosition.getDateTime()
+          .toLocalDate(), sunPosition.getDateTime().toLocalTime(), Angle
+          .fromDegrees(sunPosition.getAltitude()), Angle
+          .fromDegrees(sunPosition.getAzimuth()));
+      }
+      printWriter.println();
     }
   }
 

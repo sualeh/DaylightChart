@@ -29,11 +29,6 @@ import org.joda.time.LocalDateTime;
 public class Equinox
 {
 
-  public static void main(final String[] args)
-  {
-    System.out.println(new Equinox(2008));
-  }
-
   private final LocalDateTime vernalEquinox;
   private final LocalDateTime summerSolstice;
   private final LocalDateTime autumnalEquinox;
