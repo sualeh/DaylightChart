@@ -42,112 +42,8 @@ package org.sunposition.calculation;
  * @author Sualeh Fatehi
  */
 class CobbledSunCalc
-  extends BaseSunPositionAlgorithm
-  implements ExtendedSunPositionAlgorithm
+  extends BaseExtendedSunPositionAlgorithm
 {
-
-  private static class SolarEphemerides
-    implements ExtendedSunPositionAlgorithm.SolarEphemerides
-  {
-
-    private double declination;
-    private double rightAscension;
-    private double hourAngle;
-    private double azimuth;
-    private double altitude;
-    private double equationOfTime;
-
-    /**
-     * {@inheritDoc}
-     * 
-     * @see org.sunposition.calculation.SolarEphemerides#getAltitude()
-     */
-    public double getAltitude()
-    {
-      return altitude;
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * @see org.sunposition.calculation.SolarEphemerides#getAzimuth()
-     */
-    public double getAzimuth()
-    {
-      return azimuth;
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * @see org.sunposition.calculation.SolarEphemerides#getDeclination()
-     */
-    public double getDeclination()
-    {
-      return declination;
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * @see org.sunposition.calculation.SolarEphemerides#getEquationOfTime()
-     */
-    public double getEquationOfTime()
-    {
-      return equationOfTime;
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * @see org.sunposition.calculation.SolarEphemerides#getHourAngle()
-     */
-    public double getHourAngle()
-    {
-      return hourAngle;
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * @see org.sunposition.calculation.SolarEphemerides#getRightAscension()
-     */
-    public double getRightAscension()
-    {
-      return rightAscension;
-    }
-
-    void setAltitude(final double altitude)
-    {
-      this.altitude = altitude;
-    }
-
-    void setAzimuth(final double azimuth)
-    {
-      this.azimuth = azimuth;
-    }
-
-    void setDeclination(final double declination)
-    {
-      this.declination = declination;
-    }
-
-    void setEquationOfTime(final double equationOfTime)
-    {
-      this.equationOfTime = equationOfTime;
-    }
-
-    void setHourAngle(final double hourAngle)
-    {
-      this.hourAngle = hourAngle;
-    }
-
-    void setRightAscension(final double rightAscension)
-    {
-      this.rightAscension = rightAscension;
-    }
-
-  }
 
   /**
    * <p>
@@ -500,12 +396,12 @@ class CobbledSunCalc
      * degrees, and west to be 270 degrees.
      */
     // Azimuth (degrees)
-    azimuth = Math.acos((sinD(altitude) * sinD(latitude) - sinD(declination))
+    azimuth = Math.acos(-(sinD(altitude) * sinD(latitude) - sinD(declination))
                         / (cosD(altitude) * cosD(latitude)));
     azimuth = Math.toDegrees(azimuth);
-    if (azimuth * tau < 0)
+    if (tau >= 0)
     {
-      azimuth *= -1;
+      azimuth = 360 - azimuth;
     }
     epherimides.setAzimuth(azimuth);
 
