@@ -37,7 +37,6 @@ import java.util.logging.Logger;
 
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
-import org.pointlocation6709.Angle;
 import org.sunposition.calculation.ExtendedSunPositionAlgorithm;
 import org.sunposition.calculation.SunPositionAlgorithmFactory;
 import org.sunposition.calculation.ExtendedSunPositionAlgorithm.SolarEphemerides;
@@ -194,15 +193,15 @@ public final class SunChartUtility
       .getSunPositionsList();
     for (final SunPositions sunPositions: sunPositionsList)
     {
-      printWriter.println("Date\tTime\tAltitude\tAzimuth");
+      printWriter.println("Date\tTime\tAzimuth\tAltitude");
       List<SunPosition> sunPositionList = sunPositions.getSunPositions();
       for (Iterator iterator = sunPositionList.iterator(); iterator.hasNext();)
       {
         SunPosition sunPosition = (SunPosition) iterator.next();
         printWriter.printf("%s\t%s\t%s\t%s%n", sunPosition.getDateTime()
-          .toLocalDate(), sunPosition.getDateTime().toLocalTime(), Angle
-          .fromDegrees(sunPosition.getAltitude()), Angle
-          .fromDegrees(sunPosition.getAzimuth()));
+          .toLocalDate(), sunPosition.getDateTime().toLocalTime(), format
+          .format(sunPosition.getAzimuth()), format.format(sunPosition
+          .getAltitude()));
       }
       printWriter.println();
     }
