@@ -399,10 +399,8 @@ class CobbledSunCalc
     azimuth = Math.acos(-(sinD(altitude) * sinD(latitude) - sinD(declination))
                         / (cosD(altitude) * cosD(latitude)));
     azimuth = Math.toDegrees(azimuth);
-    if (tau >= 0)
-    {
-      azimuth = 360 - azimuth;
-    }
+    azimuth = azimuth + 90;
+    azimuth = range360(azimuth);
     epherimides.setAzimuth(azimuth);
 
     /*

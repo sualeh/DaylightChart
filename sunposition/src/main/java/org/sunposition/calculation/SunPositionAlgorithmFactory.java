@@ -30,6 +30,8 @@ package org.sunposition.calculation;
 public final class SunPositionAlgorithmFactory
 {
 
+  private static final ExtendedSunPositionAlgorithm sunPositionAlgorithm = new CobbledSunCalc();
+
   /**
    * Create an instance of a sunrise/ sunset algorithm.
    * 
@@ -37,7 +39,7 @@ public final class SunPositionAlgorithmFactory
    */
   public static SunPositionAlgorithm getInstance()
   {
-    return new CobbledSunCalc();
+    return sunPositionAlgorithm;
   }
 
   /**
@@ -47,7 +49,7 @@ public final class SunPositionAlgorithmFactory
    */
   public static ExtendedSunPositionAlgorithm getExtendedSunPositionAlgorithmInstance()
   {
-    return new CobbledSunCalc();
+    return sunPositionAlgorithm;
   }
 
   private SunPositionAlgorithmFactory()
