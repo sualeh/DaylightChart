@@ -122,7 +122,9 @@ public final class SunChartUtility
   {
     try
     {
-      final File file = new File(location.getDescription() + ".txt");
+      final File file = new File(location.getDescription()
+                                 + sunAlgorithm.getClass().getCanonicalName()
+                                 + ".txt");
       final FileWriter writer = new FileWriter(file);
       writeCalculations(writer, location);
       return file;
@@ -179,7 +181,7 @@ public final class SunChartUtility
       return;
     }
 
-    final DecimalFormat format = new DecimalFormat("00.000");
+    final DecimalFormat format = new DecimalFormat("+000.000;-000.000");
     format.setMaximumFractionDigits(3);
 
     final int year = Calendar.getInstance().get(Calendar.YEAR);
@@ -193,15 +195,20 @@ public final class SunChartUtility
       .getSunPositionsList();
     for (final SunPositions sunPositions: sunPositionsList)
     {
-      printWriter.println("Date\tTime\tAzimuth\tAltitude");
+      printWriter
+        .println("Date     \tTime     \tAzimuth      \tAltitude   \tHour Angle   \tEqn of Time  \tDeclination");
       List<SunPosition> sunPositionList = sunPositions.getSunPositions();
       for (Iterator iterator = sunPositionList.iterator(); iterator.hasNext();)
       {
         SunPosition sunPosition = (SunPosition) iterator.next();
-        printWriter.printf("%s\t%s\t%s\t%s%n", sunPosition.getDateTime()
-          .toLocalDate(), sunPosition.getDateTime().toLocalTime(), format
-          .format(sunPosition.getAzimuth()), format.format(sunPosition
-          .getAltitude()));
+        printWriter.printf("%s\t%s\t%s\t%s\t%s\t%s\t%s%n",
+                           sunPosition.getDateTime().toLocalDate(),
+                           sunPosition.getDateTime().toLocalTime(),
+                           format.format(sunPosition.getAzimuth()),
+                           format.format(sunPosition.getAltitude()),
+                           format.format(sunPosition.getHourAngle()),
+                           format.format(sunPosition.getEquationOfTime()),
+                           format.format(sunPosition.getDeclination()));
       }
       printWriter.println();
     }

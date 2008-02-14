@@ -14,21 +14,19 @@ import org.joda.time.LocalTime;
 import org.sunposition.calculation.ExtendedSunPositionAlgorithm.SolarEphemerides;
 
 public class SunPosition
-  implements Serializable, Comparable<SunPosition>
+  implements SolarEphemerides, Serializable, Comparable<SunPosition>
 {
 
   private static final long serialVersionUID = -7394558865293598834L;
 
   private final LocalDateTime dateTime;
-  private final double azimuth;
-  private final double altitude;
+  private final SolarEphemerides solarEphemerides;
 
   public SunPosition(final LocalDateTime dateTime,
                      final SolarEphemerides solarEphemerides)
   {
     this.dateTime = dateTime;
-    azimuth = solarEphemerides.getAzimuth();
-    altitude = solarEphemerides.getAltitude();
+    this.solarEphemerides = solarEphemerides;
   }
 
   /**
@@ -57,7 +55,7 @@ public class SunPosition
    */
   public double getAltitude()
   {
-    return altitude;
+    return solarEphemerides.getAltitude();
   }
 
   /**
@@ -65,7 +63,7 @@ public class SunPosition
    */
   public double getAzimuth()
   {
-    return azimuth;
+    return solarEphemerides.getAzimuth();
   }
 
   /**
@@ -82,6 +80,46 @@ public class SunPosition
   public LocalDateTime getDateTime()
   {
     return dateTime;
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see org.sunposition.calculation.ExtendedSunPositionAlgorithm.SolarEphemerides#getDeclination()
+   */
+  public double getDeclination()
+  {
+    return solarEphemerides.getDeclination();
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see org.sunposition.calculation.ExtendedSunPositionAlgorithm.SolarEphemerides#getEquationOfTime()
+   */
+  public double getEquationOfTime()
+  {
+    return solarEphemerides.getEquationOfTime();
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see org.sunposition.calculation.ExtendedSunPositionAlgorithm.SolarEphemerides#getHourAngle()
+   */
+  public double getHourAngle()
+  {
+    return solarEphemerides.getHourAngle();
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see org.sunposition.calculation.ExtendedSunPositionAlgorithm.SolarEphemerides#getRightAscension()
+   */
+  public double getRightAscension()
+  {
+    return solarEphemerides.getRightAscension();
   }
 
   /**
