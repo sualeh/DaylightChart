@@ -282,13 +282,13 @@ class CobbledSunCalc
     final double q;
     final double alpha;
     final double e;
-    final double EqT;
+    double EqT;
     double declination;
     double RA;
-    final double tau;
+    double tau;
     double altitude;
     double azimuth;
-    final SolarEphemerides epherimides = new SolarEphemerides();
+    final BaseSolarEphemerides epherimides = new BaseSolarEphemerides();
 
     // Universal Time
     UT = hour - timezoneOffset;
@@ -370,6 +370,18 @@ class CobbledSunCalc
      */
     // Hour Angle (degrees)
     tau = 15D * (LMST - RA);
+    if (hour > 12D && tau < 0)
+    {
+      tau = tau + 360D;
+    }
+    if (hour <= 12D && tau > 0)
+    {
+      tau = 360D - tau;
+    }
+    if ((hour <= 12D) && (hour > 0) && tau > 0)
+    {
+      tau = -tau;
+    }
     epherimides.setHourAngle(tau);
 
     /*
@@ -396,10 +408,13 @@ class CobbledSunCalc
      * degrees, and west to be 270 degrees.
      */
     // Azimuth (degrees)
-    azimuth = Math.acos(-(sinD(altitude) * sinD(latitude) - sinD(declination))
+    azimuth = Math.acos((sinD(altitude) * sinD(latitude) - sinD(declination))
                         / (cosD(altitude) * cosD(latitude)));
-    azimuth = Math.toDegrees(azimuth);
-    azimuth = azimuth + 90;
+    azimuth = 180 - Math.toDegrees(azimuth);
+    if (tau > 0)
+    {
+      azimuth = -azimuth;
+    }
     azimuth = range360(azimuth);
     epherimides.setAzimuth(azimuth);
 
@@ -410,6 +425,10 @@ class CobbledSunCalc
      */
     // Equation of Time (minutes)
     EqT = (q / 15D - RA) * 60D;
+    while (EqT > 1400)
+    {
+      EqT = EqT - 1440;
+    }
     epherimides.setEquationOfTime(EqT);
 
     // The Sun's ecliptic latitude, b, can be approximated by
