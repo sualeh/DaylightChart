@@ -46,7 +46,7 @@ abstract class BaseExtendedSunPositionAlgorithm
   implements ExtendedSunPositionAlgorithm
 {
 
-  protected static class SolarEphemerides
+  static class BaseSolarEphemerides
     implements ExtendedSunPositionAlgorithm.SolarEphemerides
   {
 
