@@ -25,10 +25,13 @@ package daylightchart.location;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
+import java.util.SimpleTimeZone;
 import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.pointlocation6709.Angle;
+import org.pointlocation6709.Latitude;
 import org.pointlocation6709.Longitude;
 import org.pointlocation6709.PointLocation;
 
@@ -57,6 +60,15 @@ public final class Location
 
   private transient String description;
   private transient String details;
+
+  public Location()
+  {
+    this("",
+         Country.UNKNOWN,
+         SimpleTimeZone.getDefault().getID(),
+         new PointLocation(new Latitude(Angle.fromDegrees(0)),
+                           new Longitude(Angle.fromDegrees(0))));
+  }
 
   /**
    * Copy constructor. Copies the value of a provided location.

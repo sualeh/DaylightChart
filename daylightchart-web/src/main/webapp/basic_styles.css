@@ -1,0 +1,79 @@
+body,td,select,input {
+	font-family: Verdana, Helvetica, sans-serif;
+	font-size: 9pt;
+}
+
+code {
+	font-family: Courier New, Courier, monospace;
+	font-size: 9pt;
+}
+
+hr {
+	height: .3pt;
+	color: Silver;
+}
+
+h1 {
+	color: Navy;
+	font-size: 14pt;
+}
+
+h2 {
+	color: Maroon;
+	font-size: 12pt;
+}
+
+h3 {
+	color: Green;
+	font-size: 10pt;
+}
+
+h4 {
+	color: Green;
+	font-size: 9pt;
+}
+
+dl,ul,ol {
+	padding: 0px 0px 0px 0px;
+	border: 0px;
+	background-color: #ffffff;
+}
+
+p {
+	font-size: 9pt;
+}
+
+ul {
+	margin-left: 1em;
+	padding-left: 1em;
+}
+
+a:link {
+	color: Maroon;
+}
+
+a:visited {
+	color: Navy;
+}
+
+a:active,a:hover {
+	color: Blue;
+}
+
+tr.odd {
+	background-color: White;
+}
+
+tr.even {
+	background-color: #EEEEEE;
+}
+
+tr.navigation {
+	background-color: White;
+}
+
+tr.headers {
+	font-family: Verdana, Helvetica, sans-serif;
+	font-size: 9pt;
+	font-weight: normal;
+}
