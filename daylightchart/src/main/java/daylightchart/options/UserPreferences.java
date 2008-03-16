@@ -305,7 +305,7 @@ public final class UserPreferences
    * 
    * @return Chart options
    */
-  private static Options getDefaultDaylightChartOptions()
+  public static Options getDefaultDaylightChartOptions()
   {
     final ChartOptions chartOptions = new ChartOptions();
     chartOptions.copyFromChart(new DaylightChart());
