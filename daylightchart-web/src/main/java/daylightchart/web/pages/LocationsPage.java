@@ -27,7 +27,7 @@ public class LocationsPage
   {
     add(new FeedbackPanel("errorMessages"));
 
-    add(new LocationsTable("locationsTable", 5));
+    add(new LocationsTable("locationsTable", 20));
 
     final Panel locationPanel = new LocationPanel("locationAdd");
     locationPanel.setVisible(false);

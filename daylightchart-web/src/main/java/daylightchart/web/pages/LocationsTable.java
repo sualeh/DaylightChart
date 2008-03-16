@@ -33,7 +33,7 @@ public class LocationsTable
     public Iterator<Location> iterator(final int first, final int count)
     {
       final SortParam sortParam = getSort();
-      List<Location> locations = UserPreferences.getLocations();
+      final List<Location> locations = UserPreferences.getLocations();
       return locations.listIterator(first);
     }
 
@@ -54,7 +54,7 @@ public class LocationsTable
   private static IColumn[] getColumnsForLocationsTable()
   {
     final List<IColumn> columns = new ArrayList<IColumn>();
-    columns.add(new AbstractColumn(new Model("Edit/ Delete"))
+    columns.add(new AbstractColumn(new Model(""))
     {
       private static final long serialVersionUID = 6566804574749277918L;
 

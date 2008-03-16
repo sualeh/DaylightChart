@@ -30,6 +30,7 @@ public class DaylightChartWebApplication
   protected void init()
   {
     super.init();
+    getRequestCycleSettings().setGatherExtendedBrowserInfo(true);
     mount("/daylightchart", PackageName.forClass(LocationsPage.class));
   }
 

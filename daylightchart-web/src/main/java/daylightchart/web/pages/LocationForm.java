@@ -20,13 +20,9 @@ final class LocationForm
 
   private static final long serialVersionUID = 2682300618749680498L;
 
-  private final boolean isInEditMode;
-
   LocationForm(final String id, final IModel model, final boolean isInEditMode)
   {
     super(id, model);
-
-    this.isInEditMode = isInEditMode;
   }
 
   @Override
