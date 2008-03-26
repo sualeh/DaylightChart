@@ -23,6 +23,7 @@ package daylightchart.daylightchart.calculation;
 
 
 import java.io.PrintWriter;
+import java.io.Serializable;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -39,6 +40,7 @@ import org.joda.time.LocalDate;
  * @author sfatehi
  */
 public final class DaylightBand
+  implements Serializable
 {
 
   private final DaylightBandType bandType;

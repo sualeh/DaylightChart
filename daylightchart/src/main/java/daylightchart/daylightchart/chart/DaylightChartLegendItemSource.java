@@ -26,6 +26,7 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Paint;
 import java.awt.Rectangle;
+import java.io.Serializable;
 
 import org.jfree.chart.LegendItem;
 import org.jfree.chart.LegendItemCollection;
@@ -36,7 +37,7 @@ import daylightchart.daylightchart.calculation.TwilightType;
 import daylightchart.options.Options;
 
 final class DaylightChartLegendItemSource
-  implements LegendItemSource
+  implements LegendItemSource, Serializable
 {
 
   private final Options options;
