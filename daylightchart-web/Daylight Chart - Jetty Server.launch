@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="RunJettyRunWebApp">
+<booleanAttribute key="org.eclipse.debug.core.appendEnvironmentVariables" value="true"/>
+<listAttribute key="org.eclipse.debug.ui.favoriteGroups">
+<listEntry value="org.eclipse.debug.ui.launchGroup.run"/>
+</listAttribute>
+<stringAttribute key="org.eclipse.jdt.launching.CLASSPATH_PROVIDER" value="RunJettyRunWebAppClassPathProvider"/>
+<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="runjettyrun.Bootstrap"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="daylightchart-web"/>
+<stringAttribute key="run_jetty_run.CONTEXT_ATTR" value="/"/>
+<stringAttribute key="run_jetty_run.PORT_ATTR" value="8191"/>
+<stringAttribute key="run_jetty_run.WEBAPPDIR_ATTR" value="src/main/webapp"/>
+</launchConfiguration>
