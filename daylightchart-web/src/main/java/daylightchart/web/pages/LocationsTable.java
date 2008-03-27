@@ -65,8 +65,17 @@ public class LocationsTable
         cellItem.add(new LocationEditDeletePanel(componentId, rowModel));
       }
     });
-    columns.add(new PropertyColumn(new Model("City"), "city", "city"));
-    columns.add(new PropertyColumn(new Model("Country"), "country", "country"));
+    columns.add(new AbstractColumn(new Model("City"))
+    {
+      private static final long serialVersionUID = 1388300765673366L;
+
+      public void populateItem(final Item cellItem,
+                               final String componentId,
+                               final IModel rowModel)
+      {
+        cellItem.add(new DaylightChartPanel(componentId, rowModel));
+      }
+    });
     columns.add(new PropertyColumn(new Model("Latitude"),
                                    "pointLocation.latitude",
                                    "pointLocation.latitude"));

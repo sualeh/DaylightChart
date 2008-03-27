@@ -39,19 +39,6 @@ final class LocationEditDeletePanel
     locationPanel.setOutputMarkupPlaceholderTag(true);
     add(locationPanel);
 
-    final Link chartLink = new Link("chart", model)
-    {
-      private static final long serialVersionUID = 3335666889745114007L;
-
-      @Override
-      public void onClick()
-      {
-        Location location = (Location) getModelObject();
-        setResponsePage(new DaylightChartPage(location));
-      }
-    };
-    add(chartLink);
-
     final Link deleteLink = new Link("delete", model)
     {
       private static final long serialVersionUID = 8375528747622018389L;
