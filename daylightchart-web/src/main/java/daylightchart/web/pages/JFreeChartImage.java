@@ -2,14 +2,14 @@ package daylightchart.web.pages;
 
 
 import org.apache.wicket.Resource;
-import org.apache.wicket.markup.html.image.Image;
+import org.apache.wicket.markup.html.image.NonCachingImage;
 import org.apache.wicket.markup.html.image.resource.DynamicImageResource;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.protocol.http.WebResponse;
 import org.jfree.chart.JFreeChart;
 
 public class JFreeChartImage
-  extends Image
+  extends NonCachingImage
 {
 
   private final int width;

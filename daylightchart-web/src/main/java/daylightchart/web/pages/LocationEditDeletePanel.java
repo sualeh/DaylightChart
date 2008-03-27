@@ -60,6 +60,8 @@ final class LocationEditDeletePanel
                                          true,
                                          new Model(callConfirmJs)));
     add(deleteLink);
+    deleteLink.add(new ClasspathImage("deleteIcon",
+                                      "/icons/delete_location.gif"));
 
     final AjaxLink editLink = new AjaxLink("edit")
     {
@@ -73,6 +75,7 @@ final class LocationEditDeletePanel
       }
     };
     add(editLink);
+    editLink.add(new ClasspathImage("editIcon", "/icons/edit_location.gif"));
 
   }
 
