@@ -42,7 +42,6 @@ import sf.util.ui.GuiAction;
 import daylightchart.gui.DaylightChartGui;
 import daylightchart.gui.Messages;
 import daylightchart.location.Location;
-import daylightchart.location.parser.LocationsLoader;
 import daylightchart.options.UserPreferences;
 
 /**
@@ -89,10 +88,9 @@ public final class OpenLocationsFileAction
 
       try
       {
-        final List<Location> locations = LocationsLoader.load(selectedFile);
-        Collections.sort(locations, mainWindow.getOptions()
-          .getLocationsSortOrder());
-        if (locations == null || locations.size() == 0)
+        final List<Location> locations = UserPreferences
+          .loadLocationsFromFile(selectedFile);
+        if (locations == null)
         {
           LOGGER.log(Level.WARNING, Messages
             .getString("DaylightChartGui.Message.Error.CannotOpenFile")); //$NON-NLS-1$
@@ -105,6 +103,8 @@ public final class OpenLocationsFileAction
         }
         else
         {
+          Collections.sort(locations, mainWindow.getOptions()
+            .getLocationsSortOrder());
           mainWindow.setLocations(locations);
           UserPreferences.setWorkingDirectory(selectedFile.getParentFile());
         }

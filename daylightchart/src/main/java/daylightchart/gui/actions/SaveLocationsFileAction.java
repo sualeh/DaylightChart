@@ -40,7 +40,6 @@ import sf.util.ui.GuiAction;
 import sf.util.ui.Actions.SelectedFile;
 import daylightchart.gui.DaylightChartGui;
 import daylightchart.gui.Messages;
-import daylightchart.location.parser.LocationFormatter;
 import daylightchart.options.UserPreferences;
 
 /**
@@ -86,9 +85,7 @@ public final class SaveLocationsFileAction
       {
         try
         {
-          LocationFormatter.formatLocations(mainWindow.getLocations(),
-                                            selectedFile.getFile());
-
+          UserPreferences.saveLocationsToFile(selectedFile.getFile());
           // Save last selected directory
           UserPreferences.setWorkingDirectory(selectedFile.getDirectory());
         }

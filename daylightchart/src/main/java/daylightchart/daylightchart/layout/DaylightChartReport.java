@@ -47,6 +47,7 @@ import daylightchart.daylightchart.calculation.RiseSetYearData;
 import daylightchart.daylightchart.chart.DaylightChart;
 import daylightchart.location.Location;
 import daylightchart.options.Options;
+import daylightchart.options.UserPreferences;
 
 public class DaylightChartReport
 {
@@ -152,7 +153,7 @@ public class DaylightChartReport
 
       // Generate JasperReport for the chart
       // 1. Load compiled report
-      final JasperReport jasperReport = options.getJasperReport();
+      final JasperReport jasperReport = UserPreferences.getReport();
       // 2. Prepare parameters
       final Map<String, Object> parameters = new HashMap<String, Object>();
       parameters.put("location", location);

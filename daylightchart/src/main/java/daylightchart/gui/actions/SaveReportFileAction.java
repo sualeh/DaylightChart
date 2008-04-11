@@ -33,8 +33,6 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 
-import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.xml.JRXmlWriter;
 import sf.util.ui.Actions;
 import sf.util.ui.ExtensionFileFilter;
 import sf.util.ui.GuiAction;
@@ -85,11 +83,7 @@ public final class SaveReportFileAction
       {
         try
         {
-          JasperReport jasperReport = UserPreferences.getOptions()
-            .getJasperReport();
-          JRXmlWriter.writeReport(jasperReport, selectedFile.getFile()
-            .getAbsolutePath(), "UTF-8");
-
+          UserPreferences.saveReportToFile(selectedFile.getFile());
           // Save last selected directory
           UserPreferences.setWorkingDirectory(selectedFile.getDirectory());
         }

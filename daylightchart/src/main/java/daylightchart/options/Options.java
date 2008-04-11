@@ -25,8 +25,6 @@ package daylightchart.options;
 import java.io.File;
 import java.io.Serializable;
 
-import net.sf.jasperreports.engine.JasperReport;
-
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
@@ -52,13 +50,8 @@ public class Options
   private ChartOrientation chartOrientation;
   private TwilightType twilightType;
   private boolean showChartLegend;
-  //
   private ChartOptions chartOptions;
-  //
   private File workingDirectory;
-  //
-  private JasperReport jasperReport;
-  // 
   private boolean slimUi;
 
   /**
@@ -72,8 +65,6 @@ public class Options
     chartOrientation = ChartOrientation.STANDARD;
     twilightType = TwilightType.CIVIL;
     showChartLegend = true;
-
-    jasperReport = UserPreferences.loadDefaultJasperReport();
   }
 
   public final ChartOptions getChartOptions()
@@ -89,11 +80,6 @@ public class Options
   public ChartOrientation getChartOrientation()
   {
     return chartOrientation;
-  }
-
-  public JasperReport getJasperReport()
-  {
-    return jasperReport;
   }
 
   /**
@@ -176,15 +162,6 @@ public class Options
     {
       this.chartOrientation = chartOrientation;
     }
-  }
-
-  /**
-   * @param jasperReport
-   *        the jasperReport to set
-   */
-  public void setJasperReport(final JasperReport jasperReport)
-  {
-    this.jasperReport = jasperReport;
   }
 
   /**

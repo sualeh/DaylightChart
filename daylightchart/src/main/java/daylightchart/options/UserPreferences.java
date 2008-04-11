@@ -22,12 +22,12 @@
 package daylightchart.options;
 
 
-import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -40,6 +40,7 @@ import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
+import net.sf.jasperreports.engine.xml.JRXmlWriter;
 
 import com.thoughtworks.xstream.XStream;
 
@@ -69,9 +70,11 @@ public final class UserPreferences
   private static final File settingsDirectory;
 
   private static final File locationsDataFile;
+  private static final File reportFile;
   private static final File optionsFile;
 
   private static List<Location> locations;
+  private static JasperReport report;
   private static Options options;
 
   static
@@ -85,10 +88,12 @@ public final class UserPreferences
     validateDirectory(settingsDirectory);
 
     locationsDataFile = new File(settingsDirectory, "locations.data");
+    reportFile = new File(settingsDirectory, "DaylightChartReport.jrxml");
     optionsFile = new File(settingsDirectory, "options.xml");
 
-    locations = loadLocations();
-    options = loadOptions();
+    initializeLocations();
+    initializeReport();
+    initializeOptions();
   }
 
   /**
@@ -100,13 +105,37 @@ public final class UserPreferences
     {
       optionsFile.delete();
     }
-    options = loadOptions();
+    initializeOptions();
 
     if (locationsDataFile.exists())
     {
       locationsDataFile.delete();
     }
-    locations = loadLocations();
+    initializeLocations();
+
+    if (reportFile.exists())
+    {
+      reportFile.delete();
+    }
+    initializeReport();
+  }
+
+  /**
+   * Creates a chart options instance.
+   * 
+   * @return Chart options
+   */
+  public static Options getDefaultDaylightChartOptions()
+  {
+    final ChartOptions chartOptions = new ChartOptions();
+    chartOptions.copyFromChart(new DaylightChart());
+
+    final Options options = new Options();
+    options.setChartOptions(chartOptions);
+
+    // Save the defaults
+    setOptions(options);
+    return options;
   }
 
   /**
@@ -130,6 +159,16 @@ public final class UserPreferences
   }
 
   /**
+   * Gets the report for the current user.
+   * 
+   * @return Report
+   */
+  public static JasperReport getReport()
+  {
+    return report;
+  }
+
+  /**
    * @return the workingDirectory
    */
   public static File getScratchDirectory()
@@ -149,23 +188,11 @@ public final class UserPreferences
   public static boolean importReport(final File reportFile)
   {
     boolean imported = false;
-    if (reportFile != null && reportFile.exists() && reportFile.canRead())
+    final JasperReport report = loadReportFromFile(reportFile);
+    if (report != null)
     {
-      try
-      {
-        final InputStream reportStream = new BufferedInputStream(new FileInputStream(reportFile));
-        final JasperReport jasperReport = compileReport(reportStream);
-        if (jasperReport != null)
-        {
-          options.setJasperReport(jasperReport);
-          setOptions(options); // Save options
-          imported = true;
-        }
-      }
-      catch (final FileNotFoundException e)
-      {
-        LOGGER.log(Level.WARNING, "Cannot load JasperReport", e);
-      }
+      setReport(report);
+      imported = true;
     }
     return imported;
   }
@@ -178,6 +205,69 @@ public final class UserPreferences
   public static boolean isSavePreferences()
   {
     return savePreferences;
+  }
+
+  public static List<Location> loadLocationsFromFile(final File file)
+  {
+    if (file == null || !file.exists() || !file.canRead())
+    {
+      return null;
+    }
+    List<Location> locations;
+    try
+    {
+      locations = LocationParser.parseLocations(file);
+    }
+    catch (final ParserException e)
+    {
+      LOGGER.log(Level.WARNING, "Could not read locations from " + file, e);
+      locations = null;
+    }
+    if (locations != null && locations.size() == 0)
+    {
+      LOGGER.log(Level.WARNING, "Could not read locations from " + file);
+      locations = null;
+    }
+    return locations;
+  }
+
+  public static Options loadOptionsFromFile(final File file)
+  {
+    if (file == null || !file.exists() || !file.canRead())
+    {
+      return null;
+    }
+    Options options;
+    try
+    {
+      final XStream xStream = new XStream();
+      options = (Options) xStream.fromXML(new FileReader(file));
+    }
+    catch (final Exception e)
+    {
+      LOGGER.log(Level.WARNING, "Could not read options from " + file, e);
+      options = null;
+    }
+    return options;
+  }
+
+  public static JasperReport loadReportFromFile(final File file)
+  {
+    if (file == null || !file.exists() || !file.canRead())
+    {
+      return null;
+    }
+    FileInputStream fileInputStream;
+    try
+    {
+      fileInputStream = new FileInputStream(file);
+      return compileReport(fileInputStream);
+    }
+    catch (final FileNotFoundException e)
+    {
+      LOGGER.log(Level.WARNING, "Could not read report from " + file, e);
+      return null;
+    }
   }
 
   /**
@@ -194,6 +284,51 @@ public final class UserPreferences
     UserPreferences.clear();
   }
 
+  public static void saveLocationsToFile(final File file)
+  {
+    try
+    {
+      if (locationsDataFile.exists())
+      {
+        locationsDataFile.delete();
+      }
+      LocationFormatter.formatLocations(locations, file);
+    }
+    catch (final FormatterException e)
+    {
+      LOGGER.log(Level.WARNING, "Could not save locations to " + file, e);
+    }
+  }
+
+  public static void saveOptionsToFile(final File file)
+  {
+    try
+    {
+      final XStream xStream = new XStream();
+      xStream.toXML(options, new FileWriter(file));
+    }
+    catch (final Exception e)
+    {
+      LOGGER.log(Level.WARNING, "Could save options to " + file, e);
+    }
+  }
+
+  public static void saveReportToFile(final File file)
+  {
+    try
+    {
+      if (file.exists())
+      {
+        file.delete();
+      }
+      JRXmlWriter.writeReport(report, file.getAbsolutePath(), "UTF-8");
+    }
+    catch (final JRException e)
+    {
+      LOGGER.log(Level.WARNING, "Could not save report to " + file, e);
+    }
+  }
+
   /**
    * Sets the locations for the current user.
    * 
@@ -206,24 +341,10 @@ public final class UserPreferences
     {
       return;
     }
-
     UserPreferences.locations = locations;
-
-    if (!savePreferences)
+    if (savePreferences)
     {
-      return;
-    }
-    try
-    {
-      if (locationsDataFile.exists())
-      {
-        locationsDataFile.delete();
-      }
-      LocationFormatter.formatLocations(locations, locationsDataFile);
-    }
-    catch (final FormatterException e)
-    {
-      LOGGER.log(Level.WARNING, "Could not save user locations list", e);
+      saveLocationsToFile(locationsDataFile);
     }
   }
 
@@ -239,9 +360,30 @@ public final class UserPreferences
     {
       return;
     }
-
     UserPreferences.options = options;
-    saveOptions(options);
+    if (savePreferences)
+    {
+      saveOptionsToFile(optionsFile);
+    }
+  }
+
+  /**
+   * Sets the report for the current user.
+   * 
+   * @param locations
+   *        Locations
+   */
+  public static void setReport(final JasperReport report)
+  {
+    if (report == null)
+    {
+      return;
+    }
+    UserPreferences.report = report;
+    if (savePreferences)
+    {
+      saveReportToFile(reportFile);
+    }
   }
 
   /**
@@ -258,16 +400,16 @@ public final class UserPreferences
   public static void setSlimUi(final boolean slimUi)
   {
     options.setSlimUi(slimUi);
-    saveOptions(options);
+    setOptions(options);
   }
 
   public static void setWorkingDirectory(final File workingDirectory)
   {
     options.setWorkingDirectory(workingDirectory);
-    saveOptions(options);
+    setOptions(options);
   }
 
-  static JasperReport compileReport(final InputStream reportStream)
+  private static JasperReport compileReport(final InputStream reportStream)
   {
     try
     {
@@ -285,52 +427,28 @@ public final class UserPreferences
       LOGGER.log(Level.WARNING, "Cannot load JasperReport", e);
       return null;
     }
+    finally
+    {
+      if (reportStream != null)
+      {
+        try
+        {
+          reportStream.close();
+        }
+        catch (final IOException e)
+        {
+          LOGGER.log(Level.WARNING, "Cannot close input stream", e);
+        }
+      }
+    }
   }
 
-  static JasperReport loadDefaultJasperReport()
+  private static void initializeLocations()
   {
-    final InputStream reportStream = DaylightChartReport.class
-      .getResourceAsStream("/DaylightChartReport.jrxml");
-    final JasperReport jasperReport = UserPreferences
-      .compileReport(reportStream);
-    if (jasperReport == null)
-    {
-      throw new RuntimeException("Cannot load default report");
-    }
-    return jasperReport;
-  }
+    // Try loading from user preferences
+    locations = loadLocationsFromFile(locationsDataFile);
 
-  /**
-   * Creates a chart options instance.
-   * 
-   * @return Chart options
-   */
-  public static Options getDefaultDaylightChartOptions()
-  {
-    final ChartOptions chartOptions = new ChartOptions();
-    chartOptions.copyFromChart(new DaylightChart());
-
-    final Options options = new Options();
-    options.setChartOptions(chartOptions);
-
-    // Save the defaults
-    setOptions(options);
-    return options;
-  }
-
-  private static List<Location> loadLocations()
-  {
-    List<Location> locations;
-    try
-    {
-      locations = LocationParser.parseLocations(locationsDataFile);
-    }
-    catch (final ParserException e)
-    {
-      LOGGER.log(Level.WARNING, "Could get locations", e);
-      locations = null;
-    }
-
+    // Load from internal store
     if (locations == null)
     {
       final InputStream dataStream = Thread.currentThread()
@@ -346,51 +464,38 @@ public final class UserPreferences
       }
       catch (final ParserException e)
       {
-        throw new IllegalStateException("Cannot read data from internal database",
-                                        e);
+        throw new RuntimeException("Cannot read data from internal database", e);
       }
     }
-
-    return locations;
   }
 
-  private static Options loadOptions()
+  private static void initializeOptions()
   {
-    Options options = null;
-    try
-    {
-      XStream xStream = new XStream();
-      options = (Options) xStream.fromXML(new FileReader(optionsFile));
-    }
-    catch (final Exception e)
-    {
-      LOGGER.log(Level.WARNING, "Could get options", e);
-      options = null;
-    }
+    // Try loading from user preferences
+    options = loadOptionsFromFile(optionsFile);
 
+    // Load from internal store
     if (options == null)
     {
       options = getDefaultDaylightChartOptions();
     }
-
-    return options;
   }
 
-  private static void saveOptions(final Options options)
+  private static void initializeReport()
   {
-    if (!savePreferences)
-    {
-      return;
-    }
+    // Try loading from user preferences
+    report = loadReportFromFile(reportFile);
 
-    try
+    // Load from internal store
+    if (report == null)
     {
-      XStream xStream = new XStream();
-      xStream.toXML(options, new FileWriter(optionsFile));
-    }
-    catch (final Exception e)
-    {
-      LOGGER.log(Level.WARNING, "Could save options", e);
+      final InputStream reportStream = DaylightChartReport.class
+        .getResourceAsStream("/DaylightChartReport.jrxml");
+      report = compileReport(reportStream);
+      if (report == null)
+      {
+        throw new RuntimeException("Cannot load default report");
+      }
     }
   }
 
