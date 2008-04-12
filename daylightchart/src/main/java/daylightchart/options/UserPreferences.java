@@ -50,6 +50,7 @@ import daylightchart.location.Location;
 import daylightchart.location.parser.FormatterException;
 import daylightchart.location.parser.LocationFormatter;
 import daylightchart.location.parser.LocationParser;
+import daylightchart.location.parser.LocationsLoader;
 import daylightchart.location.parser.ParserException;
 import daylightchart.options.chart.ChartOptions;
 
@@ -214,15 +215,7 @@ public final class UserPreferences
       return null;
     }
     List<Location> locations;
-    try
-    {
-      locations = LocationParser.parseLocations(file);
-    }
-    catch (final ParserException e)
-    {
-      LOGGER.log(Level.WARNING, "Could not read locations from " + file, e);
-      locations = null;
-    }
+    locations = LocationsLoader.load(file);
     if (locations != null && locations.size() == 0)
     {
       LOGGER.log(Level.WARNING, "Could not read locations from " + file);

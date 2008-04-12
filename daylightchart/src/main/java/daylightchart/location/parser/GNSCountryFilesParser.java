@@ -107,13 +107,13 @@ public final class GNSCountryFilesParser
       while ((line = reader.readLine()) != null)
       {
         final String[] fields = line.split("\t");
-        if (fields.length != 25)
+        if (fields.length != 26)
         {
           continue;
         }
 
         final String featureDesignationCode = fields[10];
-        final String nameType = fields[17];
+        final String nameType = fields[18];
         if (featureDesignationCode.startsWith("PPL")
             && (nameType.equals("C") || nameType.equals("N")))
         {
