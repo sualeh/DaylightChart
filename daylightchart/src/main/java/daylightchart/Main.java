@@ -53,7 +53,7 @@ public final class Main
   private static final Logger LOGGER = Logger.getLogger(Main.class.getName());
 
   private static final String OPTION_SLIMUI = "slim";
-  private static final String OPTION_NO_PREFERENCES = "noprefs";
+  private static final String OPTION_PREFERENCES = "prefs";
   private static final String OPTION_LOCATION = "location";
 
   /**
@@ -70,15 +70,16 @@ public final class Main
     // Parse command line
     final CommandLineParser parser = new CommandLineParser();
     parser.addOption(new BooleanOption(Option.NO_SHORT_FORM, OPTION_SLIMUI));
-    parser.addOption(new BooleanOption(Option.NO_SHORT_FORM,
-                                       OPTION_NO_PREFERENCES));
+    parser.addOption(new StringOption(Option.NO_SHORT_FORM,
+                                      OPTION_PREFERENCES,
+                                      null));
     parser.addOption(new StringOption(Option.NO_SHORT_FORM,
                                       OPTION_LOCATION,
                                       null));
     parser.parse(args);
     boolean slimUi = parser.getBooleanOptionValue(OPTION_SLIMUI);
-    final boolean noPreferences = parser
-      .getBooleanOptionValue(OPTION_NO_PREFERENCES);
+    final String preferencesDirectory = parser
+      .getStringOptionValue(OPTION_PREFERENCES);
     final String locationString = parser.getStringOptionValue(OPTION_LOCATION);
     Location location = null;
     if (locationString != null)
@@ -93,7 +94,7 @@ public final class Main
       }
     }
 
-    UserPreferences.setSavePreferences(!noPreferences);
+    UserPreferences.setSettingsDirectory(preferencesDirectory);
 
     // Set UI look and feel
     try

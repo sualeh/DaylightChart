@@ -65,14 +65,12 @@ public final class UserPreferences
   private static final Logger LOGGER = Logger.getLogger(UserPreferences.class
     .getName());
 
-  private static boolean savePreferences = true;
-
   private static final File scratchDirectory;
-  private static final File settingsDirectory;
+  private static File settingsDirectory;
 
-  private static final File locationsDataFile;
-  private static final File reportFile;
-  private static final File optionsFile;
+  private static File locationsDataFile;
+  private static File reportFile;
+  private static File optionsFile;
 
   private static List<Location> locations;
   private static JasperReport report;
@@ -85,12 +83,7 @@ public final class UserPreferences
 
     settingsDirectory = new File(System.getProperty("user.home", "."),
                                  ".daylightchart");
-    settingsDirectory.mkdirs();
-    validateDirectory(settingsDirectory);
-
-    locationsDataFile = new File(settingsDirectory, "locations.data");
-    reportFile = new File(settingsDirectory, "DaylightChartReport.jrxml");
-    optionsFile = new File(settingsDirectory, "options.xml");
+    setSettingsDirectory(settingsDirectory.getName());
 
     initializeLocations();
     initializeReport();
@@ -119,6 +112,11 @@ public final class UserPreferences
       reportFile.delete();
     }
     initializeReport();
+
+    if (settingsDirectory.exists())
+    {
+      settingsDirectory.delete();
+    }
   }
 
   /**
@@ -134,8 +132,6 @@ public final class UserPreferences
     final Options options = new Options();
     options.setChartOptions(chartOptions);
 
-    // Save the defaults
-    setOptions(options);
     return options;
   }
 
@@ -198,16 +194,6 @@ public final class UserPreferences
     return imported;
   }
 
-  /**
-   * Whether to save preferences.
-   * 
-   * @return Whether to save preferences.
-   */
-  public static boolean isSavePreferences()
-  {
-    return savePreferences;
-  }
-
   public static List<Location> loadLocationsFromFile(final File file)
   {
     if (file == null || !file.exists() || !file.canRead())
@@ -230,16 +216,32 @@ public final class UserPreferences
     {
       return null;
     }
+    FileReader fileReader = null;
     Options options;
     try
     {
+      fileReader = new FileReader(file);
       final XStream xStream = new XStream();
-      options = (Options) xStream.fromXML(new FileReader(file));
+      options = (Options) xStream.fromXML(fileReader);
     }
     catch (final Exception e)
     {
       LOGGER.log(Level.WARNING, "Could not read options from " + file, e);
       options = null;
+    }
+    finally
+    {
+      if (fileReader != null)
+      {
+        try
+        {
+          fileReader.close();
+        }
+        catch (IOException e)
+        {
+          LOGGER.log(Level.WARNING, "Could not close " + file, e);
+        }
+      }
     }
     return options;
   }
@@ -335,10 +337,7 @@ public final class UserPreferences
       return;
     }
     UserPreferences.locations = locations;
-    if (savePreferences)
-    {
-      saveLocationsToFile(locationsDataFile);
-    }
+    saveLocationsToFile(locationsDataFile);
   }
 
   /**
@@ -354,10 +353,7 @@ public final class UserPreferences
       return;
     }
     UserPreferences.options = options;
-    if (savePreferences)
-    {
-      saveOptionsToFile(optionsFile);
-    }
+    saveOptionsToFile(optionsFile);
   }
 
   /**
@@ -373,21 +369,25 @@ public final class UserPreferences
       return;
     }
     UserPreferences.report = report;
-    if (savePreferences)
-    {
-      saveReportToFile(reportFile);
-    }
+    saveReportToFile(reportFile);
   }
 
-  /**
-   * Whether to save preferences.
-   * 
-   * @param savePreferences
-   *        Whether to save preferences.
-   */
-  public static void setSavePreferences(final boolean savePreferences)
+  public static void setSettingsDirectory(final String settingsDirectoryPath)
   {
-    UserPreferences.savePreferences = savePreferences;
+    if (settingsDirectoryPath == null
+        || settingsDirectoryPath.trim().length() == 0)
+    {
+      return;
+    }
+    File settingsDirectory = new File(settingsDirectoryPath);
+
+    settingsDirectory.mkdirs();
+    validateDirectory(settingsDirectory);
+
+    UserPreferences.settingsDirectory = settingsDirectory;
+    locationsDataFile = new File(settingsDirectory, "locations.data");
+    reportFile = new File(settingsDirectory, "DaylightChartReport.jrxml");
+    optionsFile = new File(settingsDirectory, "options.xml");
   }
 
   public static void setSlimUi(final boolean slimUi)
