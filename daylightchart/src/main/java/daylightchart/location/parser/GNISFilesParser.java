@@ -23,9 +23,6 @@ package daylightchart.location.parser;
 
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
@@ -51,33 +48,6 @@ public final class GNISFilesParser
 
   private static final Logger LOGGER = Logger.getLogger(GNISFilesParser.class
     .getName());
-
-  /**
-   * Reads locations from a file.
-   * 
-   * @param locationsFile
-   *        Locations string
-   * @return List of locations
-   * @throws ParserException
-   *         On a parse exception
-   */
-  public static List<Location> parseLocations(final File locationsFile)
-    throws ParserException
-  {
-    if (locationsFile == null || !locationsFile.exists()
-        || !locationsFile.canRead())
-    {
-      throw new ParserException("Cannot read file");
-    }
-    try
-    {
-      return parseLocations(new FileReader(locationsFile));
-    }
-    catch (final FileNotFoundException e)
-    {
-      throw new ParserException(e);
-    }
-  }
 
   /**
    * Reads locations from a reader.

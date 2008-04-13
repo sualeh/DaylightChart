@@ -22,15 +22,19 @@
 package daylightchart.options;
 
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.Reader;
+import java.io.UnsupportedEncodingException;
+import java.io.Writer;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -83,7 +87,7 @@ public final class UserPreferences
 
     settingsDirectory = new File(System.getProperty("user.home", "."),
                                  ".daylightchart");
-    setSettingsDirectory(settingsDirectory.getName());
+    setSettingsDirectory(settingsDirectory.getAbsolutePath());
 
     initializeLocations();
     initializeReport();
@@ -196,12 +200,14 @@ public final class UserPreferences
 
   public static List<Location> loadLocationsFromFile(final File file)
   {
-    if (file == null || !file.exists() || !file.canRead())
+    final Reader reader = getFileReader(file);
+    if (reader == null)
     {
-      return null;
+      LOGGER.log(Level.WARNING, "Could not read locations from " + file);
+      locations = null;
     }
     List<Location> locations;
-    locations = LocationsLoader.load(file);
+    locations = LocationsLoader.load(reader);
     if (locations != null && locations.size() == 0)
     {
       LOGGER.log(Level.WARNING, "Could not read locations from " + file);
@@ -212,17 +218,17 @@ public final class UserPreferences
 
   public static Options loadOptionsFromFile(final File file)
   {
-    if (file == null || !file.exists() || !file.canRead())
+    final Reader reader = getFileReader(file);
+    if (reader == null)
     {
-      return null;
+      LOGGER.log(Level.WARNING, "Could not read options from " + file);
+      locations = null;
     }
-    FileReader fileReader = null;
     Options options;
     try
     {
-      fileReader = new FileReader(file);
       final XStream xStream = new XStream();
-      options = (Options) xStream.fromXML(fileReader);
+      options = (Options) xStream.fromXML(reader);
     }
     catch (final Exception e)
     {
@@ -231,13 +237,13 @@ public final class UserPreferences
     }
     finally
     {
-      if (fileReader != null)
+      if (reader != null)
       {
         try
         {
-          fileReader.close();
+          reader.close();
         }
-        catch (IOException e)
+        catch (final IOException e)
         {
           LOGGER.log(Level.WARNING, "Could not close " + file, e);
         }
@@ -287,7 +293,13 @@ public final class UserPreferences
       {
         locationsDataFile.delete();
       }
-      LocationFormatter.formatLocations(locations, file);
+      final Writer writer = getFileWriter(file);
+      if (writer == null)
+      {
+        LOGGER.log(Level.WARNING, "Could not save locations to " + file);
+        return;
+      }
+      LocationFormatter.formatLocations(locations, writer);
     }
     catch (final FormatterException e)
     {
@@ -299,8 +311,14 @@ public final class UserPreferences
   {
     try
     {
+      final Writer writer = getFileWriter(file);
+      if (writer == null)
+      {
+        LOGGER.log(Level.WARNING, "Could not save options to " + file);
+        return;
+      }
       final XStream xStream = new XStream();
-      xStream.toXML(options, new FileWriter(file));
+      xStream.toXML(options, writer);
     }
     catch (final Exception e)
     {
@@ -379,7 +397,7 @@ public final class UserPreferences
     {
       return;
     }
-    File settingsDirectory = new File(settingsDirectoryPath);
+    final File settingsDirectory = new File(settingsDirectoryPath);
 
     settingsDirectory.mkdirs();
     validateDirectory(settingsDirectory);
@@ -433,6 +451,51 @@ public final class UserPreferences
           LOGGER.log(Level.WARNING, "Cannot close input stream", e);
         }
       }
+    }
+  }
+
+  private static final Reader getFileReader(final File file)
+  {
+    if (file == null || !file.exists() || !file.canRead())
+    {
+      LOGGER.log(Level.WARNING, "Cannot read file " + file);
+      return null;
+    }
+    try
+    {
+      final BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file),
+                                                                             "UTF-8"));
+      return reader;
+    }
+    catch (final UnsupportedEncodingException e)
+    {
+      LOGGER.log(Level.WARNING, "Cannot read file " + file);
+      return null;
+    }
+    catch (final FileNotFoundException e)
+    {
+      LOGGER.log(Level.WARNING, "Cannot read file " + file);
+      return null;
+    }
+  }
+
+  private static Writer getFileWriter(final File file)
+  {
+    try
+    {
+      final BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file),
+                                                                              "UTF-8"));
+      return writer;
+    }
+    catch (final UnsupportedEncodingException e)
+    {
+      LOGGER.log(Level.WARNING, "Cannot write file " + file);
+      return null;
+    }
+    catch (final FileNotFoundException e)
+    {
+      LOGGER.log(Level.WARNING, "Cannot write file " + file);
+      return null;
     }
   }
 
@@ -512,5 +575,4 @@ public final class UserPreferences
   {
     // Prevent external instantiation
   }
-
 }

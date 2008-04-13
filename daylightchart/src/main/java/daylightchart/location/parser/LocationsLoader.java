@@ -22,7 +22,7 @@
 package daylightchart.location.parser;
 
 
-import java.io.File;
+import java.io.Reader;
 import java.util.List;
 
 import daylightchart.location.Location;
@@ -42,7 +42,7 @@ public final class LocationsLoader
    *        File to load
    * @return List of locations, or null on error
    */
-  public static List<Location> load(final File file)
+  public static List<Location> load(final Reader reader)
   {
     List<Location> locations = null;
 
@@ -51,7 +51,7 @@ public final class LocationsLoader
     {
       try
       {
-        locations = LocationParser.parseLocations(file);
+        locations = LocationParser.parseLocations(reader);
       }
       catch (final ParserException e)
       {
@@ -68,7 +68,7 @@ public final class LocationsLoader
     {
       try
       {
-        locations = GNSCountryFilesParser.parseLocations(file);
+        locations = GNSCountryFilesParser.parseLocations(reader);
       }
       catch (final ParserException e)
       {
@@ -85,7 +85,7 @@ public final class LocationsLoader
     {
       try
       {
-        locations = GNISFilesParser.parseLocations(file);
+        locations = GNISFilesParser.parseLocations(reader);
       }
       catch (final ParserException e)
       {

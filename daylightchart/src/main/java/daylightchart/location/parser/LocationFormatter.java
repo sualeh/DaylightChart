@@ -22,10 +22,7 @@
 package daylightchart.location.parser;
 
 
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.StringWriter;
 import java.io.Writer;
 import java.util.List;
 
@@ -74,51 +71,6 @@ public final class LocationFormatter
       .append(";").append(country.getIso3166Code2()).append(";").append(tzId)
       .append(";").append(coordinatesString);
     return new String(representation);
-  }
-
-  /**
-   * Formats a list of locations to a string.
-   * 
-   * @param locations
-   *        Locations to format
-   * @return String
-   * @throws daylightchart.location.parser.FormatterException
-   */
-  public static String formatLocations(final List<Location> locations)
-    throws daylightchart.location.parser.FormatterException
-  {
-    final StringWriter writer = new StringWriter();
-    formatLocations(locations, writer);
-    return writer.toString();
-  }
-
-  /**
-   * Formats a list of locations to a string.
-   * 
-   * @param locations
-   *        Locations to format
-   * @param file
-   *        File to write to.
-   * @throws daylightchart.location.parser.FormatterException
-   */
-  public static void formatLocations(final List<Location> locations,
-                                     final File file)
-    throws daylightchart.location.parser.FormatterException
-  {
-    if (file == null)
-    {
-      throw new daylightchart.location.parser.FormatterException("No file provided");
-    }
-
-    try
-    {
-      final FileWriter writer = new FileWriter(file);
-      formatLocations(locations, writer);
-    }
-    catch (final IOException e)
-    {
-      throw new daylightchart.location.parser.FormatterException(e);
-    }
   }
 
   /**
