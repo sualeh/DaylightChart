@@ -208,7 +208,7 @@ public final class UserPreferences
     if (reader == null)
     {
       LOGGER.log(Level.WARNING, "Could not read options from " + file);
-      locations = null;
+      return null;
     }
     Options options;
     try
