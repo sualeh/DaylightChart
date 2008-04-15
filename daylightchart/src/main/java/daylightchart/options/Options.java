@@ -239,8 +239,7 @@ public class Options
 
   private boolean isDirectoryValid(final File directory)
   {
-    return directory != null && directory.exists() && directory.isDirectory()
-           && directory.canWrite();
+    return directory != null && directory.exists() && directory.isDirectory();
   }
 
 }
