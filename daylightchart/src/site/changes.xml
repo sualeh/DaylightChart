@@ -6,6 +6,37 @@
   </properties>
   <body>
     <release
+      version="2.6"
+      date="2008-04-23">
+      <action
+        dev="Sualeh Fatehi"
+        type="add">
+        Moved JasperReport definition to it's own XML file in the preferences
+        directory.
+      </action>
+      <action
+        dev="Sualeh Fatehi"
+        type="add">
+        New command line switch to specify the preferences directory.
+      </action>
+      <action
+        dev="Sualeh Fatehi"
+        type="fix">
+        Better error messages.
+      </action>
+      <action
+        dev="Sualeh Fatehi"
+        type="fix">
+        Better handling of file reading and writing, in UTF-8 format.
+      </action>
+      <action
+        dev="Sualeh Fatehi"
+        type="fix">
+        Fixed reading of modified GNIS files and GNS files, since the file
+        formats had changed.
+      </action>
+    </release>
+    <release
       version="2.5"
       date="2008-01-23">
       <action
