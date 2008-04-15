@@ -19,13 +19,26 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * 
  */
-package daylightchart.location.parser;
+package daylightchart.options;
 
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.Reader;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import daylightchart.location.Location;
+import daylightchart.location.parser.GNISFilesParser;
+import daylightchart.location.parser.GNSCountryFilesParser;
+import daylightchart.location.parser.LocationParser;
+import daylightchart.location.parser.ParserException;
 
 /**
  * Loads locations from a file of any supported format.
@@ -35,6 +48,9 @@ import daylightchart.location.Location;
 public final class LocationsLoader
 {
 
+  private static final Logger LOGGER = Logger.getLogger(LocationsLoader.class
+    .getName());
+
   /**
    * Attempts to load a locations file, trying each format in turn.
    * 
@@ -42,11 +58,19 @@ public final class LocationsLoader
    *        File to load
    * @return List of locations, or null on error
    */
-  public static List<Location> load(final Reader reader)
+  public static List<Location> load(final File file)
   {
+    if (file == null || !file.exists() || !file.canRead())
+    {
+      LOGGER.log(Level.WARNING, "Cannot read file " + file);
+      return null;
+    }
+
+    Reader reader;
     List<Location> locations = null;
 
     // 1. Attempt to load as a Daylight Chart locations file
+    reader = getFileReader(file);
     if (locations == null)
     {
       try
@@ -57,6 +81,17 @@ public final class LocationsLoader
       {
         locations = null;
       }
+      finally
+      {
+        try
+        {
+          reader.close();
+        }
+        catch (IOException e)
+        {
+          LOGGER.log(Level.WARNING, "Could not close file " + file);
+        }
+      }
     }
     if (locations != null && locations.size() == 0)
     {
@@ -64,6 +99,7 @@ public final class LocationsLoader
     }
 
     // 2. Attempt to load as a GNS country file
+    reader = getFileReader(file);
     if (locations == null)
     {
       try
@@ -74,6 +110,17 @@ public final class LocationsLoader
       {
         locations = null;
       }
+      finally
+      {
+        try
+        {
+          reader.close();
+        }
+        catch (IOException e)
+        {
+          LOGGER.log(Level.WARNING, "Could not close file " + file);
+        }
+      }
     }
     if (locations != null && locations.size() == 0)
     {
@@ -81,6 +128,7 @@ public final class LocationsLoader
     }
 
     // 3. Attempt to load as a GNIS file
+    reader = getFileReader(file);
     if (locations == null)
     {
       try
@@ -90,6 +138,17 @@ public final class LocationsLoader
       catch (final ParserException e)
       {
         locations = null;
+      }
+      finally
+      {
+        try
+        {
+          reader.close();
+        }
+        catch (IOException e)
+        {
+          LOGGER.log(Level.WARNING, "Could not close file " + file);
+        }
       }
     }
     if (locations != null && locations.size() == 0)
@@ -102,6 +161,31 @@ public final class LocationsLoader
 
   private LocationsLoader()
   {
+  }
+
+  public static final Reader getFileReader(final File file)
+  {
+    if (file == null || !file.exists() || !file.canRead())
+    {
+      LOGGER.log(Level.WARNING, "Cannot read file " + file);
+      return null;
+    }
+    try
+    {
+      final BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file),
+                                                                             "UTF-8"));
+      return reader;
+    }
+    catch (final UnsupportedEncodingException e)
+    {
+      LOGGER.log(Level.WARNING, "Cannot read file " + file);
+      return null;
+    }
+    catch (final FileNotFoundException e)
+    {
+      LOGGER.log(Level.WARNING, "Cannot read file " + file);
+      return null;
+    }
   }
 
 }

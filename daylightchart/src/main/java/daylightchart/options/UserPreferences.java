@@ -22,7 +22,6 @@
 package daylightchart.options;
 
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
@@ -54,7 +53,6 @@ import daylightchart.location.Location;
 import daylightchart.location.parser.FormatterException;
 import daylightchart.location.parser.LocationFormatter;
 import daylightchart.location.parser.LocationParser;
-import daylightchart.location.parser.LocationsLoader;
 import daylightchart.location.parser.ParserException;
 import daylightchart.options.chart.ChartOptions;
 
@@ -200,25 +198,13 @@ public final class UserPreferences
 
   public static List<Location> loadLocationsFromFile(final File file)
   {
-    final Reader reader = getFileReader(file);
-    if (reader == null)
-    {
-      LOGGER.log(Level.WARNING, "Could not read locations from " + file);
-      locations = null;
-    }
-    List<Location> locations;
-    locations = LocationsLoader.load(reader);
-    if (locations != null && locations.size() == 0)
-    {
-      LOGGER.log(Level.WARNING, "Could not read locations from " + file);
-      locations = null;
-    }
+    List<Location> locations = LocationsLoader.load(file);
     return locations;
   }
 
   public static Options loadOptionsFromFile(final File file)
   {
-    final Reader reader = getFileReader(file);
+    final Reader reader = LocationsLoader.getFileReader(file);
     if (reader == null)
     {
       LOGGER.log(Level.WARNING, "Could not read options from " + file);
@@ -451,31 +437,6 @@ public final class UserPreferences
           LOGGER.log(Level.WARNING, "Cannot close input stream", e);
         }
       }
-    }
-  }
-
-  private static final Reader getFileReader(final File file)
-  {
-    if (file == null || !file.exists() || !file.canRead())
-    {
-      LOGGER.log(Level.WARNING, "Cannot read file " + file);
-      return null;
-    }
-    try
-    {
-      final BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file),
-                                                                             "UTF-8"));
-      return reader;
-    }
-    catch (final UnsupportedEncodingException e)
-    {
-      LOGGER.log(Level.WARNING, "Cannot read file " + file);
-      return null;
-    }
-    catch (final FileNotFoundException e)
-    {
-      LOGGER.log(Level.WARNING, "Cannot read file " + file);
-      return null;
     }
   }
 
