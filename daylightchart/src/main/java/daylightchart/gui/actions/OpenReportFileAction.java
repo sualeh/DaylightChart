@@ -87,14 +87,17 @@ public final class OpenReportFileAction
         boolean reportLoaded = UserPreferences.importReport(selectedFile);
         if (!reportLoaded)
         {
-          LOGGER.log(Level.WARNING, Messages
-            .getString("DaylightChartGui.Message.Error.CannotOpenFile")); //$NON-NLS-1$
-          JOptionPane
-            .showMessageDialog(mainWindow,
-                               selectedFile
-                                   + "\n" //$NON-NLS-1$
-                                   + Messages
-                                     .getString("DaylightChartGui.Message.Error.CannotOpenFile")); //$NON-NLS-1$
+          if (selectedFile != null)
+          {
+            LOGGER.log(Level.WARNING, Messages
+              .getString("DaylightChartGui.Message.Error.CannotOpenFile")); //$NON-NLS-1$
+            JOptionPane
+              .showMessageDialog(mainWindow,
+                                 selectedFile
+                                     + "\n" //$NON-NLS-1$
+                                     + Messages
+                                       .getString("DaylightChartGui.Message.Error.CannotOpenFile")); //$NON-NLS-1$
+          }
         }
       }
       catch (final RuntimeException e)
