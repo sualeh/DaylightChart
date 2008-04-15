@@ -93,11 +93,14 @@ public final class SaveLocationsFileAction
         {
           LOGGER.log(Level.WARNING, Messages
             .getString("DaylightChartGui.Message.Error.CannotSaveFile"), e); //$NON-NLS-1$
+          LOGGER.log(Level.WARNING, Messages
+            .getString("DaylightChartGui.Message.Error.CannotSaveFile"), e); //$NON-NLS-1$
           JOptionPane.showMessageDialog(mainWindow, Messages
-            .getString("DaylightChartGui.Message.Error.CannotSaveFile") + "\n" //$NON-NLS-1$ //$NON-NLS-2$
+            .getString("DaylightChartGui.Message.Error.CannotSaveFile") //$NON-NLS-1$
+                                                    + "\n" //$NON-NLS-1$
                                                     + selectedFile, Messages
-            .getString("DaylightChartGui.Menu.File.SaveFile"), //$NON-NLS-1$
-                                        JOptionPane.OK_OPTION);
+            .getString("DaylightChartGui.Message.Error.CannotSaveFile"), //$NON-NLS-1$
+                                        JOptionPane.ERROR_MESSAGE);
         }
       }
     }

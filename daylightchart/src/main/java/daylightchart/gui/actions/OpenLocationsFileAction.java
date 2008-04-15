@@ -96,12 +96,12 @@ public final class OpenLocationsFileAction
           {
             LOGGER.log(Level.WARNING, Messages
               .getString("DaylightChartGui.Message.Error.CannotOpenFile")); //$NON-NLS-1$
-            JOptionPane
-              .showMessageDialog(mainWindow,
-                                 selectedFile
-                                     + "\n" //$NON-NLS-1$
-                                     + Messages
-                                       .getString("DaylightChartGui.Message.Error.CannotOpenFile")); //$NON-NLS-1$
+            JOptionPane.showMessageDialog(mainWindow, Messages
+              .getString("DaylightChartGui.Message.Error.CannotOpenFile") //$NON-NLS-1$
+                                                      + "\n" //$NON-NLS-1$
+                                                      + selectedFile, Messages
+              .getString("DaylightChartGui.Message.Error.CannotOpenFile"), //$NON-NLS-1$
+                                          JOptionPane.ERROR_MESSAGE);
           }
         }
         else
