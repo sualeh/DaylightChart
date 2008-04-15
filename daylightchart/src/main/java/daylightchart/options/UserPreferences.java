@@ -289,9 +289,9 @@ public final class UserPreferences
   {
     try
     {
-      if (locationsDataFile.exists())
+      if (file.exists())
       {
-        locationsDataFile.delete();
+        file.delete();
       }
       final Writer writer = getFileWriter(file);
       if (writer == null)
