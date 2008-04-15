@@ -43,6 +43,10 @@ public final class DaylightBand
   implements Serializable
 {
 
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 5875662315368162333L;
   private final DaylightBandType bandType;
   private final int bandNumber;
   private final Map<LocalDate, RiseSet> riseSetMap;

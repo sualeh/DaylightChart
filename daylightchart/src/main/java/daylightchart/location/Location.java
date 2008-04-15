@@ -25,7 +25,6 @@ package daylightchart.location;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
-import java.util.SimpleTimeZone;
 import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -65,7 +64,7 @@ public final class Location
   {
     this("",
          Country.UNKNOWN,
-         SimpleTimeZone.getDefault().getID(),
+         TimeZone.getDefault().getID(),
          new PointLocation(new Latitude(Angle.fromDegrees(0)),
                            new Longitude(Angle.fromDegrees(0))));
   }

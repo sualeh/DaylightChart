@@ -40,6 +40,10 @@ final class DaylightChartLegendItemSource
   implements LegendItemSource, Serializable
 {
 
+  /**
+   * 
+   */
+  private static final long serialVersionUID = -7877379059709945565L;
   private final Options options;
 
   DaylightChartLegendItemSource(final Options options)

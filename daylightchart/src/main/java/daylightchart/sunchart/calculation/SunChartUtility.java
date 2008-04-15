@@ -30,7 +30,6 @@ import java.io.Writer;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -197,10 +196,10 @@ public final class SunChartUtility
     {
       printWriter
         .println("Date     \tTime     \tAzimuth      \tAltitude   \tHour Angle   \tEqn of Time  \tDeclination");
-      List<SunPosition> sunPositionList = sunPositions.getSunPositions();
-      for (Iterator iterator = sunPositionList.iterator(); iterator.hasNext();)
+      final List<SunPosition> sunPositionList = sunPositions.getSunPositions();
+      for (final Object element: sunPositionList)
       {
-        SunPosition sunPosition = (SunPosition) iterator.next();
+        final SunPosition sunPosition = (SunPosition) element;
         printWriter.printf("%s\t%s\t%s\t%s\t%s\t%s\t%s%n",
                            sunPosition.getDateTime().toLocalDate(),
                            sunPosition.getDateTime().toLocalTime(),

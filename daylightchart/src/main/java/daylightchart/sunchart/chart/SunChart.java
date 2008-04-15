@@ -34,10 +34,7 @@ import javax.swing.JPanel;
 
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.axis.AxisLocation;
 import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.axis.ValueAxis;
-import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.StandardXYItemRenderer;
 import org.jfree.chart.title.TextTitle;
@@ -47,7 +44,6 @@ import org.jfree.data.xy.VectorSeriesCollection;
 import org.jfree.ui.RectangleInsets;
 
 import daylightchart.daylightchart.chart.ChartConfiguration;
-import daylightchart.daylightchart.chart.ChartOrientation;
 import daylightchart.location.Location;
 import daylightchart.location.parser.LocationParser;
 import daylightchart.options.chart.ChartOptions;
@@ -67,8 +63,38 @@ public class SunChart
   implements ChartOptionsListener
 {
 
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 7087394007991008310L;
+
   private static final Logger LOGGER = Logger.getLogger(SunChart.class
     .getName());
+
+  public static void main(final String[] args)
+  {
+    try
+    {
+      final SunChartYearData sunChartData = SunChartUtility
+        .createSunChartYear(LocationParser
+                              .parseLocation("Albany, NY;US;America/New_York;+4239-07345/"),
+                            Calendar.getInstance().get(Calendar.YEAR));
+      final SunChart sunChart = new SunChart(sunChartData);
+
+      final JFrame frame = new JFrame("Sun Chart");
+      frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+      final JPanel chartPanel = new ChartPanel(sunChart);
+      chartPanel.setPreferredSize(new java.awt.Dimension(500, 270));
+      frame.getContentPane().add(chartPanel, BorderLayout.CENTER);
+      frame.pack();
+      frame.setVisible(true);
+    }
+    catch (final Exception e)
+    {
+      e.printStackTrace();
+    }
+  }
 
   private final SunChartYearData sunChartData;
 
@@ -80,31 +106,6 @@ public class SunChart
     this(SunChartUtility.createSunChartYear(null, Calendar.getInstance()
       .get(Calendar.YEAR)));
     setTitle("");
-  }
-
-  public static void main(String[] args)
-  {
-    try
-    {
-      SunChartYearData sunChartData = SunChartUtility
-        .createSunChartYear(LocationParser
-                              .parseLocation("Albany, NY;US;America/New_York;+4239-07345/"),
-                            Calendar.getInstance().get(Calendar.YEAR));
-      SunChart sunChart = new SunChart(sunChartData);
-
-      JFrame frame = new JFrame("Sun Chart");
-      frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-      JPanel chartPanel = new ChartPanel(sunChart);
-      chartPanel.setPreferredSize(new java.awt.Dimension(500, 270));
-      frame.getContentPane().add(chartPanel, BorderLayout.CENTER);
-      frame.pack();
-      frame.setVisible(true);
-    }
-    catch (Exception e)
-    {
-      e.printStackTrace();
-    }
   }
 
   /**
@@ -155,32 +156,25 @@ public class SunChart
     // No-op
   }
 
-  private void adjustForChartOrientation(final ChartOrientation chartOrientation)
+  @SuppressWarnings("deprecation")
+  private void createAltitudeAxis(final XYPlot plot)
   {
-    if (chartOrientation == null)
-    {
-      return;
-    }
+    final NumberAxis axis = new NumberAxis();
+    axis.setTickLabelFont(ChartConfiguration.chartFont.deriveFont(Font.PLAIN,
+                                                                  12));
+    //
+    plot.setRangeAxis(axis);
+  }
 
-    final XYPlot plot = getXYPlot();
-    final ValueAxis hoursAxis = plot.getRangeAxis();
-    final ValueAxis monthsAxis = plot.getDomainAxis();
-
-    switch (chartOrientation)
-    {
-      case STANDARD:
-        hoursAxis.setInverted(true);
-        plot.setDomainAxisLocation(AxisLocation.TOP_OR_LEFT);
-        break;
-      case CONVENTIONAL:
-        break;
-      case VERTICAL:
-        plot.setOrientation(PlotOrientation.HORIZONTAL);
-        monthsAxis.setInverted(true);
-        break;
-      default:
-        break;
-    }
+  @SuppressWarnings("deprecation")
+  private void createAzimuthAxis(final XYPlot plot)
+  {
+    final NumberAxis axis = new NumberAxis();
+    axis.setTickLabelFont(ChartConfiguration.chartFont.deriveFont(Font.PLAIN,
+                                                                  12));
+    axis.setVerticalTickLabels(true);
+    //
+    plot.setDomainAxis(axis);
   }
 
   /**
@@ -188,14 +182,15 @@ public class SunChart
    */
   private void createBandsInPlot(final XYPlot plot)
   {
-    VectorSeriesCollection vectorSeriesCollection = new VectorSeriesCollection();
-    List<SunPositions> sunPositionsList = sunChartData.getSunPositionsList();
-    for (SunPositions sunPositions: sunPositionsList)
+    final VectorSeriesCollection vectorSeriesCollection = new VectorSeriesCollection();
+    final List<SunPositions> sunPositionsList = sunChartData
+      .getSunPositionsList();
+    for (final SunPositions sunPositions: sunPositionsList)
     {
-      VectorSeries vectorSeries = new VectorSeries(sunPositions.getDate()
+      final VectorSeries vectorSeries = new VectorSeries(sunPositions.getDate()
         .toString());
-      List<SunPosition> sunPositionList = sunPositions.getSunPositions();
-      for (SunPosition sunPosition: sunPositionList)
+      final List<SunPosition> sunPositionList = sunPositions.getSunPositions();
+      for (final SunPosition sunPosition: sunPositionList)
       {
         vectorSeries.add(sunPosition.getAzimuth(),
                          sunPosition.getAltitude(),
@@ -227,27 +222,6 @@ public class SunChart
 
     createBandsInPlot(plot);
 
-  }
-
-  @SuppressWarnings("deprecation")
-  private void createAltitudeAxis(final XYPlot plot)
-  {
-    final NumberAxis axis = new NumberAxis();
-    axis.setTickLabelFont(ChartConfiguration.chartFont.deriveFont(Font.PLAIN,
-                                                                  12));
-    //
-    plot.setRangeAxis(axis);
-  }
-
-  @SuppressWarnings("deprecation")
-  private void createAzimuthAxis(final XYPlot plot)
-  {
-    final NumberAxis axis = new NumberAxis();
-    axis.setTickLabelFont(ChartConfiguration.chartFont.deriveFont(Font.PLAIN,
-                                                                  12));
-    axis.setVerticalTickLabels(true);
-    //
-    plot.setDomainAxis(axis);
   }
 
   @SuppressWarnings("unchecked")

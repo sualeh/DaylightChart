@@ -198,7 +198,7 @@ public final class UserPreferences
 
   public static List<Location> loadLocationsFromFile(final File file)
   {
-    List<Location> locations = LocationsLoader.load(file);
+    final List<Location> locations = LocationsLoader.load(file);
     return locations;
   }
 

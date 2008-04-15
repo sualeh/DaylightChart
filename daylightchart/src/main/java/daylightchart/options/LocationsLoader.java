@@ -51,6 +51,31 @@ public final class LocationsLoader
   private static final Logger LOGGER = Logger.getLogger(LocationsLoader.class
     .getName());
 
+  public static final Reader getFileReader(final File file)
+  {
+    if (file == null || !file.exists() || !file.canRead())
+    {
+      LOGGER.log(Level.WARNING, "Cannot read file " + file);
+      return null;
+    }
+    try
+    {
+      final BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file),
+                                                                             "UTF-8"));
+      return reader;
+    }
+    catch (final UnsupportedEncodingException e)
+    {
+      LOGGER.log(Level.WARNING, "Cannot read file " + file);
+      return null;
+    }
+    catch (final FileNotFoundException e)
+    {
+      LOGGER.log(Level.WARNING, "Cannot read file " + file);
+      return null;
+    }
+  }
+
   /**
    * Attempts to load a locations file, trying each format in turn.
    * 
@@ -87,7 +112,7 @@ public final class LocationsLoader
         {
           reader.close();
         }
-        catch (IOException e)
+        catch (final IOException e)
         {
           LOGGER.log(Level.WARNING, "Could not close file " + file);
         }
@@ -116,7 +141,7 @@ public final class LocationsLoader
         {
           reader.close();
         }
-        catch (IOException e)
+        catch (final IOException e)
         {
           LOGGER.log(Level.WARNING, "Could not close file " + file);
         }
@@ -145,7 +170,7 @@ public final class LocationsLoader
         {
           reader.close();
         }
-        catch (IOException e)
+        catch (final IOException e)
         {
           LOGGER.log(Level.WARNING, "Could not close file " + file);
         }
@@ -161,31 +186,6 @@ public final class LocationsLoader
 
   private LocationsLoader()
   {
-  }
-
-  public static final Reader getFileReader(final File file)
-  {
-    if (file == null || !file.exists() || !file.canRead())
-    {
-      LOGGER.log(Level.WARNING, "Cannot read file " + file);
-      return null;
-    }
-    try
-    {
-      final BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file),
-                                                                             "UTF-8"));
-      return reader;
-    }
-    catch (final UnsupportedEncodingException e)
-    {
-      LOGGER.log(Level.WARNING, "Cannot read file " + file);
-      return null;
-    }
-    catch (final FileNotFoundException e)
-    {
-      LOGGER.log(Level.WARNING, "Cannot read file " + file);
-      return null;
-    }
   }
 
 }
