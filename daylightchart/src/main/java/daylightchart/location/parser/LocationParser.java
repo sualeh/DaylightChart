@@ -120,7 +120,6 @@ public final class LocationParser
           locations.add(location);
         }
       }
-      reader.close();
     }
     catch (final IOException e)
     {

@@ -112,7 +112,6 @@ public final class GNSCountryFilesParser
           locationNames.add(city + ", " + fips10CountryCode);
         }
       }
-      reader.close();
 
       LOGGER.log(Level.INFO, "Loaded " + locations.size() + " locations");
       return new ArrayList<Location>(locations);
