@@ -41,6 +41,11 @@ public enum ChartOrientation
     this.description = description;
   }
 
+  /**
+   * Description.
+   * 
+   * @return Description.
+   */
   public String getDescription()
   {
     return description;

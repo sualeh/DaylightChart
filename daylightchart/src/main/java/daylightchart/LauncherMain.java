@@ -41,6 +41,9 @@ public final class LauncherMain
    * <p>
    * Any remaining options will be collected and passed to the main()
    * method of the launch class.
+   * 
+   * @param args
+   *        Arguments
    */
   public static void main(final String[] args)
   {
@@ -144,8 +147,7 @@ public final class LauncherMain
 
       Thread.currentThread().setContextClassLoader(newLoader);
 
-      final Class launchClass = newLoader.loadClass(launchClassName);
-
+      final Class<?> launchClass = newLoader.loadClass(launchClassName);
       final Method main = launchClass.getMethod("main", new Class[] {
         String[].class
       });
@@ -223,7 +225,7 @@ public final class LauncherMain
   {
     try
     {
-      return file.toURL();
+      return file.toURI().toURL();
     }
     catch (final MalformedURLException ex)
     {

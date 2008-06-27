@@ -11,6 +11,13 @@ public enum ChartFileType
   html("Web Page", ".html"),
   pdf("Adobe Acrobat PDF", ".pdf");
 
+  /**
+   * Finds the chart type, based on the file extension.
+   * 
+   * @param extension
+   *        File extension.
+   * @return Chart type.
+   */
   public static ChartFileType fromExtension(final String extension)
   {
     if (StringUtils.isBlank(extension))
@@ -48,13 +55,20 @@ public enum ChartFileType
   }
 
   /**
-   * @return the fileExtension
+   * Gets the file extension.
+   * 
+   * @return File extension
    */
   public String getFileExtension()
   {
     return fileExtension;
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see java.lang.Enum#toString()
+   */
   @Override
   public String toString()
   {

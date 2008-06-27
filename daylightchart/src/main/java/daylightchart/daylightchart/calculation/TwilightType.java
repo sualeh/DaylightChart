@@ -36,7 +36,6 @@ public enum TwilightType
   ASTRONOMICAL("Astronomical twilight", -18D);
 
   private final double horizon;
-
   private final String description;
 
   private TwilightType(final String description, final double horizon)
@@ -45,11 +44,21 @@ public enum TwilightType
     this.horizon = horizon;
   }
 
+  /**
+   * Description.
+   * 
+   * @return Description.
+   */
   public String getDescription()
   {
     return description;
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see java.lang.Enum#toString()
+   */
   @Override
   public String toString()
   {

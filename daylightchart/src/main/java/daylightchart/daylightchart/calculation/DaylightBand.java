@@ -74,7 +74,7 @@ public final class DaylightBand
     return bandType;
   }
 
-  public RiseSet getFirstRiseSet()
+  RiseSet getFirstRiseSet()
   {
     if (riseSetMap.size() > 0)
     {
@@ -87,7 +87,7 @@ public final class DaylightBand
     }
   }
 
-  public RiseSet getLastRiseSet()
+  RiseSet getLastRiseSet()
   {
     if (riseSetMap.size() > 0)
     {

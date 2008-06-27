@@ -33,11 +33,16 @@ import javax.swing.filechooser.FileFilter;
 /**
  * GUI helper methods.
  * 
- * @author sfatehi
+ * @author Sualeh Fatehi
  */
 public class Actions
 {
 
+  /**
+   * Selected file.
+   * 
+   * @author Sualeh Fatehi
+   */
   public static final class SelectedFile
   {
     private final File file;
@@ -51,6 +56,11 @@ public class Actions
       isSelected = file != null;
     }
 
+    /**
+     * Directory of the selected file.
+     * 
+     * @return Directory of the selected file.
+     */
     public File getDirectory()
     {
       if (file == null)
