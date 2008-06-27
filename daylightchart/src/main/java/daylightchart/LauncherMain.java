@@ -16,8 +16,8 @@ import java.util.List;
  * launch. Yep, this is functionality that should be built right into
  * Java.
  * <p>
- * See
- * {@link http://tapestryjava.blogspot.com/2007/08/quick-and-dirty-java-application.html}
+ * See <a href=" http://tapestryjava.blogspot.com/2007/08/quick-and-dirty-java-application.html"
+ * >launcher discussion</a>.
  */
 public final class LauncherMain
 {
@@ -30,7 +30,6 @@ public final class LauncherMain
    * <pre>
    * java -jar mblauncher.jar some.class.to.launch [--addclasspath dir] [--addjardir dir] [options]
    * </pre>
-   * 
    * <p>
    * The --addclasspath parameter is used to add a directory to add to
    * the classpath. This is most commonly used with a directory
