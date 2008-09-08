@@ -25,7 +25,7 @@ import java.io.ObjectInputStream;
 import java.io.Serializable;
 
 /**
- * Represents an angle in degrees or radians. Has convinience methods to
+ * Represents an angle in degrees or radians. Has convenience methods to
  * do trigonometric operations, and normalizations.
  * 
  * @author Sualeh Fatehi
@@ -92,26 +92,6 @@ public class Angle
   public static Angle fromRadians(final double radians)
   {
     return new Angle(radians);
-  }
-
-  /**
-   * Modulus function that always returns a positive value. For example,
-   * mod(-3, 24) is 21.
-   * 
-   * @param numerator
-   *        Numerator for the modulus.
-   * @param denominator
-   *        Denominator for the modulus.
-   * @return Modulus of the operands.
-   */
-  private static double mod(final double numerator, final double denominator)
-  {
-    double result = Math.IEEEremainder(numerator, denominator);
-    if (result < 0)
-    {
-      result = result + denominator;
-    }
-    return result;
   }
 
   private final double radians;
@@ -250,17 +230,6 @@ public class Angle
     temp = Double.doubleToLongBits(radians);
     result = prime * result + (int) (temp ^ temp >>> 32);
     return result;
-  }
-
-  /**
-   * Normalizes the angle so that it is within the range 0 - 360
-   * degrees.
-   * 
-   * @return Normalized angle
-   */
-  public final Angle normalize()
-  {
-    return Angle.fromRadians(Angle.mod(radians, 2 * Math.PI));
   }
 
   /**
