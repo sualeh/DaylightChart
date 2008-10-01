@@ -41,7 +41,7 @@ public final class Latitude
   {
     super(angle);
 
-    validateAbsoluteRange(getDegrees(), 90);
+    validateAbsoluteRange(90);
   }
 
   @Override

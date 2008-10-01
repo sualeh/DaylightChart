@@ -48,7 +48,7 @@ public final class Longitude
                                          "the 180th meridian is always negative " +
                                          "(180" + Field.DEGREES + " W)");
     }
-    validateAbsoluteRange(degrees, 180);
+    validateAbsoluteRange(180);
   }
 
   @Override

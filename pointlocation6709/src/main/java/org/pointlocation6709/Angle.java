@@ -289,8 +289,9 @@ public class Angle
     return null;
   }
 
-  protected void validateAbsoluteRange(final double degrees, final int range)
+  protected void validateAbsoluteRange(final int range)
   {
+    final double degrees = getDegrees();
     if (Math.abs(degrees) > range)
     {
       throw new IllegalArgumentException("" + degrees + Field.DEGREES +
