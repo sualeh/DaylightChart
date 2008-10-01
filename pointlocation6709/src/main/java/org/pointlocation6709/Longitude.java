@@ -39,7 +39,7 @@ public final class Longitude
    */
   public Longitude(final Angle angle)
   {
-    super(angle);
+    super(angle, 180);
 
     final double degrees = getDegrees();
     if (degrees == 180)
@@ -48,7 +48,6 @@ public final class Longitude
                                          "the 180th meridian is always negative " +
                                          "(180" + Field.DEGREES + " W)");
     }
-    validateAbsoluteRange(180);
   }
 
   @Override

@@ -109,6 +109,25 @@ public class Angle
   }
 
   /**
+   * Copy constructor. Copies the value of a provided angle.
+   * 
+   * @param angle
+   *        Angle to copy the value from.
+   */
+  protected Angle(final Angle angle, final int range)
+  {
+    this(angle);
+
+    final double degrees = getDegrees();
+    if (Math.abs(degrees) > range)
+    {
+      throw new IllegalArgumentException("" + degrees + Field.DEGREES +
+                                         " is out of range, +/-" + range +
+                                         Field.DEGREES);
+    }
+  }
+
+  /**
    * Default constructor. Initializes the angle to a value of 0.
    */
   private Angle(final double radians)
@@ -287,17 +306,6 @@ public class Angle
   protected String getDirection()
   {
     return null;
-  }
-
-  protected void validateAbsoluteRange(final int range)
-  {
-    final double degrees = getDegrees();
-    if (Math.abs(degrees) > range)
-    {
-      throw new IllegalArgumentException("" + degrees + Field.DEGREES +
-                                         " is out of range, +/-" + range +
-                                         Field.DEGREES);
-    }
   }
 
   private void readObject(final ObjectInputStream objectInputStream)

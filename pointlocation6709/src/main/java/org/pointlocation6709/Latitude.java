@@ -39,9 +39,7 @@ public final class Latitude
    */
   public Latitude(final Angle angle)
   {
-    super(angle);
-
-    validateAbsoluteRange(90);
+    super(angle, 90);
   }
 
   @Override
