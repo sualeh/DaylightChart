@@ -216,20 +216,56 @@ public final class CoordinateParser
 
     // Attempt to find the compass direction, and thus the sign of the
     // angle
-    int sign;
+    final String firstPart = degreeParts.get(0);
+    final String lastPart = degreeParts.get(degreeParts.size() - 1);
+
+    CompassDirection compassDirection;
     try
     {
-      // Find the sign
-      final CompassDirection compassDirection = CompassDirection
-        .valueOf(degreeParts.get(degreeParts.size() - 1).trim().toUpperCase());
-      sign = compassDirection.getSign();
+      compassDirection = CompassDirection
+        .valueOf(lastPart.trim().toUpperCase());
       isIso6709Format = false;
-      // Remove the sign
-      degreeParts.remove(degreeParts.size() - 1);
     }
     catch (final IllegalArgumentException e)
     {
-      sign = 1;
+      compassDirection = null;
+    }
+
+    final boolean hasSign = hasSign(firstPart);
+
+    if (compassDirection != null && hasSign)
+    {
+      throw new ParserException("Corordinate cannot have a compass direction, as well as a signed angle");
+    }
+
+    int sign = 1;
+    if (compassDirection != null)
+    {
+      sign = compassDirection.getSign();
+    }
+    if (hasSign)
+    {
+      sign = Double.valueOf(firstPart.trim()).intValue() >= 0? 1: -1;
+    }
+
+    // Remove the sign
+    if (compassDirection != null)
+    {
+      degreeParts.remove(lastPart);
+    }
+    if (hasSign)
+    {
+      String stripSign = firstPart.trim().substring(1).trim();
+      degreeParts.remove(0);
+      degreeParts.add(0, stripSign);
+      // Check that no other parts have signs
+      for (final String degreePart: degreeParts)
+      {
+        if (hasSign(degreePart))
+        {
+          throw new ParserException("Cannot have signs on all degree parts");
+        }
+      }
     }
 
     if (isIso6709Format)
@@ -244,7 +280,7 @@ public final class CoordinateParser
       {
         try
         {
-          angleFields.add(Integer.valueOf(degreePart.trim()));
+          angleFields.add(Double.valueOf(degreePart.trim()).intValue());
         }
         catch (final NumberFormatException e)
         {
@@ -261,8 +297,14 @@ public final class CoordinateParser
 
   }
 
+  private static boolean hasSign(final String string)
+  {
+    return string.trim().startsWith("+") || string.trim().startsWith("-");
+  }
+
   private CoordinateParser()
   {
     // Prevent instantiation
   }
+
 }

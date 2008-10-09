@@ -34,7 +34,7 @@ import org.pointlocation6709.parser.PointLocationParser;
 /**
  * Location tests.
  */
-public class TestPointLocation
+public class TestPointLocationParser
 {
 
   @Test(expected = ParserException.class)
