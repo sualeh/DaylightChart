@@ -223,11 +223,11 @@ public final class CoordinateParser
     final String[] degreeParts = new String[3];
     if (!isIso6709Format)
     {
-      for (final Field field: Field.values())
+      for (String part: parts)
       {
-        for (String part: parts)
+        part = part.trim();
+        for (final Field field: Field.values())
         {
-          part = part.trim();
           if (part.endsWith(field.toString()))
           {
             int currentField = field.ordinal();
