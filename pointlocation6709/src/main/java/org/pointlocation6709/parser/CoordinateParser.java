@@ -245,7 +245,14 @@ public final class CoordinateParser
     }
     if (hasSign)
     {
-      sign = Double.valueOf(firstPart.trim()).intValue() >= 0? 1: -1;
+      try
+      {
+        sign = Integer.valueOf(firstPart.trim().substring(0, 1) + "1");
+      }
+      catch (NumberFormatException e)
+      {
+        sign = 1;
+      }
     }
 
     // Remove the sign
