@@ -14,15 +14,46 @@ import org.pointlocation6709.parser.ParserException;
 public class TestCoordinateParser
 {
 
+  @Test(expected = ParserException.class)
+  public void bad_latitude_1a()
+    throws ParserException
+  {
+    parseAndCheckLatitude("-48° 36° 12.20\"", 0, 0, 0);
+  }
+
+  @Test(expected = ParserException.class)
+  public void bad_latitude_1b()
+    throws ParserException
+  {
+    parseAndCheckLatitude("48\' 36° 12.20\"", 0, 0, 0);
+  }
+
+  @Test(expected = ParserException.class)
+  public void bad_latitude_2()
+    throws ParserException
+  {
+    parseAndCheckLatitude("-48° 36° 12.20\" S", 0, 0, 0);
+  }
+
+  @Test(expected = ParserException.class)
+  public void bad_latitude_3()
+    throws ParserException
+  {
+    parseAndCheckLatitude("-48° -36° 12.20\"", 0, 0, 0);
+  }
+
   @Test
   public void latitude_1()
     throws ParserException
   {
     parseAndCheckLatitude("+483612.20", 48, 36, 12);
+    parseAndCheckLatitude("48° 36\' 12.20\"", 48, 36, 12);
+    parseAndCheckLatitude("+48° 36\' 12.20\"", 48, 36, 12);
+    parseAndCheckLatitude("48° 36\' 12.20\" N", 48, 36, 12);
+
     parseAndCheckLatitude("-483612.20", -48, -36, -12);
-    parseAndCheckLatitude("-48° 36\" 12.20\'", -48, -36, -12);
-    parseAndCheckLatitude("48° 36\" 12.20\' N", 48, 36, 12);
-    parseAndCheckLatitude("48° 36\" 12.20\' S", -48, -36, -12);
+    parseAndCheckLatitude("-48° 36\' 12.20\"", -48, -36, -12);
+    parseAndCheckLatitude("48° 36\' 12.20\" S", -48, -36, -12);
   }
 
   @Test
@@ -30,11 +61,38 @@ public class TestCoordinateParser
     throws ParserException
   {
     parseAndCheckLatitude("+003612.20", 0, 36, 12);
+    parseAndCheckLatitude("0° 36\' 12.20\"", 0, 36, 12);
+    parseAndCheckLatitude("+0° 36\' 12.20\"", 0, 36, 12);
+    parseAndCheckLatitude("0° 36\' 12.20\" N", 0, 36, 12);
+
     parseAndCheckLatitude("-003612.20", 0, -36, -12);
-    parseAndCheckLatitude("0° 36\" 12.20\'", 0, 36, 12);
-    parseAndCheckLatitude("-0° 36\" 12.20\'", 0, -36, -12);
-    parseAndCheckLatitude("0° 36\" 12.20\' N", 0, 36, 12);
-    parseAndCheckLatitude("0° 36\" 12.20\' S", 0, -36, -12);
+    parseAndCheckLatitude("-0° 36\' 12.20\"", 0, -36, -12);
+    parseAndCheckLatitude("0° 36\' 12.20\" S", 0, -36, -12);
+  }
+
+  @Test
+  public void latitude_3()
+    throws ParserException
+  {
+    parseAndCheckLatitude("48° 36\'", 48, 36, 0);
+    parseAndCheckLatitude("+48° 36\'", 48, 36, 0);
+    parseAndCheckLatitude("48° 36\' N", 48, 36, 0);
+
+    parseAndCheckLatitude("48° 12.20\"", 48, 0, 12);
+    parseAndCheckLatitude("+48° 12.20\"", 48, 0, 12);
+    parseAndCheckLatitude("48° 12.20\" N", 48, 0, 12);
+
+    parseAndCheckLatitude("36\' 12.20\"", 0, 36, 12);
+    parseAndCheckLatitude("36\' 12.20\"", 0, 36, 12);
+    parseAndCheckLatitude("36\' 12.20\" N", 0, 36, 12);
+
+    parseAndCheckLatitude("36\'", 0, 36, 0);
+    parseAndCheckLatitude("36\'", 0, 36, 0);
+    parseAndCheckLatitude("36\' N", 0, 36, 0);
+
+    parseAndCheckLatitude("12.20\"", 0, 0, 12);
+    parseAndCheckLatitude("12.20\"", 0, 0, 12);
+    parseAndCheckLatitude("12.20\" N", 0, 0, 12);
   }
 
   @Test
@@ -42,11 +100,13 @@ public class TestCoordinateParser
     throws ParserException
   {
     parseAndCheckLongitude("+0483612.20", 48, 36, 12);
+    parseAndCheckLongitude("48° 36\' 12.20\"", 48, 36, 12);
+    parseAndCheckLongitude("+48° 36\' 12.20\"", 48, 36, 12);
+    parseAndCheckLongitude("48° 36\' 12.20\" N", 48, 36, 12);
+
     parseAndCheckLongitude("-0483612.20", -48, -36, -12);
-    parseAndCheckLongitude("48° 36\" 12.20\'", 48, 36, 12);
-    parseAndCheckLongitude("-48° 36\" 12.20\'", -48, -36, -12);
-    parseAndCheckLongitude("48° 36\" 12.20\' E", 48, 36, 12);
-    parseAndCheckLongitude("48° 36\" 12.20\' W", -48, -36, -12);
+    parseAndCheckLongitude("-48° 36\' 12.20\"", -48, -36, -12);
+    parseAndCheckLongitude("48° 36\' 12.20\" S", -48, -36, -12);
   }
 
   @Test
@@ -54,11 +114,38 @@ public class TestCoordinateParser
     throws ParserException
   {
     parseAndCheckLongitude("+0003612.20", 0, 36, 12);
+    parseAndCheckLongitude("0° 36\' 12.20\"", 0, 36, 12);
+    parseAndCheckLongitude("+0° 36\' 12.20\"", 0, 36, 12);
+    parseAndCheckLongitude("0° 36\' 12.20\" N", 0, 36, 12);
+
     parseAndCheckLongitude("-0003612.20", 0, -36, -12);
-    parseAndCheckLongitude("0° 36\" 12.20\'", 0, 36, 12);
-    parseAndCheckLongitude("-0° 36\" 12.20\'", 0, -36, -12);
-    parseAndCheckLongitude("0° 36\" 12.20\' N", 0, 36, 12);
-    parseAndCheckLongitude("0° 36\" 12.20\' S", 0, -36, -12);
+    parseAndCheckLongitude("-0° 36\' 12.20\"", 0, -36, -12);
+    parseAndCheckLongitude("0° 36\' 12.20\" S", 0, -36, -12);
+  }
+
+  @Test
+  public void longitude_3()
+    throws ParserException
+  {
+    parseAndCheckLongitude("48° 36\'", 48, 36, 0);
+    parseAndCheckLongitude("+48° 36\'", 48, 36, 0);
+    parseAndCheckLongitude("48° 36\' N", 48, 36, 0);
+
+    parseAndCheckLongitude("48° 12.20\"", 48, 0, 12);
+    parseAndCheckLongitude("+48° 12.20\"", 48, 0, 12);
+    parseAndCheckLongitude("48° 12.20\" N", 48, 0, 12);
+
+    parseAndCheckLongitude("36\' 12.20\"", 0, 36, 12);
+    parseAndCheckLongitude("36\' 12.20\"", 0, 36, 12);
+    parseAndCheckLongitude("36\' 12.20\" N", 0, 36, 12);
+
+    parseAndCheckLongitude("36\'", 0, 36, 0);
+    parseAndCheckLongitude("36\'", 0, 36, 0);
+    parseAndCheckLongitude("36\' N", 0, 36, 0);
+
+    parseAndCheckLongitude("12.20\"", 0, 0, 12);
+    parseAndCheckLongitude("12.20\"", 0, 0, 12);
+    parseAndCheckLongitude("12.20\" N", 0, 0, 12);
   }
 
   private void checkAngle(Angle angle,

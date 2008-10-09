@@ -29,6 +29,7 @@ import org.pointlocation6709.Angle;
 import org.pointlocation6709.Latitude;
 import org.pointlocation6709.Longitude;
 import org.pointlocation6709.Utility;
+import org.pointlocation6709.Angle.Field;
 
 import antlr.RecognitionException;
 import antlr.TokenStreamException;
@@ -195,82 +196,115 @@ public final class CoordinateParser
       isIso6709Format = false;
     }
 
-    representation = representation.replaceAll(Angle.Field.DEGREES.toString(),
-                                               " ");
-    representation = representation.replaceAll(Angle.Field.MINUTES.toString(),
-                                               " ");
-    representation = representation.replaceAll(Angle.Field.SECONDS.toString(),
-                                               " ");
+    final List<String> parts = new ArrayList<String>(Arrays.asList(StringUtils
+      .split(representation, ' ')));
+    if (parts.size() > 1)
+    {
+      isIso6709Format = false;
+    }
 
-    final List<String> degreeParts = new ArrayList<String>(Arrays
-      .asList(StringUtils.split(representation, ' ')));
-    if (degreeParts.size() > 4)
+    try
+    {
+      Field.valueOf(parts.get(0).substring(0, parts.get(0).length() - 1));
+      isIso6709Format = false;
+    }
+    catch (IllegalArgumentException e)
+    {
+      // Is in ISO 6709 format
+    }
+
+    CompassDirection compassDirection = null;
+    if (parts.size() > 4)
     {
       throw new ParserException("Incorrectly formed angle - " +
                                 coordinateString);
     }
-    if (degreeParts.size() > 1)
+
+    final String[] degreeParts = new String[3];
+    if (!isIso6709Format)
     {
-      isIso6709Format = false;
+      for (final Field field: Field.values())
+      {
+        for (String part: parts)
+        {
+          part = part.trim();
+          if (part.endsWith(field.toString()))
+          {
+            int currentField = field.ordinal();
+            for (int i = currentField; i < degreeParts.length; i++)
+            {
+              if (degreeParts[i] != null)
+              {
+                throw new ParserException("Degree fields are out of order");
+              }
+            }
+            degreeParts[currentField] = part.substring(0, part.length() - 1);
+            break;
+          }
+        }
+      }
+      for (int i = 0; i < degreeParts.length; i++)
+      {
+        if (degreeParts[i] == null)
+        {
+          degreeParts[i] = "0";
+        }
+      }
+      if (parts.size() == 4)
+      {
+        try
+        {
+          compassDirection = CompassDirection.valueOf(parts.get(3).trim()
+            .toUpperCase());
+        }
+        catch (final IllegalArgumentException e)
+        {
+          compassDirection = null;
+        }
+      }
     }
 
     // Attempt to find the compass direction, and thus the sign of the
     // angle
-    final String firstPart = degreeParts.get(0);
-    final String lastPart = degreeParts.get(degreeParts.size() - 1);
-
-    CompassDirection compassDirection;
-    try
-    {
-      compassDirection = CompassDirection
-        .valueOf(lastPart.trim().toUpperCase());
-      isIso6709Format = false;
-    }
-    catch (final IllegalArgumentException e)
-    {
-      compassDirection = null;
-    }
-
-    final boolean hasSign = hasSign(firstPart);
-
-    if (compassDirection != null && hasSign)
-    {
-      throw new ParserException("Corordinate cannot have a compass direction, as well as a signed angle");
-    }
-
     int sign = 1;
-    if (compassDirection != null)
+    if (!isIso6709Format)
     {
-      sign = compassDirection.getSign();
-    }
-    if (hasSign)
-    {
-      try
-      {
-        sign = Integer.valueOf(firstPart.trim().substring(0, 1) + "1");
-      }
-      catch (NumberFormatException e)
-      {
-        sign = 1;
-      }
-    }
+      final String firstPart = degreeParts[0];
+      final boolean hasSign = hasSign(firstPart);
 
-    // Remove the sign
-    if (compassDirection != null)
-    {
-      degreeParts.remove(lastPart);
-    }
-    if (hasSign)
-    {
-      String stripSign = firstPart.trim().substring(1).trim();
-      degreeParts.remove(0);
-      degreeParts.add(0, stripSign);
-      // Check that no other parts have signs
-      for (final String degreePart: degreeParts)
+      if (compassDirection != null && hasSign)
       {
-        if (hasSign(degreePart))
+        throw new ParserException("Corordinate cannot have a compass direction, as well as a signed angle");
+      }
+
+      if (compassDirection != null)
+      {
+        sign = compassDirection.getSign();
+      }
+      if (hasSign)
+      {
+        try
         {
-          throw new ParserException("Cannot have signs on all degree parts");
+          sign = Integer.valueOf(firstPart.trim().substring(0, 1) + "1");
+        }
+        catch (NumberFormatException e)
+        {
+          sign = 1;
+        }
+      }
+
+      // Remove the sign
+      if (hasSign)
+      {
+        String stripSign = firstPart.trim().substring(1).trim();
+        degreeParts[0] = stripSign;
+        // Check that no other parts have signs
+        for (final String degreePart: degreeParts)
+        {
+          if (hasSign(degreePart))
+          {
+            throw new ParserException("Cannot have signs on all degree parts");
+          }
         }
       }
     }
