@@ -42,6 +42,34 @@ public class TestCoordinateParser
     parseAndCheckLatitude("-48° -36° 12.20\"", 0, 0, 0);
   }
 
+  @Test(expected = ParserException.class)
+  public void bad_longitude_1a()
+    throws ParserException
+  {
+    parseAndCheckLongitude("-48° 36° 12.20\"", 0, 0, 0);
+  }
+
+  @Test(expected = ParserException.class)
+  public void bad_longitude_1b()
+    throws ParserException
+  {
+    parseAndCheckLongitude("48\' 36° 12.20\"", 0, 0, 0);
+  }
+
+  @Test(expected = ParserException.class)
+  public void bad_longitude_2()
+    throws ParserException
+  {
+    parseAndCheckLongitude("-48° 36° 12.20\" S", 0, 0, 0);
+  }
+
+  @Test(expected = ParserException.class)
+  public void bad_longitude_3()
+    throws ParserException
+  {
+    parseAndCheckLongitude("-48° -36° 12.20\"", 0, 0, 0);
+  }
+
   @Test
   public void latitude_1()
     throws ParserException
