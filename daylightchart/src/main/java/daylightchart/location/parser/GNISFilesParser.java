@@ -90,15 +90,26 @@ public final class GNISFilesParser
           final String city = fields[1] + ", " + fields[3];
           final String latitudeString = fields[9];
           final String longitudeString = fields[10];
+          final String altitudeString = fields[15];
 
           final Latitude latitude = new Latitude(Angle.fromDegrees(Double
             .parseDouble(latitudeString)));
           final Longitude longitude = new Longitude(Angle.fromDegrees(Double
             .parseDouble(longitudeString)));
+          double altitude;
+          try
+          {
+            altitude = Double.parseDouble(altitudeString);
+          }
+          catch (NumberFormatException e)
+          {
+            altitude = 0;
+          }
           if (latitude.getDegrees() != 0 && longitude.getDegrees() != 0)
           {
             final PointLocation pointLocation = new PointLocation(latitude,
-                                                                  longitude);
+                                                                  longitude,
+                                                                  altitude);
             final String timeZoneId = DefaultTimezones
               .attemptTimeZoneMatch(city, usa, longitude);
             locations.add(new Location(city, usa, timeZoneId, pointLocation));
