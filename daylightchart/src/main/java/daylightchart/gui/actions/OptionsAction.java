@@ -58,8 +58,7 @@ public final class OptionsAction
      * 
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
-    public void actionPerformed(@SuppressWarnings("unused")
-    final ActionEvent actionevent)
+    public void actionPerformed(@SuppressWarnings("unused") final ActionEvent actionevent)
     {
       Options options = mainWindow.getOptions();
       options = OptionsDialog.showOptionsDialog(mainWindow, options);

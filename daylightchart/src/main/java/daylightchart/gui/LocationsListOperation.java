@@ -91,8 +91,7 @@ enum LocationsListOperation
     action.setShortcutKey(keyStroke);
     action.addActionListener(new ActionListener()
     {
-      public void actionPerformed(@SuppressWarnings("unused")
-      final ActionEvent event)
+      public void actionPerformed(@SuppressWarnings("unused") final ActionEvent event)
       {
         final Location selectedLocation = locationsList.getSelectedLocation();
         final Location editedLocation;

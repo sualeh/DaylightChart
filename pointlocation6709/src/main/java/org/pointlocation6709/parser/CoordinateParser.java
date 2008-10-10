@@ -22,13 +22,13 @@ package org.pointlocation6709.parser;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.pointlocation6709.Angle;
 import org.pointlocation6709.Latitude;
 import org.pointlocation6709.Longitude;
-import org.pointlocation6709.Utility;
 import org.pointlocation6709.Angle.Field;
 
 import antlr.RecognitionException;
@@ -250,17 +250,15 @@ public final class CoordinateParser
           degreeParts[i] = "0";
         }
       }
-      if (parts.size() == 4)
+
+      try
       {
-        try
-        {
-          compassDirection = CompassDirection.valueOf(parts.get(3).trim()
-            .toUpperCase());
-        }
-        catch (final IllegalArgumentException e)
-        {
-          compassDirection = null;
-        }
+        compassDirection = CompassDirection.valueOf(parts.get(parts.size() - 1)
+          .trim().toUpperCase());
+      }
+      catch (final IllegalArgumentException e)
+      {
+        compassDirection = null;
       }
     }
 
@@ -269,8 +267,7 @@ public final class CoordinateParser
     int sign = 1;
     if (!isIso6709Format)
     {
-      final String firstPart = degreeParts[0];
-      final boolean hasSign = hasSign(firstPart);
+      final boolean hasSign = hasSign(degreeParts);
 
       if (compassDirection != null && hasSign)
       {
@@ -283,29 +280,7 @@ public final class CoordinateParser
       }
       if (hasSign)
       {
-        try
-        {
-          sign = Integer.valueOf(firstPart.trim().substring(0, 1) + "1");
-        }
-        catch (NumberFormatException e)
-        {
-          sign = 1;
-        }
-      }
-
-      // Remove the sign
-      if (hasSign)
-      {
-        String stripSign = firstPart.trim().substring(1).trim();
-        degreeParts[0] = stripSign;
-        // Check that no other parts have signs
-        for (final String degreePart: degreeParts)
-        {
-          if (hasSign(degreePart))
-          {
-            throw new ParserException("Cannot have signs on all degree parts");
-          }
-        }
+        sign = getSign(degreeParts);
       }
     }
 
@@ -316,12 +291,21 @@ public final class CoordinateParser
     else
     {
       // Parse all the numbers
-      final List<Integer> angleFields = new ArrayList<Integer>();
-      for (final String degreePart: degreeParts)
+      final Double[] angleFields = new Double[3];
+      for (int i = 0; i < degreeParts.length; i++)
       {
+        final String degreePart = degreeParts[i];
         try
         {
-          angleFields.add(Double.valueOf(degreePart.trim()).intValue());
+          Double doubleValue = Double.valueOf(degreePart.trim());
+          angleFields[i] = sign * doubleValue;
+          if (i > 0 && doubleValue != 0 &&
+              angleFields[i - 1] != angleFields[i - 1].intValue())
+          {
+            throw new ParserException(String
+              .format("Cannot use decimal parts when %s is also specified",
+                      Field.values()[i].name().toLowerCase()));
+          }
         }
         catch (final NumberFormatException e)
         {
@@ -330,17 +314,68 @@ public final class CoordinateParser
         }
       }
 
-      double value = Utility.sexagesimalCombine(angleFields);
-      value = value * sign;
+      double angleValue = 0D;
+      if (angleFields != null)
+      {
+        List<Double> angleFieldsReversed = Arrays.asList(angleFields);
+        Collections.reverse(angleFieldsReversed);
+        for (Double part: angleFieldsReversed)
+        {
+          angleValue = angleValue / 60D + part.doubleValue();
+        }
+      }
 
-      return String.valueOf(value);
+      return String.valueOf(angleValue);
     }
 
   }
 
-  private static boolean hasSign(final String string)
+  private static boolean hasSign(final String[] degreeParts)
+    throws ParserException
   {
-    return string.trim().startsWith("+") || string.trim().startsWith("-");
+    boolean hasSign = false;
+    for (String degreePart: degreeParts)
+    {
+      if (degreePart.equals("0"))
+      {
+        continue;
+      }
+      boolean degreePartHasSign = degreePart.trim().startsWith("+") ||
+                                  degreePart.trim().startsWith("-");
+      if (hasSign && degreePartHasSign)
+      {
+        throw new ParserException("Cannot specify the sign more than once");
+      }
+      if (degreePartHasSign)
+      {
+        hasSign = true;
+      }
+    }
+    return hasSign;
+  }
+
+  private static int getSign(final String[] degreeParts)
+  {
+    int sign = 1;
+    for (int i = 0; i < degreeParts.length; i++)
+    {
+      final String degreePart = degreeParts[i];
+      if (degreePart.equals("0"))
+      {
+        continue;
+      }
+      if (degreePart.trim().startsWith("-"))
+      {
+        sign = -1;
+      }
+      if (degreePart.trim().startsWith("+") ||
+          degreePart.trim().startsWith("-"))
+      {
+        // Strip the sign
+        degreeParts[i] = degreePart.trim().substring(1).trim();
+      }
+    }
+    return sign;
   }
 
   private CoordinateParser()

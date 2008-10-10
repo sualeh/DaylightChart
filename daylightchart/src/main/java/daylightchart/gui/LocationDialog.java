@@ -91,8 +91,7 @@ public class LocationDialog
      * 
      * @see java.awt.event.KeyListener#keyPressed(java.awt.event.KeyEvent)
      */
-    public void keyPressed(@SuppressWarnings("unused")
-    final KeyEvent keyEvent)
+    public void keyPressed(@SuppressWarnings("unused") final KeyEvent keyEvent)
     {
     }
 
@@ -101,8 +100,7 @@ public class LocationDialog
      * 
      * @see java.awt.event.KeyListener#keyReleased(java.awt.event.KeyEvent)
      */
-    public void keyReleased(@SuppressWarnings("unused")
-    final KeyEvent keyEvents)
+    public void keyReleased(@SuppressWarnings("unused") final KeyEvent keyEvents)
     {
     }
 
@@ -203,8 +201,7 @@ public class LocationDialog
 
     final FocusListener focusListener = new FocusListener()
     {
-      public void focusGained(@SuppressWarnings("unused")
-      FocusEvent e)
+      public void focusGained(@SuppressWarnings("unused") FocusEvent e)
       {
       }
 
@@ -300,8 +297,7 @@ public class LocationDialog
 
       private static final long serialVersionUID = -180000433351276424L;
 
-      public void actionPerformed(@SuppressWarnings("unused")
-      ActionEvent actionEvent)
+      public void actionPerformed(@SuppressWarnings("unused") ActionEvent actionEvent)
       {
         dispose();
       }

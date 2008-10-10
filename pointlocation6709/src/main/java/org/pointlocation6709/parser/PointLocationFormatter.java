@@ -227,8 +227,8 @@ public final class PointLocationFormatter
   {
     final Latitude latitude = pointLocation.getLatitude();
     final Longitude longitude = pointLocation.getLongitude();
-    String string = formatLatitudeLong(latitude)
-                    + formatLongitudeLong(longitude);
+    String string = formatLatitudeLong(latitude) +
+                    formatLongitudeLong(longitude);
     final double altitude = pointLocation.getAltitude();
     if (altitude != 0)
     {
@@ -248,8 +248,8 @@ public final class PointLocationFormatter
   {
     final Latitude latitude = pointLocation.getLatitude();
     final Longitude longitude = pointLocation.getLongitude();
-    String string = formatLatitudeMedium(latitude)
-                    + formatLongitudeMedium(longitude);
+    String string = formatLatitudeMedium(latitude) +
+                    formatLongitudeMedium(longitude);
     final double altitude = pointLocation.getAltitude();
     if (altitude != 0)
     {
@@ -269,8 +269,8 @@ public final class PointLocationFormatter
   {
     final Latitude latitude = pointLocation.getLatitude();
     final Longitude longitude = pointLocation.getLongitude();
-    String string = formatLatitudeShort(latitude)
-                    + formatLongitudeShort(longitude);
+    String string = formatLatitudeShort(latitude) +
+                    formatLongitudeShort(longitude);
     final double altitude = pointLocation.getAltitude();
     if (altitude != 0)
     {
@@ -291,8 +291,8 @@ public final class PointLocationFormatter
   {
     final Latitude latitude = pointLocation.getLatitude();
     final Longitude longitude = pointLocation.getLongitude();
-    String string = formatLatitudeWithDecimals(latitude)
-                    + formatLongitudeWithDecimals(longitude);
+    String string = formatLatitudeWithDecimals(latitude) +
+                    formatLongitudeWithDecimals(longitude);
     final double altitude = pointLocation.getAltitude();
     if (altitude != 0)
     {
@@ -303,15 +303,15 @@ public final class PointLocationFormatter
 
   private static String formatLatitudeLong(final Latitude latitude)
   {
-    final String string = formatLatitudeShort(latitude)
-                          + formatSexagesimalMinutesStringLong(latitude);
+    final String string = formatLatitudeShort(latitude) +
+                          formatSexagesimalMinutesStringLong(latitude);
     return string;
   }
 
   private static String formatLatitudeMedium(final Latitude latitude)
   {
-    final String string = formatLatitudeShort(latitude)
-                          + formatSexagesimalMinutesStringMedium(latitude);
+    final String string = formatLatitudeShort(latitude) +
+                          formatSexagesimalMinutesStringMedium(latitude);
     return string;
   }
 
@@ -322,22 +322,22 @@ public final class PointLocationFormatter
 
   private static String formatLatitudeWithDecimals(final Latitude latitude)
   {
-    final String string = formatLatitudeShort(latitude)
-                          + formatDecimalMinutesString(latitude);
+    final String string = formatLatitudeShort(latitude) +
+                          formatDecimalMinutesString(latitude);
     return string;
   }
 
   private static String formatLongitudeLong(final Longitude longitude)
   {
-    final String string = formatLongitudeShort(longitude)
-                          + formatSexagesimalMinutesStringLong(longitude);
+    final String string = formatLongitudeShort(longitude) +
+                          formatSexagesimalMinutesStringLong(longitude);
     return string;
   }
 
   private static String formatLongitudeMedium(final Longitude longitude)
   {
-    final String string = formatLongitudeShort(longitude)
-                          + formatSexagesimalMinutesStringMedium(longitude);
+    final String string = formatLongitudeShort(longitude) +
+                          formatSexagesimalMinutesStringMedium(longitude);
     return string;
   }
 
@@ -348,8 +348,8 @@ public final class PointLocationFormatter
 
   private static String formatLongitudeWithDecimals(final Longitude longitude)
   {
-    final String string = formatIntegerDegreesString(longitude)
-                          + formatDecimalMinutesString(longitude);
+    final String string = formatIntegerDegreesString(longitude) +
+                          formatDecimalMinutesString(longitude);
     return string;
   }
 

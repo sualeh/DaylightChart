@@ -35,12 +35,11 @@ package org.sunposition.calculation;
  * -12°        Nautical Twilight
  * -18°        Astronomical Twilight
  * </pre>
- * 
  * <p>
  * Note that these values are related to the horizon (90° from the
  * azimuth). If the observer is above or below the horizon, the correct
- * adopted true sunrise/sunset altitude in degrees is -(50/60) - 0.0353 *
- * sqrt(height in meters);
+ * adopted true sunrise/sunset altitude in degrees is -(50/60) - 0.0353
+ * * sqrt(height in meters);
  * </p>
  * <p>
  * Sunrise is defined as the time when the apparent altitlude of the
@@ -80,9 +79,13 @@ public interface SunPositionAlgorithm
 
   /** Sunrise and sunset angle, in degrees */
   double SUNRISE_SUNSET = -(50.0 / 60.0);
+  /** Civil twilight angle, in degrees */
   double CIVIL_TWILIGHT = -6.0;
+  /** Nautical twilight angle, in degrees */
   double NAUTICAL_TWILIGHT = -12.0;
+  /** Astronomical twilight angle, in degrees */
   double ASTRONOMICAL_TWILIGHT = -18.0;
+  /** Civil twilight angle, in degrees */
   double TWILIGHT = CIVIL_TWILIGHT;
 
   /**
@@ -92,10 +95,10 @@ public interface SunPositionAlgorithm
    *        The adopted true altitude of the horizon in degrees. Use one
    *        of the following values. <br>
    *        <ul>
-   *        <li> SUNRISE_SUNSET </li>
-   *        <li> CIVIL_TWILIGHT </li>
-   *        <li> NAUTICAL_TWILIGHT </li>
-   *        <li> ASTRONOMICAL_TWILIGHT</li>
+   *        <li>SUNRISE_SUNSET</li>
+   *        <li>CIVIL_TWILIGHT</li>
+   *        <li>NAUTICAL_TWILIGHT</li>
+   *        <li>ASTRONOMICAL_TWILIGHT</li>
    *        </ul>
    * @return Array for sunrise and sunset times. Use RISE and SET as
    *         indices into this array.

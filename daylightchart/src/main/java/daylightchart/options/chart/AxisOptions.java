@@ -59,8 +59,7 @@ public class AxisOptions
    * @see BaseChartOptions#copyFromChart(org.jfree.chart.JFreeChart)
    */
   @Override
-  public void copyFromChart(@SuppressWarnings("unused")
-  final JFreeChart chart)
+  public void copyFromChart(@SuppressWarnings("unused") final JFreeChart chart)
   {
     // We do not know which axis to work from
     throw new NotImplementedException();
@@ -225,8 +224,7 @@ public class AxisOptions
    * @see BaseChartOptions#updateChart(org.jfree.chart.JFreeChart)
    */
   @Override
-  public void updateChart(@SuppressWarnings("unused")
-  final JFreeChart chart)
+  public void updateChart(@SuppressWarnings("unused") final JFreeChart chart)
   {
     // We do not know which axis to update
     throw new NotImplementedException();

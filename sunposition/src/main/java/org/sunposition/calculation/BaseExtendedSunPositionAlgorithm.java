@@ -60,7 +60,7 @@ abstract class BaseExtendedSunPositionAlgorithm
     /**
      * {@inheritDoc}
      * 
-     * @see org.sunposition.calculation.SolarEphemerides#getAltitude()
+     * @see org.sunposition.calculation.ExtendedSunPositionAlgorithm.SolarEphemerides#getAltitude()
      */
     public double getAltitude()
     {
@@ -70,7 +70,7 @@ abstract class BaseExtendedSunPositionAlgorithm
     /**
      * {@inheritDoc}
      * 
-     * @see org.sunposition.calculation.SolarEphemerides#getAzimuth()
+     * @see org.sunposition.calculation.ExtendedSunPositionAlgorithm.SolarEphemerides#getAzimuth()
      */
     public double getAzimuth()
     {
@@ -80,7 +80,7 @@ abstract class BaseExtendedSunPositionAlgorithm
     /**
      * {@inheritDoc}
      * 
-     * @see org.sunposition.calculation.SolarEphemerides#getDeclination()
+     * @see org.sunposition.calculation.ExtendedSunPositionAlgorithm.SolarEphemerides#getDeclination()
      */
     public double getDeclination()
     {
@@ -90,7 +90,7 @@ abstract class BaseExtendedSunPositionAlgorithm
     /**
      * {@inheritDoc}
      * 
-     * @see org.sunposition.calculation.SolarEphemerides#getEquationOfTime()
+     * @see org.sunposition.calculation.ExtendedSunPositionAlgorithm.SolarEphemerides#getEquationOfTime()
      */
     public double getEquationOfTime()
     {
@@ -100,7 +100,7 @@ abstract class BaseExtendedSunPositionAlgorithm
     /**
      * {@inheritDoc}
      * 
-     * @see org.sunposition.calculation.SolarEphemerides#getHourAngle()
+     * @see org.sunposition.calculation.ExtendedSunPositionAlgorithm.SolarEphemerides#getHourAngle()
      */
     public double getHourAngle()
     {
@@ -110,7 +110,7 @@ abstract class BaseExtendedSunPositionAlgorithm
     /**
      * {@inheritDoc}
      * 
-     * @see org.sunposition.calculation.SolarEphemerides#getRightAscension()
+     * @see org.sunposition.calculation.ExtendedSunPositionAlgorithm.SolarEphemerides#getRightAscension()
      */
     public double getRightAscension()
     {

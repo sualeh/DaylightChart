@@ -68,8 +68,7 @@ public final class SaveChartAction
      * 
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
-    public void actionPerformed(@SuppressWarnings("unused")
-    final ActionEvent actionevent)
+    public void actionPerformed(@SuppressWarnings("unused") final ActionEvent actionevent)
     {
       final DaylightChartReport daylightChartReport = mainWindow
         .getSelectedDaylightChartReport();

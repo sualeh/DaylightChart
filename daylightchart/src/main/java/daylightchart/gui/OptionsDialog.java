@@ -78,8 +78,7 @@ public class OptionsDialog
      * 
      * @see java.awt.event.KeyListener#keyPressed(java.awt.event.KeyEvent)
      */
-    public void keyPressed(@SuppressWarnings("unused")
-    final KeyEvent keyEvent)
+    public void keyPressed(@SuppressWarnings("unused") final KeyEvent keyEvent)
     {
     }
 
@@ -88,8 +87,7 @@ public class OptionsDialog
      * 
      * @see java.awt.event.KeyListener#keyReleased(java.awt.event.KeyEvent)
      */
-    public void keyReleased(@SuppressWarnings("unused")
-    final KeyEvent keyEvents)
+    public void keyReleased(@SuppressWarnings("unused") final KeyEvent keyEvents)
     {
     }
 
@@ -206,8 +204,7 @@ public class OptionsDialog
 
       private static final long serialVersionUID = -180000433351276424L;
 
-      public void actionPerformed(@SuppressWarnings("unused")
-      ActionEvent actionEvent)
+      public void actionPerformed(@SuppressWarnings("unused") ActionEvent actionEvent)
       {
         dispose();
       }

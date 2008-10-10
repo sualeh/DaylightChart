@@ -54,8 +54,7 @@ public final class ExitAction
     setShortcutKey(KeyStroke.getKeyStroke("control Q"));
     addActionListener(new ActionListener()
     {
-      public void actionPerformed(@SuppressWarnings("unused")
-      final ActionEvent actionevent)
+      public void actionPerformed(@SuppressWarnings("unused") final ActionEvent actionevent)
       {
         frame.dispose();
         System.exit(0);

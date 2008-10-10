@@ -74,24 +74,23 @@ class CobbledSunCalc
    * <li>Calculate the 'discriminant' for the quadratic, and classify
    * as:</li>
    * <ul>
-   * <li>No roots within the 2 hour interval - move onto the next 2
-   * hour range and start from step 1</li>
-   * <li>Two roots, one root within the interval - classify as rising
-   * or setting event and appropriate flag</li>
+   * <li>No roots within the 2 hour interval - move onto the next 2 hour
+   * range and start from step 1</li>
+   * <li>Two roots, one root within the interval - classify as rising or
+   * setting event and appropriate flag</li>
    * <ul>
-   * <li>If two flags set, i.e. rising and setting events both found,
-   * go to step 5</li>
+   * <li>If two flags set, i.e. rising and setting events both found, go
+   * to step 5</li>
    * <li>If one flag set, then return to step 1 for next two hour
    * interval, to search for remaining event</li>
    * </ul>
    * <li>Two roots, both within the interval - set the rising and
    * setting flags and go to step 5</li>
    * <li>One root (i.e. both roots same) within interval - set both
-   * rising and setting flags and go to step 5.
-   * </ul>
-   * <li>If neither rise nor set flag is set, then warn user that
-   * object is 'always above' or 'always below' horizon depending on the
-   * sign of the altitude in step 2, and move onto next object or quit.
+   * rising and setting flags and go to step 5. </ul>
+   * <li>If neither rise nor set flag is set, then warn user that object
+   * is 'always above' or 'always below' horizon depending on the sign
+   * of the altitude in step 2, and move onto next object or quit.
    * </ol>
    * 
    * @param horizon
@@ -105,11 +104,14 @@ class CobbledSunCalc
    *        </ul>
    * @return Array for sunrise and sunset times. Use RISE and SET as
    *         indices into this array.
-   * @see <a
-   *      href="http://www.merrymeet.com/minow/sunclock/Sun.java">Sun.java</a>
-   * @see <a
-   *      href="http://www.btinternet.com/~kburnett/kepler/moonrise.html">Moon
-   *      and Sun rise and set for any latitude</a>
+   * @see <ol>
+   *      <li><a
+   *      href="http://www.merrymeet.com/minow/sunclock/Sun.java">
+   *      Sun.java</a></li>
+   *      <li><a
+   *      href="http://www.btinternet.com/~kburnett/kepler/moonrise.html"
+   *      >Moon and Sun rise and set for any latitude</a></li>
+   *      </ol>
    */
   public double[] calcRiseSet(final double horizon)
   {
@@ -258,11 +260,9 @@ class CobbledSunCalc
    *         &#8729; HOURANGLE <br>
    *         &#8729; AZIMUTH <br>
    *         &#8729; ALTITUDE <br>
-   *         &#8729; EQUATIONOFTIME
-   *         </p>
-   *         See also: <a
-   *         href="http://www.srrb.noaa.gov/highlights/sunrise/program.txt">
-   *         NOAA calculations </a>
+   *         &#8729; EQUATIONOFTIME </p> See also: <a
+   *         href="http://www.srrb.noaa.gov/highlights/sunrise/program.txt"
+   *         > NOAA calculations </a>
    */
   public ExtendedSunPositionAlgorithm.SolarEphemerides calcSolarEphemerides(final double hour)
   {
@@ -527,53 +527,6 @@ class CobbledSunCalc
       result = -result;
     }
     return result;
-  }
-
-  private static void printE(int year)
-  {
-    double m, ve, ss, ae, ws;
-    m = ((double) year - 2000) / 1000;
-    ve = 2451623.80984 + 365242.37404 * m + 0.05169 * m * m - 0.00411 * m * m
-         * m - 0.00057 * m * m * m * m;
-    display_date(ve);
-    ss = 2451716.56767 + 365241.62603 * m + 0.00325 * m * m + 0.00888 * m * m
-         * m - 0.00030 * m * m * m * m;
-    display_date(ss);
-    ae = 2451810.21715 + 365242.01767 * m - 0.11575 * m * m + 0.00337 * m * m
-         * m + 0.00078 * m * m * m * m;
-    display_date(ae);
-    ws = 2451900.05952 + 365242.74049 * m - 0.06223 * m * m - 0.00823 * m * m
-         * m + 0.00032 * m * m * m * m;
-    display_date(ws);
-  }
-
-  private static void display_date(double jdn)
-  {
-    double p = Math.floor(jdn + 0.5);
-    double s1 = p + 68569;
-    double n = Math.floor(4 * s1 / 146097);
-    double s2 = s1 - Math.floor((146097 * n + 3) / 4);
-    double i = Math.floor(4000 * (s2 + 1) / 1461001);
-    double s3 = s2 - Math.floor(1461 * i / 4) + 31;
-    double q = Math.floor(80 * s3 / 2447);
-    double e = s3 - Math.floor(2447 * q / 80);
-    double s4 = Math.floor(q / 11);
-    double mm = q + 2 - 12 * s4;
-    double yy = 100 * (n - 49) + i + s4;
-    double dd = e + jdn - p + 0.5;
-
-    double hrs, min, sec, tm = dd;
-
-    dd = Math.floor(tm);
-    tm = 24 * (tm - dd);
-    hrs = Math.floor(tm);
-    tm = 60 * (tm - hrs);
-    min = Math.floor(tm);
-    tm = 60 * (tm - min);
-    sec = Math.round(tm);
-
-    System.out.print((int) yy + "/" + (int) mm + "/" + (int) dd + " "
-                     + (int) hrs + ":" + (int) min + ":" + (int) sec + "\t");
   }
 
 }

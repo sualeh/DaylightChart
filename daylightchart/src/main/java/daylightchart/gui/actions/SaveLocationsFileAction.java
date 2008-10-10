@@ -66,8 +66,7 @@ public final class SaveLocationsFileAction
      * 
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
-    public void actionPerformed(@SuppressWarnings("unused")
-    final ActionEvent actionevent)
+    public void actionPerformed(@SuppressWarnings("unused") final ActionEvent actionevent)
     {
       final List<FileFilter> fileFilters = new ArrayList<FileFilter>();
       fileFilters.add(new ExtensionFileFilter("Data files", ".data"));

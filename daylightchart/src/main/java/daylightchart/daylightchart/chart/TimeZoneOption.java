@@ -30,7 +30,9 @@ package daylightchart.daylightchart.chart;
 public enum TimeZoneOption
 {
 
-  /** Use local time for the time - do not correct for time zone, and DST */
+  /**
+   * Use local time for the time - do not correct for time zone, and DST
+   */
   USE_LOCAL_TIME("Use local time"),
   /** Use time zone for the time - correct for time zone, and DST */
   USE_TIME_ZONE("Use time zone");

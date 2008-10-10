@@ -125,13 +125,11 @@ public class LocationsList
     });
     locationsList.addKeyListener(new KeyListener()
     {
-      public void keyPressed(@SuppressWarnings("unused")
-      final KeyEvent e)
+      public void keyPressed(@SuppressWarnings("unused") final KeyEvent e)
       {
       }
 
-      public void keyReleased(@SuppressWarnings("unused")
-      final KeyEvent e)
+      public void keyReleased(@SuppressWarnings("unused") final KeyEvent e)
       {
       }
 

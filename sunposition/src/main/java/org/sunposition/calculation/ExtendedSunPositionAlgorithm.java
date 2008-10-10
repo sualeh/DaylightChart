@@ -35,12 +35,11 @@ package org.sunposition.calculation;
  * -12°        Nautical Twilight
  * -18°        Astronomical Twilight
  * </pre>
- * 
  * <p>
  * Note that these values are related to the horizon (90° from the
  * azimuth). If the observer is above or below the horizon, the correct
- * adopted true sunrise/sunset altitude in degrees is -(50/60) - 0.0353 *
- * sqrt(height in meters);
+ * adopted true sunrise/sunset altitude in degrees is -(50/60) - 0.0353
+ * * sqrt(height in meters);
  * </p>
  * <p>
  * Sunrise is defined as the time when the apparent altitlude of the
@@ -54,23 +53,65 @@ public interface ExtendedSunPositionAlgorithm
   extends SunPositionAlgorithm
 {
 
+  /**
+   * Solar ephemerides.
+   * 
+   * @author Sualeh Fatehi
+   */
   public interface SolarEphemerides
   {
 
+    /**
+     * Altitude.
+     * 
+     * @return Altitude.
+     */
     double getAltitude();
 
+    /**
+     * Azimuth.
+     * 
+     * @return Azimuth.
+     */
     double getAzimuth();
 
+    /**
+     * Declination.
+     * 
+     * @return Declination
+     */
     double getDeclination();
 
+    /**
+     * Equation of Time.
+     * 
+     * @return Equation of Time.
+     */
     double getEquationOfTime();
 
+    /**
+     * Hour angle.
+     * 
+     * @return Hour angle.
+     */
     double getHourAngle();
 
+    /**
+     * Right Ascension.
+     * 
+     * @return Right Ascension.
+     */
     double getRightAscension();
 
   }
 
+  /**
+   * Calculate the solar ephemerides.
+   * 
+   * @param hour
+   *        Hour of the day.
+   * @return Solar ephemerides.
+   */
   public ExtendedSunPositionAlgorithm.SolarEphemerides calcSolarEphemerides(final double hour);
 
 }

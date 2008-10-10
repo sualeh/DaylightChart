@@ -248,8 +248,7 @@ public final class DaylightChartGui
   }
 
   private void createActions(final JMenuBar menuBar,
-                             @SuppressWarnings("unused")
-                             final JToolBar toolBar)
+                             @SuppressWarnings("unused") final JToolBar toolBar)
   {
     final JMenu menu = new JMenu(Messages
       .getString("DaylightChartGui.Menu.Actions")); //$NON-NLS-1$
@@ -326,8 +325,7 @@ public final class DaylightChartGui
   }
 
   private void createOptionsMenu(final JMenuBar menuBar,
-                                 @SuppressWarnings("unused")
-                                 final JToolBar toolBar)
+                                 @SuppressWarnings("unused") final JToolBar toolBar)
   {
 
     final JMenu menu = new JMenu(Messages

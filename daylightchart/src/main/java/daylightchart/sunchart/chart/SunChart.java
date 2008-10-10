@@ -150,8 +150,7 @@ public class SunChart
    * 
    * @see daylightchart.options.chart.ChartOptionsListener#beforeSettingChartOptions(ChartOptions)
    */
-  public void beforeSettingChartOptions(@SuppressWarnings("unused")
-  final ChartOptions chartOptions)
+  public void beforeSettingChartOptions(@SuppressWarnings("unused") final ChartOptions chartOptions)
   {
     // No-op
   }

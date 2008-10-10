@@ -57,8 +57,7 @@ public final class ResetAllAction
      * 
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
-    public void actionPerformed(@SuppressWarnings("unused")
-    final ActionEvent actionevent)
+    public void actionPerformed(@SuppressWarnings("unused") final ActionEvent actionevent)
     {
       // Clear all preferences
       UserPreferences.clear();

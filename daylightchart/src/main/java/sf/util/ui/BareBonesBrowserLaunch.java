@@ -24,8 +24,8 @@ import javax.swing.JOptionPane;
  * needed. Bare Bones is free and works on Mac OS X, GNU/Linux, Unix
  * (Solaris), and Windows XP.
  * 
- * @see <a href="http://www.centerkey.com/java/browser/">Bare Bones
- *      Browser Launch for Java</a>
+ * @see <a href="http://www.centerkey.com/java/browser/">Bare Bones *
+ *      Browser Launch for Java< /a>
  */
 public class BareBonesBrowserLaunch
 {

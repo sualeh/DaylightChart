@@ -27,7 +27,6 @@ import org.pointlocation6709.Angle;
 import org.pointlocation6709.Latitude;
 import org.pointlocation6709.Longitude;
 
-
 /**
  * Location tests.
  */
