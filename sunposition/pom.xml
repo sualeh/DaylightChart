@@ -25,7 +25,7 @@
 		<dependency>
 			<groupId>pointlocation6709</groupId>
 			<artifactId>pointlocation6709</artifactId>
-			<version>2.6</version>
+			<version>${project.version}</version>
       <scope>test</scope>
 		</dependency>
 		<dependency>
