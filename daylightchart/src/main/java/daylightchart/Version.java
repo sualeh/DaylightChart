@@ -33,7 +33,7 @@ public final class Version
 {
 
   private static final String PRODUCTNAME = "Daylight Chart"; //$NON-NLS-1$
-  private static final String VERSION = "2.6"; //$NON-NLS-1$
+  private static final String VERSION = "2.8"; //$NON-NLS-1$
 
   /**
    * Information about this product.
