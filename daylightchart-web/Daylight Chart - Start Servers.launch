@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <launchConfiguration type="org.eclipse.jdt.launching.localJavaApplication">
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
 <listEntry value="/daylightchart-web/src/test/java/daylightchart/web/server/ServersMain.java"/>
@@ -15,5 +15,4 @@
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="daylightchart.web.server.ServersMain"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="src/main/webapp 8191"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="daylightchart-web"/>
-<stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.maven.ide.eclipse.launchconfig.sourcepathProvider"/>
 </launchConfiguration>
