@@ -56,7 +56,7 @@ public final class AboutAction
      * 
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
-    public void actionPerformed(@SuppressWarnings("unused") final ActionEvent actionevent)
+    public void actionPerformed(final ActionEvent actionevent)
     {
       JOptionPane.showMessageDialog(parent, Version.about());
     }

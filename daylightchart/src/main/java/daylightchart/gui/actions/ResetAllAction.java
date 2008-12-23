@@ -25,7 +25,6 @@ package daylightchart.gui.actions;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JFrame;
 import javax.swing.KeyStroke;
 
 import sf.util.ui.GuiAction;
@@ -45,11 +44,11 @@ public final class ResetAllAction
   private static final class GuiActionListener
     implements ActionListener
   {
-    private final DaylightChartGui daylightChartGui;
+    private final DaylightChartGui mainWindow;
 
-    private GuiActionListener(final DaylightChartGui daylightChartGui)
+    private GuiActionListener(final DaylightChartGui mainWindow)
     {
-      this.daylightChartGui = daylightChartGui;
+      this.mainWindow = mainWindow;
     }
 
     /**
@@ -57,24 +56,32 @@ public final class ResetAllAction
      * 
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
-    public void actionPerformed(@SuppressWarnings("unused") final ActionEvent actionevent)
+    public void actionPerformed(final ActionEvent actionevent)
     {
       // Clear all preferences
       UserPreferences.clear();
 
-      final boolean slimUi = daylightChartGui.isSlimUi();
-      restart(daylightChartGui, slimUi);
+      final boolean slimUi = mainWindow.isSlimUi();
+      restart(mainWindow, slimUi);
     }
 
   }
 
   private static final long serialVersionUID = 4002590686393404496L;
 
-  public static void restart(final DaylightChartGui daylightChartGui,
+  /**
+   * Restarts the program, by closing and opening the main window, and
+   * re-reading the preferences.
+   * 
+   * @param mainWindow
+   *        Main window.
+   * @param slimUi
+   *        Whether the program should start with a minimal GUI.
+   */
+  public static void restart(final DaylightChartGui mainWindow,
                              final boolean slimUi)
   {
     // Dispose this window
-    final JFrame mainWindow = daylightChartGui;
     mainWindow.setVisible(false);
     mainWindow.dispose();
 
@@ -85,15 +92,15 @@ public final class ResetAllAction
   /**
    * Closes current tab.
    * 
-   * @param daylightChartGui
+   * @param mainWindow
    *        Main window
    */
-  public ResetAllAction(final DaylightChartGui daylightChartGui)
+  public ResetAllAction(final DaylightChartGui mainWindow)
   {
     super(Messages.getString("DaylightChartGui.Menu.Options.ResetAll"), //$NON-NLS-1$  
           "/icons/reset_all.gif"); //$NON-NLS-1$ 
     setShortcutKey(KeyStroke.getKeyStroke("control shift alt R"));
-    addActionListener(new GuiActionListener(daylightChartGui));
+    addActionListener(new GuiActionListener(mainWindow));
   }
 
 }

@@ -61,7 +61,7 @@ public final class ChartOptionsAction
      * 
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
-    public void actionPerformed(@SuppressWarnings("unused") final ActionEvent actionevent)
+    public void actionPerformed(final ActionEvent actionevent)
     {
       final Options options = mainWindow.getOptions();
       final ChartOptions chartOptions = options.getChartOptions();
@@ -87,7 +87,7 @@ public final class ChartOptionsAction
   /**
    * Shows Help-About.
    * 
-   * @param parent
+   * @param mainWindow
    *        Main window.
    */
   public ChartOptionsAction(final DaylightChartGui mainWindow)

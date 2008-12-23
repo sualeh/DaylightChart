@@ -65,7 +65,7 @@ public final class SaveReportFileAction
      * 
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
-    public void actionPerformed(@SuppressWarnings("unused") final ActionEvent actionevent)
+    public void actionPerformed(final ActionEvent actionevent)
     {
       final List<FileFilter> fileFilters = new ArrayList<FileFilter>();
       fileFilters.add(new ExtensionFileFilter("Report design files", ".jrxml"));

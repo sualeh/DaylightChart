@@ -48,7 +48,7 @@ public final class OnlineHelpAction
      * 
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
-    public void actionPerformed(@SuppressWarnings("unused") final ActionEvent actionevent)
+    public void actionPerformed(final ActionEvent actionevent)
     {
       BareBonesBrowserLaunch
         .openURL("http://daylightchart.sourceforge.net/howto.html"); //$NON-NLS-1$

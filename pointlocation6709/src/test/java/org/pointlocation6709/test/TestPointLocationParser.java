@@ -128,7 +128,7 @@ public class TestPointLocationParser
     assertEquals(0, pointLocation.getLongitude().getField(Angle.Field.MINUTES));
     assertEquals(0, pointLocation.getLongitude().getField(Angle.Field.SECONDS));
 
-    assertEquals(0D, pointLocation.getAltitude());
+    assertEquals(0D, pointLocation.getAltitude(), 1e-10);
 
     assertEquals("+400000-0750000/", formattedPointLocationString1);
     assertEquals("+40.0-075.0/", formattedPointLocationString2);
@@ -158,7 +158,7 @@ public class TestPointLocationParser
     assertEquals(-15, pointLocation.getLongitude()
       .getField(Angle.Field.SECONDS));
 
-    assertEquals(0D, pointLocation.getAltitude());
+    assertEquals(0D, pointLocation.getAltitude(), 1e-10);
 
     assertEquals("+401213-0750015/", formattedPointLocationString1);
     assertEquals("+40.20361-075.00417/", formattedPointLocationString2);
@@ -187,7 +187,7 @@ public class TestPointLocationParser
     assertEquals(0, pointLocation.getLongitude().getField(Angle.Field.MINUTES));
     assertEquals(0, pointLocation.getLongitude().getField(Angle.Field.SECONDS));
 
-    assertEquals(0D, pointLocation.getAltitude());
+    assertEquals(0D, pointLocation.getAltitude(), 1e-10);
 
     assertEquals("+401200-0750000/", formattedPointLocationString1);
     assertEquals("+40.2-075.0/", formattedPointLocationString2);
@@ -217,7 +217,7 @@ public class TestPointLocationParser
     assertEquals(-15, pointLocation.getLongitude()
       .getField(Angle.Field.SECONDS));
 
-    assertEquals(0D, pointLocation.getAltitude());
+    assertEquals(0D, pointLocation.getAltitude(), 1e-10);
 
     assertEquals("+401213-0750015/", formattedPointLocationString1);
     assertEquals("+40.20367-075.00417/", formattedPointLocationString2);
@@ -247,7 +247,7 @@ public class TestPointLocationParser
     assertEquals(-15, pointLocation.getLongitude()
       .getField(Angle.Field.SECONDS));
 
-    assertEquals(0D, pointLocation.getAltitude());
+    assertEquals(0D, pointLocation.getAltitude(), 1e-10);
 
     assertEquals("+401213-0750015/", formattedPointLocationString1);
     assertEquals("+40.20361-075.00417/", formattedPointLocationString2);
@@ -277,7 +277,7 @@ public class TestPointLocationParser
     assertEquals(-15, pointLocation.getLongitude()
       .getField(Angle.Field.SECONDS));
 
-    assertEquals(0D, pointLocation.getAltitude());
+    assertEquals(0D, pointLocation.getAltitude(), 1e-10);
 
     assertEquals("+401213-0750015/", formattedPointLocationString1);
     assertEquals("+40.20364-075.00419/", formattedPointLocationString2);
@@ -306,7 +306,7 @@ public class TestPointLocationParser
     assertEquals(0, pointLocation.getLongitude().getField(Angle.Field.MINUTES));
     assertEquals(0, pointLocation.getLongitude().getField(Angle.Field.SECONDS));
 
-    assertEquals(350D, pointLocation.getAltitude());
+    assertEquals(350D, pointLocation.getAltitude(), 1e-10);
 
     assertEquals("+400000-0750000+350.0/", formattedPointLocationString1);
     assertEquals("+40.0-075.0+350.0/", formattedPointLocationString2);
@@ -336,7 +336,7 @@ public class TestPointLocationParser
     assertEquals(-15, pointLocation.getLongitude()
       .getField(Angle.Field.SECONDS));
 
-    assertEquals(350.517, pointLocation.getAltitude());
+    assertEquals(350.517, pointLocation.getAltitude(), 1e-10);
 
     assertEquals("+401213-0750015+350.517/", formattedPointLocationString1);
     assertEquals("+40.20361-075.00417+350.517/", formattedPointLocationString2);
@@ -365,7 +365,7 @@ public class TestPointLocationParser
     assertEquals(0, pointLocation.getLongitude().getField(Angle.Field.MINUTES));
     assertEquals(0, pointLocation.getLongitude().getField(Angle.Field.SECONDS));
 
-    assertEquals(-169.2, pointLocation.getAltitude());
+    assertEquals(-169.2, pointLocation.getAltitude(), 1e-10);
 
     assertEquals("+401200-0750000-169.2/", formattedPointLocationString1);
     assertEquals("+40.2-075.0-169.2/", formattedPointLocationString2);
@@ -395,7 +395,7 @@ public class TestPointLocationParser
     assertEquals(-15, pointLocation.getLongitude()
       .getField(Angle.Field.SECONDS));
 
-    assertEquals(-169.2, pointLocation.getAltitude());
+    assertEquals(-169.2, pointLocation.getAltitude(), 1e-10);
 
     assertEquals("+401213-0750015-169.2/", formattedPointLocationString1);
     assertEquals("+40.20367-075.00417-169.2/", formattedPointLocationString2);
@@ -425,7 +425,7 @@ public class TestPointLocationParser
     assertEquals(-15, pointLocation.getLongitude()
       .getField(Angle.Field.SECONDS));
 
-    assertEquals(2.79, pointLocation.getAltitude());
+    assertEquals(2.79, pointLocation.getAltitude(), 1e-10);
 
     assertEquals("+401213-0750015+2.79/", formattedPointLocationString1);
     assertEquals("+40.20361-075.00417+2.79/", formattedPointLocationString2);
@@ -455,15 +455,12 @@ public class TestPointLocationParser
     assertEquals(-15, pointLocation.getLongitude()
       .getField(Angle.Field.SECONDS));
 
-    assertEquals(2.79, pointLocation.getAltitude());
+    assertEquals(2.79, pointLocation.getAltitude(), 1e-10);
 
     assertEquals("+401213-0750015+2.79/", formattedPointLocationString1);
     assertEquals("+40.20364-075.00419+2.79/", formattedPointLocationString2);
   }
 
-  @SuppressWarnings( {
-      "boxing", "boxing", "boxing"
-  })
   @Test
   public void pointLocationBoundary_1()
     throws ParserException, FormatterException
@@ -486,7 +483,7 @@ public class TestPointLocationParser
     assertEquals(0, pointLocation.getLongitude().getField(Angle.Field.MINUTES));
     assertEquals(0, pointLocation.getLongitude().getField(Angle.Field.SECONDS));
 
-    assertEquals(0D, pointLocation.getAltitude());
+    assertEquals(0D, pointLocation.getAltitude(), 1e-10);
 
     assertEquals("+400000-1800000/", formattedPointLocationString1);
     assertEquals("+40.0-180.0/", formattedPointLocationString2);
@@ -525,7 +522,7 @@ public class TestPointLocationParser
     assertEquals(0, pointLocation.getLongitude().getField(Angle.Field.MINUTES));
     assertEquals(0, pointLocation.getLongitude().getField(Angle.Field.SECONDS));
 
-    assertEquals(0D, pointLocation.getAltitude());
+    assertEquals(0D, pointLocation.getAltitude(), 1e-10);
 
     assertEquals("+900000-0750000/", formattedPointLocationString1);
     assertEquals("+90.0-075.0/", formattedPointLocationString2);
@@ -554,7 +551,7 @@ public class TestPointLocationParser
     assertEquals(0, pointLocation.getLongitude().getField(Angle.Field.MINUTES));
     assertEquals(0, pointLocation.getLongitude().getField(Angle.Field.SECONDS));
 
-    assertEquals(0D, pointLocation.getAltitude());
+    assertEquals(0D, pointLocation.getAltitude(), 1e-10);
 
     assertEquals("-900000-0750000/", formattedPointLocationString1);
     assertEquals("-90.0-075.0/", formattedPointLocationString2);

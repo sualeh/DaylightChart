@@ -40,26 +40,39 @@ public class TestRounding
   public void rounding()
     throws ParserException
   {
-    assertEquals(2.0, DefaultTimezones.roundToNearestFraction(1.9, 0.5));
-    assertEquals(2.0, DefaultTimezones.roundToNearestFraction(2.0, 0.5));
-    assertEquals(2.0, DefaultTimezones.roundToNearestFraction(2.1, 0.5));
+    assertEquals(2.0, DefaultTimezones.roundToNearestFraction(1.9, 0.5), 1e-10);
+    assertEquals(2.0, DefaultTimezones.roundToNearestFraction(2.0, 0.5), 1e-10);
+    assertEquals(2.0, DefaultTimezones.roundToNearestFraction(2.1, 0.5), 1e-10);
 
-    assertEquals(2.5, DefaultTimezones.roundToNearestFraction(2.4, 0.5));
-    assertEquals(2.5, DefaultTimezones.roundToNearestFraction(2.5, 0.5));
-    assertEquals(2.5, DefaultTimezones.roundToNearestFraction(2.6, 0.5));
+    assertEquals(2.5, DefaultTimezones.roundToNearestFraction(2.4, 0.5), 1e-10);
+    assertEquals(2.5, DefaultTimezones.roundToNearestFraction(2.5, 0.5), 1e-10);
+    assertEquals(2.5, DefaultTimezones.roundToNearestFraction(2.6, 0.5), 1e-10);
 
-// assertEquals(0.0, DefaultTimezones.roundToNearestFraction(-0.1,
-// 0.5));
-    assertEquals(0.0, DefaultTimezones.roundToNearestFraction(0, 0.5));
-// assertEquals(0.0, DefaultTimezones.roundToNearestFraction(0.1, 0.5));
+// assertEquals(0.0, DefaultTimezones.roundToNearestFraction(-0.1, 0.5),
+    // 1e-10);
+    assertEquals(0.0, DefaultTimezones.roundToNearestFraction(0, 0.5), 1e-10);
+// assertEquals(0.0, DefaultTimezones.roundToNearestFraction(0.1, 0.5),
+    // 1e-10);
 
-    assertEquals(-2.0, DefaultTimezones.roundToNearestFraction(-1.9, 0.5));
-    assertEquals(-2.0, DefaultTimezones.roundToNearestFraction(-2.0, 0.5));
-    assertEquals(-2.0, DefaultTimezones.roundToNearestFraction(-2.1, 0.5));
+    assertEquals(-2.0,
+                 DefaultTimezones.roundToNearestFraction(-1.9, 0.5),
+                 1e-10);
+    assertEquals(-2.0,
+                 DefaultTimezones.roundToNearestFraction(-2.0, 0.5),
+                 1e-10);
+    assertEquals(-2.0,
+                 DefaultTimezones.roundToNearestFraction(-2.1, 0.5),
+                 1e-10);
 
-    assertEquals(-2.5, DefaultTimezones.roundToNearestFraction(-2.4, 0.5));
-    assertEquals(-2.5, DefaultTimezones.roundToNearestFraction(-2.5, 0.5));
-    assertEquals(-2.5, DefaultTimezones.roundToNearestFraction(-2.6, 0.5));
+    assertEquals(-2.5,
+                 DefaultTimezones.roundToNearestFraction(-2.4, 0.5),
+                 1e-10);
+    assertEquals(-2.5,
+                 DefaultTimezones.roundToNearestFraction(-2.5, 0.5),
+                 1e-10);
+    assertEquals(-2.5,
+                 DefaultTimezones.roundToNearestFraction(-2.6, 0.5),
+                 1e-10);
   }
 
 }
