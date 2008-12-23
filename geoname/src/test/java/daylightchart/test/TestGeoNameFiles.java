@@ -35,55 +35,50 @@ import org.geoname.parser.ParserException;
 import org.junit.Ignore;
 import org.junit.Test;
 
-
 /**
  * Location tests.
  */
-public class TestGNSCountryFiles
+public class TestGeoNameFiles
 {
 
-  @SuppressWarnings("boxing")
   @Test
   @Ignore
-  public void locations1()
+  public void countries()
     throws ParserException
   {
-    final InputStream dataStream = this.getClass().getClassLoader()
-      .getResourceAsStream("lo.txt");
-    final InputStreamReader reader = new InputStreamReader(dataStream);
-    final List<Location> locations = GNSCountryFilesParser
-      .parseLocations(reader);
-
-    assertEquals(4574, locations.size());
+    parseGNSCountryFile("lo.txt", 4574);
+    parseGNSCountryFile("ar.txt", 5467);
   }
 
-  @SuppressWarnings("boxing")
   @Test
   @Ignore
-  public void locations2()
+  public void GNISUSStates()
     throws ParserException
   {
-    final InputStream dataStream = this.getClass().getClassLoader()
-      .getResourceAsStream("ar.txt");
-    final InputStreamReader reader = new InputStreamReader(dataStream);
-    final List<Location> locations = GNSCountryFilesParser
-      .parseLocations(reader);
-
-    assertEquals(5467, locations.size());
+    parseGNISUSStates("IN_DECI.txt", 3451);
   }
 
-  @SuppressWarnings("boxing")
-  @Test
-  @Ignore
-  public void locations3()
+  private void parseGNISUSStates(final String filename, final int numLocations)
     throws ParserException
   {
     final InputStream dataStream = this.getClass().getClassLoader()
-      .getResourceAsStream("IN_DECI.txt");
+      .getResourceAsStream(filename);
     final InputStreamReader reader = new InputStreamReader(dataStream);
     final List<Location> locations = GNISFilesParser.parseLocations(reader);
 
-    assertEquals(3451, locations.size());
+    assertEquals(numLocations, locations.size());
+  }
+
+  private void parseGNSCountryFile(final String filename, final int numLocations)
+    throws ParserException
+  {
+    final InputStream dataStream = this.getClass().getClassLoader()
+      .getResourceAsStream(filename);
+    final InputStreamReader reader = new InputStreamReader(dataStream);
+    final List<Location> locations = GNSCountryFilesParser
+      .parseLocations(reader);
+
+    assertEquals(numLocations, locations.size());
   }
 
 }
