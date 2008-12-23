@@ -35,10 +35,6 @@ import org.geoname.parser.LocationParser;
 import org.geoname.parser.ParserException;
 import org.junit.Test;
 
-
-/**
- * Location tests.
- */
 public class TestLocation
 {
 
@@ -54,7 +50,6 @@ public class TestLocation
 
   }
 
-  @SuppressWarnings("boxing")
   @Test
   public void locations()
     throws ParserException

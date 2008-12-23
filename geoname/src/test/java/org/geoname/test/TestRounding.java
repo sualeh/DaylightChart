@@ -28,14 +28,9 @@ import org.geoname.parser.DefaultTimezones;
 import org.geoname.parser.ParserException;
 import org.junit.Test;
 
-
-/**
- * Location tests.
- */
 public class TestRounding
 {
 
-  @SuppressWarnings("boxing")
   @Test
   public void rounding()
     throws ParserException

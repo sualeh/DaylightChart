@@ -32,17 +32,12 @@ import org.geoname.Location;
 import org.geoname.parser.GNISFilesParser;
 import org.geoname.parser.GNSCountryFilesParser;
 import org.geoname.parser.ParserException;
-import org.junit.Ignore;
 import org.junit.Test;
 
-/**
- * Location tests.
- */
 public class TestGeoNameFiles
 {
 
   @Test
-  @Ignore
   public void countries()
     throws ParserException
   {
@@ -51,7 +46,6 @@ public class TestGeoNameFiles
   }
 
   @Test
-  @Ignore
   public void GNISUSStates()
     throws ParserException
   {
