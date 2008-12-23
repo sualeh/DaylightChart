@@ -173,6 +173,11 @@
       <version>${project.version}</version>
     </dependency>
     <dependency>
+      <groupId>geoname</groupId>
+      <artifactId>geoname</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
       <groupId>joda-time</groupId>
       <artifactId>joda-time</artifactId>
       <version>1.5.2</version>

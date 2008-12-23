@@ -1,0 +1,1 @@
+Daylight Chart depends on Point Location 6709, ANTLR, Joda Time, JGoodies Looks, JFreeChart and JCommon. All of these are distributed in their binary form. Please refer to their individual licenses for license terms.
