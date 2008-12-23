@@ -38,6 +38,12 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.geoname.Location;
+import org.geoname.parser.FormatterException;
+import org.geoname.parser.LocationFormatter;
+import org.geoname.parser.LocationParser;
+import org.geoname.parser.ParserException;
+
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperReport;
@@ -49,11 +55,6 @@ import com.thoughtworks.xstream.XStream;
 
 import daylightchart.daylightchart.chart.DaylightChart;
 import daylightchart.daylightchart.layout.DaylightChartReport;
-import daylightchart.location.Location;
-import daylightchart.location.parser.FormatterException;
-import daylightchart.location.parser.LocationFormatter;
-import daylightchart.location.parser.LocationParser;
-import daylightchart.location.parser.ParserException;
 import daylightchart.options.chart.ChartOptions;
 
 /**

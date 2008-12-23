@@ -11,7 +11,7 @@
 	<reportFont name="TableHeader" isDefault="false" fontName="Verdana" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="true"/>
 	<reportFont name="TableData" isDefault="false" fontName="Verdana" size="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="true"/>
 	<reportFont name="HeaderFooter" isDefault="false" fontName="Verdana" size="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="true"/>
-	<parameter name="location" class="daylightchart.location.Location"/>
+	<parameter name="location" class="org.geoname.Location"/>
 	<parameter name="daylight_chart" class="net.sf.jasperreports.engine.JRRenderable" isForPrompting="false">
 		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
 	</parameter>

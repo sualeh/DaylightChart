@@ -19,7 +19,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * 
  */
-package daylightchart.location.parser;
+package org.geoname.parser;
 
 
 import java.io.BufferedReader;
@@ -30,7 +30,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import daylightchart.location.USState;
+import org.geoname.USState;
+
 
 /**
  * In-memory database of US states.

@@ -34,11 +34,12 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import daylightchart.location.Location;
-import daylightchart.location.parser.GNISFilesParser;
-import daylightchart.location.parser.GNSCountryFilesParser;
-import daylightchart.location.parser.LocationParser;
-import daylightchart.location.parser.ParserException;
+import org.geoname.Location;
+import org.geoname.parser.GNISFilesParser;
+import org.geoname.parser.GNSCountryFilesParser;
+import org.geoname.parser.LocationParser;
+import org.geoname.parser.ParserException;
+
 
 /**
  * Loads locations from a file of any supported format.

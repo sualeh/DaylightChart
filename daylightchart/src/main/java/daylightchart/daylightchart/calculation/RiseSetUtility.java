@@ -37,6 +37,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.apache.commons.lang.ArrayUtils;
+import org.geoname.Location;
+import org.geoname.parser.DefaultTimezones;
+import org.geoname.parser.LocationParser;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.joda.time.LocalTime;
@@ -44,9 +47,6 @@ import org.sunposition.calculation.SunPositionAlgorithm;
 import org.sunposition.calculation.SunPositionAlgorithmFactory;
 
 import daylightchart.daylightchart.chart.TimeZoneOption;
-import daylightchart.location.Location;
-import daylightchart.location.parser.DefaultTimezones;
-import daylightchart.location.parser.LocationParser;
 import daylightchart.options.Options;
 
 /**

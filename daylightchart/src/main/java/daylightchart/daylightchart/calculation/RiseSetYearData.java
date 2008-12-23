@@ -28,10 +28,10 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import org.geoname.Location;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
 
-import daylightchart.location.Location;
 
 /**
  * A full year's sunrise and sunset times for a location.

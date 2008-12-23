@@ -6,11 +6,11 @@ import java.util.Calendar;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.protocol.http.ClientProperties;
 import org.apache.wicket.protocol.http.request.WebClientInfo;
+import org.geoname.Location;
 
 import daylightchart.daylightchart.calculation.RiseSetUtility;
 import daylightchart.daylightchart.calculation.RiseSetYearData;
 import daylightchart.daylightchart.chart.DaylightChart;
-import daylightchart.location.Location;
 import daylightchart.options.Options;
 import daylightchart.options.UserPreferences;
 

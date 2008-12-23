@@ -27,6 +27,10 @@ import java.util.logging.Logger;
 
 import javax.swing.UIManager;
 
+import org.geoname.Location;
+import org.geoname.parser.LocationParser;
+import org.geoname.parser.ParserException;
+
 import sf.util.CommandLineParser;
 import sf.util.CommandLineUtility;
 import sf.util.CommandLineParser.BooleanOption;
@@ -37,9 +41,6 @@ import com.jgoodies.looks.plastic.PlasticLookAndFeel;
 import com.jgoodies.looks.plastic.theme.LightGray;
 
 import daylightchart.gui.DaylightChartGui;
-import daylightchart.location.Location;
-import daylightchart.location.parser.LocationParser;
-import daylightchart.location.parser.ParserException;
 import daylightchart.options.UserPreferences;
 
 /**

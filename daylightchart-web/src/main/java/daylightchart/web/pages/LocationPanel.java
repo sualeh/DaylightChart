@@ -15,8 +15,8 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
+import org.geoname.Location;
 
-import daylightchart.location.Location;
 
 public class LocationPanel
   extends Panel

@@ -19,19 +19,19 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * 
  */
-package daylightchart.location.parser;
+package org.geoname.parser;
 
 
 import java.io.IOException;
 import java.io.Writer;
 import java.util.List;
 
+import org.geoname.Country;
+import org.geoname.Location;
 import org.pointlocation6709.parser.FormatterException;
 import org.pointlocation6709.parser.PointLocationFormatType;
 import org.pointlocation6709.parser.PointLocationFormatter;
 
-import daylightchart.location.Country;
-import daylightchart.location.Location;
 
 /**
  * Formats objects to strings.
@@ -47,10 +47,10 @@ public final class LocationFormatter
    * @param location
    *        Location to format
    * @return Formated string.
-   * @throws daylightchart.location.parser.FormatterException
+   * @throws org.geoname.parser.FormatterException
    */
   public static String formatLocation(final Location location)
-    throws daylightchart.location.parser.FormatterException
+    throws org.geoname.parser.FormatterException
   {
     String coordinatesString;
     try
@@ -60,7 +60,7 @@ public final class LocationFormatter
     }
     catch (final FormatterException e)
     {
-      throw new daylightchart.location.parser.FormatterException(e);
+      throw new org.geoname.parser.FormatterException(e);
     }
     final String tzId = location.getTimeZoneId();
 
@@ -80,12 +80,12 @@ public final class LocationFormatter
    *        Locations to write.
    * @param writer
    *        Writer to write to.
-   * @throws daylightchart.location.parser.FormatterException
+   * @throws org.geoname.parser.FormatterException
    *         On an exception.
    */
   public static void formatLocations(final List<Location> locations,
                                      final Writer writer)
-    throws daylightchart.location.parser.FormatterException
+    throws org.geoname.parser.FormatterException
   {
     if (locations == null || writer == null)
     {
@@ -104,7 +104,7 @@ public final class LocationFormatter
     }
     catch (final IOException e)
     {
-      throw new daylightchart.location.parser.FormatterException(e);
+      throw new org.geoname.parser.FormatterException(e);
     }
   }
 

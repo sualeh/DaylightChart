@@ -36,12 +36,13 @@ import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 import javax.swing.filechooser.FileFilter;
 
+import org.geoname.Location;
+
 import sf.util.ui.Actions;
 import sf.util.ui.ExtensionFileFilter;
 import sf.util.ui.GuiAction;
 import daylightchart.gui.DaylightChartGui;
 import daylightchart.gui.Messages;
-import daylightchart.location.Location;
 import daylightchart.options.UserPreferences;
 
 /**

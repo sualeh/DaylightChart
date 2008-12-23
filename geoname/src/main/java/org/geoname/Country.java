@@ -19,46 +19,46 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * 
  */
-package daylightchart.location;
+package org.geoname;
 
 
 import java.io.Serializable;
 
 /**
- * US State, with codes from the Federal Information Processing
- * Standards Publication 5-2 - Codes For The Identification Of The
- * States, The District Of Columbia And The Outlying Areas Of The United
- * States, And Associated Areas.
+ * Country, with ISO 3166 country code, and FIPS 10 country code.
  * 
  * @author Sualeh Fatehi
  */
-public final class USState
-  implements Serializable, Comparable<USState>
+public final class Country
+  implements Serializable, Comparable<Country>
 {
 
-  private static final long serialVersionUID = -5807680114125246988L;
+  /** Unknown country. */
+  public static final Country UNKNOWN = new Country("", "", "");
 
+  private static final long serialVersionUID = -5625327893850178062L;
   private final String name;
-  private final String fips5_2AlphaCode;
-  private final int fips5_2NumericCode;
+  private final String iso3166Code2;
+
+  private final String fips10Code;
 
   /**
    * Constructor.
    * 
    * @param name
-   *        State name
-   * @param fips5_2AlphaCode
-   *        FIPS 5-2 Alpha Code
-   * @param fips5_2NumericCode
-   *        FIPS 5-2 Numeric Code
+   *        Country name
+   * @param iso3166Code2
+   *        Two letter ISO 3166 country code
+   * @param fips10Code
+   *        FIPS 10 country code
    */
-  public USState(final String name,
-                 final String fips5_2AlphaCode,
-                 final int fips5_2NumericCode)
+  public Country(final String name,
+                 final String iso3166Code2,
+                 final String fips10Code)
   {
     this.name = name;
-    this.fips5_2AlphaCode = fips5_2AlphaCode;
-    this.fips5_2NumericCode = fips5_2NumericCode;
+    this.iso3166Code2 = iso3166Code2;
+    this.fips10Code = fips10Code;
   }
 
   /**
@@ -66,9 +66,9 @@ public final class USState
    * 
    * @see java.lang.Comparable#compareTo(java.lang.Object)
    */
-  public int compareTo(final USState otherUSState)
+  public int compareTo(final Country otherCountry)
   {
-    return fips5_2NumericCode - otherUSState.fips5_2NumericCode;
+    return name.compareTo(otherCountry.name);
   }
 
   /**
@@ -91,22 +91,7 @@ public final class USState
     {
       return false;
     }
-    final USState other = (USState) obj;
-    if (fips5_2AlphaCode == null)
-    {
-      if (other.fips5_2AlphaCode != null)
-      {
-        return false;
-      }
-    }
-    else if (!fips5_2AlphaCode.equals(other.fips5_2AlphaCode))
-    {
-      return false;
-    }
-    if (fips5_2NumericCode != other.fips5_2NumericCode)
-    {
-      return false;
-    }
+    final Country other = (Country) obj;
     if (name == null)
     {
       if (other.name != null)
@@ -118,27 +103,49 @@ public final class USState
     {
       return false;
     }
+    if (fips10Code == null)
+    {
+      if (other.fips10Code != null)
+      {
+        return false;
+      }
+    }
+    else if (!fips10Code.equals(other.fips10Code))
+    {
+      return false;
+    }
+    if (iso3166Code2 == null)
+    {
+      if (other.iso3166Code2 != null)
+      {
+        return false;
+      }
+    }
+    else if (!iso3166Code2.equals(other.iso3166Code2))
+    {
+      return false;
+    }
     return true;
   }
 
   /**
-   * Gets the FIPS 5-2 Alpha Code.
+   * Gets the FIPS 10 country code.
    * 
-   * @return FIPS 5-2 Alpha Code
+   * @return FIPS 10 country code
    */
-  public String getFips5_2AlphaCode()
+  public String getFips10Code()
   {
-    return fips5_2AlphaCode;
+    return fips10Code;
   }
 
   /**
-   * Gets the FIPS 5-2 Numeric Code.
+   * Gets the ISO 3166 2-letter country code.
    * 
-   * @return FIPS 5-2 Numeric Code
+   * @return ISO 3166 2-letter country code
    */
-  public int getFips5_2NumericCode()
+  public String getIso3166Code2()
   {
-    return fips5_2NumericCode;
+    return iso3166Code2;
   }
 
   /**
@@ -159,10 +166,10 @@ public final class USState
   {
     final int prime = 31;
     int result = 1;
-    result = prime * result
-             + (fips5_2AlphaCode == null? 0: fips5_2AlphaCode.hashCode());
-    result = prime * result + fips5_2NumericCode;
     result = prime * result + (name == null? 0: name.hashCode());
+    result = prime * result + (fips10Code == null? 0: fips10Code.hashCode());
+    result = prime * result
+             + (iso3166Code2 == null? 0: iso3166Code2.hashCode());
     return result;
   }
 

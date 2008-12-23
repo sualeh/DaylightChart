@@ -34,14 +34,14 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.geoname.Location;
+import org.geoname.parser.LocationParser;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.sunposition.calculation.ExtendedSunPositionAlgorithm;
 import org.sunposition.calculation.SunPositionAlgorithmFactory;
 import org.sunposition.calculation.ExtendedSunPositionAlgorithm.SolarEphemerides;
 
-import daylightchart.location.Location;
-import daylightchart.location.parser.LocationParser;
 
 /**
  * Calculator for sunrise and sunset times for a year.

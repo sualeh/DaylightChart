@@ -26,7 +26,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import daylightchart.location.Location;
+import org.geoname.Location;
+
 
 /**
  * A full year's sunrise and sunset times for a location.

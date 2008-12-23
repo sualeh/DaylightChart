@@ -28,13 +28,13 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.List;
 
+import org.geoname.Location;
+import org.geoname.parser.GNISFilesParser;
+import org.geoname.parser.GNSCountryFilesParser;
+import org.geoname.parser.ParserException;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import daylightchart.location.Location;
-import daylightchart.location.parser.GNISFilesParser;
-import daylightchart.location.parser.GNSCountryFilesParser;
-import daylightchart.location.parser.ParserException;
 
 /**
  * Location tests.

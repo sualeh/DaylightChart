@@ -24,10 +24,10 @@ package daylightchart.test;
 
 import static org.junit.Assert.assertEquals;
 
+import org.geoname.parser.DefaultTimezones;
+import org.geoname.parser.ParserException;
 import org.junit.Test;
 
-import daylightchart.location.parser.DefaultTimezones;
-import daylightchart.location.parser.ParserException;
 
 /**
  * Location tests.

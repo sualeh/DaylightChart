@@ -39,13 +39,13 @@ import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.renderers.JFreeChartRenderer;
 
+import org.geoname.Location;
 import org.jfree.chart.ChartUtilities;
 import org.joda.time.LocalDateTime;
 
 import daylightchart.daylightchart.calculation.RiseSetUtility;
 import daylightchart.daylightchart.calculation.RiseSetYearData;
 import daylightchart.daylightchart.chart.DaylightChart;
-import daylightchart.location.Location;
 import daylightchart.options.Options;
 import daylightchart.options.UserPreferences;
 

@@ -39,6 +39,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JSplitPane;
 import javax.swing.JToolBar;
 
+import org.geoname.Location;
 import org.jfree.chart.ChartPanel;
 
 import sf.util.ui.BareBonesBrowserLaunch;
@@ -59,7 +60,6 @@ import daylightchart.gui.actions.ResetAllAction;
 import daylightchart.gui.actions.SaveChartAction;
 import daylightchart.gui.actions.SaveLocationsFileAction;
 import daylightchart.gui.actions.SaveReportFileAction;
-import daylightchart.location.Location;
 import daylightchart.options.Options;
 import daylightchart.options.UserPreferences;
 

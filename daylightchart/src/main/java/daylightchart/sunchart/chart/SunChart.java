@@ -32,6 +32,8 @@ import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import org.geoname.Location;
+import org.geoname.parser.LocationParser;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.NumberAxis;
@@ -44,8 +46,6 @@ import org.jfree.data.xy.VectorSeriesCollection;
 import org.jfree.ui.RectangleInsets;
 
 import daylightchart.daylightchart.chart.ChartConfiguration;
-import daylightchart.location.Location;
-import daylightchart.location.parser.LocationParser;
 import daylightchart.options.chart.ChartOptions;
 import daylightchart.options.chart.ChartOptionsListener;
 import daylightchart.sunchart.calculation.SunChartUtility;

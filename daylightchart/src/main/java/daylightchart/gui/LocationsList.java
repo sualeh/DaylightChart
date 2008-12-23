@@ -40,10 +40,11 @@ import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JToolBar;
 
+import org.geoname.Location;
+import org.geoname.parser.LocationFormatter;
+
 import sf.util.ui.GuiAction;
 import daylightchart.daylightchart.layout.DaylightChartReport;
-import daylightchart.location.Location;
-import daylightchart.location.parser.LocationFormatter;
 import daylightchart.options.Options;
 import daylightchart.options.UserPreferences;
 

@@ -46,6 +46,11 @@ import javax.swing.JDialog;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 
+import org.geoname.Country;
+import org.geoname.Location;
+import org.geoname.parser.Countries;
+import org.geoname.parser.DefaultTimezones;
+import org.geoname.parser.TimeZoneDisplay;
 import org.pointlocation6709.Latitude;
 import org.pointlocation6709.Longitude;
 import org.pointlocation6709.PointLocation;
@@ -56,11 +61,6 @@ import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.factories.ButtonBarFactory;
 import com.jgoodies.forms.layout.FormLayout;
 
-import daylightchart.location.Country;
-import daylightchart.location.Location;
-import daylightchart.location.parser.Countries;
-import daylightchart.location.parser.DefaultTimezones;
-import daylightchart.location.parser.TimeZoneDisplay;
 
 /**
  * This class is used for the display of the location editor. The user

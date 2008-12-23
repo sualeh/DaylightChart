@@ -19,7 +19,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * 
  */
-package daylightchart.location;
+package org.geoname;
 
 
 import java.io.IOException;
@@ -29,12 +29,12 @@ import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.geoname.parser.DefaultTimezones;
 import org.pointlocation6709.Angle;
 import org.pointlocation6709.Latitude;
 import org.pointlocation6709.Longitude;
 import org.pointlocation6709.PointLocation;
 
-import daylightchart.location.parser.DefaultTimezones;
 
 /**
  * A location object has all the information required to define a

@@ -41,6 +41,8 @@ import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.KeyStroke;
 
+import org.geoname.LocationsSortOrder;
+
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.factories.ButtonBarFactory;
 import com.jgoodies.forms.layout.FormLayout;
@@ -48,7 +50,6 @@ import com.jgoodies.forms.layout.FormLayout;
 import daylightchart.daylightchart.calculation.TwilightType;
 import daylightchart.daylightchart.chart.ChartOrientation;
 import daylightchart.daylightchart.chart.TimeZoneOption;
-import daylightchart.location.LocationsSortOrder;
 import daylightchart.options.Options;
 
 /**

@@ -24,14 +24,14 @@ package daylightchart.gui;
 
 import javax.swing.JTabbedPane;
 
+import org.geoname.Location;
+import org.geoname.parser.LocationFormatter;
 import org.jfree.chart.ChartPanel;
 
 import sf.util.ui.CloseTabIcon;
 import daylightchart.daylightchart.chart.ChartConfiguration;
 import daylightchart.daylightchart.chart.DaylightChart;
 import daylightchart.daylightchart.layout.DaylightChartReport;
-import daylightchart.location.Location;
-import daylightchart.location.parser.LocationFormatter;
 import daylightchart.options.Options;
 
 /**
