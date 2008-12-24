@@ -37,7 +37,6 @@ import org.pointlocation6709.Latitude;
 import org.pointlocation6709.Longitude;
 import org.pointlocation6709.PointLocation;
 
-
 /**
  * Parses data files.
  * 
@@ -76,7 +75,7 @@ public final class GNISFilesParser
       while ((line = reader.readLine()) != null)
       {
         final String[] fields = line.split("\\|");
-        if (fields.length != 17)
+        if (fields.length != 19)
         {
           continue;
         }

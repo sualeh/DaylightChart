@@ -26,38 +26,50 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import org.geoname.Location;
 import org.geoname.parser.GNISFilesParser;
 import org.geoname.parser.GNSCountryFilesParser;
 import org.geoname.parser.ParserException;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class TestGeoNameFiles
 {
 
   @Test
+  @Ignore
   public void countries()
     throws ParserException
   {
-    parseGNSCountryFile("lo.txt", 4574);
-    parseGNSCountryFile("ar.txt", 5467);
+    parseGNSCountryFile("in.txt", 25091);
+    parseGNSCountryFile("ks.txt", 24719);
   }
 
   @Test
   public void GNISUSStates()
     throws ParserException
   {
-    parseGNISUSStates("IN_DECI.txt", 3451);
+    parseGNISUSStates("AK_Features_20081120.txt", 759);
+    parseGNISUSStates("MA_Features_20081120.txt", 3451);
   }
 
   private void parseGNISUSStates(final String filename, final int numLocations)
     throws ParserException
   {
-    final InputStream dataStream = this.getClass().getClassLoader()
-      .getResourceAsStream(filename);
-    final InputStreamReader reader = new InputStreamReader(dataStream);
+    InputStreamReader reader;
+    try
+    {
+      final InputStream dataStream = this.getClass().getClassLoader()
+        .getResourceAsStream(filename);
+      reader = new InputStreamReader(dataStream, "UTF-16");
+    }
+    catch (UnsupportedEncodingException e)
+    {
+      throw new ParserException(e);
+    }
     final List<Location> locations = GNISFilesParser.parseLocations(reader);
 
     assertEquals(numLocations, locations.size());
