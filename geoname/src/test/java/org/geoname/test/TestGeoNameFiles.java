@@ -33,14 +33,12 @@ import org.geoname.Location;
 import org.geoname.parser.GNISFilesParser;
 import org.geoname.parser.GNSCountryFilesParser;
 import org.geoname.parser.ParserException;
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class TestGeoNameFiles
 {
 
   @Test
-  @Ignore
   public void countries()
     throws ParserException
   {
@@ -52,8 +50,8 @@ public class TestGeoNameFiles
   public void GNISUSStates()
     throws ParserException
   {
-    parseGNISUSStates("AK_Features_20081120.txt", 759);
-    parseGNISUSStates("MA_Features_20081120.txt", 3451);
+// parseGNISUSStates("AK_Features_20081120.txt", 759);
+    parseGNISUSStates("MA_Features_20081120.txt", 226);
   }
 
   private void parseGNISUSStates(final String filename, final int numLocations)
@@ -64,7 +62,7 @@ public class TestGeoNameFiles
     {
       final InputStream dataStream = this.getClass().getClassLoader()
         .getResourceAsStream(filename);
-      reader = new InputStreamReader(dataStream, "UTF-16");
+      reader = new InputStreamReader(dataStream, "UTF-8");
     }
     catch (UnsupportedEncodingException e)
     {
