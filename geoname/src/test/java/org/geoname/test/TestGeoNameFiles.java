@@ -24,65 +24,91 @@ package org.geoname.test;
 
 import static org.junit.Assert.assertEquals;
 
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 import org.geoname.Location;
 import org.geoname.parser.GNISFilesParser;
 import org.geoname.parser.GNSCountryFilesParser;
 import org.geoname.parser.ParserException;
+import org.geoname.parser.UnicodeReader;
 import org.junit.Test;
 
 public class TestGeoNameFiles
 {
 
   @Test
-  public void countries()
-    throws ParserException
+  public void GNSCountries()
+    throws ParserException, IOException
   {
-    parseGNSCountryFile("in.txt", 25091);
-    parseGNSCountryFile("ks.txt", 24719);
+    parseGNSCountryFile("in.zip", 25091);
+    parseGNSCountryFile("ch.zip", 63430);
+    parseGNSCountryFile("lo.zip", 4606);
   }
 
   @Test
   public void GNISUSStates()
-    throws ParserException
+    throws ParserException, IOException
   {
-// parseGNISUSStates("AK_Features_20081120.txt", 759);
-    parseGNISUSStates("MA_Features_20081120.txt", 226);
+    parseGNISUSStates("AK_Features_20081120.zip", 759);
+    parseGNISUSStates("MA_Features_20081120.zip", 226);
+    parseGNISUSStates("HI_Features_20081120.zip", 540);
   }
 
   private void parseGNISUSStates(final String filename, final int numLocations)
-    throws ParserException
+    throws ParserException, IOException
   {
-    InputStreamReader reader;
-    try
-    {
-      final InputStream dataStream = this.getClass().getClassLoader()
-        .getResourceAsStream(filename);
-      reader = new InputStreamReader(dataStream, "UTF-8");
-    }
-    catch (UnsupportedEncodingException e)
-    {
-      throw new ParserException(e);
-    }
-    final List<Location> locations = GNISFilesParser.parseLocations(reader);
+    List<Location> locations = new ArrayList<Location>();
+    String dataFilename = "";
 
-    assertEquals(numLocations, locations.size());
+    final InputStream dataStream = this.getClass().getClassLoader()
+      .getResourceAsStream(filename);
+    ZipInputStream zis = new ZipInputStream(dataStream);
+    ZipEntry ze;
+    if ((ze = zis.getNextEntry()) != null)
+    {
+      dataFilename = ze.getName();
+      System.out.println(dataFilename);
+      BufferedReader reader = new BufferedReader(new UnicodeReader(zis, "UTF-8"));
+      locations = GNISFilesParser.parseLocations(reader);
+
+      zis.closeEntry();
+    }
+    zis.close();
+
+    assertEquals(String.format("Number of locations in file %s:%s",
+                               filename,
+                               dataFilename), numLocations, locations.size());
   }
 
   private void parseGNSCountryFile(final String filename, final int numLocations)
-    throws ParserException
+    throws ParserException, IOException
   {
+    List<Location> locations = new ArrayList<Location>();
+    String dataFilename = "";
+
     final InputStream dataStream = this.getClass().getClassLoader()
       .getResourceAsStream(filename);
-    final InputStreamReader reader = new InputStreamReader(dataStream);
-    final List<Location> locations = GNSCountryFilesParser
-      .parseLocations(reader);
+    ZipInputStream zis = new ZipInputStream(dataStream);
+    ZipEntry ze;
+    if ((ze = zis.getNextEntry()) != null)
+    {
+      dataFilename = ze.getName();
+      System.out.println(dataFilename);
+      BufferedReader reader = new BufferedReader(new UnicodeReader(zis, "UTF-8"));
+      locations = GNSCountryFilesParser.parseLocations(reader);
 
-    assertEquals(numLocations, locations.size());
+      zis.closeEntry();
+    }
+    zis.close();
+
+    assertEquals(String.format("Number of locations in file %s:%s",
+                               filename,
+                               dataFilename), numLocations, locations.size());
   }
-
 }
