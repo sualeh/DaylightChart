@@ -8,7 +8,7 @@
     <href>http://www.sourceforge.net/</href>
   </bannerLeft>
   <bannerRight>
-    <name>Sun Position Calculations</name>
+    <name>Geographical Names</name>
     <href>http://sourceforge.net/projects/daylightchart</href>
   </bannerRight>
   <body>
@@ -20,9 +20,9 @@
         name="Download"
         href="http://sourceforge.net/project/showfiles.php?group_id=193171" />
     </links>
-    <menu name="Sun Position Calculations">
+    <menu name="Geographical Names">
       <item
-        name="About Sun Position Calculations"
+        name="About Geographical Names"
         href="index.html" />
       <item
         name="Readme"

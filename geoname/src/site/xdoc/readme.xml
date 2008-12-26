@@ -1,36 +1,75 @@
 <!DOCTYPE document PUBLIC "-//Apache Software Foundation//DTD XDOC 1.0//EN"
   "http://maven.apache.org/dtd/xdoc_1_0.dtd">
 <document>
-  <properties>
-    <title>Sun Position Calculations - Readme</title>
-    <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
-  </properties>
-  <body>
-    <section name="Getting Started">
-      <subsection name="About">
-        Sun Position Calculations is an LGPL licensed Java library for calculating sunrise
-        and sunset times for any location in the world.
+	<properties>
+		<title>Geographical Names - Readme</title>
+		<author email="sualeh@hotmail.com">Sualeh Fatehi</author>
+	</properties>
+	<body>
+		<section name="Getting Started">
+			<subsection name="About">
+				Geographical Names is an LGPL licensed
+				Java library for parsing .
       </subsection>
-    </section>
-    <section name="Building From the Source Code">
-      <subsection name="Maven Build">
-        <p>
-          Sun Position Calculations uses Maven 2.0 to build, run unit
-          tests, and create the project web-site. Download
-          <a href="http://maven.apache.org/">Maven 2.0</a>,
-          and run <code>mvn compile</code> to build the library.
-        </p>
-      </subsection>
-      <subsection name="Eclipse">
-        <p>
-          Before importing the Sun Position Calculations project into Eclipse, make sure that
-          you have a successful Maven build. Maven will download all the
-          dependencies needed to build Sun Position Calculations. You will need to define
-          one Eclipse Java Classpath Variable,
-          <code>M2_REPO</code>
-          to point to the Maven 2.0 repository.
-        </p>
-      </subsection>
-    </section>
-  </body>
+		</section>
+		<section name="Building From the Source Code">
+			<subsection name="Maven Build">
+				<p>
+					Geographical Names uses Maven 2.0 to build, run unit
+					tests, and
+					create the project web-site. Download
+					<a href="http://maven.apache.org/">Maven 2.0</a>
+					,
+					and run
+					<code>mvn compile</code>
+					to build the library.
+				</p>
+			</subsection>
+			<subsection name="Eclipse">
+				<p>
+					Before importing the Geographical Names project into
+					Eclipse, make
+					sure that
+					you have a successful Maven build. Maven will download all
+					the
+					dependencies needed to build Geographical Names. You will
+					need to
+					define
+					one Eclipse Java Classpath Variable,
+					<code>M2_REPO</code>
+					to point to the Maven 2.0 repository.
+				</p>
+			</subsection>
+			<section name="About Geographical Names">
+				<subsection name="Parse Locations">
+					<p>
+						In addition to the Daylight Chart Locations List Format, the
+						Geographical Names program also
+						supports loading of locations in the
+						<a href="http://earth-info.nga.mil/gns/html/cntry_files.html">
+							GNS Country Files
+          </a>
+						format. However, the data in the GNS Country Files does not
+						contain
+						daylight savings time information, so Geographical Names
+						will make a best
+						guess of the time zone.
+					</p>
+					<p>
+						The Geographical Names program can load populated places in the
+						USA in
+						the
+						<a href="http://geonames.usgs.gov/domestic/download_data.htm">
+							GNIS file
+          </a>
+						format. The data in the GNIS files does not contain daylight
+						savings
+						time information, so Geographical Names will make a best
+						guess of the time
+						zone.
+					</p>
+				</subsection>
+			</section>
+		</section>
+	</body>
 </document>

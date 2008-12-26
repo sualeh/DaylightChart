@@ -6,6 +6,31 @@
   </properties>
   <body>
     <release
+      version="2.8"
+      date="2008-12-27">
+      <action
+        dev="Sualeh Fatehi"
+        type="add">
+        Created a new project for the parsing of GNIS files and GNS files.
+      </action>      
+      <action
+        dev="Sualeh Fatehi"
+        type="fix">
+        Fixed reading of modified GNIS files and GNS files, since the file
+        formats had changed.
+      </action>
+    </release>  
+    <release
+      version="2.7"
+      date="2008-10-10">
+      <action
+        dev="Sualeh Fatehi"
+        type="fix">
+        Fixed reading of modified GNIS files and GNS files, since the file
+        formats had changed.
+      </action>
+    </release>  
+    <release
       version="2.6"
       date="2008-04-23">
       <action

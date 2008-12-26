@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <document>
   <properties>
-    <title>Sun Position Calculations</title>
+    <title>Geographical Names</title>
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
-    <release version="1.7" date="2007-08-04">
+    <release version="2.8" date="2007-12-27">
       <action dev="Sualeh Fatehi" type="add">
-        Added new project for calculating sunrise and sunset times.
+        Created a new project for the parsing of GNIS files and GNS files.
       </action>
     </release>
   </body>
