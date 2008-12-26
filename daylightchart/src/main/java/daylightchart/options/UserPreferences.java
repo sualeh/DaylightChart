@@ -245,15 +245,15 @@ public final class UserPreferences
         switch (fileType)
         {
           case data:
-            locations = LocationParser.parseLocations(reader);
+            locations.addAll(LocationParser.parseLocations(reader));
             break;
           case gns_country_file:
           case gns_country_file_zipped:
-            locations = GNSCountryFilesParser.parseLocations(reader);
+            locations.addAll(GNSCountryFilesParser.parseLocations(reader));
             break;
           case gnis_state_file:
           case gnis_state_file_zipped:
-            locations = GNISFilesParser.parseLocations(reader);
+            locations.addAll(GNISFilesParser.parseLocations(reader));
             break;
         }
         reader.close();
