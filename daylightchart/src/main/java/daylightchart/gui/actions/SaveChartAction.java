@@ -32,12 +32,11 @@ import java.util.logging.Logger;
 
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
-import javax.swing.filechooser.FileFilter;
 
 import sf.util.ui.Actions;
 import sf.util.ui.ExtensionFileFilter;
 import sf.util.ui.GuiAction;
-import sf.util.ui.Actions.SelectedFile;
+import sf.util.ui.SelectedFile;
 import daylightchart.daylightchart.layout.ChartFileType;
 import daylightchart.daylightchart.layout.DaylightChartReport;
 import daylightchart.gui.DaylightChartGui;
@@ -72,16 +71,14 @@ public final class SaveChartAction
     {
       final DaylightChartReport daylightChartReport = mainWindow
         .getSelectedDaylightChartReport();
-      final List<FileFilter> fileFilters = new ArrayList<FileFilter>();
+      final List<ExtensionFileFilter<ChartFileType>> fileFilters = new ArrayList<ExtensionFileFilter<ChartFileType>>();
       for (final ChartFileType chartFileType: ChartFileType.values())
       {
-        fileFilters.add(new ExtensionFileFilter(chartFileType.getDescription(),
-                                                chartFileType
-                                                  .getFileExtension()));
+        fileFilters.add(new ExtensionFileFilter<ChartFileType>(chartFileType));
       }
       final String reportFilename = daylightChartReport
         .getReportFileName(ChartFileType.pdf);
-      final SelectedFile selectedFile = Actions
+      final SelectedFile<ChartFileType> selectedFile = Actions
         .showSaveDialog(mainWindow,
                         Messages
                           .getString("DaylightChartGui.Menu.File.SaveChart"),
@@ -94,11 +91,8 @@ public final class SaveChartAction
       {
         try
         {
-          final ExtensionFileFilter fileFilter = (ExtensionFileFilter) selectedFile
-            .getFileFilter();
-          final ChartFileType chartFileType = ChartFileType
-            .fromExtension(fileFilter.getExtension());
-          daylightChartReport.write(selectedFile.getFile(), chartFileType);
+          daylightChartReport.write(selectedFile.getFile(), selectedFile
+            .getFileType());
 
           // Save last selected directory
           UserPreferences.setWorkingDirectory(selectedFile.getDirectory());

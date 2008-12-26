@@ -32,12 +32,11 @@ import java.util.logging.Logger;
 
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
-import javax.swing.filechooser.FileFilter;
 
 import sf.util.ui.Actions;
 import sf.util.ui.ExtensionFileFilter;
 import sf.util.ui.GuiAction;
-import sf.util.ui.Actions.SelectedFile;
+import sf.util.ui.SelectedFile;
 import daylightchart.gui.DaylightChartGui;
 import daylightchart.gui.Messages;
 import daylightchart.options.UserPreferences;
@@ -68,10 +67,10 @@ public final class SaveLocationsFileAction
      */
     public void actionPerformed(final ActionEvent actionevent)
     {
-      final List<FileFilter> fileFilters = new ArrayList<FileFilter>();
-      fileFilters.add(new ExtensionFileFilter("Data files", ".data"));
-      fileFilters.add(new ExtensionFileFilter("Text files", ".txt"));
-      final SelectedFile selectedFile = Actions
+      final List<ExtensionFileFilter<LocationFileType>> fileFilters = new ArrayList<ExtensionFileFilter<LocationFileType>>();
+      fileFilters
+        .add(new ExtensionFileFilter<LocationFileType>(LocationFileType.data));
+      final SelectedFile<LocationFileType> selectedFile = Actions
         .showSaveDialog(mainWindow,
                         Messages
                           .getString("DaylightChartGui.Menu.File.SaveLocations"),

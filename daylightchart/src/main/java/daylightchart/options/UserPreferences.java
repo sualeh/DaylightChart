@@ -34,15 +34,13 @@ import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import org.geoname.Location;
-import org.geoname.parser.FormatterException;
-import org.geoname.parser.LocationFormatter;
-import org.geoname.parser.LocationParser;
-import org.geoname.parser.ParserException;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
@@ -51,10 +49,22 @@ import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import net.sf.jasperreports.engine.xml.JRXmlWriter;
 
+import org.geoname.Location;
+import org.geoname.parser.FormatterException;
+import org.geoname.parser.GNISFilesParser;
+import org.geoname.parser.GNSCountryFilesParser;
+import org.geoname.parser.LocationFormatter;
+import org.geoname.parser.LocationParser;
+import org.geoname.parser.ParserException;
+import org.geoname.parser.UnicodeReader;
+
+import sf.util.ui.SelectedFile;
+
 import com.thoughtworks.xstream.XStream;
 
 import daylightchart.daylightchart.chart.DaylightChart;
 import daylightchart.daylightchart.layout.DaylightChartReport;
+import daylightchart.gui.actions.LocationFileType;
 import daylightchart.options.chart.ChartOptions;
 
 /**
@@ -197,23 +207,92 @@ public final class UserPreferences
     return imported;
   }
 
-  public static List<Location> loadLocationsFromFile(final File file)
+  public static List<Location> loadLocationsFromFile(final SelectedFile<LocationFileType> selectedFile)
   {
-    final List<Location> locations = LocationsLoader.load(file);
+    List<Location> locations = new ArrayList<Location>();
+    if (selectedFile == null || !selectedFile.isSelected())
+    {
+      return locations;
+    }
+
+    LocationFileType fileType = selectedFile.getFileType();
+    List<InputStream> inputs = new ArrayList<InputStream>();
+    ;
+    try
+    {
+      switch (fileType)
+      {
+        case data:
+        case gns_country_file:
+        case gnis_state_file:
+          inputs.add(new FileInputStream(selectedFile.getFile()));
+          break;
+        case gns_country_file_zipped:
+        case gnis_state_file_zipped:
+          ZipFile zipFile = new ZipFile(selectedFile.getFile());
+          List<ZipEntry> zippedFiles = (List<ZipEntry>) Collections
+            .list(zipFile.entries());
+          for (ZipEntry zipEntry: zippedFiles)
+          {
+            inputs.add(zipFile.getInputStream(zipEntry));
+          }
+          break;
+      }
+
+      for (InputStream inputStream: inputs)
+      {
+        Reader reader = new UnicodeReader(inputStream, "UTF-8");
+        switch (fileType)
+        {
+          case data:
+            locations = LocationParser.parseLocations(reader);
+            break;
+          case gns_country_file:
+          case gns_country_file_zipped:
+            locations = GNSCountryFilesParser.parseLocations(reader);
+            break;
+          case gnis_state_file:
+          case gnis_state_file_zipped:
+            locations = GNISFilesParser.parseLocations(reader);
+            break;
+        }
+        reader.close();
+      }
+    }
+    catch (final Exception e)
+    {
+      LOGGER.log(Level.WARNING,
+                 "Could not read locations from " + selectedFile,
+                 e);
+      locations = new ArrayList<Location>();
+    }
+    finally
+    {
+      for (InputStream inputStream: inputs)
+      {
+        if (inputStream != null)
+        {
+          try
+          {
+            inputStream.close();
+          }
+          catch (final IOException e)
+          {
+            LOGGER.log(Level.WARNING, "Could not close input stream", e);
+          }
+        }
+      }
+    }
     return locations;
   }
 
   public static Options loadOptionsFromFile(final File file)
   {
-    final Reader reader = LocationsLoader.getFileReader(file);
-    if (reader == null)
-    {
-      LOGGER.log(Level.WARNING, "Could not read options from " + file);
-      return null;
-    }
+    Reader reader = null;
     Options options;
     try
     {
+      reader = new UnicodeReader(new FileInputStream(file), "UTF-8");
       final XStream xStream = new XStream();
       options = (Options) xStream.fromXML(reader);
     }
@@ -463,8 +542,18 @@ public final class UserPreferences
 
   private static void initializeLocations()
   {
-    // Try loading from user preferences
-    locations = loadLocationsFromFile(locationsDataFile);
+    try
+    {
+      // Try loading from user preferences
+      locations = LocationParser
+        .parseLocations(new UnicodeReader(new FileInputStream(locationsDataFile),
+                                          "UTF-8"));
+    }
+    catch (Exception e)
+    {
+      LOGGER.log(Level.WARNING, "Cannot read locations from file " + locations);
+      locations = null;
+    }
 
     // Load from internal store
     if (locations == null)

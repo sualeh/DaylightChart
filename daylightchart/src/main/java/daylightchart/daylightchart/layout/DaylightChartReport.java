@@ -43,6 +43,7 @@ import org.geoname.Location;
 import org.jfree.chart.ChartUtilities;
 import org.joda.time.LocalDateTime;
 
+import sf.util.ui.FileType;
 import daylightchart.daylightchart.calculation.RiseSetUtility;
 import daylightchart.daylightchart.calculation.RiseSetYearData;
 import daylightchart.daylightchart.chart.DaylightChart;
@@ -91,7 +92,7 @@ public class DaylightChartReport
     return location;
   }
 
-  public String getReportFileName(final ChartFileType chartFileType)
+  public String getReportFileName(final FileType chartFileType)
   {
     return location.getDescription() + "."
            + new LocalDateTime().toString("yyyyMMddhhmm")

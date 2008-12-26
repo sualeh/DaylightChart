@@ -30,7 +30,7 @@ import java.util.Locale;
  * 
  * @author sfatehi
  */
-public class ExtensionFileFilter
+public class ExtensionFileFilter<T extends FileType>
   extends javax.swing.filechooser.FileFilter
   implements java.io.FileFilter
 {
@@ -55,34 +55,17 @@ public class ExtensionFileFilter
   }
 
   /** A description for the file type. */
-  private final String description;
-
-  /** File extensions that are accepted. */
-  private final String extension;
+  private final T fileType;
 
   /**
    * Constructor.
    * 
-   * @param description
-   *        A description of the file type;
-   * @param extension
-   *        The file extension;
+   * @param fileType
+   *        A description of the file type.
    */
-  public ExtensionFileFilter(final String description, final String extension)
+  public ExtensionFileFilter(final T fileType)
   {
-    this.description = description;
-
-    String fileExtension = extension;
-    if (fileExtension == null)
-    {
-      fileExtension = "";
-    }
-    if (!fileExtension.startsWith("."))
-    {
-      fileExtension = "." + fileExtension;
-    }
-    this.extension = fileExtension;
-
+    this.fileType = fileType;
   }
 
   /**
@@ -105,30 +88,21 @@ public class ExtensionFileFilter
     else
     {
       final String extension = getExtension(file);
-      accept = extension != null && extension.equals(this.extension);
+      accept = extension != null
+               && extension.equals(fileType.getFileExtension());
     }
     return accept;
   }
 
-  /**
-   * {@inheritDoc}
-   * 
-   * @see javax.swing.filechooser.FileFilter#getDescription()
-   */
   @Override
   public String getDescription()
   {
-    return description;
+    return fileType.getDescription();
   }
 
-  /**
-   * Gets the file extension.
-   * 
-   * @return File extension.
-   */
-  public String getExtension()
+  public T getFileType()
   {
-    return extension;
+    return fileType;
   }
 
 }

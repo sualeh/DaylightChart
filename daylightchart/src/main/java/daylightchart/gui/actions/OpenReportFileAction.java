@@ -32,11 +32,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.JOptionPane;
-import javax.swing.filechooser.FileFilter;
 
 import sf.util.ui.Actions;
 import sf.util.ui.ExtensionFileFilter;
 import sf.util.ui.GuiAction;
+import sf.util.ui.SelectedFile;
 import daylightchart.gui.DaylightChartGui;
 import daylightchart.gui.Messages;
 import daylightchart.options.UserPreferences;
@@ -67,9 +67,10 @@ public final class OpenReportFileAction
      */
     public void actionPerformed(final ActionEvent actionevent)
     {
-      final List<FileFilter> fileFilters = new ArrayList<FileFilter>();
-      fileFilters.add(new ExtensionFileFilter("Report design files", ".jrxml"));
-      final File selectedFile = Actions
+      final List<ExtensionFileFilter<ReportDesignFileType>> fileFilters = new ArrayList<ExtensionFileFilter<ReportDesignFileType>>();
+      fileFilters
+        .add(new ExtensionFileFilter<ReportDesignFileType>(ReportDesignFileType.report_design));
+      final SelectedFile<ReportDesignFileType> selectedFile = Actions
         .showOpenDialog(mainWindow,
                         Messages
                           .getString("DaylightChartGui.Menu.File.LoadReport"),
@@ -79,34 +80,39 @@ public final class OpenReportFileAction
                         Messages
                           .getString("DaylightChartGui.Message.Error.CannotOpenFile"));
 
-      mainWindow.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-
-      try
+      if (selectedFile.isSelected())
       {
-        boolean reportLoaded = UserPreferences.importReport(selectedFile);
-        if (!reportLoaded)
+        mainWindow.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+
+        try
         {
-          if (selectedFile != null)
+          boolean reportLoaded = UserPreferences.importReport(selectedFile
+            .getFile());
+          if (!reportLoaded)
           {
-            LOGGER.log(Level.WARNING, Messages
-              .getString("DaylightChartGui.Message.Error.CannotOpenFile")); //$NON-NLS-1$
-            JOptionPane.showMessageDialog(mainWindow, Messages
-              .getString("DaylightChartGui.Message.Error.CannotOpenFile") //$NON-NLS-1$
-                                                      + "\n" //$NON-NLS-1$
-                                                      + selectedFile, Messages
-              .getString("DaylightChartGui.Message.Error.CannotOpenFile"), //$NON-NLS-1$
-                                          JOptionPane.ERROR_MESSAGE);
+            if (selectedFile != null)
+            {
+              LOGGER.log(Level.WARNING, Messages
+                .getString("DaylightChartGui.Message.Error.CannotOpenFile")); //$NON-NLS-1$
+              JOptionPane
+                .showMessageDialog(mainWindow, Messages
+                  .getString("DaylightChartGui.Message.Error.CannotOpenFile") //$NON-NLS-1$
+                                               + "\n" //$NON-NLS-1$
+                                               + selectedFile, Messages
+                  .getString("DaylightChartGui.Message.Error.CannotOpenFile"), //$NON-NLS-1$
+                                   JOptionPane.ERROR_MESSAGE);
+            }
           }
         }
-      }
-      catch (final RuntimeException e)
-      {
-        // We catch exceptions, because otherwise the cursor may get
-        // stuck in busy mode
-        LOGGER.log(Level.WARNING, "Could not load report");
-      }
+        catch (final RuntimeException e)
+        {
+          // We catch exceptions, because otherwise the cursor may get
+          // stuck in busy mode
+          LOGGER.log(Level.WARNING, "Could not load report");
+        }
 
-      mainWindow.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+        mainWindow.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+      }
     }
   }
 

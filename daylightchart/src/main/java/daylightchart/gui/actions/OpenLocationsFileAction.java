@@ -34,13 +34,13 @@ import java.util.logging.Logger;
 
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
-import javax.swing.filechooser.FileFilter;
 
 import org.geoname.Location;
 
 import sf.util.ui.Actions;
 import sf.util.ui.ExtensionFileFilter;
 import sf.util.ui.GuiAction;
+import sf.util.ui.SelectedFile;
 import daylightchart.gui.DaylightChartGui;
 import daylightchart.gui.Messages;
 import daylightchart.options.UserPreferences;
@@ -71,10 +71,18 @@ public final class OpenLocationsFileAction
      */
     public void actionPerformed(final ActionEvent actionevent)
     {
-      final List<FileFilter> fileFilters = new ArrayList<FileFilter>();
-      fileFilters.add(new ExtensionFileFilter("Data files", ".data"));
-      fileFilters.add(new ExtensionFileFilter("Text files", ".txt"));
-      final File selectedFile = Actions
+      final List<ExtensionFileFilter<LocationFileType>> fileFilters = new ArrayList<ExtensionFileFilter<LocationFileType>>();
+      fileFilters
+        .add(new ExtensionFileFilter<LocationFileType>(LocationFileType.data));
+      fileFilters
+        .add(new ExtensionFileFilter<LocationFileType>(LocationFileType.gns_country_file));
+      fileFilters
+        .add(new ExtensionFileFilter<LocationFileType>(LocationFileType.gns_country_file_zipped));
+      fileFilters
+        .add(new ExtensionFileFilter<LocationFileType>(LocationFileType.gnis_state_file));
+      fileFilters
+        .add(new ExtensionFileFilter<LocationFileType>(LocationFileType.gnis_state_file_zipped));
+      final SelectedFile<LocationFileType> selectedFile = Actions
         .showOpenDialog(mainWindow,
                         Messages
                           .getString("DaylightChartGui.Menu.File.LoadLocations"),
@@ -84,42 +92,46 @@ public final class OpenLocationsFileAction
                         Messages
                           .getString("DaylightChartGui.Message.Error.CannotOpenFile"));
 
-      mainWindow.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-
-      try
+      if (selectedFile.isSelected())
       {
-        final List<Location> locations = UserPreferences
-          .loadLocationsFromFile(selectedFile);
-        if (locations == null)
+        mainWindow.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+
+        try
         {
-          if (selectedFile != null)
+          final List<Location> locations = UserPreferences
+            .loadLocationsFromFile(selectedFile);
+          if (locations == null)
           {
-            LOGGER.log(Level.WARNING, Messages
-              .getString("DaylightChartGui.Message.Error.CannotOpenFile")); //$NON-NLS-1$
-            JOptionPane.showMessageDialog(mainWindow, Messages
-              .getString("DaylightChartGui.Message.Error.CannotOpenFile") //$NON-NLS-1$
-                                                      + "\n" //$NON-NLS-1$
-                                                      + selectedFile, Messages
-              .getString("DaylightChartGui.Message.Error.CannotOpenFile"), //$NON-NLS-1$
-                                          JOptionPane.ERROR_MESSAGE);
+            if (selectedFile != null)
+            {
+              LOGGER.log(Level.WARNING, Messages
+                .getString("DaylightChartGui.Message.Error.CannotOpenFile")); //$NON-NLS-1$
+              JOptionPane
+                .showMessageDialog(mainWindow, Messages
+                  .getString("DaylightChartGui.Message.Error.CannotOpenFile") //$NON-NLS-1$
+                                               + "\n" //$NON-NLS-1$
+                                               + selectedFile, Messages
+                  .getString("DaylightChartGui.Message.Error.CannotOpenFile"), //$NON-NLS-1$
+                                   JOptionPane.ERROR_MESSAGE);
+            }
+          }
+          else
+          {
+            Collections.sort(locations, mainWindow.getOptions()
+              .getLocationsSortOrder());
+            mainWindow.setLocations(locations);
+            UserPreferences.setWorkingDirectory(selectedFile.getDirectory());
           }
         }
-        else
+        catch (final RuntimeException e)
         {
-          Collections.sort(locations, mainWindow.getOptions()
-            .getLocationsSortOrder());
-          mainWindow.setLocations(locations);
-          UserPreferences.setWorkingDirectory(selectedFile.getParentFile());
+          // We catch exceptions, because otherwise the cursor may get
+          // stuck in busy mode
+          LOGGER.log(Level.WARNING, "Could not load locations");
         }
-      }
-      catch (final RuntimeException e)
-      {
-        // We catch exceptions, because otherwise the cursor may get
-        // stuck in busy mode
-        LOGGER.log(Level.WARNING, "Could not load locations");
-      }
 
-      mainWindow.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+        mainWindow.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+      }
     }
   }
 

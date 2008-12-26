@@ -1,21 +1,19 @@
-package daylightchart.daylightchart.layout;
+package daylightchart.gui.actions;
 
 
 import sf.util.ui.FileType;
 
-public enum ChartFileType
+public enum ReportDesignFileType
   implements FileType
 {
 
-  png("Portable Network Graphics", ".png"),
-  jpg("JPEG", ".jpg"),
-  html("Web Page", ".html"),
-  pdf("Adobe Acrobat PDF", ".pdf");
+  report_design("Report design file", ".jrxml");
 
   private final String description;
   private final String fileExtension;
 
-  private ChartFileType(final String description, final String fileExtension)
+  private ReportDesignFileType(final String description,
+                               final String fileExtension)
   {
     this.description = description;
     this.fileExtension = fileExtension;
@@ -51,4 +49,5 @@ public enum ChartFileType
   {
     return description + " (*" + fileExtension + ")";
   }
+
 }

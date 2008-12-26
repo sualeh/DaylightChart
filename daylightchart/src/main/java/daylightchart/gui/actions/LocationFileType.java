@@ -1,21 +1,22 @@
-package daylightchart.daylightchart.layout;
+package daylightchart.gui.actions;
 
 
 import sf.util.ui.FileType;
 
-public enum ChartFileType
+public enum LocationFileType
   implements FileType
 {
 
-  png("Portable Network Graphics", ".png"),
-  jpg("JPEG", ".jpg"),
-  html("Web Page", ".html"),
-  pdf("Adobe Acrobat PDF", ".pdf");
+  data("Daylight Chart data file", ".data"),
+  gns_country_file("GNS Country File", ".txt"),
+  gns_country_file_zipped("GNS Country File, zipped", ".zip"),
+  gnis_state_file("GNIS states file", ".txt"),
+  gnis_state_file_zipped("GNIS states file, zipped", ".zipped"), ;
 
   private final String description;
   private final String fileExtension;
 
-  private ChartFileType(final String description, final String fileExtension)
+  private LocationFileType(final String description, final String fileExtension)
   {
     this.description = description;
     this.fileExtension = fileExtension;
@@ -51,4 +52,5 @@ public enum ChartFileType
   {
     return description + " (*" + fileExtension + ")";
   }
+
 }

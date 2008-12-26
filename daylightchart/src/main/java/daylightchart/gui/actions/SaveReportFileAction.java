@@ -31,12 +31,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.JOptionPane;
-import javax.swing.filechooser.FileFilter;
 
 import sf.util.ui.Actions;
 import sf.util.ui.ExtensionFileFilter;
 import sf.util.ui.GuiAction;
-import sf.util.ui.Actions.SelectedFile;
+import sf.util.ui.SelectedFile;
 import daylightchart.gui.DaylightChartGui;
 import daylightchart.gui.Messages;
 import daylightchart.options.UserPreferences;
@@ -67,9 +66,10 @@ public final class SaveReportFileAction
      */
     public void actionPerformed(final ActionEvent actionevent)
     {
-      final List<FileFilter> fileFilters = new ArrayList<FileFilter>();
-      fileFilters.add(new ExtensionFileFilter("Report design files", ".jrxml"));
-      final SelectedFile selectedFile = Actions
+      final List<ExtensionFileFilter<ReportDesignFileType>> fileFilters = new ArrayList<ExtensionFileFilter<ReportDesignFileType>>();
+      fileFilters
+        .add(new ExtensionFileFilter<ReportDesignFileType>(ReportDesignFileType.report_design));
+      final SelectedFile<ReportDesignFileType> selectedFile = Actions
         .showSaveDialog(mainWindow,
                         Messages
                           .getString("DaylightChartGui.Menu.File.SaveReport"),

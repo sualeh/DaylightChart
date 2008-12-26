@@ -39,67 +39,6 @@ public class Actions
 {
 
   /**
-   * Selected file.
-   * 
-   * @author Sualeh Fatehi
-   */
-  public static final class SelectedFile
-  {
-    private final File file;
-    private final FileFilter fileFilter;
-    private final boolean isSelected;
-
-    SelectedFile(final File file, final FileFilter fileFilter)
-    {
-      this.file = file;
-      this.fileFilter = fileFilter;
-      isSelected = file != null;
-    }
-
-    /**
-     * Directory of the selected file.
-     * 
-     * @return Directory of the selected file.
-     */
-    public File getDirectory()
-    {
-      if (file == null)
-      {
-        return null;
-      }
-      else
-      {
-        return file.getParentFile();
-      }
-    }
-
-    /**
-     * @return the file
-     */
-    public File getFile()
-    {
-      return file;
-    }
-
-    /**
-     * @return the fileFilter
-     */
-    public FileFilter getFileFilter()
-    {
-      return fileFilter;
-    }
-
-    /**
-     * @return the isSelected
-     */
-    public boolean isSelected()
-    {
-      return isSelected;
-    }
-
-  }
-
-  /**
    * Shows an open file dialog, and returns the selected file. Checks if
    * the file is readable.
    * 
@@ -114,11 +53,11 @@ public class Actions
    *        Message if the file cannot be read
    * @return Selected file to open
    */
-  public static File showOpenDialog(final Component parent,
-                                    final String dialogTitle,
-                                    final List<FileFilter> fileFilters,
-                                    final File suggestedFile,
-                                    final String cannotReadMessage)
+  public static <T extends FileType> SelectedFile<T> showOpenDialog(final Component parent,
+                                                                    final String dialogTitle,
+                                                                    final List<ExtensionFileFilter<T>> fileFilters,
+                                                                    final File suggestedFile,
+                                                                    final String cannotReadMessage)
   {
     final JFileChooser fileDialog = new JFileChooser();
     fileDialog.setDialogTitle(dialogTitle);
@@ -136,7 +75,7 @@ public class Actions
 
     if (dialogReturnValue != JFileChooser.APPROVE_OPTION)
     {
-      return null;
+      return new SelectedFile<T>();
     }
 
     File selectedFile = fileDialog.getSelectedFile();
@@ -146,9 +85,11 @@ public class Actions
     {
       JOptionPane.showMessageDialog(parent, selectedFile + "\n"
                                             + cannotReadMessage);
-      return null;
+      return new SelectedFile<T>();
     }
-    return selectedFile;
+    return new SelectedFile<T>(selectedFile,
+                               (ExtensionFileFilter<T>) fileDialog
+                                 .getFileFilter());
   }
 
   /**
@@ -166,11 +107,11 @@ public class Actions
    *        Message to confirm overwrite
    * @return Selected file, or null if no file is selected.
    */
-  public static SelectedFile showSaveDialog(final Component parent,
-                                            final String dialogTitle,
-                                            final List<FileFilter> fileFilters,
-                                            final File suggestedFile,
-                                            final String overwriteMessage)
+  public static <T extends FileType> SelectedFile<T> showSaveDialog(final Component parent,
+                                                                    final String dialogTitle,
+                                                                    final List<ExtensionFileFilter<T>> fileFilters,
+                                                                    final File suggestedFile,
+                                                                    final String overwriteMessage)
   {
     final JFileChooser fileDialog = new JFileChooser();
     fileDialog.setDialogTitle(dialogTitle);
@@ -209,7 +150,9 @@ public class Actions
         }
       }
     }
-    return new SelectedFile(selectedFile, fileDialog.getFileFilter());
+    return new SelectedFile<T>(selectedFile,
+                               (ExtensionFileFilter<T>) fileDialog
+                                 .getFileFilter());
   }
 
   private static File addExtension(final JFileChooser fileDialog,
@@ -219,8 +162,9 @@ public class Actions
     final FileFilter fileFilter = fileDialog.getFileFilter();
     if (fileFilter instanceof ExtensionFileFilter)
     {
-      final ExtensionFileFilter extFileFilter = (ExtensionFileFilter) fileFilter;
-      final String selectedExtension = extFileFilter.getExtension();
+      final ExtensionFileFilter<?> extFileFilter = (ExtensionFileFilter<?>) fileFilter;
+      final String selectedExtension = extFileFilter.getFileType()
+        .getFileExtension();
       if (!ExtensionFileFilter.getExtension(selectedFile)
         .equals(selectedExtension))
       {
