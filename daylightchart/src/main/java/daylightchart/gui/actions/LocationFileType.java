@@ -11,7 +11,7 @@ public enum LocationFileType
   gns_country_file("GNS Country File", ".txt"),
   gns_country_file_zipped("GNS Country File, zipped", ".zip"),
   gnis_state_file("GNIS states file", ".txt"),
-  gnis_state_file_zipped("GNIS states file, zipped", ".zipped"), ;
+  gnis_state_file_zipped("GNIS states file, zipped", ".zip"), ;
 
   private final String description;
   private final String fileExtension;
