@@ -7,8 +7,13 @@
   <version>2.8</version>
   <name>Daylight Chart [All]</name>
   <description>Daylight Chart shows sunrise and sunset times in an attractive chart, for any location in the world. The effect of daylight savings time is also displayed. Charts can be exported to image files.</description>
-  <url>http://sourceforge.net/projects/daylightchart</url>
   <inceptionYear>2007</inceptionYear>
+  <licenses>
+    <license>
+      <name>GNU Lesser General Public License</name>
+      <url>http://www.gnu.org/copyleft/lesser.txt</url>
+    </license>
+  </licenses>
   <developers>
     <developer>
       <name>Sualeh Fatehi</name>
@@ -25,8 +30,8 @@
     <name>Sualeh Fatehi</name>
   </organization>
   <scm>
-    <connection>scm:svn:https://svn.sourceforge.net/svnroot/daylightchart</connection>
-    <url>http://schemacrawler.svn.sourceforge.net/viewvc/daylightchart/</url>
+    <connection>scm:svn:https://daylightchart.svn.sourceforge.net/svnroot/daylightchart</connection>
+    <url>https://daylightchart.svn.sourceforge.net/svnroot/daylightchart/</url>
   </scm>
   <modules>
     <module>pointlocation6709</module>
@@ -51,14 +56,6 @@
         <configuration>
           <source>5</source>
           <target>5</target>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-eclipse-plugin</artifactId>
-        <configuration>
-          <downloadSources>true</downloadSources>
-          <downloadJavadocs>true</downloadJavadocs>
         </configuration>
       </plugin>
       <plugin>
