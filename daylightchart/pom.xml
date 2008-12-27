@@ -142,6 +142,9 @@
                 <move
                   file="${daylightchart.home}/sunposition/target/site"
                   tofile="target/site/sunposition" />
+                <move
+                  file="${daylightchart.home}/geoname/target/site"
+                  tofile="target/site/geoname" />
               </tasks>
             </configuration>
           </execution>
