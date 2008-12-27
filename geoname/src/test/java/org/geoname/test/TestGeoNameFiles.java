@@ -47,7 +47,6 @@ public class TestGeoNameFiles
     throws ParserException, IOException
   {
     parseGNSCountryFile("in.zip", 25091);
-    parseGNSCountryFile("ch.zip", 63430);
     parseGNSCountryFile("lo.zip", 4606);
   }
 
@@ -55,7 +54,6 @@ public class TestGeoNameFiles
   public void GNISUSStates()
     throws ParserException, IOException
   {
-    parseGNISUSStates("AK_Features_20081120.zip", 759);
     parseGNISUSStates("MA_Features_20081120.zip", 226);
     parseGNISUSStates("HI_Features_20081120.zip", 540);
   }
