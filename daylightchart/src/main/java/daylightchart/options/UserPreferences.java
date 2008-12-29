@@ -551,7 +551,9 @@ public final class UserPreferences
     }
     catch (Exception e)
     {
-      LOGGER.log(Level.WARNING, "Cannot read locations from file " + locations);
+      LOGGER.log(Level.WARNING,
+                 "Cannot read locations from file " + locations,
+                 e);
       locations = null;
     }
 

@@ -388,6 +388,7 @@ public final class PointLocationFormatter
     numberFormat.setMinimumIntegerDigits(integerDigits);
     numberFormat.setMinimumFractionDigits(1);
     numberFormat.setMaximumFractionDigits(5);
+    numberFormat.setGroupingUsed(false);
     return numberFormat;
   }
 
