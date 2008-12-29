@@ -17,13 +17,6 @@
       </includes>
     </fileSet>
     <fileSet>
-      <directory>target</directory>
-      <outputDirectory>lib</outputDirectory>
-      <includes>
-        <include>*.jar</include>
-      </includes>
-    </fileSet>
-    <fileSet>
       <directory>target/licenses</directory>
       <outputDirectory>licenses</outputDirectory>
       <includes>
