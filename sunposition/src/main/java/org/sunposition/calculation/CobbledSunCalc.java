@@ -104,14 +104,11 @@ class CobbledSunCalc
    *        </ul>
    * @return Array for sunrise and sunset times. Use RISE and SET as
    *         indices into this array.
-   * @see <ol>
-   *      <li><a
-   *      href="http://www.merrymeet.com/minow/sunclock/Sun.java">
-   *      Sun.java</a></li>
-   *      <li><a
+   * @see <a
+   *      href="http://www.merrymeet.com/minow/sunclock/Sun.java">Sun.java</a>
+   * @see <a
    *      href="http://www.btinternet.com/~kburnett/kepler/moonrise.html"
-   *      >Moon and Sun rise and set for any latitude</a></li>
-   *      </ol>
+   *      >Moon and Sun rise and set for any latitude</a>
    */
   public double[] calcRiseSet(final double horizon)
   {

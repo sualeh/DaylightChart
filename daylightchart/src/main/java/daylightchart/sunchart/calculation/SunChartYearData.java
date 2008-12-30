@@ -28,7 +28,6 @@ import java.util.List;
 
 import org.geoname.Location;
 
-
 /**
  * A full year's sunrise and sunset times for a location.
  * 
@@ -43,14 +42,12 @@ public final class SunChartYearData
   private final Location location;
   private final int year;
   private boolean usesDaylightTime;
-  private final Equinox equinox;
   private final List<SunPositions> sunPositionsList;
 
   SunChartYearData(final Location location, final int year)
   {
     this.location = location;
     this.year = year;
-    equinox = new Equinox(year);
     sunPositionsList = new ArrayList<SunPositions>();
   }
 

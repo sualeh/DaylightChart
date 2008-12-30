@@ -83,6 +83,9 @@ public final class DaylightChartGui
 
   /**
    * Creates a new instance of a Daylight Chart main window.
+   * 
+   * @param slimUi
+   *        Whether to show the slim user interface
    */
   public DaylightChartGui(final boolean slimUi)
   {
@@ -176,11 +179,21 @@ public final class DaylightChartGui
     return UserPreferences.getOptions();
   }
 
+  /**
+   * Gets the report for the selected location.
+   * 
+   * @return Report for the selected location
+   */
   public DaylightChartReport getSelectedDaylightChartReport()
   {
     return locationsList.getSelectedDaylightChartReport();
   }
 
+  /**
+   * Gets the selected location.
+   * 
+   * @return Selected location
+   */
   public Location getSelectedLocation()
   {
     return locationsList.getSelectedLocation();
@@ -247,8 +260,7 @@ public final class DaylightChartGui
     }
   }
 
-  private void createActions(final JMenuBar menuBar,
-                             @SuppressWarnings("unused") final JToolBar toolBar)
+  private void createActions(final JMenuBar menuBar, final JToolBar toolBar)
   {
     final JMenu menu = new JMenu(Messages
       .getString("DaylightChartGui.Menu.Actions")); //$NON-NLS-1$
@@ -324,8 +336,7 @@ public final class DaylightChartGui
 
   }
 
-  private void createOptionsMenu(final JMenuBar menuBar,
-                                 @SuppressWarnings("unused") final JToolBar toolBar)
+  private void createOptionsMenu(final JMenuBar menuBar, final JToolBar toolBar)
   {
 
     final JMenu menu = new JMenu(Messages

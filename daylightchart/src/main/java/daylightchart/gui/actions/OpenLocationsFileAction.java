@@ -120,7 +120,6 @@ public final class OpenLocationsFileAction
             Collections.sort(locations, mainWindow.getOptions()
               .getLocationsSortOrder());
             mainWindow.setLocations(locations);
-            UserPreferences.setWorkingDirectory(selectedFile.getDirectory());
           }
         }
         catch (final RuntimeException e)

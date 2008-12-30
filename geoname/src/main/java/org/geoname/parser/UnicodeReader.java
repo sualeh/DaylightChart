@@ -32,7 +32,7 @@ import java.io.Reader;
  * system encoding.
  * 
  * @see <a
- *      href=http://koti.mbnet.fi/akini/java/unicodereader/>UnicodeReader
+ *      href="http://koti.mbnet.fi/akini/java/unicodereader/">UnicodeReader
  *      and UnicodeInputStream</a>
  */
 public class UnicodeReader

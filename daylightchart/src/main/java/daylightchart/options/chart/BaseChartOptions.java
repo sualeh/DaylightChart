@@ -41,6 +41,8 @@ public abstract class BaseChartOptions
   implements Serializable
 {
 
+  private static final long serialVersionUID = 1329786356991593668L;
+
   private static final JFreeChart chart = createDummyChart();
 
   private static JFreeChart createDummyChart()

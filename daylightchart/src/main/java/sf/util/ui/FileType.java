@@ -1,6 +1,11 @@
 package sf.util.ui;
 
 
+/**
+ * Defines a type of file, with a given file extension.
+ * 
+ * @author sfatehi
+ */
 public interface FileType
 {
 

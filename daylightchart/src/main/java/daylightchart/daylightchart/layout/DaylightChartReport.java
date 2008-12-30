@@ -37,7 +37,7 @@ import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
-import net.sf.jasperreports.renderers.JFreeChartRenderer;
+import net.sf.jasperreports.renderers.JCommonDrawableRenderer;
 
 import org.geoname.Location;
 import org.jfree.chart.ChartUtilities;
@@ -50,6 +50,11 @@ import daylightchart.daylightchart.chart.DaylightChart;
 import daylightchart.options.Options;
 import daylightchart.options.UserPreferences;
 
+/**
+ * The Daylight Chart report that can be written to a file.
+ * 
+ * @author sfatehi
+ */
 public class DaylightChartReport
 {
 
@@ -60,6 +65,14 @@ public class DaylightChartReport
   private final JasperPrint jasperPrint;
   private final DaylightChart chart;
 
+  /**
+   * Constructor.
+   * 
+   * @param location
+   *        Location for the report.
+   * @param options
+   *        Report options.
+   */
   public DaylightChartReport(final Location location, final Options options)
   {
     this.location = location;
@@ -77,7 +90,9 @@ public class DaylightChartReport
   }
 
   /**
-   * @return the chart
+   * Daylight Chart chart.
+   * 
+   * @return Chart
    */
   public DaylightChart getChart()
   {
@@ -85,13 +100,22 @@ public class DaylightChartReport
   }
 
   /**
-   * @return the location
+   * The location for the chart.
+   * 
+   * @return Location
    */
   public Location getLocation()
   {
     return location;
   }
 
+  /**
+   * Filename for the generated report.
+   * 
+   * @param chartFileType
+   *        Type of chart file.
+   * @return Report file name
+   */
   public String getReportFileName(final FileType chartFileType)
   {
     return location.getDescription() + "."
@@ -99,6 +123,14 @@ public class DaylightChartReport
            + chartFileType.getFileExtension();
   }
 
+  /**
+   * Write the Daylight Chart report to a file.
+   * 
+   * @param file
+   *        File to write to.
+   * @param chartFileType
+   *        Type of chart file.
+   */
   public void write(final File file, final ChartFileType chartFileType)
   {
     if (chartFileType == null)
@@ -158,7 +190,7 @@ public class DaylightChartReport
       // 2. Prepare parameters
       final Map<String, Object> parameters = new HashMap<String, Object>();
       parameters.put("location", location);
-      parameters.put("daylight_chart", new JFreeChartRenderer(chart));
+      parameters.put("daylight_chart", new JCommonDrawableRenderer(chart));
       // 3. Create data set
       final JRDataSource dataSource = new JRBeanCollectionDataSource(riseSetData
         .getRiseSetData());

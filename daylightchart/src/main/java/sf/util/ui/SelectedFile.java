@@ -7,6 +7,8 @@ import java.io.File;
  * Selected file.
  * 
  * @author Sualeh Fatehi
+ * @param <T>
+ *        File type
  */
 public final class SelectedFile<T extends FileType>
 {

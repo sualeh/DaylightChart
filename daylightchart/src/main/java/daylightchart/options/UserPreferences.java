@@ -132,10 +132,44 @@ public final class UserPreferences
     }
   }
 
+  private static JasperReport compileReport(final InputStream reportStream)
+  {
+    try
+    {
+      if (reportStream == null)
+      {
+        return null;
+      }
+      final JasperDesign jasperDesign = JRXmlLoader.load(reportStream);
+      final JasperReport jasperReport = JasperCompileManager
+        .compileReport(jasperDesign);
+      return jasperReport;
+    }
+    catch (final JRException e)
+    {
+      LOGGER.log(Level.WARNING, "Cannot load JasperReport", e);
+      return null;
+    }
+    finally
+    {
+      if (reportStream != null)
+      {
+        try
+        {
+          reportStream.close();
+        }
+        catch (final IOException e)
+        {
+          LOGGER.log(Level.WARNING, "Cannot close input stream", e);
+        }
+      }
+    }
+  }
+
   /**
-   * Creates a chart options instance.
+   * Creates a options instance.
    * 
-   * @return Chart options
+   * @return Options
    */
   public static Options getDefaultDaylightChartOptions()
   {
@@ -146,6 +180,26 @@ public final class UserPreferences
     options.setChartOptions(chartOptions);
 
     return options;
+  }
+
+  private static Writer getFileWriter(final File file)
+  {
+    try
+    {
+      final BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file),
+                                                                              "UTF-8"));
+      return writer;
+    }
+    catch (final UnsupportedEncodingException e)
+    {
+      LOGGER.log(Level.WARNING, "Cannot write file " + file);
+      return null;
+    }
+    catch (final FileNotFoundException e)
+    {
+      LOGGER.log(Level.WARNING, "Cannot write file " + file);
+      return null;
+    }
   }
 
   /**
@@ -195,6 +249,13 @@ public final class UserPreferences
     return settingsDirectory;
   }
 
+  /**
+   * Import a report file.
+   * 
+   * @param reportFile
+   *        Report file
+   * @return Whether the file could be imported
+   */
   public static boolean importReport(final File reportFile)
   {
     boolean imported = false;
@@ -207,6 +268,81 @@ public final class UserPreferences
     return imported;
   }
 
+  private static void initializeLocations()
+  {
+    try
+    {
+      // Try loading from user preferences
+      locations = LocationParser
+        .parseLocations(new UnicodeReader(new FileInputStream(locationsDataFile),
+                                          "UTF-8"));
+    }
+    catch (Exception e)
+    {
+      LOGGER.log(Level.WARNING,
+                 "Cannot read locations from file " + locations,
+                 e);
+      locations = null;
+    }
+
+    // Load from internal store
+    if (locations == null)
+    {
+      final InputStream dataStream = Thread.currentThread()
+        .getContextClassLoader().getResourceAsStream("locations.data");
+      if (dataStream == null)
+      {
+        throw new IllegalStateException("Cannot read data from internal database");
+      }
+      final Reader reader = new InputStreamReader(dataStream);
+      try
+      {
+        locations = LocationParser.parseLocations(reader);
+      }
+      catch (final ParserException e)
+      {
+        throw new RuntimeException("Cannot read data from internal database", e);
+      }
+    }
+  }
+
+  private static void initializeOptions()
+  {
+    // Try loading from user preferences
+    options = loadOptionsFromFile(optionsFile);
+
+    // Load from internal store
+    if (options == null)
+    {
+      options = getDefaultDaylightChartOptions();
+    }
+  }
+
+  private static void initializeReport()
+  {
+    // Try loading from user preferences
+    report = loadReportFromFile(reportFile);
+
+    // Load from internal store
+    if (report == null)
+    {
+      final InputStream reportStream = DaylightChartReport.class
+        .getResourceAsStream("/DaylightChartReport.jrxml");
+      report = compileReport(reportStream);
+      if (report == null)
+      {
+        throw new RuntimeException("Cannot load default report");
+      }
+    }
+  }
+
+  /**
+   * Loads a list of locations from a file of a given format.
+   * 
+   * @param selectedFile
+   *        Selected file of a known location file format.
+   * @return List of locations, read from the file
+   */
   public static List<Location> loadLocationsFromFile(final SelectedFile<LocationFileType> selectedFile)
   {
     List<Location> locations = new ArrayList<Location>();
@@ -286,7 +422,7 @@ public final class UserPreferences
     return locations;
   }
 
-  public static Options loadOptionsFromFile(final File file)
+  private static Options loadOptionsFromFile(final File file)
   {
     Reader reader = null;
     Options options;
@@ -318,7 +454,7 @@ public final class UserPreferences
     return options;
   }
 
-  public static JasperReport loadReportFromFile(final File file)
+  private static JasperReport loadReportFromFile(final File file)
   {
     if (file == null || !file.exists() || !file.canRead())
     {
@@ -351,6 +487,11 @@ public final class UserPreferences
     UserPreferences.clear();
   }
 
+  /**
+   * Saves locations to a file in
+   * 
+   * @param file
+   */
   public static void saveLocationsToFile(final File file)
   {
     try
@@ -373,6 +514,12 @@ public final class UserPreferences
     }
   }
 
+  /**
+   * Saves options to a file.
+   * 
+   * @param file
+   *        File to write
+   */
   public static void saveOptionsToFile(final File file)
   {
     try
@@ -392,6 +539,12 @@ public final class UserPreferences
     }
   }
 
+  /**
+   * Saves report to a file.
+   * 
+   * @param file
+   *        File to write
+   */
   public static void saveReportToFile(final File file)
   {
     try
@@ -443,8 +596,8 @@ public final class UserPreferences
   /**
    * Sets the report for the current user.
    * 
-   * @param locations
-   *        Locations
+   * @param report
+   *        Report
    */
   public static void setReport(final JasperReport report)
   {
@@ -456,6 +609,12 @@ public final class UserPreferences
     saveReportToFile(reportFile);
   }
 
+  /**
+   * Set the location of the settings directory.
+   * 
+   * @param settingsDirectoryPath
+   *        Location of the settings directory
+   */
   public static void setSettingsDirectory(final String settingsDirectoryPath)
   {
     if (settingsDirectoryPath == null
@@ -474,138 +633,28 @@ public final class UserPreferences
     optionsFile = new File(settingsDirectory, "options.xml");
   }
 
+  /**
+   * Sets the slim mode for the user interface.
+   * 
+   * @param slimUi
+   *        Slim mode for the user interface
+   */
   public static void setSlimUi(final boolean slimUi)
   {
     options.setSlimUi(slimUi);
     setOptions(options);
   }
 
+  /**
+   * Sets the working directory.
+   * 
+   * @param workingDirectory
+   *        Working directory
+   */
   public static void setWorkingDirectory(final File workingDirectory)
   {
     options.setWorkingDirectory(workingDirectory);
     setOptions(options);
-  }
-
-  private static JasperReport compileReport(final InputStream reportStream)
-  {
-    try
-    {
-      if (reportStream == null)
-      {
-        return null;
-      }
-      final JasperDesign jasperDesign = JRXmlLoader.load(reportStream);
-      final JasperReport jasperReport = JasperCompileManager
-        .compileReport(jasperDesign);
-      return jasperReport;
-    }
-    catch (final JRException e)
-    {
-      LOGGER.log(Level.WARNING, "Cannot load JasperReport", e);
-      return null;
-    }
-    finally
-    {
-      if (reportStream != null)
-      {
-        try
-        {
-          reportStream.close();
-        }
-        catch (final IOException e)
-        {
-          LOGGER.log(Level.WARNING, "Cannot close input stream", e);
-        }
-      }
-    }
-  }
-
-  private static Writer getFileWriter(final File file)
-  {
-    try
-    {
-      final BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file),
-                                                                              "UTF-8"));
-      return writer;
-    }
-    catch (final UnsupportedEncodingException e)
-    {
-      LOGGER.log(Level.WARNING, "Cannot write file " + file);
-      return null;
-    }
-    catch (final FileNotFoundException e)
-    {
-      LOGGER.log(Level.WARNING, "Cannot write file " + file);
-      return null;
-    }
-  }
-
-  private static void initializeLocations()
-  {
-    try
-    {
-      // Try loading from user preferences
-      locations = LocationParser
-        .parseLocations(new UnicodeReader(new FileInputStream(locationsDataFile),
-                                          "UTF-8"));
-    }
-    catch (Exception e)
-    {
-      LOGGER.log(Level.WARNING,
-                 "Cannot read locations from file " + locations,
-                 e);
-      locations = null;
-    }
-
-    // Load from internal store
-    if (locations == null)
-    {
-      final InputStream dataStream = Thread.currentThread()
-        .getContextClassLoader().getResourceAsStream("locations.data");
-      if (dataStream == null)
-      {
-        throw new IllegalStateException("Cannot read data from internal database");
-      }
-      final Reader reader = new InputStreamReader(dataStream);
-      try
-      {
-        locations = LocationParser.parseLocations(reader);
-      }
-      catch (final ParserException e)
-      {
-        throw new RuntimeException("Cannot read data from internal database", e);
-      }
-    }
-  }
-
-  private static void initializeOptions()
-  {
-    // Try loading from user preferences
-    options = loadOptionsFromFile(optionsFile);
-
-    // Load from internal store
-    if (options == null)
-    {
-      options = getDefaultDaylightChartOptions();
-    }
-  }
-
-  private static void initializeReport()
-  {
-    // Try loading from user preferences
-    report = loadReportFromFile(reportFile);
-
-    // Load from internal store
-    if (report == null)
-    {
-      final InputStream reportStream = DaylightChartReport.class
-        .getResourceAsStream("/DaylightChartReport.jrxml");
-      report = compileReport(reportStream);
-      if (report == null)
-      {
-        throw new RuntimeException("Cannot load default report");
-      }
-    }
   }
 
   /**

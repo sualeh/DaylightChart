@@ -17,7 +17,6 @@ import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
 import org.geoname.Location;
 
-
 public class LocationPanel
   extends Panel
 {
@@ -27,7 +26,7 @@ public class LocationPanel
   public LocationPanel(final String id)
   {
     super(id);
-    addForm(new CompoundPropertyModel(new Location()), false);
+    addForm(new CompoundPropertyModel(Location.UNKNOWN), false);
   }
 
   public LocationPanel(final String id, final IModel model)

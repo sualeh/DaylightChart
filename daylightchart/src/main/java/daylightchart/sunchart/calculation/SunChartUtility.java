@@ -42,7 +42,6 @@ import org.sunposition.calculation.ExtendedSunPositionAlgorithm;
 import org.sunposition.calculation.SunPositionAlgorithmFactory;
 import org.sunposition.calculation.ExtendedSunPositionAlgorithm.SolarEphemerides;
 
-
 /**
  * Calculator for sunrise and sunset times for a year.
  * 
@@ -64,8 +63,6 @@ public final class SunChartUtility
    *        Location
    * @param year
    *        Year
-   * @param options
-   *        Options
    * @return Full years sunset and sunrise times for a location
    */
   public static SunChartYearData createSunChartYear(final Location location,
@@ -196,10 +193,8 @@ public final class SunChartUtility
     {
       printWriter
         .println("Date     \tTime     \tAzimuth      \tAltitude   \tHour Angle   \tEqn of Time  \tDeclination");
-      final List<SunPosition> sunPositionList = sunPositions.getSunPositions();
-      for (final Object element: sunPositionList)
+      for (final SunPosition sunPosition: sunPositions)
       {
-        final SunPosition sunPosition = (SunPosition) element;
         printWriter.printf("%s\t%s\t%s\t%s\t%s\t%s\t%s%n",
                            sunPosition.getDateTime().toLocalDate(),
                            sunPosition.getDateTime().toLocalTime(),

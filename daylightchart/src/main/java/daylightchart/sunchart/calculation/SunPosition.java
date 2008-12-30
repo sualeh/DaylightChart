@@ -13,6 +13,11 @@ import org.joda.time.LocalDateTime;
 import org.joda.time.LocalTime;
 import org.sunposition.calculation.ExtendedSunPositionAlgorithm.SolarEphemerides;
 
+/**
+ * Solar ephemerides at a given date and time.
+ * 
+ * @author sfatehi
+ */
 public class SunPosition
   implements SolarEphemerides, Serializable, Comparable<SunPosition>
 {
@@ -22,6 +27,12 @@ public class SunPosition
   private final LocalDateTime dateTime;
   private final SolarEphemerides solarEphemerides;
 
+  /**
+   * Solar ephemerides at a given date and time.
+   * 
+   * @param dateTime
+   * @param solarEphemerides
+   */
   public SunPosition(final LocalDateTime dateTime,
                      final SolarEphemerides solarEphemerides)
   {

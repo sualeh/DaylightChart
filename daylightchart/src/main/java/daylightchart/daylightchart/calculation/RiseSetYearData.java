@@ -32,7 +32,6 @@ import org.geoname.Location;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
 
-
 /**
  * A full year's sunrise and sunset times for a location.
  * 
@@ -118,6 +117,11 @@ public final class RiseSetYearData
     return location;
   }
 
+  /**
+   * Sunrise and sunset data for the year.
+   * 
+   * @return Sunrise and sunset data for the year
+   */
   public List<RiseSetData> getRiseSetData()
   {
     final List<RiseSetData> riseSetData = new ArrayList<RiseSetData>();

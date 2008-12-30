@@ -35,7 +35,6 @@ import org.pointlocation6709.Latitude;
 import org.pointlocation6709.Longitude;
 import org.pointlocation6709.PointLocation;
 
-
 /**
  * A location object has all the information required to define a
  * location, such as the name of the city and the country, the point
@@ -60,14 +59,15 @@ public final class Location
   private transient String description;
   private transient String details;
 
-  public Location()
-  {
-    this("",
-         Country.UNKNOWN,
-         TimeZone.getDefault().getID(),
-         new PointLocation(new Latitude(Angle.fromDegrees(0)),
-                           new Longitude(Angle.fromDegrees(0))));
-  }
+  /** UNKNOWN, setting all fields to blank. */
+  public static final Location UNKNOWN = new Location("",
+                                                      Country.UNKNOWN,
+                                                      TimeZone.getDefault()
+                                                        .getID(),
+                                                      new PointLocation(new Latitude(Angle
+                                                                          .fromDegrees(0)),
+                                                                        new Longitude(Angle
+                                                                          .fromDegrees(0))));
 
   /**
    * Copy constructor. Copies the value of a provided location.

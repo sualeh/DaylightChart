@@ -90,10 +90,8 @@ public class DaylightChart
   /**
    * Instantiate the chart for a given location, and given year.
    * 
-   * @param location
-   *        Location
-   * @param year
-   *        Year
+   * @param riseSetData
+   *        Rise and set data for the year
    * @param options
    *        Options
    */
@@ -129,7 +127,7 @@ public class DaylightChart
    * 
    * @see daylightchart.options.chart.ChartOptionsListener#beforeSettingChartOptions(ChartOptions)
    */
-  public void beforeSettingChartOptions(@SuppressWarnings("unused") final ChartOptions chartOptions)
+  public void beforeSettingChartOptions(final ChartOptions chartOptions)
   {
     // No-op
   }

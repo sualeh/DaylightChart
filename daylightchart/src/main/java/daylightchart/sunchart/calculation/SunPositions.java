@@ -4,6 +4,7 @@ package daylightchart.sunchart.calculation;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.lang.builder.CompareToBuilder;
@@ -13,8 +14,13 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 import org.joda.time.LocalDate;
 
+/**
+ * Sun positions on a given date.
+ * 
+ * @author sfatehi
+ */
 public class SunPositions
-  implements Serializable, Comparable<SunPositions>
+  implements Serializable, Comparable<SunPositions>, Iterable<SunPosition>
 {
 
   private static final long serialVersionUID = -6448204793272141613L;
@@ -22,13 +28,19 @@ public class SunPositions
   private final LocalDate date;
   private final List<SunPosition> sunPositions;
 
+  /**
+   * Sun positions on a given date.
+   * 
+   * @param date
+   *        Date
+   */
   public SunPositions(final LocalDate date)
   {
     this.date = date;
     sunPositions = new ArrayList<SunPosition>();
   }
 
-  public void add(final SunPosition sunPosition)
+  void add(final SunPosition sunPosition)
   {
     if (sunPosition == null || !sunPosition.getDate().equals(date))
     {
@@ -68,14 +80,6 @@ public class SunPositions
   }
 
   /**
-   * @return the sunPositions
-   */
-  public List<SunPosition> getSunPositions()
-  {
-    return sunPositions;
-  }
-
-  /**
    * {@inheritDoc}
    * 
    * @see java.lang.Object#hashCode()
@@ -96,6 +100,16 @@ public class SunPositions
   {
     return ToStringBuilder.reflectionToString(this,
                                               ToStringStyle.MULTI_LINE_STYLE);
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see java.lang.Iterable#iterator()
+   */
+  public Iterator<SunPosition> iterator()
+  {
+    return sunPositions.iterator();
   }
 
 }

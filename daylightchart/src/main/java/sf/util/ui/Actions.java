@@ -30,6 +30,8 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 
+import daylightchart.options.UserPreferences;
+
 /**
  * GUI helper methods.
  * 
@@ -42,7 +44,10 @@ public class Actions
    * Shows an open file dialog, and returns the selected file. Checks if
    * the file is readable.
    * 
+   * @param <T>
+   *        File type for the selected file
    * @param parent
+   *        Parent component
    * @param dialogTitle
    *        Dialog title
    * @param fileFilters
@@ -71,30 +76,38 @@ public class Actions
       }
     }
     fileDialog.setFileSelectionMode(JFileChooser.FILES_ONLY);
+
+    File file = null;
+
     final int dialogReturnValue = fileDialog.showOpenDialog(parent);
-
-    if (dialogReturnValue != JFileChooser.APPROVE_OPTION)
+    if (dialogReturnValue == JFileChooser.APPROVE_OPTION)
     {
-      return new SelectedFile<T>();
+      file = getSelectedFileWithExtension(fileDialog);
+      if (file == null || !file.exists() || !file.canRead())
+      {
+        JOptionPane.showMessageDialog(parent, file + "\n" + cannotReadMessage);
+        file = null;
+      }
     }
 
-    File selectedFile = fileDialog.getSelectedFile();
-    selectedFile = addExtension(fileDialog, selectedFile);
-    if (selectedFile == null || !selectedFile.exists()
-        || !selectedFile.canRead())
+    final SelectedFile<T> selectedFile = new SelectedFile<T>(file,
+                                                             (ExtensionFileFilter<T>) fileDialog
+                                                               .getFileFilter());
+
+    // Save last selected directory
+    if (selectedFile.isSelected())
     {
-      JOptionPane.showMessageDialog(parent, selectedFile + "\n"
-                                            + cannotReadMessage);
-      return new SelectedFile<T>();
+      UserPreferences.setWorkingDirectory(selectedFile.getDirectory());
     }
-    return new SelectedFile<T>(selectedFile,
-                               (ExtensionFileFilter<T>) fileDialog
-                                 .getFileFilter());
+
+    return selectedFile;
   }
 
   /**
    * Shows the save dialog.
    * 
+   * @param <T>
+   *        File type for the selected file
    * @param parent
    *        Main GUI window.
    * @param dialogTitle
@@ -125,58 +138,66 @@ public class Actions
       }
     }
     fileDialog.setFileSelectionMode(JFileChooser.FILES_ONLY);
+
+    File file = null;
+
     final int dialogReturnValue = fileDialog.showSaveDialog(parent);
-
-    if (dialogReturnValue != JFileChooser.APPROVE_OPTION)
+    if (dialogReturnValue == JFileChooser.APPROVE_OPTION)
     {
-      return null;
-    }
-
-    File selectedFile = fileDialog.getSelectedFile();
-    if (selectedFile != null)
-    {
-      selectedFile = addExtension(fileDialog, selectedFile);
-
-      if (selectedFile.exists())
+      file = getSelectedFileWithExtension(fileDialog);
+      if (file != null && file.exists())
       {
         final int confirm = JOptionPane
           .showConfirmDialog(parent,
-                             selectedFile + "\n" + overwriteMessage,
+                             file + "\n" + overwriteMessage,
                              dialogTitle,
                              JOptionPane.YES_NO_OPTION);
         if (confirm != JOptionPane.YES_OPTION)
         {
-          selectedFile = null;
+          file = null;
         }
       }
     }
-    return new SelectedFile<T>(selectedFile,
-                               (ExtensionFileFilter<T>) fileDialog
-                                 .getFileFilter());
+
+    final SelectedFile<T> selectedFile = new SelectedFile<T>(file,
+                                                             (ExtensionFileFilter<T>) fileDialog
+                                                               .getFileFilter());
+
+    // Save last selected directory
+    if (selectedFile.isSelected())
+    {
+      UserPreferences.setWorkingDirectory(selectedFile.getDirectory());
+    }
+
+    return selectedFile;
   }
 
-  private static File addExtension(final JFileChooser fileDialog,
-                                   File selectedFile)
+  /**
+   * Get the selected file, and add extension, if it is not provided.
+   * 
+   * @param fileDialog
+   *        File dialog for the file.
+   * @return File, with extension
+   */
+  private static File getSelectedFileWithExtension(final JFileChooser fileDialog)
   {
-    // Add extension, if it is not provided
-    final FileFilter fileFilter = fileDialog.getFileFilter();
-    if (fileFilter instanceof ExtensionFileFilter)
+    File file = fileDialog.getSelectedFile();
+    if (file != null)
     {
-      final ExtensionFileFilter<?> extFileFilter = (ExtensionFileFilter<?>) fileFilter;
-      final String selectedExtension = extFileFilter.getFileType()
-        .getFileExtension();
-      if (!ExtensionFileFilter.getExtension(selectedFile)
-        .equals(selectedExtension))
+      final ExtensionFileFilter<?> fileFilter = (ExtensionFileFilter<?>) fileDialog
+        .getFileFilter();
+      if (!ExtensionFileFilter.getExtension(file).equals(fileFilter
+        .getFileType().getFileExtension()))
       {
-        selectedFile = new File(selectedFile.getAbsoluteFile()
-                                + selectedExtension);
+        file = new File(file.getAbsoluteFile() + fileFilter.getFileExtension());
       }
     }
-    return selectedFile;
+    return file;
   }
 
   private Actions()
   {
     // Prevent instantiation
   }
+
 }

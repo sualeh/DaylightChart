@@ -48,7 +48,6 @@ import org.geoname.USState;
 import org.pointlocation6709.Longitude;
 import org.pointlocation6709.Utility;
 
-
 /**
  * Time zone utilities.
  * 
@@ -268,6 +267,11 @@ public final class DefaultTimezones
     return timeZoneId;
   }
 
+  /**
+   * Gets all time zones.
+   * 
+   * @return All time zones
+   */
   public static List<TimeZoneDisplay> getAllTimeZonesForDisplay()
   {
     final ArrayList<TimeZoneDisplay> allTimeZonesList = new ArrayList<TimeZoneDisplay>(allTimezones);

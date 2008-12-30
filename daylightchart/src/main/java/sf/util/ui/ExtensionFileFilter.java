@@ -29,10 +29,12 @@ import java.util.Locale;
  * Filters files by extension.
  * 
  * @author sfatehi
+ * @param <T>
+ *        A file type enumeration
  */
 public class ExtensionFileFilter<T extends FileType>
   extends javax.swing.filechooser.FileFilter
-  implements java.io.FileFilter
+  implements java.io.FileFilter, FileType
 {
 
   /**
@@ -94,15 +96,46 @@ public class ExtensionFileFilter<T extends FileType>
     return accept;
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see javax.swing.filechooser.FileFilter#getDescription()
+   */
   @Override
   public String getDescription()
   {
     return fileType.getDescription();
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see sf.util.ui.FileType#getFileExtension()
+   */
+  public String getFileExtension()
+  {
+    return fileType.getFileExtension();
+  }
+
+  /**
+   * Gets the file type.
+   * 
+   * @return File type.
+   */
   public T getFileType()
   {
     return fileType;
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see java.lang.Object#toString()
+   */
+  @Override
+  public String toString()
+  {
+    return fileType.getDescription();
   }
 
 }

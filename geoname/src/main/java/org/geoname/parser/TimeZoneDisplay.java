@@ -48,6 +48,11 @@ public final class TimeZoneDisplay
     description = createDescription();
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see java.lang.Comparable#compareTo(java.lang.Object)
+   */
   public int compareTo(final TimeZoneDisplay other)
   {
     int compareTo = 0;
@@ -62,6 +67,11 @@ public final class TimeZoneDisplay
     return compareTo;
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see java.lang.Object#equals(java.lang.Object)
+   */
   @Override
   public boolean equals(final Object obj)
   {
@@ -103,16 +113,31 @@ public final class TimeZoneDisplay
     return true;
   }
 
+  /**
+   * Time zone display name.
+   * 
+   * @return Time zone display name
+   */
   public String getTimeZoneDisplayName()
   {
     return timeZoneDisplayName;
   }
 
+  /**
+   * Time zone id.
+   * 
+   * @return Time zone id
+   */
   public String getTimeZoneId()
   {
     return timeZoneId;
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see java.lang.Object#hashCode()
+   */
   @Override
   public int hashCode()
   {
@@ -124,6 +149,11 @@ public final class TimeZoneDisplay
     return result;
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see java.lang.Object#toString()
+   */
   @Override
   public String toString()
   {

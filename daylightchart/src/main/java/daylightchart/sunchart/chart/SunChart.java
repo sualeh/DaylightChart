@@ -22,19 +22,12 @@
 package daylightchart.sunchart.chart;
 
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.util.Calendar;
 import java.util.List;
-import java.util.logging.Logger;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
 
 import org.geoname.Location;
-import org.geoname.parser.LocationParser;
-import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.XYPlot;
@@ -63,38 +56,7 @@ public class SunChart
   implements ChartOptionsListener
 {
 
-  /**
-   * 
-   */
   private static final long serialVersionUID = 7087394007991008310L;
-
-  private static final Logger LOGGER = Logger.getLogger(SunChart.class
-    .getName());
-
-  public static void main(final String[] args)
-  {
-    try
-    {
-      final SunChartYearData sunChartData = SunChartUtility
-        .createSunChartYear(LocationParser
-                              .parseLocation("Albany, NY;US;America/New_York;+4239-07345/"),
-                            Calendar.getInstance().get(Calendar.YEAR));
-      final SunChart sunChart = new SunChart(sunChartData);
-
-      final JFrame frame = new JFrame("Sun Chart");
-      frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-      final JPanel chartPanel = new ChartPanel(sunChart);
-      chartPanel.setPreferredSize(new java.awt.Dimension(500, 270));
-      frame.getContentPane().add(chartPanel, BorderLayout.CENTER);
-      frame.pack();
-      frame.setVisible(true);
-    }
-    catch (final Exception e)
-    {
-      e.printStackTrace();
-    }
-  }
 
   private final SunChartYearData sunChartData;
 
@@ -111,12 +73,8 @@ public class SunChart
   /**
    * Instantiate the chart for a given location, and given year.
    * 
-   * @param location
-   *        Location
-   * @param year
-   *        Year
-   * @param options
-   *        Options
+   * @param sunChartData
+   *        Data for the chart, for the entire year
    */
   public SunChart(final SunChartYearData sunChartData)
   {
@@ -150,12 +108,11 @@ public class SunChart
    * 
    * @see daylightchart.options.chart.ChartOptionsListener#beforeSettingChartOptions(ChartOptions)
    */
-  public void beforeSettingChartOptions(@SuppressWarnings("unused") final ChartOptions chartOptions)
+  public void beforeSettingChartOptions(final ChartOptions chartOptions)
   {
     // No-op
   }
 
-  @SuppressWarnings("deprecation")
   private void createAltitudeAxis(final XYPlot plot)
   {
     final NumberAxis axis = new NumberAxis();
@@ -165,7 +122,6 @@ public class SunChart
     plot.setRangeAxis(axis);
   }
 
-  @SuppressWarnings("deprecation")
   private void createAzimuthAxis(final XYPlot plot)
   {
     final NumberAxis axis = new NumberAxis();
@@ -188,8 +144,7 @@ public class SunChart
     {
       final VectorSeries vectorSeries = new VectorSeries(sunPositions.getDate()
         .toString());
-      final List<SunPosition> sunPositionList = sunPositions.getSunPositions();
-      for (final SunPosition sunPosition: sunPositionList)
+      for (final SunPosition sunPosition: sunPositions)
       {
         vectorSeries.add(sunPosition.getAzimuth(),
                          sunPosition.getAltitude(),

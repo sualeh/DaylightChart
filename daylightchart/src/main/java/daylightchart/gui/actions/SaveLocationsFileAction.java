@@ -84,8 +84,6 @@ public final class SaveLocationsFileAction
         try
         {
           UserPreferences.saveLocationsToFile(selectedFile.getFile());
-          // Save last selected directory
-          UserPreferences.setWorkingDirectory(selectedFile.getDirectory());
         }
         catch (final Exception e)
         {

@@ -26,6 +26,11 @@ import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 import org.joda.time.LocalDateTime;
 
+/**
+ * Dates and times for the solstices and equinoxes.
+ * 
+ * @author sfatehi
+ */
 public class Equinox
 {
 
@@ -34,6 +39,12 @@ public class Equinox
   private final LocalDateTime autumnalEquinox;
   private final LocalDateTime winterSolstice;
 
+  /**
+   * Calculate the dates and times for the solstices and equinoxes.
+   * 
+   * @param year
+   *        The year to calculate for,
+   */
   public Equinox(final int year)
   {
     final double m, ve, ss, ae, ws;
@@ -87,6 +98,11 @@ public class Equinox
     return winterSolstice;
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see java.lang.Object#toString()
+   */
   @Override
   public String toString()
   {

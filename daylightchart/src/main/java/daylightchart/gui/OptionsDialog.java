@@ -79,7 +79,7 @@ public class OptionsDialog
      * 
      * @see java.awt.event.KeyListener#keyPressed(java.awt.event.KeyEvent)
      */
-    public void keyPressed(@SuppressWarnings("unused") final KeyEvent keyEvent)
+    public void keyPressed(final KeyEvent keyEvent)
     {
     }
 
@@ -88,7 +88,7 @@ public class OptionsDialog
      * 
      * @see java.awt.event.KeyListener#keyReleased(java.awt.event.KeyEvent)
      */
-    public void keyReleased(@SuppressWarnings("unused") final KeyEvent keyEvents)
+    public void keyReleased(final KeyEvent keyEvents)
     {
     }
 
@@ -118,6 +118,12 @@ public class OptionsDialog
 
   /**
    * Show a dialog for options.
+   * 
+   * @param mainWindow
+   *        Main Daylight Chart window
+   * @param options
+   *        Current options
+   * @return Options
    */
   public static Options showOptionsDialog(final Frame mainWindow,
                                           final Options options)
@@ -193,6 +199,11 @@ public class OptionsDialog
     setVisible(true);
   }
 
+  /**
+   * Get the options from the dialog.
+   * 
+   * @return Options from the dialog.
+   */
   public Options getOptions()
   {
     return options;
@@ -205,7 +216,7 @@ public class OptionsDialog
 
       private static final long serialVersionUID = -180000433351276424L;
 
-      public void actionPerformed(@SuppressWarnings("unused") ActionEvent actionEvent)
+      public void actionPerformed(ActionEvent actionEvent)
       {
         dispose();
       }

@@ -122,6 +122,11 @@ public final class DaylightBand
     return riseSets;
   }
 
+  /**
+   * Size of the band.
+   * 
+   * @return Size of the band
+   */
   public int size()
   {
     return riseSetMap.size();

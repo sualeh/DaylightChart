@@ -67,6 +67,11 @@ public class Options
     showChartLegend = true;
   }
 
+  /**
+   * Get just the chart options.
+   * 
+   * @return Chart options.
+   */
   public final ChartOptions getChartOptions()
   {
     return chartOptions;
@@ -108,6 +113,11 @@ public class Options
     return twilightType;
   }
 
+  /**
+   * Get the working directory.
+   * 
+   * @return Working directory.
+   */
   public File getWorkingDirectory()
   {
     if (isDirectoryValid(workingDirectory))
@@ -213,6 +223,11 @@ public class Options
     }
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see java.lang.Object#toString()
+   */
   @Override
   public String toString()
   {

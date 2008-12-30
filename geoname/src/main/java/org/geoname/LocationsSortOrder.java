@@ -62,11 +62,21 @@ public enum LocationsSortOrder
     this.description = description;
   }
 
+  /**
+   * Description.
+   * 
+   * @return Description
+   */
   public String getDescription()
   {
     return description;
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see java.lang.Enum#toString()
+   */
   @Override
   public String toString()
   {

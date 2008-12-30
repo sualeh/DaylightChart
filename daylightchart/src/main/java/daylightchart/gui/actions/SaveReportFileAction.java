@@ -83,8 +83,6 @@ public final class SaveReportFileAction
         try
         {
           UserPreferences.saveReportToFile(selectedFile.getFile());
-          // Save last selected directory
-          UserPreferences.setWorkingDirectory(selectedFile.getDirectory());
         }
         catch (final Exception e)
         {
