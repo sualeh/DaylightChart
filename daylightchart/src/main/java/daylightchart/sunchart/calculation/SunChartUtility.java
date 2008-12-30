@@ -38,6 +38,7 @@ import org.geoname.Location;
 import org.geoname.parser.LocationParser;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
+import org.sunposition.calculation.Equinox;
 import org.sunposition.calculation.ExtendedSunPositionAlgorithm;
 import org.sunposition.calculation.SunPositionAlgorithmFactory;
 import org.sunposition.calculation.ExtendedSunPositionAlgorithm.SolarEphemerides;
