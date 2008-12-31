@@ -183,7 +183,7 @@ public class DaylightChartReport
           exporter.setParameter(JRPdfExporterParameter.METADATA_TITLE, location
             .getDescription());
           exporter.setParameter(JRPdfExporterParameter.METADATA_SUBJECT,
-                                "Daylight Chart Report");
+                                Version.getProductName());
           exporter.setParameter(JRPdfExporterParameter.METADATA_AUTHOR, System
             .getProperty("user.name"));
 
