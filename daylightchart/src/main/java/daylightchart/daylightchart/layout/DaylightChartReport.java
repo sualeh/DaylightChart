@@ -32,14 +32,16 @@ import java.util.logging.Logger;
 
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JRExporter;
 import net.sf.jasperreports.engine.JRExporterParameter;
-import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.export.JRHtmlExporter;
 import net.sf.jasperreports.engine.export.JRHtmlExporterParameter;
+import net.sf.jasperreports.engine.export.JRPdfExporter;
+import net.sf.jasperreports.engine.export.JRPdfExporterParameter;
 import net.sf.jasperreports.renderers.JCommonDrawableRenderer;
 
 import org.apache.commons.lang.StringUtils;
@@ -51,6 +53,7 @@ import org.pointlocation6709.parser.PointLocationFormatType;
 import org.pointlocation6709.parser.PointLocationFormatter;
 
 import sf.util.ui.FileType;
+import daylightchart.Version;
 import daylightchart.daylightchart.calculation.RiseSetUtility;
 import daylightchart.daylightchart.calculation.RiseSetYearData;
 import daylightchart.daylightchart.chart.DaylightChart;
@@ -164,20 +167,30 @@ public class DaylightChartReport
 
     try
     {
-      final String filePath = file.getAbsolutePath();
+      JRExporter exporter;
       switch (chartFileType)
       {
         case pdf:
-          JasperExportManager.exportReportToPdfFile(jasperPrint, filePath);
-          break;
-        case png:
-          ChartUtilities.saveChartAsPNG(file, chart, 842, 595);
-          break;
-        case jpg:
-          ChartUtilities.saveChartAsJPEG(file, chart, 842, 595);
+          exporter = new JRPdfExporter();
+
+          exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+          exporter.setParameter(JRExporterParameter.OUTPUT_FILE, file);
+
+          exporter.setParameter(JRPdfExporterParameter.PDF_VERSION,
+                                JRPdfExporterParameter.PDF_VERSION_1_6);
+          exporter.setParameter(JRPdfExporterParameter.METADATA_CREATOR,
+                                Version.about());
+          exporter.setParameter(JRPdfExporterParameter.METADATA_TITLE, location
+            .getDescription());
+          exporter.setParameter(JRPdfExporterParameter.METADATA_SUBJECT,
+                                "Daylight Chart Report");
+          exporter.setParameter(JRPdfExporterParameter.METADATA_AUTHOR, System
+            .getProperty("user.name"));
+
+          exporter.exportReport();
           break;
         case html:
-          JRHtmlExporter exporter = new JRHtmlExporter();
+          exporter = new JRHtmlExporter();
 
           exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
           exporter.setParameter(JRExporterParameter.OUTPUT_FILE, file);
@@ -186,6 +199,12 @@ public class DaylightChartReport
                           Boolean.FALSE);
 
           exporter.exportReport();
+          break;
+        case png:
+          ChartUtilities.saveChartAsPNG(file, chart, 842, 595);
+          break;
+        case jpg:
+          ChartUtilities.saveChartAsJPEG(file, chart, 842, 595);
           break;
         default:
           throw new IllegalArgumentException("Unknown chart file type");
