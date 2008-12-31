@@ -39,9 +39,13 @@ import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.renderers.JCommonDrawableRenderer;
 
+import org.apache.commons.lang.StringUtils;
 import org.geoname.data.Location;
 import org.jfree.chart.ChartUtilities;
 import org.joda.time.LocalDateTime;
+import org.pointlocation6709.parser.FormatterException;
+import org.pointlocation6709.parser.PointLocationFormatType;
+import org.pointlocation6709.parser.PointLocationFormatter;
 
 import sf.util.ui.FileType;
 import daylightchart.daylightchart.calculation.RiseSetUtility;
@@ -118,9 +122,19 @@ public class DaylightChartReport
    */
   public String getReportFileName(final FileType chartFileType)
   {
-    return location.getDescription() + "."
-           + new LocalDateTime().toString("yyyyMMddhhmm")
-           + chartFileType.getFileExtension();
+    final String timeStamp = new LocalDateTime().toString("yyyyMMddhhmm");
+    String pointLocation = "";
+    try
+    {
+      pointLocation = PointLocationFormatter.formatIso6709(location
+        .getPointLocation(), PointLocationFormatType.MEDIUM);
+      pointLocation = StringUtils.replace(pointLocation, "/", "");
+    }
+    catch (FormatterException e)
+    {
+      pointLocation = "";
+    }
+    return pointLocation + "." + timeStamp + chartFileType.getFileExtension();
   }
 
   /**
