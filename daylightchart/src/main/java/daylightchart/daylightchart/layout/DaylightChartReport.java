@@ -32,11 +32,14 @@ import java.util.logging.Logger;
 
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JRExporterParameter;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.export.JRHtmlExporter;
+import net.sf.jasperreports.engine.export.JRHtmlExporterParameter;
 import net.sf.jasperreports.renderers.JCommonDrawableRenderer;
 
 import org.apache.commons.lang.StringUtils;
@@ -174,7 +177,15 @@ public class DaylightChartReport
           ChartUtilities.saveChartAsJPEG(file, chart, 842, 595);
           break;
         case html:
-          JasperExportManager.exportReportToHtmlFile(jasperPrint, filePath);
+          JRHtmlExporter exporter = new JRHtmlExporter();
+
+          exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+          exporter.setParameter(JRExporterParameter.OUTPUT_FILE, file);
+          exporter
+            .setParameter(JRHtmlExporterParameter.IS_USING_IMAGES_TO_ALIGN,
+                          Boolean.FALSE);
+
+          exporter.exportReport();
           break;
         default:
           throw new IllegalArgumentException("Unknown chart file type");
@@ -209,7 +220,7 @@ public class DaylightChartReport
       final JRDataSource dataSource = new JRBeanCollectionDataSource(riseSetData
         .getRiseSetData());
 
-      // Render the report into PDF
+      // 4. Fill the report
       return JasperFillManager.fillReport(jasperReport, parameters, dataSource);
     }
     catch (final JRException e)
