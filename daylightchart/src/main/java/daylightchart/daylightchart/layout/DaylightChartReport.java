@@ -200,8 +200,8 @@ public class DaylightChartReport
     }
     catch (final JRException e)
     {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
+      LOGGER.log(Level.SEVERE, "Error generating a report for location "
+                               + location, e);
       return null;
     }
   }
