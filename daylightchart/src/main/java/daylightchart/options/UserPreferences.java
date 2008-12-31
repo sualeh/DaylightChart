@@ -49,7 +49,7 @@ import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import net.sf.jasperreports.engine.xml.JRXmlWriter;
 
-import org.geoname.Location;
+import org.geoname.data.Location;
 import org.geoname.parser.FormatterException;
 import org.geoname.parser.GNISFilesParser;
 import org.geoname.parser.GNSCountryFilesParser;

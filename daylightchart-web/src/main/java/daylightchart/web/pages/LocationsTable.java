@@ -15,7 +15,7 @@ import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
-import org.geoname.Location;
+import org.geoname.data.Location;
 
 import daylightchart.options.UserPreferences;
 

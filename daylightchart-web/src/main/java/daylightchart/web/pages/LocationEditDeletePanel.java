@@ -20,7 +20,7 @@ import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
-import org.geoname.Location;
+import org.geoname.data.Location;
 
 import daylightchart.options.UserPreferences;
 

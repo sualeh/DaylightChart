@@ -24,7 +24,7 @@ package daylightchart.gui;
 
 import javax.swing.JTabbedPane;
 
-import org.geoname.Location;
+import org.geoname.data.Location;
 import org.geoname.parser.LocationFormatter;
 import org.jfree.chart.ChartPanel;
 

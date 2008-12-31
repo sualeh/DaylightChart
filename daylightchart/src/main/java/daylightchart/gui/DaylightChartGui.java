@@ -39,7 +39,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JSplitPane;
 import javax.swing.JToolBar;
 
-import org.geoname.Location;
+import org.geoname.data.Location;
 import org.jfree.chart.ChartPanel;
 
 import sf.util.ui.BareBonesBrowserLaunch;

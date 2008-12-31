@@ -28,8 +28,9 @@ import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.geoname.Country;
-import org.geoname.Location;
+import org.geoname.data.Countries;
+import org.geoname.data.Country;
+import org.geoname.data.Location;
 import org.pointlocation6709.PointLocation;
 import org.pointlocation6709.parser.PointLocationParser;
 

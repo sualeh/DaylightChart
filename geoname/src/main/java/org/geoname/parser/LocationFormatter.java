@@ -26,8 +26,8 @@ import java.io.IOException;
 import java.io.Writer;
 import java.util.List;
 
-import org.geoname.Country;
-import org.geoname.Location;
+import org.geoname.data.Country;
+import org.geoname.data.Location;
 import org.pointlocation6709.parser.FormatterException;
 import org.pointlocation6709.parser.PointLocationFormatType;
 import org.pointlocation6709.parser.PointLocationFormatter;

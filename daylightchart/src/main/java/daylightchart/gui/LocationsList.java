@@ -40,7 +40,7 @@ import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JToolBar;
 
-import org.geoname.Location;
+import org.geoname.data.Location;
 import org.geoname.parser.LocationFormatter;
 
 import sf.util.ui.GuiAction;

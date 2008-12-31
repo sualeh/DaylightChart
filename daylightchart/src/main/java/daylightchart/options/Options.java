@@ -27,7 +27,7 @@ import java.io.Serializable;
 
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
-import org.geoname.LocationsSortOrder;
+import org.geoname.data.LocationsSortOrder;
 
 import daylightchart.daylightchart.calculation.TwilightType;
 import daylightchart.daylightchart.chart.ChartOrientation;

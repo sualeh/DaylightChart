@@ -46,9 +46,9 @@ import javax.swing.JDialog;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 
-import org.geoname.Country;
-import org.geoname.Location;
-import org.geoname.parser.Countries;
+import org.geoname.data.Countries;
+import org.geoname.data.Country;
+import org.geoname.data.Location;
 import org.geoname.parser.DefaultTimezones;
 import org.geoname.parser.TimeZoneDisplay;
 import org.pointlocation6709.Latitude;

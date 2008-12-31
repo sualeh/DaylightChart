@@ -36,7 +36,7 @@ import java.util.logging.Logger;
 
 import javax.swing.KeyStroke;
 
-import org.geoname.Location;
+import org.geoname.data.Location;
 import org.geoname.parser.FormatterException;
 import org.geoname.parser.LocationFormatter;
 import org.geoname.parser.LocationParser;

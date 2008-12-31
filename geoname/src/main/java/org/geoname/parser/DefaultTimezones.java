@@ -43,8 +43,10 @@ import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.geoname.Country;
-import org.geoname.USState;
+import org.geoname.data.Countries;
+import org.geoname.data.Country;
+import org.geoname.data.USState;
+import org.geoname.data.USStates;
 import org.pointlocation6709.Longitude;
 import org.pointlocation6709.Utility;
 

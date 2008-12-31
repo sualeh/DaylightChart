@@ -27,7 +27,7 @@ import java.awt.Font;
 import java.util.Calendar;
 import java.util.List;
 
-import org.geoname.Location;
+import org.geoname.data.Location;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.XYPlot;

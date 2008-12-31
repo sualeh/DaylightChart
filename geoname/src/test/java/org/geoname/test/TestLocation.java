@@ -28,7 +28,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.List;
 
-import org.geoname.Location;
+import org.geoname.data.Location;
 import org.geoname.parser.FormatterException;
 import org.geoname.parser.LocationFormatter;
 import org.geoname.parser.LocationParser;

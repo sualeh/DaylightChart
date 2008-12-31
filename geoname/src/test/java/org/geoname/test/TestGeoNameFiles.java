@@ -32,7 +32,7 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-import org.geoname.Location;
+import org.geoname.data.Location;
 import org.geoname.parser.GNISFilesParser;
 import org.geoname.parser.GNSCountryFilesParser;
 import org.geoname.parser.ParserException;

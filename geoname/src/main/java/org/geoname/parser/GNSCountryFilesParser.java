@@ -30,8 +30,9 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.geoname.Country;
-import org.geoname.Location;
+import org.geoname.data.Countries;
+import org.geoname.data.Country;
+import org.geoname.data.Location;
 import org.pointlocation6709.Angle;
 import org.pointlocation6709.Latitude;
 import org.pointlocation6709.Longitude;

@@ -27,7 +27,7 @@ import java.util.logging.Logger;
 
 import javax.swing.UIManager;
 
-import org.geoname.Location;
+import org.geoname.data.Location;
 import org.geoname.parser.LocationParser;
 import org.geoname.parser.ParserException;
 

@@ -41,7 +41,7 @@ import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.KeyStroke;
 
-import org.geoname.LocationsSortOrder;
+import org.geoname.data.LocationsSortOrder;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.factories.ButtonBarFactory;

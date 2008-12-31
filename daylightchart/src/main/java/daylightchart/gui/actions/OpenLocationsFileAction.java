@@ -35,7 +35,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 
-import org.geoname.Location;
+import org.geoname.data.Location;
 
 import sf.util.ui.Actions;
 import sf.util.ui.ExtensionFileFilter;

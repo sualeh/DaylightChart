@@ -34,7 +34,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.geoname.Location;
+import org.geoname.data.Location;
 import org.geoname.parser.LocationParser;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;

@@ -39,7 +39,7 @@ import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.renderers.JCommonDrawableRenderer;
 
-import org.geoname.Location;
+import org.geoname.data.Location;
 import org.jfree.chart.ChartUtilities;
 import org.joda.time.LocalDateTime;
 
