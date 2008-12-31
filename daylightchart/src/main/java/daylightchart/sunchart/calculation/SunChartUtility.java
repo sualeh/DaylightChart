@@ -41,6 +41,7 @@ import org.joda.time.LocalDateTime;
 import org.sunposition.calculation.Equinox;
 import org.sunposition.calculation.ExtendedSunPositionAlgorithm;
 import org.sunposition.calculation.SunPositionAlgorithmFactory;
+import org.sunposition.calculation.Equinox.DateTime;
 import org.sunposition.calculation.ExtendedSunPositionAlgorithm.SolarEphemerides;
 
 /**
@@ -149,16 +150,24 @@ public final class SunChartUtility
       switch (month)
       {
         case 3:
-          date = equinox.getVernalEquinox().toLocalDate();
+          DateTime vernalEquinox = equinox.getVernalEquinox();
+          date = new LocalDate(vernalEquinox.getYear(), vernalEquinox
+            .getMonth(), vernalEquinox.getDay());
           break;
         case 6:
-          date = equinox.getSummerSolstice().toLocalDate();
+          DateTime summerSolstice = equinox.getSummerSolstice();
+          date = new LocalDate(summerSolstice.getYear(), summerSolstice
+            .getMonth(), summerSolstice.getDay());
           break;
         case 9:
-          date = equinox.getAutumnalEquinox().toLocalDate();
+          DateTime autumnalEquinox = equinox.getAutumnalEquinox();
+          date = new LocalDate(autumnalEquinox.getYear(), autumnalEquinox
+            .getMonth(), autumnalEquinox.getDay());
           break;
         case 12:
-          date = equinox.getWinterSolstice().toLocalDate();
+          DateTime winterSolstice = equinox.getWinterSolstice();
+          date = new LocalDate(winterSolstice.getYear(), winterSolstice
+            .getMonth(), winterSolstice.getDay());
           break;
         default:
           date = new LocalDate(year, month, 15);
