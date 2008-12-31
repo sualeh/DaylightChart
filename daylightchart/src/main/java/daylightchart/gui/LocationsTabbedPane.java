@@ -28,10 +28,10 @@ import org.geoname.data.Location;
 import org.geoname.parser.LocationFormatter;
 import org.jfree.chart.ChartPanel;
 
-import sf.util.ui.CloseTabIcon;
 import daylightchart.daylightchart.chart.ChartConfiguration;
 import daylightchart.daylightchart.chart.DaylightChart;
 import daylightchart.daylightchart.layout.DaylightChartReport;
+import daylightchart.gui.util.CloseTabIcon;
 import daylightchart.options.Options;
 
 /**

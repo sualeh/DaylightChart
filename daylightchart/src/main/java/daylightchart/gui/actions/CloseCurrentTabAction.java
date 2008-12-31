@@ -27,8 +27,8 @@ import java.awt.event.ActionListener;
 
 import javax.swing.KeyStroke;
 
-import sf.util.ui.GuiAction;
 import daylightchart.gui.LocationsTabbedPane;
+import daylightchart.gui.util.GuiAction;
 
 /**
  * Closes current tab.

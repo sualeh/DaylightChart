@@ -42,7 +42,8 @@ import org.geoname.parser.LocationFormatter;
 import org.geoname.parser.LocationParser;
 import org.geoname.parser.ParserException;
 
-import sf.util.ui.GuiAction;
+import daylightchart.gui.util.GuiAction;
+
 
 enum LocationsListOperation
 {

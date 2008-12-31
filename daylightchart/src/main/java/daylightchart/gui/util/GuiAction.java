@@ -19,7 +19,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * 
  */
-package sf.util.ui;
+package daylightchart.gui.util;
 
 
 import java.awt.event.ActionEvent;

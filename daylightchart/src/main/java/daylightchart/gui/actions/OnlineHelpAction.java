@@ -27,9 +27,9 @@ import java.awt.event.ActionListener;
 
 import javax.swing.KeyStroke;
 
-import sf.util.ui.BareBonesBrowserLaunch;
-import sf.util.ui.GuiAction;
 import daylightchart.gui.Messages;
+import daylightchart.gui.util.BareBonesBrowserLaunch;
+import daylightchart.gui.util.GuiAction;
 
 /**
  * Shows online help.

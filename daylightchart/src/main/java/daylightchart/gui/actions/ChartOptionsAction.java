@@ -30,9 +30,9 @@ import javax.swing.KeyStroke;
 
 import org.jfree.chart.editor.ChartEditor;
 
-import sf.util.ui.GuiAction;
 import daylightchart.gui.DaylightChartGui;
 import daylightchart.gui.Messages;
+import daylightchart.gui.util.GuiAction;
 import daylightchart.options.Options;
 import daylightchart.options.UserPreferences;
 import daylightchart.options.chart.ChartOptions;

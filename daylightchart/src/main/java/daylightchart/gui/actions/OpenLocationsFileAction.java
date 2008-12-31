@@ -37,12 +37,12 @@ import javax.swing.KeyStroke;
 
 import org.geoname.data.Location;
 
-import sf.util.ui.Actions;
-import sf.util.ui.ExtensionFileFilter;
-import sf.util.ui.GuiAction;
-import sf.util.ui.SelectedFile;
 import daylightchart.gui.DaylightChartGui;
 import daylightchart.gui.Messages;
+import daylightchart.gui.util.Actions;
+import daylightchart.gui.util.ExtensionFileFilter;
+import daylightchart.gui.util.GuiAction;
+import daylightchart.gui.util.SelectedFile;
 import daylightchart.options.UserPreferences;
 
 /**

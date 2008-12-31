@@ -52,11 +52,11 @@ import org.pointlocation6709.parser.FormatterException;
 import org.pointlocation6709.parser.PointLocationFormatType;
 import org.pointlocation6709.parser.PointLocationFormatter;
 
-import sf.util.ui.FileType;
 import daylightchart.Version;
 import daylightchart.daylightchart.calculation.RiseSetUtility;
 import daylightchart.daylightchart.calculation.RiseSetYearData;
 import daylightchart.daylightchart.chart.DaylightChart;
+import daylightchart.gui.util.FileType;
 import daylightchart.options.Options;
 import daylightchart.options.UserPreferences;
 

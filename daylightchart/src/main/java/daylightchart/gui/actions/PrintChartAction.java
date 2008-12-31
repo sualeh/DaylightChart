@@ -27,9 +27,9 @@ import java.awt.event.ActionListener;
 
 import javax.swing.KeyStroke;
 
-import sf.util.ui.GuiAction;
 import daylightchart.gui.LocationsTabbedPane;
 import daylightchart.gui.Messages;
+import daylightchart.gui.util.GuiAction;
 
 /**
  * Prints the current chart.

@@ -9,7 +9,7 @@
 //Public Domain Software -- Free to Use as You Like    //
 /////////////////////////////////////////////////////////
 
-package sf.util.ui;
+package daylightchart.gui.util;
 
 
 import java.lang.reflect.Method;

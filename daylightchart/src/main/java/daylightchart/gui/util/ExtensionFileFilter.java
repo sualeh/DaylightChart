@@ -19,7 +19,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * 
  */
-package sf.util.ui;
+package daylightchart.gui.util;
 
 
 import java.io.File;
@@ -110,7 +110,7 @@ public class ExtensionFileFilter<T extends FileType>
   /**
    * {@inheritDoc}
    * 
-   * @see sf.util.ui.FileType#getFileExtension()
+   * @see daylightchart.gui.util.FileType#getFileExtension()
    */
   public String getFileExtension()
   {

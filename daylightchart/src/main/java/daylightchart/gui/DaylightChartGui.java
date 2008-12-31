@@ -42,9 +42,6 @@ import javax.swing.JToolBar;
 import org.geoname.data.Location;
 import org.jfree.chart.ChartPanel;
 
-import sf.util.ui.BareBonesBrowserLaunch;
-import sf.util.ui.ExitAction;
-import sf.util.ui.GuiAction;
 import daylightchart.daylightchart.chart.ChartConfiguration;
 import daylightchart.daylightchart.layout.ChartFileType;
 import daylightchart.daylightchart.layout.DaylightChartReport;
@@ -60,6 +57,9 @@ import daylightchart.gui.actions.ResetAllAction;
 import daylightchart.gui.actions.SaveChartAction;
 import daylightchart.gui.actions.SaveLocationsFileAction;
 import daylightchart.gui.actions.SaveReportFileAction;
+import daylightchart.gui.util.BareBonesBrowserLaunch;
+import daylightchart.gui.util.ExitAction;
+import daylightchart.gui.util.GuiAction;
 import daylightchart.options.Options;
 import daylightchart.options.UserPreferences;
 

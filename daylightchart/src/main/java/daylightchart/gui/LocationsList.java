@@ -43,8 +43,8 @@ import javax.swing.JToolBar;
 import org.geoname.data.Location;
 import org.geoname.parser.LocationFormatter;
 
-import sf.util.ui.GuiAction;
 import daylightchart.daylightchart.layout.DaylightChartReport;
+import daylightchart.gui.util.GuiAction;
 import daylightchart.options.Options;
 import daylightchart.options.UserPreferences;
 

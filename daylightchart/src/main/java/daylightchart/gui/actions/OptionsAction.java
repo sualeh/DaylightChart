@@ -27,10 +27,10 @@ import java.awt.event.ActionListener;
 
 import javax.swing.KeyStroke;
 
-import sf.util.ui.GuiAction;
 import daylightchart.gui.DaylightChartGui;
 import daylightchart.gui.Messages;
 import daylightchart.gui.OptionsDialog;
+import daylightchart.gui.util.GuiAction;
 import daylightchart.options.Options;
 import daylightchart.options.UserPreferences;
 

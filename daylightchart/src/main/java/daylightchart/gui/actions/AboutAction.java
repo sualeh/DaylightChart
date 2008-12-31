@@ -28,9 +28,9 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JOptionPane;
 
-import sf.util.ui.GuiAction;
 import daylightchart.Version;
 import daylightchart.gui.Messages;
+import daylightchart.gui.util.GuiAction;
 
 /**
  * Shows Help-About.

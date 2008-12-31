@@ -58,13 +58,13 @@ import org.geoname.parser.LocationParser;
 import org.geoname.parser.ParserException;
 import org.geoname.parser.UnicodeReader;
 
-import sf.util.ui.SelectedFile;
 
 import com.thoughtworks.xstream.XStream;
 
 import daylightchart.daylightchart.chart.DaylightChart;
 import daylightchart.daylightchart.layout.DaylightChartReport;
 import daylightchart.gui.actions.LocationFileType;
+import daylightchart.gui.util.SelectedFile;
 import daylightchart.options.chart.ChartOptions;
 
 /**
