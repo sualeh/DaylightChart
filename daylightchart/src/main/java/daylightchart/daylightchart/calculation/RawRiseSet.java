@@ -29,7 +29,6 @@ import java.io.StringWriter;
 import org.geoname.data.Location;
 import org.joda.time.LocalDate;
 
-
 /**
  * Sunrise and sunset at a given location, and a given date.
  * 

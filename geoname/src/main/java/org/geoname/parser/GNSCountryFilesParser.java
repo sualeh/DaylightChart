@@ -38,7 +38,6 @@ import org.pointlocation6709.Latitude;
 import org.pointlocation6709.Longitude;
 import org.pointlocation6709.PointLocation;
 
-
 /**
  * Parses objects from strings.
  * 

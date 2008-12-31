@@ -22,6 +22,8 @@
 package org.sunposition.calculation;
 
 
+import java.io.Serializable;
+
 /**
  * Dates and times for the solstices and equinoxes.
  * 
@@ -30,54 +32,92 @@ package org.sunposition.calculation;
 public class Equinox
 {
 
+  /**
+   * A date and a time.
+   * 
+   * @author Sualeh Fatehi
+   */
   public class DateTime
+    implements Serializable
   {
+
+    private static final long serialVersionUID = -8184768383256338584L;
+
     private final int year;
     private final int month;
     private final int day;
-    private final int hour;
-    private final int minute;
-    private final int second;
+    private final int hours;
+    private final int minutes;
+    private final int seconds;
 
     DateTime(int year, int month, int day, int hour, int minute, int second)
     {
-      super();
       this.year = year;
       this.month = month;
       this.day = day;
-      this.hour = hour;
-      this.minute = minute;
-      this.second = second;
+      this.hours = hour;
+      this.minutes = minute;
+      this.seconds = second;
     }
 
+    /**
+     * Year.
+     * 
+     * @return Year
+     */
     public int getYear()
     {
       return year;
     }
 
+    /**
+     * Month.
+     * 
+     * @return Month
+     */
     public int getMonth()
     {
       return month;
     }
 
+    /**
+     * Day.
+     * 
+     * @return Day
+     */
     public int getDay()
     {
       return day;
     }
 
-    public int getHour()
+    /**
+     * Hours.
+     * 
+     * @return Hours
+     */
+    public int getHours()
     {
-      return hour;
+      return hours;
     }
 
-    public int getMinute()
+    /**
+     * Minute.
+     * 
+     * @return Minutes
+     */
+    public int getMinutes()
     {
-      return minute;
+      return minutes;
     }
 
-    public int getSecond()
+    /**
+     * Seconds.
+     * 
+     * @return Seconds
+     */
+    public int getSeconds()
     {
-      return second;
+      return seconds;
     }
 
   }
@@ -117,7 +157,7 @@ public class Equinox
   /**
    * @return the autumnalEquinox
    */
-  public DateTime getAutumnalEquinox()
+  public DateTime getSeptemberEquinox()
   {
     return autumnalEquinox;
   }
@@ -125,7 +165,7 @@ public class Equinox
   /**
    * @return the summerSolstice
    */
-  public DateTime getSummerSolstice()
+  public DateTime getJuneSolstice()
   {
     return summerSolstice;
   }
@@ -133,7 +173,7 @@ public class Equinox
   /**
    * @return the vernalEquinox
    */
-  public DateTime getVernalEquinox()
+  public DateTime getMarchEquinox()
   {
     return vernalEquinox;
   }
@@ -141,7 +181,7 @@ public class Equinox
   /**
    * @return the winterSolstice
    */
-  public DateTime getWinterSolstice()
+  public DateTime getDecemberSolstice()
   {
     return winterSolstice;
   }

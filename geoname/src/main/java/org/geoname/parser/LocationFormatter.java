@@ -32,7 +32,6 @@ import org.pointlocation6709.parser.FormatterException;
 import org.pointlocation6709.parser.PointLocationFormatType;
 import org.pointlocation6709.parser.PointLocationFormatter;
 
-
 /**
  * Formats objects to strings.
  * 

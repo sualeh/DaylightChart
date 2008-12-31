@@ -24,9 +24,10 @@ package org.sunposition.calculation;
 
 /**
  * <p>
- * Defines the interface the sunrise algorithms need to use. <p/> The
- * values that define the location of the horizon for an observer at sea
- * level:
+ * Defines the interface the sunrise algorithms need to use.
+ * <p/>
+ * The values that define the location of the horizon for an observer at
+ * sea level:
  * </p>
  * 
  * <pre>

@@ -150,24 +150,16 @@ public final class SunChartUtility
       switch (month)
       {
         case 3:
-          DateTime vernalEquinox = equinox.getVernalEquinox();
-          date = new LocalDate(vernalEquinox.getYear(), vernalEquinox
-            .getMonth(), vernalEquinox.getDay());
+          date = toLocalDate(equinox.getMarchEquinox());
           break;
         case 6:
-          DateTime summerSolstice = equinox.getSummerSolstice();
-          date = new LocalDate(summerSolstice.getYear(), summerSolstice
-            .getMonth(), summerSolstice.getDay());
+          date = toLocalDate(equinox.getJuneSolstice());
           break;
         case 9:
-          DateTime autumnalEquinox = equinox.getAutumnalEquinox();
-          date = new LocalDate(autumnalEquinox.getYear(), autumnalEquinox
-            .getMonth(), autumnalEquinox.getDay());
+          date = toLocalDate(equinox.getSeptemberEquinox());
           break;
         case 12:
-          DateTime winterSolstice = equinox.getWinterSolstice();
-          date = new LocalDate(winterSolstice.getYear(), winterSolstice
-            .getMonth(), winterSolstice.getDay());
+          date = toLocalDate(equinox.getDecemberSolstice());
           break;
         default:
           date = new LocalDate(year, month, 15);
@@ -178,7 +170,14 @@ public final class SunChartUtility
     return dates;
   }
 
-  @SuppressWarnings("boxing")
+  private static LocalDate toLocalDate(DateTime equinox3)
+  {
+    LocalDate date;
+    date = new LocalDate(equinox3.getYear(), equinox3.getMonth(), equinox3
+      .getDay());
+    return date;
+  }
+
   private static void writeCalculations(final Writer writer,
                                         final Location location)
   {

@@ -32,7 +32,6 @@ import org.joda.time.LocalDateTime;
 import org.joda.time.LocalTime;
 import org.pointlocation6709.Utility;
 
-
 /**
  * Sunrise and sunset at a given location, and a given date. RiseSet is
  * calculated as part of the rise/ set year, and then may be split for

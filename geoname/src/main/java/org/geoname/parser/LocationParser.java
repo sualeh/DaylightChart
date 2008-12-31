@@ -34,7 +34,6 @@ import org.geoname.data.Location;
 import org.pointlocation6709.PointLocation;
 import org.pointlocation6709.parser.PointLocationParser;
 
-
 /**
  * Parses locations.
  * 

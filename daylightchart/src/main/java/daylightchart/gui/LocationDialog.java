@@ -61,7 +61,6 @@ import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.factories.ButtonBarFactory;
 import com.jgoodies.forms.layout.FormLayout;
 
-
 /**
  * This class is used for the display of the location editor. The user
  * is allowed to add new locations, and delete or modify existing

@@ -30,8 +30,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-
-
 /**
  * In-memory database of US states.
  * 
