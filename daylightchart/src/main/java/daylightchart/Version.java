@@ -44,7 +44,7 @@ public final class Version
   {
     final StringBuffer about = new StringBuffer();
     about.append(getProductName()).append(" ").append(getVersion()) //$NON-NLS-1$
-      .append("\n").append("\u00A9 2007-2008 Sualeh Fatehi"); //$NON-NLS-1$ //$NON-NLS-2$
+      .append("\n").append("\u00A9 2007-2009, Sualeh Fatehi."); //$NON-NLS-1$ //$NON-NLS-2$
     return new String(about);
   }
 
