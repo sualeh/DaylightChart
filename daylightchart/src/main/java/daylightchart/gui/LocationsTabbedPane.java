@@ -60,10 +60,8 @@ public class LocationsTabbedPane
    */
   public void addLocationTab(final DaylightChartReport daylightChartReport)
   {
-    final Options options = mainWindow.getOptions();
     final Location location = daylightChartReport.getLocation();
     final DaylightChart chart = daylightChartReport.getChart();
-    options.getChartOptions().updateChart(chart);
 
     final ChartPanel chartPanel = new ChartPanel(chart);
     chartPanel.setName(location.toString());
