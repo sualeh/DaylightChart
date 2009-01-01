@@ -139,8 +139,8 @@ public class LocationDialog
    * Show a dialog for location delete, add or edit operation to be
    * performed.
    * 
-   * @param locationsList
-   *        Locations list
+   * @param mainWindow
+   *        Main window
    * @param operation
    *        Operation to perform
    * @return Location, if one was added, edited or deleted, or null if

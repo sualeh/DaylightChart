@@ -5,6 +5,11 @@ import java.util.List;
 
 import org.geoname.data.Location;
 
+/**
+ * User interface operations on the list of locations.
+ * 
+ * @author Sualeh Fatehi
+ */
 public interface LocationOperations
 {
 

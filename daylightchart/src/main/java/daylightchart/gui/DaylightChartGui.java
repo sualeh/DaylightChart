@@ -117,7 +117,7 @@ public final class DaylightChartGui
     if (location == null)
     {
       // Create basic UI
-      locationsTabbedPane = new LocationsTabbedPane(this);
+      locationsTabbedPane = new LocationsTabbedPane();
       locationsList = new LocationsList(this);
 
       if (slimUi)
@@ -377,21 +377,42 @@ public final class DaylightChartGui
     toolBar.addSeparator();
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see daylightchart.gui.LocationOperations#getLocations()
+   */
   public List<Location> getLocations()
   {
     return locationsList.getLocations();
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see daylightchart.gui.LocationOperations#addLocation(org.geoname.data.Location)
+   */
   public void addLocation(Location location)
   {
     locationsList.addLocation(location);
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see daylightchart.gui.LocationOperations#replaceLocation(org.geoname.data.Location,
+   *      org.geoname.data.Location)
+   */
   public void replaceLocation(Location selectedLocation, Location editedLocation)
   {
     locationsList.replaceLocation(selectedLocation, editedLocation);
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see daylightchart.gui.LocationOperations#removeLocation(org.geoname.data.Location)
+   */
   public void removeLocation(Location location)
   {
     locationsList.removeLocation(location);

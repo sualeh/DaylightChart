@@ -44,13 +44,6 @@ public class LocationsTabbedPane
 
   private static final long serialVersionUID = -2086804705336786590L;
 
-  private final DaylightChartGui mainWindow;
-
-  LocationsTabbedPane(final DaylightChartGui mainWindow)
-  {
-    this.mainWindow = mainWindow;
-  }
-
   /**
    * Add a new tab for the location.
    * 

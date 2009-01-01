@@ -66,7 +66,7 @@ class LocationsList
   /**
    * Create a new locations list component.
    * 
-   * @param parent
+   * @param mainWindow
    *        Main window.
    */
   public LocationsList(final DaylightChartGui mainWindow)
