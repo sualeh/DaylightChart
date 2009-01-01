@@ -39,33 +39,20 @@ import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipFile;
 
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
-import net.sf.jasperreports.engine.xml.JRXmlWriter;
 
 import org.apache.commons.lang.StringUtils;
 import org.geoname.data.Location;
-import org.geoname.parser.FormatterException;
-import org.geoname.parser.GNISFilesParser;
-import org.geoname.parser.GNSCountryFilesParser;
-import org.geoname.parser.LocationFormatter;
 import org.geoname.parser.LocationParser;
 import org.geoname.parser.ParserException;
 import org.geoname.parser.UnicodeReader;
 
-import com.thoughtworks.xstream.XStream;
-
-import daylightchart.daylightchart.chart.DaylightChart;
 import daylightchart.daylightchart.layout.DaylightChartReport;
-import daylightchart.gui.actions.LocationFileType;
-import daylightchart.gui.util.SelectedFile;
-import daylightchart.options.chart.ChartOptions;
 
 /**
  * User preferences for the GUI.
@@ -158,22 +145,6 @@ public final class UserPreferences
   }
 
   /**
-   * Creates a options instance.
-   * 
-   * @return Options
-   */
-  public static Options getDefaultDaylightChartOptions()
-  {
-    final ChartOptions chartOptions = new ChartOptions();
-    chartOptions.copyFromChart(new DaylightChart());
-
-    final Options options = new Options();
-    options.setChartOptions(chartOptions);
-
-    return options;
-  }
-
-  /**
    * Gets the locations for the current user.
    * 
    * @return Locations
@@ -236,98 +207,14 @@ public final class UserPreferences
   public static boolean importReport(final File reportFile)
   {
     boolean imported = false;
-    final JasperReport report = loadReportFromFile(reportFile);
+    final JasperReport report = UserPreferenceOperations
+      .loadReportFromFile(reportFile);
     if (report != null)
     {
       setReport(report);
       imported = true;
     }
     return imported;
-  }
-
-  /**
-   * Loads a list of locations from a file of a given format.
-   * 
-   * @param selectedFile
-   *        Selected file of a known location file format.
-   * @return List of locations, read from the file
-   */
-  public static List<Location> loadLocationsFromFile(final SelectedFile<LocationFileType> selectedFile)
-  {
-    List<Location> locations = new ArrayList<Location>();
-    if (selectedFile == null || !selectedFile.isSelected())
-    {
-      return locations;
-    }
-
-    LocationFileType fileType = selectedFile.getFileType();
-    List<InputStream> inputs = new ArrayList<InputStream>();
-    try
-    {
-      switch (fileType)
-      {
-        case data:
-        case gns_country_file:
-        case gnis_state_file:
-          inputs.add(new FileInputStream(selectedFile.getFile()));
-          break;
-        case gns_country_file_zipped:
-        case gnis_state_file_zipped:
-          ZipFile zipFile = new ZipFile(selectedFile.getFile());
-          List<ZipEntry> zippedFiles = (List<ZipEntry>) Collections
-            .list(zipFile.entries());
-          for (ZipEntry zipEntry: zippedFiles)
-          {
-            inputs.add(zipFile.getInputStream(zipEntry));
-          }
-          break;
-      }
-
-      for (InputStream inputStream: inputs)
-      {
-        Reader reader = new UnicodeReader(inputStream, "UTF-8");
-        switch (fileType)
-        {
-          case data:
-            locations.addAll(LocationParser.parseLocations(reader));
-            break;
-          case gns_country_file:
-          case gns_country_file_zipped:
-            locations.addAll(GNSCountryFilesParser.parseLocations(reader));
-            break;
-          case gnis_state_file:
-          case gnis_state_file_zipped:
-            locations.addAll(GNISFilesParser.parseLocations(reader));
-            break;
-        }
-        reader.close();
-      }
-    }
-    catch (final Exception e)
-    {
-      LOGGER.log(Level.WARNING,
-                 "Could not read locations from " + selectedFile,
-                 e);
-      locations = new ArrayList<Location>();
-    }
-    finally
-    {
-      for (InputStream inputStream: inputs)
-      {
-        if (inputStream != null)
-        {
-          try
-          {
-            inputStream.close();
-          }
-          catch (final IOException e)
-          {
-            LOGGER.log(Level.WARNING, "Could not close input stream", e);
-          }
-        }
-      }
-    }
-    return locations;
   }
 
   /**
@@ -345,64 +232,6 @@ public final class UserPreferences
   }
 
   /**
-   * Saves locations to a file.
-   * 
-   * @param locations
-   *        Locations to save
-   * @param file
-   *        File
-   */
-  public static void saveLocationsToFile(final List<Location> locations,
-                                         final File file)
-  {
-    try
-    {
-      if (file == null)
-      {
-        LOGGER.log(Level.WARNING, "No locations file provided");
-        return;
-      }
-      if (file.exists())
-      {
-        file.delete();
-      }
-      final Writer writer = getFileWriter(file);
-      if (writer == null)
-      {
-        LOGGER.log(Level.WARNING, "Could not save locations to " + file);
-        return;
-      }
-      LocationFormatter.formatLocations(locations, writer);
-    }
-    catch (final FormatterException e)
-    {
-      LOGGER.log(Level.WARNING, "Could not save locations to " + file, e);
-    }
-  }
-
-  /**
-   * Saves report to a file.
-   * 
-   * @param file
-   *        File to write
-   */
-  public static void saveReportToFile(final File file)
-  {
-    try
-    {
-      if (file.exists())
-      {
-        file.delete();
-      }
-      JRXmlWriter.writeReport(report, file.getAbsolutePath(), "UTF-8");
-    }
-    catch (final JRException e)
-    {
-      LOGGER.log(Level.WARNING, "Could not save report to " + file, e);
-    }
-  }
-
-  /**
    * Sets the locations for the current user.
    * 
    * @param locations
@@ -415,7 +244,7 @@ public final class UserPreferences
       return;
     }
     UserPreferences.locations = locations;
-    saveLocationsToFile(locations, locationsDataFile);
+    UserPreferenceOperations.saveLocationsToFile(locations, locationsDataFile);
   }
 
   /**
@@ -431,7 +260,7 @@ public final class UserPreferences
       return;
     }
     UserPreferences.options = options;
-    saveOptionsToFile(optionsFile);
+    UserPreferenceOperations.saveOptionsToFile(options, optionsFile);
   }
 
   /**
@@ -588,12 +417,12 @@ public final class UserPreferences
   private static void initializeOptions()
   {
     // Try loading from user preferences
-    options = loadOptionsFromFile(optionsFile);
+    options = UserPreferenceOperations.loadOptionsFromFile(optionsFile);
 
     // Load from internal store
     if (options == null)
     {
-      options = getDefaultDaylightChartOptions();
+      options = UserPreferenceOperations.getDefaultDaylightChartOptions();
     }
   }
 
@@ -619,7 +448,7 @@ public final class UserPreferences
   private static void initializeReport()
   {
     // Try loading from user preferences
-    report = loadReportFromFile(reportFile);
+    report = UserPreferenceOperations.loadReportFromFile(reportFile);
 
     // Load from internal store
     if (report == null)
@@ -631,82 +460,6 @@ public final class UserPreferences
       {
         throw new RuntimeException("Cannot load default report");
       }
-    }
-  }
-
-  private static Options loadOptionsFromFile(final File file)
-  {
-    Reader reader = null;
-    Options options;
-    try
-    {
-      reader = new UnicodeReader(new FileInputStream(file), "UTF-8");
-      final XStream xStream = new XStream();
-      options = (Options) xStream.fromXML(reader);
-    }
-    catch (final Exception e)
-    {
-      LOGGER.log(Level.WARNING, "Could not read options from " + file, e);
-      options = null;
-    }
-    finally
-    {
-      if (reader != null)
-      {
-        try
-        {
-          reader.close();
-        }
-        catch (final IOException e)
-        {
-          LOGGER.log(Level.WARNING, "Could not close " + file, e);
-        }
-      }
-    }
-    return options;
-  }
-
-  private static JasperReport loadReportFromFile(final File file)
-  {
-    if (file == null || !file.exists() || !file.canRead())
-    {
-      return null;
-    }
-    FileInputStream fileInputStream;
-    try
-    {
-      fileInputStream = new FileInputStream(file);
-      return compileReport(fileInputStream);
-    }
-    catch (final FileNotFoundException e)
-    {
-      LOGGER.log(Level.WARNING, "Could not read report from " + file, e);
-      return null;
-    }
-  }
-
-  /**
-   * Saves options to a file.
-   * 
-   * @param file
-   *        File to write
-   */
-  private static void saveOptionsToFile(final File file)
-  {
-    try
-    {
-      final Writer writer = getFileWriter(file);
-      if (writer == null)
-      {
-        LOGGER.log(Level.WARNING, "Could not save options to " + file);
-        return;
-      }
-      final XStream xStream = new XStream();
-      xStream.toXML(options, writer);
-    }
-    catch (final Exception e)
-    {
-      LOGGER.log(Level.WARNING, "Could save options to " + file, e);
     }
   }
 
@@ -723,7 +476,8 @@ public final class UserPreferences
       return;
     }
     UserPreferences.recentLocations = locations;
-    saveLocationsToFile(recentLocations, recentLocationsDataFile);
+    UserPreferenceOperations.saveLocationsToFile(recentLocations,
+                                                 recentLocationsDataFile);
   }
 
   /**
@@ -739,7 +493,7 @@ public final class UserPreferences
       return;
     }
     UserPreferences.report = report;
-    saveReportToFile(reportFile);
+    UserPreferenceOperations.saveReportToFile(report, reportFile);
   }
 
   /**

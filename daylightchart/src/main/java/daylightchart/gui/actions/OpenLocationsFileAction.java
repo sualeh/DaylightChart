@@ -43,6 +43,7 @@ import daylightchart.gui.util.Actions;
 import daylightchart.gui.util.ExtensionFileFilter;
 import daylightchart.gui.util.GuiAction;
 import daylightchart.gui.util.SelectedFile;
+import daylightchart.options.UserPreferenceOperations;
 import daylightchart.options.UserPreferences;
 
 /**
@@ -98,7 +99,7 @@ public final class OpenLocationsFileAction
 
         try
         {
-          final List<Location> locations = UserPreferences
+          final List<Location> locations = UserPreferenceOperations
             .loadLocationsFromFile(selectedFile);
           if (locations == null)
           {

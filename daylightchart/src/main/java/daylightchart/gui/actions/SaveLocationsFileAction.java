@@ -39,6 +39,7 @@ import daylightchart.gui.util.Actions;
 import daylightchart.gui.util.ExtensionFileFilter;
 import daylightchart.gui.util.GuiAction;
 import daylightchart.gui.util.SelectedFile;
+import daylightchart.options.UserPreferenceOperations;
 import daylightchart.options.UserPreferences;
 
 /**
@@ -83,8 +84,8 @@ public final class SaveLocationsFileAction
       {
         try
         {
-          UserPreferences.saveLocationsToFile(mainWindow.getLocations(),
-                                              selectedFile.getFile());
+          UserPreferenceOperations.saveLocationsToFile(mainWindow
+            .getLocations(), selectedFile.getFile());
         }
         catch (final Exception e)
         {
