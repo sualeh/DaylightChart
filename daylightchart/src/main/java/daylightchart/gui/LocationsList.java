@@ -43,9 +43,7 @@ import javax.swing.JToolBar;
 import org.geoname.data.Location;
 import org.geoname.parser.LocationFormatter;
 
-import daylightchart.daylightchart.layout.DaylightChartReport;
 import daylightchart.gui.util.GuiAction;
-import daylightchart.options.Options;
 import daylightchart.options.UserPreferences;
 
 /**
@@ -114,7 +112,7 @@ public class LocationsList
       {
         if (!e.isConsumed() && e.getClickCount() == 2)
         {
-          addLocationTab(parent);
+          parent.addLocationTab(getSelectedLocation());
           e.consume();
         }
         if (e.getButton() == MouseEvent.BUTTON2
@@ -138,7 +136,7 @@ public class LocationsList
       {
         if (e.getKeyChar() == KeyEvent.VK_ENTER)
         {
-          addLocationTab(parent);
+          parent.addLocationTab(getSelectedLocation());
         }
         e.consume();
       }
@@ -190,21 +188,12 @@ public class LocationsList
    * 
    * @return Currently selected location.
    */
-  public DaylightChartReport getSelectedDaylightChartReport()
-  {
-    final Options options = mainWindow.getOptions();
-    final DaylightChartReport daylightChartReport = new DaylightChartReport(getSelectedLocation(),
-                                                                            options);
-    return daylightChartReport;
-  }
-
-  /**
-   * Get the currently selected location.
-   * 
-   * @return Currently selected location.
-   */
   public Location getSelectedLocation()
   {
+    if (locationsList.getSelectedIndex() == -1)
+    {
+      locationsList.setSelectedIndex(0);
+    }
     return (Location) locationsList.getSelectedValue();
   }
 
@@ -278,15 +267,6 @@ public class LocationsList
   public void sortLocations()
   {
     setLocations(locations);
-  }
-
-  private void addLocationTab(final DaylightChartGui parent)
-  {
-    if (locationsList.getSelectedIndex() == -1)
-    {
-      locationsList.setSelectedIndex(0);
-    }
-    parent.addLocationTab(getSelectedDaylightChartReport());
   }
 
   private void createActions(final JToolBar toolBar, final JPopupMenu popupMenu)

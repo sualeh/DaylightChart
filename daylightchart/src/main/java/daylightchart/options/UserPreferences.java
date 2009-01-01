@@ -58,7 +58,6 @@ import org.geoname.parser.LocationParser;
 import org.geoname.parser.ParserException;
 import org.geoname.parser.UnicodeReader;
 
-
 import com.thoughtworks.xstream.XStream;
 
 import daylightchart.daylightchart.chart.DaylightChart;
@@ -82,10 +81,12 @@ public final class UserPreferences
   private static File settingsDirectory;
 
   private static File locationsDataFile;
+  private static File recentLocationsDataFile;
   private static File reportFile;
   private static File optionsFile;
 
   private static List<Location> locations;
+  private static List<Location> recentLocations;
   private static JasperReport report;
   private static Options options;
 
@@ -99,6 +100,7 @@ public final class UserPreferences
     setSettingsDirectory(settingsDirectory.getAbsolutePath());
 
     initializeLocations();
+    initializeRecentLocations();
     initializeReport();
     initializeOptions();
   }
@@ -119,6 +121,12 @@ public final class UserPreferences
       locationsDataFile.delete();
     }
     initializeLocations();
+
+    if (recentLocationsDataFile.exists())
+    {
+      recentLocationsDataFile.delete();
+    }
+    initializeRecentLocations();
 
     if (reportFile.exists())
     {
@@ -213,6 +221,19 @@ public final class UserPreferences
   }
 
   /**
+   * Gets the recent locations for the current user.
+   * 
+   * @return Locations
+   */
+  public static List<Location> getRecentLocations()
+  {
+    List<Location> lastRecentLocations = new ArrayList<Location>(UserPreferences.recentLocations);
+    Collections.reverse(lastRecentLocations);
+    lastRecentLocations = lastRecentLocations.subList(0, 10);
+    return lastRecentLocations;
+  }
+
+  /**
    * Gets the options for the current user.
    * 
    * @return Options
@@ -279,9 +300,8 @@ public final class UserPreferences
     }
     catch (Exception e)
     {
-      LOGGER.log(Level.WARNING,
-                 "Cannot read locations from file " + locations,
-                 e);
+      LOGGER.log(Level.WARNING, "Cannot read locations from file "
+                                + locationsDataFile, e);
       locations = null;
     }
 
@@ -303,6 +323,25 @@ public final class UserPreferences
       {
         throw new RuntimeException("Cannot read data from internal database", e);
       }
+    }
+  }
+
+  private static void initializeRecentLocations()
+  {
+    try
+    {
+      // Try loading from user preferences
+      recentLocations = new ArrayList<Location>();
+      recentLocations
+        .addAll(LocationParser
+          .parseLocations(new UnicodeReader(new FileInputStream(recentLocationsDataFile),
+                                            "UTF-8")));
+    }
+    catch (Exception e)
+    {
+      LOGGER.log(Level.WARNING, "Cannot read recent locations from file "
+                                + recentLocationsDataFile, e);
+      recentLocations = new ArrayList<Location>();
     }
   }
 
@@ -492,7 +531,8 @@ public final class UserPreferences
    * 
    * @param file
    */
-  public static void saveLocationsToFile(final File file)
+  public static void saveLocationsToFile(final List<Location> locations,
+                                         final File file)
   {
     try
     {
@@ -574,7 +614,44 @@ public final class UserPreferences
       return;
     }
     UserPreferences.locations = locations;
-    saveLocationsToFile(locationsDataFile);
+    saveLocationsToFile(locations, locationsDataFile);
+  }
+
+  /**
+   * Adds a recent location for the current user.
+   * 
+   * @param location
+   *        Location
+   */
+  public static void addRecentLocation(final Location location)
+  {
+    if (location == null)
+    {
+      return;
+    }
+    if (recentLocations.contains(location))
+    {
+      recentLocations.remove(location);
+    }
+    recentLocations.add(location);
+
+    setRecentLocations(recentLocations);
+  }
+
+  /**
+   * Sets the recent locations for the current user.
+   * 
+   * @param locations
+   *        Locations
+   */
+  public static void setRecentLocations(final List<Location> locations)
+  {
+    if (locations == null)
+    {
+      return;
+    }
+    UserPreferences.recentLocations = locations;
+    saveLocationsToFile(recentLocations, recentLocationsDataFile);
   }
 
   /**
@@ -629,6 +706,8 @@ public final class UserPreferences
 
     UserPreferences.settingsDirectory = settingsDirectory;
     locationsDataFile = new File(settingsDirectory, "locations.data");
+    recentLocationsDataFile = new File(settingsDirectory,
+                                       "recent.locations.data");
     reportFile = new File(settingsDirectory, "DaylightChartReport.jrxml");
     optionsFile = new File(settingsDirectory, "options.xml");
   }

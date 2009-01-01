@@ -86,7 +86,6 @@ public class DaylightChartReport
   public DaylightChartReport(final Location location, final Options options)
   {
     this.location = location;
-    //
     // Calculate rise and set timings for the whole year, and generate
     // chart
     final RiseSetYearData riseSetData = RiseSetUtility

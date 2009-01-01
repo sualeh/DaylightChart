@@ -49,6 +49,7 @@ import daylightchart.gui.actions.AboutAction;
 import daylightchart.gui.actions.ChartOptionsAction;
 import daylightchart.gui.actions.CloseCurrentTabAction;
 import daylightchart.gui.actions.OnlineHelpAction;
+import daylightchart.gui.actions.OpenLocationTabAction;
 import daylightchart.gui.actions.OpenLocationsFileAction;
 import daylightchart.gui.actions.OpenReportFileAction;
 import daylightchart.gui.actions.OptionsAction;
@@ -78,6 +79,7 @@ public final class DaylightChartGui
     .getName());
 
   private final LocationsList locationsList;
+  private JMenu recentLocationsMenu;
   private final LocationsTabbedPane locationsTabbedPane;
   private final boolean slimUi;
 
@@ -143,7 +145,7 @@ public final class DaylightChartGui
       createHelpMenu(menuBar, toolBar);
 
       // Open the first location
-      addLocationTab(locationsList.getSelectedDaylightChartReport());
+      addLocationTab(locationsList.getSelectedLocation());
     }
     else
     {
@@ -162,41 +164,11 @@ public final class DaylightChartGui
   }
 
   /**
-   * Gets locations from the list.
-   * 
-   * @return Locations list.
-   */
-  public List<Location> getLocations()
-  {
-    return locationsList.getLocations();
-  }
-
-  /**
    * @return the options
    */
   public Options getOptions()
   {
     return UserPreferences.getOptions();
-  }
-
-  /**
-   * Gets the report for the selected location.
-   * 
-   * @return Report for the selected location
-   */
-  public DaylightChartReport getSelectedDaylightChartReport()
-  {
-    return locationsList.getSelectedDaylightChartReport();
-  }
-
-  /**
-   * Gets the selected location.
-   * 
-   * @return Selected location
-   */
-  public Location getSelectedLocation()
-  {
-    return locationsList.getSelectedLocation();
   }
 
   /**
@@ -232,13 +204,29 @@ public final class DaylightChartGui
   }
 
   /**
+   * Get the currently selected location.
+   * 
+   * @return Currently selected location.
+   */
+  public Location getSelectedLocation()
+  {
+    return locationsList.getSelectedLocation();
+  }
+
+  /**
    * Add a new location tab.
    * 
    * @param location
-   *        Location.
+   *        Location
    */
-  void addLocationTab(final DaylightChartReport daylightChartReport)
+  public void addLocationTab(final Location location)
   {
+    if (location == null)
+    {
+      return;
+    }
+    final DaylightChartReport daylightChartReport = new DaylightChartReport(location,
+                                                                            getOptions());
     if (slimUi)
     {
       final File reportFile = new File(UserPreferences.getScratchDirectory(),
@@ -259,6 +247,18 @@ public final class DaylightChartGui
     else
     {
       locationsTabbedPane.addLocationTab(daylightChartReport);
+    }
+
+    // Add to recent locations
+    UserPreferences.addRecentLocation(location);
+    final List<Location> recentLocations = UserPreferences.getRecentLocations();
+    recentLocationsMenu.removeAll();
+    for (Location recentLocation: recentLocations)
+    {
+      recentLocationsMenu.add(new OpenLocationTabAction(this,
+                                                        recentLocation,
+                                                        recentLocationsMenu
+                                                          .getItemCount()));
     }
   }
 
@@ -298,6 +298,10 @@ public final class DaylightChartGui
       .getString("DaylightChartGui.Menu.File")); //$NON-NLS-1$
     menu.setMnemonic('F');
 
+    recentLocationsMenu = new JMenu(Messages
+      .getString("DaylightChartGui.Menu.File.RecentLocations")); //$NON-NLS-1$
+    menu.setMnemonic('R');
+
     menu.add(openLocationsFile);
     menu.add(saveLocationsFile);
     menu.addSeparator();
@@ -306,6 +310,8 @@ public final class DaylightChartGui
     menu.addSeparator();
     menu.add(openReportFile);
     menu.add(saveReportFile);
+    menu.addSeparator();
+    menu.add(recentLocationsMenu);
     menu.addSeparator();
     menu.add(exit);
     menuBar.add(menu);
@@ -375,6 +381,11 @@ public final class DaylightChartGui
     toolBar.add(options);
     toolBar.add(chartOptions);
     toolBar.addSeparator();
+  }
+
+  public List<Location> getLocations()
+  {
+    return locationsList.getLocations();
   }
 
 }

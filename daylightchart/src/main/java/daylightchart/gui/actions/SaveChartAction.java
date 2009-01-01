@@ -69,8 +69,10 @@ public final class SaveChartAction
      */
     public void actionPerformed(final ActionEvent actionevent)
     {
-      final DaylightChartReport daylightChartReport = mainWindow
-        .getSelectedDaylightChartReport();
+      final DaylightChartReport daylightChartReport = new DaylightChartReport(mainWindow
+                                                                                .getSelectedLocation(),
+                                                                              mainWindow
+                                                                                .getOptions());
       final List<ExtensionFileFilter<ChartFileType>> fileFilters = new ArrayList<ExtensionFileFilter<ChartFileType>>();
       for (final ChartFileType chartFileType: ChartFileType.values())
       {

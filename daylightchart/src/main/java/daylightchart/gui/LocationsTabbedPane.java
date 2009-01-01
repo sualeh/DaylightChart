@@ -32,7 +32,6 @@ import daylightchart.daylightchart.chart.ChartConfiguration;
 import daylightchart.daylightchart.chart.DaylightChart;
 import daylightchart.daylightchart.layout.DaylightChartReport;
 import daylightchart.gui.util.CloseTabIcon;
-import daylightchart.options.Options;
 
 /**
  * Tabbed pane for location charts.

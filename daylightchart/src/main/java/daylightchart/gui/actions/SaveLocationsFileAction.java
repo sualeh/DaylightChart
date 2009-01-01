@@ -83,7 +83,8 @@ public final class SaveLocationsFileAction
       {
         try
         {
-          UserPreferences.saveLocationsToFile(selectedFile.getFile());
+          UserPreferences.saveLocationsToFile(mainWindow.getLocations(),
+                                              selectedFile.getFile());
         }
         catch (final Exception e)
         {
