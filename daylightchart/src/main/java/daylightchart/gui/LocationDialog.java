@@ -61,6 +61,8 @@ import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.factories.ButtonBarFactory;
 import com.jgoodies.forms.layout.FormLayout;
 
+import daylightchart.gui.actions.LocationsListOperation;
+
 /**
  * This class is used for the display of the location editor. The user
  * is allowed to add new locations, and delete or modify existing
@@ -144,10 +146,10 @@ public class LocationDialog
    * @return Location, if one was added, edited or deleted, or null if
    *         the dialog was canceled
    */
-  public static Location showLocationDialog(final LocationsList locationsList,
+  public static Location showLocationDialog(final DaylightChartGui mainWindow,
                                             final LocationsListOperation operation)
   {
-    final LocationDialog locationDialog = new LocationDialog(locationsList,
+    final LocationDialog locationDialog = new LocationDialog(mainWindow,
                                                              operation);
     if (locationDialog.dialogNotCancelled)
     {
@@ -172,11 +174,11 @@ public class LocationDialog
 
   private boolean dialogNotCancelled;
 
-  private LocationDialog(final LocationsList locationsList,
+  private LocationDialog(final DaylightChartGui mainWindow,
                          final LocationsListOperation operation)
   {
 
-    super(locationsList.getMainWindow(), operation.getText(), true);
+    super(mainWindow, operation.getText(), true);
     disposeOnEscapeKey();
 
     this.operation = operation;
@@ -270,11 +272,11 @@ public class LocationDialog
     }
     if (operation != LocationsListOperation.add)
     {
-      setCurrentLocation(locationsList.getSelectedLocation());
+      setCurrentLocation(mainWindow.getSelectedLocation());
     }
 
     pack();
-    setLocationRelativeTo(locationsList.getMainWindow());
+    setLocationRelativeTo(mainWindow);
     setResizable(false);
     setVisible(true);
   }

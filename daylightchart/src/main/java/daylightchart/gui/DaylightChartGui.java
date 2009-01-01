@@ -48,6 +48,7 @@ import daylightchart.daylightchart.layout.DaylightChartReport;
 import daylightchart.gui.actions.AboutAction;
 import daylightchart.gui.actions.ChartOptionsAction;
 import daylightchart.gui.actions.CloseCurrentTabAction;
+import daylightchart.gui.actions.LocationsListOperation;
 import daylightchart.gui.actions.OnlineHelpAction;
 import daylightchart.gui.actions.OpenLocationTabAction;
 import daylightchart.gui.actions.OpenLocationsFileAction;
@@ -71,6 +72,7 @@ import daylightchart.options.UserPreferences;
  */
 public final class DaylightChartGui
   extends JFrame
+  implements LocationOperations
 {
 
   private final static long serialVersionUID = 3760840181833283637L;
@@ -271,7 +273,7 @@ public final class DaylightChartGui
     for (final LocationsListOperation operation: LocationsListOperation
       .values())
     {
-      final GuiAction action = operation.getAction(locationsList);
+      final GuiAction action = operation.getAction(this);
       menu.add(action);
     }
 
@@ -386,6 +388,21 @@ public final class DaylightChartGui
   public List<Location> getLocations()
   {
     return locationsList.getLocations();
+  }
+
+  public void addLocation(Location location)
+  {
+    locationsList.addLocation(location);
+  }
+
+  public void replaceLocation(Location selectedLocation, Location editedLocation)
+  {
+    locationsList.replaceLocation(selectedLocation, editedLocation);
+  }
+
+  public void removeLocation(Location location)
+  {
+    locationsList.removeLocation(location);
   }
 
 }

@@ -19,7 +19,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * 
  */
-package daylightchart.gui;
+package daylightchart.gui.actions;
 
 
 import java.awt.Toolkit;
@@ -42,10 +42,12 @@ import org.geoname.parser.LocationFormatter;
 import org.geoname.parser.LocationParser;
 import org.geoname.parser.ParserException;
 
+import daylightchart.gui.DaylightChartGui;
+import daylightchart.gui.LocationDialog;
+import daylightchart.gui.Messages;
 import daylightchart.gui.util.GuiAction;
 
-
-enum LocationsListOperation
+public enum LocationsListOperation
 {
 
   /** Add location. */
@@ -83,11 +85,11 @@ enum LocationsListOperation
   /**
    * Creates an action for this operation, on the given locations list.
    * 
-   * @param locationsList
-   *        Locations list.
+   * @param mainWindow
+   *        Main window.
    * @return Action
    */
-  GuiAction getAction(final LocationsList locationsList)
+  public GuiAction getAction(final DaylightChartGui mainWindow)
   {
     final GuiAction action = new GuiAction(text, iconResource);
     action.setShortcutKey(keyStroke);
@@ -95,7 +97,7 @@ enum LocationsListOperation
     {
       public void actionPerformed(final ActionEvent event)
       {
-        final Location selectedLocation = locationsList.getSelectedLocation();
+        final Location selectedLocation = mainWindow.getSelectedLocation();
         final Location editedLocation;
         switch (LocationsListOperation.this)
         {
@@ -105,7 +107,7 @@ enum LocationsListOperation
             // fall-through
           case delete:
             editedLocation = LocationDialog
-              .showLocationDialog(locationsList, LocationsListOperation.this);
+              .showLocationDialog(mainWindow, LocationsListOperation.this);
             break;
           case copy:
             // fall-through
@@ -121,13 +123,13 @@ enum LocationsListOperation
           switch (LocationsListOperation.this)
           {
             case add:
-              locationsList.addLocation(editedLocation);
+              mainWindow.addLocation(editedLocation);
               break;
             case edit:
-              locationsList.replaceLocation(selectedLocation, editedLocation);
+              mainWindow.replaceLocation(selectedLocation, editedLocation);
               break;
             case delete:
-              locationsList.removeLocation(selectedLocation);
+              mainWindow.removeLocation(selectedLocation);
               break;
             default:
               break;
@@ -182,7 +184,7 @@ enum LocationsListOperation
               .getTransferData(DataFlavor.stringFlavor);
             final Location location = LocationParser
               .parseLocation(locationString);
-            locationsList.addLocation(location);
+            mainWindow.addLocation(location);
           }
           catch (final UnsupportedFlavorException e)
           {
@@ -209,7 +211,7 @@ enum LocationsListOperation
    * 
    * @return Text
    */
-  final String getText()
+  public final String getText()
   {
     return text;
   }

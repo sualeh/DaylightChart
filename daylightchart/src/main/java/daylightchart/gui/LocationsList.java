@@ -43,6 +43,7 @@ import javax.swing.JToolBar;
 import org.geoname.data.Location;
 import org.geoname.parser.LocationFormatter;
 
+import daylightchart.gui.actions.LocationsListOperation;
 import daylightchart.gui.util.GuiAction;
 import daylightchart.options.UserPreferences;
 
@@ -51,8 +52,9 @@ import daylightchart.options.UserPreferences;
  * 
  * @author Sualeh Fatehi
  */
-public class LocationsList
+class LocationsList
   extends JPanel
+  implements LocationOperations
 {
 
   private static final long serialVersionUID = -6884483130453983685L;
@@ -67,12 +69,12 @@ public class LocationsList
    * @param parent
    *        Main window.
    */
-  public LocationsList(final DaylightChartGui parent)
+  public LocationsList(final DaylightChartGui mainWindow)
   {
 
     super(new BorderLayout());
 
-    mainWindow = parent;
+    this.mainWindow = mainWindow;
 
     final JToolBar toolBar = new JToolBar();
     toolBar.setRollover(true);
@@ -112,7 +114,7 @@ public class LocationsList
       {
         if (!e.isConsumed() && e.getClickCount() == 2)
         {
-          parent.addLocationTab(getSelectedLocation());
+          mainWindow.addLocationTab(getSelectedLocation());
           e.consume();
         }
         if (e.getButton() == MouseEvent.BUTTON2
@@ -136,7 +138,7 @@ public class LocationsList
       {
         if (e.getKeyChar() == KeyEvent.VK_ENTER)
         {
-          parent.addLocationTab(getSelectedLocation());
+          mainWindow.addLocationTab(getSelectedLocation());
         }
         e.consume();
       }
@@ -149,10 +151,9 @@ public class LocationsList
   }
 
   /**
-   * Add a location to the list, in sorted order.
+   * {@inheritDoc}
    * 
-   * @param location
-   *        Location to add
+   * @see daylightchart.gui.LocationOperations#addLocation(org.geoname.data.Location)
    */
   public void addLocation(final Location location)
   {
@@ -164,9 +165,9 @@ public class LocationsList
   }
 
   /**
-   * Gets all locations in the list.
+   * {@inheritDoc}
    * 
-   * @return Locations list.
+   * @see daylightchart.gui.LocationOperations#getLocations()
    */
   public List<Location> getLocations()
   {
@@ -174,19 +175,9 @@ public class LocationsList
   }
 
   /**
-   * Gets the parent window.
+   * {@inheritDoc}
    * 
-   * @return Window
-   */
-  public DaylightChartGui getMainWindow()
-  {
-    return mainWindow;
-  }
-
-  /**
-   * Get the currently selected location.
-   * 
-   * @return Currently selected location.
+   * @see daylightchart.gui.LocationOperations#getSelectedLocation()
    */
   public Location getSelectedLocation()
   {
@@ -198,10 +189,9 @@ public class LocationsList
   }
 
   /**
-   * Removes the specified location.
+   * {@inheritDoc}
    * 
-   * @param location
-   *        Location
+   * @see daylightchart.gui.LocationOperations#removeLocation(org.geoname.data.Location)
    */
   public void removeLocation(final Location location)
   {
@@ -213,12 +203,10 @@ public class LocationsList
   }
 
   /**
-   * Replaces a location on the list with another.
+   * {@inheritDoc}
    * 
-   * @param location
-   *        Location to replace
-   * @param newLocation
-   *        New location
+   * @see daylightchart.gui.LocationOperations#replaceLocation(org.geoname.data.Location,
+   *      org.geoname.data.Location)
    */
   public void replaceLocation(final Location location,
                               final Location newLocation)
@@ -232,10 +220,9 @@ public class LocationsList
   }
 
   /**
-   * Set the locations list.
+   * {@inheritDoc}
    * 
-   * @param locations
-   *        Locations list.
+   * @see daylightchart.gui.LocationOperations#setLocations(java.util.List)
    */
   public void setLocations(final List<Location> locations)
   {
@@ -251,18 +238,9 @@ public class LocationsList
   }
 
   /**
-   * Sets the selected location.
+   * {@inheritDoc}
    * 
-   * @param location
-   *        Location to select
-   */
-  public void setSelectedLocation(final Location location)
-  {
-    locationsList.setSelectedValue(location, true);
-  }
-
-  /**
-   * Sort the locations in the list.
+   * @see daylightchart.gui.LocationOperations#sortLocations()
    */
   public void sortLocations()
   {
@@ -274,7 +252,7 @@ public class LocationsList
     for (final LocationsListOperation operation: LocationsListOperation
       .values())
     {
-      final GuiAction action = operation.getAction(this);
+      final GuiAction action = operation.getAction(mainWindow);
       toolBar.add(action);
       popupMenu.add(action);
     }
