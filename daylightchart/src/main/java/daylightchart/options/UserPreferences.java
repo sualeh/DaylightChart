@@ -49,6 +49,7 @@ import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import net.sf.jasperreports.engine.xml.JRXmlWriter;
 
+import org.apache.commons.lang.StringUtils;
 import org.geoname.data.Location;
 import org.geoname.parser.FormatterException;
 import org.geoname.parser.GNISFilesParser;
@@ -76,6 +77,8 @@ public final class UserPreferences
 
   private static final Logger LOGGER = Logger.getLogger(UserPreferences.class
     .getName());
+
+  private static final int NUMBER_RECENT_LOCATIONS = 9;
 
   private static final File scratchDirectory;
   private static File settingsDirectory;
@@ -138,6 +141,7 @@ public final class UserPreferences
     {
       settingsDirectory.delete();
     }
+    setSettingsDirectory(settingsDirectory.getAbsolutePath());
   }
 
   private static JasperReport compileReport(final InputStream reportStream)
@@ -200,12 +204,12 @@ public final class UserPreferences
     }
     catch (final UnsupportedEncodingException e)
     {
-      LOGGER.log(Level.WARNING, "Cannot write file " + file);
+      LOGGER.log(Level.WARNING, "Cannot write file " + file, e);
       return null;
     }
     catch (final FileNotFoundException e)
     {
-      LOGGER.log(Level.WARNING, "Cannot write file " + file);
+      LOGGER.log(Level.WARNING, "Cannot write file " + file, e);
       return null;
     }
   }
@@ -229,7 +233,9 @@ public final class UserPreferences
   {
     List<Location> lastRecentLocations = new ArrayList<Location>(UserPreferences.recentLocations);
     Collections.reverse(lastRecentLocations);
-    lastRecentLocations = lastRecentLocations.subList(0, 10);
+    final int numberRecentLocations = Math.min(lastRecentLocations.size(),
+                                               NUMBER_RECENT_LOCATIONS);
+    lastRecentLocations = lastRecentLocations.subList(0, numberRecentLocations);
     return lastRecentLocations;
   }
 
@@ -536,6 +542,11 @@ public final class UserPreferences
   {
     try
     {
+      if (file == null)
+      {
+        LOGGER.log(Level.WARNING, "No locations file provided");
+        return;
+      }
       if (file.exists())
       {
         file.delete();
@@ -694,8 +705,7 @@ public final class UserPreferences
    */
   public static void setSettingsDirectory(final String settingsDirectoryPath)
   {
-    if (settingsDirectoryPath == null
-        || settingsDirectoryPath.trim().length() == 0)
+    if (StringUtils.isBlank(settingsDirectoryPath))
     {
       return;
     }
@@ -703,6 +713,7 @@ public final class UserPreferences
 
     settingsDirectory.mkdirs();
     validateDirectory(settingsDirectory);
+    LOGGER.fine("Created settings directory " + settingsDirectoryPath);
 
     UserPreferences.settingsDirectory = settingsDirectory;
     locationsDataFile = new File(settingsDirectory, "locations.data");
