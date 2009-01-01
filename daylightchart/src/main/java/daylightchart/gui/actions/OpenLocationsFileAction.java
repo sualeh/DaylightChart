@@ -27,7 +27,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -43,7 +42,7 @@ import daylightchart.gui.util.Actions;
 import daylightchart.gui.util.ExtensionFileFilter;
 import daylightchart.gui.util.GuiAction;
 import daylightchart.gui.util.SelectedFile;
-import daylightchart.options.UserPreferenceOperations;
+import daylightchart.options.FileOperations;
 import daylightchart.options.UserPreferences;
 
 /**
@@ -99,27 +98,21 @@ public final class OpenLocationsFileAction
 
         try
         {
-          final List<Location> locations = UserPreferenceOperations
+          final List<Location> locations = FileOperations
             .loadLocationsFromFile(selectedFile);
           if (locations == null)
           {
-            if (selectedFile != null)
-            {
-              LOGGER.log(Level.WARNING, Messages
-                .getString("DaylightChartGui.Message.Error.CannotOpenFile")); //$NON-NLS-1$
-              JOptionPane
-                .showMessageDialog(mainWindow, Messages
-                  .getString("DaylightChartGui.Message.Error.CannotOpenFile") //$NON-NLS-1$
-                                               + "\n" //$NON-NLS-1$
-                                               + selectedFile, Messages
-                  .getString("DaylightChartGui.Message.Error.CannotOpenFile"), //$NON-NLS-1$
-                                   JOptionPane.ERROR_MESSAGE);
-            }
+            LOGGER.log(Level.WARNING, Messages
+              .getString("DaylightChartGui.Message.Error.CannotOpenFile")); //$NON-NLS-1$
+            JOptionPane.showMessageDialog(mainWindow, Messages
+              .getString("DaylightChartGui.Message.Error.CannotOpenFile") //$NON-NLS-1$
+                                                      + "\n" //$NON-NLS-1$
+                                                      + selectedFile, Messages
+              .getString("DaylightChartGui.Message.Error.CannotOpenFile"), //$NON-NLS-1$
+                                          JOptionPane.ERROR_MESSAGE);
           }
           else
           {
-            Collections.sort(locations, UserPreferences.getOptions()
-              .getLocationsSortOrder());
             mainWindow.setLocations(locations);
           }
         }

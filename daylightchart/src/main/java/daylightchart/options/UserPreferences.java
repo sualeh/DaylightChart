@@ -52,7 +52,9 @@ import org.geoname.parser.LocationParser;
 import org.geoname.parser.ParserException;
 import org.geoname.parser.UnicodeReader;
 
+import daylightchart.daylightchart.chart.DaylightChart;
 import daylightchart.daylightchart.layout.DaylightChartReport;
+import daylightchart.options.chart.ChartOptions;
 
 /**
  * User preferences for the GUI.
@@ -207,7 +209,7 @@ public final class UserPreferences
   public static boolean importReport(final File reportFile)
   {
     boolean imported = false;
-    final JasperReport report = UserPreferenceOperations
+    final JasperReport report = FileOperations
       .loadReportFromFile(reportFile);
     if (report != null)
     {
@@ -244,7 +246,7 @@ public final class UserPreferences
       return;
     }
     UserPreferences.locations = locations;
-    UserPreferenceOperations.saveLocationsToFile(locations, locationsDataFile);
+    FileOperations.saveLocationsToFile(locations, locationsDataFile);
   }
 
   /**
@@ -260,7 +262,7 @@ public final class UserPreferences
       return;
     }
     UserPreferences.options = options;
-    UserPreferenceOperations.saveOptionsToFile(options, optionsFile);
+    FileOperations.saveOptionsToFile(options, optionsFile);
   }
 
   /**
@@ -417,12 +419,12 @@ public final class UserPreferences
   private static void initializeOptions()
   {
     // Try loading from user preferences
-    options = UserPreferenceOperations.loadOptionsFromFile(optionsFile);
+    options = FileOperations.loadOptionsFromFile(optionsFile);
 
     // Load from internal store
     if (options == null)
     {
-      options = UserPreferenceOperations.getDefaultDaylightChartOptions();
+      options = UserPreferences.getDefaultDaylightChartOptions();
     }
   }
 
@@ -448,7 +450,7 @@ public final class UserPreferences
   private static void initializeReport()
   {
     // Try loading from user preferences
-    report = UserPreferenceOperations.loadReportFromFile(reportFile);
+    report = FileOperations.loadReportFromFile(reportFile);
 
     // Load from internal store
     if (report == null)
@@ -476,7 +478,7 @@ public final class UserPreferences
       return;
     }
     UserPreferences.recentLocations = locations;
-    UserPreferenceOperations.saveLocationsToFile(recentLocations,
+    FileOperations.saveLocationsToFile(recentLocations,
                                                  recentLocationsDataFile);
   }
 
@@ -493,7 +495,7 @@ public final class UserPreferences
       return;
     }
     UserPreferences.report = report;
-    UserPreferenceOperations.saveReportToFile(report, reportFile);
+    FileOperations.saveReportToFile(report, reportFile);
   }
 
   /**
@@ -515,5 +517,21 @@ public final class UserPreferences
   private UserPreferences()
   {
     // Prevent external instantiation
+  }
+
+  /**
+   * Creates a options instance.
+   * 
+   * @return Options
+   */
+  public static Options getDefaultDaylightChartOptions()
+  {
+    final ChartOptions chartOptions = new ChartOptions();
+    chartOptions.copyFromChart(new DaylightChart());
+  
+    final Options options = new Options();
+    options.setChartOptions(chartOptions);
+  
+    return options;
   }
 }

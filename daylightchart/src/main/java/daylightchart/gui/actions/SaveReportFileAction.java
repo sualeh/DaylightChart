@@ -38,7 +38,7 @@ import daylightchart.gui.util.Actions;
 import daylightchart.gui.util.ExtensionFileFilter;
 import daylightchart.gui.util.GuiAction;
 import daylightchart.gui.util.SelectedFile;
-import daylightchart.options.UserPreferenceOperations;
+import daylightchart.options.FileOperations;
 import daylightchart.options.UserPreferences;
 
 /**
@@ -83,7 +83,7 @@ public final class SaveReportFileAction
       {
         try
         {
-          UserPreferenceOperations
+          FileOperations
             .saveReportToFile(UserPreferences.getReport(), selectedFile
               .getFile());
         }

@@ -90,18 +90,14 @@ public final class OpenReportFileAction
             .getFile());
           if (!reportLoaded)
           {
-            if (selectedFile != null)
-            {
-              LOGGER.log(Level.WARNING, Messages
-                .getString("DaylightChartGui.Message.Error.CannotOpenFile")); //$NON-NLS-1$
-              JOptionPane
-                .showMessageDialog(mainWindow, Messages
-                  .getString("DaylightChartGui.Message.Error.CannotOpenFile") //$NON-NLS-1$
-                                               + "\n" //$NON-NLS-1$
-                                               + selectedFile, Messages
-                  .getString("DaylightChartGui.Message.Error.CannotOpenFile"), //$NON-NLS-1$
-                                   JOptionPane.ERROR_MESSAGE);
-            }
+            LOGGER.log(Level.WARNING, Messages
+              .getString("DaylightChartGui.Message.Error.CannotOpenFile")); //$NON-NLS-1$
+            JOptionPane.showMessageDialog(mainWindow, Messages
+              .getString("DaylightChartGui.Message.Error.CannotOpenFile") //$NON-NLS-1$
+                                                      + "\n" //$NON-NLS-1$
+                                                      + selectedFile, Messages
+              .getString("DaylightChartGui.Message.Error.CannotOpenFile"), //$NON-NLS-1$
+                                          JOptionPane.ERROR_MESSAGE);
           }
         }
         catch (final RuntimeException e)

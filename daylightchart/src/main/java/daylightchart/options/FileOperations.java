@@ -58,37 +58,19 @@ import org.geoname.parser.UnicodeReader;
 
 import com.thoughtworks.xstream.XStream;
 
-import daylightchart.daylightchart.chart.DaylightChart;
 import daylightchart.gui.actions.LocationFileType;
 import daylightchart.gui.util.SelectedFile;
-import daylightchart.options.chart.ChartOptions;
 
 /**
  * User preferences for the GUI.
  * 
  * @author Sualeh Fatehi
  */
-public final class UserPreferenceOperations
+public final class FileOperations
 {
 
   private static final Logger LOGGER = Logger
-    .getLogger(UserPreferenceOperations.class.getName());
-
-  /**
-   * Creates a options instance.
-   * 
-   * @return Options
-   */
-  public static Options getDefaultDaylightChartOptions()
-  {
-    final ChartOptions chartOptions = new ChartOptions();
-    chartOptions.copyFromChart(new DaylightChart());
-
-    final Options options = new Options();
-    options.setChartOptions(chartOptions);
-
-    return options;
-  }
+    .getLogger(FileOperations.class.getName());
 
   /**
    * Loads a list of locations from a file of a given format.
@@ -427,7 +409,7 @@ public final class UserPreferenceOperations
     }
   }
 
-  private UserPreferenceOperations()
+  private FileOperations()
   {
     // Prevent external instantiation
   }
