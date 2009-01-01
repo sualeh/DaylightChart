@@ -100,12 +100,28 @@ public final class UserPreferences
 
     settingsDirectory = new File(System.getProperty("user.home", "."),
                                  ".daylightchart");
-    setSettingsDirectory(settingsDirectory.getAbsolutePath());
+    initialize();
+  }
 
-    initializeLocations();
-    initializeRecentLocations();
-    initializeReport();
-    initializeOptions();
+  /**
+   * Adds a recent location for the current user.
+   * 
+   * @param location
+   *        Location
+   */
+  public static void addRecentLocation(final Location location)
+  {
+    if (location == null)
+    {
+      return;
+    }
+    if (recentLocations.contains(location))
+    {
+      recentLocations.remove(location);
+    }
+    recentLocations.add(location);
+
+    setRecentLocations(recentLocations);
   }
 
   /**
@@ -117,65 +133,28 @@ public final class UserPreferences
     {
       optionsFile.delete();
     }
-    initializeOptions();
 
     if (locationsDataFile.exists())
     {
       locationsDataFile.delete();
     }
-    initializeLocations();
 
     if (recentLocationsDataFile.exists())
     {
       recentLocationsDataFile.delete();
     }
-    initializeRecentLocations();
 
     if (reportFile.exists())
     {
       reportFile.delete();
     }
-    initializeReport();
 
     if (settingsDirectory.exists())
     {
       settingsDirectory.delete();
     }
-    setSettingsDirectory(settingsDirectory.getAbsolutePath());
-  }
 
-  private static JasperReport compileReport(final InputStream reportStream)
-  {
-    try
-    {
-      if (reportStream == null)
-      {
-        return null;
-      }
-      final JasperDesign jasperDesign = JRXmlLoader.load(reportStream);
-      final JasperReport jasperReport = JasperCompileManager
-        .compileReport(jasperDesign);
-      return jasperReport;
-    }
-    catch (final JRException e)
-    {
-      LOGGER.log(Level.WARNING, "Cannot load JasperReport", e);
-      return null;
-    }
-    finally
-    {
-      if (reportStream != null)
-      {
-        try
-        {
-          reportStream.close();
-        }
-        catch (final IOException e)
-        {
-          LOGGER.log(Level.WARNING, "Cannot close input stream", e);
-        }
-      }
-    }
+    initialize();
   }
 
   /**
@@ -194,26 +173,6 @@ public final class UserPreferences
     return options;
   }
 
-  private static Writer getFileWriter(final File file)
-  {
-    try
-    {
-      final BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file),
-                                                                              "UTF-8"));
-      return writer;
-    }
-    catch (final UnsupportedEncodingException e)
-    {
-      LOGGER.log(Level.WARNING, "Cannot write file " + file, e);
-      return null;
-    }
-    catch (final FileNotFoundException e)
-    {
-      LOGGER.log(Level.WARNING, "Cannot write file " + file, e);
-      return null;
-    }
-  }
-
   /**
    * Gets the locations for the current user.
    * 
@@ -222,6 +181,16 @@ public final class UserPreferences
   public static List<Location> getLocations()
   {
     return locations;
+  }
+
+  /**
+   * Gets the options for the current user.
+   * 
+   * @return Options
+   */
+  public static Options getOptions()
+  {
+    return options;
   }
 
   /**
@@ -237,16 +206,6 @@ public final class UserPreferences
                                                NUMBER_RECENT_LOCATIONS);
     lastRecentLocations = lastRecentLocations.subList(0, numberRecentLocations);
     return lastRecentLocations;
-  }
-
-  /**
-   * Gets the options for the current user.
-   * 
-   * @return Options
-   */
-  public static Options getOptions()
-  {
-    return options;
   }
 
   /**
@@ -268,15 +227,6 @@ public final class UserPreferences
   }
 
   /**
-   * @return the applicationSettingsDirectory
-   */
-  public static File getSettingsDirectory()
-  {
-    settingsDirectory.mkdirs();
-    return settingsDirectory;
-  }
-
-  /**
    * Import a report file.
    * 
    * @param reportFile
@@ -293,92 +243,6 @@ public final class UserPreferences
       imported = true;
     }
     return imported;
-  }
-
-  private static void initializeLocations()
-  {
-    try
-    {
-      // Try loading from user preferences
-      locations = LocationParser
-        .parseLocations(new UnicodeReader(new FileInputStream(locationsDataFile),
-                                          "UTF-8"));
-    }
-    catch (Exception e)
-    {
-      LOGGER.log(Level.WARNING, "Cannot read locations from file "
-                                + locationsDataFile, e);
-      locations = null;
-    }
-
-    // Load from internal store
-    if (locations == null)
-    {
-      final InputStream dataStream = Thread.currentThread()
-        .getContextClassLoader().getResourceAsStream("locations.data");
-      if (dataStream == null)
-      {
-        throw new IllegalStateException("Cannot read data from internal database");
-      }
-      final Reader reader = new InputStreamReader(dataStream);
-      try
-      {
-        locations = LocationParser.parseLocations(reader);
-      }
-      catch (final ParserException e)
-      {
-        throw new RuntimeException("Cannot read data from internal database", e);
-      }
-    }
-  }
-
-  private static void initializeRecentLocations()
-  {
-    try
-    {
-      // Try loading from user preferences
-      recentLocations = new ArrayList<Location>();
-      recentLocations
-        .addAll(LocationParser
-          .parseLocations(new UnicodeReader(new FileInputStream(recentLocationsDataFile),
-                                            "UTF-8")));
-    }
-    catch (Exception e)
-    {
-      LOGGER.log(Level.WARNING, "Cannot read recent locations from file "
-                                + recentLocationsDataFile, e);
-      recentLocations = new ArrayList<Location>();
-    }
-  }
-
-  private static void initializeOptions()
-  {
-    // Try loading from user preferences
-    options = loadOptionsFromFile(optionsFile);
-
-    // Load from internal store
-    if (options == null)
-    {
-      options = getDefaultDaylightChartOptions();
-    }
-  }
-
-  private static void initializeReport()
-  {
-    // Try loading from user preferences
-    report = loadReportFromFile(reportFile);
-
-    // Load from internal store
-    if (report == null)
-    {
-      final InputStream reportStream = DaylightChartReport.class
-        .getResourceAsStream("/DaylightChartReport.jrxml");
-      report = compileReport(reportStream);
-      if (report == null)
-      {
-        throw new RuntimeException("Cannot load default report");
-      }
-    }
   }
 
   /**
@@ -398,7 +262,6 @@ public final class UserPreferences
 
     LocationFileType fileType = selectedFile.getFileType();
     List<InputStream> inputs = new ArrayList<InputStream>();
-    ;
     try
     {
       switch (fileType)
@@ -467,6 +330,310 @@ public final class UserPreferences
     return locations;
   }
 
+  /**
+   * Main method. Lists all user preferences.
+   * 
+   * @param args
+   *        Command line arguments
+   * @throws Exception
+   *         On an exception
+   */
+  public static void main(final String[] args)
+    throws Exception
+  {
+    UserPreferences.clear();
+  }
+
+  /**
+   * Saves locations to a file.
+   * 
+   * @param locations
+   *        Locations to save
+   * @param file
+   *        File
+   */
+  public static void saveLocationsToFile(final List<Location> locations,
+                                         final File file)
+  {
+    try
+    {
+      if (file == null)
+      {
+        LOGGER.log(Level.WARNING, "No locations file provided");
+        return;
+      }
+      if (file.exists())
+      {
+        file.delete();
+      }
+      final Writer writer = getFileWriter(file);
+      if (writer == null)
+      {
+        LOGGER.log(Level.WARNING, "Could not save locations to " + file);
+        return;
+      }
+      LocationFormatter.formatLocations(locations, writer);
+    }
+    catch (final FormatterException e)
+    {
+      LOGGER.log(Level.WARNING, "Could not save locations to " + file, e);
+    }
+  }
+
+  /**
+   * Saves report to a file.
+   * 
+   * @param file
+   *        File to write
+   */
+  public static void saveReportToFile(final File file)
+  {
+    try
+    {
+      if (file.exists())
+      {
+        file.delete();
+      }
+      JRXmlWriter.writeReport(report, file.getAbsolutePath(), "UTF-8");
+    }
+    catch (final JRException e)
+    {
+      LOGGER.log(Level.WARNING, "Could not save report to " + file, e);
+    }
+  }
+
+  /**
+   * Sets the locations for the current user.
+   * 
+   * @param locations
+   *        Locations
+   */
+  public static void setLocations(final List<Location> locations)
+  {
+    if (locations == null)
+    {
+      return;
+    }
+    UserPreferences.locations = locations;
+    saveLocationsToFile(locations, locationsDataFile);
+  }
+
+  /**
+   * Sets the options for the current user.
+   * 
+   * @param options
+   *        Options
+   */
+  public static void setOptions(final Options options)
+  {
+    if (options == null)
+    {
+      return;
+    }
+    UserPreferences.options = options;
+    saveOptionsToFile(optionsFile);
+  }
+
+  /**
+   * Set the location of the settings directory.
+   * 
+   * @param settingsDirectoryPath
+   *        Location of the settings directory
+   */
+  public static void setSettingsDirectory(final String settingsDirectoryPath)
+  {
+    if (StringUtils.isBlank(settingsDirectoryPath))
+    {
+      return;
+    }
+    final File settingsDirectory = new File(settingsDirectoryPath);
+
+    settingsDirectory.mkdirs();
+    validateDirectory(settingsDirectory);
+    LOGGER.fine("Created settings directory " + settingsDirectoryPath);
+
+    UserPreferences.settingsDirectory = settingsDirectory;
+    locationsDataFile = new File(settingsDirectory, "locations.data");
+    recentLocationsDataFile = new File(settingsDirectory,
+                                       "recent.locations.data");
+    reportFile = new File(settingsDirectory, "DaylightChartReport.jrxml");
+    optionsFile = new File(settingsDirectory, "options.xml");
+  }
+
+  /**
+   * Sets the slim mode for the user interface.
+   * 
+   * @param slimUi
+   *        Slim mode for the user interface
+   */
+  public static void setSlimUi(final boolean slimUi)
+  {
+    options.setSlimUi(slimUi);
+    setOptions(options);
+  }
+
+  /**
+   * Sets the working directory.
+   * 
+   * @param workingDirectory
+   *        Working directory
+   */
+  public static void setWorkingDirectory(final File workingDirectory)
+  {
+    options.setWorkingDirectory(workingDirectory);
+    setOptions(options);
+  }
+
+  private static JasperReport compileReport(final InputStream reportStream)
+  {
+    try
+    {
+      if (reportStream == null)
+      {
+        return null;
+      }
+      final JasperDesign jasperDesign = JRXmlLoader.load(reportStream);
+      final JasperReport jasperReport = JasperCompileManager
+        .compileReport(jasperDesign);
+      return jasperReport;
+    }
+    catch (final JRException e)
+    {
+      LOGGER.log(Level.WARNING, "Cannot load JasperReport", e);
+      return null;
+    }
+    finally
+    {
+      if (reportStream != null)
+      {
+        try
+        {
+          reportStream.close();
+        }
+        catch (final IOException e)
+        {
+          LOGGER.log(Level.WARNING, "Cannot close input stream", e);
+        }
+      }
+    }
+  }
+
+  private static Writer getFileWriter(final File file)
+  {
+    try
+    {
+      final BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file),
+                                                                              "UTF-8"));
+      return writer;
+    }
+    catch (final UnsupportedEncodingException e)
+    {
+      LOGGER.log(Level.WARNING, "Cannot write file " + file, e);
+      return null;
+    }
+    catch (final FileNotFoundException e)
+    {
+      LOGGER.log(Level.WARNING, "Cannot write file " + file, e);
+      return null;
+    }
+  }
+
+  private static void initialize()
+  {
+    setSettingsDirectory(settingsDirectory.getAbsolutePath());
+
+    initializeLocations();
+    initializeRecentLocations();
+    initializeReport();
+    initializeOptions();
+  }
+
+  private static void initializeLocations()
+  {
+    try
+    {
+      // Try loading from user preferences
+      locations = LocationParser
+        .parseLocations(new UnicodeReader(new FileInputStream(locationsDataFile),
+                                          "UTF-8"));
+    }
+    catch (Exception e)
+    {
+      LOGGER.log(Level.WARNING, "Cannot read locations from file "
+                                + locationsDataFile, e);
+      locations = null;
+    }
+
+    // Load from internal store
+    if (locations == null)
+    {
+      final InputStream dataStream = Thread.currentThread()
+        .getContextClassLoader().getResourceAsStream("locations.data");
+      if (dataStream == null)
+      {
+        throw new IllegalStateException("Cannot read data from internal database");
+      }
+      final Reader reader = new InputStreamReader(dataStream);
+      try
+      {
+        locations = LocationParser.parseLocations(reader);
+      }
+      catch (final ParserException e)
+      {
+        throw new RuntimeException("Cannot read data from internal database", e);
+      }
+    }
+  }
+
+  private static void initializeOptions()
+  {
+    // Try loading from user preferences
+    options = loadOptionsFromFile(optionsFile);
+
+    // Load from internal store
+    if (options == null)
+    {
+      options = getDefaultDaylightChartOptions();
+    }
+  }
+
+  private static void initializeRecentLocations()
+  {
+    try
+    {
+      // Try loading from user preferences
+      recentLocations = new ArrayList<Location>();
+      recentLocations
+        .addAll(LocationParser
+          .parseLocations(new UnicodeReader(new FileInputStream(recentLocationsDataFile),
+                                            "UTF-8")));
+    }
+    catch (Exception e)
+    {
+      LOGGER.log(Level.WARNING, "Cannot read recent locations from file "
+                                + recentLocationsDataFile, e);
+      recentLocations = new ArrayList<Location>();
+    }
+  }
+
+  private static void initializeReport()
+  {
+    // Try loading from user preferences
+    report = loadReportFromFile(reportFile);
+
+    // Load from internal store
+    if (report == null)
+    {
+      final InputStream reportStream = DaylightChartReport.class
+        .getResourceAsStream("/DaylightChartReport.jrxml");
+      report = compileReport(reportStream);
+      if (report == null)
+      {
+        throw new RuntimeException("Cannot load default report");
+      }
+    }
+  }
+
   private static Options loadOptionsFromFile(final File file)
   {
     Reader reader = null;
@@ -519,59 +686,12 @@ public final class UserPreferences
   }
 
   /**
-   * Main method. Lists all user preferences.
-   * 
-   * @param args
-   *        Command line arguments
-   * @throws Exception
-   *         On an exception
-   */
-  public static void main(final String[] args)
-    throws Exception
-  {
-    UserPreferences.clear();
-  }
-
-  /**
-   * Saves locations to a file in
-   * 
-   * @param file
-   */
-  public static void saveLocationsToFile(final List<Location> locations,
-                                         final File file)
-  {
-    try
-    {
-      if (file == null)
-      {
-        LOGGER.log(Level.WARNING, "No locations file provided");
-        return;
-      }
-      if (file.exists())
-      {
-        file.delete();
-      }
-      final Writer writer = getFileWriter(file);
-      if (writer == null)
-      {
-        LOGGER.log(Level.WARNING, "Could not save locations to " + file);
-        return;
-      }
-      LocationFormatter.formatLocations(locations, writer);
-    }
-    catch (final FormatterException e)
-    {
-      LOGGER.log(Level.WARNING, "Could not save locations to " + file, e);
-    }
-  }
-
-  /**
    * Saves options to a file.
    * 
    * @param file
    *        File to write
    */
-  public static void saveOptionsToFile(final File file)
+  private static void saveOptionsToFile(final File file)
   {
     try
     {
@@ -591,71 +711,12 @@ public final class UserPreferences
   }
 
   /**
-   * Saves report to a file.
-   * 
-   * @param file
-   *        File to write
-   */
-  public static void saveReportToFile(final File file)
-  {
-    try
-    {
-      if (file.exists())
-      {
-        file.delete();
-      }
-      JRXmlWriter.writeReport(report, file.getAbsolutePath(), "UTF-8");
-    }
-    catch (final JRException e)
-    {
-      LOGGER.log(Level.WARNING, "Could not save report to " + file, e);
-    }
-  }
-
-  /**
-   * Sets the locations for the current user.
-   * 
-   * @param locations
-   *        Locations
-   */
-  public static void setLocations(final List<Location> locations)
-  {
-    if (locations == null)
-    {
-      return;
-    }
-    UserPreferences.locations = locations;
-    saveLocationsToFile(locations, locationsDataFile);
-  }
-
-  /**
-   * Adds a recent location for the current user.
-   * 
-   * @param location
-   *        Location
-   */
-  public static void addRecentLocation(final Location location)
-  {
-    if (location == null)
-    {
-      return;
-    }
-    if (recentLocations.contains(location))
-    {
-      recentLocations.remove(location);
-    }
-    recentLocations.add(location);
-
-    setRecentLocations(recentLocations);
-  }
-
-  /**
    * Sets the recent locations for the current user.
    * 
    * @param locations
    *        Locations
    */
-  public static void setRecentLocations(final List<Location> locations)
+  private static void setRecentLocations(final List<Location> locations)
   {
     if (locations == null)
     {
@@ -666,28 +727,12 @@ public final class UserPreferences
   }
 
   /**
-   * Sets the options for the current user.
-   * 
-   * @param options
-   *        Options
-   */
-  public static void setOptions(final Options options)
-  {
-    if (options == null)
-    {
-      return;
-    }
-    UserPreferences.options = options;
-    saveOptionsToFile(optionsFile);
-  }
-
-  /**
    * Sets the report for the current user.
    * 
    * @param report
    *        Report
    */
-  public static void setReport(final JasperReport report)
+  private static void setReport(final JasperReport report)
   {
     if (report == null)
     {
@@ -695,56 +740,6 @@ public final class UserPreferences
     }
     UserPreferences.report = report;
     saveReportToFile(reportFile);
-  }
-
-  /**
-   * Set the location of the settings directory.
-   * 
-   * @param settingsDirectoryPath
-   *        Location of the settings directory
-   */
-  public static void setSettingsDirectory(final String settingsDirectoryPath)
-  {
-    if (StringUtils.isBlank(settingsDirectoryPath))
-    {
-      return;
-    }
-    final File settingsDirectory = new File(settingsDirectoryPath);
-
-    settingsDirectory.mkdirs();
-    validateDirectory(settingsDirectory);
-    LOGGER.fine("Created settings directory " + settingsDirectoryPath);
-
-    UserPreferences.settingsDirectory = settingsDirectory;
-    locationsDataFile = new File(settingsDirectory, "locations.data");
-    recentLocationsDataFile = new File(settingsDirectory,
-                                       "recent.locations.data");
-    reportFile = new File(settingsDirectory, "DaylightChartReport.jrxml");
-    optionsFile = new File(settingsDirectory, "options.xml");
-  }
-
-  /**
-   * Sets the slim mode for the user interface.
-   * 
-   * @param slimUi
-   *        Slim mode for the user interface
-   */
-  public static void setSlimUi(final boolean slimUi)
-  {
-    options.setSlimUi(slimUi);
-    setOptions(options);
-  }
-
-  /**
-   * Sets the working directory.
-   * 
-   * @param workingDirectory
-   *        Working directory
-   */
-  public static void setWorkingDirectory(final File workingDirectory)
-  {
-    options.setWorkingDirectory(workingDirectory);
-    setOptions(options);
   }
 
   /**
