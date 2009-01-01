@@ -63,7 +63,7 @@ public final class ChartOptionsAction
      */
     public void actionPerformed(final ActionEvent actionevent)
     {
-      final Options options = mainWindow.getOptions();
+      final Options options = UserPreferences.getOptions();
       final ChartOptions chartOptions = options.getChartOptions();
 
       final ChartEditor chartEditor = chartOptions.getChartEditor();

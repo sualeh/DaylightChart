@@ -71,7 +71,7 @@ public final class SaveChartAction
     {
       final DaylightChartReport daylightChartReport = new DaylightChartReport(mainWindow
                                                                                 .getSelectedLocation(),
-                                                                              mainWindow
+                                                                              UserPreferences
                                                                                 .getOptions());
       final List<ExtensionFileFilter<ChartFileType>> fileFilters = new ArrayList<ExtensionFileFilter<ChartFileType>>();
       for (final ChartFileType chartFileType: ChartFileType.values())

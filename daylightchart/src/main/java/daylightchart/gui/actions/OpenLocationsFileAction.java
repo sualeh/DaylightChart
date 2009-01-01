@@ -117,7 +117,7 @@ public final class OpenLocationsFileAction
           }
           else
           {
-            Collections.sort(locations, mainWindow.getOptions()
+            Collections.sort(locations, UserPreferences.getOptions()
               .getLocationsSortOrder());
             mainWindow.setLocations(locations);
           }

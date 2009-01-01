@@ -62,7 +62,6 @@ import daylightchart.gui.actions.SaveReportFileAction;
 import daylightchart.gui.util.BareBonesBrowserLaunch;
 import daylightchart.gui.util.ExitAction;
 import daylightchart.gui.util.GuiAction;
-import daylightchart.options.Options;
 import daylightchart.options.UserPreferences;
 
 /**
@@ -166,14 +165,6 @@ public final class DaylightChartGui
   }
 
   /**
-   * @return the options
-   */
-  public Options getOptions()
-  {
-    return UserPreferences.getOptions();
-  }
-
-  /**
    * @return the slimUi
    */
   public boolean isSlimUi()
@@ -228,7 +219,8 @@ public final class DaylightChartGui
       return;
     }
     final DaylightChartReport daylightChartReport = new DaylightChartReport(location,
-                                                                            getOptions());
+                                                                            UserPreferences
+                                                                              .getOptions());
     if (slimUi)
     {
       final File reportFile = new File(UserPreferences.getScratchDirectory(),

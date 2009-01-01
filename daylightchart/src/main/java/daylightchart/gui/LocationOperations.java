@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.geoname.data.Location;
 
-interface LocationOperations
+public interface LocationOperations
 {
 
   /**

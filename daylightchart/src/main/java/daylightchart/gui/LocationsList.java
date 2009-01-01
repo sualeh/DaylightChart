@@ -145,8 +145,8 @@ class LocationsList
     });
 
     final List<Location> locations = UserPreferences.getLocations();
-    Collections
-      .sort(locations, mainWindow.getOptions().getLocationsSortOrder());
+    Collections.sort(locations, UserPreferences.getOptions()
+      .getLocationsSortOrder());
     setLocations(locations);
   }
 
@@ -198,8 +198,8 @@ class LocationsList
     if (location != null)
     {
       locations.remove(location);
+      setLocations(locations);
     }
-    setLocations(locations);
   }
 
   /**
@@ -215,8 +215,8 @@ class LocationsList
     {
       locations.remove(location);
       locations.add(newLocation);
+      setLocations(locations);
     }
-    setLocations(locations);
   }
 
   /**
@@ -228,7 +228,7 @@ class LocationsList
   {
     if (locations != null && locations.size() > 0)
     {
-      Collections.sort(locations, mainWindow.getOptions()
+      Collections.sort(locations, UserPreferences.getOptions()
         .getLocationsSortOrder());
       this.locations = locations;
       locationsList.setListData(new Vector<Location>(locations));
