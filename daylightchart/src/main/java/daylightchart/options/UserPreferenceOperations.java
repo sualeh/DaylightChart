@@ -50,7 +50,6 @@ import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import net.sf.jasperreports.engine.xml.JRXmlWriter;
 
 import org.geoname.data.Location;
-import org.geoname.parser.FormatterException;
 import org.geoname.parser.GNISFilesParser;
 import org.geoname.parser.GNSCountryFilesParser;
 import org.geoname.parser.LocationFormatter;
@@ -100,12 +99,13 @@ public final class UserPreferenceOperations
    */
   public static List<Location> loadLocationsFromFile(final SelectedFile<LocationFileType> selectedFile)
   {
-    List<Location> locations = new ArrayList<Location>();
     if (selectedFile == null || !selectedFile.isSelected())
     {
-      return locations;
+      LOGGER.log(Level.WARNING, "No locations file provided");
+      return null;
     }
 
+    List<Location> locations = new ArrayList<Location>();
     LocationFileType fileType = selectedFile.getFileType();
     List<InputStream> inputs = new ArrayList<InputStream>();
     try
@@ -154,7 +154,7 @@ public final class UserPreferenceOperations
       LOGGER.log(Level.WARNING,
                  "Could not read locations from " + selectedFile,
                  e);
-      locations = new ArrayList<Location>();
+      locations = null;
     }
     finally
     {
@@ -173,6 +173,12 @@ public final class UserPreferenceOperations
         }
       }
     }
+
+    if (locations.size() == 0)
+    {
+      locations = null;
+    }
+
     return locations;
   }
 
@@ -189,6 +195,11 @@ public final class UserPreferenceOperations
   {
     try
     {
+      if (locations == null)
+      {
+        LOGGER.log(Level.WARNING, "No locations provided");
+        return;
+      }
       if (file == null)
       {
         LOGGER.log(Level.WARNING, "No locations file provided");
@@ -204,9 +215,10 @@ public final class UserPreferenceOperations
         LOGGER.log(Level.WARNING, "Could not save locations to " + file);
         return;
       }
+
       LocationFormatter.formatLocations(locations, writer);
     }
-    catch (final FormatterException e)
+    catch (final Exception e)
     {
       LOGGER.log(Level.WARNING, "Could not save locations to " + file, e);
     }
@@ -224,13 +236,24 @@ public final class UserPreferenceOperations
   {
     try
     {
+      if (report == null)
+      {
+        LOGGER.log(Level.WARNING, "No report provided");
+        return;
+      }
+      if (file == null)
+      {
+        LOGGER.log(Level.WARNING, "No report file provided");
+        return;
+      }
       if (file.exists())
       {
         file.delete();
       }
+
       JRXmlWriter.writeReport(report, file.getAbsolutePath(), "UTF-8");
     }
-    catch (final JRException e)
+    catch (final Exception e)
     {
       LOGGER.log(Level.WARNING, "Could not save report to " + file, e);
     }
@@ -299,6 +322,12 @@ public final class UserPreferenceOperations
    */
   public static Options loadOptionsFromFile(final File file)
   {
+    if (file == null || !file.exists() || !file.canRead())
+    {
+      LOGGER.log(Level.WARNING, "No options file provided");
+      return null;
+    }
+
     Reader reader = null;
     Options options;
     try
@@ -340,12 +369,13 @@ public final class UserPreferenceOperations
   {
     if (file == null || !file.exists() || !file.canRead())
     {
+      LOGGER.log(Level.WARNING, "No report file provided");
       return null;
     }
-    FileInputStream fileInputStream;
+
     try
     {
-      fileInputStream = new FileInputStream(file);
+      FileInputStream fileInputStream = new FileInputStream(file);
       return compileReport(fileInputStream);
     }
     catch (final FileNotFoundException e)
@@ -367,12 +397,27 @@ public final class UserPreferenceOperations
   {
     try
     {
+      if (options == null)
+      {
+        LOGGER.log(Level.WARNING, "No options provided");
+        return;
+      }
+      if (file == null)
+      {
+        LOGGER.log(Level.WARNING, "No options file provided");
+        return;
+      }
+      if (file.exists())
+      {
+        file.delete();
+      }
       final Writer writer = getFileWriter(file);
       if (writer == null)
       {
         LOGGER.log(Level.WARNING, "Could not save options to " + file);
         return;
       }
+
       final XStream xStream = new XStream();
       xStream.toXML(options, writer);
     }
