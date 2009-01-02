@@ -23,17 +23,12 @@ package daylightchart.options;
 
 
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import net.sf.jasperreports.engine.JasperReport;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.geoname.data.Location;
 
@@ -53,18 +48,14 @@ public final class UserPreferences
   private static final Logger LOGGER = Logger.getLogger(UserPreferences.class
     .getName());
 
-  private static final int NUMBER_RECENT_LOCATIONS = 9;
-
   private static final File scratchDirectory;
   private static File settingsDirectory;
 
-  private static File locationsDataFile;
-  private static File recentLocationsDataFile;
+  private static LocationsDataFile locationsDataFile;
+  private static RecentLocationsDataFile recentLocationsDataFile;
   private static File reportFile;
   private static File optionsFile;
 
-  private static List<Location> locations;
-  private static List<Location> recentLocations;
   private static JasperReport report;
   private static Options options;
 
@@ -86,17 +77,7 @@ public final class UserPreferences
    */
   public static void addRecentLocation(final Location location)
   {
-    if (location == null)
-    {
-      return;
-    }
-    if (recentLocations.contains(location))
-    {
-      recentLocations.remove(location);
-    }
-    recentLocations.add(location);
-
-    setRecentLocations(recentLocations);
+    recentLocationsDataFile.add(location);
   }
 
   /**
@@ -104,14 +85,28 @@ public final class UserPreferences
    */
   public static void clear()
   {
-    try
+    if (optionsFile.exists())
     {
-      FileUtils.deleteDirectory(settingsDirectory);
+      optionsFile.delete();
     }
-    catch (IOException e)
+
+    locationsDataFile.delete();
+
+    if (recentLocationsDataFile.exists())
     {
-      LOGGER.log(Level.WARNING, "Could not delete " + settingsDirectory, e);
+      recentLocationsDataFile.delete();
     }
+
+    if (reportFile.exists())
+    {
+      reportFile.delete();
+    }
+
+    if (settingsDirectory.exists())
+    {
+      settingsDirectory.delete();
+    }
+
     initialize();
   }
 
@@ -138,7 +133,7 @@ public final class UserPreferences
    */
   public static List<Location> getLocations()
   {
-    return locations;
+    return locationsDataFile.getLocations();
   }
 
   /**
@@ -158,12 +153,7 @@ public final class UserPreferences
    */
   public static List<Location> getRecentLocations()
   {
-    List<Location> lastRecentLocations = new ArrayList<Location>(UserPreferences.recentLocations);
-    Collections.reverse(lastRecentLocations);
-    final int numberRecentLocations = Math.min(lastRecentLocations.size(),
-                                               NUMBER_RECENT_LOCATIONS);
-    lastRecentLocations = lastRecentLocations.subList(0, numberRecentLocations);
-    return lastRecentLocations;
+    return recentLocationsDataFile.getLocations();
   }
 
   /**
@@ -229,8 +219,8 @@ public final class UserPreferences
     {
       return;
     }
-    UserPreferences.locations = locations;
-    FileOperations.saveLocationsToFile(locations, locationsDataFile);
+    locationsDataFile.setLocations(locations);
+    locationsDataFile.save();
   }
 
   /**
@@ -268,9 +258,10 @@ public final class UserPreferences
     LOGGER.fine("Created settings directory " + settingsDirectoryPath);
 
     UserPreferences.settingsDirectory = settingsDirectory;
-    locationsDataFile = new File(settingsDirectory, "locations.data");
-    recentLocationsDataFile = new File(settingsDirectory,
-                                       "recent.locations.data");
+    locationsDataFile = new LocationsDataFile(new File(settingsDirectory,
+                                                       "locations.data"),
+                                              LocationFileType.data);
+    recentLocationsDataFile = new RecentLocationsDataFile(settingsDirectory);
     reportFile = new File(settingsDirectory, "DaylightChartReport.jrxml");
     optionsFile = new File(settingsDirectory, "options.xml");
   }
@@ -311,22 +302,10 @@ public final class UserPreferences
 
   private static void initializeLocations()
   {
-    // Try loading from user preferences
-    locations = FileOperations.loadLocationsFromFile(LocationFileType.data,
-                                                     locationsDataFile);
-
-    // Load from internal store
-    if (locations == null)
-    {
-      final InputStream input = Thread.currentThread().getContextClassLoader()
-        .getResourceAsStream("locations.data");
-      locations = FileOperations.loadLocations(LocationFileType.data, input);
-    }
-
-    if (locations == null)
-    {
-      throw new RuntimeException("Cannot load locations");
-    }
+    locationsDataFile = new LocationsDataFile(new File(settingsDirectory,
+                                                       "locations.data"),
+                                              LocationFileType.data);
+    locationsDataFile.loadWithFallback();
   }
 
   private static void initializeOptions()
@@ -343,14 +322,7 @@ public final class UserPreferences
 
   private static void initializeRecentLocations()
   {
-    // Try loading from user preferences
-    recentLocations = FileOperations
-      .loadLocationsFromFile(LocationFileType.data, recentLocationsDataFile);
-
-    if (recentLocations == null)
-    {
-      recentLocations = new ArrayList<Location>();
-    }
+    recentLocationsDataFile = new RecentLocationsDataFile(settingsDirectory);
   }
 
   private static void initializeReport()
@@ -370,23 +342,6 @@ public final class UserPreferences
     {
       throw new RuntimeException("Cannot load report");
     }
-  }
-
-  /**
-   * Sets the recent locations for the current user.
-   * 
-   * @param locations
-   *        Locations
-   */
-  private static void setRecentLocations(final List<Location> locations)
-  {
-    if (locations == null)
-    {
-      return;
-    }
-    UserPreferences.recentLocations = locations;
-    FileOperations
-      .saveLocationsToFile(recentLocations, recentLocationsDataFile);
   }
 
   /**

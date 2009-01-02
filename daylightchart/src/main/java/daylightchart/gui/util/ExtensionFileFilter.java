@@ -25,6 +25,8 @@ package daylightchart.gui.util;
 import java.io.File;
 import java.util.Locale;
 
+import daylightchart.options.FileType;
+
 /**
  * Filters files by extension.
  * 
@@ -110,7 +112,7 @@ public class ExtensionFileFilter<T extends FileType>
   /**
    * {@inheritDoc}
    * 
-   * @see daylightchart.gui.util.FileType#getFileExtension()
+   * @see daylightchart.options.FileType#getFileExtension()
    */
   public String getFileExtension()
   {

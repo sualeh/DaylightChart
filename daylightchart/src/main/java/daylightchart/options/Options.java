@@ -235,6 +235,11 @@ public class Options
                                               ToStringStyle.MULTI_LINE_STYLE);
   }
 
+  private boolean isDirectoryValid(final File directory)
+  {
+    return directory != null && directory.exists() && directory.isDirectory();
+  }
+
   /**
    * @param slimUi
    *        the slimUi to set
@@ -250,11 +255,6 @@ public class Options
     {
       this.workingDirectory = workingDirectory;
     }
-  }
-
-  private boolean isDirectoryValid(final File directory)
-  {
-    return directory != null && directory.exists() && directory.isDirectory();
   }
 
 }

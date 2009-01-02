@@ -1,7 +1,7 @@
 package daylightchart.daylightchart.layout;
 
 
-import daylightchart.gui.util.FileType;
+import daylightchart.options.FileType;
 
 public enum ChartFileType
   implements FileType
@@ -24,7 +24,7 @@ public enum ChartFileType
   /**
    * {@inheritDoc}
    * 
-   * @see daylightchart.gui.util.FileType#getDescription()
+   * @see daylightchart.options.FileType#getDescription()
    */
   public String getDescription()
   {
@@ -34,7 +34,7 @@ public enum ChartFileType
   /**
    * {@inheritDoc}
    * 
-   * @see daylightchart.gui.util.FileType#getFileExtension()
+   * @see daylightchart.options.FileType#getFileExtension()
    */
   public String getFileExtension()
   {

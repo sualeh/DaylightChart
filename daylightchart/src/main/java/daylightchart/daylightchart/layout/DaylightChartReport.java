@@ -56,7 +56,7 @@ import daylightchart.Version;
 import daylightchart.daylightchart.calculation.RiseSetUtility;
 import daylightchart.daylightchart.calculation.RiseSetYearData;
 import daylightchart.daylightchart.chart.DaylightChart;
-import daylightchart.gui.util.FileType;
+import daylightchart.options.FileType;
 import daylightchart.options.Options;
 import daylightchart.options.UserPreferences;
 

@@ -42,7 +42,7 @@ import daylightchart.gui.util.Actions;
 import daylightchart.gui.util.ExtensionFileFilter;
 import daylightchart.gui.util.GuiAction;
 import daylightchart.gui.util.SelectedFile;
-import daylightchart.options.FileOperations;
+import daylightchart.options.LocationsDataFile;
 import daylightchart.options.UserPreferences;
 
 /**
@@ -98,9 +98,9 @@ public final class OpenLocationsFileAction
 
         try
         {
-          final List<Location> locations = FileOperations
-            .loadLocationsFromFile(selectedFile.getFileType(), selectedFile
-              .getFile());
+          LocationsDataFile locationDataFile = new LocationsDataFile(selectedFile);
+          locationDataFile.load();
+          final List<Location> locations = locationDataFile.getLocations();
           if (locations == null)
           {
             LOGGER.log(Level.WARNING, Messages

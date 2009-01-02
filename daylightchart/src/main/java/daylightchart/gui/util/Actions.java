@@ -30,6 +30,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 
+import daylightchart.options.FileType;
 import daylightchart.options.UserPreferences;
 
 /**

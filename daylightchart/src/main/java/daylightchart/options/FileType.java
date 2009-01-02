@@ -1,4 +1,4 @@
-package daylightchart.gui.util;
+package daylightchart.options;
 
 
 /**
