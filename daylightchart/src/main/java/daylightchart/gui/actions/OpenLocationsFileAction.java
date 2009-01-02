@@ -99,7 +99,8 @@ public final class OpenLocationsFileAction
         try
         {
           final List<Location> locations = FileOperations
-            .loadLocationsFromFile(selectedFile);
+            .loadLocationsFromFile(selectedFile.getFileType(), selectedFile
+              .getFile());
           if (locations == null)
           {
             LOGGER.log(Level.WARNING, Messages
