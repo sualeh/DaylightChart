@@ -23,19 +23,13 @@ package daylightchart.options;
 
 
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.design.JasperDesign;
-import net.sf.jasperreports.engine.xml.JRXmlLoader;
 
 import org.apache.commons.lang.StringUtils;
 import org.geoname.data.Location;
@@ -133,6 +127,22 @@ public final class UserPreferences
     }
 
     initialize();
+  }
+
+  /**
+   * Creates a options instance.
+   * 
+   * @return Options
+   */
+  public static Options getDefaultDaylightChartOptions()
+  {
+    final ChartOptions chartOptions = new ChartOptions();
+    chartOptions.copyFromChart(new DaylightChart());
+
+    final Options options = new Options();
+    options.setChartOptions(chartOptions);
+
+    return options;
   }
 
   /**
@@ -430,19 +440,4 @@ public final class UserPreferences
     // Prevent external instantiation
   }
 
-  /**
-   * Creates a options instance.
-   * 
-   * @return Options
-   */
-  public static Options getDefaultDaylightChartOptions()
-  {
-    final ChartOptions chartOptions = new ChartOptions();
-    chartOptions.copyFromChart(new DaylightChart());
-
-    final Options options = new Options();
-    options.setChartOptions(chartOptions);
-
-    return options;
-  }
 }
