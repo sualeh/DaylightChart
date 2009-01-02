@@ -41,7 +41,6 @@ import java.util.logging.Logger;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
-import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRReport;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperReport;
@@ -69,8 +68,8 @@ import daylightchart.gui.util.SelectedFile;
 public final class FileOperations
 {
 
-  private static final Logger LOGGER = Logger
-    .getLogger(FileOperations.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(FileOperations.class
+    .getName());
 
   /**
    * Loads a list of locations from a file of a given format.
@@ -87,7 +86,6 @@ public final class FileOperations
       return null;
     }
 
-    List<Location> locations = new ArrayList<Location>();
     LocationFileType fileType = selectedFile.getFileType();
     List<InputStream> inputs = new ArrayList<InputStream>();
     try
@@ -110,58 +108,74 @@ public final class FileOperations
           }
           break;
       }
-
-      for (InputStream inputStream: inputs)
-      {
-        Reader reader = new UnicodeReader(inputStream, "UTF-8");
-        switch (fileType)
-        {
-          case data:
-            locations.addAll(LocationParser.parseLocations(reader));
-            break;
-          case gns_country_file:
-          case gns_country_file_zipped:
-            locations.addAll(GNSCountryFilesParser.parseLocations(reader));
-            break;
-          case gnis_state_file:
-          case gnis_state_file_zipped:
-            locations.addAll(GNISFilesParser.parseLocations(reader));
-            break;
-        }
-        reader.close();
-      }
     }
     catch (final Exception e)
     {
       LOGGER.log(Level.WARNING,
                  "Could not read locations from " + selectedFile,
                  e);
-      locations = null;
-    }
-    finally
-    {
-      for (InputStream inputStream: inputs)
-      {
-        if (inputStream != null)
-        {
-          try
-          {
-            inputStream.close();
-          }
-          catch (final IOException e)
-          {
-            LOGGER.log(Level.WARNING, "Could not close input stream", e);
-          }
-        }
-      }
+      return null;
     }
 
-    if (locations.size() == 0)
+    return loadLocations(fileType, inputs
+      .toArray(new InputStream[inputs.size()]));
+  }
+
+  /**
+   * Loads options from a file.
+   * 
+   * @param file
+   *        File
+   * @return Options
+   */
+  public static Options loadOptionsFromFile(final File file)
+  {
+    if (file == null || !file.exists() || !file.canRead())
     {
-      locations = null;
+      LOGGER.log(Level.WARNING, "No options file provided");
+      return null;
+    }
+    FileInputStream input;
+    try
+    {
+      input = new FileInputStream(file);
+    }
+    catch (FileNotFoundException e)
+    {
+      LOGGER.log(Level.WARNING, "Could not open options file, " + file, e);
+      return null;
     }
 
-    return locations;
+    return loadOptions(input);
+  }
+
+  /**
+   * Loads a report from a file.
+   * 
+   * @param file
+   *        File
+   * @return JasperReports report
+   */
+  public static JasperReport loadReportFromFile(final File file)
+  {
+    if (file == null || !file.exists() || !file.canRead())
+    {
+      LOGGER.log(Level.WARNING, "No report file provided");
+      return null;
+    }
+
+    InputStream input;
+    try
+    {
+      input = new FileInputStream(file);
+    }
+    catch (final FileNotFoundException e)
+    {
+      LOGGER.log(Level.WARNING, "Could not read report from " + file, e);
+      return null;
+    }
+
+    return loadReport(input);
   }
 
   /**
@@ -207,167 +221,6 @@ public final class FileOperations
   }
 
   /**
-   * Saves report to a file.
-   * 
-   * @param report
-   *        JasperReports report
-   * @param file
-   *        File to write
-   */
-  public static void saveReportToFile(final JRReport report, final File file)
-  {
-    try
-    {
-      if (report == null)
-      {
-        LOGGER.log(Level.WARNING, "No report provided");
-        return;
-      }
-      if (file == null)
-      {
-        LOGGER.log(Level.WARNING, "No report file provided");
-        return;
-      }
-      if (file.exists())
-      {
-        file.delete();
-      }
-
-      JRXmlWriter.writeReport(report, file.getAbsolutePath(), "UTF-8");
-    }
-    catch (final Exception e)
-    {
-      LOGGER.log(Level.WARNING, "Could not save report to " + file, e);
-    }
-  }
-
-  private static JasperReport compileReport(final InputStream reportStream)
-  {
-    try
-    {
-      if (reportStream == null)
-      {
-        return null;
-      }
-      final JasperDesign jasperDesign = JRXmlLoader.load(reportStream);
-      final JasperReport jasperReport = JasperCompileManager
-        .compileReport(jasperDesign);
-      return jasperReport;
-    }
-    catch (final JRException e)
-    {
-      LOGGER.log(Level.WARNING, "Cannot load JasperReport", e);
-      return null;
-    }
-    finally
-    {
-      if (reportStream != null)
-      {
-        try
-        {
-          reportStream.close();
-        }
-        catch (final IOException e)
-        {
-          LOGGER.log(Level.WARNING, "Cannot close input stream", e);
-        }
-      }
-    }
-  }
-
-  private static Writer getFileWriter(final File file)
-  {
-    try
-    {
-      final BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file),
-                                                                              "UTF-8"));
-      return writer;
-    }
-    catch (final UnsupportedEncodingException e)
-    {
-      LOGGER.log(Level.WARNING, "Cannot write file " + file, e);
-      return null;
-    }
-    catch (final FileNotFoundException e)
-    {
-      LOGGER.log(Level.WARNING, "Cannot write file " + file, e);
-      return null;
-    }
-  }
-
-  /**
-   * Loads options from a file.
-   * 
-   * @param file
-   *        File
-   * @return Options
-   */
-  public static Options loadOptionsFromFile(final File file)
-  {
-    if (file == null || !file.exists() || !file.canRead())
-    {
-      LOGGER.log(Level.WARNING, "No options file provided");
-      return null;
-    }
-
-    Reader reader = null;
-    Options options;
-    try
-    {
-      reader = new UnicodeReader(new FileInputStream(file), "UTF-8");
-      final XStream xStream = new XStream();
-      options = (Options) xStream.fromXML(reader);
-    }
-    catch (final Exception e)
-    {
-      LOGGER.log(Level.WARNING, "Could not read options from " + file, e);
-      options = null;
-    }
-    finally
-    {
-      if (reader != null)
-      {
-        try
-        {
-          reader.close();
-        }
-        catch (final IOException e)
-        {
-          LOGGER.log(Level.WARNING, "Could not close " + file, e);
-        }
-      }
-    }
-    return options;
-  }
-
-  /**
-   * Loads a report from a file.
-   * 
-   * @param file
-   *        File
-   * @return JasperReports report
-   */
-  public static JasperReport loadReportFromFile(final File file)
-  {
-    if (file == null || !file.exists() || !file.canRead())
-    {
-      LOGGER.log(Level.WARNING, "No report file provided");
-      return null;
-    }
-
-    try
-    {
-      FileInputStream fileInputStream = new FileInputStream(file);
-      return compileReport(fileInputStream);
-    }
-    catch (final FileNotFoundException e)
-    {
-      LOGGER.log(Level.WARNING, "Could not read report from " + file, e);
-      return null;
-    }
-  }
-
-  /**
    * Saves options to a file.
    * 
    * @param file
@@ -406,6 +259,195 @@ public final class FileOperations
     catch (final Exception e)
     {
       LOGGER.log(Level.WARNING, "Could save options to " + file, e);
+    }
+  }
+
+  /**
+   * Saves report to a file.
+   * 
+   * @param report
+   *        JasperReports report
+   * @param file
+   *        File to write
+   */
+  public static void saveReportToFile(final JRReport report, final File file)
+  {
+    try
+    {
+      if (report == null)
+      {
+        LOGGER.log(Level.WARNING, "No report provided");
+        return;
+      }
+      if (file == null)
+      {
+        LOGGER.log(Level.WARNING, "No report file provided");
+        return;
+      }
+      if (file.exists())
+      {
+        file.delete();
+      }
+
+      JRXmlWriter.writeReport(report, file.getAbsolutePath(), "UTF-8");
+    }
+    catch (final Exception e)
+    {
+      LOGGER.log(Level.WARNING, "Could not save report to " + file, e);
+    }
+  }
+
+  static List<Location> loadLocations(LocationFileType fileType,
+                                      InputStream... inputs)
+  {
+    if (fileType == null || inputs == null)
+    {
+      return null;
+    }
+
+    List<Location> locations = new ArrayList<Location>();
+    try
+    {
+      for (InputStream inputStream: inputs)
+      {
+        Reader reader = new UnicodeReader(inputStream, "UTF-8");
+        switch (fileType)
+        {
+          case data:
+            locations.addAll(LocationParser.parseLocations(reader));
+            break;
+          case gns_country_file:
+          case gns_country_file_zipped:
+            locations.addAll(GNSCountryFilesParser.parseLocations(reader));
+            break;
+          case gnis_state_file:
+          case gnis_state_file_zipped:
+            locations.addAll(GNISFilesParser.parseLocations(reader));
+            break;
+        }
+        reader.close();
+      }
+    }
+    catch (final Exception e)
+    {
+      LOGGER.log(Level.WARNING, "Could not read locations", e);
+      locations = null;
+    }
+    finally
+    {
+      for (InputStream inputStream: inputs)
+      {
+        if (inputStream != null)
+        {
+          try
+          {
+            inputStream.close();
+          }
+          catch (final IOException e)
+          {
+            LOGGER.log(Level.WARNING, "Could not close input stream", e);
+          }
+        }
+      }
+    }
+
+    if (locations.size() == 0)
+    {
+      locations = null;
+    }
+
+    return locations;
+  }
+
+  static Options loadOptions(InputStream input)
+  {
+    if (input == null)
+    {
+      return null;
+    }
+
+    Reader reader = null;
+    Options options;
+    try
+    {
+      reader = new UnicodeReader(input, "UTF-8");
+      final XStream xStream = new XStream();
+      options = (Options) xStream.fromXML(reader);
+    }
+    catch (final Exception e)
+    {
+      LOGGER.log(Level.WARNING, "Could not read options", e);
+      options = null;
+    }
+    finally
+    {
+      if (reader != null)
+      {
+        try
+        {
+          reader.close();
+        }
+        catch (final IOException e)
+        {
+          LOGGER.log(Level.WARNING, "Could not close stream", e);
+        }
+      }
+    }
+    return options;
+  }
+
+  static JasperReport loadReport(final InputStream input)
+  {
+    if (input == null)
+    {
+      return null;
+    }
+
+    try
+    {
+      final JasperDesign jasperDesign = JRXmlLoader.load(input);
+      final JasperReport jasperReport = JasperCompileManager
+        .compileReport(jasperDesign);
+      return jasperReport;
+    }
+    catch (final Exception e)
+    {
+      LOGGER.log(Level.WARNING, "Cannot load JasperReport", e);
+      return null;
+    }
+    finally
+    {
+      if (input != null)
+      {
+        try
+        {
+          input.close();
+        }
+        catch (final IOException e)
+        {
+          LOGGER.log(Level.WARNING, "Cannot close input stream", e);
+        }
+      }
+    }
+  }
+
+  private static Writer getFileWriter(final File file)
+  {
+    try
+    {
+      final BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file),
+                                                                              "UTF-8"));
+      return writer;
+    }
+    catch (final UnsupportedEncodingException e)
+    {
+      LOGGER.log(Level.WARNING, "Cannot write file " + file, e);
+      return null;
+    }
+    catch (final FileNotFoundException e)
+    {
+      LOGGER.log(Level.WARNING, "Cannot write file " + file, e);
+      return null;
     }
   }
 
