@@ -111,7 +111,6 @@ public final class UserPreferences
     catch (IOException e)
     {
       LOGGER.log(Level.WARNING, "Could not delete " + settingsDirectory, e);
-      return;
     }
     initialize();
   }
