@@ -22,18 +22,9 @@
 package daylightchart.options;
 
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.Reader;
-import java.io.UnsupportedEncodingException;
-import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -48,12 +39,10 @@ import net.sf.jasperreports.engine.xml.JRXmlLoader;
 
 import org.apache.commons.lang.StringUtils;
 import org.geoname.data.Location;
-import org.geoname.parser.LocationParser;
-import org.geoname.parser.ParserException;
-import org.geoname.parser.UnicodeReader;
 
 import daylightchart.daylightchart.chart.DaylightChart;
 import daylightchart.daylightchart.layout.DaylightChartReport;
+import daylightchart.gui.actions.LocationFileType;
 import daylightchart.options.chart.ChartOptions;
 
 /**
@@ -209,8 +198,7 @@ public final class UserPreferences
   public static boolean importReport(final File reportFile)
   {
     boolean imported = false;
-    final JasperReport report = FileOperations
-      .loadReportFromFile(reportFile);
+    final JasperReport report = FileOperations.loadReportFromFile(reportFile);
     if (report != null)
     {
       setReport(report);
@@ -315,60 +303,6 @@ public final class UserPreferences
     setOptions(options);
   }
 
-  private static JasperReport compileReport(final InputStream reportStream)
-  {
-    try
-    {
-      if (reportStream == null)
-      {
-        return null;
-      }
-      final JasperDesign jasperDesign = JRXmlLoader.load(reportStream);
-      final JasperReport jasperReport = JasperCompileManager
-        .compileReport(jasperDesign);
-      return jasperReport;
-    }
-    catch (final JRException e)
-    {
-      LOGGER.log(Level.WARNING, "Cannot load JasperReport", e);
-      return null;
-    }
-    finally
-    {
-      if (reportStream != null)
-      {
-        try
-        {
-          reportStream.close();
-        }
-        catch (final IOException e)
-        {
-          LOGGER.log(Level.WARNING, "Cannot close input stream", e);
-        }
-      }
-    }
-  }
-
-  private static Writer getFileWriter(final File file)
-  {
-    try
-    {
-      final BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file),
-                                                                              "UTF-8"));
-      return writer;
-    }
-    catch (final UnsupportedEncodingException e)
-    {
-      LOGGER.log(Level.WARNING, "Cannot write file " + file, e);
-      return null;
-    }
-    catch (final FileNotFoundException e)
-    {
-      LOGGER.log(Level.WARNING, "Cannot write file " + file, e);
-      return null;
-    }
-  }
-
   private static void initialize()
   {
     setSettingsDirectory(settingsDirectory.getAbsolutePath());
@@ -381,38 +315,21 @@ public final class UserPreferences
 
   private static void initializeLocations()
   {
-    try
-    {
-      // Try loading from user preferences
-      locations = LocationParser
-        .parseLocations(new UnicodeReader(new FileInputStream(locationsDataFile),
-                                          "UTF-8"));
-    }
-    catch (Exception e)
-    {
-      LOGGER.log(Level.WARNING, "Cannot read locations from file "
-                                + locationsDataFile, e);
-      locations = null;
-    }
+    // Try loading from user preferences
+    locations = FileOperations.loadLocationsFromFile(LocationFileType.data,
+                                                     locationsDataFile);
 
     // Load from internal store
     if (locations == null)
     {
-      final InputStream dataStream = Thread.currentThread()
-        .getContextClassLoader().getResourceAsStream("locations.data");
-      if (dataStream == null)
-      {
-        throw new IllegalStateException("Cannot read data from internal database");
-      }
-      final Reader reader = new InputStreamReader(dataStream);
-      try
-      {
-        locations = LocationParser.parseLocations(reader);
-      }
-      catch (final ParserException e)
-      {
-        throw new RuntimeException("Cannot read data from internal database", e);
-      }
+      final InputStream input = Thread.currentThread().getContextClassLoader()
+        .getResourceAsStream("locations.data");
+      locations = FileOperations.loadLocations(LocationFileType.data, input);
+    }
+
+    if (locations == null)
+    {
+      throw new RuntimeException("Cannot load locations");
     }
   }
 
@@ -430,19 +347,12 @@ public final class UserPreferences
 
   private static void initializeRecentLocations()
   {
-    try
+    // Try loading from user preferences
+    recentLocations = FileOperations
+      .loadLocationsFromFile(LocationFileType.data, recentLocationsDataFile);
+
+    if (recentLocations == null)
     {
-      // Try loading from user preferences
-      recentLocations = new ArrayList<Location>();
-      recentLocations
-        .addAll(LocationParser
-          .parseLocations(new UnicodeReader(new FileInputStream(recentLocationsDataFile),
-                                            "UTF-8")));
-    }
-    catch (Exception e)
-    {
-      LOGGER.log(Level.WARNING, "Cannot read recent locations from file "
-                                + recentLocationsDataFile, e);
       recentLocations = new ArrayList<Location>();
     }
   }
@@ -455,13 +365,14 @@ public final class UserPreferences
     // Load from internal store
     if (report == null)
     {
-      final InputStream reportStream = DaylightChartReport.class
+      final InputStream input = DaylightChartReport.class
         .getResourceAsStream("/DaylightChartReport.jrxml");
-      report = compileReport(reportStream);
-      if (report == null)
-      {
-        throw new RuntimeException("Cannot load default report");
-      }
+      report = FileOperations.loadReport(input);
+    }
+
+    if (report == null)
+    {
+      throw new RuntimeException("Cannot load report");
     }
   }
 
@@ -478,8 +389,8 @@ public final class UserPreferences
       return;
     }
     UserPreferences.recentLocations = locations;
-    FileOperations.saveLocationsToFile(recentLocations,
-                                                 recentLocationsDataFile);
+    FileOperations
+      .saveLocationsToFile(recentLocations, recentLocationsDataFile);
   }
 
   /**
@@ -528,10 +439,10 @@ public final class UserPreferences
   {
     final ChartOptions chartOptions = new ChartOptions();
     chartOptions.copyFromChart(new DaylightChart());
-  
+
     final Options options = new Options();
     options.setChartOptions(chartOptions);
-  
+
     return options;
   }
 }
