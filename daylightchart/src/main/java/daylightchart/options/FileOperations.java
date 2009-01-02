@@ -58,7 +58,6 @@ import org.geoname.parser.UnicodeReader;
 import com.thoughtworks.xstream.XStream;
 
 import daylightchart.gui.actions.LocationFileType;
-import daylightchart.gui.util.SelectedFile;
 
 /**
  * User preferences for the GUI.
@@ -78,15 +77,14 @@ public final class FileOperations
    *        Selected file of a known location file format.
    * @return List of locations, read from the file
    */
-  public static List<Location> loadLocationsFromFile(final SelectedFile<LocationFileType> selectedFile)
+  public static List<Location> loadLocations(LocationFileType fileType,
+                                             File file)
   {
-    if (selectedFile == null || !selectedFile.isSelected())
+    if (fileType == null || file == null)
     {
-      LOGGER.log(Level.WARNING, "No locations file provided");
       return null;
     }
 
-    LocationFileType fileType = selectedFile.getFileType();
     List<InputStream> inputs = new ArrayList<InputStream>();
     try
     {
@@ -95,11 +93,11 @@ public final class FileOperations
         case data:
         case gns_country_file:
         case gnis_state_file:
-          inputs.add(new FileInputStream(selectedFile.getFile()));
+          inputs.add(new FileInputStream(file));
           break;
         case gns_country_file_zipped:
         case gnis_state_file_zipped:
-          ZipFile zipFile = new ZipFile(selectedFile.getFile());
+          ZipFile zipFile = new ZipFile(file);
           List<ZipEntry> zippedFiles = (List<ZipEntry>) Collections
             .list(zipFile.entries());
           for (ZipEntry zipEntry: zippedFiles)
@@ -111,9 +109,7 @@ public final class FileOperations
     }
     catch (final Exception e)
     {
-      LOGGER.log(Level.WARNING,
-                 "Could not read locations from " + selectedFile,
-                 e);
+      LOGGER.log(Level.WARNING, "Could not read locations from " + file, e);
       return null;
     }
 
