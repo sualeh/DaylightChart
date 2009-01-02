@@ -57,17 +57,6 @@ public final class LocationsDataFile
   }
 
   /**
-   * {@inheritDoc}
-   * 
-   * @see daylightchart.options.BaseLocationsDataFile#load()
-   */
-  @Override
-  public void load()
-  {
-    super.load();
-  }
-
-  /**
    * Loads a list of locations from a file of a given format, falling
    * back to an internal resource with the same name.
    */
@@ -76,28 +65,17 @@ public final class LocationsDataFile
     // 1. Load from file
     load();
     // 2. Load from internal store
-    if (locations == null)
+    if (data == null)
     {
       final InputStream input = Thread.currentThread().getContextClassLoader()
         .getResourceAsStream(getFilename());
       load(input);
     }
     // 3. If no locations are loaded, fail
-    if (locations == null)
+    if (data == null)
     {
       throw new RuntimeException("Cannot load locations");
     }
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see daylightchart.options.BaseLocationsDataFile#save()
-   */
-  @Override
-  public void save()
-  {
-    super.save();
   }
 
   /**
@@ -112,7 +90,7 @@ public final class LocationsDataFile
     {
       return;
     }
-    this.locations = locations;
+    this.data = locations;
   }
 
 }

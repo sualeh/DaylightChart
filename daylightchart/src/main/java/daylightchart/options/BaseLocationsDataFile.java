@@ -30,13 +30,11 @@ import daylightchart.gui.actions.LocationFileType;
  * @author sfatehi
  */
 public abstract class BaseLocationsDataFile
-  extends BaseTypedFile<LocationFileType>
+  extends BaseDataFile<LocationFileType, List<Location>>
 {
 
   private static final Logger LOGGER = Logger
     .getLogger(BaseLocationsDataFile.class.getName());
-
-  protected List<Location> locations;
 
   /**
    * Constructor.
@@ -60,37 +58,17 @@ public abstract class BaseLocationsDataFile
   public BaseLocationsDataFile(final File file, final LocationFileType fileType)
   {
     super(file, fileType);
-
-    // Validation
-    if (file == null)
-    {
-      throw new IllegalArgumentException("No file provided");
-    }
-    if (fileType == null)
-    {
-      throw new IllegalArgumentException("No file type provided");
-    }
-  }
-
-  /**
-   * Gets the locations for the current user.
-   * 
-   * @return Locations
-   */
-  public final List<Location> getLocations()
-  {
-    return new ArrayList<Location>(locations);
   }
 
   /**
    * Loads a list of locations from a file of a given format.
    */
-  protected void load()
+  public void load()
   {
     if (!exists())
     {
       LOGGER.log(Level.WARNING, "No locations file provided");
-      locations = null;
+      data = null;
       return;
     }
 
@@ -120,7 +98,7 @@ public abstract class BaseLocationsDataFile
     catch (final Exception e)
     {
       LOGGER.log(Level.WARNING, "Could not read locations from " + file, e);
-      locations = null;
+      data = null;
     }
 
     load(inputs.toArray(new InputStream[inputs.size()]));
@@ -128,7 +106,7 @@ public abstract class BaseLocationsDataFile
 
   protected final void load(final InputStream... inputs)
   {
-    locations = new ArrayList<Location>();
+    data = new ArrayList<Location>();
     try
     {
       for (final InputStream inputStream: inputs)
@@ -137,15 +115,15 @@ public abstract class BaseLocationsDataFile
         switch (getFileType())
         {
           case data:
-            locations.addAll(LocationParser.parseLocations(reader));
+            data.addAll(LocationParser.parseLocations(reader));
             break;
           case gns_country_file:
           case gns_country_file_zipped:
-            locations.addAll(GNSCountryFilesParser.parseLocations(reader));
+            data.addAll(GNSCountryFilesParser.parseLocations(reader));
             break;
           case gnis_state_file:
           case gnis_state_file_zipped:
-            locations.addAll(GNISFilesParser.parseLocations(reader));
+            data.addAll(GNISFilesParser.parseLocations(reader));
             break;
         }
         reader.close();
@@ -154,7 +132,7 @@ public abstract class BaseLocationsDataFile
     catch (final Exception e)
     {
       LOGGER.log(Level.WARNING, "Could not read locations", e);
-      locations = null;
+      data = null;
     }
     finally
     {
@@ -174,23 +152,17 @@ public abstract class BaseLocationsDataFile
       }
     }
 
-    if (locations.size() == 0)
+    if (data.size() == 0)
     {
-      locations = null;
+      data = null;
     }
   }
 
   /**
    * Saves locations to a file.
    */
-  protected void save()
+  public void save()
   {
-    if (locations == null)
-    {
-      LOGGER.log(Level.WARNING, "No locations provided");
-      return;
-    }
-
     final File file = getFile();
     if (file == null)
     {
@@ -200,18 +172,15 @@ public abstract class BaseLocationsDataFile
 
     try
     {
-      if (file.exists())
-      {
-        file.delete();
-      }
-      final Writer writer = FileOperations.getFileWriter(file);
+      file.delete();
+
+      final Writer writer = getFileWriter(file);
       if (writer == null)
       {
-        LOGGER.log(Level.WARNING, "Could not save locations to " + file);
         return;
       }
 
-      LocationFormatter.formatLocations(locations, writer);
+      LocationFormatter.formatLocations(data, writer);
     }
     catch (final Exception e)
     {

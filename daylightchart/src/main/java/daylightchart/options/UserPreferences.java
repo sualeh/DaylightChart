@@ -23,7 +23,6 @@ package daylightchart.options;
 
 
 import java.io.File;
-import java.io.InputStream;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -32,10 +31,7 @@ import net.sf.jasperreports.engine.JasperReport;
 import org.apache.commons.lang.StringUtils;
 import org.geoname.data.Location;
 
-import daylightchart.daylightchart.chart.DaylightChart;
-import daylightchart.daylightchart.layout.DaylightChartReport;
 import daylightchart.gui.actions.LocationFileType;
-import daylightchart.options.chart.ChartOptions;
 
 /**
  * User preferences for the GUI.
@@ -51,13 +47,10 @@ public final class UserPreferences
   private static final File scratchDirectory;
   private static File settingsDirectory;
 
-  private static LocationsDataFile locationsDataFile;
-  private static RecentLocationsDataFile recentLocationsDataFile;
-  private static File reportFile;
-  private static File optionsFile;
-
-  private static JasperReport report;
-  private static Options options;
+  private static LocationsDataFile locationsFile;
+  private static RecentLocationsDataFile recentLocationsFile;
+  private static ReportDataFile reportFile;
+  private static OptionsDataFile optionsFile;
 
   static
   {
@@ -77,7 +70,8 @@ public final class UserPreferences
    */
   public static void addRecentLocation(final Location location)
   {
-    recentLocationsDataFile.add(location);
+    recentLocationsFile.add(location);
+    recentLocationsFile.save();
   }
 
   /**
@@ -85,22 +79,10 @@ public final class UserPreferences
    */
   public static void clear()
   {
-    if (optionsFile.exists())
-    {
-      optionsFile.delete();
-    }
-
-    locationsDataFile.delete();
-
-    if (recentLocationsDataFile.exists())
-    {
-      recentLocationsDataFile.delete();
-    }
-
-    if (reportFile.exists())
-    {
-      reportFile.delete();
-    }
+    optionsFile.delete();
+    locationsFile.delete();
+    recentLocationsFile.delete();
+    reportFile.delete();
 
     if (settingsDirectory.exists())
     {
@@ -111,29 +93,13 @@ public final class UserPreferences
   }
 
   /**
-   * Creates a options instance.
-   * 
-   * @return Options
-   */
-  public static Options getDefaultDaylightChartOptions()
-  {
-    final ChartOptions chartOptions = new ChartOptions();
-    chartOptions.copyFromChart(new DaylightChart());
-
-    final Options options = new Options();
-    options.setChartOptions(chartOptions);
-
-    return options;
-  }
-
-  /**
    * Gets the locations for the current user.
    * 
    * @return Locations
    */
   public static List<Location> getLocations()
   {
-    return locationsDataFile.getLocations();
+    return locationsFile.getData();
   }
 
   /**
@@ -143,7 +109,7 @@ public final class UserPreferences
    */
   public static Options getOptions()
   {
-    return options;
+    return optionsFile.getData();
   }
 
   /**
@@ -153,7 +119,7 @@ public final class UserPreferences
    */
   public static List<Location> getRecentLocations()
   {
-    return recentLocationsDataFile.getLocations();
+    return recentLocationsFile.getData();
   }
 
   /**
@@ -163,7 +129,7 @@ public final class UserPreferences
    */
   public static JasperReport getReport()
   {
-    return report;
+    return reportFile.getData();
   }
 
   /**
@@ -184,7 +150,9 @@ public final class UserPreferences
   public static boolean importReport(final File reportFile)
   {
     boolean imported = false;
-    final JasperReport report = FileOperations.loadReportFromFile(reportFile);
+    ReportDataFile importedReportFile = new ReportDataFile(reportFile);
+    importedReportFile.load();
+    JasperReport report = importedReportFile.getData();
     if (report != null)
     {
       setReport(report);
@@ -219,8 +187,8 @@ public final class UserPreferences
     {
       return;
     }
-    locationsDataFile.setLocations(locations);
-    locationsDataFile.save();
+    locationsFile.setLocations(locations);
+    locationsFile.save();
   }
 
   /**
@@ -231,12 +199,8 @@ public final class UserPreferences
    */
   public static void setOptions(final Options options)
   {
-    if (options == null)
-    {
-      return;
-    }
-    UserPreferences.options = options;
-    FileOperations.saveOptionsToFile(options, optionsFile);
+    optionsFile.setData(options);
+    optionsFile.save();
   }
 
   /**
@@ -258,12 +222,19 @@ public final class UserPreferences
     LOGGER.fine("Created settings directory " + settingsDirectoryPath);
 
     UserPreferences.settingsDirectory = settingsDirectory;
-    locationsDataFile = new LocationsDataFile(new File(settingsDirectory,
-                                                       "locations.data"),
-                                              LocationFileType.data);
-    recentLocationsDataFile = new RecentLocationsDataFile(settingsDirectory);
-    reportFile = new File(settingsDirectory, "DaylightChartReport.jrxml");
-    optionsFile = new File(settingsDirectory, "options.xml");
+    locationsFile = new LocationsDataFile(new File(settingsDirectory,
+                                                   "locations.data"),
+                                          LocationFileType.data);
+
+    recentLocationsFile = new RecentLocationsDataFile(settingsDirectory);
+    recentLocationsFile.loadWithFallback();
+
+    reportFile = new ReportDataFile(new File(settingsDirectory,
+                                             "DaylightChartReport.jrxml"));
+    reportFile.loadWithFallback();
+
+    optionsFile = new OptionsDataFile(settingsDirectory);
+    optionsFile.loadWithFallback();
   }
 
   /**
@@ -274,8 +245,10 @@ public final class UserPreferences
    */
   public static void setSlimUi(final boolean slimUi)
   {
+    Options options = optionsFile.getData();
     options.setSlimUi(slimUi);
-    setOptions(options);
+    optionsFile.setData(options);
+    optionsFile.save();
   }
 
   /**
@@ -286,8 +259,10 @@ public final class UserPreferences
    */
   public static void setWorkingDirectory(final File workingDirectory)
   {
+    Options options = optionsFile.getData();
     options.setWorkingDirectory(workingDirectory);
-    setOptions(options);
+    optionsFile.setData(options);
+    optionsFile.save();
   }
 
   private static void initialize()
@@ -302,43 +277,32 @@ public final class UserPreferences
 
   private static void initializeLocations()
   {
-    locationsDataFile = new LocationsDataFile(new File(settingsDirectory,
-                                                       "locations.data"),
-                                              LocationFileType.data);
-    locationsDataFile.loadWithFallback();
+    locationsFile = new LocationsDataFile(new File(settingsDirectory,
+                                                   "locations.data"),
+                                          LocationFileType.data);
+    locationsFile.loadWithFallback();
   }
 
   private static void initializeOptions()
   {
-    // Try loading from user preferences
-    options = FileOperations.loadOptionsFromFile(optionsFile);
-
-    // Load from internal store
-    if (options == null)
-    {
-      options = UserPreferences.getDefaultDaylightChartOptions();
-    }
+    optionsFile = new OptionsDataFile(settingsDirectory);
+    optionsFile.loadWithFallback();
   }
 
   private static void initializeRecentLocations()
   {
-    recentLocationsDataFile = new RecentLocationsDataFile(settingsDirectory);
+    recentLocationsFile = new RecentLocationsDataFile(settingsDirectory);
+    recentLocationsFile.loadWithFallback();
   }
 
   private static void initializeReport()
   {
     // Try loading from user preferences
-    report = FileOperations.loadReportFromFile(reportFile);
+    reportFile = new ReportDataFile(new File(settingsDirectory,
+                                             "DaylightChartReport.jrxml"));
+    reportFile.loadWithFallback();
 
-    // Load from internal store
-    if (report == null)
-    {
-      final InputStream input = DaylightChartReport.class
-        .getResourceAsStream("/DaylightChartReport.jrxml");
-      report = FileOperations.loadReport(input);
-    }
-
-    if (report == null)
+    if (reportFile.getData() == null)
     {
       throw new RuntimeException("Cannot load report");
     }
@@ -356,8 +320,8 @@ public final class UserPreferences
     {
       return;
     }
-    UserPreferences.report = report;
-    FileOperations.saveReportToFile(report, reportFile);
+    reportFile.setData(report);
+    reportFile.save();
   }
 
   /**

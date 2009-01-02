@@ -12,7 +12,7 @@ import daylightchart.daylightchart.calculation.RiseSetUtility;
 import daylightchart.daylightchart.calculation.RiseSetYearData;
 import daylightchart.daylightchart.chart.DaylightChart;
 import daylightchart.options.Options;
-import daylightchart.options.UserPreferences;
+import daylightchart.options.OptionsDataFile;
 
 public class DaylightChartPage
   extends WebPage
@@ -29,7 +29,7 @@ public class DaylightChartPage
     final int height = (int) (properties.getBrowserHeight() * 0.9);
     final int width = (int) (properties.getBrowserWidth() * 0.9);
 
-    final Options options = UserPreferences.getDefaultDaylightChartOptions();
+    final Options options = new OptionsDataFile().getData();
     final RiseSetYearData riseSetData = RiseSetUtility
       .createRiseSetYear(location,
                          Calendar.getInstance().get(Calendar.YEAR),

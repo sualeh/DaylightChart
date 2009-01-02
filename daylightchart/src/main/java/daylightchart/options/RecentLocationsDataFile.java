@@ -13,7 +13,7 @@ import daylightchart.gui.actions.LocationFileType;
  * 
  * @author sfatehi
  */
-public final class RecentLocationsDataFile
+final class RecentLocationsDataFile
   extends BaseLocationsDataFile
 {
 
@@ -21,16 +21,27 @@ public final class RecentLocationsDataFile
 
   /**
    * Constructor.
+   * 
+   * @param settingsDirectory
+   *        Settings directory
    */
   RecentLocationsDataFile(final File settingsDirectory)
   {
     super(new File(settingsDirectory, "recent.locations.data"),
           LocationFileType.data);
-
-    load();
-    if (locations == null)
+    // Validation
+    if (!getFile().isDirectory() || !getFile().exists())
     {
-      locations = new ArrayList<Location>();
+      throw new IllegalArgumentException("Settings directory is not a directory");
+    }
+  }
+
+  public void loadWithFallback()
+  {
+    load();
+    if (data == null)
+    {
+      data = new ArrayList<Location>();
     }
   }
 
@@ -46,15 +57,15 @@ public final class RecentLocationsDataFile
     {
       return;
     }
-    if (locations.contains(location))
+    if (data.contains(location))
     {
-      locations.remove(location);
+      data.remove(location);
     }
-    locations.add(0, location);
+    data.add(0, location);
 
-    if (locations.size() > NUMBER_RECENT_LOCATIONS)
+    if (data.size() > NUMBER_RECENT_LOCATIONS)
     {
-      locations = locations.subList(0, NUMBER_RECENT_LOCATIONS);
+      data = data.subList(0, NUMBER_RECENT_LOCATIONS);
     }
 
     save();

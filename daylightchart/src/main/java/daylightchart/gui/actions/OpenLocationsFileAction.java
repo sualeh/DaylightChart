@@ -100,7 +100,7 @@ public final class OpenLocationsFileAction
         {
           LocationsDataFile locationDataFile = new LocationsDataFile(selectedFile);
           locationDataFile.load();
-          final List<Location> locations = locationDataFile.getLocations();
+          final List<Location> locations = locationDataFile.getData();
           if (locations == null)
           {
             LOGGER.log(Level.WARNING, Messages
