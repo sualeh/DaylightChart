@@ -23,14 +23,17 @@ package daylightchart.options;
 
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import net.sf.jasperreports.engine.JasperReport;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.geoname.data.Location;
 
@@ -101,31 +104,15 @@ public final class UserPreferences
    */
   public static void clear()
   {
-    if (optionsFile.exists())
+    try
     {
-      optionsFile.delete();
+      FileUtils.deleteDirectory(settingsDirectory);
     }
-
-    if (locationsDataFile.exists())
+    catch (IOException e)
     {
-      locationsDataFile.delete();
+      LOGGER.log(Level.WARNING, "Could not delete " + settingsDirectory, e);
+      return;
     }
-
-    if (recentLocationsDataFile.exists())
-    {
-      recentLocationsDataFile.delete();
-    }
-
-    if (reportFile.exists())
-    {
-      reportFile.delete();
-    }
-
-    if (settingsDirectory.exists())
-    {
-      settingsDirectory.delete();
-    }
-
     initialize();
   }
 
