@@ -77,8 +77,8 @@ public final class FileOperations
    *        Selected file of a known location file format.
    * @return List of locations, read from the file
    */
-  public static List<Location> loadLocations(LocationFileType fileType,
-                                             File file)
+  public static List<Location> loadLocationsFromFile(LocationFileType fileType,
+                                                     File file)
   {
     if (fileType == null || file == null)
     {
