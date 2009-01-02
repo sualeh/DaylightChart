@@ -78,4 +78,22 @@ public final class SelectedFile<T extends FileType>
     return file != null;
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see java.lang.Object#toString()
+   */
+  @Override
+  public String toString()
+  {
+    if (isSelected())
+    {
+      return String.format("%s%n%s", fileType, file);
+    }
+    else
+    {
+      return String.format("No file selected [%d]", hashCode());
+    }
+  }
+
 }
