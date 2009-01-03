@@ -6,6 +6,30 @@
   </properties>
   <body>
     <release
+      version="3.0"
+      date="2009-01-03">
+      <action
+        dev="Sualeh Fatehi"
+        type="add">
+        Updated all third-party libraries to the latest versions, including reporting.
+      </action>      
+      <action
+        dev="Sualeh Fatehi"
+        type="fix">
+        Export of JPEG charts now shows the right colors.
+      </action>
+      <action
+        dev="Sualeh Fatehi"
+        type="fix">
+        Print menu item is disabled in slim mode, since printing is done from the browser.
+      </action>     
+      <action
+        dev="Sualeh Fatehi"
+        type="add">
+        Recent locations list.
+      </action>        
+    </release>    
+    <release
       version="2.8"
       date="2008-12-27">
       <action
