@@ -47,6 +47,11 @@ import daylightchart.gui.LocationDialog;
 import daylightchart.gui.Messages;
 import daylightchart.gui.util.GuiAction;
 
+/**
+ * Operations that possible on the list of locations.
+ * 
+ * @author Sualeh Fatehi
+ */
 public enum LocationsListOperation
 {
 

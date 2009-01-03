@@ -37,6 +37,10 @@ import java.util.logging.Logger;
  * Represents a data file, with data.
  * 
  * @author sfatehi
+ * @param <T>
+ *        File type
+ * @param <D>
+ *        Data object type
  */
 public abstract class BaseDataFile<T extends FileType, D>
   extends BaseTypedFile<T>
@@ -96,6 +100,10 @@ public abstract class BaseDataFile<T extends FileType, D>
    */
   public abstract void load();
 
+  /**
+   * Loads data from the file, falling back to a default that is usually
+   * loaded from an internal resource.
+   */
   public abstract void loadWithFallback();
 
   /**

@@ -24,10 +24,6 @@ package daylightchart.options;
 
 import java.io.File;
 import java.io.InputStream;
-import java.util.List;
-import java.util.logging.Logger;
-
-import org.geoname.data.Location;
 
 import daylightchart.gui.actions.LocationFileType;
 
@@ -39,9 +35,6 @@ import daylightchart.gui.actions.LocationFileType;
 public final class LocationsDataFile
   extends BaseLocationsDataFile
 {
-
-  private static final Logger LOGGER = Logger.getLogger(LocationsDataFile.class
-    .getName());
 
   /**
    * Constructor.
