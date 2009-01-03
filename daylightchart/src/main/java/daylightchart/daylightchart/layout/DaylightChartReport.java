@@ -22,6 +22,7 @@
 package daylightchart.daylightchart.layout;
 
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Calendar;
@@ -29,6 +30,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.imageio.ImageIO;
 
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
@@ -46,7 +49,6 @@ import net.sf.jasperreports.renderers.JCommonDrawableRenderer;
 
 import org.apache.commons.lang.StringUtils;
 import org.geoname.data.Location;
-import org.jfree.chart.ChartUtilities;
 import org.joda.time.LocalDateTime;
 import org.pointlocation6709.parser.FormatterException;
 import org.pointlocation6709.parser.PointLocationFormatType;
@@ -200,10 +202,10 @@ public class DaylightChartReport
           exporter.exportReport();
           break;
         case png:
-          ChartUtilities.saveChartAsPNG(file, chart, 842, 595);
-          break;
         case jpg:
-          ChartUtilities.saveChartAsJPEG(file, 1f, chart, 842, 595);
+          final BufferedImage image = chart
+            .createBufferedImage(842, 595, BufferedImage.TYPE_INT_RGB, null);
+          ImageIO.write(image, chartFileType.name(), file);
           break;
         default:
           throw new IllegalArgumentException("Unknown chart file type");
