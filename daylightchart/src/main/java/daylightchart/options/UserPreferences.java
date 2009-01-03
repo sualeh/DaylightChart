@@ -156,32 +156,6 @@ public final class UserPreferences
     reportFile = new ReportDataFile(settingsDirectory);
   }
 
-  /**
-   * Sets the slim mode for the user interface.
-   * 
-   * @param slimUi
-   *        Slim mode for the user interface
-   */
-  public static void setSlimUi(final boolean slimUi)
-  {
-    Options options = optionsFile.getData();
-    options.setSlimUi(slimUi);
-    optionsFile.save(options);
-  }
-
-  /**
-   * Sets the working directory.
-   * 
-   * @param workingDirectory
-   *        Working directory
-   */
-  public static void setWorkingDirectory(final File workingDirectory)
-  {
-    Options options = optionsFile.getData();
-    options.setWorkingDirectory(workingDirectory);
-    optionsFile.save(options);
-  }
-
   private static void validateDirectory(final File directory)
   {
     final boolean isDirectoryValid = directory != null && directory.exists()
@@ -194,22 +168,22 @@ public final class UserPreferences
     }
   }
 
-  public static LocationsDataFile getLocationsFile()
+  public static LocationsDataFile locationsFile()
   {
     return locationsFile;
   }
 
-  public static RecentLocationsDataFile getRecentLocationsFile()
+  public static RecentLocationsDataFile recentLocationsFile()
   {
     return recentLocationsFile;
   }
 
-  public static ReportDataFile getReportFile()
+  public static ReportDataFile reportFile()
   {
     return reportFile;
   }
 
-  public static OptionsDataFile getOptionsFile()
+  public static OptionsDataFile optionsFile()
   {
     return optionsFile;
   }

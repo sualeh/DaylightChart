@@ -235,16 +235,12 @@ public class Options
                                               ToStringStyle.MULTI_LINE_STYLE);
   }
 
-  /**
-   * @param slimUi
-   *        the slimUi to set
-   */
-  void setSlimUi(final boolean slimUi)
+  public void setSlimUi(final boolean slimUi)
   {
     this.slimUi = slimUi;
   }
 
-  void setWorkingDirectory(final File workingDirectory)
+  public void setWorkingDirectory(final File workingDirectory)
   {
     if (isDirectoryValid(workingDirectory))
     {

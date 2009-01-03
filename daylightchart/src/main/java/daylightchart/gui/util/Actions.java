@@ -31,6 +31,7 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 
 import daylightchart.options.FileType;
+import daylightchart.options.Options;
 import daylightchart.options.UserPreferences;
 
 /**
@@ -98,10 +99,23 @@ public class Actions
     // Save last selected directory
     if (selectedFile.isSelected())
     {
-      UserPreferences.setWorkingDirectory(selectedFile.getDirectory());
+      setWorkingDirectory(selectedFile.getDirectory());
     }
 
     return selectedFile;
+  }
+
+  /**
+   * Sets the working directory.
+   * 
+   * @param workingDirectory
+   *        Working directory
+   */
+  public static void setWorkingDirectory(final File workingDirectory)
+  {
+    Options options = UserPreferences.optionsFile().getData();
+    options.setWorkingDirectory(workingDirectory);
+    UserPreferences.optionsFile().save(options);
   }
 
   /**
@@ -167,7 +181,7 @@ public class Actions
     // Save last selected directory
     if (selectedFile.isSelected())
     {
-      UserPreferences.setWorkingDirectory(selectedFile.getDirectory());
+      setWorkingDirectory(selectedFile.getDirectory());
     }
 
     return selectedFile;

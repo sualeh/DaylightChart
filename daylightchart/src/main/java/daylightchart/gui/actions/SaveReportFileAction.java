@@ -75,7 +75,7 @@ public final class SaveReportFileAction
                         Messages
                           .getString("DaylightChartGui.Menu.File.SaveReport"),
                         fileFilters,
-                        new File(UserPreferences.getOptionsFile().getData()
+                        new File(UserPreferences.optionsFile().getData()
                           .getWorkingDirectory(), "DaylightChartReport.jrxml"),
                         Messages
                           .getString("DaylightChartGui.Message.Confirm.FileOverwrite")); //$NON-NLS-1$
@@ -84,7 +84,7 @@ public final class SaveReportFileAction
         try
         {
           ReportDataFile reportFile = new ReportDataFile(selectedFile);
-          reportFile.save(UserPreferences.getReportFile().getData());
+          reportFile.save(UserPreferences.reportFile().getData());
         }
         catch (final Exception e)
         {

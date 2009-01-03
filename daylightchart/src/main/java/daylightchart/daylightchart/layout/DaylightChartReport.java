@@ -229,7 +229,7 @@ public class DaylightChartReport
 
       // Generate JasperReport for the chart
       // 1. Load compiled report
-      final JasperReport jasperReport = UserPreferences.getReportFile()
+      final JasperReport jasperReport = UserPreferences.reportFile()
         .getData();
       // 2. Prepare parameters
       final Map<String, Object> parameters = new HashMap<String, Object>();

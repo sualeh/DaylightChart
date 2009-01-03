@@ -63,7 +63,7 @@ public final class ChartOptionsAction
      */
     public void actionPerformed(final ActionEvent actionevent)
     {
-      final Options options = UserPreferences.getOptionsFile().getData();
+      final Options options = UserPreferences.optionsFile().getData();
       final ChartOptions chartOptions = options.getChartOptions();
 
       final ChartEditor chartEditor = chartOptions.getChartEditor();
@@ -77,7 +77,7 @@ public final class ChartOptionsAction
         // Get chart options from the editor
         chartOptions.copyFromChartEditor(chartEditor);
         // Save preferences
-        UserPreferences.getOptionsFile().save(options);
+        UserPreferences.optionsFile().save(options);
       }
     }
   }

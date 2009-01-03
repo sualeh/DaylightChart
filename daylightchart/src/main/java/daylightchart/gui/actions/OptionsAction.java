@@ -60,9 +60,9 @@ public final class OptionsAction
      */
     public void actionPerformed(final ActionEvent actionevent)
     {
-      Options options = UserPreferences.getOptionsFile().getData();
+      Options options = UserPreferences.optionsFile().getData();
       options = OptionsDialog.showOptionsDialog(mainWindow, options);
-      UserPreferences.getOptionsFile().save(options);
+      UserPreferences.optionsFile().save(options);
       mainWindow.sortLocations();
     }
   }

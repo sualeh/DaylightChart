@@ -75,7 +75,7 @@ public final class OpenReportFileAction
                         Messages
                           .getString("DaylightChartGui.Menu.File.LoadReport"),
                         fileFilters,
-                        new File(UserPreferences.getOptionsFile().getData()
+                        new File(UserPreferences.optionsFile().getData()
                           .getWorkingDirectory(), "DaylightChartReport.jrxml"),
                         Messages
                           .getString("DaylightChartGui.Message.Error.CannotOpenFile"));

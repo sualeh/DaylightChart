@@ -62,6 +62,7 @@ import daylightchart.gui.actions.SaveReportFileAction;
 import daylightchart.gui.util.BareBonesBrowserLaunch;
 import daylightchart.gui.util.ExitAction;
 import daylightchart.gui.util.GuiAction;
+import daylightchart.options.Options;
 import daylightchart.options.UserPreferences;
 
 /**
@@ -154,7 +155,7 @@ public final class DaylightChartGui
       locationsList = null;
       final DaylightChartReport daylightChartReport = new DaylightChartReport(location,
                                                                               UserPreferences
-                                                                                .getOptionsFile()
+                                                                                .optionsFile()
                                                                                 .getData());
       final ChartPanel chartPanel = new ChartPanel(daylightChartReport
         .getChart());
@@ -189,7 +190,7 @@ public final class DaylightChartGui
     }
     final DaylightChartReport daylightChartReport = new DaylightChartReport(location,
                                                                             UserPreferences
-                                                                              .getOptionsFile()
+                                                                              .optionsFile()
                                                                               .getData());
     if (slimUi)
     {
@@ -216,7 +217,7 @@ public final class DaylightChartGui
     // Add to recent locations
     UserPreferences.addRecentLocation(location);
     final List<Location> recentLocations = UserPreferences
-      .getRecentLocationsFile().getData();
+      .recentLocationsFile().getData();
     recentLocationsMenu.removeAll();
     for (Location recentLocation: recentLocations)
     {
@@ -408,7 +409,9 @@ public final class DaylightChartGui
       public void itemStateChanged(final ItemEvent e)
       {
         final boolean slimUi = e.getStateChange() == ItemEvent.SELECTED;
-        UserPreferences.setSlimUi(slimUi);
+        final Options options = UserPreferences.optionsFile().getData();
+        options.setSlimUi(slimUi);
+        UserPreferences.optionsFile().save(options);
         ResetAllAction.restart(DaylightChartGui.this, slimUi);
       }
     });
