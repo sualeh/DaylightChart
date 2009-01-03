@@ -147,7 +147,18 @@ public final class DaylightChartGui
       createHelpMenu(menuBar, toolBar);
 
       // Open the first location
-      addLocationTab(locationsList.getSelectedLocation());
+      Location firstTabLocation;
+      List<Location> recentLocations = UserPreferences.recentLocationsFile()
+        .getData();
+      if (recentLocations.size() > 0)
+      {
+        firstTabLocation = recentLocations.get(0);
+      }
+      else
+      {
+        firstTabLocation = locationsList.getSelectedLocation();
+      }
+      addLocationTab(firstTabLocation);
     }
     else
     {
