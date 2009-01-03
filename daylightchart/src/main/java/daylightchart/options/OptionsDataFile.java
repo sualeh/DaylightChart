@@ -53,34 +53,19 @@ public final class OptionsDataFile
 
   /**
    * Constructor.
-   */
-  public OptionsDataFile()
-  {
-    this(new File("."));
-
-    createDefaultOptions();
-  }
-
-  /**
-   * Constructor.
    * 
    * @param settingsDirectory
    *        Settings directory
    */
   public OptionsDataFile(final File settingsDirectory)
   {
-    super(new File(settingsDirectory, "options.xml"), new OptionsFileType());
-    // Validation
-    if (!settingsDirectory.isDirectory() || !settingsDirectory.exists())
-    {
-      throw new IllegalArgumentException("Settings directory is not a directory");
-    }
+    super(settingsDirectory, "options.xml", new OptionsFileType());
   }
 
   /**
    * Loads options from a file.
    */
-  public void load()
+  protected void load()
   {
     if (!exists())
     {
@@ -102,7 +87,7 @@ public final class OptionsDataFile
     load(input);
   }
 
-  public void load(final InputStream... input)
+  protected void load(final InputStream... input)
   {
     if (input == null || input.length == 0)
     {
@@ -137,14 +122,18 @@ public final class OptionsDataFile
     }
   }
 
-  public void loadWithFallback()
+  protected void loadWithFallback()
   {
     // 1. Load from file
     load();
     // 2. Create default options
     if (data == null)
     {
-      createDefaultOptions();
+      final ChartOptions chartOptions = new ChartOptions();
+      chartOptions.copyFromChart(new DaylightChart());
+
+      data = new Options();
+      data.setChartOptions(chartOptions);
     }
   }
 
@@ -174,15 +163,6 @@ public final class OptionsDataFile
     {
       LOGGER.log(Level.WARNING, "Could save options to " + getFile(), e);
     }
-  }
-
-  private void createDefaultOptions()
-  {
-    final ChartOptions chartOptions = new ChartOptions();
-    chartOptions.copyFromChart(new DaylightChart());
-
-    data = new Options();
-    data.setChartOptions(chartOptions);
   }
 
 }

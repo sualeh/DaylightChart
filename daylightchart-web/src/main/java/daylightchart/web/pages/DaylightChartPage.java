@@ -1,6 +1,7 @@
 package daylightchart.web.pages;
 
 
+import java.io.File;
 import java.util.Calendar;
 
 import org.apache.wicket.markup.html.WebPage;
@@ -29,7 +30,7 @@ public class DaylightChartPage
     final int height = (int) (properties.getBrowserHeight() * 0.9);
     final int width = (int) (properties.getBrowserWidth() * 0.9);
 
-    final Options options = new OptionsDataFile().getData();
+    final Options options = new OptionsDataFile(new File(".")).getData();
     final RiseSetYearData riseSetData = RiseSetUtility
       .createRiseSetYear(location,
                          Calendar.getInstance().get(Calendar.YEAR),

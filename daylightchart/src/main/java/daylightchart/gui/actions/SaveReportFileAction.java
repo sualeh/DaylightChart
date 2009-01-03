@@ -83,7 +83,7 @@ public final class SaveReportFileAction
       {
         try
         {
-          ReportDataFile reportFile = new ReportDataFile(selectedFile.getFile());
+          ReportDataFile reportFile = new ReportDataFile(selectedFile);
           reportFile.save(UserPreferences.getReport());
         }
         catch (final Exception e)

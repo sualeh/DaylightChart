@@ -35,6 +35,7 @@ import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import net.sf.jasperreports.engine.xml.JRXmlWriter;
+import daylightchart.gui.actions.ReportDesignFileType;
 
 /**
  * Represents a report file, with data.
@@ -42,7 +43,7 @@ import net.sf.jasperreports.engine.xml.JRXmlWriter;
  * @author sfatehi
  */
 public class ReportDataFile
-  extends BaseDataFile<ReportFileType, JasperReport>
+  extends BaseDataFile<ReportDesignFileType, JasperReport>
 {
 
   private static final Logger LOGGER = Logger.getLogger(ReportDataFile.class
@@ -54,9 +55,22 @@ public class ReportDataFile
    * @param reportDataFile
    *        File
    */
-  public ReportDataFile(final BaseTypedFile<ReportFileType> reportDataFile)
+  public ReportDataFile(final BaseTypedFile<ReportDesignFileType> reportDataFile)
   {
-    this(reportDataFile.getFile());
+    this(reportDataFile.getFile(), reportDataFile.getFileType());
+  }
+
+  /**
+   * Constructor.
+   * 
+   * @param settingsDirectory
+   *        Settings directory
+   */
+  public ReportDataFile(final File settingsDirectory)
+  {
+    super(settingsDirectory,
+          "DaylightChartReport.jrxml",
+          ReportDesignFileType.report_design);
   }
 
   /**
@@ -64,10 +78,12 @@ public class ReportDataFile
    * 
    * @param file
    *        File
+   * @param fileType
+   *        File type
    */
-  public ReportDataFile(final File file)
+  public ReportDataFile(final File file, ReportDesignFileType fileType)
   {
-    super(file, new ReportFileType());
+    super(file, fileType);
   }
 
   /**
@@ -96,7 +112,7 @@ public class ReportDataFile
     load(input);
   }
 
-  public void load(final InputStream... input)
+  protected void load(final InputStream... input)
   {
     if (input == null || input.length == 0)
     {
@@ -133,7 +149,7 @@ public class ReportDataFile
    * Loads a report from a file, falling back to an internal resource
    * with the same name.
    */
-  public void loadWithFallback()
+  protected void loadWithFallback()
   {
     // 1. Load from file
     load();

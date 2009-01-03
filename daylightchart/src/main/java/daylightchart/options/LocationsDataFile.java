@@ -71,10 +71,21 @@ public final class LocationsDataFile
   }
 
   /**
+   * Constructor.
+   * 
+   * @param settingsDirectory
+   *        Settings directory
+   */
+  public LocationsDataFile(final File settingsDirectory)
+  {
+    super(settingsDirectory, "locations.data", LocationFileType.data);
+  }
+
+  /**
    * Loads a list of locations from a file of a given format, falling
    * back to an internal resource with the same name.
    */
-  public void loadWithFallback()
+  protected void loadWithFallback()
   {
     // 1. Load from file
     load();

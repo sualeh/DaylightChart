@@ -46,15 +46,9 @@ final class RecentLocationsDataFile
    * @param settingsDirectory
    *        Settings directory
    */
-  RecentLocationsDataFile(final File settingsDirectory)
+  public RecentLocationsDataFile(final File settingsDirectory)
   {
-    super(new File(settingsDirectory, "recent.locations.data"),
-          LocationFileType.data);
-    // Validation
-    if (!settingsDirectory.isDirectory() || !settingsDirectory.exists())
-    {
-      throw new IllegalArgumentException("Settings directory is not a directory");
-    }
+    super(settingsDirectory, "recent.locations.data", LocationFileType.data);
   }
 
   /**
@@ -83,7 +77,7 @@ final class RecentLocationsDataFile
     save();
   }
 
-  public void loadWithFallback()
+  protected void loadWithFallback()
   {
     load();
     if (data == null)

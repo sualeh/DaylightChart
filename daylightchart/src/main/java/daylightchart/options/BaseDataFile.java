@@ -42,7 +42,7 @@ import java.util.logging.Logger;
  * @param <D>
  *        Data object type
  */
-public abstract class BaseDataFile<T extends FileType, D>
+abstract class BaseDataFile<T extends FileType, D>
   extends BaseTypedFile<T>
 {
 
@@ -86,6 +86,30 @@ public abstract class BaseDataFile<T extends FileType, D>
   }
 
   /**
+   * Constructor.
+   * 
+   * @param settingsDirectory
+   *        Settings directory
+   * @param resource
+   *        Resource
+   * @param fileType
+   *        File type
+   */
+  BaseDataFile(final File settingsDirectory,
+               final String resource,
+               final T fileType)
+  {
+    this(new File(settingsDirectory, resource), fileType);
+    // Validation
+    if (!settingsDirectory.isDirectory() || !settingsDirectory.exists())
+    {
+      throw new IllegalArgumentException("Settings directory is not a directory");
+    }
+    // Load
+    loadWithFallback();
+  }
+
+  /**
    * Gets data.
    * 
    * @return Data
@@ -94,22 +118,6 @@ public abstract class BaseDataFile<T extends FileType, D>
   {
     return data;
   }
-
-  /**
-   * Loads data from the file.
-   */
-  public abstract void load();
-
-  /**
-   * Loads data from the file, falling back to a default that is usually
-   * loaded from an internal resource.
-   */
-  public abstract void loadWithFallback();
-
-  /**
-   * Saves data to a file.
-   */
-  protected abstract void save();
 
   /**
    * Sets data, and saves it.
@@ -146,6 +154,22 @@ public abstract class BaseDataFile<T extends FileType, D>
     }
   }
 
+  /**
+   * Loads data from the file.
+   */
+  protected abstract void load();
+
   protected abstract void load(final InputStream... inputs);
+
+  /**
+   * Loads data from the file, falling back to a default that is usually
+   * loaded from an internal resource.
+   */
+  protected abstract void loadWithFallback();
+
+  /**
+   * Saves data to a file.
+   */
+  protected abstract void save();
 
 }

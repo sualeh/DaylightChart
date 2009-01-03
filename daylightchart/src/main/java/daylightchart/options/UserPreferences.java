@@ -32,6 +32,7 @@ import org.apache.commons.lang.StringUtils;
 import org.geoname.data.Location;
 
 import daylightchart.gui.actions.LocationFileType;
+import daylightchart.gui.actions.ReportDesignFileType;
 
 /**
  * User preferences for the GUI.
@@ -149,7 +150,8 @@ public final class UserPreferences
   public static boolean importReport(final File reportFile)
   {
     boolean imported = false;
-    ReportDataFile importedReportFile = new ReportDataFile(reportFile);
+    ReportDataFile importedReportFile = new ReportDataFile(reportFile,
+                                                           ReportDesignFileType.report_design);
     importedReportFile.load();
     JasperReport report = importedReportFile.getData();
     if (report != null)
@@ -223,7 +225,8 @@ public final class UserPreferences
     recentLocationsFile.loadWithFallback();
 
     reportFile = new ReportDataFile(new File(settingsDirectory,
-                                             "DaylightChartReport.jrxml"));
+                                             "DaylightChartReport.jrxml"),
+                                    ReportDesignFileType.report_design);
     reportFile.loadWithFallback();
 
     optionsFile = new OptionsDataFile(settingsDirectory);
@@ -290,7 +293,8 @@ public final class UserPreferences
   {
     // Try loading from user preferences
     reportFile = new ReportDataFile(new File(settingsDirectory,
-                                             "DaylightChartReport.jrxml"));
+                                             "DaylightChartReport.jrxml"),
+                                    ReportDesignFileType.report_design);
     reportFile.loadWithFallback();
 
     if (reportFile.getData() == null)

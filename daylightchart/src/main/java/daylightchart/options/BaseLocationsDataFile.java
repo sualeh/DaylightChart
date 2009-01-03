@@ -50,7 +50,7 @@ import daylightchart.gui.actions.LocationFileType;
  * 
  * @author sfatehi
  */
-public abstract class BaseLocationsDataFile
+abstract class BaseLocationsDataFile
   extends BaseDataFile<LocationFileType, List<Location>>
 {
 
@@ -60,31 +60,38 @@ public abstract class BaseLocationsDataFile
   /**
    * Constructor.
    * 
-   * @param locationDataFile
-   *        File
-   */
-  public BaseLocationsDataFile(final BaseTypedFile<LocationFileType> locationDataFile)
-  {
-    this(locationDataFile.getFile(), locationDataFile.getFileType());
-  }
-
-  /**
-   * Constructor.
-   * 
    * @param file
    *        File
    * @param fileType
    *        Location file type
    */
-  public BaseLocationsDataFile(final File file, final LocationFileType fileType)
+  protected BaseLocationsDataFile(final File file,
+                                  final LocationFileType fileType)
   {
     super(file, fileType);
   }
 
   /**
+   * Constructor.
+   * 
+   * @param settingsDirectory
+   *        Settings directory
+   * @param resource
+   *        Resource
+   * @param fileType
+   *        File type
+   */
+  protected BaseLocationsDataFile(File settingsDirectory,
+                                  String resource,
+                                  LocationFileType fileType)
+  {
+    super(settingsDirectory, resource, fileType);
+  }
+
+  /**
    * Loads a list of locations from a file of a given format.
    */
-  public void load()
+  public final void load()
   {
     if (!exists())
     {
@@ -123,36 +130,6 @@ public abstract class BaseLocationsDataFile
     }
 
     load(inputs.toArray(new InputStream[inputs.size()]));
-  }
-
-  /**
-   * Saves locations to a file.
-   */
-  protected void save()
-  {
-    final File file = getFile();
-    if (file == null)
-    {
-      LOGGER.log(Level.WARNING, "No locations file provided");
-      return;
-    }
-
-    try
-    {
-      file.delete();
-
-      final Writer writer = getFileWriter(file);
-      if (writer == null)
-      {
-        return;
-      }
-
-      LocationFormatter.formatLocations(data, writer);
-    }
-    catch (final Exception e)
-    {
-      LOGGER.log(Level.WARNING, "Could not save locations to " + file, e);
-    }
   }
 
   protected final void load(final InputStream... inputs)
@@ -206,6 +183,36 @@ public abstract class BaseLocationsDataFile
     if (data.size() == 0)
     {
       data = null;
+    }
+  }
+
+  /**
+   * Saves locations to a file.
+   */
+  protected final void save()
+  {
+    final File file = getFile();
+    if (file == null)
+    {
+      LOGGER.log(Level.WARNING, "No locations file provided");
+      return;
+    }
+
+    try
+    {
+      file.delete();
+
+      final Writer writer = getFileWriter(file);
+      if (writer == null)
+      {
+        return;
+      }
+
+      LocationFormatter.formatLocations(data, writer);
+    }
+    catch (final Exception e)
+    {
+      LOGGER.log(Level.WARNING, "Could not save locations to " + file, e);
     }
   }
 
