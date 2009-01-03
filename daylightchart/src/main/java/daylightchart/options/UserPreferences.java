@@ -23,15 +23,12 @@ package daylightchart.options;
 
 
 import java.io.File;
-import java.util.List;
 import java.util.logging.Logger;
 
 import net.sf.jasperreports.engine.JasperReport;
 
-import org.apache.commons.lang.StringUtils;
 import org.geoname.data.Location;
 
-import daylightchart.gui.actions.LocationFileType;
 import daylightchart.gui.actions.ReportDesignFileType;
 
 /**
@@ -46,7 +43,6 @@ public final class UserPreferences
     .getName());
 
   private static final File scratchDirectory;
-  private static File settingsDirectory;
 
   private static LocationsDataFile locationsFile;
   private static RecentLocationsDataFile recentLocationsFile;
@@ -58,9 +54,7 @@ public final class UserPreferences
     scratchDirectory = new File(System.getProperty("java.io.tmpdir"), ".");
     validateDirectory(scratchDirectory);
 
-    settingsDirectory = new File(System.getProperty("user.home", "."),
-                                 ".daylightchart");
-    initialize();
+    initialize((File) null);
   }
 
   /**
@@ -84,56 +78,13 @@ public final class UserPreferences
     recentLocationsFile.delete();
     reportFile.delete();
 
-    if (settingsDirectory.exists())
-    {
-      settingsDirectory.delete();
-    }
-
-    initialize();
+    initialize(optionsFile.getDirectory());
   }
 
   /**
-   * Gets the locations for the current user.
+   * Gets the scratch directory.
    * 
-   * @return Locations
-   */
-  public static List<Location> getLocations()
-  {
-    return locationsFile.getData();
-  }
-
-  /**
-   * Gets the options for the current user.
-   * 
-   * @return Options
-   */
-  public static Options getOptions()
-  {
-    return optionsFile.getData();
-  }
-
-  /**
-   * Gets the recent locations for the current user.
-   * 
-   * @return Locations
-   */
-  public static List<Location> getRecentLocations()
-  {
-    return recentLocationsFile.getData();
-  }
-
-  /**
-   * Gets the report for the current user.
-   * 
-   * @return Report
-   */
-  public static JasperReport getReport()
-  {
-    return reportFile.getData();
-  }
-
-  /**
-   * @return the workingDirectory
+   * @return Gets the scratch directory
    */
   public static File getScratchDirectory()
   {
@@ -156,7 +107,7 @@ public final class UserPreferences
     JasperReport report = importedReportFile.getData();
     if (report != null)
     {
-      setReport(report);
+      UserPreferences.reportFile.save(report);
       imported = true;
     }
     return imported;
@@ -177,60 +128,32 @@ public final class UserPreferences
   }
 
   /**
-   * Sets the locations for the current user.
-   * 
-   * @param locations
-   *        Locations
-   */
-  public static void setLocations(final List<Location> locations)
-  {
-    locationsFile.save(locations);
-  }
-
-  /**
-   * Sets the options for the current user.
-   * 
-   * @param options
-   *        Options
-   */
-  public static void setOptions(final Options options)
-  {
-    optionsFile.save(options);
-  }
-
-  /**
    * Set the location of the settings directory.
    * 
-   * @param settingsDirectoryPath
+   * @param settingsDir
    *        Location of the settings directory
    */
-  public static void setSettingsDirectory(final String settingsDirectoryPath)
+  public static void initialize(final File settingsDir)
   {
-    if (StringUtils.isBlank(settingsDirectoryPath))
+    final File settingsDirectory;
+    if (settingsDir == null)
     {
-      return;
+      settingsDirectory = new File(System.getProperty("user.home", "."),
+                                   ".daylightchart");
     }
-    final File settingsDirectory = new File(settingsDirectoryPath);
+    else
+    {
+      settingsDirectory = settingsDir;
+    }
 
     settingsDirectory.mkdirs();
     validateDirectory(settingsDirectory);
-    LOGGER.fine("Created settings directory " + settingsDirectoryPath);
-
-    UserPreferences.settingsDirectory = settingsDirectory;
-    locationsFile = new LocationsDataFile(new File(settingsDirectory,
-                                                   "locations.data"),
-                                          LocationFileType.data);
-
-    recentLocationsFile = new RecentLocationsDataFile(settingsDirectory);
-    recentLocationsFile.loadWithFallback();
-
-    reportFile = new ReportDataFile(new File(settingsDirectory,
-                                             "DaylightChartReport.jrxml"),
-                                    ReportDesignFileType.report_design);
-    reportFile.loadWithFallback();
+    LOGGER.fine("Created settings directory " + settingsDirectory);
 
     optionsFile = new OptionsDataFile(settingsDirectory);
-    optionsFile.loadWithFallback();
+    locationsFile = new LocationsDataFile(settingsDirectory);
+    recentLocationsFile = new RecentLocationsDataFile(settingsDirectory);
+    reportFile = new ReportDataFile(settingsDirectory);
   }
 
   /**
@@ -259,65 +182,6 @@ public final class UserPreferences
     optionsFile.save(options);
   }
 
-  private static void initialize()
-  {
-    setSettingsDirectory(settingsDirectory.getAbsolutePath());
-
-    initializeLocations();
-    initializeRecentLocations();
-    initializeReport();
-    initializeOptions();
-  }
-
-  private static void initializeLocations()
-  {
-    locationsFile = new LocationsDataFile(new File(settingsDirectory,
-                                                   "locations.data"),
-                                          LocationFileType.data);
-    locationsFile.loadWithFallback();
-  }
-
-  private static void initializeOptions()
-  {
-    optionsFile = new OptionsDataFile(settingsDirectory);
-    optionsFile.loadWithFallback();
-  }
-
-  private static void initializeRecentLocations()
-  {
-    recentLocationsFile = new RecentLocationsDataFile(settingsDirectory);
-    recentLocationsFile.loadWithFallback();
-  }
-
-  private static void initializeReport()
-  {
-    // Try loading from user preferences
-    reportFile = new ReportDataFile(new File(settingsDirectory,
-                                             "DaylightChartReport.jrxml"),
-                                    ReportDesignFileType.report_design);
-    reportFile.loadWithFallback();
-
-    if (reportFile.getData() == null)
-    {
-      throw new RuntimeException("Cannot load report");
-    }
-  }
-
-  /**
-   * Sets the report for the current user.
-   * 
-   * @param report
-   *        Report
-   */
-  private static void setReport(final JasperReport report)
-  {
-    reportFile.save(report);
-  }
-
-  /**
-   * @param directory
-   *        the workingDirectory to set
-   */
   private static void validateDirectory(final File directory)
   {
     final boolean isDirectoryValid = directory != null && directory.exists()
@@ -328,6 +192,26 @@ public final class UserPreferences
       throw new IllegalArgumentException("Directory is not writable - "
                                          + directory);
     }
+  }
+
+  public static LocationsDataFile getLocationsFile()
+  {
+    return locationsFile;
+  }
+
+  public static RecentLocationsDataFile getRecentLocationsFile()
+  {
+    return recentLocationsFile;
+  }
+
+  public static ReportDataFile getReportFile()
+  {
+    return reportFile;
+  }
+
+  public static OptionsDataFile getOptionsFile()
+  {
+    return optionsFile;
   }
 
   private UserPreferences()

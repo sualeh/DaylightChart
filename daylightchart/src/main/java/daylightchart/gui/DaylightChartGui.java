@@ -154,7 +154,8 @@ public final class DaylightChartGui
       locationsList = null;
       final DaylightChartReport daylightChartReport = new DaylightChartReport(location,
                                                                               UserPreferences
-                                                                                .getOptions());
+                                                                                .getOptionsFile()
+                                                                                .getData());
       final ChartPanel chartPanel = new ChartPanel(daylightChartReport
         .getChart());
       chartPanel.setPreferredSize(ChartConfiguration.chartDimension);
@@ -188,7 +189,8 @@ public final class DaylightChartGui
     }
     final DaylightChartReport daylightChartReport = new DaylightChartReport(location,
                                                                             UserPreferences
-                                                                              .getOptions());
+                                                                              .getOptionsFile()
+                                                                              .getData());
     if (slimUi)
     {
       final File reportFile = new File(UserPreferences.getScratchDirectory(),
@@ -213,7 +215,8 @@ public final class DaylightChartGui
 
     // Add to recent locations
     UserPreferences.addRecentLocation(location);
-    final List<Location> recentLocations = UserPreferences.getRecentLocations();
+    final List<Location> recentLocations = UserPreferences
+      .getRecentLocationsFile().getData();
     recentLocationsMenu.removeAll();
     for (Location recentLocation: recentLocations)
     {

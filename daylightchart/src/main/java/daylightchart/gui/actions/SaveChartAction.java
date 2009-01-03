@@ -72,7 +72,8 @@ public final class SaveChartAction
       final DaylightChartReport daylightChartReport = new DaylightChartReport(mainWindow
                                                                                 .getSelectedLocation(),
                                                                               UserPreferences
-                                                                                .getOptions());
+                                                                                .getOptionsFile()
+                                                                                .getData());
       final List<ExtensionFileFilter<ChartFileType>> fileFilters = new ArrayList<ExtensionFileFilter<ChartFileType>>();
       for (final ChartFileType chartFileType: ChartFileType.values())
       {
@@ -85,7 +86,7 @@ public final class SaveChartAction
                         Messages
                           .getString("DaylightChartGui.Menu.File.SaveChart"),
                         fileFilters,
-                        new File(UserPreferences.getOptions()
+                        new File(UserPreferences.getOptionsFile().getData()
                           .getWorkingDirectory(), reportFilename),
                         Messages
                           .getString("DaylightChartGui.Message.Confirm.FileOverwrite")); //$NON-NLS-1$

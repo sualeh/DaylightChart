@@ -22,11 +22,13 @@
 package daylightchart;
 
 
+import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.UIManager;
 
+import org.apache.commons.lang.StringUtils;
 import org.geoname.data.Location;
 import org.geoname.parser.LocationParser;
 import org.geoname.parser.ParserException;
@@ -95,7 +97,10 @@ public final class Main
       }
     }
 
-    UserPreferences.setSettingsDirectory(preferencesDirectory);
+    if (StringUtils.isNotBlank(preferencesDirectory))
+    {
+      UserPreferences.initialize(new File(preferencesDirectory));
+    }
 
     // Set UI look and feel
     try
@@ -110,7 +115,7 @@ public final class Main
 
     if (!slimUi)
     {
-      slimUi = UserPreferences.getOptions().isSlimUi();
+      slimUi = UserPreferences.getOptionsFile().getData().isSlimUi();
     }
     UserPreferences.setSlimUi(slimUi);
     new DaylightChartGui(location, slimUi).setVisible(true);

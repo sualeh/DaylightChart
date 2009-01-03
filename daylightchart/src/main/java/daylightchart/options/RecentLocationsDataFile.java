@@ -34,7 +34,7 @@ import daylightchart.gui.actions.LocationFileType;
  * 
  * @author sfatehi
  */
-final class RecentLocationsDataFile
+public final class RecentLocationsDataFile
   extends BaseLocationsDataFile
 {
 

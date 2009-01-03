@@ -76,7 +76,7 @@ public final class SaveLocationsFileAction
                         Messages
                           .getString("DaylightChartGui.Menu.File.SaveLocations"),
                         fileFilters,
-                        new File(UserPreferences.getOptions()
+                        new File(UserPreferences.getOptionsFile().getData()
                           .getWorkingDirectory(), "locations.data"),
                         Messages
                           .getString("DaylightChartGui.Message.Confirm.FileOverwrite")); //$NON-NLS-1$

@@ -144,8 +144,9 @@ class LocationsList
       }
     });
 
-    final List<Location> locations = UserPreferences.getLocations();
-    Collections.sort(locations, UserPreferences.getOptions()
+    final List<Location> locations = UserPreferences.getLocationsFile()
+      .getData();
+    Collections.sort(locations, UserPreferences.getOptionsFile().getData()
       .getLocationsSortOrder());
     setLocations(locations);
   }
@@ -228,12 +229,12 @@ class LocationsList
   {
     if (locations != null && locations.size() > 0)
     {
-      Collections.sort(locations, UserPreferences.getOptions()
+      Collections.sort(locations, UserPreferences.getOptionsFile().getData()
         .getLocationsSortOrder());
       this.locations = locations;
       locationsList.setListData(new Vector<Location>(locations));
       locationsList.setSelectedIndex(0);
-      UserPreferences.setLocations(locations);
+      UserPreferences.getLocationsFile().save(locations);
     }
   }
 
