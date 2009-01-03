@@ -54,17 +54,6 @@ public final class UserPreferences
   }
 
   /**
-   * Adds a recent location for the current user.
-   * 
-   * @param location
-   *        Location
-   */
-  public static void addRecentLocation(final Location location)
-  {
-    recentLocationsFile.add(location);
-  }
-
-  /**
    * Clears all user preferences.
    */
   public static void clear()

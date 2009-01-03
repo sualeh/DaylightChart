@@ -215,7 +215,7 @@ public final class DaylightChartGui
     }
 
     // Add to recent locations
-    UserPreferences.addRecentLocation(location);
+    UserPreferences.recentLocationsFile().add(location);
     final List<Location> recentLocations = UserPreferences
       .recentLocationsFile().getData();
     recentLocationsMenu.removeAll();
