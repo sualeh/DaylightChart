@@ -183,11 +183,7 @@ public final class UserPreferences
    */
   public static void setLocations(final List<Location> locations)
   {
-    if (locations == null)
-    {
-      return;
-    }
-    locationsFile.setLocations(locations);
+    locationsFile.setData(locations);
     locationsFile.save();
   }
 
@@ -316,10 +312,6 @@ public final class UserPreferences
    */
   private static void setReport(final JasperReport report)
   {
-    if (report == null)
-    {
-      return;
-    }
     reportFile.setData(report);
     reportFile.save();
   }

@@ -99,19 +99,4 @@ public final class LocationsDataFile
     }
   }
 
-  /**
-   * Sets the locations for the current user.
-   * 
-   * @param locations
-   *        Locations
-   */
-  public void setLocations(final List<Location> locations)
-  {
-    if (locations == null)
-    {
-      return;
-    }
-    this.data = locations;
-  }
-
 }
