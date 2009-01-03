@@ -156,7 +156,7 @@ public final class OptionsDataFile
    * @param options
    *        Options
    */
-  public void save()
+  protected void save()
   {
     try
     {

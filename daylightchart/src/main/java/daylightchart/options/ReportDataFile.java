@@ -154,7 +154,7 @@ public class ReportDataFile
   /**
    * Saves report to a file.
    */
-  public void save()
+  protected void save()
   {
     final File file = getFile();
     try

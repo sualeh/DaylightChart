@@ -101,19 +101,20 @@ public abstract class BaseDataFile<T extends FileType, D>
   /**
    * Saves data to a file.
    */
-  public abstract void save();
+  protected abstract void save();
 
   /**
-   * Sets data.
+   * Sets data, and saves it.
    * 
    * @param data
    *        Data
    */
-  public final void setData(D data)
+  public final void save(D data)
   {
     if (data != null)
     {
       this.data = data;
+      save();
     }
   }
 

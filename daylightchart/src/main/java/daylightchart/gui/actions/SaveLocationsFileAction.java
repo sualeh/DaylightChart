@@ -85,8 +85,7 @@ public final class SaveLocationsFileAction
         try
         {
           LocationsDataFile locationDataFile = new LocationsDataFile(selectedFile);
-          locationDataFile.setData(mainWindow.getLocations());
-          locationDataFile.save();
+          locationDataFile.save(mainWindow.getLocations());
         }
         catch (final Exception e)
         {

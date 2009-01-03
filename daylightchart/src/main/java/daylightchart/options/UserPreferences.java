@@ -71,7 +71,6 @@ public final class UserPreferences
   public static void addRecentLocation(final Location location)
   {
     recentLocationsFile.add(location);
-    recentLocationsFile.save();
   }
 
   /**
@@ -183,8 +182,7 @@ public final class UserPreferences
    */
   public static void setLocations(final List<Location> locations)
   {
-    locationsFile.setData(locations);
-    locationsFile.save();
+    locationsFile.save(locations);
   }
 
   /**
@@ -195,8 +193,7 @@ public final class UserPreferences
    */
   public static void setOptions(final Options options)
   {
-    optionsFile.setData(options);
-    optionsFile.save();
+    optionsFile.save(options);
   }
 
   /**
@@ -243,8 +240,7 @@ public final class UserPreferences
   {
     Options options = optionsFile.getData();
     options.setSlimUi(slimUi);
-    optionsFile.setData(options);
-    optionsFile.save();
+    optionsFile.save(options);
   }
 
   /**
@@ -257,8 +253,7 @@ public final class UserPreferences
   {
     Options options = optionsFile.getData();
     options.setWorkingDirectory(workingDirectory);
-    optionsFile.setData(options);
-    optionsFile.save();
+    optionsFile.save(options);
   }
 
   private static void initialize()
@@ -312,8 +307,7 @@ public final class UserPreferences
    */
   private static void setReport(final JasperReport report)
   {
-    reportFile.setData(report);
-    reportFile.save();
+    reportFile.save(report);
   }
 
   /**

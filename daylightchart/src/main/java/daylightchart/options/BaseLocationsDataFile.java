@@ -128,7 +128,7 @@ public abstract class BaseLocationsDataFile
   /**
    * Saves locations to a file.
    */
-  public void save()
+  protected void save()
   {
     final File file = getFile();
     if (file == null)
