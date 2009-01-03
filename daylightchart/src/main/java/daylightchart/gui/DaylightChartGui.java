@@ -333,6 +333,9 @@ public final class DaylightChartGui
     final ExitAction exit = new ExitAction(this, Messages
       .getString("DaylightChartGui.Menu.File.Exit")); //$NON-NLS-1$
 
+    final boolean slimUi = UserPreferences.optionsFile().getData().isSlimUi();
+    printChart.setEnabled(!slimUi);
+
     final JMenu menu = new JMenu(Messages
       .getString("DaylightChartGui.Menu.File")); //$NON-NLS-1$
     menu.setMnemonic('F');
