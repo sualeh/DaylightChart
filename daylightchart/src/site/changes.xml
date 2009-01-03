@@ -1,303 +1,189 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <document>
-  <properties>
-    <title>Daylight Chart</title>
-    <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
-  </properties>
-  <body>
-    <release
-      version="3.0"
-      date="2009-01-03">
-      <action
-        dev="Sualeh Fatehi"
-        type="add">
-        Updated all third-party libraries to the latest versions, including reporting.
-      </action>      
-      <action
-        dev="Sualeh Fatehi"
-        type="fix">
-        Export of JPEG charts now shows the right colors.
+	<properties>
+		<title>Daylight Chart</title>
+		<author email="sualeh@hotmail.com">Sualeh Fatehi</author>
+	</properties>
+	<body>
+		<release version="3.0" date="2009-01-03">
+			<action dev="Sualeh Fatehi" type="add">
+				Updates to all third-party libraries to the latest versions, including
+				reporting. Major internal code reorganization.
       </action>
-      <action
-        dev="Sualeh Fatehi"
-        type="fix">
-        Print menu item is disabled in slim mode, since printing is done from the browser.
-      </action>     
-      <action
-        dev="Sualeh Fatehi"
-        type="add">
-        Recent locations list.
-      </action>        
-    </release>    
-    <release
-      version="2.8"
-      date="2008-12-27">
-      <action
-        dev="Sualeh Fatehi"
-        type="add">
-        Created a new project for the parsing of GNIS files and GNS files.
-      </action>      
-      <action
-        dev="Sualeh Fatehi"
-        type="fix">
-        Fixed reading of modified GNIS files and GNS files, since the file
-        formats had changed.
+			<action dev="Sualeh Fatehi" type="fix">
+				Export of JPEG charts now shows the right colors.
       </action>
-    </release>  
-    <release
-      version="2.7"
-      date="2008-10-10">
-      <action
-        dev="Sualeh Fatehi"
-        type="fix">
-        Fixed reading of modified GNIS files and GNS files, since the file
-        formats had changed.
+			<action dev="Sualeh Fatehi" type="fix">
+				Print menu item is disabled in slim mode, since printing is done from the
+				browser.
       </action>
-    </release>  
-    <release
-      version="2.6"
-      date="2008-04-23">
-      <action
-        dev="Sualeh Fatehi"
-        type="add">
-        Moved JasperReport definition to it's own XML file in the preferences
-        directory.
+			<action dev="Sualeh Fatehi" type="add">
+				Recent locations list.
       </action>
-      <action
-        dev="Sualeh Fatehi"
-        type="add">
-        New command line switch to specify the preferences directory.
+		</release>
+		<release version="2.8" date="2008-12-27">
+			<action dev="Sualeh Fatehi" type="add">
+				Created a new project for the parsing of GNIS files and GNS files.
       </action>
-      <action
-        dev="Sualeh Fatehi"
-        type="fix">
-        Better error messages.
+			<action dev="Sualeh Fatehi" type="fix">
+				Fixed reading of modified GNIS files and GNS files, since the file
+				formats had changed.
       </action>
-      <action
-        dev="Sualeh Fatehi"
-        type="fix">
-        Better handling of file reading and writing, in UTF-8 format.
+		</release>
+		<release version="2.7" date="2008-10-10">
+			<action dev="Sualeh Fatehi" type="fix">
+				Fixed reading of modified GNIS files and GNS files, since the file
+				formats had changed.
       </action>
-      <action
-        dev="Sualeh Fatehi"
-        type="fix">
-        Fixed reading of modified GNIS files and GNS files, since the file
-        formats had changed.
+		</release>
+		<release version="2.6" date="2008-04-23">
+			<action dev="Sualeh Fatehi" type="add">
+				Moved JasperReport definition to it's own XML file in the preferences
+				directory.
       </action>
-    </release>
-    <release
-      version="2.5"
-      date="2008-01-23">
-      <action
-        dev="Sualeh Fatehi"
-        type="add">
-        Moved all configuration to the .daylightchart directory in the user's
-        home directory.
+			<action dev="Sualeh Fatehi" type="add">
+				New command line switch to specify the preferences directory.
       </action>
-      <action
-        dev="Sualeh Fatehi"
-        type="add">
-        Added the ability to import and export (that is, customize) the report
-        definition for PDF and HTML formats.
+			<action dev="Sualeh Fatehi" type="fix">
+				Better error messages.
       </action>
-    </release>
-    <release
-      version="2.4"
-      date="2008-01-16">
-      <action
-        dev="Sualeh Fatehi"
-        type="add">
-        Added a new "slim" mode that shows the main user interface in an
-        advanced mode.
+			<action dev="Sualeh Fatehi" type="fix">
+				Better handling of file reading and writing, in UTF-8 format.
       </action>
-      <action
-        dev="Sualeh Fatehi"
-        type="add">
-        The location dialog now allows you to change the time zone.
+			<action dev="Sualeh Fatehi" type="fix">
+				Fixed reading of modified GNIS files and GNS files, since the file
+				formats had changed.
       </action>
-    </release>
-    <release
-      version="2.3"
-      date="2008-01-14">
-      <action
-        dev="Sualeh Fatehi"
-        type="fix">
-        Fixed Unix launch.
+		</release>
+		<release version="2.5" date="2008-01-23">
+			<action dev="Sualeh Fatehi" type="add">
+				Moved all configuration to the .daylightchart directory in the user's
+				home directory.
       </action>
-      <action
-        dev="Sualeh Fatehi"
-        type="fix">
-        Tweaked PDF and HTML export.
+			<action dev="Sualeh Fatehi" type="add">
+				Added the ability to import and export (that is, customize) the report
+				definition for PDF and HTML formats.
       </action>
-      <action
-        dev="Sualeh Fatehi"
-        type="fix">
-        Changed copyright notices in the source.
+		</release>
+		<release version="2.4" date="2008-01-16">
+			<action dev="Sualeh Fatehi" type="add">
+				Added a new "slim" mode that shows the main user interface in an
+				advanced mode.
       </action>
-    </release>
-    <release
-      version="2.2"
-      date="2008-01-12">
-      <action
-        dev="Sualeh Fatehi"
-        type="add">
-        Added the ability to save a daylight chart as an Adobe Acrobat PDF, or
-        as a web page (HTML). These new formats have details on the twilight and
-        sunrise and sunset times.
+			<action dev="Sualeh Fatehi" type="add">
+				The location dialog now allows you to change the time zone.
       </action>
-    </release>
-    <release
-      version="2.1"
-      date="2007-09-09">
-      <action
-        dev="Sualeh Fatehi"
-        type="add">
-        Smoothening of the charts, and spike removal.
+		</release>
+		<release version="2.3" date="2008-01-14">
+			<action dev="Sualeh Fatehi" type="fix">
+				Fixed Unix launch.
       </action>
-    </release>
-    <release
-      version="2.0"
-      date="2007-08-14">
-      <action
-        dev="Sualeh Fatehi"
-        type="add">
-        Showing twilight times on the chart.
+			<action dev="Sualeh Fatehi" type="fix">
+				Tweaked PDF and HTML export.
       </action>
-      <action
-        dev="Sualeh Fatehi"
-        type="add">
-        Chart legend.
+			<action dev="Sualeh Fatehi" type="fix">
+				Changed copyright notices in the source.
       </action>
-    </release>
-    <release
-      version="1.7"
-      date="2007-08-04">
-      <action
-        dev="Sualeh Fatehi"
-        type="fix">
-        Fixing gridlines on the chart.
+		</release>
+		<release version="2.2" date="2008-01-12">
+			<action dev="Sualeh Fatehi" type="add">
+				Added the ability to save a daylight chart as an Adobe Acrobat PDF, or
+				as a web page (HTML). These new formats have details on the twilight
+				and
+				sunrise and sunset times.
       </action>
-      <action
-        dev="Sualeh Fatehi"
-        type="fix">
-        Fixing months axis, so December shows.
+		</release>
+		<release version="2.1" date="2007-09-09">
+			<action dev="Sualeh Fatehi" type="add">
+				Smoothening of the charts, and spike removal.
       </action>
-    </release>
-    <release
-      version="1.6"
-      date="2007-07-30">
-      <action
-        dev="Sualeh Fatehi"
-        type="fix">
-        Fixing reset all option. This option now closes the current window, and
-        opens a new one, so that all tabs are closed, and all menus are reset.
+		</release>
+		<release version="2.0" date="2007-08-14">
+			<action dev="Sualeh Fatehi" type="add">
+				Showing twilight times on the chart.
       </action>
-      <action
-        dev="Sualeh Fatehi"
-        type="add">
-        Adding options for chart orientation.
+			<action dev="Sualeh Fatehi" type="add">
+				Chart legend.
       </action>
-      <action
-        dev="Sualeh Fatehi"
-        type="add">
-        Adding new command line option for a chart for a single location.
+		</release>
+		<release version="1.7" date="2007-08-04">
+			<action dev="Sualeh Fatehi" type="fix">
+				Fixing gridlines on the chart.
       </action>
-      <action
-        dev="Sualeh Fatehi"
-        type="add">
-        Adding new copy and paste actions for the locations list.
+			<action dev="Sualeh Fatehi" type="fix">
+				Fixing months axis, so December shows.
       </action>
-    </release>
-    <release
-      version="1.5"
-      date="2007-06-15">
-      <action
-        dev="Sualeh Fatehi"
-        type="fix">
-        Fixing distribution.
+		</release>
+		<release version="1.6" date="2007-07-30">
+			<action dev="Sualeh Fatehi" type="fix">
+				Fixing reset all option. This option now closes the current window, and
+				opens a new one, so that all tabs are closed, and all menus are
+				reset.
       </action>
-    </release>
-    <release
-      version="1.4"
-      date="2007-06-09">
-      <action
-        dev="Sualeh Fatehi"
-        type="add">
-        Location editor to add, edit, and delete locations.
+			<action dev="Sualeh Fatehi" type="add">
+				Adding options for chart orientation.
       </action>
-      <action
-        dev="Sualeh Fatehi"
-        type="add">
-        Icons and toolbars in the main window.
+			<action dev="Sualeh Fatehi" type="add">
+				Adding new command line option for a chart for a single location.
       </action>
-    </release>
-    <release
-      version="1.3"
-      date="2007-05-15">
-      <action
-        dev="Sualeh Fatehi"
-        type="add">
-        Charts are shown in tabs.
+			<action dev="Sualeh Fatehi" type="add">
+				Adding new copy and paste actions for the locations list.
       </action>
-      <action
-        dev="Sualeh Fatehi"
-        type="add">
-        New Windows executable to launch daylight time.
+		</release>
+		<release version="1.5" date="2007-06-15">
+			<action dev="Sualeh Fatehi" type="fix">
+				Fixing distribution.
       </action>
-      <action
-        dev="Sualeh Fatehi"
-        type="add">
-        Now remembers the locations sort order, and whether to use the time zone
-        for the chart.
+		</release>
+		<release version="1.4" date="2007-06-09">
+			<action dev="Sualeh Fatehi" type="add">
+				Location editor to add, edit, and delete locations.
       </action>
-    </release>
-    <release
-      version="1.2"
-      date="2007-04-30">
-      <action
-        dev="Sualeh Fatehi"
-        type="fix">
-        Now makes a best guess at the time zone for locations loaded in from GNS
-        Country Files and GNIS Files.
+			<action dev="Sualeh Fatehi" type="add">
+				Icons and toolbars in the main window.
       </action>
-      <action
-        dev="Sualeh Fatehi"
-        type="add">
-        New menu option to see online help.
+		</release>
+		<release version="1.3" date="2007-05-15">
+			<action dev="Sualeh Fatehi" type="add">
+				Charts are shown in tabs.
       </action>
-      <action
-        dev="Sualeh Fatehi"
-        type="add">
-        New option to see daylight chart with local time.
+			<action dev="Sualeh Fatehi" type="add">
+				New Windows executable to launch daylight time.
       </action>
-    </release>
-    <release
-      version="1.0"
-      date="2007-04-15">
-      <action
-        dev="Sualeh Fatehi"
-        type="add">
-        Added new project.
+			<action dev="Sualeh Fatehi" type="add">
+				Now remembers the locations sort order, and whether to use the time
+				zone
+				for the chart.
       </action>
-    </release>
-    <release
-      version="1.1"
-      date="2007-04-22">
-      <action
-        dev="Sualeh Fatehi"
-        type="add">
-        New look and feel, courtesy of JGoodies Looks.
+		</release>
+		<release version="1.2" date="2007-04-30">
+			<action dev="Sualeh Fatehi" type="fix">
+				Now makes a best guess at the time zone for locations loaded in from
+				GNS
+				Country Files and GNIS Files.
       </action>
-      <action
-        dev="Sualeh Fatehi"
-        type="add">
-        The ability in load in GNS Country Files.
+			<action dev="Sualeh Fatehi" type="add">
+				New menu option to see online help.
       </action>
-      <action
-        dev="Sualeh Fatehi"
-        type="add">
-        The ability in load in GNIS Files.
+			<action dev="Sualeh Fatehi" type="add">
+				New option to see daylight chart with local time.
       </action>
-    </release>
-  </body>
+		</release>
+		<release version="1.0" date="2007-04-15">
+			<action dev="Sualeh Fatehi" type="add">
+				Added new project.
+      </action>
+		</release>
+		<release version="1.1" date="2007-04-22">
+			<action dev="Sualeh Fatehi" type="add">
+				New look and feel, courtesy of JGoodies Looks.
+      </action>
+			<action dev="Sualeh Fatehi" type="add">
+				The ability in load in GNS Country Files.
+      </action>
+			<action dev="Sualeh Fatehi" type="add">
+				The ability in load in GNIS Files.
+      </action>
+		</release>
+	</body>
 </document>
