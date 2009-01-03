@@ -102,6 +102,10 @@ public final class Main
     {
       UserPreferences.initialize(new File(preferencesDirectory));
     }
+    else
+    {
+      UserPreferences.initialize();
+    }
 
     // Set UI look and feel
     try

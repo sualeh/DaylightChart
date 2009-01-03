@@ -47,9 +47,9 @@ final class LocationEditDeletePanel
       public void onClick()
       {
         Location location = (Location) getModelObject();
-        List<Location> locations = UserPreferences.getLocationsFile().getData();
+        List<Location> locations = UserPreferences.locationsFile().getData();
         locations.remove(location);
-        UserPreferences.getLocationsFile().save(locations);
+        UserPreferences.locationsFile().save(locations);
         setResponsePage(LocationsPage.class);
       }
     };

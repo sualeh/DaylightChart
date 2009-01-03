@@ -25,11 +25,7 @@ package daylightchart.options;
 import java.io.File;
 import java.util.logging.Logger;
 
-import net.sf.jasperreports.engine.JasperReport;
-
 import org.geoname.data.Location;
-
-import daylightchart.gui.actions.ReportDesignFileType;
 
 /**
  * User preferences for the GUI.
@@ -54,6 +50,11 @@ public final class UserPreferences
     scratchDirectory = new File(System.getProperty("java.io.tmpdir"), ".");
     validateDirectory(scratchDirectory);
 
+    initialize();
+  }
+
+  public static void initialize()
+  {
     initialize((File) null);
   }
 
@@ -89,28 +90,6 @@ public final class UserPreferences
   public static File getScratchDirectory()
   {
     return scratchDirectory;
-  }
-
-  /**
-   * Import a report file.
-   * 
-   * @param reportFile
-   *        Report file
-   * @return Whether the file could be imported
-   */
-  public static boolean importReport(final File reportFile)
-  {
-    boolean imported = false;
-    ReportDataFile importedReportFile = new ReportDataFile(reportFile,
-                                                           ReportDesignFileType.report_design);
-    importedReportFile.load();
-    JasperReport report = importedReportFile.getData();
-    if (report != null)
-    {
-      UserPreferences.reportFile.save(report);
-      imported = true;
-    }
-    return imported;
   }
 
   /**

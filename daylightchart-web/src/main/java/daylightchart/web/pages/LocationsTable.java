@@ -33,7 +33,7 @@ public class LocationsTable
     public Iterator<Location> iterator(final int first, final int count)
     {
       final SortParam sortParam = getSort();
-      final List<Location> locations = UserPreferences.getLocationsFile()
+      final List<Location> locations = UserPreferences.locationsFile()
         .getData();
       return locations.listIterator(first);
     }
@@ -45,7 +45,7 @@ public class LocationsTable
 
     public int size()
     {
-      return UserPreferences.getLocationsFile().getData().size();
+      return UserPreferences.locationsFile().getData().size();
     }
 
   }

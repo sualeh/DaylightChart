@@ -33,12 +33,14 @@ import java.util.logging.Logger;
 
 import javax.swing.JOptionPane;
 
+import net.sf.jasperreports.engine.JasperReport;
 import daylightchart.gui.DaylightChartGui;
 import daylightchart.gui.Messages;
 import daylightchart.gui.util.Actions;
 import daylightchart.gui.util.ExtensionFileFilter;
 import daylightchart.gui.util.GuiAction;
 import daylightchart.gui.util.SelectedFile;
+import daylightchart.options.ReportDataFile;
 import daylightchart.options.UserPreferences;
 
 /**
@@ -86,8 +88,7 @@ public final class OpenReportFileAction
 
         try
         {
-          boolean reportLoaded = UserPreferences.importReport(selectedFile
-            .getFile());
+          boolean reportLoaded = importReport(selectedFile.getFile());
           if (!reportLoaded)
           {
             LOGGER.log(Level.WARNING, Messages
@@ -109,6 +110,28 @@ public final class OpenReportFileAction
 
         mainWindow.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
       }
+    }
+
+    /**
+     * Import a report file.
+     * 
+     * @param reportFile
+     *        Report file
+     * @return Whether the file could be imported
+     */
+    private boolean importReport(final File reportFile)
+    {
+      boolean imported = false;
+      ReportDataFile importedReportFile = new ReportDataFile(reportFile,
+                                                             ReportDesignFileType.report_design);
+      importedReportFile.load();
+      JasperReport report = importedReportFile.getData();
+      if (report != null)
+      {
+        UserPreferences.reportFile().save(report);
+        imported = true;
+      }
+      return imported;
     }
   }
 
