@@ -203,7 +203,7 @@ public class DaylightChartReport
           ChartUtilities.saveChartAsPNG(file, chart, 842, 595);
           break;
         case jpg:
-          ChartUtilities.saveChartAsJPEG(file, chart, 842, 595);
+          ChartUtilities.saveChartAsJPEG(file, 1f, chart, 842, 595);
           break;
         default:
           throw new IllegalArgumentException("Unknown chart file type");
@@ -229,8 +229,7 @@ public class DaylightChartReport
 
       // Generate JasperReport for the chart
       // 1. Load compiled report
-      final JasperReport jasperReport = UserPreferences.reportFile()
-        .getData();
+      final JasperReport jasperReport = UserPreferences.reportFile().getData();
       // 2. Prepare parameters
       final Map<String, Object> parameters = new HashMap<String, Object>();
       parameters.put("location", location);
