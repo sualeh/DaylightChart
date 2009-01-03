@@ -165,45 +165,13 @@ public final class DaylightChartGui
   }
 
   /**
-   * @return the slimUi
-   */
-  public boolean isSlimUi()
-  {
-    return slimUi;
-  }
-
-  /**
-   * Sets the locations list on the GUI.
+   * {@inheritDoc}
    * 
-   * @param locations
-   *        Locations
+   * @see daylightchart.gui.LocationOperations#addLocation(org.geoname.data.Location)
    */
-  public void setLocations(final List<Location> locations)
+  public void addLocation(Location location)
   {
-    if (locations != null && locations.size() > 0)
-    {
-      locationsList.setLocations(locations);
-      this.repaint();
-    }
-  }
-
-  /**
-   * Sorts the locations list on the GUI.
-   */
-  public void sortLocations()
-  {
-    locationsList.sortLocations();
-    this.repaint();
-  }
-
-  /**
-   * Get the currently selected location.
-   * 
-   * @return Currently selected location.
-   */
-  public Location getSelectedLocation()
-  {
-    return locationsList.getSelectedLocation();
+    locationsList.addLocation(location);
   }
 
   /**
@@ -254,6 +222,79 @@ public final class DaylightChartGui
                                                         recentLocationsMenu
                                                           .getItemCount()));
     }
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see daylightchart.gui.LocationOperations#getLocations()
+   */
+  public List<Location> getLocations()
+  {
+    return locationsList.getLocations();
+  }
+
+  /**
+   * Get the currently selected location.
+   * 
+   * @return Currently selected location.
+   */
+  public Location getSelectedLocation()
+  {
+    return locationsList.getSelectedLocation();
+  }
+
+  /**
+   * @return the slimUi
+   */
+  public boolean isSlimUi()
+  {
+    return slimUi;
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see daylightchart.gui.LocationOperations#removeLocation(org.geoname.data.Location)
+   */
+  public void removeLocation(Location location)
+  {
+    locationsList.removeLocation(location);
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see daylightchart.gui.LocationOperations#replaceLocation(org.geoname.data.Location,
+   *      org.geoname.data.Location)
+   */
+  public void replaceLocation(Location selectedLocation, Location editedLocation)
+  {
+    locationsList.replaceLocation(selectedLocation, editedLocation);
+  }
+
+  /**
+   * Sets the locations list on the GUI.
+   * 
+   * @param locations
+   *        Locations
+   */
+  public void setLocations(final List<Location> locations)
+  {
+    if (locations != null && locations.size() > 0)
+    {
+      locationsList.setLocations(locations);
+      this.repaint();
+    }
+  }
+
+  /**
+   * Sorts the locations list on the GUI.
+   */
+  public void sortLocations()
+  {
+    locationsList.sortLocations();
+    this.repaint();
   }
 
   private void createActions(final JMenuBar menuBar, final JToolBar toolBar)
@@ -375,47 +416,6 @@ public final class DaylightChartGui
     toolBar.add(options);
     toolBar.add(chartOptions);
     toolBar.addSeparator();
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see daylightchart.gui.LocationOperations#getLocations()
-   */
-  public List<Location> getLocations()
-  {
-    return locationsList.getLocations();
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see daylightchart.gui.LocationOperations#addLocation(org.geoname.data.Location)
-   */
-  public void addLocation(Location location)
-  {
-    locationsList.addLocation(location);
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see daylightchart.gui.LocationOperations#replaceLocation(org.geoname.data.Location,
-   *      org.geoname.data.Location)
-   */
-  public void replaceLocation(Location selectedLocation, Location editedLocation)
-  {
-    locationsList.replaceLocation(selectedLocation, editedLocation);
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see daylightchart.gui.LocationOperations#removeLocation(org.geoname.data.Location)
-   */
-  public void removeLocation(Location location)
-  {
-    locationsList.removeLocation(location);
   }
 
 }

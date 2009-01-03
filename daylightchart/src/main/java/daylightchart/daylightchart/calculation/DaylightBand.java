@@ -72,32 +72,6 @@ public final class DaylightBand
     return bandType;
   }
 
-  RiseSet getFirstRiseSet()
-  {
-    if (riseSetMap.size() > 0)
-    {
-      final List<RiseSet> riseSets = getRiseSets();
-      return riseSets.get(0);
-    }
-    else
-    {
-      return null;
-    }
-  }
-
-  RiseSet getLastRiseSet()
-  {
-    if (riseSetMap.size() > 0)
-    {
-      final List<RiseSet> riseSets = getRiseSets();
-      return riseSets.get(riseSets.size() - 1);
-    }
-    else
-    {
-      return null;
-    }
-  }
-
   /**
    * Name of the band.
    * 
@@ -170,6 +144,32 @@ public final class DaylightBand
   RiseSet get(final LocalDate date)
   {
     return riseSetMap.get(date);
+  }
+
+  RiseSet getFirstRiseSet()
+  {
+    if (riseSetMap.size() > 0)
+    {
+      final List<RiseSet> riseSets = getRiseSets();
+      return riseSets.get(0);
+    }
+    else
+    {
+      return null;
+    }
+  }
+
+  RiseSet getLastRiseSet()
+  {
+    if (riseSetMap.size() > 0)
+    {
+      final List<RiseSet> riseSets = getRiseSets();
+      return riseSets.get(riseSets.size() - 1);
+    }
+    else
+    {
+      return null;
+    }
   }
 
 }

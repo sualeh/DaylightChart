@@ -92,6 +92,18 @@ public abstract class BaseDataFile<T extends FileType, D>
   }
 
   /**
+   * Loads data from the file.
+   */
+  public abstract void load();
+
+  public abstract void loadWithFallback();
+
+  /**
+   * Saves data to a file.
+   */
+  public abstract void save();
+
+  /**
    * Sets data.
    * 
    * @param data
@@ -104,20 +116,6 @@ public abstract class BaseDataFile<T extends FileType, D>
       this.data = data;
     }
   }
-
-  /**
-   * Loads data from the file.
-   */
-  public abstract void load();
-
-  public abstract void loadWithFallback();
-
-  protected abstract void load(final InputStream... inputs);
-
-  /**
-   * Saves data to a file.
-   */
-  public abstract void save();
 
   protected final Writer getFileWriter(final File file)
   {
@@ -138,5 +136,7 @@ public abstract class BaseDataFile<T extends FileType, D>
       return null;
     }
   }
+
+  protected abstract void load(final InputStream... inputs);
 
 }

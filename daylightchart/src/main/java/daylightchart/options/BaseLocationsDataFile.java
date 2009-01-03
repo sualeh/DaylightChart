@@ -125,6 +125,36 @@ public abstract class BaseLocationsDataFile
     load(inputs.toArray(new InputStream[inputs.size()]));
   }
 
+  /**
+   * Saves locations to a file.
+   */
+  public void save()
+  {
+    final File file = getFile();
+    if (file == null)
+    {
+      LOGGER.log(Level.WARNING, "No locations file provided");
+      return;
+    }
+
+    try
+    {
+      file.delete();
+
+      final Writer writer = getFileWriter(file);
+      if (writer == null)
+      {
+        return;
+      }
+
+      LocationFormatter.formatLocations(data, writer);
+    }
+    catch (final Exception e)
+    {
+      LOGGER.log(Level.WARNING, "Could not save locations to " + file, e);
+    }
+  }
+
   protected final void load(final InputStream... inputs)
   {
     data = new ArrayList<Location>();
@@ -176,36 +206,6 @@ public abstract class BaseLocationsDataFile
     if (data.size() == 0)
     {
       data = null;
-    }
-  }
-
-  /**
-   * Saves locations to a file.
-   */
-  public void save()
-  {
-    final File file = getFile();
-    if (file == null)
-    {
-      LOGGER.log(Level.WARNING, "No locations file provided");
-      return;
-    }
-
-    try
-    {
-      file.delete();
-
-      final Writer writer = getFileWriter(file);
-      if (writer == null)
-      {
-        return;
-      }
-
-      LocationFormatter.formatLocations(data, writer);
-    }
-    catch (final Exception e)
-    {
-      LOGGER.log(Level.WARNING, "Could not save locations to " + file, e);
     }
   }
 

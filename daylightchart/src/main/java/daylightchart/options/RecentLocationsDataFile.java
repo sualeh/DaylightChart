@@ -51,18 +51,9 @@ final class RecentLocationsDataFile
     super(new File(settingsDirectory, "recent.locations.data"),
           LocationFileType.data);
     // Validation
-    if (!getFile().isDirectory() || !getFile().exists())
+    if (!settingsDirectory.isDirectory() || !settingsDirectory.exists())
     {
       throw new IllegalArgumentException("Settings directory is not a directory");
-    }
-  }
-
-  public void loadWithFallback()
-  {
-    load();
-    if (data == null)
-    {
-      data = new ArrayList<Location>();
     }
   }
 
@@ -90,6 +81,15 @@ final class RecentLocationsDataFile
     }
 
     save();
+  }
+
+  public void loadWithFallback()
+  {
+    load();
+    if (data == null)
+    {
+      data = new ArrayList<Location>();
+    }
   }
 
 }

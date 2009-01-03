@@ -40,16 +40,6 @@ public class SunPositions
     sunPositions = new ArrayList<SunPosition>();
   }
 
-  void add(final SunPosition sunPosition)
-  {
-    if (sunPosition == null || !sunPosition.getDate().equals(date))
-    {
-      throw new IllegalArgumentException("Cannot add " + sunPosition);
-    }
-    sunPositions.add(sunPosition);
-    Collections.sort(sunPositions);
-  }
-
   /**
    * {@inheritDoc}
    * 
@@ -93,6 +83,16 @@ public class SunPositions
   /**
    * {@inheritDoc}
    * 
+   * @see java.lang.Iterable#iterator()
+   */
+  public Iterator<SunPosition> iterator()
+  {
+    return sunPositions.iterator();
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
    * @see java.lang.Object#toString()
    */
   @Override
@@ -102,14 +102,14 @@ public class SunPositions
                                               ToStringStyle.MULTI_LINE_STYLE);
   }
 
-  /**
-   * {@inheritDoc}
-   * 
-   * @see java.lang.Iterable#iterator()
-   */
-  public Iterator<SunPosition> iterator()
+  void add(final SunPosition sunPosition)
   {
-    return sunPositions.iterator();
+    if (sunPosition == null || !sunPosition.getDate().equals(date))
+    {
+      throw new IllegalArgumentException("Cannot add " + sunPosition);
+    }
+    sunPositions.add(sunPosition);
+    Collections.sort(sunPositions);
   }
 
 }

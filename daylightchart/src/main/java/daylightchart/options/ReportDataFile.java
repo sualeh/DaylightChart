@@ -96,45 +96,6 @@ public class ReportDataFile
     load(input);
   }
 
-  /**
-   * Saves report to a file.
-   */
-  public void save()
-  {
-    final File file = getFile();
-    try
-    {
-      delete();
-      JRXmlWriter.writeReport(data, file.getAbsolutePath(), "UTF-8");
-    }
-    catch (final Exception e)
-    {
-      LOGGER.log(Level.WARNING, "Could not save report to " + file, e);
-    }
-  }
-
-  /**
-   * Loads a report from a file, falling back to an internal resource
-   * with the same name.
-   */
-  public void loadWithFallback()
-  {
-    // 1. Load from file
-    load();
-    // 2. Load from internal store
-    if (data == null)
-    {
-      final InputStream input = Thread.currentThread().getContextClassLoader()
-        .getResourceAsStream(getFilename());
-      load(input);
-    }
-    // 3. If no report is loaded, fail
-    if (data == null)
-    {
-      throw new RuntimeException("Cannot load report");
-    }
-  }
-
   public void load(final InputStream... input)
   {
     if (input == null || input.length == 0)
@@ -165,6 +126,45 @@ public class ReportDataFile
           LOGGER.log(Level.WARNING, "Cannot close input stream", e);
         }
       }
+    }
+  }
+
+  /**
+   * Loads a report from a file, falling back to an internal resource
+   * with the same name.
+   */
+  public void loadWithFallback()
+  {
+    // 1. Load from file
+    load();
+    // 2. Load from internal store
+    if (data == null)
+    {
+      final InputStream input = Thread.currentThread().getContextClassLoader()
+        .getResourceAsStream(getFilename());
+      load(input);
+    }
+    // 3. If no report is loaded, fail
+    if (data == null)
+    {
+      throw new RuntimeException("Cannot load report");
+    }
+  }
+
+  /**
+   * Saves report to a file.
+   */
+  public void save()
+  {
+    final File file = getFile();
+    try
+    {
+      delete();
+      JRXmlWriter.writeReport(data, file.getAbsolutePath(), "UTF-8");
+    }
+    catch (final Exception e)
+    {
+      LOGGER.log(Level.WARNING, "Could not save report to " + file, e);
     }
   }
 
