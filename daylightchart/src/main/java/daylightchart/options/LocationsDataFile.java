@@ -50,6 +50,17 @@ public final class LocationsDataFile
   /**
    * Constructor.
    * 
+   * @param settingsDirectory
+   *        Settings directory
+   */
+  public LocationsDataFile(final File settingsDirectory)
+  {
+    super(settingsDirectory, "locations.data", LocationFileType.data);
+  }
+
+  /**
+   * Constructor.
+   * 
    * @param file
    *        File
    * @param fileType
@@ -68,17 +79,6 @@ public final class LocationsDataFile
     {
       throw new IllegalArgumentException("No file type provided");
     }
-  }
-
-  /**
-   * Constructor.
-   * 
-   * @param settingsDirectory
-   *        Settings directory
-   */
-  public LocationsDataFile(final File settingsDirectory)
-  {
-    super(settingsDirectory, "locations.data", LocationFileType.data);
   }
 
   /**

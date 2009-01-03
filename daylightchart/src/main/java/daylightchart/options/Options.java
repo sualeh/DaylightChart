@@ -197,6 +197,11 @@ public class Options
     this.showChartLegend = showChartLegend;
   }
 
+  public void setSlimUi(final boolean slimUi)
+  {
+    this.slimUi = slimUi;
+  }
+
   /**
    * @param timeZoneOption
    *        the timeZoneOption to set
@@ -223,6 +228,14 @@ public class Options
     }
   }
 
+  public void setWorkingDirectory(final File workingDirectory)
+  {
+    if (isDirectoryValid(workingDirectory))
+    {
+      this.workingDirectory = workingDirectory;
+    }
+  }
+
   /**
    * {@inheritDoc}
    * 
@@ -233,19 +246,6 @@ public class Options
   {
     return ReflectionToStringBuilder.toString(this,
                                               ToStringStyle.MULTI_LINE_STYLE);
-  }
-
-  public void setSlimUi(final boolean slimUi)
-  {
-    this.slimUi = slimUi;
-  }
-
-  public void setWorkingDirectory(final File workingDirectory)
-  {
-    if (isDirectoryValid(workingDirectory))
-    {
-      this.workingDirectory = workingDirectory;
-    }
   }
 
   private boolean isDirectoryValid(final File directory)

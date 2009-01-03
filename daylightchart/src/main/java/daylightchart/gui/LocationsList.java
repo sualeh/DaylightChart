@@ -144,8 +144,7 @@ class LocationsList
       }
     });
 
-    final List<Location> locations = UserPreferences.locationsFile()
-      .getData();
+    final List<Location> locations = UserPreferences.locationsFile().getData();
     Collections.sort(locations, UserPreferences.optionsFile().getData()
       .getLocationsSortOrder());
     setLocations(locations);

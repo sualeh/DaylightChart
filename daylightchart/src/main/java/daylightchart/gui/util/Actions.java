@@ -43,6 +43,19 @@ public class Actions
 {
 
   /**
+   * Sets the working directory.
+   * 
+   * @param workingDirectory
+   *        Working directory
+   */
+  public static void setWorkingDirectory(final File workingDirectory)
+  {
+    Options options = UserPreferences.optionsFile().getData();
+    options.setWorkingDirectory(workingDirectory);
+    UserPreferences.optionsFile().save(options);
+  }
+
+  /**
    * Shows an open file dialog, and returns the selected file. Checks if
    * the file is readable.
    * 
@@ -103,19 +116,6 @@ public class Actions
     }
 
     return selectedFile;
-  }
-
-  /**
-   * Sets the working directory.
-   * 
-   * @param workingDirectory
-   *        Working directory
-   */
-  public static void setWorkingDirectory(final File workingDirectory)
-  {
-    Options options = UserPreferences.optionsFile().getData();
-    options.setWorkingDirectory(workingDirectory);
-    UserPreferences.optionsFile().save(options);
   }
 
   /**

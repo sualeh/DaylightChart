@@ -53,11 +53,6 @@ public final class UserPreferences
     initialize();
   }
 
-  public static void initialize()
-  {
-    initialize((File) null);
-  }
-
   /**
    * Adds a recent location for the current user.
    * 
@@ -92,18 +87,9 @@ public final class UserPreferences
     return scratchDirectory;
   }
 
-  /**
-   * Main method. Lists all user preferences.
-   * 
-   * @param args
-   *        Command line arguments
-   * @throws Exception
-   *         On an exception
-   */
-  public static void main(final String[] args)
-    throws Exception
+  public static void initialize()
   {
-    UserPreferences.clear();
+    initialize((File) null);
   }
 
   /**
@@ -135,21 +121,28 @@ public final class UserPreferences
     reportFile = new ReportDataFile(settingsDirectory);
   }
 
-  private static void validateDirectory(final File directory)
-  {
-    final boolean isDirectoryValid = directory != null && directory.exists()
-                                     && directory.isDirectory()
-                                     && directory.canWrite();
-    if (!isDirectoryValid)
-    {
-      throw new IllegalArgumentException("Directory is not writable - "
-                                         + directory);
-    }
-  }
-
   public static LocationsDataFile locationsFile()
   {
     return locationsFile;
+  }
+
+  /**
+   * Main method. Lists all user preferences.
+   * 
+   * @param args
+   *        Command line arguments
+   * @throws Exception
+   *         On an exception
+   */
+  public static void main(final String[] args)
+    throws Exception
+  {
+    UserPreferences.clear();
+  }
+
+  public static OptionsDataFile optionsFile()
+  {
+    return optionsFile;
   }
 
   public static RecentLocationsDataFile recentLocationsFile()
@@ -162,9 +155,16 @@ public final class UserPreferences
     return reportFile;
   }
 
-  public static OptionsDataFile optionsFile()
+  private static void validateDirectory(final File directory)
   {
-    return optionsFile;
+    final boolean isDirectoryValid = directory != null && directory.exists()
+                                     && directory.isDirectory()
+                                     && directory.canWrite();
+    if (!isDirectoryValid)
+    {
+      throw new IllegalArgumentException("Directory is not writable - "
+                                         + directory);
+    }
   }
 
   private UserPreferences()
