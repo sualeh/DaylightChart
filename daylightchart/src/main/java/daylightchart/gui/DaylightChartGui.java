@@ -212,7 +212,7 @@ public final class DaylightChartGui
       try
       {
         final String url = reportFile.toURL().toString();
-        LOGGER.log(Level.FINE, "OPening URL " + url);
+        LOGGER.log(Level.FINE, "Opening URL " + url);
         BareBonesBrowserLaunch.openURL(url);
       }
       catch (final MalformedURLException e)
