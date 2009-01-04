@@ -126,19 +126,22 @@ public class DaylightChartReport
    */
   public String getReportFileName(final FileType chartFileType)
   {
-    final String timeStamp = new LocalDateTime().toString("yyyyMMddhhmmss");
+    final String timeStamp = new LocalDateTime()
+      .toString("yyyy_MMM_dd_hh_mm_ss");
     String locationDescription = "";
     try
     {
       locationDescription = new String(location.getDescription()
         .getBytes("ASCII"), "ASCII");
-      locationDescription = locationDescription.replaceAll("\\?", "~");
+      locationDescription = locationDescription.replaceAll("\\?", "");
+      locationDescription = locationDescription.replaceAll(", ", "_");
+      locationDescription = locationDescription.replaceAll(" ", "_");
     }
     catch (UnsupportedEncodingException e)
     {
       locationDescription = "";
     }
-    return locationDescription + "." + timeStamp
+    return locationDescription + "_" + timeStamp
            + chartFileType.getFileExtension();
   }
 
