@@ -126,7 +126,7 @@ public class DaylightChartReport
    */
   public String getReportFileName(final FileType chartFileType)
   {
-    final String timeStamp = new LocalDateTime().toString("yyyyMMddhhmm");
+    final String timeStamp = new LocalDateTime().toString("yyyyMMddhhmmss");
     String locationDescription = "";
     try
     {
