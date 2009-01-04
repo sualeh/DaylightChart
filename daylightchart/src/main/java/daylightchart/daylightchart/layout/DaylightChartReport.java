@@ -25,6 +25,7 @@ package daylightchart.daylightchart.layout;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
@@ -47,12 +48,8 @@ import net.sf.jasperreports.engine.export.JRPdfExporter;
 import net.sf.jasperreports.engine.export.JRPdfExporterParameter;
 import net.sf.jasperreports.renderers.JCommonDrawableRenderer;
 
-import org.apache.commons.lang.StringUtils;
 import org.geoname.data.Location;
 import org.joda.time.LocalDateTime;
-import org.pointlocation6709.parser.FormatterException;
-import org.pointlocation6709.parser.PointLocationFormatType;
-import org.pointlocation6709.parser.PointLocationFormatter;
 
 import daylightchart.Version;
 import daylightchart.daylightchart.calculation.RiseSetUtility;
@@ -130,18 +127,19 @@ public class DaylightChartReport
   public String getReportFileName(final FileType chartFileType)
   {
     final String timeStamp = new LocalDateTime().toString("yyyyMMddhhmm");
-    String pointLocation = "";
+    String locationDescription = "";
     try
     {
-      pointLocation = PointLocationFormatter.formatIso6709(location
-        .getPointLocation(), PointLocationFormatType.MEDIUM);
-      pointLocation = StringUtils.replace(pointLocation, "/", "");
+      locationDescription = new String(location.getDescription()
+        .getBytes("ASCII"), "ASCII");
+      locationDescription = locationDescription.replaceAll("\\?", "~");
     }
-    catch (FormatterException e)
+    catch (UnsupportedEncodingException e)
     {
-      pointLocation = "";
+      locationDescription = "";
     }
-    return pointLocation + "." + timeStamp + chartFileType.getFileExtension();
+    return locationDescription + "." + timeStamp
+           + chartFileType.getFileExtension();
   }
 
   /**
