@@ -133,7 +133,7 @@ public class DaylightChartReport
     {
       locationDescription = new String(location.getDescription()
         .getBytes("ASCII"), "ASCII");
-      locationDescription = locationDescription.replaceAll("\\?", "");
+      locationDescription = locationDescription.replaceAll("\\?", "~");
       locationDescription = locationDescription.replaceAll(", ", "_");
       locationDescription = locationDescription.replaceAll(" ", "_");
     }
