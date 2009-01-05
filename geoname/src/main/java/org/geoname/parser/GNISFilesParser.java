@@ -76,7 +76,7 @@ public final class GNISFilesParser
       while ((line = reader.readLine()) != null)
       {
         final String[] fields = line.split("\\|");
-        if (fields.length != 19)
+        if (fields.length != 18 && fields.length != 19)
         {
           continue;
         }
