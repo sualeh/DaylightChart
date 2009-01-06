@@ -201,14 +201,15 @@ public final class SunChartUtility
     for (final SunPositions sunPositions: sunPositionsList)
     {
       printWriter
-        .println("Date     \tTime     \tAzimuth      \tAltitude   \tHour Angle   \tEqn of Time  \tDeclination");
+        .println("Date      \tTime\tAltitude\tAzimuth  \tHour Angle\tEqn of Time  \tDeclination");
       for (final SunPosition sunPosition: sunPositions)
       {
         printWriter.printf("%s\t%s\t%s\t%s\t%s\t%s\t%s%n",
                            sunPosition.getDateTime().toLocalDate(),
-                           sunPosition.getDateTime().toLocalTime(),
-                           format.format(sunPosition.getAzimuth()),
+                           sunPosition.getDateTime().toLocalTime()
+                             .toString("hh:mm"),
                            format.format(sunPosition.getAltitude()),
+                           format.format(sunPosition.getAzimuth()),
                            format.format(sunPosition.getHourAngle()),
                            format.format(sunPosition.getEquationOfTime()),
                            format.format(sunPosition.getDeclination()));
