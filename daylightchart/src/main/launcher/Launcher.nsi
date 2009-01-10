@@ -3,10 +3,9 @@
  
 ;You want to change the next four lines
 Name "Daylight Chart"
-Caption ""
-; Icon "DaylightChart.ico"
 OutFile "DaylightChart.exe"
  
+RequestExecutionLevel user   
 SilentInstall silent
 AutoCloseWindow true
 ShowInstDetails nevershow
