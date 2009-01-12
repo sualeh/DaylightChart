@@ -211,7 +211,7 @@ public final class DaylightChartGui
       daylightChartReport.write(reportFile, ChartFileType.html);
       try
       {
-        final String url = reportFile.toURL().toString();
+        final String url = reportFile.toURI().toURL().toString();
         LOGGER.log(Level.FINE, "Opening URL " + url);
         BareBonesBrowserLaunch.openURL(url);
       }
