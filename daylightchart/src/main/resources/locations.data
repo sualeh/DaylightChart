@@ -14,6 +14,7 @@ Bakersfield, CA;US;America/Los_Angeles;+3523-11901/
 Baltimore, MD;US;America/New_York;+3917-07637/
 Bangalore;IN;Asia/Calcutta;+1258+07735/
 Bangkok;TH;Asia/Bangkok;+1345+10031/
+Banská Bystrica;SK;Europe/Bratislava;+4844+01909/
 Beirut;LB;Asia/Beirut;+3353+03530/
 Bergen;NO;Europe/Oslo;+6023+00520/
 Berlin;DE;Europe/Berlin;+5230+01322/
@@ -60,7 +61,7 @@ London;GB;Europe/London;+5130-00010/
 Los Angeles, CA;US;America/Los_Angeles;+3403-11815/
 Lubbock, TX;US;America/Chicago;+3336-10142/
 Lucknow;IN;Asia/Calcutta;+2650+08054/
-Luleå;SE;Europe/Stockholm;+6536+02210/
+LuleÃ¥;SE;Europe/Stockholm;+6536+02210/
 MacMurdo;AQ;Antarctica/DumontDUrville;-7751+16637/
 Madras;IN;Asia/Calcutta;+1305+08017/
 Madrid;ES;Europe/Madrid;+4024-00341/
@@ -87,7 +88,7 @@ Pittsburgh, PA;US;America/New_York;+4026-07959/
 Port-Louis;MU;Indian/Mauritius;-2010+05732/
 Portland, OR;US;America/Los_Angeles;+4531-12240/
 Pune;IN;Asia/Calcutta;+1832+07352/
-Reykjavík;IS;Atlantic/Reykjavik;+6409-02158/
+ReykjavÃ­k;IS;Atlantic/Reykjavik;+6409-02158/
 Riyadh;SA;Asia/Riyadh;+2439+04646/
 Rome;IT;Europe/Rome;+4154+01229/
 Saint-Denis;RE;Indian/Reunion;-2055+05527/
