@@ -35,6 +35,7 @@
 			<outputDirectory></outputDirectory>
 			<includes>
 				<include>*.exe</include>
+				<include>*.sh</include>
 			</includes>
 		</fileSet>
 	</fileSets>

@@ -109,7 +109,8 @@ public final class DaylightChartGui
 
     this.slimUi = slimUi;
 
-    setIconImage(new ImageIcon(DaylightChartGui.class.getResource("/icon.png")) //$NON-NLS-1$
+    setIconImage(new ImageIcon(DaylightChartGui.class
+      .getResource("/daylightchart.png")) //$NON-NLS-1$
       .getImage());
 
     setTitle("Daylight Chart"); //$NON-NLS-1$
