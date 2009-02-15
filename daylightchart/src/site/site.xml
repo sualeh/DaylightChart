@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <project name="Daylight Chart">
   <bannerLeft>
+    <name>Daylight Chart</name>
+    <src>images/daylightchart.png</src>
+    <href>http://sourceforge.net/projects/daylightchart</href>
+  </bannerLeft>
+  <bannerRight>
     <name>SourceForge</name>
     <src>
       <![CDATA[http://sourceforge.net/sflogo.php?group_id=193171&type=7]]>
     </src>
-  </bannerLeft>
-  <bannerRight>
-    <name>Daylight Chart</name>
-    <href>http://sourceforge.net/projects/daylightchart</href>
   </bannerRight>
   <body>
     <links>
