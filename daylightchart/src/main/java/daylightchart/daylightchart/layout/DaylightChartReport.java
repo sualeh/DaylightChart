@@ -94,7 +94,7 @@ public class DaylightChartReport
     chart = new DaylightChart(riseSetData, options);
     options.getChartOptions().updateChart(chart);
     //
-    jasperPrint = renderDaylightChartReport(riseSetData, options);
+    jasperPrint = renderDaylightChartReport(riseSetData);
   }
 
   /**
@@ -224,8 +224,7 @@ public class DaylightChartReport
     }
   }
 
-  private JasperPrint renderDaylightChartReport(final RiseSetYearData riseSetData,
-                                                final Options options)
+  private JasperPrint renderDaylightChartReport(final RiseSetYearData riseSetData)
   {
     try
     {

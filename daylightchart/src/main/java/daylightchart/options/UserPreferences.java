@@ -25,8 +25,6 @@ package daylightchart.options;
 import java.io.File;
 import java.util.logging.Logger;
 
-import org.geoname.data.Location;
-
 /**
  * User preferences for the GUI.
  * 
