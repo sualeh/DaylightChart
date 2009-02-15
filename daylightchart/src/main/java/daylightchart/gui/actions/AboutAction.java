@@ -58,7 +58,8 @@ public final class AboutAction
      */
     public void actionPerformed(final ActionEvent actionevent)
     {
-      JOptionPane.showMessageDialog(parent, Version.about());
+      JOptionPane.showMessageDialog(parent, Version.about(), Version
+        .getProductName(), JOptionPane.PLAIN_MESSAGE);
     }
   }
 
