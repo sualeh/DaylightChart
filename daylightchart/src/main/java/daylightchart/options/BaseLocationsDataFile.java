@@ -26,6 +26,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.Writer;
 import java.util.ArrayList;
@@ -139,18 +140,21 @@ abstract class BaseLocationsDataFile
     {
       for (final InputStream inputStream: inputs)
       {
-        final Reader reader = new UnicodeReader(inputStream, "UTF-8");
+        Reader reader = null;
         switch (getFileType())
         {
           case data:
+            reader = new InputStreamReader(inputStream, "UTF-8");
             data.addAll(LocationParser.parseLocations(reader));
             break;
           case gns_country_file:
           case gns_country_file_zipped:
+            reader = new UnicodeReader(inputStream, "UTF-8");
             data.addAll(GNSCountryFilesParser.parseLocations(reader));
             break;
           case gnis_state_file:
           case gnis_state_file_zipped:
+            reader = new UnicodeReader(inputStream, "UTF-8");
             data.addAll(GNISFilesParser.parseLocations(reader));
             break;
         }
