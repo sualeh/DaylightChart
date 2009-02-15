@@ -54,8 +54,8 @@ public class TestGeoNameFiles
   public void GNISUSStates()
     throws ParserException, IOException
   {
-    parseGNISUSStates("MA_Features_20081228.zip", 2306);
-    parseGNISUSStates("HI_Features_20081228.zip", 540);
+    parseGNISUSStates("MA_Features_20090203.zip", 2306);
+    parseGNISUSStates("HI_Features_20090203.zip", 540);
   }
 
   private void parseGNISUSStates(final String filename, final int numLocations)
