@@ -43,6 +43,15 @@ public class TestGeoNameFiles
 {
 
   @Test
+  public void GNISUSStates()
+    throws ParserException, IOException
+  {
+    final String date = "20090401";
+    parseGNISUSStates("MA", date, 2306);
+    parseGNISUSStates("HI", date, 540);
+  }
+
+  @Test
   public void GNSCountries()
     throws ParserException, IOException
   {
@@ -50,17 +59,12 @@ public class TestGeoNameFiles
     parseGNSCountryFile("lo.zip", 4606);
   }
 
-  @Test
-  public void GNISUSStates()
+  private void parseGNISUSStates(final String state,
+                                 final String date,
+                                 final int numLocations)
     throws ParserException, IOException
   {
-    parseGNISUSStates("MA_Features_20090401.zip", 2306);
-    parseGNISUSStates("HI_Features_20090401.zip", 540);
-  }
-
-  private void parseGNISUSStates(final String filename, final int numLocations)
-    throws ParserException, IOException
-  {
+    final String filename = state + "_Features_" + date + ".zip";
     List<Location> locations = new ArrayList<Location>();
     String dataFilename = "";
 
