@@ -46,7 +46,7 @@ public class TestGeoNameFiles
   public void GNISUSStates()
     throws ParserException, IOException
   {
-    final String date = "20090401";
+    final String date = "20100607";
     parseGNISUSStates("MA", date, 2306);
     parseGNISUSStates("HI", date, 540);
   }
@@ -55,7 +55,7 @@ public class TestGeoNameFiles
   public void GNSCountries()
     throws ParserException, IOException
   {
-    parseGNSCountryFile("in.zip", 31622);
+    parseGNSCountryFile("in.zip", 31621);
     parseGNSCountryFile("lo.zip", 4606);
   }
 
