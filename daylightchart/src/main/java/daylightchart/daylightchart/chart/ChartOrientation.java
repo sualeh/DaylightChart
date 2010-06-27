@@ -2,7 +2,7 @@
  * 
  * Daylight Chart
  * http://sourceforge.net/projects/daylightchart
- * Copyright (c) 2007-2009, Sualeh Fatehi.
+ * Copyright (c) 2007-2010, Sualeh Fatehi.
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -30,31 +30,23 @@ package daylightchart.daylightchart.chart;
 public enum ChartOrientation
 {
 
-  STANDARD("Standard"),
-  CONVENTIONAL("Conventional"),
-  VERTICAL("Vertical");
-
-  private final String description;
-
-  private ChartOrientation(final String description)
-  {
-    this.description = description;
-  }
+  /** Standard */
+  STANDARD,
+  /** Conventional */
+  CONVENTIONAL,
+  /** Vertical */
+  VERTICAL;
 
   /**
-   * Description.
+   * {@inheritDoc}
    * 
-   * @return Description.
+   * @see java.lang.Enum#toString()
    */
-  public String getDescription()
-  {
-    return description;
-  }
-
   @Override
   public String toString()
   {
-    return description;
+    return name().substring(0, 1).toUpperCase()
+           + name().substring(1).toLowerCase();
   }
 
 }
