@@ -69,7 +69,7 @@ final class DaylightChartLegendItemSource
     for (final DaylightBandType daylightSavingsMode: DaylightBandType.values())
     {
       if (daylightSavingsMode == DaylightBandType.twilight
-          && options.getTwilightType() == TwilightType.NONE)
+          && options.getTwilightType() == TwilightType.NO)
       {
         continue;
       }

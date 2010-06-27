@@ -129,7 +129,7 @@ public final class RiseSetUtility
                                                   date,
                                                   useDaylightTime,
                                                   inDaylightSavings,
-                                                  TwilightType.NONE);
+                                                  TwilightType.NO);
       riseSetYear.addRiseSet(riseSet);
 
       if (twilight != null)

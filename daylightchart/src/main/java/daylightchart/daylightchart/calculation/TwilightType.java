@@ -30,28 +30,16 @@ package daylightchart.daylightchart.calculation;
 public enum TwilightType
 {
 
-  NONE("None", -5D / 6D),
-  CIVIL("Civil twilight", -6D),
-  NAUTICAL("Nautical twilight", -12D),
-  ASTRONOMICAL("Astronomical twilight", -18D);
+  NO(-5D / 6D),
+  CIVIL(-6D),
+  NAUTICAL(-12D),
+  ASTRONOMICAL(-18D);
 
   private final double horizon;
-  private final String description;
 
-  private TwilightType(final String description, final double horizon)
+  private TwilightType(final double horizon)
   {
-    this.description = description;
     this.horizon = horizon;
-  }
-
-  /**
-   * Description.
-   * 
-   * @return Description.
-   */
-  public String getDescription()
-  {
-    return description;
   }
 
   /**
@@ -62,7 +50,8 @@ public enum TwilightType
   @Override
   public String toString()
   {
-    return description;
+    return name().substring(0, 1).toUpperCase()
+           + name().substring(1).toLowerCase() + " twilight";
   }
 
   double getHorizon()
