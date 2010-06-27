@@ -42,8 +42,6 @@
                   usetimestamp="true" />
                 <get src="http://xml.apache.org/xalan-j/#license1.1" dest="${licenses.dir}/LICENSE.ApacheXML.html"
                   usetimestamp="true" />
-                <get src="http://www.eclipse.org/legal/epl-v10.html" dest="${licenses.dir}/LICENSE.JDTCompiler.html"
-                  usetimestamp="true" />
                 <get src="http://xstream.codehaus.org/license.html" dest="${licenses.dir}/LICENSE.XStream.html"
                   usetimestamp="true" />
                 <get src="https://jgoodies.dev.java.net/" dest="${licenses.dir}/LICENSE.JGoodies.html" usetimestamp="true" />
@@ -61,6 +59,27 @@
             <groupId>org.apache.ant</groupId>
             <artifactId>ant-apache-regexp</artifactId>
             <version>1.7.0</version>
+          </dependency>
+        </dependencies>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>jasperreports-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <goals>
+              <goal>compile-reports</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <outputDirectory>${project.build.directory}/classes</outputDirectory>
+        </configuration>
+        <dependencies>
+          <dependency>
+            <groupId>net.sf.jasperreports</groupId>
+            <artifactId>jasperreports</artifactId>
+            <version>3.7.3</version>
           </dependency>
         </dependencies>
       </plugin>
@@ -170,14 +189,10 @@
       <version>1.2.1</version>
     </dependency>
     <dependency>
-      <groupId>jasperreports</groupId>
+      <groupId>net.sf.jasperreports</groupId>
       <artifactId>jasperreports</artifactId>
-      <version>3.1.2</version>
+      <version>3.7.3</version>
       <exclusions>
-        <exclusion>
-          <groupId>ant</groupId>
-          <artifactId>ant</artifactId>
-        </exclusion>
         <exclusion>
           <groupId>antlr</groupId>
           <artifactId>antlr</artifactId>
@@ -243,8 +258,20 @@
           <artifactId>mondrian</artifactId>
         </exclusion>
         <exclusion>
+          <groupId>net.sf.barcode4j</groupId>
+          <artifactId>barcode4j</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>net.sourceforge.barbecue</groupId>
+          <artifactId>barbecue</artifactId>
+        </exclusion>
+        <exclusion>
           <groupId>net.sourceforge.jexcelapi</groupId>
           <artifactId>jxl</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.apache.ant</groupId>
+          <artifactId>ant</artifactId>
         </exclusion>
         <exclusion>
           <groupId>org.apache.poi</groupId>

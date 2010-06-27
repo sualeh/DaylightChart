@@ -151,6 +151,7 @@ public class ReportDataFile
    */
   protected void loadWithFallback()
   {
+    if (true) return;
     // 1. Load from file
     load();
     // 2. Load from internal store
