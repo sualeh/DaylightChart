@@ -48,7 +48,7 @@ public final class UserPreferences
     scratchDirectory = new File(System.getProperty("java.io.tmpdir"), ".");
     validateDirectory(scratchDirectory);
 
-    initialize();
+    initialize((File) null);
   }
 
   /**
@@ -72,11 +72,6 @@ public final class UserPreferences
   public static File getScratchDirectory()
   {
     return scratchDirectory;
-  }
-
-  public static void initialize()
-  {
-    initialize((File) null);
   }
 
   /**
@@ -108,6 +103,11 @@ public final class UserPreferences
     reportFile = new ReportDataFile(settingsDirectory);
   }
 
+  /**
+   * Locations file.
+   * 
+   * @return Locations file.
+   */
   public static LocationsDataFile locationsFile()
   {
     return locationsFile;
@@ -127,16 +127,31 @@ public final class UserPreferences
     UserPreferences.clear();
   }
 
+  /**
+   * Options file.
+   * 
+   * @return Options file.
+   */
   public static OptionsDataFile optionsFile()
   {
     return optionsFile;
   }
 
+  /**
+   * Recent locations file.
+   * 
+   * @return Recent locations file.
+   */
   public static RecentLocationsDataFile recentLocationsFile()
   {
     return recentLocationsFile;
   }
 
+  /**
+   * Report file.
+   * 
+   * @return Report file.
+   */
   public static ReportDataFile reportFile()
   {
     return reportFile;

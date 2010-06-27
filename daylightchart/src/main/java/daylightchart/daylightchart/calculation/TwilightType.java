@@ -30,9 +30,13 @@ package daylightchart.daylightchart.calculation;
 public enum TwilightType
 {
 
+  /** No twilight */
   NO(-5D / 6D),
+  /** Civil twilight */
   CIVIL(-6D),
+  /** Nautical twilight */
   NAUTICAL(-12D),
+  /** Astronomical twilight */
   ASTRONOMICAL(-18D);
 
   private final double horizon;

@@ -197,6 +197,12 @@ public class Options
     this.showChartLegend = showChartLegend;
   }
 
+  /**
+   * Whether the UI should work in "slim" mode.
+   * 
+   * @param slimUi
+   *        Slim mode setting.
+   */
   public void setSlimUi(final boolean slimUi)
   {
     this.slimUi = slimUi;
@@ -228,6 +234,12 @@ public class Options
     }
   }
 
+  /**
+   * Working directory.
+   * 
+   * @param workingDirectory
+   *        Working directory.
+   */
   public void setWorkingDirectory(final File workingDirectory)
   {
     if (isDirectoryValid(workingDirectory))
