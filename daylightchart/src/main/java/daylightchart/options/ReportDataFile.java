@@ -30,10 +30,8 @@ import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.design.JasperDesign;
-import net.sf.jasperreports.engine.xml.JRXmlLoader;
+import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.engine.xml.JRXmlWriter;
 import daylightchart.gui.actions.ReportDesignFileType;
 
@@ -69,7 +67,7 @@ public class ReportDataFile
   public ReportDataFile(final File settingsDirectory)
   {
     super(settingsDirectory,
-          "DaylightChartReport.jrxml",
+          "DaylightChartReport.jasper",
           ReportDesignFileType.report_design);
   }
 
@@ -121,8 +119,7 @@ public class ReportDataFile
 
     try
     {
-      final JasperDesign jasperDesign = JRXmlLoader.load(input[0]);
-      data = JasperCompileManager.compileReport(jasperDesign);
+      data = (JasperReport) JRLoader.loadObject(input[0]);
     }
     catch (final Exception e)
     {
@@ -151,7 +148,6 @@ public class ReportDataFile
    */
   protected void loadWithFallback()
   {
-    if (true) return;
     // 1. Load from file
     load();
     // 2. Load from internal store
