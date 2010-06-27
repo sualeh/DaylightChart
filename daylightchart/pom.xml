@@ -204,10 +204,6 @@
           <artifactId>png-encoder</artifactId>
         </exclusion>
         <exclusion>
-          <groupId>com.lowagie</groupId>
-          <artifactId>itext</artifactId>
-        </exclusion>
-        <exclusion>
           <groupId>commons-javaflow</groupId>
           <artifactId>commons-javaflow</artifactId>
         </exclusion>
