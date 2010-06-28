@@ -10,6 +10,7 @@
 	<reportFont name="TableData" isDefault="false" fontName="Verdana" size="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="true"/>
 	<reportFont name="PageHeader" isDefault="false" fontName="Verdana" size="14" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica-Bold" pdfEncoding="Cp1252" isPdfEmbedded="true"/>
 	<reportFont name="PageFooter" isDefault="false" fontName="Verdana" size="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="true"/>
+	<reportFont name="PageTitle" isDefault="false" fontName="Verdana" size="16" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica-Bold" pdfEncoding="Cp1252" isPdfEmbedded="true"/>
 	<parameter name="location" class="org.geoname.data.Location"/>
 	<parameter name="daylight_chart" class="net.sf.jasperreports.engine.JRRenderable" isForPrompting="false">
 		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
@@ -19,52 +20,8 @@
 	<field name="sunset" class="org.joda.time.LocalDateTime"/>
 	<field name="twilightRise" class="org.joda.time.LocalDateTime"/>
 	<field name="twilightSet" class="org.joda.time.LocalDateTime"/>
-	<group name="Month">
+	<group name="Month" isStartNewColumn="true">
 		<groupExpression><![CDATA[$F{date}.getMonthOfYear()]]></groupExpression>
-		<groupHeader>
-			<band height="34">
-				<staticText>
-					<reportElement key="staticText" x="0" y="0" width="100" height="34" forecolor="#0000A0"/>
-					<box padding="2"/>
-					<textElement verticalAlignment="Bottom">
-						<font reportFont="TableHeader"/>
-					</textElement>
-					<text><![CDATA[Date]]></text>
-				</staticText>
-				<staticText>
-					<reportElement key="staticText" x="100" y="0" width="70" height="34" forecolor="#0000A0"/>
-					<box padding="2"/>
-					<textElement verticalAlignment="Bottom">
-						<font reportFont="TableHeader"/>
-					</textElement>
-					<text><![CDATA[Twilight - Rise]]></text>
-				</staticText>
-				<staticText>
-					<reportElement key="staticText" x="170" y="0" width="70" height="34" forecolor="#0000A0"/>
-					<box padding="2"/>
-					<textElement verticalAlignment="Bottom">
-						<font reportFont="TableHeader"/>
-					</textElement>
-					<text><![CDATA[Sunrise]]></text>
-				</staticText>
-				<staticText>
-					<reportElement key="staticText" x="240" y="0" width="70" height="34" forecolor="#0000A0"/>
-					<box padding="2"/>
-					<textElement verticalAlignment="Bottom">
-						<font reportFont="TableHeader"/>
-					</textElement>
-					<text><![CDATA[Sunset]]></text>
-				</staticText>
-				<staticText>
-					<reportElement key="staticText" x="310" y="0" width="70" height="34" forecolor="#0000A0"/>
-					<box padding="2"/>
-					<textElement verticalAlignment="Bottom">
-						<font reportFont="TableHeader"/>
-					</textElement>
-					<text><![CDATA[Twilight - Set]]></text>
-				</staticText>
-			</band>
-		</groupHeader>
 	</group>
 	<title>
 		<band height="530">
@@ -76,18 +33,77 @@
 		</band>
 	</title>
 	<pageHeader>
-		<band height="22">
+		<band height="80">
 			<textField isBlankWhenNull="false" hyperlinkType="None">
-				<reportElement key="textField" x="0" y="0" width="802" height="22" forecolor="#0000A0"/>
+				<reportElement key="textField" x="0" y="0" width="802" height="25" forecolor="#0000A0"/>
 				<box padding="2"/>
 				<textElement verticalAlignment="Middle">
+					<font reportFont="PageTitle"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{location}.getDescription()]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false" hyperlinkType="None">
+				<reportElement key="textField" x="0" y="47" width="802" height="22" forecolor="#0000A0"/>
+				<box padding="2"/>
+				<textElement verticalAlignment="Middle" markup="none">
 					<font reportFont="PageHeader"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["Sunrise, sunset and twilight times for " +
-$P{location}.getDescription() + " " +  $P{location}.getDetails()]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["Sunrise, sunset and twilight times for " + $F{date}.toString("MMMM yyyy")]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false" hyperlinkType="None">
+				<reportElement key="textField" x="0" y="25" width="802" height="22" forecolor="#0000A0"/>
+				<box padding="2"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font reportFont="PageHeader"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{location}.getDetails()]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>
+	<columnHeader>
+		<band height="34">
+			<staticText>
+				<reportElement key="staticText" x="0" y="0" width="100" height="34" forecolor="#0000A0"/>
+				<box padding="2"/>
+				<textElement verticalAlignment="Bottom">
+					<font reportFont="TableHeader"/>
+				</textElement>
+				<text><![CDATA[Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="100" y="0" width="70" height="34" forecolor="#0000A0"/>
+				<box padding="2"/>
+				<textElement verticalAlignment="Bottom">
+					<font reportFont="TableHeader"/>
+				</textElement>
+				<text><![CDATA[Twilight - Rise]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="170" y="0" width="70" height="34" forecolor="#0000A0"/>
+				<box padding="2"/>
+				<textElement verticalAlignment="Bottom">
+					<font reportFont="TableHeader"/>
+				</textElement>
+				<text><![CDATA[Sunrise]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="240" y="0" width="70" height="34" forecolor="#0000A0"/>
+				<box padding="2"/>
+				<textElement verticalAlignment="Bottom">
+					<font reportFont="TableHeader"/>
+				</textElement>
+				<text><![CDATA[Sunset]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="310" y="0" width="70" height="34" forecolor="#0000A0"/>
+				<box padding="2"/>
+				<textElement verticalAlignment="Bottom">
+					<font reportFont="TableHeader"/>
+				</textElement>
+				<text><![CDATA[Twilight - Set]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
 	<detail>
 		<band height="20">
 			<textField isBlankWhenNull="false" hyperlinkType="None">
