@@ -33,8 +33,8 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 import org.geoname.data.Location;
-import org.geoname.parser.GNISFilesParser;
-import org.geoname.parser.GNSCountryFilesParser;
+import org.geoname.parser.GNISFileParser;
+import org.geoname.parser.GNSCountryFileParser;
 import org.geoname.parser.ParserException;
 import org.geoname.parser.UnicodeReader;
 import org.junit.Test;
@@ -47,7 +47,7 @@ public class TestGeoNameFiles
     throws ParserException, IOException
   {
     final String date = "20100607";
-    parseGNISUSStates("MA", date, 2306);
+    parseGNISUSStates("MA", date, 2428);
     parseGNISUSStates("HI", date, 541);
   }
 
@@ -55,8 +55,8 @@ public class TestGeoNameFiles
   public void GNSCountries()
     throws ParserException, IOException
   {
-    parseGNSCountryFile("in.zip", 31621);
-    parseGNSCountryFile("lo.zip", 4606);
+    parseGNSCountryFile("in.zip", 37018);
+    parseGNSCountryFile("lo.zip", 4969);
   }
 
   private void parseGNISUSStates(final String state,
@@ -77,7 +77,8 @@ public class TestGeoNameFiles
       dataFilename = ze.getName();
       System.out.println(dataFilename);
       BufferedReader reader = new BufferedReader(new UnicodeReader(zis, "UTF-8"));
-      locations = GNISFilesParser.parseLocations(reader);
+      final GNISFileParser parser = new GNISFileParser(reader);
+      locations = parser.parseLocations();
 
       zis.closeEntry();
     }
@@ -103,7 +104,8 @@ public class TestGeoNameFiles
       dataFilename = ze.getName();
       System.out.println(dataFilename);
       BufferedReader reader = new BufferedReader(new UnicodeReader(zis, "UTF-8"));
-      locations = GNSCountryFilesParser.parseLocations(reader);
+      final GNSCountryFileParser parser = new GNSCountryFileParser(reader);
+      locations = parser.parseLocations();
 
       zis.closeEntry();
     }

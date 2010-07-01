@@ -38,8 +38,8 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 import org.geoname.data.Location;
-import org.geoname.parser.GNISFilesParser;
-import org.geoname.parser.GNSCountryFilesParser;
+import org.geoname.parser.GNISFileParser;
+import org.geoname.parser.GNSCountryFileParser;
 import org.geoname.parser.LocationFormatter;
 import org.geoname.parser.LocationParser;
 import org.geoname.parser.UnicodeReader;
@@ -150,12 +150,14 @@ abstract class BaseLocationsDataFile
           case gns_country_file:
           case gns_country_file_zipped:
             reader = new UnicodeReader(inputStream, "UTF-8");
-            data.addAll(GNSCountryFilesParser.parseLocations(reader));
+            final GNSCountryFileParser countryFileParser = new GNSCountryFileParser(reader);
+            data.addAll(countryFileParser.parseLocations());
             break;
           case gnis_state_file:
           case gnis_state_file_zipped:
             reader = new UnicodeReader(inputStream, "UTF-8");
-            data.addAll(GNISFilesParser.parseLocations(reader));
+            final GNISFileParser gnisFileParser = new GNISFileParser(reader);
+            data.addAll(gnisFileParser.parseLocations());
             break;
         }
         reader.close();
