@@ -38,7 +38,7 @@
     <module>sunposition</module>
     <module>geoname</module>
     <module>daylightchart</module>
-    <module>daylightchart-web</module>
+    <!-- <module>daylightchart-web</module> -->
   </modules>
   <dependencies>
     <dependency>

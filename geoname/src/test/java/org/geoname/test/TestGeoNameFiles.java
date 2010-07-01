@@ -48,7 +48,7 @@ public class TestGeoNameFiles
   {
     final String date = "20100607";
     parseGNISUSStates("MA", date, 2306);
-    parseGNISUSStates("HI", date, 540);
+    parseGNISUSStates("HI", date, 541);
   }
 
   @Test
