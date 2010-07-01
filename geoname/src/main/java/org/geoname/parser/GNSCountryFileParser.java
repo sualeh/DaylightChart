@@ -59,7 +59,19 @@ public final class GNSCountryFileParser
     {
       try
       {
-        final String city = locationDataMap.get("FULL_NAME_RO");
+        final String city;
+        if (locationDataMap.containsKey("FULL_NAME_RO"))
+        {
+          city = locationDataMap.get("FULL_NAME_RO");
+        }
+        else if (locationDataMap.containsKey("FULL_NAME_RO"))
+        {
+          city = locationDataMap.get("FULL_NAME_RO");
+        }
+        else
+        {
+          return null;
+        }
         final Country country = Countries
           .lookupFips10CountryCode(locationDataMap.get("CC1"));
 
