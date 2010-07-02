@@ -30,7 +30,7 @@ import java.util.List;
 import org.geoname.data.Location;
 import org.geoname.parser.FormatterException;
 import org.geoname.parser.LocationFormatter;
-import org.geoname.parser.LocationParser;
+import org.geoname.parser.LocationsListParser;
 import org.geoname.parser.ParserException;
 import org.junit.Test;
 
@@ -43,7 +43,7 @@ public class TestLocation
   {
 
     final String locationString = "Aberdeen;GB;Europe/London;+5710-00204/";
-    final Location location = LocationParser.parseLocation(locationString);
+    final Location location = LocationsListParser.parseLocation(locationString);
 
     assertEquals(locationString, LocationFormatter.formatLocation(location));
 
@@ -55,7 +55,7 @@ public class TestLocation
   {
     final InputStream dataStream = this.getClass().getClassLoader()
       .getResourceAsStream("locations.data");
-    final List<Location> locations = new LocationParser(dataStream)
+    final List<Location> locations = new LocationsListParser(dataStream)
       .parseLocations();
 
     assertEquals(109, locations.size());
