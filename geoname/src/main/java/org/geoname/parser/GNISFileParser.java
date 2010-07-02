@@ -22,7 +22,7 @@
 package org.geoname.parser;
 
 
-import java.io.Reader;
+import java.io.InputStream;
 import java.util.Map;
 
 import org.geoname.data.Countries;
@@ -40,10 +40,10 @@ public final class GNISFileParser
 
   private static final Country usa = Countries.lookupCountry("US");
 
-  public GNISFileParser(final Reader reader)
+  public GNISFileParser(final InputStream stream)
     throws ParserException
   {
-    super(reader, "\\|");
+    super(stream, "\\|");
   }
 
   @Override

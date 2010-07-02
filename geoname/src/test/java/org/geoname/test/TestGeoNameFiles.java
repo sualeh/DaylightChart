@@ -24,7 +24,6 @@ package org.geoname.test;
 
 import static org.junit.Assert.assertEquals;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -36,7 +35,6 @@ import org.geoname.data.Location;
 import org.geoname.parser.GNISFileParser;
 import org.geoname.parser.GNSCountryFileParser;
 import org.geoname.parser.ParserException;
-import org.geoname.parser.UnicodeReader;
 import org.junit.Test;
 
 public class TestGeoNameFiles
@@ -66,7 +64,6 @@ public class TestGeoNameFiles
   {
     final String filename = state + "_Features_" + date + ".zip";
     List<Location> locations = new ArrayList<Location>();
-    String dataFilename = "";
 
     final InputStream dataStream = this.getClass().getClassLoader()
       .getResourceAsStream(filename);
@@ -74,26 +71,21 @@ public class TestGeoNameFiles
     ZipEntry ze;
     if ((ze = zis.getNextEntry()) != null)
     {
-      dataFilename = ze.getName();
-      System.out.println(dataFilename);
-      BufferedReader reader = new BufferedReader(new UnicodeReader(zis, "UTF-8"));
-      final GNISFileParser parser = new GNISFileParser(reader);
+      System.out.println(ze);
+      final GNISFileParser parser = new GNISFileParser(zis);
       locations = parser.parseLocations();
-
-      zis.closeEntry();
     }
     zis.close();
 
     assertEquals(String.format("Number of locations in file %s:%s",
                                filename,
-                               dataFilename), numLocations, locations.size());
+                               ze), numLocations, locations.size());
   }
 
   private void parseGNSCountryFile(final String filename, final int numLocations)
     throws ParserException, IOException
   {
     List<Location> locations = new ArrayList<Location>();
-    String dataFilename = "";
 
     final InputStream dataStream = this.getClass().getClassLoader()
       .getResourceAsStream(filename);
@@ -101,18 +93,14 @@ public class TestGeoNameFiles
     ZipEntry ze;
     if ((ze = zis.getNextEntry()) != null)
     {
-      dataFilename = ze.getName();
-      System.out.println(dataFilename);
-      BufferedReader reader = new BufferedReader(new UnicodeReader(zis, "UTF-8"));
-      final GNSCountryFileParser parser = new GNSCountryFileParser(reader);
+      System.out.println(ze);
+      final GNSCountryFileParser parser = new GNSCountryFileParser(zis);
       locations = parser.parseLocations();
-
-      zis.closeEntry();
     }
     zis.close();
 
     assertEquals(String.format("Number of locations in file %s:%s",
                                filename,
-                               dataFilename), numLocations, locations.size());
+                               ze), numLocations, locations.size());
   }
 }

@@ -24,9 +24,11 @@ package org.geoname.parser;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.Reader;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.geoname.data.Countries;
 import org.geoname.data.Country;
@@ -40,7 +42,10 @@ import org.pointlocation6709.parser.PointLocationParser;
  * @author Sualeh Fatehi
  */
 public final class LocationParser
+  implements LocationsFileParser
 {
+  private static final Logger LOGGER = Logger.getLogger(LocationParser.class
+    .getName());
 
   /**
    * Parses a string representation of a location.
@@ -86,30 +91,30 @@ public final class LocationParser
 
   }
 
-  /**
-   * Reads locations from a reader.
-   * 
-   * @param rdr
-   *        Reader
-   * @return List of locations
-   * @throws ParserException
-   *         On a parse exception
-   */
-  public static List<Location> parseLocations(final Reader rdr)
+  private final BufferedReader reader;
+
+  public LocationParser(final InputStream stream)
     throws ParserException
   {
-
-    if (rdr == null)
+    if (stream == null)
     {
       throw new ParserException("Cannot read locations");
     }
+    reader = new BufferedReader(new UnicodeReader(stream, "UTF-8"));
+  }
 
-    List<Location> locations;
+  /**
+   * {@inheritDoc}
+   * 
+   * @see org.geoname.parser.LocationsFileParser#parseLocations()
+   */
+  public List<Location> parseLocations()
+    throws ParserException
+  {
+
+    final List<Location> locations = new ArrayList<Location>();
     try
     {
-      locations = new ArrayList<Location>();
-      final BufferedReader reader = new BufferedReader(rdr);
-
       String line;
       while ((line = reader.readLine()) != null)
       {
@@ -125,13 +130,20 @@ public final class LocationParser
     {
       throw new ParserException("Invalid locations", e);
     }
+    finally
+    {
+      try
+      {
+        reader.close();
+      }
+      catch (final IOException e)
+      {
+        LOGGER.log(Level.WARNING, "Could not close locations reader");
+      }
+    }
 
-    return new ArrayList<Location>(locations);
-
-  }
-
-  private LocationParser()
-  {
+    LOGGER.log(Level.INFO, "Loaded " + locations.size() + " locations");
+    return locations;
   }
 
 }

@@ -25,7 +25,6 @@ package org.geoname.test;
 import static org.junit.Assert.assertEquals;
 
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.List;
 
 import org.geoname.data.Location;
@@ -56,8 +55,8 @@ public class TestLocation
   {
     final InputStream dataStream = this.getClass().getClassLoader()
       .getResourceAsStream("locations.data");
-    final InputStreamReader reader = new InputStreamReader(dataStream);
-    final List<Location> locations = LocationParser.parseLocations(reader);
+    final List<Location> locations = new LocationParser(dataStream)
+      .parseLocations();
 
     assertEquals(109, locations.size());
   }

@@ -22,7 +22,7 @@
 package org.geoname.parser;
 
 
-import java.io.Reader;
+import java.io.InputStream;
 import java.util.Map;
 
 import org.geoname.data.Countries;
@@ -38,10 +38,10 @@ public final class GNSCountryFileParser
   extends BaseDelimitedLocationsFileParser
 {
 
-  public GNSCountryFileParser(final Reader reader)
+  public GNSCountryFileParser(final InputStream stream)
     throws ParserException
   {
-    super(reader, "\t");
+    super(stream, "\t");
   }
 
   @Override

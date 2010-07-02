@@ -24,7 +24,7 @@ package org.geoname.parser;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.Reader;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -40,6 +40,7 @@ import org.pointlocation6709.Longitude;
 import org.pointlocation6709.PointLocation;
 
 abstract class BaseDelimitedLocationsFileParser
+  implements LocationsFileParser
 {
   private static final Logger LOGGER = Logger
     .getLogger(BaseDelimitedLocationsFileParser.class.getName());
@@ -48,15 +49,15 @@ abstract class BaseDelimitedLocationsFileParser
   private final String delimiter;
   private final String[] header;
 
-  protected BaseDelimitedLocationsFileParser(final Reader reader,
+  protected BaseDelimitedLocationsFileParser(final InputStream stream,
                                              final String delimiter)
     throws ParserException
   {
-    if (reader == null)
+    if (stream == null)
     {
       throw new ParserException("Cannot read locations");
     }
-    this.reader = new BufferedReader(reader);
+    this.reader = new BufferedReader(new UnicodeReader(stream, "UTF-8"));
 
     if (delimiter == null)
     {
@@ -85,6 +86,11 @@ abstract class BaseDelimitedLocationsFileParser
     }
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see org.geoname.parser.LocationsFileParser#parseLocations()
+   */
   public final List<Location> parseLocations()
     throws ParserException
   {
@@ -116,14 +122,25 @@ abstract class BaseDelimitedLocationsFileParser
           locations.add(location);
         }
       }
-
-      LOGGER.log(Level.INFO, "Loaded " + locations.size() + " locations");
-      return locations;
     }
     catch (final IOException e)
     {
       throw new ParserException("Invalid locations", e);
     }
+    finally
+    {
+      try
+      {
+        reader.close();
+      }
+      catch (final IOException e)
+      {
+        LOGGER.log(Level.WARNING, "Could not close locations reader");
+      }
+    }
+
+    LOGGER.log(Level.INFO, "Loaded " + locations.size() + " locations");
+    return locations;
   }
 
   private final double getDouble(final Map<String, String> locationDataMap,
