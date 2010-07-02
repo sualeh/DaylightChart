@@ -40,7 +40,7 @@ import org.pointlocation6709.Longitude;
 import org.pointlocation6709.PointLocation;
 
 abstract class BaseDelimitedLocationsFileParser
-  implements LocationsFileParser
+  implements LocationsParser
 {
   private static final Logger LOGGER = Logger
     .getLogger(BaseDelimitedLocationsFileParser.class.getName());
@@ -89,7 +89,7 @@ abstract class BaseDelimitedLocationsFileParser
   /**
    * {@inheritDoc}
    * 
-   * @see org.geoname.parser.LocationsFileParser#parseLocations()
+   * @see org.geoname.parser.LocationsParser#parseLocations()
    */
   public final List<Location> parseLocations()
     throws ParserException

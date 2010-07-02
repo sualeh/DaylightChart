@@ -41,10 +41,10 @@ import org.pointlocation6709.parser.PointLocationParser;
  * 
  * @author Sualeh Fatehi
  */
-public final class LocationParser
-  implements LocationsFileParser
+public final class LocationsListParser
+  implements LocationsParser
 {
-  private static final Logger LOGGER = Logger.getLogger(LocationParser.class
+  private static final Logger LOGGER = Logger.getLogger(LocationsListParser.class
     .getName());
 
   /**
@@ -93,7 +93,7 @@ public final class LocationParser
 
   private final BufferedReader reader;
 
-  public LocationParser(final InputStream stream)
+  public LocationsListParser(final InputStream stream)
     throws ParserException
   {
     if (stream == null)
@@ -106,7 +106,7 @@ public final class LocationParser
   /**
    * {@inheritDoc}
    * 
-   * @see org.geoname.parser.LocationsFileParser#parseLocations()
+   * @see org.geoname.parser.LocationsParser#parseLocations()
    */
   public List<Location> parseLocations()
     throws ParserException

@@ -31,7 +31,7 @@ import org.geoname.data.Location;
  * 
  * @author Sualeh Fatehi
  */
-public interface LocationsFileParser
+public interface LocationsParser
 {
 
   /**
