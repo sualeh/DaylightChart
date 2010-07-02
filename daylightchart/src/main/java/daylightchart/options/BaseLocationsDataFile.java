@@ -39,8 +39,8 @@ import org.geoname.data.Location;
 import org.geoname.parser.GNISFileParser;
 import org.geoname.parser.GNSCountryFileParser;
 import org.geoname.parser.LocationFormatter;
-import org.geoname.parser.LocationParser;
-import org.geoname.parser.LocationsFileParser;
+import org.geoname.parser.LocationsListParser;
+import org.geoname.parser.LocationsParser;
 
 import daylightchart.gui.actions.LocationFileType;
 
@@ -138,11 +138,11 @@ abstract class BaseLocationsDataFile
     {
       for (final InputStream inputStream: inputs)
       {
-        final LocationsFileParser locationsFileParser;
+        final LocationsParser locationsFileParser;
         switch (getFileType())
         {
           case data:
-            locationsFileParser = new LocationParser(inputStream);
+            locationsFileParser = new LocationsListParser(inputStream);
             break;
           case gns_country_file:
           case gns_country_file_zipped:

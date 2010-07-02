@@ -39,7 +39,7 @@ import java.util.logging.Logger;
 import org.apache.commons.lang.ArrayUtils;
 import org.geoname.data.Location;
 import org.geoname.parser.DefaultTimezones;
-import org.geoname.parser.LocationParser;
+import org.geoname.parser.LocationsListParser;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.joda.time.LocalTime;
@@ -167,7 +167,7 @@ public final class RiseSetUtility
     throws Exception
   {
     final String locationString = args[0];
-    final Location location = LocationParser.parseLocation(locationString);
+    final Location location = LocationsListParser.parseLocation(locationString);
     final File file = RiseSetUtility.writeCalculationsToFile(location);
     System.out.println("Calculations written to " + file.getAbsolutePath());
   }

@@ -30,7 +30,7 @@ import javax.swing.UIManager;
 
 import org.apache.commons.lang.StringUtils;
 import org.geoname.data.Location;
-import org.geoname.parser.LocationParser;
+import org.geoname.parser.LocationsListParser;
 import org.geoname.parser.ParserException;
 
 import sf.util.CommandLineParser;
@@ -90,7 +90,7 @@ public final class Main
     {
       try
       {
-        location = LocationParser.parseLocation(locationString);
+        location = LocationsListParser.parseLocation(locationString);
       }
       catch (final ParserException e)
       {

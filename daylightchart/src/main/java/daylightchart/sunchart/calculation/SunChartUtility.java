@@ -35,7 +35,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.geoname.data.Location;
-import org.geoname.parser.LocationParser;
+import org.geoname.parser.LocationsListParser;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.sunposition.calculation.Equinox;
@@ -104,7 +104,7 @@ public final class SunChartUtility
     throws Exception
   {
     final String locationString = args[0];
-    final Location location = LocationParser.parseLocation(locationString);
+    final Location location = LocationsListParser.parseLocation(locationString);
     final File file = SunChartUtility.writeCalculationsToFile(location);
     System.out.println("Calculations written to " + file.getAbsolutePath());
   }

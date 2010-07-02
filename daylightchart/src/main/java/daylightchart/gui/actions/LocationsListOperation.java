@@ -39,7 +39,7 @@ import javax.swing.KeyStroke;
 import org.geoname.data.Location;
 import org.geoname.parser.FormatterException;
 import org.geoname.parser.LocationFormatter;
-import org.geoname.parser.LocationParser;
+import org.geoname.parser.LocationsListParser;
 import org.geoname.parser.ParserException;
 
 import daylightchart.gui.DaylightChartGui;
@@ -187,7 +187,7 @@ public enum LocationsListOperation
           {
             locationString = (String) contents
               .getTransferData(DataFlavor.stringFlavor);
-            final Location location = LocationParser
+            final Location location = LocationsListParser
               .parseLocation(locationString);
             mainWindow.addLocation(location);
           }
