@@ -26,8 +26,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -42,7 +40,7 @@ import org.geoname.parser.GNISFileParser;
 import org.geoname.parser.GNSCountryFileParser;
 import org.geoname.parser.LocationFormatter;
 import org.geoname.parser.LocationParser;
-import org.geoname.parser.UnicodeReader;
+import org.geoname.parser.LocationsFileParser;
 
 import daylightchart.gui.actions.LocationFileType;
 
@@ -140,27 +138,28 @@ abstract class BaseLocationsDataFile
     {
       for (final InputStream inputStream: inputs)
       {
-        Reader reader = null;
+        final LocationsFileParser locationsFileParser;
         switch (getFileType())
         {
           case data:
-            reader = new InputStreamReader(inputStream, "UTF-8");
-            data.addAll(LocationParser.parseLocations(reader));
+            locationsFileParser = new LocationParser(inputStream);
             break;
           case gns_country_file:
           case gns_country_file_zipped:
-            reader = new UnicodeReader(inputStream, "UTF-8");
-            final GNSCountryFileParser countryFileParser = new GNSCountryFileParser(reader);
-            data.addAll(countryFileParser.parseLocations());
+            locationsFileParser = new GNSCountryFileParser(inputStream);
             break;
           case gnis_state_file:
           case gnis_state_file_zipped:
-            reader = new UnicodeReader(inputStream, "UTF-8");
-            final GNISFileParser gnisFileParser = new GNISFileParser(reader);
-            data.addAll(gnisFileParser.parseLocations());
+            locationsFileParser = new GNISFileParser(inputStream);
+            break;
+          default:
+            locationsFileParser = null;
             break;
         }
-        reader.close();
+        if (locationsFileParser != null)
+        {
+          data.addAll(locationsFileParser.parseLocations());
+        }
       }
     }
     catch (final Exception e)
