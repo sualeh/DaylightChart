@@ -53,7 +53,7 @@ public class TestGeoNameFiles
   public void GNSCountries()
     throws ParserException, IOException
   {
-    parseGNSCountryFile("in.zip", 37018);
+    parseGNSCountryFile("uz.zip", 3757);
     parseGNSCountryFile("lo.zip", 4969);
   }
 

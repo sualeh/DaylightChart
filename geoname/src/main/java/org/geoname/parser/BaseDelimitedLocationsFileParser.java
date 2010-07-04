@@ -192,7 +192,14 @@ abstract class BaseDelimitedLocationsFileParser
     final String timeZoneId = DefaultTimezones
       .attemptTimeZoneMatch(city, country, pointLocation.getLongitude());
 
-    return new Location(city, country, timeZoneId, pointLocation);
+    try
+    {
+      return new Location(city, country, timeZoneId, pointLocation);
+    }
+    catch (final IllegalArgumentException e)
+    {
+      throw new ParserException("Could not get location", e);
+    }
   }
 
   protected abstract Location parseLocation(final Map<String, String> locationDataMap);
