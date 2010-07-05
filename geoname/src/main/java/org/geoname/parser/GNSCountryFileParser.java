@@ -27,6 +27,7 @@ import java.util.Map;
 
 import org.geoname.data.Countries;
 import org.geoname.data.Country;
+import org.geoname.data.FIPS10AdministrationDivisions;
 import org.geoname.data.Location;
 
 /**
@@ -59,7 +60,7 @@ public final class GNSCountryFileParser
     {
       try
       {
-        final String city;
+        String city;
         if (locationDataMap.containsKey("FULL_NAME_RO"))
         {
           city = locationDataMap.get("FULL_NAME_RO");
@@ -74,6 +75,13 @@ public final class GNSCountryFileParser
         }
         final Country country = Countries
           .lookupFips10CountryCode(locationDataMap.get("CC1"));
+        final String fips10AdministrationDivisionName = FIPS10AdministrationDivisions
+          .lookupFips10AdministrationDivisionName(country, locationDataMap
+            .get("ADM1"));
+        if (fips10AdministrationDivisionName != null)
+        {
+          city = city + ", " + fips10AdministrationDivisionName;
+        }
 
         return getLocation(locationDataMap,
                            city,
