@@ -96,21 +96,15 @@ public final class OpenLocationsFileAction
       {
         mainWindow.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 
+        boolean loadedLocations = false;
         try
         {
           LocationsDataFile locationDataFile = new LocationsDataFile(selectedFile);
           locationDataFile.load();
           final List<Location> locations = locationDataFile.getData();
-          if (locations == null)
+          if (locations != null && !locations.isEmpty())
           {
-            LOGGER.log(Level.WARNING, Messages
-              .getString("DaylightChartGui.Message.Error.CannotOpenFile")); //$NON-NLS-1$
-            JOptionPane.showMessageDialog(mainWindow, Messages
-              .getString("DaylightChartGui.Message.Error.CannotOpenFile") //$NON-NLS-1$
-                                                      + "\n" //$NON-NLS-1$
-                                                      + selectedFile, Messages
-              .getString("DaylightChartGui.Message.Error.CannotOpenFile"), //$NON-NLS-1$
-                                          JOptionPane.ERROR_MESSAGE);
+            loadedLocations = true;
           }
           else
           {
@@ -121,7 +115,19 @@ public final class OpenLocationsFileAction
         {
           // We catch exceptions, because otherwise the cursor may get
           // stuck in busy mode
-          LOGGER.log(Level.WARNING, "Could not load locations");
+          LOGGER.log(Level.WARNING, "Could not load locations", e);
+        }
+
+        if (!loadedLocations)
+        {
+          LOGGER.log(Level.WARNING, Messages
+            .getString("DaylightChartGui.Message.Error.CannotOpenFile")); //$NON-NLS-1$
+          JOptionPane.showMessageDialog(mainWindow, Messages
+            .getString("DaylightChartGui.Message.Error.CannotOpenFile") //$NON-NLS-1$
+                                                    + "\n" //$NON-NLS-1$
+                                                    + selectedFile, Messages
+            .getString("DaylightChartGui.Message.Error.CannotOpenFile"), //$NON-NLS-1$
+                                        JOptionPane.ERROR_MESSAGE);
         }
 
         mainWindow.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
