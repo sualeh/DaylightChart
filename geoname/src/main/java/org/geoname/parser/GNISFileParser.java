@@ -55,7 +55,7 @@ public final class GNISFileParser
     }
 
     final String featureClass = locationDataMap.get("FEATURE_CLASS");
-    if (featureClass.equals("Populated Place"))
+    if (featureClass != null && featureClass.equals("Populated Place"))
     {
       try
       {
