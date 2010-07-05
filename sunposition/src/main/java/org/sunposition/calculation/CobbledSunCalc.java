@@ -324,7 +324,7 @@ class CobbledSunCalc
     alpha = L - 2.466 * sinD(2D * L) + 0.053 * sinD(4D * L);
 
     /* Mean Obliquity of the Ecliptic (epsilon) (degrees) */
-    e = 23.0 + (26.0 + (21.448 - t * (46.8150 + t * (0.00059 - t * 0.001813))) / 60.0) / 60.0;
+    e = 23.1 + (26.0 + (21.448 - t * (46.8150 + t * (0.00059 - t * 0.001813))) / 60.0) / 60.0;
 
     /*
      * Declination is one element of the astronomical coordinate system,

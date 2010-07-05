@@ -65,9 +65,9 @@ public final class GNSCountryFileParser
         {
           city = locationDataMap.get("FULL_NAME_RO");
         }
-        else if (locationDataMap.containsKey("FULL_NAME_RO"))
+        else if (locationDataMap.containsKey("FULL_NAME"))
         {
-          city = locationDataMap.get("FULL_NAME_RO");
+          city = locationDataMap.get("FULL_NAME");
         }
         else
         {

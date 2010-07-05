@@ -5,7 +5,7 @@
 		<author email="sualeh@hotmail.com">Sualeh Fatehi</author>
 	</properties>
 	<body>
-		<release version="3.0" date="2009-01-03">
+		<release version="3.1" date="2009-01-03">
 			<action dev="Sualeh Fatehi" type="add">
 				Updates to all third-party libraries to the latest versions, including
 				reporting. Major internal code reorganization.

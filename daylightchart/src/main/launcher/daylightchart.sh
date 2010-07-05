@@ -1,1 +1,1 @@
-java -cp ./lib/daylightchart-3.0.jar daylightchart.LauncherMain daylightchart.Main --addclasspath ./lib
+java -cp ./lib/daylightchart-3.1.jar daylightchart.LauncherMain daylightchart.Main --addclasspath ./lib

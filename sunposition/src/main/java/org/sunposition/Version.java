@@ -33,7 +33,7 @@ public final class Version
 {
 
   private static final String PRODUCTNAME = "Sun Position Calculations"; //$NON-NLS-1$
-  private static final String VERSION = "3.0"; //$NON-NLS-1$
+  private static final String VERSION = "3.1"; //$NON-NLS-1$
 
   /**
    * Information about this product.
