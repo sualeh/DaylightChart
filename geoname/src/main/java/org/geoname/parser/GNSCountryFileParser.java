@@ -60,6 +60,11 @@ public final class GNSCountryFileParser
     {
       try
       {
+        final Country country = Countries
+          .lookupFips10CountryCode(locationDataMap.get("CC1"));
+        final String fips10AdministrationDivisionName = FIPS10AdministrationDivisions
+          .lookupFips10AdministrationDivisionName(country, locationDataMap
+            .get("ADM1"));
         String city;
         if (locationDataMap.containsKey("FULL_NAME_RO"))
         {
@@ -73,11 +78,6 @@ public final class GNSCountryFileParser
         {
           return null;
         }
-        final Country country = Countries
-          .lookupFips10CountryCode(locationDataMap.get("CC1"));
-        final String fips10AdministrationDivisionName = FIPS10AdministrationDivisions
-          .lookupFips10AdministrationDivisionName(country, locationDataMap
-            .get("ADM1"));
         if (fips10AdministrationDivisionName != null)
         {
           city = city + ", " + fips10AdministrationDivisionName;
