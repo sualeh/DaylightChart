@@ -57,7 +57,7 @@ abstract class BaseDelimitedLocationsFileParser
     {
       throw new ParserException("Cannot read locations");
     }
-    this.reader = new BufferedReader(new UnicodeReader(stream, "UTF-8"));
+    reader = new BufferedReader(new UnicodeReader(stream, "UTF-8"));
 
     if (delimiter == null)
     {
@@ -69,7 +69,7 @@ abstract class BaseDelimitedLocationsFileParser
     try
     {
       String line;
-      if ((line = this.reader.readLine()) != null)
+      if ((line = reader.readLine()) != null)
       {
         header = line.split(delimiter);
       }
@@ -162,6 +162,41 @@ abstract class BaseDelimitedLocationsFileParser
     }
   }
 
+  protected final double getDouble(final Map<String, String> locationDataMap,
+                                   final String key,
+                                   final double defaultValue)
+  {
+    double doubleValue = defaultValue;
+    try
+    {
+      doubleValue = getDouble(locationDataMap, key);
+    }
+    catch (final Exception e)
+    {
+      doubleValue = defaultValue;
+    }
+    return doubleValue;
+  }
+
+  protected final int getInteger(final Map<String, String> locationDataMap,
+                                 final String key,
+                                 final int defaultValue)
+  {
+    int integerValue = defaultValue;
+    if (locationDataMap == null || !locationDataMap.containsKey(key))
+    {
+      try
+      {
+        integerValue = Integer.parseInt(locationDataMap.get(key));
+      }
+      catch (final NumberFormatException e)
+      {
+        integerValue = defaultValue;
+      }
+    }
+    return integerValue;
+  }
+
   protected final Location getLocation(final Map<String, String> locationDataMap,
                                        final String city,
                                        final Country country,
@@ -174,16 +209,7 @@ abstract class BaseDelimitedLocationsFileParser
       .fromDegrees(getDouble(locationDataMap, latitudeKey)));
     final Longitude longitude = new Longitude(Angle
       .fromDegrees(getDouble(locationDataMap, longitudeKey)));
-
-    double altitude;
-    try
-    {
-      altitude = getDouble(locationDataMap, altitudeKey);
-    }
-    catch (final ParserException e)
-    {
-      altitude = 0D;
-    }
+    final double altitude = getDouble(locationDataMap, altitudeKey, 0D);
 
     final PointLocation pointLocation = new PointLocation(latitude,
                                                           longitude,
