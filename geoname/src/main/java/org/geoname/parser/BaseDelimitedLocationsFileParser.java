@@ -183,7 +183,7 @@ abstract class BaseDelimitedLocationsFileParser
                                  final int defaultValue)
   {
     int integerValue = defaultValue;
-    if (locationDataMap == null || !locationDataMap.containsKey(key))
+    if (locationDataMap != null && locationDataMap.containsKey(key))
     {
       try
       {
