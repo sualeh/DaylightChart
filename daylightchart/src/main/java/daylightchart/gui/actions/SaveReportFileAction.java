@@ -76,7 +76,7 @@ public final class SaveReportFileAction
                           .getString("DaylightChartGui.Menu.File.SaveReport"),
                         fileFilters,
                         new File(UserPreferences.optionsFile().getData()
-                          .getWorkingDirectory(), "DaylightChartReport.jrxml"),
+                          .getWorkingDirectory(), "DaylightChartReport.jasper"),
                         Messages
                           .getString("DaylightChartGui.Message.Confirm.FileOverwrite")); //$NON-NLS-1$
       if (selectedFile.isSelected())
