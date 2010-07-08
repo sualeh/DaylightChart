@@ -105,9 +105,6 @@ public final class OpenLocationsFileAction
           if (locations != null && !locations.isEmpty())
           {
             loadedLocations = true;
-          }
-          else
-          {
             mainWindow.setLocations(locations);
           }
         }
