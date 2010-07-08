@@ -71,7 +71,7 @@ public final class GNSCountryFileParser
         {
           fips10AdministrationDivisionName = FIPS10AdministrationDivisions
             .lookupFips10AdministrationDivisionName(country, String
-              .format("%2d", fips10AdministrationDivisionCode));
+              .format("%02d", fips10AdministrationDivisionCode));
         }
         else
         {
