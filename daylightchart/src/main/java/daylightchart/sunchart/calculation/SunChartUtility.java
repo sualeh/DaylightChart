@@ -22,20 +22,15 @@
 package daylightchart.sunchart.calculation;
 
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Writer;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.geoname.data.Location;
-import org.geoname.parser.LocationsListParser;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.sunposition.calculation.Equinox;
@@ -93,45 +88,47 @@ public final class SunChartUtility
   }
 
   /**
-   * Shows the calculations.
-   * 
-   * @param args
-   *        Location
-   * @throws Exception
-   *         On an exception
-   */
-  public static void main(final String[] args)
-    throws Exception
-  {
-    final String locationString = args[0];
-    final Location location = LocationsListParser.parseLocation(locationString);
-    final File file = SunChartUtility.writeCalculationsToFile(location);
-    System.out.println("Calculations written to " + file.getAbsolutePath());
-  }
-
-  /**
-   * Writes chart calculations to a file.
-   * 
+   * Writes calculations to a writer.
    * @param location
-   *        Location
-   * @return File that was written
+   * @param writer
    */
-  public static File writeCalculationsToFile(final Location location)
+  public static void writeCalculations(final Location location,
+                                       final Writer writer)
   {
-    try
+    if (writer == null || location == null)
     {
-      final File file = new File(location.getDescription()
-                                 + sunAlgorithm.getClass().getCanonicalName()
-                                 + ".txt");
-      final FileWriter writer = new FileWriter(file);
-      writeCalculations(writer, location);
-      return file;
+      return;
     }
-    catch (final IOException e)
+
+    final DecimalFormat format = new DecimalFormat("+000.000;-000.000");
+    format.setMaximumFractionDigits(3);
+
+    final int year = Calendar.getInstance().get(Calendar.YEAR);
+    final SunChartYearData sunChartYear = createSunChartYear(location, year);
+
+    final PrintWriter printWriter = new PrintWriter(writer, true);
+    // Header
+    printWriter.printf("Location\t%s%nDate\t%s%n%n", location, year);
+    // Data rows
+    final List<SunPositions> sunPositionsList = sunChartYear
+      .getSunPositionsList();
+    for (final SunPositions sunPositions: sunPositionsList)
     {
-      LOGGER.log(Level.WARNING, "Cannot write calculations for location "
-                                + location, e);
-      return null;
+      printWriter
+        .println("Date      \tTime\tAltitude\tAzimuth  \tHour Angle\tEqn of Time  \tDeclination");
+      for (final SunPosition sunPosition: sunPositions)
+      {
+        printWriter.printf("%s\t%s\t%s\t%s\t%s\t%s\t%s%n",
+                           sunPosition.getDateTime().toLocalDate(),
+                           sunPosition.getDateTime().toLocalTime()
+                             .toString("hh:mm"),
+                           format.format(sunPosition.getAltitude()),
+                           format.format(sunPosition.getAzimuth()),
+                           format.format(sunPosition.getHourAngle()),
+                           format.format(sunPosition.getEquationOfTime()),
+                           format.format(sunPosition.getDeclination()));
+      }
+      printWriter.println();
     }
   }
 
@@ -176,46 +173,6 @@ public final class SunChartUtility
     date = new LocalDate(equinox3.getYear(), equinox3.getMonth(), equinox3
       .getDay());
     return date;
-  }
-
-  private static void writeCalculations(final Writer writer,
-                                        final Location location)
-  {
-    if (writer == null || location == null)
-    {
-      return;
-    }
-
-    final DecimalFormat format = new DecimalFormat("+000.000;-000.000");
-    format.setMaximumFractionDigits(3);
-
-    final int year = Calendar.getInstance().get(Calendar.YEAR);
-    final SunChartYearData sunChartYear = createSunChartYear(location, year);
-
-    final PrintWriter printWriter = new PrintWriter(writer, true);
-    // Header
-    printWriter.printf("Location\t%s%nDate\t%s%n%n", location, year);
-    // Data rows
-    final List<SunPositions> sunPositionsList = sunChartYear
-      .getSunPositionsList();
-    for (final SunPositions sunPositions: sunPositionsList)
-    {
-      printWriter
-        .println("Date      \tTime\tAltitude\tAzimuth  \tHour Angle\tEqn of Time  \tDeclination");
-      for (final SunPosition sunPosition: sunPositions)
-      {
-        printWriter.printf("%s\t%s\t%s\t%s\t%s\t%s\t%s%n",
-                           sunPosition.getDateTime().toLocalDate(),
-                           sunPosition.getDateTime().toLocalTime()
-                             .toString("hh:mm"),
-                           format.format(sunPosition.getAltitude()),
-                           format.format(sunPosition.getAzimuth()),
-                           format.format(sunPosition.getHourAngle()),
-                           format.format(sunPosition.getEquationOfTime()),
-                           format.format(sunPosition.getDeclination()));
-      }
-      printWriter.println();
-    }
   }
 
   private SunChartUtility()
