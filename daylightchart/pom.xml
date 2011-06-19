@@ -4,7 +4,7 @@
   <parent>
     <artifactId>daylightchart-all</artifactId>
     <groupId>daylightchart</groupId>
-    <version>3.1</version>
+    <version>3.2</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>daylightchart</artifactId>
@@ -36,13 +36,14 @@
           <dependency>
             <groupId>net.sf.jasperreports</groupId>
             <artifactId>jasperreports</artifactId>
-            <version>3.7.3</version>
+            <version>4.0.1</version>
           </dependency>
         </dependencies>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-antrun-plugin</artifactId>
+        <version>1.6</version>
         <executions>
           <execution>
             <id>download-licenses</id>
@@ -67,7 +68,8 @@
                   usetimestamp="true" />
                 <get src="http://xstream.codehaus.org/license.html" dest="${licenses.dir}/LICENSE.XStream.html"
                   usetimestamp="true" />
-                <get src="https://jgoodies.dev.java.net/" dest="${licenses.dir}/LICENSE.JGoodies.html" usetimestamp="true" />
+                <get src="http://bodoni.lib.liv.ac.uk/fab4/looks-license.txt" dest="${licenses.dir}/LICENSE.JGoodies.html"
+                  usetimestamp="true" />
               </tasks>
             </configuration>
           </execution>
@@ -76,7 +78,7 @@
           <dependency>
             <groupId>org.apache.ant</groupId>
             <artifactId>ant</artifactId>
-            <version>1.7.0</version>
+            <version>1.8.2</version>
           </dependency>
           <dependency>
             <groupId>org.apache.ant</groupId>
@@ -86,7 +88,9 @@
         </dependencies>
       </plugin>
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jar-plugin</artifactId>
+        <version>2.3.1</version>
         <configuration>
           <archive>
             <index>true</index>
@@ -102,7 +106,9 @@
         </configuration>
       </plugin>
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-assembly-plugin</artifactId>
+        <version>2.2.1</version>
         <executions>
           <execution>
             <id>assembly</id>
@@ -122,6 +128,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-antrun-plugin</artifactId>
+        <version>1.6</version>
         <executions>
           <execution>
             <id>move-sub-sites</id>
@@ -143,7 +150,7 @@
           <dependency>
             <groupId>org.apache.ant</groupId>
             <artifactId>ant</artifactId>
-            <version>1.7.0</version>
+            <version>1.8.2</version>
           </dependency>
           <dependency>
             <groupId>org.apache.ant</groupId>
@@ -173,17 +180,17 @@
     <dependency>
       <groupId>joda-time</groupId>
       <artifactId>joda-time</artifactId>
-      <version>1.6</version>
+      <version>1.6.2</version>
     </dependency>
     <dependency>
       <groupId>jfree</groupId>
       <artifactId>jfreechart</artifactId>
-      <version>1.0.9</version>
+      <version>1.0.12</version>
     </dependency>
     <dependency>
       <groupId>com.jgoodies</groupId>
       <artifactId>looks</artifactId>
-      <version>2.2.0</version>
+      <version>2.2.2</version>
     </dependency>
     <dependency>
       <groupId>com.jgoodies</groupId>
@@ -193,7 +200,7 @@
     <dependency>
       <groupId>net.sf.jasperreports</groupId>
       <artifactId>jasperreports</artifactId>
-      <version>3.7.3</version>
+      <version>4.0.1</version>
       <exclusions>
         <exclusion>
           <groupId>antlr</groupId>

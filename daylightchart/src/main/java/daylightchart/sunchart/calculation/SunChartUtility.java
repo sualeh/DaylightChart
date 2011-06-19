@@ -2,7 +2,7 @@
  * 
  * Daylight Chart
  * http://sourceforge.net/projects/daylightchart
- * Copyright (c) 2007-2010, Sualeh Fatehi.
+ * Copyright (c) 2007-2011, Sualeh Fatehi.
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -89,6 +89,7 @@ public final class SunChartUtility
 
   /**
    * Writes calculations to a writer.
+   * 
    * @param location
    * @param writer
    */
@@ -121,7 +122,7 @@ public final class SunChartUtility
         printWriter.printf("%s\t%s\t%s\t%s\t%s\t%s\t%s%n",
                            sunPosition.getDateTime().toLocalDate(),
                            sunPosition.getDateTime().toLocalTime()
-                             .toString("hh:mm"),
+                             .toString("HH:mm"),
                            format.format(sunPosition.getAltitude()),
                            format.format(sunPosition.getAzimuth()),
                            format.format(sunPosition.getHourAngle()),

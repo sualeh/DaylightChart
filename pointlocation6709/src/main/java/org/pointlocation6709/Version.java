@@ -2,7 +2,7 @@
  *
  * Daylight Chart
  * http://sourceforge.net/projects/daylightchart
- * Copyright (c) 2007-2010, Sualeh Fatehi.
+ * Copyright (c) 2007-2011, Sualeh Fatehi.
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -33,7 +33,7 @@ public final class Version
 {
 
   private static final String PRODUCTNAME = "Point Location 6709"; //$NON-NLS-1$
-  private static final String VERSION = "3.1"; //$NON-NLS-1$
+  private static final String VERSION = "3.2"; //$NON-NLS-1$
 
   /**
    * Information about this product.

@@ -21,10 +21,10 @@ public class SunChartDevelopmentTest
     throws Exception
   {
     // Set up data
-    final String locationString = "Aberdeen;GB;Europe/London;+5710-00204/";
+    final String locationString = "Boston, MA;US;America/New_York;+4219-07105/";
 
     final Location location = LocationsListParser.parseLocation(locationString);
-    final int year = 2010;
+    final int year = 2011;
     final SunChartYearData sunChartYearData = SunChartUtility
       .createSunChartYear(location, year);
 

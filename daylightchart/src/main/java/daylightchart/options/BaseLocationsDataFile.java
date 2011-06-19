@@ -2,7 +2,7 @@
  * 
  * Daylight Chart
  * http://sourceforge.net/projects/daylightchart
- * Copyright (c) 2007-2010, Sualeh Fatehi.
+ * Copyright (c) 2007-2011, Sualeh Fatehi.
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -113,9 +113,7 @@ abstract class BaseLocationsDataFile
         case gns_country_file_zipped:
         case gnis_state_file_zipped:
           final ZipFile zipFile = new ZipFile(file);
-          final List<ZipEntry> zippedFiles = (List<ZipEntry>) Collections
-            .list(zipFile.entries());
-          for (final ZipEntry zipEntry: zippedFiles)
+          for (final ZipEntry zipEntry: Collections.list(zipFile.entries()))
           {
             inputs.add(zipFile.getInputStream(zipEntry));
           }

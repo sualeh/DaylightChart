@@ -40,7 +40,6 @@ public class BareBonesBrowserLaunch
    * @param url
    *        URL to launch in a browser
    */
-  @SuppressWarnings("unchecked")
   public static void openURL(final String url)
   {
     final String osName = System.getProperty("os.name");
@@ -48,7 +47,7 @@ public class BareBonesBrowserLaunch
     {
       if (osName.startsWith("Mac OS"))
       {
-        final Class fileMgr = Class.forName("com.apple.eio.FileManager");
+        final Class<?> fileMgr = Class.forName("com.apple.eio.FileManager");
         final Method openURL = fileMgr.getDeclaredMethod("openURL",
                                                          new Class[] {
                                                            String.class
@@ -91,8 +90,8 @@ public class BareBonesBrowserLaunch
     }
     catch (final Exception e)
     {
-      JOptionPane.showMessageDialog(null, errMsg + ":\n"
-                                          + e.getLocalizedMessage());
+      JOptionPane.showMessageDialog(null,
+                                    errMsg + ":\n" + e.getLocalizedMessage());
     }
   }
 
