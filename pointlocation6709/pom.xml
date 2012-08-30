@@ -5,7 +5,7 @@
   <parent>
     <groupId>daylightchart</groupId>
     <artifactId>daylightchart-all</artifactId>
-    <version>3.2</version>
+    <version>3.3</version>
   </parent>
   <groupId>pointlocation6709</groupId>
   <artifactId>pointlocation6709</artifactId>
@@ -23,9 +23,9 @@
   </licenses>
   <dependencies>
     <dependency>
-      <groupId>antlr</groupId>
+      <groupId>org.antlr</groupId>
       <artifactId>antlr</artifactId>
-      <version>20030911</version>
+      <version>3.4</version>
     </dependency>
     <dependency>
       <groupId>commons-lang</groupId>
