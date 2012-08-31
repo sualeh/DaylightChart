@@ -17,7 +17,7 @@
         <p>
           In addition to the Daylight Chart Locations List Format, the Daylight
           Chart program also supports loading of locations in the
-          <a href="http://earth-info.nga.mil/gns/html/cntry_files.html">
+          <a href="http://earth-info.nga.mil/gns/html/namefiles.htm">
             GNS Country Files
           </a>
           format. However, the data in the GNS Country Files does not contain
