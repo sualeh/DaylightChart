@@ -22,29 +22,44 @@
 package daylightchart.gui.actions;
 
 
-import daylightchart.gui.Messages;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-/**
- * Shows online help.
- * 
- * @author sfatehi
- */
-public final class OnlineHelpAction
-  extends BaseBrowserAction
+import javax.swing.KeyStroke;
+
+import org.apache.commons.lang.StringUtils;
+
+import daylightchart.gui.util.BareBonesBrowserLaunch;
+import daylightchart.gui.util.GuiAction;
+
+abstract class BaseBrowserAction
+  extends GuiAction
 {
 
   private static final long serialVersionUID = 4002590686393404496L;
 
-  /**
-   * Shows online help.
-   */
-  public OnlineHelpAction()
+  BaseBrowserAction(final String text, final String url)
   {
-    super(Messages.getString("DaylightChartGui.Menu.Help.Online"), //$NON-NLS-1$
-          "/icons/help.gif", //$NON-NLS-1$ 
-          "F1", //$NON-NLS-1$ 
-          "http://daylightchart.sourceforge.net/howto.html" //$NON-NLS-1$ 
-    );
+    this(text, null, null, url);
+  }
+
+  BaseBrowserAction(final String text,
+                    final String iconResource,
+                    final String shortcutKey,
+                    final String url)
+  {
+    super(text, iconResource);
+    if (StringUtils.isNotBlank(shortcutKey))
+    {
+      setShortcutKey(KeyStroke.getKeyStroke(shortcutKey));
+    }
+    addActionListener(new ActionListener()
+    {
+      public void actionPerformed(final ActionEvent actionevent)
+      {
+        BareBonesBrowserLaunch.openURL(url);
+      }
+    });
   }
 
 }

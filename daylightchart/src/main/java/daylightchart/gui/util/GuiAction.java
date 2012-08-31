@@ -24,6 +24,7 @@ package daylightchart.gui.util;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -31,6 +32,8 @@ import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 import javax.swing.KeyStroke;
 import javax.swing.event.EventListenerList;
+
+import org.apache.commons.lang.StringUtils;
 
 /**
  * An abstract action, which takes listeners.
@@ -71,7 +74,15 @@ public class GuiAction
   public GuiAction(final String text, final String iconResource)
   {
     this(text);
-    setIcon(new ImageIcon(GuiAction.class.getResource(iconResource)));
+
+    if (StringUtils.isNotBlank(iconResource))
+    {
+      final URL resource = GuiAction.class.getResource(iconResource);
+      if (resource != null)
+      {
+        setIcon(new ImageIcon(resource));
+      }
+    }
   }
 
   /**

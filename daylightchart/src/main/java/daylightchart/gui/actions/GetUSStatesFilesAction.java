@@ -24,26 +24,16 @@ package daylightchart.gui.actions;
 
 import daylightchart.gui.Messages;
 
-/**
- * Shows online help.
- * 
- * @author sfatehi
- */
-public final class OnlineHelpAction
+public final class GetUSStatesFilesAction
   extends BaseBrowserAction
 {
 
   private static final long serialVersionUID = 4002590686393404496L;
 
-  /**
-   * Shows online help.
-   */
-  public OnlineHelpAction()
+  public GetUSStatesFilesAction()
   {
-    super(Messages.getString("DaylightChartGui.Menu.Help.Online"), //$NON-NLS-1$
-          "/icons/help.gif", //$NON-NLS-1$ 
-          "F1", //$NON-NLS-1$ 
-          "http://daylightchart.sourceforge.net/howto.html" //$NON-NLS-1$ 
+    super(Messages.getString("DaylightChartGui.Menu.Actions.GetUSStatesFiles"), //$NON-NLS-1$
+          "http://geonames.usgs.gov/domestic/download_data.htm" //$NON-NLS-1$ 
     );
   }
 

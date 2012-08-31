@@ -24,26 +24,16 @@ package daylightchart.gui.actions;
 
 import daylightchart.gui.Messages;
 
-/**
- * Shows online help.
- * 
- * @author sfatehi
- */
-public final class OnlineHelpAction
+public final class GetCountriesFilesAction
   extends BaseBrowserAction
 {
 
   private static final long serialVersionUID = 4002590686393404496L;
 
-  /**
-   * Shows online help.
-   */
-  public OnlineHelpAction()
+  public GetCountriesFilesAction()
   {
-    super(Messages.getString("DaylightChartGui.Menu.Help.Online"), //$NON-NLS-1$
-          "/icons/help.gif", //$NON-NLS-1$ 
-          "F1", //$NON-NLS-1$ 
-          "http://daylightchart.sourceforge.net/howto.html" //$NON-NLS-1$ 
+    super(Messages.getString("DaylightChartGui.Menu.Actions.GetCountriesFiles"), //$NON-NLS-1$
+          "http://earth-info.nga.mil/gns/html/namefiles.htm" //$NON-NLS-1$ 
     );
   }
 
