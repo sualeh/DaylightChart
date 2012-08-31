@@ -44,7 +44,7 @@
           To customize a report, first export the report definition to a file.
           Then, modify the report definition using
           <a
-            href="http://www.jasperforge.org/jaspersoft/opensource/business_intelligence/ireport/">
+            href="http://jasperforge.org/projects/ireport">
             iReport
           </a>
           . Next, you can import the modified report definition. The next time
