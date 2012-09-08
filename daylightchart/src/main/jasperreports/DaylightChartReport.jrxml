@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created using an evaluation version of JasperAssistant (http://www.jasperassistant.com) -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="DaylightChartReport" columnCount="2" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="380" columnSpacing="42" leftMargin="20" rightMargin="20" topMargin="30" bottomMargin="30" isTitleNewPage="true">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="DaylightChartReport" columnCount="2" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="380" columnSpacing="42" leftMargin="20" rightMargin="20" topMargin="30" bottomMargin="30" isTitleNewPage="true" uuid="856abf29-bbe1-42bd-8e6f-fbac83944029">
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="122"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
-	<reportFont name="TableHeader" isDefault="false" fontName="Verdana" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica-Bold" pdfEncoding="Cp1252" isPdfEmbedded="true"/>
-	<reportFont name="TableData" isDefault="false" fontName="Verdana" size="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="true"/>
-	<reportFont name="PageHeader" isDefault="false" fontName="Verdana" size="14" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica-Bold" pdfEncoding="Cp1252" isPdfEmbedded="true"/>
-	<reportFont name="PageFooter" isDefault="false" fontName="Verdana" size="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="true"/>
-	<reportFont name="PageTitle" isDefault="false" fontName="Verdana" size="16" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica-Bold" pdfEncoding="Cp1252" isPdfEmbedded="true"/>
+	<style name="TableHeader" fontName="Verdana" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica-Bold" pdfEncoding="Cp1252" isPdfEmbedded="true"/>
+	<style name="TableData" fontName="Verdana" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="true"/>
+	<style name="PageHeader" fontName="Verdana" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica-Bold" pdfEncoding="Cp1252" isPdfEmbedded="true"/>
+	<style name="PageFooter" fontName="Verdana" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="true"/>
+	<style name="PageTitle" fontName="Verdana" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica-Bold" pdfEncoding="Cp1252" isPdfEmbedded="true"/>
 	<parameter name="location" class="org.geoname.data.Location"/>
 	<parameter name="daylight_chart" class="net.sf.jasperreports.engine.JRRenderable" isForPrompting="false">
 		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
@@ -25,146 +27,116 @@
 	</group>
 	<title>
 		<band height="530">
-			<image hyperlinkType="None">
-				<reportElement key="image" x="0" y="0" width="802" height="530"/>
+			<image>
+				<reportElement uuid="4d52a45b-6b29-45a6-b1cb-9e542a3e9582" key="image" x="0" y="0" width="802" height="530"/>
 				<box padding="2"/>
-				<imageExpression class="net.sf.jasperreports.engine.JRRenderable"><![CDATA[$P{daylight_chart}]]></imageExpression>
+				<imageExpression><![CDATA[$P{daylight_chart}]]></imageExpression>
 			</image>
 		</band>
 	</title>
 	<pageHeader>
 		<band height="80">
-			<textField isBlankWhenNull="false" hyperlinkType="None">
-				<reportElement key="textField" x="0" y="0" width="802" height="25" forecolor="#0000A0"/>
+			<textField isBlankWhenNull="false">
+				<reportElement uuid="203afacd-dce2-405f-a3d1-6b297d7c4439" key="textField" style="PageTitle" x="0" y="0" width="802" height="25" forecolor="#0000A0"/>
 				<box padding="2"/>
-				<textElement verticalAlignment="Middle">
-					<font reportFont="PageTitle"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$P{location}.getDescription()]]></textFieldExpression>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{location}.getDescription()]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="false" hyperlinkType="None">
-				<reportElement key="textField" x="0" y="47" width="802" height="22" forecolor="#0000A0"/>
+			<textField isBlankWhenNull="false">
+				<reportElement uuid="083413a0-2516-4d69-9dc8-5f3f3db4568d" key="textField" style="PageHeader" x="0" y="47" width="802" height="22" forecolor="#0000A0"/>
 				<box padding="2"/>
-				<textElement verticalAlignment="Middle" markup="none">
-					<font reportFont="PageHeader"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["Sunrise, sunset and twilight times for " + $F{date}.toString("MMMM yyyy")]]></textFieldExpression>
+				<textElement verticalAlignment="Middle" markup="none"/>
+				<textFieldExpression><![CDATA["Sunrise, sunset and twilight times for " + $F{date}.toString("MMMM yyyy")]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="false" hyperlinkType="None">
-				<reportElement key="textField" x="0" y="25" width="802" height="22" forecolor="#0000A0"/>
+			<textField isBlankWhenNull="false">
+				<reportElement uuid="eb438c22-2a4b-418d-ae34-9f664cb52359" key="textField" style="PageHeader" x="0" y="25" width="802" height="22" forecolor="#0000A0"/>
 				<box padding="2"/>
-				<textElement verticalAlignment="Middle" markup="none">
-					<font reportFont="PageHeader"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$P{location}.getDetails()]]></textFieldExpression>
+				<textElement verticalAlignment="Middle" markup="none"/>
+				<textFieldExpression><![CDATA[$P{location}.getDetails()]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>
 	<columnHeader>
 		<band height="34">
 			<staticText>
-				<reportElement key="staticText" x="0" y="0" width="100" height="34" forecolor="#0000A0"/>
+				<reportElement uuid="b3926570-f5ce-4b4b-b5a4-2be96124972b" key="staticText" style="TableHeader" x="0" y="0" width="100" height="34" forecolor="#0000A0"/>
 				<box padding="2"/>
-				<textElement verticalAlignment="Bottom">
-					<font reportFont="TableHeader"/>
-				</textElement>
+				<textElement verticalAlignment="Bottom"/>
 				<text><![CDATA[Date]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText" x="100" y="0" width="70" height="34" forecolor="#0000A0"/>
+				<reportElement uuid="889ee595-08d9-4d7c-9fce-708283ec691f" key="staticText" style="TableHeader" x="100" y="0" width="70" height="34" forecolor="#0000A0"/>
 				<box padding="2"/>
-				<textElement verticalAlignment="Bottom">
-					<font reportFont="TableHeader"/>
-				</textElement>
+				<textElement verticalAlignment="Bottom"/>
 				<text><![CDATA[Twilight - Rise]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText" x="170" y="0" width="70" height="34" forecolor="#0000A0"/>
+				<reportElement uuid="292b6b64-2abe-47a8-b997-97155a9c2037" key="staticText" style="TableHeader" x="170" y="0" width="70" height="34" forecolor="#0000A0"/>
 				<box padding="2"/>
-				<textElement verticalAlignment="Bottom">
-					<font reportFont="TableHeader"/>
-				</textElement>
+				<textElement verticalAlignment="Bottom"/>
 				<text><![CDATA[Sunrise]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText" x="240" y="0" width="70" height="34" forecolor="#0000A0"/>
+				<reportElement uuid="9430b257-76ab-4389-a991-b46317b419ee" key="staticText" style="TableHeader" x="240" y="0" width="70" height="34" forecolor="#0000A0"/>
 				<box padding="2"/>
-				<textElement verticalAlignment="Bottom">
-					<font reportFont="TableHeader"/>
-				</textElement>
+				<textElement verticalAlignment="Bottom"/>
 				<text><![CDATA[Sunset]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText" x="310" y="0" width="70" height="34" forecolor="#0000A0"/>
+				<reportElement uuid="9c67bb25-a541-4ab0-8f29-1a90aa828916" key="staticText" style="TableHeader" x="310" y="0" width="70" height="34" forecolor="#0000A0"/>
 				<box padding="2"/>
-				<textElement verticalAlignment="Bottom">
-					<font reportFont="TableHeader"/>
-				</textElement>
+				<textElement verticalAlignment="Bottom"/>
 				<text><![CDATA[Twilight - Set]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="20">
-			<textField isBlankWhenNull="false" hyperlinkType="None">
-				<reportElement key="textField" x="0" y="0" width="100" height="20" forecolor="#000000"/>
+			<textField isBlankWhenNull="false">
+				<reportElement uuid="92f884f6-b7a2-42e2-b764-b9cccf30bb3f" key="textField" style="TableData" x="0" y="0" width="100" height="20" forecolor="#000000"/>
 				<box padding="2"/>
-				<textElement>
-					<font reportFont="TableData"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{date}.toString("MMM dd, yyyy")]]></textFieldExpression>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{date}.toString("MMM dd, yyyy")]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="false" hyperlinkType="None">
-				<reportElement key="textField" x="100" y="0" width="70" height="20" forecolor="#000000"/>
+			<textField isBlankWhenNull="false">
+				<reportElement uuid="ab18b1f4-f076-4733-ac0f-8349e81e2f8a" key="textField" style="TableData" x="100" y="0" width="70" height="20" forecolor="#000000"/>
 				<box padding="2"/>
-				<textElement>
-					<font reportFont="TableData"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{twilightRise}.toString("hh:mm a")]]></textFieldExpression>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{twilightRise}.toString("hh:mm a")]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="false" hyperlinkType="None">
-				<reportElement key="textField" x="170" y="0" width="70" height="20" forecolor="#000000"/>
+			<textField isBlankWhenNull="false">
+				<reportElement uuid="17f67f67-f1c1-48f3-9dde-75385f50c266" key="textField" style="TableData" x="170" y="0" width="70" height="20" forecolor="#000000"/>
 				<box padding="2"/>
-				<textElement>
-					<font reportFont="TableData"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{sunrise}.toString("hh:mm a")]]></textFieldExpression>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{sunrise}.toString("hh:mm a")]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="false" hyperlinkType="None">
-				<reportElement key="textField" x="240" y="0" width="70" height="20" forecolor="#000000"/>
+			<textField isBlankWhenNull="false">
+				<reportElement uuid="5f90cb53-6028-4ade-943c-6864b0a07dc0" key="textField" style="TableData" x="240" y="0" width="70" height="20" forecolor="#000000"/>
 				<box padding="2"/>
-				<textElement>
-					<font reportFont="TableData"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{sunset}.toString("hh:mm a")]]></textFieldExpression>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{sunset}.toString("hh:mm a")]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="false" hyperlinkType="None">
-				<reportElement key="textField" x="310" y="0" width="70" height="20" forecolor="#000000"/>
+			<textField isBlankWhenNull="false">
+				<reportElement uuid="058a1fb7-28f0-4b25-a903-8407f084db43" key="textField" style="TableData" x="310" y="0" width="70" height="20" forecolor="#000000"/>
 				<box padding="2"/>
-				<textElement>
-					<font reportFont="TableData"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{twilightSet}.toString("hh:mm a")]]></textFieldExpression>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{twilightSet}.toString("hh:mm a")]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
 	<pageFooter>
 		<band height="20">
 			<staticText>
-				<reportElement key="staticText" x="0" y="0" width="662" height="20" forecolor="#6C6C6C"/>
+				<reportElement uuid="1531e1ee-4868-42e4-ae65-2a84c3b1a40f" key="staticText" style="PageFooter" x="0" y="0" width="662" height="20" forecolor="#6C6C6C"/>
 				<box padding="2"/>
-				<textElement verticalAlignment="Middle">
-					<font reportFont="PageFooter"/>
-				</textElement>
-				<text><![CDATA[Generated by Daylight Chart, © Sualeh Fatehi, 2007-2012. http://daylightchart.sourceforge.net/]]></text>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Generated by Daylight Chart © Sualeh Fatehi, 2007-2012. http://daylightchart.sourceforge.net/]]></text>
 			</staticText>
-			<textField isBlankWhenNull="false" hyperlinkType="None">
-				<reportElement key="textField" x="662" y="0" width="139" height="20" forecolor="#6C6C6C"/>
+			<textField isBlankWhenNull="false">
+				<reportElement uuid="c0dce066-cd4f-4b71-8afa-c9a46c5f22a5" key="textField" style="PageFooter" x="662" y="0" width="139" height="20" forecolor="#6C6C6C"/>
 				<box padding="2"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font reportFont="PageFooter"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["Page " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Page " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageFooter>
