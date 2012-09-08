@@ -12,7 +12,7 @@ AutoCloseWindow true
 ShowInstDetails nevershow
 
 ;You want to change the next two lines too
-!define CLASSPATH "./lib/daylightchart-3.2.jar"
+!define CLASSPATH "./lib/daylightchart-3.3.jar"
 !define MAINCLASS "daylightchart.LauncherMain"
 !define ARGS "daylightchart.Main --addclasspath ./lib"
 
