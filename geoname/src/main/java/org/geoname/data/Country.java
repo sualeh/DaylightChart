@@ -34,31 +34,23 @@ public final class Country
 {
 
   /** Unknown country. */
-  public static final Country UNKNOWN = new Country("", "", "");
+  public static final Country UNKNOWN = new Country("", "");
 
   private static final long serialVersionUID = -5625327893850178062L;
   private final String name;
-  private final String iso3166Code2;
-
-  private final String fips10Code;
+  private final String countryCode;
 
   /**
    * Constructor.
-   * 
+   * @param countryCode
+   *        Two letter ISO 3166 country code
    * @param name
    *        Country name
-   * @param iso3166Code2
-   *        Two letter ISO 3166 country code
-   * @param fips10Code
-   *        FIPS 10 country code
    */
-  public Country(final String name,
-                 final String iso3166Code2,
-                 final String fips10Code)
+  public Country(final String countryCode, final String name)
   {
     this.name = name;
-    this.iso3166Code2 = iso3166Code2;
-    this.fips10Code = fips10Code;
+    this.countryCode = countryCode;
   }
 
   /**
@@ -103,25 +95,14 @@ public final class Country
     {
       return false;
     }
-    if (fips10Code == null)
+    if (countryCode == null)
     {
-      if (other.fips10Code != null)
+      if (other.countryCode != null)
       {
         return false;
       }
     }
-    else if (!fips10Code.equals(other.fips10Code))
-    {
-      return false;
-    }
-    if (iso3166Code2 == null)
-    {
-      if (other.iso3166Code2 != null)
-      {
-        return false;
-      }
-    }
-    else if (!iso3166Code2.equals(other.iso3166Code2))
+    else if (!countryCode.equals(other.countryCode))
     {
       return false;
     }
@@ -129,23 +110,13 @@ public final class Country
   }
 
   /**
-   * Gets the FIPS 10 country code.
-   * 
-   * @return FIPS 10 country code
-   */
-  public String getFips10Code()
-  {
-    return fips10Code;
-  }
-
-  /**
    * Gets the ISO 3166 2-letter country code.
    * 
    * @return ISO 3166 2-letter country code
    */
-  public String getIso3166Code2()
+  public String getCode()
   {
-    return iso3166Code2;
+    return countryCode;
   }
 
   /**
@@ -167,9 +138,7 @@ public final class Country
     final int prime = 31;
     int result = 1;
     result = prime * result + (name == null? 0: name.hashCode());
-    result = prime * result + (fips10Code == null? 0: fips10Code.hashCode());
-    result = prime * result
-             + (iso3166Code2 == null? 0: iso3166Code2.hashCode());
+    result = prime * result + (countryCode == null? 0: countryCode.hashCode());
     return result;
   }
 

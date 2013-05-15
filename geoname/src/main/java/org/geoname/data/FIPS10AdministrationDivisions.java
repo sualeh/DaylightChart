@@ -110,8 +110,7 @@ public final class FIPS10AdministrationDivisions
   {
     if (country != null && fips10AdministrationDivisionCode != null)
     {
-      final String fips10FullAdministrationDivisionCode = country
-        .getFips10Code()
+      final String fips10FullAdministrationDivisionCode = country.getCode()
                                                           + fips10AdministrationDivisionCode;
       return fips10AdministrationDivisionMap
         .get(fips10FullAdministrationDivisionCode);

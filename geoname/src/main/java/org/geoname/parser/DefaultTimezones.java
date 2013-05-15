@@ -382,7 +382,7 @@ public final class DefaultTimezones
     {
       locationParts.add(locationPart.trim().replaceAll(" |-", "_"));
     }
-    if (country.getIso3166Code2().equals("US") && locationParts.size() >= 2)
+    if (country.getCode().equals("US") && locationParts.size() >= 2)
     {
       final String stateString = locationParts.get(locationParts.size() - 1);
       final USState state = USStates.lookupUSState(stateString);

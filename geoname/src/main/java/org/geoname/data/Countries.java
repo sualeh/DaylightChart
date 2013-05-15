@@ -25,9 +25,12 @@ package org.geoname.data;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -39,10 +42,8 @@ import java.util.Map;
 public final class Countries
 {
 
-  private static final long serialVersionUID = -2155899588206966572L;
-
-  private static final Map<String, Country> iso3166CountryCodeMap = new HashMap<String, Country>();
-  private static final Map<String, Country> fips10CountryCodeMap = new HashMap<String, Country>();
+  private static final Map<String, Country> iso3166CountryCodeMap;
+  private static final Map<String, Country> fips10CountryCodeMap;
   private static final Map<String, Country> countryNameMap = new HashMap<String, Country>();
 
   /**
@@ -50,53 +51,16 @@ public final class Countries
    */
   static
   {
-    BufferedReader reader = null;
-    try
+    iso3166CountryCodeMap = readISOCountryData("iso_countries.data");
+    fips10CountryCodeMap = readFips10CountryData("fips10_countries.data");
+
+    final Collection<Country> countries = new HashSet<>();
+    countries.addAll(iso3166CountryCodeMap.values());
+    countries.addAll(fips10CountryCodeMap.values());
+
+    for (final Country country: countries)
     {
-      reader = new BufferedReader(new InputStreamReader(Countries.class
-        .getClassLoader().getResourceAsStream("countries.data")));
-
-      String line;
-      while ((line = reader.readLine()) != null)
-      {
-
-        final String[] fields = line.split(",");
-
-        final boolean invalidNumberOfFields = fields.length != 3;
-        final boolean invalidHasNulls = fields[0] == null || fields[1] == null
-                                        || fields[2] == null;
-        final boolean invalidLengths = fields[0].length() != 2
-                                       || fields[2].length() == 0;
-        if (invalidNumberOfFields || invalidHasNulls || invalidLengths)
-        {
-          throw new IllegalArgumentException("Invalid country record: " + line);
-        }
-
-        final Country country = new Country(fields[2], fields[0], fields[1]);
-        iso3166CountryCodeMap.put(country.getIso3166Code2(), country);
-        fips10CountryCodeMap.put(country.getFips10Code(), country);
-        countryNameMap.put(country.getName(), country);
-      }
-    }
-    catch (final IOException e)
-    {
-      throw new IllegalStateException("Cannot read data from internal database",
-                                      e);
-    }
-    finally
-    {
-      if (reader != null)
-      {
-        try
-        {
-          reader.close();
-        }
-        catch (final IOException e)
-        {
-          throw new IllegalStateException("Cannot read data from internal database",
-                                          e);
-        }
-      }
+      countryNameMap.put(country.getName(), country);
     }
   }
 
@@ -180,6 +144,106 @@ public final class Countries
   public static Country lookupIso3166CountryCode2(final String iso3166CountryCode2)
   {
     return iso3166CountryCodeMap.get(iso3166CountryCode2);
+  }
+
+  private static Map<String, Country> readFips10CountryData(final String dataResource)
+  {
+    final Map<String, Country> countryCodeMap = new HashMap<>();
+    try (final BufferedReader reader = new BufferedReader(new InputStreamReader(Countries.class
+                                                                                  .getClassLoader()
+                                                                                  .getResourceAsStream(dataResource),
+                                                                                Charset
+                                                                                  .forName("UTF8")));)
+    {
+
+      String line;
+      while ((line = reader.readLine()) != null)
+      {
+
+        final String[] fields = line.split(",");
+
+        final boolean invalidNumberOfFields = fields.length != 3;
+
+        final String fips10CountryCode = fields[0];
+        final String iso3166CountryCode = fields[1];
+
+        final boolean invalidHasNulls = fips10CountryCode == null
+                                        || iso3166CountryCode == null;
+        final boolean invalidLengths = fips10CountryCode.length() > 2
+                                       || fips10CountryCode.length() > 2
+                                       || iso3166CountryCode.isEmpty();
+        if (invalidNumberOfFields || invalidHasNulls || invalidLengths)
+        {
+          throw new IllegalArgumentException("Invalid country record: " + line);
+        }
+
+        final Country country;
+        if (iso3166CountryCodeMap.containsKey(iso3166CountryCode))
+        {
+          country = iso3166CountryCodeMap.get(iso3166CountryCode);
+        }
+        else
+        {
+          final String countryName = fields[2];
+          if (iso3166CountryCode.length() == 2)
+          {
+            country = new Country(iso3166CountryCode, countryName);
+          }
+          else if (fips10CountryCode.length() == 2)
+          {
+            country = new Country(fips10CountryCode, countryName);
+          }
+          else
+          {
+            continue;
+          }
+        }
+        countryCodeMap.put(fips10CountryCode, country);
+      }
+    }
+    catch (final IOException e)
+    {
+      throw new IllegalStateException("Cannot read data from internal database",
+                                      e);
+    }
+    return countryCodeMap;
+  }
+
+  private static Map<String, Country> readISOCountryData(final String dataResource)
+  {
+    final Map<String, Country> countryCodeMap = new HashMap<>();
+    try (final BufferedReader reader = new BufferedReader(new InputStreamReader(Countries.class
+                                                                                  .getClassLoader()
+                                                                                  .getResourceAsStream(dataResource),
+                                                                                Charset
+                                                                                  .forName("UTF8")));)
+    {
+
+      String line;
+      while ((line = reader.readLine()) != null)
+      {
+
+        final String[] fields = line.split(",");
+
+        final boolean invalidNumberOfFields = fields.length != 2;
+        final boolean invalidHasNulls = fields[0] == null || fields[1] == null;
+        final boolean invalidLengths = fields[0].length() != 2
+                                       || fields[1].isEmpty();
+        if (invalidNumberOfFields || invalidHasNulls || invalidLengths)
+        {
+          throw new IllegalArgumentException("Invalid country record: " + line);
+        }
+
+        final Country country = new Country(fields[0], fields[1]);
+        countryCodeMap.put(country.getCode(), country);
+      }
+    }
+    catch (final IOException e)
+    {
+      throw new IllegalStateException("Cannot read data from internal database",
+                                      e);
+    }
+    return countryCodeMap;
   }
 
 }

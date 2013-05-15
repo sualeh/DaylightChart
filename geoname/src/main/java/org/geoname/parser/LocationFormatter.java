@@ -67,7 +67,7 @@ public final class LocationFormatter
     final Country country = location.getCountry();
 
     final StringBuffer representation = new StringBuffer().append(city)
-      .append(";").append(country.getIso3166Code2()).append(";").append(tzId)
+      .append(";").append(country.getCode()).append(";").append(tzId)
       .append(";").append(coordinatesString);
     return new String(representation);
   }
