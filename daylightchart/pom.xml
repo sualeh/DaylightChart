@@ -56,7 +56,7 @@
                 <property name="licenses.dir" location="target/licenses" />
                 <mkdir dir="${licenses.dir}" />
                 <get src="http://www.antlr.org/license.html" dest="${licenses.dir}/LICENSE.antlr.html" usetimestamp="true" />
-                <get src="http://commons.apache.org/license.html" dest="${licenses.dir}/LICENSE.ApacheCommons.html"
+                <get src="http://www.apache.org/licenses/LICENSE-2.0" dest="${licenses.dir}/LICENSE.ApacheCommons.html"
                   usetimestamp="true" />
                 <get src="http://joda-time.sourceforge.net/license.html" dest="${licenses.dir}/LICENSE.JodaTime.html"
                   usetimestamp="true" />

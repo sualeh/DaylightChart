@@ -101,6 +101,18 @@ public final class Countries
       else
       {
         country = lookupFips10CountryCode(countryString);
+        if (country == null)
+        {
+          Collection<Country> countries = fips10CountryCodeMap.values();
+          for (Country fips10Country: countries)
+          {
+            if (fips10Country.getCode().equals(countryString))
+            {
+              country = fips10Country;
+              break;
+            }
+          }
+        }
       }
     }
     else

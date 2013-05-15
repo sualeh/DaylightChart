@@ -1,5 +1,5 @@
 AF,AF,Afghanistan
-AX,-,Akrotiri
+AX,~1,Akrotiri
 AL,AL,Albania
 AG,DZ,Algeria
 AQ,AS,American Samoa
@@ -64,7 +64,7 @@ UC,CW,Curacao
 CY,CY,Cyprus
 EZ,CZ,Czech Republic
 DA,DK,Denmark
-DX,-,Dhekelia
+DX,~2,Dhekelia
 DJ,DJ,Djibouti
 DO,DM,Dominica
 DR,DO,Dominican Republic
@@ -75,7 +75,7 @@ EK,GQ,Equatorial Guinea
 ER,ER,Eritrea
 EN,EE,Estonia
 ET,ET,Ethiopia
-PJ,-,Etorofu Habomai Kunashiri and Shikotan Islands
+PJ,~3,Etorofu Habomai Kunashiri and Shikotan Islands
 EU,RE,Europa Island
 FK,FK,Falkland Islands (Islas Malvinas)
 FO,FO,Faroe Islands
@@ -133,7 +133,7 @@ KQ,UM,Kingman Reef
 KR,KI,Kiribati
 KN,KP,North Korea
 KS,KR,South Korea
-KV,-,Kosovo
+KV,~4,Kosovo
 KU,KW,Kuwait
 KG,KG,Kyrgyzstan
 LA,LA,Laos
@@ -189,7 +189,7 @@ PS,PW,Palau
 LQ,UM,Palmyra Atoll
 PM,PA,Panama
 PP,PG,Papua New Guinea
-PF,-,Paracel Islands
+PF,~5,Paracel Islands
 PA,PY,Paraguay
 PE,PE,Peru
 RP,PH,Philippines
@@ -227,7 +227,7 @@ SF,ZA,South Africa
 SX,GS,South Georgia and the Islands
 OD,SS,South Sudan
 SP,ES,Spain
-PG,-,Spratly Islands
+PG,~6,Spratly Islands
 CE,LK,Sri Lanka
 SU,SD,Sudan
 NS,SR,Suriname
