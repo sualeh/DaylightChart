@@ -2,7 +2,7 @@
  * 
  * Daylight Chart
  * http://sourceforge.net/projects/daylightchart
- * Copyright (c) 2007-2012, Sualeh Fatehi.
+ * Copyright (c) 2007-2013, Sualeh Fatehi.
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -28,8 +28,6 @@ import java.awt.Paint;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.Axis;
 import org.jfree.ui.RectangleInsets;
-
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 /**
  * Options for customizing charts.
@@ -62,7 +60,7 @@ public class AxisOptions
   public void copyFromChart(final JFreeChart chart)
   {
     // We do not know which axis to work from
-    throw new NotImplementedException();
+    throw new UnsupportedOperationException();
   }
 
   /**
@@ -227,7 +225,7 @@ public class AxisOptions
   public void updateChart(final JFreeChart chart)
   {
     // We do not know which axis to update
-    throw new NotImplementedException();
+    throw new UnsupportedOperationException();
   }
 
   /**

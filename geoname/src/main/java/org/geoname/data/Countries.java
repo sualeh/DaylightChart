@@ -2,7 +2,7 @@
  * 
  * Daylight Chart
  * http://sourceforge.net/projects/daylightchart
- * Copyright (c) 2007-2012, Sualeh Fatehi.
+ * Copyright (c) 2007-2013, Sualeh Fatehi.
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -33,6 +33,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+
+import org.geoname.parser.UnicodeReader;
 
 /**
  * In-memory database of locations.
@@ -161,11 +163,10 @@ public final class Countries
   private static Map<String, Country> readFips10CountryData(final String dataResource)
   {
     final Map<String, Country> countryCodeMap = new HashMap<>();
-    try (final BufferedReader reader = new BufferedReader(new InputStreamReader(Countries.class
-                                                                                  .getClassLoader()
-                                                                                  .getResourceAsStream(dataResource),
-                                                                                Charset
-                                                                                  .forName("UTF8")));)
+    try (final BufferedReader reader = new BufferedReader(new UnicodeReader(Countries.class
+                                                                              .getClassLoader()
+                                                                              .getResourceAsStream(dataResource),
+                                                                            "UTF-8"));)
     {
 
       String line;
@@ -257,5 +258,4 @@ public final class Countries
     }
     return countryCodeMap;
   }
-
 }

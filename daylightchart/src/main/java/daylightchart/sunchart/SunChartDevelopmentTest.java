@@ -24,7 +24,7 @@ public class SunChartDevelopmentTest
     final String locationString = "Boston, MA;US;America/New_York;+4219-07105/";
 
     final Location location = LocationsListParser.parseLocation(locationString);
-    final int year = 2012;
+    final int year = 2013;
     final SunChartYearData sunChartYearData = SunChartUtility
       .createSunChartYear(location, year);
 

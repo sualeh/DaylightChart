@@ -2,7 +2,7 @@
  * 
  * Daylight Chart
  * http://sourceforge.net/projects/daylightchart
- * Copyright (c) 2007-2012, Sualeh Fatehi.
+ * Copyright (c) 2007-2013, Sualeh Fatehi.
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -132,16 +132,16 @@ public class OptionsDialog
     return dialog.getOptions();
   }
 
-  private static <E extends Enum<E>> JComboBox enumDropDown(final Class<E> e)
+  private static <E extends Enum<E>> JComboBox<E> enumDropDown(final Class<E> e)
   {
-    return new JComboBox(new Vector<E>(EnumSet.allOf(e)));
+    return new JComboBox<>(new Vector<E>(EnumSet.allOf(e)));
   }
 
   private Options options;
-  private final JComboBox listLocationsSortOrder;
-  private final JComboBox listTimeZoneOption;
-  private final JComboBox listChartOrientation;
-  private final JComboBox listTwilightType;
+  private final JComboBox<LocationsSortOrder> listLocationsSortOrder;
+  private final JComboBox<TimeZoneOption> listTimeZoneOption;
+  private final JComboBox<ChartOrientation> listChartOrientation;
+  private final JComboBox<TwilightType> listTwilightType;
 
   private final JCheckBox checkShowChartLegend;
   private final JButton ok;
@@ -161,8 +161,7 @@ public class OptionsDialog
     checkShowChartLegend = new JCheckBox();
 
     ok = new JButton(Messages.getString("DaylightChartGui.OptionsEditor.Ok")); //$NON-NLS-1$
-    cancel = new JButton(Messages
-      .getString("DaylightChartGui.OptionsEditor.Cancel")); //$NON-NLS-1$
+    cancel = new JButton(Messages.getString("DaylightChartGui.OptionsEditor.Cancel")); //$NON-NLS-1$
 
     final DialogButtonListener listener = new DialogButtonListener();
     ok.addActionListener(listener);

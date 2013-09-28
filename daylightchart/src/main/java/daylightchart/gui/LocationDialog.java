@@ -2,7 +2,7 @@
  * 
  * Daylight Chart
  * http://sourceforge.net/projects/daylightchart
- * Copyright (c) 2007-2012, Sualeh Fatehi.
+ * Copyright (c) 2007-2013, Sualeh Fatehi.
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -164,10 +164,10 @@ public class LocationDialog
   private final LocationsListOperation operation;
 
   private final JTextField city;
-  private final JComboBox countries;
+  private final JComboBox<Country> countries;
   private final JTextField latitudeValue;
   private final JTextField longitudeValue;
-  private final JComboBox timeZone;
+  private final JComboBox<TimeZoneDisplay> timeZone;
 
   private final JButton ok;
   private final JButton cancel;
@@ -184,15 +184,13 @@ public class LocationDialog
     this.operation = operation;
 
     city = new JTextField();
-    countries = new JComboBox(new Vector<Country>(Countries.getAllCountries()));
+    countries = new JComboBox<>(new Vector<Country>(Countries.getAllCountries()));
     latitudeValue = new JTextField();
     longitudeValue = new JTextField();
-    timeZone = new JComboBox(new Vector<TimeZoneDisplay>(DefaultTimezones
-      .getAllTimeZonesForDisplay()));
+    timeZone = new JComboBox<>(new Vector<TimeZoneDisplay>(DefaultTimezones.getAllTimeZonesForDisplay()));
 
     ok = new JButton(Messages.getString("DaylightChartGui.LocationEditor.Ok")); //$NON-NLS-1$
-    cancel = new JButton(Messages
-      .getString("DaylightChartGui.LocationEditor.Cancel")); //$NON-NLS-1$
+    cancel = new JButton(Messages.getString("DaylightChartGui.LocationEditor.Cancel")); //$NON-NLS-1$
 
     final DialogButtonListener listener = new DialogButtonListener();
     ok.addActionListener(listener);

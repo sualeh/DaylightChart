@@ -2,7 +2,7 @@
  * 
  * Daylight Chart
  * http://sourceforge.net/projects/daylightchart
- * Copyright (c) 2007-2012, Sualeh Fatehi.
+ * Copyright (c) 2007-2013, Sualeh Fatehi.
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -25,7 +25,6 @@ package daylightchart.options;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -117,28 +116,14 @@ public class ReportDataFile
       return;
     }
 
-    try
+    try (final InputStream is = input[0];)
     {
-      data = (JasperReport) JRLoader.loadObject(input[0]);
+      data = (JasperReport) JRLoader.loadObject(is);
     }
     catch (final Exception e)
     {
       LOGGER.log(Level.WARNING, "Cannot load report", e);
       return;
-    }
-    finally
-    {
-      if (input != null)
-      {
-        try
-        {
-          input[0].close();
-        }
-        catch (final IOException e)
-        {
-          LOGGER.log(Level.WARNING, "Cannot close input stream", e);
-        }
-      }
     }
   }
 

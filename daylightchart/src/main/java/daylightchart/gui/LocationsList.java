@@ -2,7 +2,7 @@
  * 
  * Daylight Chart
  * http://sourceforge.net/projects/daylightchart
- * Copyright (c) 2007-2012, Sualeh Fatehi.
+ * Copyright (c) 2007-2013, Sualeh Fatehi.
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -60,7 +60,7 @@ class LocationsList
   private static final long serialVersionUID = -6884483130453983685L;
 
   private final DaylightChartGui mainWindow;
-  private final JList locationsList;
+  private final JList<Location> locationsList;
   private List<Location> locations;
 
   /**
@@ -84,7 +84,7 @@ class LocationsList
 
     createActions(toolBar, popupMenu);
 
-    locationsList = new JList();
+    locationsList = new JList<>();
     locationsList.setVisibleRowCount(20);
     add(new JScrollPane(locationsList));
     locationsList.setCellRenderer(new DefaultListCellRenderer()
