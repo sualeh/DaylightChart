@@ -1,1 +1,1 @@
-java -cp ./lib/* daylightchart.Main
+@javaw -cp ./lib/* daylightchart.Main

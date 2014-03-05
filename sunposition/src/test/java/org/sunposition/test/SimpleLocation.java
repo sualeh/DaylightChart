@@ -101,7 +101,7 @@ final class SimpleLocation
   public String toString()
   {
     ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-    new PrintStream(outputStream, true).printf("%s, %s (%3.3f), %s",
+    new PrintStream(outputStream, true).printf("%s, %s (%3.4f), %s",
                                                location,
                                                timeZoneId,
                                                getTimeZoneOffset(),
