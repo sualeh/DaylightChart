@@ -189,7 +189,7 @@ public final class RiseSet
    */
   public LocalDateTime getSunrise()
   {
-    return createLocalDateTime(date, sunrise);
+    return date.toLocalDateTime(sunrise);
   }
 
   /**
@@ -199,7 +199,7 @@ public final class RiseSet
    */
   public LocalDateTime getSunset()
   {
-    return createLocalDateTime(date, sunset);
+    return date.toLocalDateTime(sunset);
   }
 
   /**
@@ -263,8 +263,11 @@ public final class RiseSet
     }
     else
     {
-      return new RiseSet(location, date, false, sunrise.minusHours(1), sunset
-        .minusHours(1));
+      return new RiseSet(location,
+                         date,
+                         false,
+                         sunrise.minusHours(1),
+                         sunset.minusHours(1));
     }
   }
 
@@ -295,14 +298,6 @@ public final class RiseSet
   RiseSet withNewRiseSetTimes(final LocalTime sunrise, final LocalTime sunset)
   {
     return new RiseSet(location, date, inDaylightSavings, sunrise, sunset);
-  }
-
-  private LocalDateTime createLocalDateTime(final LocalDate date,
-                                            final LocalTime time)
-  {
-    return new LocalDateTime(date.getYear(), date.getMonthOfYear(), date
-      .getDayOfMonth(), time.getHourOfDay(), time.getMinuteOfHour(), time
-      .getSecondOfMinute(), time.getMillisOfSecond());
   }
 
   private LocalTime toLocalTime(final double hour)

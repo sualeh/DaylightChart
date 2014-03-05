@@ -16,30 +16,60 @@
 			<url>http://www.gnu.org/licenses/gpl.txt</url>
 		</license>
 	</licenses>
+	<properties>
+		<jasperreports.version>5.5.1</jasperreports.version>
+	</properties>
 	<build>
 		<plugins>
 			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+				</configuration>
+			</plugin>
+			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>jasperreports-maven-plugin</artifactId>
-				<version>1.0-beta-2</version>
+				<configuration>
+					<!-- Folder where compiled reports will be generated -->
+					<outputDirectory>${project.build.directory}/classes</outputDirectory>
+				</configuration>
 				<executions>
 					<execution>
-						<id>compile-jasperreports</id>
-						<phase>validate</phase>
-						<inherited>false</inherited>
 						<goals>
 							<goal>compile-reports</goal>
 						</goals>
+						<phase>generate-sources</phase>
 					</execution>
 				</executions>
-				<configuration>
-					<outputDirectory>${project.build.directory}/classes</outputDirectory>
-				</configuration>
 				<dependencies>
+					<dependency>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>jasperreports-maven-plugin</artifactId>
+						<version>1.0-beta-2</version>
+						<exclusions>
+							<exclusion>
+								<groupId>net.sf.jasperreports</groupId>
+								<artifactId>jasperreports</artifactId>
+							</exclusion>
+						</exclusions>
+					</dependency>
 					<dependency>
 						<groupId>net.sf.jasperreports</groupId>
 						<artifactId>jasperreports</artifactId>
-						<version>5.2.0</version>
+						<version>${jasperreports.version}</version>
+					</dependency>
+					<dependency>
+						<groupId>com.lowagie</groupId>
+						<artifactId>itext</artifactId>
+						<version>4.2.0</version>
+					</dependency>
+					<dependency>
+						<groupId>javax.servlet</groupId>
+						<artifactId>servlet-api</artifactId>
+						<version>2.5</version>
 					</dependency>
 				</dependencies>
 			</plugin>
@@ -72,8 +102,8 @@
 									usetimestamp="true" />
 								<get src="http://xstream.codehaus.org/license.html" dest="${licenses.dir}/LICENSE.XStream.html"
 									usetimestamp="true" />
-								<get src="http://opensource.org/licenses/BSD-2-Clause"
-									dest="${licenses.dir}/LICENSE.JGoodies.html" usetimestamp="true" />
+								<get src="http://opensource.org/licenses/BSD-2-Clause" dest="${licenses.dir}/LICENSE.JGoodies.html"
+									usetimestamp="true" />
 							</tasks>
 						</configuration>
 					</execution>
@@ -181,12 +211,8 @@
 								<pluginExecution>
 									<pluginExecutionFilter>
 										<groupId>org.codehaus.mojo</groupId>
-										<artifactId>
-											jasperreports-maven-plugin
-										</artifactId>
-										<versionRange>
-											[1.0-beta-2,)
-										</versionRange>
+										<artifactId>jasperreports-maven-plugin</artifactId>
+										<versionRange>[1.0-beta-2,)</versionRange>
 										<goals>
 											<goal>compile-reports</goal>
 										</goals>
@@ -241,7 +267,7 @@
 		<dependency>
 			<groupId>net.sf.jasperreports</groupId>
 			<artifactId>jasperreports</artifactId>
-			<version>5.2.0</version>
+			<version>${jasperreports.version}</version>
 			<exclusions>
 				<exclusion>
 					<groupId>antlr</groupId>
@@ -262,10 +288,6 @@
 				<exclusion>
 					<groupId>javax.persistence</groupId>
 					<artifactId>persistence-api</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>javax.servlet</groupId>
-					<artifactId>servlet-api</artifactId>
 				</exclusion>
 				<exclusion>
 					<groupId>javax.xml.soap</groupId>
@@ -397,6 +419,11 @@
 			<groupId>com.thoughtworks.xstream</groupId>
 			<artifactId>xstream</artifactId>
 			<version>1.4.5</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.5</version>
 		</dependency>
 	</dependencies>
 </project>
