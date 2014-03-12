@@ -28,16 +28,16 @@ import java.util.logging.Logger;
 
 import javax.swing.UIManager;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.geoname.data.Location;
 import org.geoname.parser.LocationsListParser;
 import org.geoname.parser.ParserException;
 
 import sf.util.CommandLineParser;
-import sf.util.CommandLineUtility;
 import sf.util.CommandLineParser.BooleanOption;
 import sf.util.CommandLineParser.Option;
 import sf.util.CommandLineParser.StringOption;
+import sf.util.CommandLineUtility;
 
 import com.jgoodies.looks.plastic.PlasticLookAndFeel;
 import com.jgoodies.looks.plastic.theme.LightGray;

@@ -33,11 +33,12 @@ import java.util.logging.Logger;
 import org.geoname.data.Location;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
-import org.sunposition.calculation.Equinox;
-import org.sunposition.calculation.ExtendedSunPositionAlgorithm;
-import org.sunposition.calculation.SunPositionAlgorithmFactory;
-import org.sunposition.calculation.Equinox.DateTime;
-import org.sunposition.calculation.ExtendedSunPositionAlgorithm.SolarEphemerides;
+
+import us.fatehi.calculation.Equinox;
+import us.fatehi.calculation.Equinox.DateTime;
+import us.fatehi.calculation.ExtendedSunPositionAlgorithm;
+import us.fatehi.calculation.ExtendedSunPositionAlgorithm.SolarEphemerides;
+import us.fatehi.calculation.SunPositionAlgorithmFactory;
 
 /**
  * Calculator for sunrise and sunset times for a year.
@@ -70,14 +71,19 @@ public final class SunChartUtility
     for (final LocalDate date: getYearsDates(year))
     {
       final SunPositions sunPositions = new SunPositions(date);
-      sunAlgorithm.setDate(date.getYear(), date.getMonthOfYear(), date
-        .getDayOfMonth());
+      sunAlgorithm.setDate(date.getYear(),
+                           date.getMonthOfYear(),
+                           date.getDayOfMonth());
       for (int hour = 0; hour < 24; hour++)
       {
         final SolarEphemerides solarEphemerides = sunAlgorithm
           .calcSolarEphemerides(hour);
-        final LocalDateTime dateTime = new LocalDateTime(date.getYear(), date
-          .getMonthOfYear(), date.getDayOfMonth(), hour, 0, 0);
+        final LocalDateTime dateTime = new LocalDateTime(date.getYear(),
+                                                         date.getMonthOfYear(),
+                                                         date.getDayOfMonth(),
+                                                         hour,
+                                                         0,
+                                                         0);
         final SunPosition sunPosition = new SunPosition(dateTime,
                                                         solarEphemerides);
         sunPositions.add(sunPosition);
@@ -171,8 +177,9 @@ public final class SunChartUtility
   private static LocalDate toLocalDate(DateTime equinox3)
   {
     LocalDate date;
-    date = new LocalDate(equinox3.getYear(), equinox3.getMonth(), equinox3
-      .getDay());
+    date = new LocalDate(equinox3.getYear(),
+                         equinox3.getMonth(),
+                         equinox3.getDay());
     return date;
   }
 

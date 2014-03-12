@@ -27,10 +27,10 @@ import java.io.Serializable;
 import java.io.StringWriter;
 
 import org.geoname.data.Location;
+import org.geoname.parser.Utility;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.joda.time.LocalTime;
-import org.pointlocation6709.Utility;
 
 /**
  * Sunrise and sunset at a given location, and a given date. RiseSet is

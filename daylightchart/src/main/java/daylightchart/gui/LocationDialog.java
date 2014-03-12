@@ -51,11 +51,11 @@ import org.geoname.data.Country;
 import org.geoname.data.Location;
 import org.geoname.parser.DefaultTimezones;
 import org.geoname.parser.TimeZoneDisplay;
-import org.pointlocation6709.Latitude;
-import org.pointlocation6709.Longitude;
-import org.pointlocation6709.PointLocation;
-import org.pointlocation6709.parser.CoordinateParser;
-import org.pointlocation6709.parser.ParserException;
+
+import us.fatehi.pointlocation6709.Latitude;
+import us.fatehi.pointlocation6709.Longitude;
+import us.fatehi.pointlocation6709.PointLocation;
+import us.fatehi.pointlocation6709.parse.CoordinateParser;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.factories.ButtonBarFactory;
@@ -329,9 +329,9 @@ public class LocationDialog
     Latitude latitude = null;
     try
     {
-      latitude = CoordinateParser.parseLatitude(latitudeValue.getText());
+      latitude = new CoordinateParser().parseLatitude(latitudeValue.getText());
     }
-    catch (final ParserException e)
+    catch (final us.fatehi.pointlocation6709.parse.ParserException e)
     {
       LOGGER.log(Level.FINE, e.getMessage(), e);
     }
@@ -343,9 +343,10 @@ public class LocationDialog
     Longitude longitude = null;
     try
     {
-      longitude = CoordinateParser.parseLongitude(longitudeValue.getText());
+      longitude = new CoordinateParser().parseLongitude(longitudeValue
+        .getText());
     }
-    catch (final ParserException e)
+    catch (final us.fatehi.pointlocation6709.parse.ParserException e)
     {
       LOGGER.log(Level.FINE, e.getMessage(), e);
     }

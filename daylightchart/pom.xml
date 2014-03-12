@@ -159,43 +159,6 @@
 					</execution>
 				</executions>
 			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-antrun-plugin</artifactId>
-				<version>1.6</version>
-				<executions>
-					<execution>
-						<id>move-sub-sites</id>
-						<phase>site</phase>
-						<goals>
-							<goal>run</goal>
-						</goals>
-						<configuration>
-							<tasks>
-								<property name="daylightchart.home" location=".." />
-								<move file="${daylightchart.home}/pointlocation6709/target/site"
-									tofile="target/site/pointlocation6709" />
-								<move file="${daylightchart.home}/sunposition/target/site"
-									tofile="target/site/sunposition" />
-								<move file="${daylightchart.home}/geoname/target/site"
-									tofile="target/site/geoname" />
-							</tasks>
-						</configuration>
-					</execution>
-				</executions>
-				<dependencies>
-					<dependency>
-						<groupId>org.apache.ant</groupId>
-						<artifactId>ant</artifactId>
-						<version>1.8.2</version>
-					</dependency>
-					<dependency>
-						<groupId>org.apache.ant</groupId>
-						<artifactId>ant-apache-regexp</artifactId>
-						<version>1.7.0</version>
-					</dependency>
-				</dependencies>
-			</plugin>
 		</plugins>
 		<pluginManagement>
 			<plugins>
@@ -230,14 +193,14 @@
 	</build>
 	<dependencies>
 		<dependency>
-			<groupId>pointlocation6709</groupId>
+			<groupId>us.fatehi</groupId>
 			<artifactId>pointlocation6709</artifactId>
-			<version>${project.version}</version>
+			<version>4.0</version>
 		</dependency>
 		<dependency>
-			<groupId>sunposition</groupId>
+			<groupId>us.fatehi</groupId>
 			<artifactId>sunposition</artifactId>
-			<version>${project.version}</version>
+			<version>4.0</version>
 		</dependency>
 		<dependency>
 			<groupId>geoname</groupId>

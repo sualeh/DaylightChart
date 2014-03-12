@@ -36,16 +36,16 @@ import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang3.ArrayUtils;
 import org.geoname.data.Location;
 import org.geoname.parser.DefaultTimezones;
 import org.geoname.parser.LocationsListParser;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.joda.time.LocalTime;
-import org.sunposition.calculation.SunPositionAlgorithm;
-import org.sunposition.calculation.SunPositionAlgorithmFactory;
 
+import us.fatehi.calculation.SunPositionAlgorithm;
+import us.fatehi.calculation.SunPositionAlgorithmFactory;
 import daylightchart.daylightchart.chart.TimeZoneOption;
 import daylightchart.options.Options;
 
@@ -343,16 +343,16 @@ public final class RiseSetUtility
       return new RiseSet[] {
           riseSet.withNewRiseSetTimes(sunrise.toLocalTime(),
                                       RiseSet.JUST_BEFORE_MIDNIGHT),
-          riseSet.withNewRiseSetTimes(RiseSet.JUST_AFTER_MIDNIGHT, sunset
-            .toLocalTime())
+          riseSet.withNewRiseSetTimes(RiseSet.JUST_AFTER_MIDNIGHT,
+                                      sunset.toLocalTime())
       };
     }
     else if (riseSet.getRiseSetType() != RiseSetType.partial
              && sunrise.getHourOfDay() > 15)
     {
       return new RiseSet[] {
-          riseSet.withNewRiseSetTimes(RiseSet.JUST_AFTER_MIDNIGHT, sunset
-            .toLocalTime()),
+          riseSet.withNewRiseSetTimes(RiseSet.JUST_AFTER_MIDNIGHT,
+                                      sunset.toLocalTime()),
           riseSet.withNewRiseSetTimes(sunrise.toLocalTime(),
                                       RiseSet.JUST_BEFORE_MIDNIGHT)
       };
@@ -380,8 +380,9 @@ public final class RiseSetUtility
       sunAlgorithm.setTimeZoneOffset(DefaultTimezones
         .getStandardTimeZoneOffsetHours(location.getTimeZoneId()));
     }
-    sunAlgorithm.setDate(date.getYear(), date.getMonthOfYear(), date
-      .getDayOfMonth());
+    sunAlgorithm.setDate(date.getYear(),
+                         date.getMonthOfYear(),
+                         date.getDayOfMonth());
     final double[] sunriseSunset = sunAlgorithm.calcRiseSet(twilight
       .getHorizon());
 
@@ -510,9 +511,10 @@ public final class RiseSetUtility
     for (int i = 0; i < rawRiseSets.size(); i++)
     {
       final RawRiseSet rawRiseSet = rawRiseSets.get(i);
-      printWriter
-        .printf("%s\t%s\t%s", rawRiseSet.getDate(), format.format(rawRiseSet
-          .getSunrise()), format.format(rawRiseSet.getSunset()));
+      printWriter.printf("%s\t%s\t%s",
+                         rawRiseSet.getDate(),
+                         format.format(rawRiseSet.getSunrise()),
+                         format.format(rawRiseSet.getSunset()));
       if (ArrayUtils.contains(daylightBandType, DaylightBandType.twilight))
       {
         final RawRiseSet rawTwilight = rawTwilights.get(i);
@@ -529,9 +531,11 @@ public final class RiseSetUtility
         }
         else
         {
-          printWriter.printf("\t%s\t%s", riseSet.getSunrise().toLocalTime()
-            .toString("HH:mm:ss"), riseSet.getSunset().toLocalTime()
-            .toString("HH:mm:ss"));
+          printWriter.printf("\t%s\t%s",
+                             riseSet.getSunrise().toLocalTime()
+                               .toString("HH:mm:ss"),
+                             riseSet.getSunset().toLocalTime()
+                               .toString("HH:mm:ss"));
         }
       }
       printWriter.println();

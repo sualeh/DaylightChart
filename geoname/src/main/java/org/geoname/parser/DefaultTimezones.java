@@ -36,10 +36,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TimeZone;
 import java.util.TreeSet;
-import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -47,8 +47,8 @@ import org.geoname.data.Countries;
 import org.geoname.data.Country;
 import org.geoname.data.USState;
 import org.geoname.data.USStates;
-import org.pointlocation6709.Longitude;
-import org.pointlocation6709.Utility;
+
+import us.fatehi.pointlocation6709.Longitude;
 
 /**
  * Time zone utilities.

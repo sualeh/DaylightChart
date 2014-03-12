@@ -33,8 +33,9 @@ import java.util.logging.Logger;
 import org.geoname.data.Countries;
 import org.geoname.data.Country;
 import org.geoname.data.Location;
-import org.pointlocation6709.PointLocation;
-import org.pointlocation6709.parser.PointLocationParser;
+
+import us.fatehi.pointlocation6709.PointLocation;
+import us.fatehi.pointlocation6709.parse.PointLocationParser;
 
 /**
  * Parses locations.
@@ -44,8 +45,8 @@ import org.pointlocation6709.parser.PointLocationParser;
 public final class LocationsListParser
   implements LocationsParser
 {
-  private static final Logger LOGGER = Logger.getLogger(LocationsListParser.class
-    .getName());
+  private static final Logger LOGGER = Logger
+    .getLogger(LocationsListParser.class.getName());
 
   /**
    * Parses a string representation of a location.
@@ -84,7 +85,7 @@ public final class LocationsListParser
                                              pointLocation);
       return location;
     }
-    catch (final org.pointlocation6709.parser.ParserException e)
+    catch (final us.fatehi.pointlocation6709.parse.ParserException e)
     {
       throw new ParserException("Invalid location: " + representation, e);
     }

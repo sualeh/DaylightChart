@@ -21,9 +21,9 @@
   </licenses>
   <dependencies>
     <dependency>
-      <groupId>pointlocation6709</groupId>
+      <groupId>us.fatehi</groupId>
       <artifactId>pointlocation6709</artifactId>
-      <version>${project.version}</version>
+      <version>4.0</version>
     </dependency>
   </dependencies>
   <build>

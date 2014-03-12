@@ -34,10 +34,11 @@ import java.util.logging.Logger;
 
 import org.geoname.data.Country;
 import org.geoname.data.Location;
-import org.pointlocation6709.Angle;
-import org.pointlocation6709.Latitude;
-import org.pointlocation6709.Longitude;
-import org.pointlocation6709.PointLocation;
+
+import us.fatehi.pointlocation6709.Angle;
+import us.fatehi.pointlocation6709.Latitude;
+import us.fatehi.pointlocation6709.Longitude;
+import us.fatehi.pointlocation6709.PointLocation;
 
 abstract class BaseDelimitedLocationsFileParser
   implements LocationsParser
@@ -205,15 +206,16 @@ abstract class BaseDelimitedLocationsFileParser
                                        final String altitudeKey)
     throws ParserException
   {
-    final Latitude latitude = new Latitude(Angle
-      .fromDegrees(getDouble(locationDataMap, latitudeKey)));
-    final Longitude longitude = new Longitude(Angle
-      .fromDegrees(getDouble(locationDataMap, longitudeKey)));
+    final Latitude latitude = new Latitude(Angle.fromDegrees(getDouble(locationDataMap,
+                                                                       latitudeKey)));
+    final Longitude longitude = new Longitude(Angle.fromDegrees(getDouble(locationDataMap,
+                                                                          longitudeKey)));
     final double altitude = getDouble(locationDataMap, altitudeKey, 0D);
 
     final PointLocation pointLocation = new PointLocation(latitude,
                                                           longitude,
-                                                          altitude);
+                                                          altitude,
+                                                          "");
 
     final String timeZoneId = DefaultTimezones
       .attemptTimeZoneMatch(city, country, pointLocation.getLongitude());

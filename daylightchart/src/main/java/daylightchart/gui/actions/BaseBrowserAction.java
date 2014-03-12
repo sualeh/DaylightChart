@@ -27,7 +27,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.KeyStroke;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import daylightchart.gui.util.BareBonesBrowserLaunch;
 import daylightchart.gui.util.GuiAction;

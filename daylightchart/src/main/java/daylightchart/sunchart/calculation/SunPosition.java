@@ -3,15 +3,16 @@ package daylightchart.sunchart.calculation;
 
 import java.io.Serializable;
 
-import org.apache.commons.lang.builder.CompareToBuilder;
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.apache.commons.lang.builder.ToStringBuilder;
-import org.apache.commons.lang.builder.ToStringStyle;
+import org.apache.commons.lang3.builder.CompareToBuilder;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.joda.time.LocalTime;
-import org.sunposition.calculation.ExtendedSunPositionAlgorithm.SolarEphemerides;
+
+import us.fatehi.calculation.ExtendedSunPositionAlgorithm.SolarEphemerides;
 
 /**
  * Solar ephemerides at a given date and time.

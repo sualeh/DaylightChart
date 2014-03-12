@@ -24,7 +24,7 @@ package org.geoname.data;
 
 import java.util.Comparator;
 
-import org.pointlocation6709.Latitude;
+import us.fatehi.pointlocation6709.Latitude;
 
 /**
  * Sort order for locations.
@@ -39,8 +39,8 @@ public enum LocationsSortOrder
   {
     public int compare(final Location location1, final Location location2)
     {
-      return location1.getDescription().toLowerCase().compareTo(location2
-        .getDescription().toLowerCase());
+      return location1.getDescription().toLowerCase()
+        .compareTo(location2.getDescription().toLowerCase());
     }
   },
   BY_LATITUDE("Sort locations by latitude")

@@ -25,7 +25,7 @@ package org.geoname.parser;
 import java.io.Serializable;
 import java.util.TimeZone;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 public final class TimeZoneDisplay
   implements Serializable, Comparable<TimeZoneDisplay>

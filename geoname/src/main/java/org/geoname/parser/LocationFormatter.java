@@ -22,15 +22,15 @@
 package org.geoname.parser;
 
 
+import static us.fatehi.pointlocation6709.format.PointLocationFormatType.MEDIUM;
+import static us.fatehi.pointlocation6709.format.PointLocationFormatter.formatISO6709;
+
 import java.io.IOException;
 import java.io.Writer;
 import java.util.List;
 
 import org.geoname.data.Country;
 import org.geoname.data.Location;
-import org.pointlocation6709.parser.FormatterException;
-import org.pointlocation6709.parser.PointLocationFormatType;
-import org.pointlocation6709.parser.PointLocationFormatter;
 
 /**
  * Formats objects to strings.
@@ -54,10 +54,9 @@ public final class LocationFormatter
     String coordinatesString;
     try
     {
-      coordinatesString = PointLocationFormatter.formatIso6709(location
-        .getPointLocation(), PointLocationFormatType.MEDIUM);
+      coordinatesString = formatISO6709(location.getPointLocation(), MEDIUM);
     }
-    catch (final FormatterException e)
+    catch (final us.fatehi.pointlocation6709.format.FormatterException e)
     {
       throw new org.geoname.parser.FormatterException(e);
     }

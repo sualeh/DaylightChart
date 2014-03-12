@@ -34,11 +34,8 @@
     <url>https://daylightchart.svn.sourceforge.net/svnroot/daylightchart/</url>
   </scm>
   <modules>
-    <module>pointlocation6709</module>
-    <module>sunposition</module>
     <module>geoname</module>
     <module>daylightchart</module>
-    <!-- <module>daylightchart-web</module> -->
   </modules>
   <dependencies>
     <dependency>
