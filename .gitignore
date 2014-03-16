@@ -1,0 +1,11 @@
+.svn
+.clover
+target
+workspace
+*.patch
+/schemacrawler-docs/*.txt
+/schemacrawler-docs/*.png
+/schemacrawler/*.jar
+/schemacrawler/gpl-3.0.txt
+/schemacrawler/lgpl-3.0.txt
+/schemacrawler/*.bnd
