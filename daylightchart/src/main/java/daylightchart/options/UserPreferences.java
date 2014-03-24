@@ -40,7 +40,6 @@ public final class UserPreferences
 
   private static LocationsDataFile locationsFile;
   private static RecentLocationsDataFile recentLocationsFile;
-  private static ReportDataFile reportFile;
   private static OptionsDataFile optionsFile;
 
   static
@@ -59,7 +58,6 @@ public final class UserPreferences
     optionsFile.delete();
     locationsFile.delete();
     recentLocationsFile.delete();
-    reportFile.delete();
 
     initialize(optionsFile.getDirectory());
   }
@@ -100,7 +98,6 @@ public final class UserPreferences
     optionsFile = new OptionsDataFile(settingsDirectory);
     locationsFile = new LocationsDataFile(settingsDirectory);
     recentLocationsFile = new RecentLocationsDataFile(settingsDirectory);
-    reportFile = new ReportDataFile(settingsDirectory);
   }
 
   /**
@@ -145,16 +142,6 @@ public final class UserPreferences
   public static RecentLocationsDataFile recentLocationsFile()
   {
     return recentLocationsFile;
-  }
-
-  /**
-   * Report file.
-   * 
-   * @return Report file.
-   */
-  public static ReportDataFile reportFile()
-  {
-    return reportFile;
   }
 
   private static void validateDirectory(final File directory)

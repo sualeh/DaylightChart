@@ -35,11 +35,7 @@ public enum ChartFileType
   /** Portable Network Graphics */
   png("Portable Network Graphics", ".png"),
   /** JPEG */
-  jpg("JPEG", ".jpg"),
-  /** Web Page */
-  html("Web Page", ".html"),
-  /** Adobe Acrobat PDF */
-  pdf("Adobe Acrobat PDF", ".pdf");
+  jpg("JPEG", ".jpg");
 
   private final String description;
   private final String fileExtension;

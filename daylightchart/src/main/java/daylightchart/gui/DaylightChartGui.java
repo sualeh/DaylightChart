@@ -54,13 +54,11 @@ import daylightchart.gui.actions.LocationsListOperation;
 import daylightchart.gui.actions.OnlineHelpAction;
 import daylightchart.gui.actions.OpenLocationTabAction;
 import daylightchart.gui.actions.OpenLocationsFileAction;
-import daylightchart.gui.actions.OpenReportFileAction;
 import daylightchart.gui.actions.OptionsAction;
 import daylightchart.gui.actions.PrintChartAction;
 import daylightchart.gui.actions.ResetAllAction;
 import daylightchart.gui.actions.SaveChartAction;
 import daylightchart.gui.actions.SaveLocationsFileAction;
-import daylightchart.gui.actions.SaveReportFileAction;
 import daylightchart.gui.util.BareBonesBrowserLaunch;
 import daylightchart.gui.util.ExitAction;
 import daylightchart.gui.util.GuiAction;
@@ -208,8 +206,8 @@ public final class DaylightChartGui
     {
       final File reportFile = new File(UserPreferences.getScratchDirectory(),
                                        daylightChartReport
-                                         .getReportFileName(ChartFileType.html));
-      daylightChartReport.write(reportFile, ChartFileType.html);
+                                         .getReportFileName(ChartFileType.png));
+      daylightChartReport.write(reportFile, ChartFileType.png);
       try
       {
         final String url = reportFile.toURI().toURL().toString();
@@ -342,8 +340,6 @@ public final class DaylightChartGui
     final GuiAction saveLocationsFile = new SaveLocationsFileAction(this);
     final GuiAction saveChart = new SaveChartAction(this);
     final GuiAction printChart = new PrintChartAction(locationsTabbedPane);
-    final GuiAction openReportFile = new OpenReportFileAction(this);
-    final GuiAction saveReportFile = new SaveReportFileAction(this);
 
     final ExitAction exit = new ExitAction(this,
                                            Messages
@@ -364,8 +360,6 @@ public final class DaylightChartGui
       menu.add(printChart);
     }
     menu.addSeparator();
-    menu.add(openReportFile);
-    menu.add(saveReportFile);
     menu.addSeparator();
     menu.add(recentLocationsMenu);
     menu.addSeparator();

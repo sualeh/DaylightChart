@@ -80,7 +80,7 @@ public final class SaveChartAction
         fileFilters.add(new ExtensionFileFilter<ChartFileType>(chartFileType));
       }
       final String reportFilename = daylightChartReport
-        .getReportFileName(ChartFileType.pdf);
+        .getReportFileName(ChartFileType.png);
       final SelectedFile<ChartFileType> selectedFile = Actions
         .showSaveDialog(mainWindow,
                         Messages
@@ -94,19 +94,22 @@ public final class SaveChartAction
       {
         try
         {
-          daylightChartReport.write(selectedFile.getFile(), selectedFile
-            .getFileType());
+          daylightChartReport.write(selectedFile.getFile(),
+                                    selectedFile.getFileType());
         }
         catch (final Exception e)
         {
           LOGGER.log(Level.WARNING, Messages
             .getString("DaylightChartGui.Message.Error.CannotSaveFile"), e); //$NON-NLS-1$
-          JOptionPane.showMessageDialog(mainWindow, Messages
-            .getString("DaylightChartGui.Message.Error.CannotSaveFile") //$NON-NLS-1$
-                                                    + "\n" //$NON-NLS-1$
-                                                    + selectedFile, Messages
-            .getString("DaylightChartGui.Message.Error.CannotSaveFile"), //$NON-NLS-1$
-                                        JOptionPane.ERROR_MESSAGE);
+          JOptionPane
+            .showMessageDialog(mainWindow,
+                               Messages
+                                 .getString("DaylightChartGui.Message.Error.CannotSaveFile") //$NON-NLS-1$
+                                   + "\n" //$NON-NLS-1$
+                                   + selectedFile,
+                               Messages
+                                 .getString("DaylightChartGui.Message.Error.CannotSaveFile"), //$NON-NLS-1$
+                               JOptionPane.ERROR_MESSAGE);
         }
       }
     }
