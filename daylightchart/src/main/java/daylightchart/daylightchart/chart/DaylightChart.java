@@ -25,6 +25,7 @@ package daylightchart.daylightchart.chart;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
+import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -46,7 +47,6 @@ import org.jfree.chart.renderer.xy.StandardXYItemRenderer;
 import org.jfree.chart.title.LegendTitle;
 import org.jfree.chart.title.TextTitle;
 import org.jfree.chart.title.Title;
-import org.jfree.data.time.Day;
 import org.jfree.ui.Layer;
 import org.jfree.ui.RectangleAnchor;
 import org.jfree.ui.RectangleEdge;
@@ -82,8 +82,10 @@ public class DaylightChart
    */
   public DaylightChart()
   {
-    this(RiseSetUtility.createRiseSetYear(null, Calendar.getInstance()
-      .get(Calendar.YEAR), new Options()), new Options());
+    this(RiseSetUtility.createRiseSetYear(null,
+                                          Calendar.getInstance()
+                                            .get(Calendar.YEAR),
+                                          new Options()), new Options());
     setTitle("");
   }
 
@@ -222,20 +224,22 @@ public class DaylightChart
     {
       optionsNotNull = options;
     }
-    createTitles(optionsNotNull.getChartOptions(), ChartConfiguration.chartFont
-      .deriveFont(Font.BOLD, 18));
+    createTitles(optionsNotNull.getChartOptions(),
+                 ChartConfiguration.chartFont.deriveFont(Font.BOLD, 18));
 
-    createLegend(optionsNotNull, ChartConfiguration.chartFont
-      .deriveFont(Font.PLAIN, 12));
+    createLegend(optionsNotNull,
+                 ChartConfiguration.chartFont.deriveFont(Font.PLAIN, 12));
 
   }
 
   private void createDSTMarker(final XYPlot plot)
   {
-    final long intervalStart = new Day(riseSetData.getDstStartDate())
-      .getFirstMillisecond();
-    final long intervalEnd = new Day(riseSetData.getDstEndDate())
-      .getFirstMillisecond();
+    if (!riseSetData.usesDaylightTime()) return;
+
+    final long intervalStart = riseSetData.getDstStartDate().atStartOfDay()
+      .atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
+    final long intervalEnd = riseSetData.getDstEndDate().atStartOfDay()
+      .atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
     final IntervalMarker dstMarker = new IntervalMarker(intervalStart,
                                                         intervalEnd,
                                                         ChartConfiguration.nightColor,

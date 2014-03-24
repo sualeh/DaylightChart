@@ -26,6 +26,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -33,7 +35,6 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 
 import org.geoname.data.Location;
-import org.joda.time.LocalDateTime;
 
 import daylightchart.daylightchart.calculation.RiseSetUtility;
 import daylightchart.daylightchart.calculation.RiseSetYearData;
@@ -105,8 +106,8 @@ public class DaylightChartReport
    */
   public String getReportFileName(final FileType chartFileType)
   {
-    final String timeStamp = new LocalDateTime()
-      .toString("yyyy_MMM_dd_hh_mm_ss");
+    final String timeStamp = LocalDateTime.now()
+      .format(DateTimeFormatter.ofPattern("yyyy_MMM_dd_hh_mm_ss"));
     String locationDescription = "";
     try
     {

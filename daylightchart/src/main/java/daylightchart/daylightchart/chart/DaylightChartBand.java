@@ -3,6 +3,7 @@ package daylightchart.daylightchart.chart;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.time.LocalDateTime;
 
 import org.jfree.chart.renderer.xy.XYDifferenceRenderer;
 import org.jfree.chart.renderer.xy.XYItemRenderer;
@@ -12,7 +13,6 @@ import org.jfree.data.time.Minute;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.data.time.TimeSeriesDataItem;
-import org.joda.time.LocalDateTime;
 
 import daylightchart.daylightchart.calculation.DaylightBand;
 import daylightchart.daylightchart.calculation.DaylightBandType;
@@ -127,10 +127,13 @@ public class DaylightChartBand
   private TimeSeriesDataItem toTimeSeriesDataItem(final LocalDateTime dateTime)
   {
     final Day day = new Day(dateTime.getDayOfMonth(),
-                            dateTime.getMonthOfYear(),
+                            dateTime.getMonthValue(),
                             dateTime.getYear());
-    final Minute minute = new Minute(dateTime.getMinuteOfHour(), dateTime
-      .getHourOfDay(), 1, 1, 1970);
+    final Minute minute = new Minute(dateTime.getMinute(),
+                                     dateTime.getHour(),
+                                     1,
+                                     1,
+                                     1970);
     final long minuteValue = minute.getFirstMillisecond();
     return new TimeSeriesDataItem(day, minuteValue);
   }

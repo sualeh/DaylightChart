@@ -25,14 +25,15 @@ package daylightchart.sunchart.calculation;
 import java.io.PrintWriter;
 import java.io.Writer;
 import java.text.DecimalFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.logging.Logger;
 
 import org.geoname.data.Location;
-import org.joda.time.LocalDate;
-import org.joda.time.LocalDateTime;
 
 import us.fatehi.calculation.Equinox;
 import us.fatehi.calculation.Equinox.DateTime;
@@ -72,18 +73,18 @@ public final class SunChartUtility
     {
       final SunPositions sunPositions = new SunPositions(date);
       sunAlgorithm.setDate(date.getYear(),
-                           date.getMonthOfYear(),
+                           date.getMonthValue(),
                            date.getDayOfMonth());
       for (int hour = 0; hour < 24; hour++)
       {
         final SolarEphemerides solarEphemerides = sunAlgorithm
           .calcSolarEphemerides(hour);
-        final LocalDateTime dateTime = new LocalDateTime(date.getYear(),
-                                                         date.getMonthOfYear(),
-                                                         date.getDayOfMonth(),
-                                                         hour,
-                                                         0,
-                                                         0);
+        final LocalDateTime dateTime = LocalDateTime.of(date.getYear(),
+                                                        date.getMonthValue(),
+                                                        date.getDayOfMonth(),
+                                                        hour,
+                                                        0,
+                                                        0);
         final SunPosition sunPosition = new SunPosition(dateTime,
                                                         solarEphemerides);
         sunPositions.add(sunPosition);
@@ -128,7 +129,7 @@ public final class SunChartUtility
         printWriter.printf("%s\t%s\t%s\t%s\t%s\t%s\t%s%n",
                            sunPosition.getDateTime().toLocalDate(),
                            sunPosition.getDateTime().toLocalTime()
-                             .toString("HH:mm"),
+                             .format(DateTimeFormatter.ofPattern("HH:mm")),
                            format.format(sunPosition.getAltitude()),
                            format.format(sunPosition.getAzimuth()),
                            format.format(sunPosition.getHourAngle()),
@@ -166,7 +167,7 @@ public final class SunChartUtility
           date = toLocalDate(equinox.getDecemberSolstice());
           break;
         default:
-          date = new LocalDate(year, month, 15);
+          date = LocalDate.of(year, month, 15);
           break;
       }
       dates.add(date);
@@ -177,9 +178,9 @@ public final class SunChartUtility
   private static LocalDate toLocalDate(DateTime equinox3)
   {
     LocalDate date;
-    date = new LocalDate(equinox3.getYear(),
-                         equinox3.getMonth(),
-                         equinox3.getDay());
+    date = LocalDate.of(equinox3.getYear(),
+                        equinox3.getMonth(),
+                        equinox3.getDay());
     return date;
   }
 

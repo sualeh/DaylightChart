@@ -45,8 +45,6 @@
 									usetimestamp="true" />
 								<get src="http://www.apache.org/licenses/LICENSE-2.0" dest="${licenses.dir}/LICENSE.ApacheCommons.html"
 									usetimestamp="true" />
-								<get src="http://joda-time.sourceforge.net/license.html"
-									dest="${licenses.dir}/LICENSE.JodaTime.html" usetimestamp="true" />
 								<get src="http://www.lowagie.com/iText/lgpl.txt" dest="${licenses.dir}/LICENSE.iText.html"
 									usetimestamp="true" />
 								<get src="http://www.object-refinery.com/lgpl.html" dest="${licenses.dir}/LICENSE.JFreeChart.html"
@@ -129,11 +127,6 @@
 			<groupId>geoname</groupId>
 			<artifactId>geoname</artifactId>
 			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>joda-time</groupId>
-			<artifactId>joda-time</artifactId>
-			<version>2.3</version>
 		</dependency>
 		<dependency>
 			<groupId>jfree</groupId>

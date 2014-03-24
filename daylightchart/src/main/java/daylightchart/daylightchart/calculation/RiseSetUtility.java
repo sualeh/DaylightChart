@@ -28,8 +28,13 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Writer;
 import java.text.DecimalFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.TimeZone;
@@ -40,9 +45,6 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.geoname.data.Location;
 import org.geoname.parser.DefaultTimezones;
 import org.geoname.parser.LocationsListParser;
-import org.joda.time.LocalDate;
-import org.joda.time.LocalDateTime;
-import org.joda.time.LocalTime;
 
 import us.fatehi.calculation.SunPositionAlgorithm;
 import us.fatehi.calculation.SunPositionAlgorithmFactory;
@@ -110,8 +112,9 @@ public final class RiseSetUtility
     riseSetYear.setUsesDaylightTime(useDaylightTime);
     for (final LocalDate date: getYearsDates(year))
     {
-      final boolean inDaylightSavings = timeZone.inDaylightTime(date
-        .toDateTime((LocalTime) null).toGregorianCalendar().getTime());
+      final boolean inDaylightSavings = timeZone.inDaylightTime(new Date(date
+        .atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()
+        .toEpochMilli()));
       if (wasDaylightSavings != inDaylightSavings)
       {
         if (!wasDaylightSavings)
@@ -337,8 +340,7 @@ public final class RiseSetUtility
     final LocalDateTime sunrise = riseSet.getSunrise();
     final LocalDateTime sunset = riseSet.getSunset();
 
-    if (riseSet.getRiseSetType() != RiseSetType.partial
-        && sunset.getHourOfDay() < 9)
+    if (riseSet.getRiseSetType() != RiseSetType.partial && sunset.getHour() < 9)
     {
       return new RiseSet[] {
           riseSet.withNewRiseSetTimes(sunrise.toLocalTime(),
@@ -348,7 +350,7 @@ public final class RiseSetUtility
       };
     }
     else if (riseSet.getRiseSetType() != RiseSetType.partial
-             && sunrise.getHourOfDay() > 15)
+             && sunrise.getHour() > 15)
     {
       return new RiseSet[] {
           riseSet.withNewRiseSetTimes(RiseSet.JUST_AFTER_MIDNIGHT,
@@ -381,7 +383,7 @@ public final class RiseSetUtility
         .getStandardTimeZoneOffsetHours(location.getTimeZoneId()));
     }
     sunAlgorithm.setDate(date.getYear(),
-                         date.getMonthOfYear(),
+                         date.getMonthValue(),
                          date.getDayOfMonth());
     final double[] sunriseSunset = sunAlgorithm.calcRiseSet(twilight
       .getHorizon());
@@ -415,12 +417,12 @@ public final class RiseSetUtility
   private static List<LocalDate> getYearsDates(final int year)
   {
     final List<LocalDate> dates = new ArrayList<LocalDate>();
-    LocalDate date = new LocalDate(year, 1, 1);
+    LocalDate date = LocalDate.of(year, 1, 1);
     do
     {
       dates.add(date);
       date = date.plusDays(1);
-    } while (!(date.getMonthOfYear() == 1 && date.getDayOfMonth() == 1));
+    } while (!(date.getMonthValue() == 1 && date.getDayOfMonth() == 1));
     return dates;
   }
 
@@ -531,11 +533,12 @@ public final class RiseSetUtility
         }
         else
         {
-          printWriter.printf("\t%s\t%s",
-                             riseSet.getSunrise().toLocalTime()
-                               .toString("HH:mm:ss"),
-                             riseSet.getSunset().toLocalTime()
-                               .toString("HH:mm:ss"));
+          printWriter
+            .printf("\t%s\t%s",
+                    riseSet.getSunrise().toLocalTime()
+                      .format(DateTimeFormatter.ofPattern("HH:mm:ss")),
+                    riseSet.getSunset().toLocalTime()
+                      .format(DateTimeFormatter.ofPattern("HH:mm:ss")));
         }
       }
       printWriter.println();

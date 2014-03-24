@@ -1,8 +1,8 @@
 package daylightchart.daylightchart.calculation;
 
 
-import org.joda.time.LocalDate;
-import org.joda.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  * Contains a data point for the sunrise and sunset, and twilight times

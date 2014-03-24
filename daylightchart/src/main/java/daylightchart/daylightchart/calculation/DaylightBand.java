@@ -25,13 +25,12 @@ package daylightchart.daylightchart.calculation;
 import java.io.PrintWriter;
 import java.io.Serializable;
 import java.io.StringWriter;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.joda.time.LocalDate;
 
 /**
  * One daylight band, consisting of a sunrise series and a sunset

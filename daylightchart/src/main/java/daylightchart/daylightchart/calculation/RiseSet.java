@@ -25,12 +25,13 @@ package daylightchart.daylightchart.calculation;
 import java.io.PrintWriter;
 import java.io.Serializable;
 import java.io.StringWriter;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 import org.geoname.data.Location;
 import org.geoname.parser.Utility;
-import org.joda.time.LocalDate;
-import org.joda.time.LocalDateTime;
-import org.joda.time.LocalTime;
 
 /**
  * Sunrise and sunset at a given location, and a given date. RiseSet is
@@ -44,9 +45,9 @@ public final class RiseSet
 {
 
   static final LocalTime JUST_BEFORE_MIDNIGHT = LocalTime.MIDNIGHT
-    .minusMillis(1);
+    .minusNanos(1);
 
-  static final LocalTime JUST_AFTER_MIDNIGHT = LocalTime.MIDNIGHT.plusMillis(1);
+  static final LocalTime JUST_AFTER_MIDNIGHT = LocalTime.MIDNIGHT.plusNanos(1);
 
   private static final long serialVersionUID = 3092668888760029582L;
 
@@ -189,7 +190,7 @@ public final class RiseSet
    */
   public LocalDateTime getSunrise()
   {
-    return date.toLocalDateTime(sunrise);
+    return date.atTime(sunrise);
   }
 
   /**
@@ -199,7 +200,7 @@ public final class RiseSet
    */
   public LocalDateTime getSunset()
   {
-    return date.toLocalDateTime(sunset);
+    return date.atTime(sunset);
   }
 
   /**
@@ -221,8 +222,10 @@ public final class RiseSet
                                            location.getDescription(),
                                            date,
                                            riseSetType,
-                                           sunrise.toString("HH:mm:ss"),
-                                           sunset.toString("HH:mm:ss"));
+                                           sunrise.format(DateTimeFormatter
+                                             .ofPattern("HH:mm:ss")),
+                                           sunset.format(DateTimeFormatter
+                                             .ofPattern("HH:mm:ss")));
       return writer.toString();
     }
   }
@@ -308,7 +311,7 @@ public final class RiseSet
       dayHour = dayHour + 24;
     }
     final int[] fields = Utility.sexagesimalSplit(dayHour);
-    return new LocalTime(fields[0], fields[1], fields[2]);
+    return LocalTime.of(fields[0], fields[1], fields[2]);
   }
 
 }

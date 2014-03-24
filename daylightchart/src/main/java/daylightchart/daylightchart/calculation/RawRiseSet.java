@@ -25,9 +25,9 @@ package daylightchart.daylightchart.calculation;
 import java.io.PrintWriter;
 import java.io.Serializable;
 import java.io.StringWriter;
+import java.time.LocalDate;
 
 import org.geoname.data.Location;
-import org.joda.time.LocalDate;
 
 /**
  * Sunrise and sunset at a given location, and a given date.

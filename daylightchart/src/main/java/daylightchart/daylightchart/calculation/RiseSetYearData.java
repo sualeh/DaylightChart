@@ -23,14 +23,12 @@ package daylightchart.daylightchart.calculation;
 
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 import org.geoname.data.Location;
-import org.joda.time.LocalDate;
-import org.joda.time.LocalTime;
 
 /**
  * A full year's sunrise and sunset times for a location.
@@ -80,15 +78,13 @@ public final class RiseSetYearData
    * 
    * @return End of DST.
    */
-  public Date getDstEndDate()
+  public LocalDate getDstEndDate()
   {
-    Date dstEndDate = null;
     if (usesDaylightTime && dstEnd != null)
     {
-      dstEndDate = dstEnd.toDateTime((LocalTime) null).toGregorianCalendar()
-        .getTime();
+      return dstEnd;
     }
-    return dstEndDate;
+    return null;
   }
 
   /**
@@ -96,15 +92,13 @@ public final class RiseSetYearData
    * 
    * @return Start of DST.
    */
-  public Date getDstStartDate()
+  public LocalDate getDstStartDate()
   {
-    Date dstStartDate = null;
     if (usesDaylightTime && dstStart != null)
     {
-      dstStartDate = dstStart.toDateTime((LocalTime) null)
-        .toGregorianCalendar().getTime();
+      return dstStart;
     }
-    return dstStartDate;
+    return null;
   }
 
   /**
