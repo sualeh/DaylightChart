@@ -34,7 +34,6 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.TimeZone;
@@ -110,11 +109,11 @@ public final class RiseSetUtility
                                                             twilight,
                                                             year);
     riseSetYear.setUsesDaylightTime(useDaylightTime);
+    ZoneId zoneId = ZoneId.of(timeZone.getID());
     for (final LocalDate date: getYearsDates(year))
     {
-      final boolean inDaylightSavings = timeZone.inDaylightTime(new Date(date
-        .atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()
-        .toEpochMilli()));
+      final boolean inDaylightSavings = zoneId.getRules()
+        .isDaylightSavings(date.atStartOfDay().atZone(zoneId).toInstant());
       if (wasDaylightSavings != inDaylightSavings)
       {
         if (!wasDaylightSavings)
