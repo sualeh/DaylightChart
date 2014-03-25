@@ -25,8 +25,8 @@ package daylightchart.daylightchart.chart;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
+import java.time.Year;
 import java.time.ZoneId;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -83,8 +83,7 @@ public class DaylightChart
   public DaylightChart()
   {
     this(RiseSetUtility.createRiseSetYear(null,
-                                          Calendar.getInstance()
-                                            .get(Calendar.YEAR),
+                                          Year.now().getValue(),
                                           new Options()), new Options());
     setTitle("");
   }

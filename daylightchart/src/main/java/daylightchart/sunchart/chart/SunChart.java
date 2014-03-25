@@ -24,9 +24,8 @@ package daylightchart.sunchart.chart;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.util.Calendar;
+import java.time.Year;
 import java.util.List;
-
 
 import org.geoname.data.Location;
 import org.jfree.chart.JFreeChart;
@@ -66,8 +65,7 @@ public class SunChart
    */
   public SunChart()
   {
-    this(SunChartUtility.createSunChartYear(null, Calendar.getInstance()
-      .get(Calendar.YEAR)));
+    this(SunChartUtility.createSunChartYear(null, Year.now().getValue()));
     setTitle("");
   }
 

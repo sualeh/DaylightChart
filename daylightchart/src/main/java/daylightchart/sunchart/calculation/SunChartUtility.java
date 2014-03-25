@@ -27,9 +27,9 @@ import java.io.Writer;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Year;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -111,7 +111,7 @@ public final class SunChartUtility
     final DecimalFormat format = new DecimalFormat("+000.000;-000.000");
     format.setMaximumFractionDigits(3);
 
-    final int year = Calendar.getInstance().get(Calendar.YEAR);
+    final int year = Year.now().getValue();
     final SunChartYearData sunChartYear = createSunChartYear(location, year);
 
     final PrintWriter printWriter = new PrintWriter(writer, true);

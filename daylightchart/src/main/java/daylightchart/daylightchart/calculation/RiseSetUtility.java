@@ -30,10 +30,10 @@ import java.io.Writer;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Year;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 import java.util.TimeZone;
@@ -466,7 +466,7 @@ public final class RiseSetUtility
     final DecimalFormat format = new DecimalFormat("00.000");
     format.setMaximumFractionDigits(3);
 
-    final int year = Calendar.getInstance().get(Calendar.YEAR);
+    final int year = Year.now().getValue();
     final Options options = new Options();
     options.setTwilightType(twilight);
     final RiseSetYearData riseSetYear = createRiseSetYear(location,

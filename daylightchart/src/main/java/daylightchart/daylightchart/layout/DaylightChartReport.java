@@ -27,8 +27,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.time.LocalDateTime;
+import java.time.Year;
 import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -69,10 +69,9 @@ public class DaylightChartReport
     this.location = location;
     // Calculate rise and set timings for the whole year, and generate
     // chart
+    final int year = Year.now().getValue();
     final RiseSetYearData riseSetData = RiseSetUtility
-      .createRiseSetYear(location,
-                         Calendar.getInstance().get(Calendar.YEAR),
-                         options);
+      .createRiseSetYear(location, year, options);
     chart = new DaylightChart(riseSetData, options);
     options.getChartOptions().updateChart(chart);
   }
