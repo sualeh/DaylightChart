@@ -5,7 +5,7 @@
 	<parent>
 		<artifactId>daylightchart-all</artifactId>
 		<groupId>daylightchart</groupId>
-		<version>3.4</version>
+		<version>4.0</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>daylightchart</artifactId>
@@ -18,14 +18,6 @@
 	</licenses>
 	<build>
 		<plugins>
-			<plugin>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.3.2</version>
-				<configuration>
-					<source>1.7</source>
-					<target>1.7</target>
-				</configuration>
-			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-antrun-plugin</artifactId>
@@ -41,11 +33,7 @@
 							<tasks>
 								<property name="licenses.dir" location="target/licenses" />
 								<mkdir dir="${licenses.dir}" />
-								<get src="http://www.antlr.org/license.html" dest="${licenses.dir}/LICENSE.antlr.html"
-									usetimestamp="true" />
 								<get src="http://www.apache.org/licenses/LICENSE-2.0" dest="${licenses.dir}/LICENSE.ApacheCommons.html"
-									usetimestamp="true" />
-								<get src="http://www.lowagie.com/iText/lgpl.txt" dest="${licenses.dir}/LICENSE.iText.html"
 									usetimestamp="true" />
 								<get src="http://www.object-refinery.com/lgpl.html" dest="${licenses.dir}/LICENSE.JFreeChart.html"
 									usetimestamp="true" />
@@ -147,11 +135,6 @@
 			<groupId>com.thoughtworks.xstream</groupId>
 			<artifactId>xstream</artifactId>
 			<version>1.4.7</version>
-		</dependency>
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>servlet-api</artifactId>
-			<version>3.0-alpha-1</version>
 		</dependency>
 	</dependencies>
 </project>

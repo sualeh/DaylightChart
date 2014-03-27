@@ -64,6 +64,5 @@
         name="Project Page on SourceForge"
         href="http://sourceforge.net/projects/daylightchart/" />
     </menu>
-    ${reports}
   </body>
 </project>

@@ -4,7 +4,7 @@
   <groupId>daylightchart</groupId>
   <artifactId>daylightchart-all</artifactId>
   <packaging>pom</packaging>
-  <version>3.4</version>
+  <version>4.0</version>
   <name>Daylight Chart [All]</name>
   <description>Daylight Chart shows sunrise and sunset times in an attractive chart, for any location in the world. The effect of daylight savings time is also displayed. Charts can be exported to image files.</description>
   <inceptionYear>2007</inceptionYear>
@@ -52,21 +52,9 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.1</version>
         <configuration>
-          <source>7</source>
-          <target>7</target>
+          <source>8</source>
+          <target>8</target>
         </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>cobertura-maven-plugin</artifactId>
-        <version>2.6</version>
-        <executions>
-          <execution>
-            <goals>
-              <goal>clean</goal>
-            </goals>
-          </execution>
-        </executions>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
