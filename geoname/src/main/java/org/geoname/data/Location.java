@@ -25,7 +25,9 @@ package org.geoname.data;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
-import java.util.TimeZone;
+import java.time.ZoneId;
+import java.time.format.TextStyle;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -63,8 +65,8 @@ public final class Location
   /** UNKNOWN, setting all fields to blank. */
   public static final Location UNKNOWN = new Location("",
                                                       Country.UNKNOWN,
-                                                      TimeZone.getDefault()
-                                                        .getID(),
+                                                      ZoneId.systemDefault()
+                                                        .getId(),
                                                       new PointLocation(new Latitude(Angle
                                                                           .fromDegrees(0)),
                                                                         new Longitude(Angle
@@ -333,8 +335,9 @@ public final class Location
     }
     description = descriptionBuilder.toString();
 
-    final TimeZone timeZone = TimeZone.getTimeZone(timeZoneId);
-    details = getPointLocation().toString() + ", " + timeZone.getDisplayName();
+    final ZoneId zoneId = ZoneId.of(timeZoneId);
+    details = getPointLocation().toString() + ", "
+              + zoneId.getDisplayName(TextStyle.FULL, Locale.getDefault());
   }
 
   private void validateTimeZone()

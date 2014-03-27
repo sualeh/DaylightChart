@@ -1,29 +1,31 @@
-/* 
- * 
+/*
+ *
  * Daylight Chart
  * http://sourceforge.net/projects/daylightchart
  * Copyright (c) 2007-2014, Sualeh Fatehi.
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- * 
+ *
  */
 package org.geoname.parser;
 
 
 import java.io.Serializable;
-import java.util.TimeZone;
+import java.time.ZoneId;
+import java.time.format.TextStyle;
+import java.util.Locale;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -37,22 +39,24 @@ public final class TimeZoneDisplay
   private final String timeZoneDisplayName;
   private final String description;
 
-  public TimeZoneDisplay(final TimeZone timeZone)
+  public TimeZoneDisplay(final ZoneId zoneId)
   {
-    if (timeZone == null)
+    if (zoneId == null)
     {
       throw new IllegalArgumentException("Cannot use null time zone");
     }
-    timeZoneId = timeZone.getID();
-    timeZoneDisplayName = timeZone.getDisplayName();
+    timeZoneId = zoneId.getId();
+    timeZoneDisplayName = zoneId.getDisplayName(TextStyle.FULL,
+                                                Locale.getDefault());
     description = createDescription();
   }
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see java.lang.Comparable#compareTo(java.lang.Object)
    */
+  @Override
   public int compareTo(final TimeZoneDisplay other)
   {
     int compareTo = 0;
@@ -69,7 +73,7 @@ public final class TimeZoneDisplay
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see java.lang.Object#equals(java.lang.Object)
    */
   @Override
@@ -115,7 +119,7 @@ public final class TimeZoneDisplay
 
   /**
    * Time zone display name.
-   * 
+   *
    * @return Time zone display name
    */
   public String getTimeZoneDisplayName()
@@ -125,7 +129,7 @@ public final class TimeZoneDisplay
 
   /**
    * Time zone id.
-   * 
+   *
    * @return Time zone id
    */
   public String getTimeZoneId()
@@ -135,7 +139,7 @@ public final class TimeZoneDisplay
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see java.lang.Object#hashCode()
    */
   @Override
@@ -151,7 +155,7 @@ public final class TimeZoneDisplay
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see java.lang.Object#toString()
    */
   @Override

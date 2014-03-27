@@ -1,23 +1,23 @@
-/* 
- * 
+/*
+ *
  * Daylight Chart
  * http://sourceforge.net/projects/daylightchart
  * Copyright (c) 2007-2014, Sualeh Fatehi.
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- * 
+ *
  */
 package daylightchart.daylightchart.chart;
 
@@ -62,7 +62,7 @@ import daylightchart.options.chart.ChartOptionsListener;
 
 /**
  * Produces a chart of daylight times for any location.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public class DaylightChart
@@ -90,7 +90,7 @@ public class DaylightChart
 
   /**
    * Instantiate the chart for a given location, and given year.
-   * 
+   *
    * @param riseSetData
    *        Rise and set data for the year
    * @param options
@@ -105,9 +105,10 @@ public class DaylightChart
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see daylightchart.options.chart.ChartOptionsListener#afterSettingChartOptions(ChartOptions)
    */
+  @Override
   public void afterSettingChartOptions(final ChartOptions chartOptions)
   {
     Font titleFont;
@@ -125,9 +126,10 @@ public class DaylightChart
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see daylightchart.options.chart.ChartOptionsListener#beforeSettingChartOptions(ChartOptions)
    */
+  @Override
   public void beforeSettingChartOptions(final ChartOptions chartOptions)
   {
     // No-op
@@ -233,7 +235,10 @@ public class DaylightChart
 
   private void createDSTMarker(final XYPlot plot)
   {
-    if (!riseSetData.usesDaylightTime()) return;
+    if (!riseSetData.usesDaylightTime())
+    {
+      return;
+    }
 
     final long intervalStart = riseSetData.getDstStartDate().atStartOfDay()
       .atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();

@@ -36,7 +36,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -80,7 +79,7 @@ public final class RiseSetUtility
                                                   final Options options)
   {
     final TimeZoneOption timeZoneOption = options.getTimeZoneOption();
-    final TimeZone timeZone;
+    final ZoneId zoneId;
     if (location != null)
     {
       final String timeZoneId;
@@ -94,13 +93,15 @@ public final class RiseSetUtility
         timeZoneId = DefaultTimezones.createGMTTimeZoneId(location
           .getPointLocation().getLongitude());
       }
-      timeZone = TimeZone.getTimeZone(timeZoneId);
+      zoneId = ZoneId.of(timeZoneId);
     }
     else
     {
-      timeZone = TimeZone.getDefault();
+      zoneId = ZoneId.systemDefault();
     }
-    final boolean useDaylightTime = timeZone.useDaylightTime()
+    final boolean timeZoneUsesDaylightTime = !zoneId.getRules().getTransitionRules()
+      .isEmpty();
+    final boolean useDaylightTime = timeZoneUsesDaylightTime
                                     && timeZoneOption != TimeZoneOption.USE_LOCAL_TIME;
     boolean wasDaylightSavings = false;
 
@@ -109,7 +110,6 @@ public final class RiseSetUtility
                                                             twilight,
                                                             year);
     riseSetYear.setUsesDaylightTime(useDaylightTime);
-    ZoneId zoneId = ZoneId.of(timeZone.getID());
     for (final LocalDate date: getYearsDates(year))
     {
       final boolean inDaylightSavings = zoneId.getRules()

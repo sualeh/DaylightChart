@@ -29,6 +29,7 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 import java.text.NumberFormat;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -148,15 +149,14 @@ public final class DefaultTimezones
 
   static
   {
-    final String[] allTimeZoneIds = TimeZone.getAvailableIDs();
+    final Set<String> allTimeZoneIds = ZoneId.getAvailableZoneIds();
     for (final String timeZoneId: allTimeZoneIds)
     {
       if (timeZoneId.startsWith("Etc/"))
       {
         continue;
       }
-      final TimeZone timeZone = TimeZone.getTimeZone(timeZoneId);
-      allTimezones.add(new TimeZoneDisplay(timeZone));
+      allTimezones.add(new TimeZoneDisplay(ZoneId.of(timeZoneId)));
       final List<String> timeZoneIdParts = splitTimeZoneId(timeZoneId);
       if (timeZoneIdParts.size() > 0)
       {
@@ -245,7 +245,7 @@ public final class DefaultTimezones
   {
     if (longitude == null)
     {
-      return TimeZone.getDefault().getID();
+      return ZoneId.systemDefault().getId();
     }
 
     final double tzOffsetHours = longitude.getDegrees() / 15D;

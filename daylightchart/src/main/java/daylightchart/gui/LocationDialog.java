@@ -31,7 +31,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.TimeZone;
+import java.time.ZoneId;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -422,8 +422,7 @@ public class LocationDialog
 
   private void setTimeZoneId(final String timeZoneId)
   {
-    timeZone.setSelectedItem(new TimeZoneDisplay(TimeZone
-      .getTimeZone(timeZoneId)));
+    timeZone.setSelectedItem(new TimeZoneDisplay(ZoneId.of(timeZoneId)));
   }
 
   private void showError(final Component component)
