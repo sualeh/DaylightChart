@@ -37,11 +37,13 @@ public final class Country
   public static final Country UNKNOWN = new Country("", "");
 
   private static final long serialVersionUID = -5625327893850178062L;
+
   private final String name;
   private final String countryCode;
 
   /**
    * Constructor.
+   * 
    * @param countryCode
    *        Two letter ISO 3166 country code
    * @param name
