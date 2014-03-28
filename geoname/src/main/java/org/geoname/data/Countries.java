@@ -1,23 +1,23 @@
-/* 
- * 
+/*
+ *
  * Daylight Chart
  * http://sourceforge.net/projects/daylightchart
  * Copyright (c) 2007-2014, Sualeh Fatehi.
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- * 
+ *
  */
 package org.geoname.data;
 
@@ -38,7 +38,7 @@ import org.geoname.parser.UnicodeReader;
 
 /**
  * In-memory database of locations.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public final class Countries
@@ -68,7 +68,7 @@ public final class Countries
 
   /**
    * Gets a collection of all countries.
-   * 
+   *
    * @return All countries.
    */
   public static List<Country> getAllCountries()
@@ -82,7 +82,7 @@ public final class Countries
   /**
    * Looks up a country from the provided string - whether a country
    * code or a country name.
-   * 
+   *
    * @param countryString
    *        Country
    * @return Country ojbect, or null
@@ -105,8 +105,8 @@ public final class Countries
         country = lookupFips10CountryCode(countryString);
         if (country == null)
         {
-          Collection<Country> countries = fips10CountryCodeMap.values();
-          for (Country fips10Country: countries)
+          final Collection<Country> countries = fips10CountryCodeMap.values();
+          for (final Country fips10Country: countries)
           {
             if (fips10Country.getCode().equals(countryString))
             {
@@ -126,7 +126,7 @@ public final class Countries
 
   /**
    * Looks up a country from the country name.
-   * 
+   *
    * @param countryName
    *        Country name
    * @return Country ojbect, or null
@@ -138,7 +138,7 @@ public final class Countries
 
   /**
    * Looks up a country from the FIPS-10 country code.
-   * 
+   *
    * @param fips10CountryCode
    *        FIPS-10 country code
    * @return Country ojbect, or null
@@ -150,7 +150,7 @@ public final class Countries
 
   /**
    * Looks up a country from the two-letter ISO 3166 country code.
-   * 
+   *
    * @param iso3166CountryCode2
    *        ISO 3166 country code
    * @return Country ojbect, or null
@@ -168,51 +168,39 @@ public final class Countries
                                                                               .getResourceAsStream(dataResource),
                                                                             "UTF-8"));)
     {
-
-      String line;
-      while ((line = reader.readLine()) != null)
-      {
-
-        final String[] fields = line.split(",");
-
-        final boolean invalidNumberOfFields = fields.length != 3;
-
-        final String fips10CountryCode = fields[0];
-        final String iso3166CountryCode = fields[1];
-
-        final boolean invalidHasNulls = fips10CountryCode == null
-                                        || iso3166CountryCode == null;
-        final boolean invalidLengths = fips10CountryCode.length() > 2
-                                       || fips10CountryCode.length() > 2
-                                       || iso3166CountryCode.isEmpty();
-        if (invalidNumberOfFields || invalidHasNulls || invalidLengths)
-        {
-          throw new IllegalArgumentException("Invalid country record: " + line);
-        }
-
-        final Country country;
-        if (iso3166CountryCodeMap.containsKey(iso3166CountryCode))
-        {
-          country = iso3166CountryCodeMap.get(iso3166CountryCode);
-        }
-        else
-        {
-          final String countryName = fields[2];
-          if (iso3166CountryCode.length() == 2)
+      reader.lines().map(line -> line.split(","))
+        .filter(fields -> fields.length == 3)
+        .filter(fields -> fields[0] != null & fields[1] != null)
+        .filter(fields -> fields[0].length() <= 2 && !fields[1].isEmpty())
+        .forEach(fields -> {
+          final String iso3166CountryCode = fields[1];
+          final String fips10CountryCode = fields[0];
+          final Country country;
+          if (iso3166CountryCodeMap.containsKey(iso3166CountryCode))
           {
-            country = new Country(iso3166CountryCode, countryName);
-          }
-          else if (fips10CountryCode.length() == 2)
-          {
-            country = new Country(fips10CountryCode, countryName);
+            country = iso3166CountryCodeMap.get(iso3166CountryCode);
           }
           else
           {
-            continue;
+            final String countryName = fields[2];
+            if (iso3166CountryCode.length() == 2)
+            {
+              country = new Country(iso3166CountryCode, countryName);
+            }
+            else if (fips10CountryCode.length() == 2)
+            {
+              country = new Country(fips10CountryCode, countryName);
+            }
+            else
+            {
+              country = null;
+            }
           }
-        }
-        countryCodeMap.put(fips10CountryCode, country);
-      }
+          if (country != null)
+          {
+            countryCodeMap.put(fips10CountryCode, country);
+          }
+        });
     }
     catch (final IOException e)
     {
@@ -234,10 +222,9 @@ public final class Countries
       .filter(fields -> fields.length == 2)
       .filter(fields -> fields[0] != null && fields[1] != null)
       .filter(fields -> fields[0].length() == 2 || !fields[1].isEmpty())
-      .forEach(fields -> {
-        final Country country = new Country(fields[0], fields[1]);
-        countryCodeMap.put(country.getCode(), country);
-      });
+      .map(fields -> new Country(fields[0], fields[1]))
+      .forEach(country -> countryCodeMap.put(country.getCode(), country));
     return countryCodeMap;
   }
+
 }
