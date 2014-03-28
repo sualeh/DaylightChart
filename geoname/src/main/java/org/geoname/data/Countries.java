@@ -225,37 +225,19 @@ public final class Countries
   private static Map<String, Country> readISOCountryData(final String dataResource)
   {
     final Map<String, Country> countryCodeMap = new HashMap<>();
-    try (final BufferedReader reader = new BufferedReader(new InputStreamReader(Countries.class
-                                                                                  .getClassLoader()
-                                                                                  .getResourceAsStream(dataResource),
-                                                                                Charset
-                                                                                  .forName("UTF8")));)
-    {
-
-      String line;
-      while ((line = reader.readLine()) != null)
-      {
-
-        final String[] fields = line.split(",");
-
-        final boolean invalidNumberOfFields = fields.length != 2;
-        final boolean invalidHasNulls = fields[0] == null || fields[1] == null;
-        final boolean invalidLengths = fields[0].length() != 2
-                                       || fields[1].isEmpty();
-        if (invalidNumberOfFields || invalidHasNulls || invalidLengths)
-        {
-          throw new IllegalArgumentException("Invalid country record: " + line);
-        }
-
+    final BufferedReader reader = new BufferedReader(new InputStreamReader(Countries.class
+                                                                             .getClassLoader()
+                                                                             .getResourceAsStream(dataResource),
+                                                                           Charset
+                                                                             .forName("UTF8")));
+    reader.lines().map(line -> line.split(","))
+      .filter(fields -> fields.length == 2)
+      .filter(fields -> fields[0] != null && fields[1] != null)
+      .filter(fields -> fields[0].length() == 2 || !fields[1].isEmpty())
+      .forEach(fields -> {
         final Country country = new Country(fields[0], fields[1]);
         countryCodeMap.put(country.getCode(), country);
-      }
-    }
-    catch (final IOException e)
-    {
-      throw new IllegalStateException("Cannot read data from internal database",
-                                      e);
-    }
+      });
     return countryCodeMap;
   }
 }
