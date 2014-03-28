@@ -110,19 +110,12 @@ public final class DefaultTimezones
         final String timezoneId = fields[1];
 
         // Add default timezone for the country
-        final TimeZone defaultTimezone = TimeZone.getTimeZone(timezoneId);
-        if (!defaultTimezone.getID().equals("GMT"))
-        {
-          final Country country = Countries
-            .lookupIso3166CountryCode2(iso3166CountryCode2);
-          final List<String> defaultTimezonesForCountry = defaultTimezones
-            .get(country);
-          defaultTimezonesForCountry.add(defaultTimezone.getID());
-        }
-        else
-        {
-          LOGGER.log(Level.WARNING, "Cannot find timezone " + timezoneId);
-        }
+        final ZoneId defaultZoneId = ZoneId.of(timezoneId);
+        final Country country = Countries
+          .lookupIso3166CountryCode2(iso3166CountryCode2);
+        final List<String> defaultTimezonesForCountry = defaultTimezones
+          .get(country);
+        defaultTimezonesForCountry.add(defaultZoneId.getId());
       }
     }
     catch (final IOException e)
