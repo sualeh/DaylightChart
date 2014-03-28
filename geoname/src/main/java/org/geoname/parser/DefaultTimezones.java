@@ -29,6 +29,7 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 import java.text.NumberFormat;
+import java.time.Instant;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -39,7 +40,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-import java.util.TimeZone;
 import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -287,8 +287,9 @@ public final class DefaultTimezones
     {
       return 0D;
     }
-    final TimeZone timeZone = TimeZone.getTimeZone(timeZoneId);
-    return timeZone.getRawOffset() / (60D * 60D * 1000D);
+    final ZoneId zoneId = ZoneId.of(timeZoneId);
+    return zoneId.getRules().getStandardOffset(Instant.now()).getTotalSeconds()
+           / (60D * 60D);
   }
 
   /**
