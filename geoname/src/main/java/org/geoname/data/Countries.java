@@ -213,17 +213,24 @@ public final class Countries
   private static Map<String, Country> readISOCountryData(final String dataResource)
   {
     final Map<String, Country> countryCodeMap = new HashMap<>();
-    final BufferedReader reader = new BufferedReader(new InputStreamReader(Countries.class
-                                                                             .getClassLoader()
-                                                                             .getResourceAsStream(dataResource),
-                                                                           Charset
-                                                                             .forName("UTF8")));
-    reader.lines().map(line -> line.split(","))
-      .filter(fields -> fields.length == 2)
-      .filter(fields -> fields[0] != null && fields[1] != null)
-      .filter(fields -> fields[0].length() == 2 || !fields[1].isEmpty())
-      .map(fields -> new Country(fields[0], fields[1]))
-      .forEach(country -> countryCodeMap.put(country.getCode(), country));
+    try (final BufferedReader reader = new BufferedReader(new InputStreamReader(Countries.class
+                                                                                  .getClassLoader()
+                                                                                  .getResourceAsStream(dataResource),
+                                                                                Charset
+                                                                                  .forName("UTF8")));)
+    {
+      reader.lines().map(line -> line.split(","))
+        .filter(fields -> fields.length == 2)
+        .filter(fields -> fields[0] != null && fields[1] != null)
+        .filter(fields -> fields[0].length() == 2 || !fields[1].isEmpty())
+        .map(fields -> new Country(fields[0], fields[1]))
+        .forEach(country -> countryCodeMap.put(country.getCode(), country));
+    }
+    catch (final IOException e)
+    {
+      throw new IllegalStateException("Cannot read data from internal database",
+                                      e);
+    }
     return countryCodeMap;
   }
 

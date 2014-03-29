@@ -23,6 +23,7 @@ package org.geoname.parser;
 
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -77,24 +78,31 @@ public final class DefaultTimezones
       defaultTimezones.put(country, new ArrayList<String>());
     }
 
-    BufferedReader reader = new BufferedReader(new InputStreamReader(DefaultTimezones.class
-      .getClassLoader().getResourceAsStream("default.timezones.data")));
-    reader
-      .lines()
-      .filter(line -> !line.startsWith("#"))
-      .map(line -> line.split(","))
-      .filter(fields -> fields.length == 2)
-      .filter(fields -> fields[0] != null && fields[1] != null)
-      .filter(fields -> fields[0].length() == 2 && !fields[1].isEmpty())
-      .forEach(fields -> {
-        final String iso3166CountryCode2 = fields[0];
-        final String timezoneId = fields[1];
-        final ZoneId defaultZoneId = ZoneId.of(timezoneId);
-        final Country country = Countries.lookupIso3166CountryCode2(iso3166CountryCode2);
-        final List<String> defaultTimezonesForCountry = defaultTimezones
-          .get(country);
-        defaultTimezonesForCountry.add(defaultZoneId.getId());
-      });
+    try (BufferedReader reader = new BufferedReader(new InputStreamReader(DefaultTimezones.class
+      .getClassLoader().getResourceAsStream("default.timezones.data")));)
+    {
+      reader
+        .lines()
+        .filter(line -> !line.startsWith("#"))
+        .map(line -> line.split(","))
+        .filter(fields -> fields.length == 2)
+        .filter(fields -> fields[0] != null && fields[1] != null)
+        .filter(fields -> fields[0].length() == 2 && !fields[1].isEmpty())
+        .forEach(fields -> {
+          final String iso3166CountryCode2 = fields[0];
+          final String timezoneId = fields[1];
+          final ZoneId defaultZoneId = ZoneId.of(timezoneId);
+          final Country country = Countries.lookupIso3166CountryCode2(iso3166CountryCode2);
+          final List<String> defaultTimezonesForCountry = defaultTimezones
+            .get(country);
+          defaultTimezonesForCountry.add(defaultZoneId.getId());
+        });
+    }
+    catch (final IOException e)
+    {
+      throw new IllegalStateException("Cannot read data from internal database",
+                                      e);
+    }
   }
 
   static
