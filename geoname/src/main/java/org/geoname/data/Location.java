@@ -37,6 +37,9 @@ import us.fatehi.pointlocation6709.Angle;
 import us.fatehi.pointlocation6709.Latitude;
 import us.fatehi.pointlocation6709.Longitude;
 import us.fatehi.pointlocation6709.PointLocation;
+import us.fatehi.pointlocation6709.format.FormatterException;
+import us.fatehi.pointlocation6709.format.PointLocationFormatType;
+import us.fatehi.pointlocation6709.format.PointLocationFormatter;
 
 /**
  * A location object has all the information required to define a
@@ -336,8 +339,19 @@ public final class Location
     description = descriptionBuilder.toString();
 
     final ZoneId zoneId = ZoneId.of(timeZoneId);
-    details = getPointLocation().toString() + ", "
-              + zoneId.getDisplayName(TextStyle.FULL, Locale.getDefault());
+    try
+    {
+      details = PointLocationFormatter
+        .formatPointLocation(getPointLocation(),
+                             PointLocationFormatType.HUMAN_MEDIUM)
+                + ", "
+                + zoneId.getDisplayName(TextStyle.FULL, Locale.getDefault());
+    }
+    catch (FormatterException e)
+    {
+      LOGGER.log(Level.FINE, e.getMessage(), e);
+      details = "";
+    }
   }
 
   private void validateTimeZone()
