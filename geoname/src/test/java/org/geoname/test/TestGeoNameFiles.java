@@ -28,17 +28,42 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Handler;
+import java.util.logging.Logger;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 import org.geoname.data.Location;
+import org.geoname.parser.DefaultTimezones;
 import org.geoname.parser.GNISFileParser;
 import org.geoname.parser.GNSCountryFileParser;
 import org.geoname.parser.ParserException;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class TestGeoNameFiles
 {
+
+  @BeforeClass
+  public static void turnOffLogs()
+  {
+    final Logger[] loggers = new Logger[] {
+                                            Logger
+                                              .getLogger(DefaultTimezones.class
+                                                .getName()),
+                                            Logger
+                                              .getLogger("org.geoname.parser.BaseDelimitedLocationsFileParser")
+    };
+    for (Logger logger: loggers)
+    {
+      logger.setUseParentHandlers(false);
+      final Handler[] handlers = logger.getHandlers();
+      for (final Handler handler: handlers)
+      {
+        logger.removeHandler(handler);
+      }
+    }
+  }
 
   @Test
   public void GNISUSStates()
@@ -60,18 +85,17 @@ public class TestGeoNameFiles
   private void parseGNISUSStates(final String state,
                                  final String date,
                                  final int numLocations)
-    throws ParserException, IOException
+                                   throws ParserException, IOException
   {
     final String filename = state + "_Features_" + date + ".zip";
     List<Location> locations = new ArrayList<Location>();
 
     final InputStream dataStream = this.getClass().getClassLoader()
       .getResourceAsStream(filename);
-    ZipInputStream zis = new ZipInputStream(dataStream);
+    final ZipInputStream zis = new ZipInputStream(dataStream);
     ZipEntry ze;
     if ((ze = zis.getNextEntry()) != null)
     {
-      System.out.println(ze);
       final GNISFileParser parser = new GNISFileParser(zis);
       locations = parser.parseLocations();
     }
@@ -79,21 +103,22 @@ public class TestGeoNameFiles
 
     assertEquals(String.format("Number of locations in file %s:%s",
                                filename,
-                               ze), numLocations, locations.size());
+                               ze),
+                 numLocations, locations.size());
   }
 
-  private void parseGNSCountryFile(final String filename, final int numLocations)
-    throws ParserException, IOException
+  private void parseGNSCountryFile(final String filename,
+                                   final int numLocations)
+                                     throws ParserException, IOException
   {
     List<Location> locations = new ArrayList<Location>();
 
     final InputStream dataStream = this.getClass().getClassLoader()
       .getResourceAsStream(filename);
-    ZipInputStream zis = new ZipInputStream(dataStream);
+    final ZipInputStream zis = new ZipInputStream(dataStream);
     ZipEntry ze;
     if ((ze = zis.getNextEntry()) != null)
     {
-      System.out.println(ze);
       final GNSCountryFileParser parser = new GNSCountryFileParser(zis);
       locations = parser.parseLocations();
     }
@@ -101,6 +126,7 @@ public class TestGeoNameFiles
 
     assertEquals(String.format("Number of locations in file %s:%s",
                                filename,
-                               ze), numLocations, locations.size());
+                               ze),
+                 numLocations, locations.size());
   }
 }
