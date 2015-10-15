@@ -22,7 +22,7 @@
 package org.geoname.parser;
 
 
-import static us.fatehi.pointlocation6709.format.PointLocationFormatType.HUMAN_MEDIUM;
+import static us.fatehi.pointlocation6709.format.PointLocationFormatType.MEDIUM;
 import static us.fatehi.pointlocation6709.format.PointLocationFormatter.formatPointLocation;
 
 import java.io.IOException;
@@ -55,7 +55,7 @@ public final class LocationFormatter
     try
     {
       coordinatesString = formatPointLocation(location.getPointLocation(),
-                                              HUMAN_MEDIUM);
+                                              MEDIUM);
     }
     catch (final us.fatehi.pointlocation6709.format.FormatterException e)
     {
@@ -84,7 +84,7 @@ public final class LocationFormatter
    */
   public static void formatLocations(final List<Location> locations,
                                      final Writer writer)
-    throws org.geoname.parser.FormatterException
+                                       throws org.geoname.parser.FormatterException
   {
     if (locations == null || writer == null)
     {

@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
+  <prerequisites>
+    <maven>3.3.3</maven>
+  </prerequisites>  
   <groupId>daylightchart</groupId>
   <artifactId>daylightchart-all</artifactId>
   <packaging>pom</packaging>
@@ -29,10 +32,6 @@
   <organization>
     <name>Sualeh Fatehi</name>
   </organization>
-  <scm>
-    <connection>scm:svn:https://daylightchart.svn.sourceforge.net/svnroot/daylightchart</connection>
-    <url>https://daylightchart.svn.sourceforge.net/svnroot/daylightchart/</url>
-  </scm>
   <modules>
     <module>geoname</module>
     <module>daylightchart</module>
@@ -41,7 +40,7 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.11</version>
+      <version>4.12</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
@@ -50,7 +49,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.1</version>
+        <version>3.3</version>
         <configuration>
           <source>8</source>
           <target>8</target>
@@ -59,7 +58,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-site-plugin</artifactId>
-        <version>3.3</version>
+        <version>3.4</version>
         <executions>
           <execution>
             <id>site</id>

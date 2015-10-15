@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>geoname</name>
+	<name>Geographical Names</name>
 	<comment>Geographical Names is an LGPL licensed Java library that can parse geographical data files.</comment>
 	<projects>
 	</projects>
