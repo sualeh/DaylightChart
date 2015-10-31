@@ -22,11 +22,15 @@
 package daylightchart.daylightchart.calculation;
 
 
-import java.io.File;
-import java.io.FileWriter;
+import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
+import static java.nio.file.StandardOpenOption.WRITE;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Writer;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -44,10 +48,10 @@ import org.geoname.data.Location;
 import org.geoname.parser.DefaultTimezones;
 import org.geoname.parser.LocationsListParser;
 
-import us.fatehi.calculation.SunPositionAlgorithm;
-import us.fatehi.calculation.SunPositionAlgorithmFactory;
 import daylightchart.daylightchart.chart.TimeZoneOption;
 import daylightchart.options.Options;
+import us.fatehi.calculation.SunPositionAlgorithm;
+import us.fatehi.calculation.SunPositionAlgorithmFactory;
 
 /**
  * Calculator for sunrise and sunset times for a year.
@@ -57,8 +61,8 @@ import daylightchart.options.Options;
 public final class RiseSetUtility
 {
 
-  private static final Logger LOGGER = Logger.getLogger(RiseSetUtility.class
-    .getName());
+  private static final Logger LOGGER = Logger
+    .getLogger(RiseSetUtility.class.getName());
 
   private static final SunPositionAlgorithm sunAlgorithm = SunPositionAlgorithmFactory
     .getInstance();
@@ -90,8 +94,8 @@ public final class RiseSetUtility
       }
       else
       {
-        timeZoneId = DefaultTimezones.createGMTTimeZoneId(location
-          .getPointLocation().getLongitude());
+        timeZoneId = DefaultTimezones
+          .createGMTTimeZoneId(location.getPointLocation().getLongitude());
       }
       zoneId = ZoneId.of(timeZoneId);
     }
@@ -99,8 +103,8 @@ public final class RiseSetUtility
     {
       zoneId = ZoneId.systemDefault();
     }
-    final boolean timeZoneUsesDaylightTime = !zoneId.getRules().getTransitionRules()
-      .isEmpty();
+    final boolean timeZoneUsesDaylightTime = !zoneId.getRules()
+      .getTransitionRules().isEmpty();
     final boolean useDaylightTime = timeZoneUsesDaylightTime
                                     && timeZoneOption != TimeZoneOption.USE_LOCAL_TIME;
     boolean wasDaylightSavings = false;
@@ -170,8 +174,8 @@ public final class RiseSetUtility
   {
     final String locationString = args[0];
     final Location location = LocationsListParser.parseLocation(locationString);
-    final File file = RiseSetUtility.writeCalculationsToFile(location);
-    System.out.println("Calculations written to " + file.getAbsolutePath());
+    final Path path = RiseSetUtility.writeCalculationsToFile(location);
+    System.out.println("Calculations written to " + path);
   }
 
   /**
@@ -181,19 +185,23 @@ public final class RiseSetUtility
    *        Location
    * @return File that was written
    */
-  public static File writeCalculationsToFile(final Location location)
+  public static Path writeCalculationsToFile(final Location location)
   {
     try
     {
-      final File file = new File(location.getDescription() + ".txt");
-      final FileWriter writer = new FileWriter(file);
+      final Path file = Paths.get(location.getDescription() + ".txt")
+        .toAbsolutePath();
+      final Writer writer = Files.newBufferedWriter(file,
+                                                    WRITE,
+                                                    TRUNCATE_EXISTING);
       writeCalculations(writer, location);
       return file;
     }
     catch (final IOException e)
     {
-      LOGGER.log(Level.WARNING, "Cannot write calculations for location "
-                                + location, e);
+      LOGGER.log(Level.WARNING,
+                 "Cannot write calculations for location " + location,
+                 e);
       return null;
     }
   }
@@ -209,9 +217,9 @@ public final class RiseSetUtility
     }
     else
     {
-      bands = RiseSetUtility
-        .createDaylightBands(riseSetYear.getRiseSets(daylightSavingsMode
-          .isAdjustedForDaylightSavings()), daylightSavingsMode);
+      bands = RiseSetUtility.createDaylightBands(riseSetYear
+        .getRiseSets(daylightSavingsMode.isAdjustedForDaylightSavings()),
+                                                 daylightSavingsMode);
     }
 
     riseSetYear.addDaylightBands(bands);
@@ -273,8 +281,8 @@ public final class RiseSetUtility
         if (riseSetYesterday != null
             && riseSetYesterday.getRiseSetType() == RiseSetType.all_daylight)
         {
-          wrapBand.add(riseSets[1].withNewRiseSetDate(riseSetYesterday
-            .getDate()));
+          wrapBand
+            .add(riseSets[1].withNewRiseSetDate(riseSetYesterday.getDate()));
         }
       }
       else if (riseSets.length == 1)
@@ -342,26 +350,28 @@ public final class RiseSetUtility
     if (riseSet.getRiseSetType() != RiseSetType.partial && sunset.getHour() < 9)
     {
       return new RiseSet[] {
-          riseSet.withNewRiseSetTimes(sunrise.toLocalTime(),
-                                      RiseSet.JUST_BEFORE_MIDNIGHT),
-          riseSet.withNewRiseSetTimes(RiseSet.JUST_AFTER_MIDNIGHT,
-                                      sunset.toLocalTime())
+                             riseSet.withNewRiseSetTimes(sunrise
+                               .toLocalTime(), RiseSet.JUST_BEFORE_MIDNIGHT),
+                             riseSet.withNewRiseSetTimes(
+                                                         RiseSet.JUST_AFTER_MIDNIGHT,
+                                                         sunset.toLocalTime())
       };
     }
     else if (riseSet.getRiseSetType() != RiseSetType.partial
              && sunrise.getHour() > 15)
     {
       return new RiseSet[] {
-          riseSet.withNewRiseSetTimes(RiseSet.JUST_AFTER_MIDNIGHT,
-                                      sunset.toLocalTime()),
-          riseSet.withNewRiseSetTimes(sunrise.toLocalTime(),
-                                      RiseSet.JUST_BEFORE_MIDNIGHT)
+                             riseSet.withNewRiseSetTimes(
+                                                         RiseSet.JUST_AFTER_MIDNIGHT,
+                                                         sunset.toLocalTime()),
+                             riseSet.withNewRiseSetTimes(sunrise
+                               .toLocalTime(), RiseSet.JUST_BEFORE_MIDNIGHT)
       };
     }
     else
     {
       return new RiseSet[] {
-        riseSet
+                             riseSet
       };
     }
   }
@@ -375,17 +385,18 @@ public final class RiseSetUtility
   {
     if (location != null)
     {
-      sunAlgorithm.setLocation(location.getDescription(), location
-        .getPointLocation().getLatitude().getDegrees(), location
-        .getPointLocation().getLongitude().getDegrees());
+      sunAlgorithm
+        .setLocation(location.getDescription(),
+                     location.getPointLocation().getLatitude().getDegrees(),
+                     location.getPointLocation().getLongitude().getDegrees());
       sunAlgorithm.setTimeZoneOffset(DefaultTimezones
         .getStandardTimeZoneOffsetHours(location.getTimeZoneId()));
     }
     sunAlgorithm.setDate(date.getYear(),
                          date.getMonthValue(),
                          date.getDayOfMonth());
-    final double[] sunriseSunset = sunAlgorithm.calcRiseSet(twilight
-      .getHorizon());
+    final double[] sunriseSunset = sunAlgorithm
+      .calcRiseSet(twilight.getHorizon());
 
     if (useDaylightTime && inDaylightSavings)
     {
@@ -401,7 +412,8 @@ public final class RiseSetUtility
 
     final RawRiseSet riseSet = new RawRiseSet(location,
                                               date,
-                                              (useDaylightTime && inDaylightSavings),
+                                              (useDaylightTime
+                                               && inDaylightSavings),
                                               sunriseSunset[0],
                                               sunriseSunset[1]);
     return riseSet;
