@@ -23,9 +23,9 @@ package daylightchart.daylightchart.layout;
 
 
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.time.Year;
 import java.time.format.DateTimeFormatter;
@@ -132,7 +132,7 @@ public class DaylightChartReport
    * @param chartFileType
    *        Type of chart file.
    */
-  public void write(final File file, final ChartFileType chartFileType)
+  public void write(final Path file, final ChartFileType chartFileType)
   {
     if (chartFileType == null)
     {
@@ -154,7 +154,7 @@ public class DaylightChartReport
         case jpg:
           final BufferedImage image = chart
             .createBufferedImage(842, 595, BufferedImage.TYPE_INT_RGB, null);
-          ImageIO.write(image, chartFileType.name(), file);
+          ImageIO.write(image, chartFileType.name(), file.toFile());
           break;
         default:
           throw new IllegalArgumentException("Unknown chart file type");
@@ -162,8 +162,9 @@ public class DaylightChartReport
     }
     catch (final IOException e)
     {
-      LOGGER.log(Level.WARNING, "Error generating a report of type "
-                                + chartFileType, e);
+      LOGGER.log(Level.WARNING,
+                 "Error generating a report of type " + chartFileType,
+                 e);
     }
   }
 

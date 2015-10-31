@@ -70,10 +70,7 @@ public final class SaveChartAction
     public void actionPerformed(final ActionEvent actionevent)
     {
       final DaylightChartReport daylightChartReport = new DaylightChartReport(mainWindow
-                                                                                .getSelectedLocation(),
-                                                                              UserPreferences
-                                                                                .optionsFile()
-                                                                                .getData());
+        .getSelectedLocation(), UserPreferences.optionsFile().getData());
       final List<ExtensionFileFilter<ChartFileType>> fileFilters = new ArrayList<ExtensionFileFilter<ChartFileType>>();
       for (final ChartFileType chartFileType: ChartFileType.values())
       {
@@ -94,19 +91,21 @@ public final class SaveChartAction
       {
         try
         {
-          daylightChartReport.write(selectedFile.getFile(),
+          daylightChartReport.write(selectedFile.getFile().toPath(),
                                     selectedFile.getFileType());
         }
         catch (final Exception e)
         {
-          LOGGER.log(Level.WARNING, Messages
-            .getString("DaylightChartGui.Message.Error.CannotSaveFile"), e); //$NON-NLS-1$
+          LOGGER.log(Level.WARNING,
+                     Messages
+                       .getString("DaylightChartGui.Message.Error.CannotSaveFile"), //$NON-NLS-1$
+                     e);
           JOptionPane
             .showMessageDialog(mainWindow,
                                Messages
                                  .getString("DaylightChartGui.Message.Error.CannotSaveFile") //$NON-NLS-1$
-                                   + "\n" //$NON-NLS-1$
-                                   + selectedFile,
+                                           + "\n" //$NON-NLS-1$
+                                           + selectedFile,
                                Messages
                                  .getString("DaylightChartGui.Message.Error.CannotSaveFile"), //$NON-NLS-1$
                                JOptionPane.ERROR_MESSAGE);
@@ -117,8 +116,8 @@ public final class SaveChartAction
 
   private static final long serialVersionUID = 1173685118494564955L;
 
-  private static final Logger LOGGER = Logger.getLogger(SaveChartAction.class
-    .getName());
+  private static final Logger LOGGER = Logger
+    .getLogger(SaveChartAction.class.getName());
 
   /**
    * Saves locations into a file.
@@ -129,7 +128,7 @@ public final class SaveChartAction
   public SaveChartAction(final DaylightChartGui mainWindow)
   {
 
-    super(Messages.getString("DaylightChartGui.Menu.File.SaveChart"), //$NON-NLS-1$ 
+    super(Messages.getString("DaylightChartGui.Menu.File.SaveChart"), //$NON-NLS-1$
           "/icons/save.gif" //$NON-NLS-1$
     );
     setShortcutKey(KeyStroke.getKeyStroke("control S"));

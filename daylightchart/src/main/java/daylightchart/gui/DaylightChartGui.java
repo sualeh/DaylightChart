@@ -25,8 +25,9 @@ package daylightchart.gui;
 import java.awt.BorderLayout;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.io.File;
 import java.net.MalformedURLException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -77,8 +78,8 @@ public final class DaylightChartGui
 
   private final static long serialVersionUID = 3760840181833283637L;
 
-  private static final Logger LOGGER = Logger.getLogger(DaylightChartGui.class
-    .getName());
+  private static final Logger LOGGER = Logger
+    .getLogger(DaylightChartGui.class.getName());
 
   private final LocationsList locationsList;
   private JMenu recentLocationsMenu;
@@ -109,8 +110,9 @@ public final class DaylightChartGui
 
     this.slimUi = slimUi;
 
-    setIconImage(new ImageIcon(DaylightChartGui.class.getResource("/daylightchart.png")) //$NON-NLS-1$
-      .getImage());
+    setIconImage(new ImageIcon(DaylightChartGui.class
+      .getResource("/daylightchart.png")) //$NON-NLS-1$
+        .getImage());
 
     setTitle("Daylight Chart"); //$NON-NLS-1$
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -168,7 +170,8 @@ public final class DaylightChartGui
                                                                               UserPreferences
                                                                                 .optionsFile()
                                                                                 .getData());
-      final ChartPanel chartPanel = new ChartPanel(daylightChartReport.getChart());
+      final ChartPanel chartPanel = new ChartPanel(daylightChartReport
+        .getChart());
       chartPanel.setPreferredSize(ChartConfiguration.chartDimension);
       setContentPane(chartPanel);
     }
@@ -204,13 +207,13 @@ public final class DaylightChartGui
                                                                               .getData());
     if (slimUi)
     {
-      final File reportFile = new File(UserPreferences.getScratchDirectory(),
-                                       daylightChartReport
-                                         .getReportFileName(ChartFileType.png));
+      final Path reportFile = Paths
+        .get(UserPreferences.getScratchDirectory().getAbsolutePath(),
+             daylightChartReport.getReportFileName(ChartFileType.png));
       daylightChartReport.write(reportFile, ChartFileType.png);
       try
       {
-        final String url = reportFile.toURI().toURL().toString();
+        final String url = reportFile.toUri().toURL().toString();
         LOGGER.log(Level.FINE, "Opening URL " + url);
         BareBonesBrowserLaunch.openURL(url);
       }
@@ -226,15 +229,15 @@ public final class DaylightChartGui
 
     // Add to recent locations
     UserPreferences.recentLocationsFile().add(location);
-    final List<Location> recentLocations = UserPreferences
-      .recentLocationsFile().getData();
+    final List<Location> recentLocations = UserPreferences.recentLocationsFile()
+      .getData();
     recentLocationsMenu.removeAll();
     for (Location recentLocation: recentLocations)
     {
-      recentLocationsMenu.add(new OpenLocationTabAction(this,
-                                                        recentLocation,
-                                                        recentLocationsMenu
-                                                          .getItemCount()));
+      recentLocationsMenu
+        .add(new OpenLocationTabAction(this,
+                                       recentLocation,
+                                       recentLocationsMenu.getItemCount()));
     }
   }
 
@@ -282,7 +285,8 @@ public final class DaylightChartGui
    * @see daylightchart.gui.LocationOperations#replaceLocation(org.geoname.data.Location,
    *      org.geoname.data.Location)
    */
-  public void replaceLocation(Location selectedLocation, Location editedLocation)
+  public void replaceLocation(Location selectedLocation,
+                              Location editedLocation)
   {
     locationsList.replaceLocation(selectedLocation, editedLocation);
   }
@@ -313,7 +317,8 @@ public final class DaylightChartGui
 
   private void createActions(final JMenuBar menuBar, final JToolBar toolBar)
   {
-    final JMenu menu = new JMenu(Messages.getString("DaylightChartGui.Menu.Actions")); //$NON-NLS-1$
+    final JMenu menu = new JMenu(Messages
+      .getString("DaylightChartGui.Menu.Actions")); //$NON-NLS-1$
     menu.setMnemonic('A');
 
     for (final LocationsListOperation operation: LocationsListOperation
@@ -345,10 +350,12 @@ public final class DaylightChartGui
                                            Messages
                                              .getString("DaylightChartGui.Menu.File.Exit")); //$NON-NLS-1$
 
-    final JMenu menu = new JMenu(Messages.getString("DaylightChartGui.Menu.File")); //$NON-NLS-1$
+    final JMenu menu = new JMenu(Messages
+      .getString("DaylightChartGui.Menu.File")); //$NON-NLS-1$
     menu.setMnemonic('F');
 
-    recentLocationsMenu = new JMenu(Messages.getString("DaylightChartGui.Menu.File.RecentLocations")); //$NON-NLS-1$
+    recentLocationsMenu = new JMenu(Messages
+      .getString("DaylightChartGui.Menu.File.RecentLocations")); //$NON-NLS-1$
     menu.setMnemonic('R');
 
     menu.add(openLocationsFile);
@@ -381,7 +388,8 @@ public final class DaylightChartGui
     final GuiAction onlineHelp = new OnlineHelpAction();
     final GuiAction about = new AboutAction(DaylightChartGui.this);
 
-    final JMenu menuHelp = new JMenu(Messages.getString("DaylightChartGui.Menu.Help")); //$NON-NLS-1$
+    final JMenu menuHelp = new JMenu(Messages
+      .getString("DaylightChartGui.Menu.Help")); //$NON-NLS-1$
     menuHelp.setMnemonic('H');
 
     menuHelp.add(onlineHelp);
@@ -396,7 +404,8 @@ public final class DaylightChartGui
   private void createOptionsMenu(final JMenuBar menuBar, final JToolBar toolBar)
   {
 
-    final JMenu menu = new JMenu(Messages.getString("DaylightChartGui.Menu.Options")); //$NON-NLS-1$
+    final JMenu menu = new JMenu(Messages
+      .getString("DaylightChartGui.Menu.Options")); //$NON-NLS-1$
     menu.setMnemonic('O');
 
     final GuiAction options = new OptionsAction(this);
@@ -410,7 +419,8 @@ public final class DaylightChartGui
 
     menu.addSeparator();
 
-    final JCheckBoxMenuItem slimUiMenuItem = new JCheckBoxMenuItem(Messages.getString("DaylightChartGui.Menu.Options.SlimUi")); //$NON-NLS-1$
+    final JCheckBoxMenuItem slimUiMenuItem = new JCheckBoxMenuItem(Messages
+      .getString("DaylightChartGui.Menu.Options.SlimUi")); //$NON-NLS-1$
     slimUiMenuItem.setState(isSlimUi());
     slimUiMenuItem.addItemListener(new ItemListener()
     {
