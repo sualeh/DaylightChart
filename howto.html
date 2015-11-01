@@ -8,7 +8,7 @@
 
 	<head>
 		<meta charset="UTF-8" />
-		<title>Daylight Chart - Daylight Chart</title>
+		<title>Daylight Chart - Daylight Chart - How-to</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta name="description" content="" />
 		<meta http-equiv="content-language" content="en" />
@@ -42,7 +42,7 @@
 		  })();</script>
 	</head>
 
-	<body class="page-index project-daylightchart" data-spy="scroll" data-offset="60" data-target="#toc-scroll-target">
+	<body class="page-howto project-daylightchart" data-spy="scroll" data-offset="60" data-target="#toc-scroll-target">
 
 		<div class="navbar navbar-fixed-top">
 			<div class="navbar-inner">
@@ -60,8 +60,8 @@
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Daylight Chart <b class="caret"></b></a>
 								<ul class="dropdown-menu">
 									<li ><a href="readme.html" title="Getting Started">Getting Started</a></li>
-									<li ><a href="howto.html" title="How-to">How-to</a></li>
-									<li class="active"><a href="" title="About Daylight Chart">About Daylight Chart</a></li>
+									<li class="active"><a href="" title="How-to">How-to</a></li>
+									<li ><a href="index.html" title="About Daylight Chart">About Daylight Chart</a></li>
 									<li ><a href="https://github.com/sualeh/DaylightChart/releases" title="Download" class="externalLink">Download</a></li>
 									<li ><a href="changes-report.html" title="Change History">Change History</a></li>
 									<li ><a href="https://github.com/sualeh/DaylightChart" title="Source Code" class="externalLink">Source Code</a></li>
@@ -105,10 +105,19 @@
 		<div class="span12">
 			<div class="body-content">
 <div class="page-header">
- <h1>Daylight Chart</h1>
+ <h1>Daylight Chart - How-to</h1>
 </div> 
-<p>Daylight Chart is a program to display sunrise and sunset charts for a whole year at any location in the world. Charts can be customized, saved, and printed.</p> 
-<p><img src="screenshot.jpg" alt="Screenshot" /></p>
+<div class="section"> 
+ <h2 id="Save_and_Load_Locations">Save and Load Locations</h2> 
+ <p>Daylight Chart has an option to save the locations list. This list will be saved in the Daylight Chart Locations List Format. It can be edited in any standard text editor, and loaded back into Daylight Chart.</p> 
+ <p>In addition to the Daylight Chart Locations List Format, the Daylight Chart program also supports loading of locations in the <a class="externalLink" href="http://geonames.nga.mil/gns/html/namefiles.html">GNS Country Files</a> format. However, the data in the GNS Country Files does not contain daylight savings time information, so Daylight Chart will make a best guess of the time zone.</p> 
+ <p>The Daylight Chart program can load populated places in the USA in the <a class="externalLink" href="http://geonames.usgs.gov/domestic/download_data.htm">GNIS file</a> format. The data in the GNIS files does not contain daylight savings time information, so Daylight Chart will make a best guess of the time zone. </p> 
+</div> 
+<div class="section"> 
+ <h2 id="Import_and_Export_Reports">Import and Export Reports</h2> 
+ <p>Daylight Chart has an option to import and export reports. Report definitions are used to layout the Daylight Chart chart and data for the Adobe Acrobat PDF and HTML file formats. </p> 
+ <p>To customize a report, first export the report definition to a file. Then, modify the report definition using <a class="externalLink" href="http://community.jaspersoft.com/project/ireport-designer">iReport Designer</a>. Next, you can import the modified report definition. The next time that you save the Daylight Chart chart in the the Adobe Acrobat PDF or HTML file formats, it will use the new report. </p> 
+</div>
 			</div>
 		</div>
 	</div>
@@ -127,11 +136,11 @@
 						<li >
 							<a href="readme.html" title="Getting Started">Getting Started</a>
 						</li>
-						<li >
-							<a href="howto.html" title="How-to">How-to</a>
-						</li>
 						<li class="active">
-							<a href="#" title="About Daylight Chart">About Daylight Chart</a>
+							<a href="#" title="How-to">How-to</a>
+						</li>
+						<li >
+							<a href="index.html" title="About Daylight Chart">About Daylight Chart</a>
 						</li>
 						<li >
 							<a href="https://github.com/sualeh/DaylightChart/releases" title="Download" class="externalLink">Download</a>
