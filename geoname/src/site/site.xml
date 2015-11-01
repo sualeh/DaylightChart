@@ -8,7 +8,7 @@
   </bannerLeft>
   <bannerRight>
     <name>Geographical Names</name>
-    <href>http://sourceforge.net/projects/daylightchart</href>
+    <href>http://sualeh.github.io/DaylightChart</href>
   </bannerRight>
   <body>
     <links>
@@ -40,7 +40,7 @@
         href="http://sourceforge.net/svn/?group_id=193171" />
       <item
         name="Project Page on SourceForge"
-        href="http://sourceforge.net/projects/daylightchart/" />
+        href="http://sualeh.github.io/DaylightChart/" />
     </menu>
   </body>
 </project>

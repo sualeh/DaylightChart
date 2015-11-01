@@ -1,7 +1,7 @@
 /* 
  * 
  * Daylight Chart
- * http://sourceforge.net/projects/daylightchart
+ * http://sualeh.github.io/DaylightChart
  * Copyright (c) 2007-2015, Sualeh Fatehi.
  * 
  * This library is free software; you can redistribute it and/or modify it under the terms

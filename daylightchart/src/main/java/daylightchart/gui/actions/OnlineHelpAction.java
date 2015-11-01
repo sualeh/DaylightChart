@@ -1,7 +1,7 @@
 /*
  *
  * Daylight Chart
- * http://sourceforge.net/projects/daylightchart
+ * http://sualeh.github.io/DaylightChart
  * Copyright (c) 2007-2015, Sualeh Fatehi.
  *
  * This program is free software; you can redistribute it and/or
@@ -43,7 +43,7 @@ public final class OnlineHelpAction
     super(Messages.getString("DaylightChartGui.Menu.Help.Online"), //$NON-NLS-1$
           "/icons/help.gif", //$NON-NLS-1$
           "F1", //$NON-NLS-1$
-          "http://daylightchart.sourceforge.net/howto.html" //$NON-NLS-1$
+          "http://sualeh.github.io/DaylightChart/howto.html" //$NON-NLS-1$
     );
   }
 
