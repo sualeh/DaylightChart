@@ -375,7 +375,6 @@ public final class DaylightChartGui
       menu.add(printChart);
     }
     menu.addSeparator();
-    menu.addSeparator();
     menu.add(recentLocationsMenu);
     menu.addSeparator();
     menu.add(exit);

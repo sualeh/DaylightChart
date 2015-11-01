@@ -30,6 +30,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -134,7 +135,7 @@ abstract class BaseLocationsDataFile
   @Override
   protected final void load(final InputStream... inputs)
   {
-    data = new ArrayList<Location>();
+    data = new HashSet<Location>();
     try
     {
       for (final InputStream inputStream: inputs)
@@ -186,7 +187,7 @@ abstract class BaseLocationsDataFile
       }
     }
 
-    if (data.size() == 0)
+    if (data.isEmpty())
     {
       data = null;
     }
