@@ -1,34 +1,33 @@
-/* 
- * 
+/*
+ *
  * Daylight Chart
  * http://sourceforge.net/projects/daylightchart
  * Copyright (c) 2007-2015, Sualeh Fatehi.
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- * 
+ *
  */
 package daylightchart.options;
 
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
 import java.io.Writer;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -41,23 +40,23 @@ import daylightchart.options.chart.ChartOptions;
 
 /**
  * Represents a location file, with data.
- * 
+ *
  * @author sfatehi
  */
 public final class OptionsDataFile
   extends BaseDataFile<OptionsFileType, Options>
 {
 
-  private static final Logger LOGGER = Logger.getLogger(OptionsDataFile.class
-    .getName());
+  private static final Logger LOGGER = Logger
+    .getLogger(OptionsDataFile.class.getName());
 
   /**
    * Constructor.
-   * 
+   *
    * @param settingsDirectory
    *        Settings directory
    */
-  public OptionsDataFile(final File settingsDirectory)
+  public OptionsDataFile(final Path settingsDirectory)
   {
     super(settingsDirectory, "options.xml", new OptionsFileType());
   }
@@ -65,6 +64,7 @@ public final class OptionsDataFile
   /**
    * Loads options from a file.
    */
+  @Override
   protected void load()
   {
     if (!exists())
@@ -72,13 +72,13 @@ public final class OptionsDataFile
       LOGGER.log(Level.WARNING, "No options file provided");
       return;
     }
-    FileInputStream input;
-    final File file = getFile();
+    InputStream input;
+    final Path file = getFile();
     try
     {
-      input = new FileInputStream(file);
+      input = Files.newInputStream(file);
     }
-    catch (final FileNotFoundException e)
+    catch (final IOException e)
     {
       LOGGER.log(Level.WARNING, "Could not open options file, " + file, e);
       return;
@@ -87,6 +87,7 @@ public final class OptionsDataFile
     load(input);
   }
 
+  @Override
   protected void load(final InputStream... input)
   {
     if (input == null || input.length == 0)
@@ -122,6 +123,7 @@ public final class OptionsDataFile
     }
   }
 
+  @Override
   protected void loadWithFallback()
   {
     // 1. Load from file
@@ -139,12 +141,13 @@ public final class OptionsDataFile
 
   /**
    * Saves options to a file.
-   * 
+   *
    * @param file
    *        File to write
    * @param options
    *        Options
    */
+  @Override
   protected void save()
   {
     try

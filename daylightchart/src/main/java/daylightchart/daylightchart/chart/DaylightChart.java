@@ -72,8 +72,8 @@ public class DaylightChart
 
   private static final long serialVersionUID = 1223227216177061127L;
 
-  private static final Logger LOGGER = Logger.getLogger(DaylightChart.class
-    .getName());
+  private static final Logger LOGGER = Logger
+    .getLogger(DaylightChart.class.getName());
 
   private final RiseSetYearData riseSetData;
 
@@ -84,7 +84,8 @@ public class DaylightChart
   {
     this(RiseSetUtility.createRiseSetYear(null,
                                           Year.now().getValue(),
-                                          new Options()), new Options());
+                                          new Options()),
+         new Options());
     setTitle("");
   }
 
@@ -174,8 +175,8 @@ public class DaylightChart
       final DaylightChartBand chartBand = new DaylightChartBand(band);
       LOGGER.log(Level.FINE, band.toString());
       final int currentDatasetNumber = plot.getDatasetCount();
-      plot
-        .setDataset(currentDatasetNumber, chartBand.getTimeSeriesCollection());
+      plot.setDataset(currentDatasetNumber,
+                      chartBand.getTimeSeriesCollection());
       plot.setRenderer(currentDatasetNumber, chartBand.getRenderer());
     }
   }

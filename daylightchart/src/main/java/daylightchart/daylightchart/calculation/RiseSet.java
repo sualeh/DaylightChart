@@ -1,23 +1,23 @@
-/* 
- * 
+/*
+ *
  * Daylight Chart
  * http://sourceforge.net/projects/daylightchart
  * Copyright (c) 2007-2015, Sualeh Fatehi.
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- * 
+ *
  */
 package daylightchart.daylightchart.calculation;
 
@@ -37,7 +37,7 @@ import org.geoname.parser.Utility;
  * Sunrise and sunset at a given location, and a given date. RiseSet is
  * calculated as part of the rise/ set year, and then may be split for
  * creating the daylight bands.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public final class RiseSet
@@ -67,8 +67,8 @@ public final class RiseSet
     final double sunriseRaw = rawRiseSet.getSunrise();
     final double sunsetRaw = rawRiseSet.getSunset();
 
-    boolean hasSunrise = !Double.isInfinite(sunriseRaw);
-    boolean hasSunset = !Double.isInfinite(sunsetRaw);
+    final boolean hasSunrise = !Double.isInfinite(sunriseRaw);
+    final boolean hasSunset = !Double.isInfinite(sunsetRaw);
     if (sunriseRaw == Double.POSITIVE_INFINITY
         && sunsetRaw == Double.POSITIVE_INFINITY)
     {
@@ -135,7 +135,7 @@ public final class RiseSet
     if (sunrise.equals(JUST_AFTER_MIDNIGHT)
         && !sunset.equals(JUST_BEFORE_MIDNIGHT)
         || !sunrise.equals(JUST_AFTER_MIDNIGHT)
-        && sunset.equals(JUST_BEFORE_MIDNIGHT))
+           && sunset.equals(JUST_BEFORE_MIDNIGHT))
     {
       riseSetType = RiseSetType.split;
     }
@@ -155,9 +155,10 @@ public final class RiseSet
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see java.lang.Comparable#compareTo(java.lang.Object)
    */
+  @Override
   public int compareTo(final RiseSet o)
   {
     return date.compareTo(o.getDate());
@@ -165,7 +166,7 @@ public final class RiseSet
 
   /**
    * Date.
-   * 
+   *
    * @return Date
    */
   public LocalDate getDate()
@@ -175,7 +176,7 @@ public final class RiseSet
 
   /**
    * Location.
-   * 
+   *
    * @return Location
    */
   public Location getLocation()
@@ -185,7 +186,7 @@ public final class RiseSet
 
   /**
    * Sunrise time.
-   * 
+   *
    * @return Sunrise time
    */
   public LocalDateTime getSunrise()
@@ -195,7 +196,7 @@ public final class RiseSet
 
   /**
    * Sunset time.
-   * 
+   *
    * @return Sunset time
    */
   public LocalDateTime getSunset()
@@ -205,7 +206,7 @@ public final class RiseSet
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see java.lang.Object#toString()
    */
   @Override
@@ -218,21 +219,20 @@ public final class RiseSet
     else
     {
       final StringWriter writer = new StringWriter();
-      new PrintWriter(writer, true).printf("%s, %s: (%s) sunrise %s sunset %s",
-                                           location.getDescription(),
-                                           date,
-                                           riseSetType,
-                                           sunrise.format(DateTimeFormatter
-                                             .ofPattern("HH:mm:ss")),
-                                           sunset.format(DateTimeFormatter
-                                             .ofPattern("HH:mm:ss")));
+      new PrintWriter(writer, true)
+        .printf("%s, %s: (%s) sunrise %s sunset %s",
+                location.getDescription(),
+                date,
+                riseSetType,
+                sunrise.format(DateTimeFormatter.ofPattern("HH:mm:ss")),
+                sunset.format(DateTimeFormatter.ofPattern("HH:mm:ss")));
       return writer.toString();
     }
   }
 
   /**
    * Gets the rise/ set type.
-   * 
+   *
    * @return Rise/ set type
    */
   RiseSetType getRiseSetType()
@@ -242,7 +242,7 @@ public final class RiseSet
 
   /**
    * Whether this rise/ set pair is using daylight savings time.
-   * 
+   *
    * @return is in daylight savings time
    */
   boolean isInDaylightSavings()
@@ -253,7 +253,7 @@ public final class RiseSet
   /**
    * Gets a copy of of this rise/ set, with times adjusted for daylight
    * saving time.
-   * 
+   *
    * @param adjustedForDaylightSavings
    *        Whether to adjust the times.
    * @return Adjusted copy
@@ -276,7 +276,7 @@ public final class RiseSet
 
   /**
    * Gets a copy of this rise/ set, with different date times.
-   * 
+   *
    * @param sunrise
    *        Sunrise
    * @param sunset
@@ -291,7 +291,7 @@ public final class RiseSet
   /**
    * Gets a copy of this rise/ set, with different sunrise and sunset
    * times.
-   * 
+   *
    * @param sunrise
    *        Sunrise
    * @param sunset

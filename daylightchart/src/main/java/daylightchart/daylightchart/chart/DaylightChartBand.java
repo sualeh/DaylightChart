@@ -20,7 +20,7 @@ import daylightchart.daylightchart.calculation.RiseSet;
 
 /**
  * Adapter for daylight bands to add charting functionality.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public class DaylightChartBand
@@ -39,7 +39,7 @@ public class DaylightChartBand
 
   /**
    * Gets the chart renderer for the daylight band.
-   * 
+   *
    * @return Chart renderer
    */
   public XYItemRenderer getRenderer()
@@ -49,7 +49,7 @@ public class DaylightChartBand
 
   /**
    * Get the band as a collection.
-   * 
+   *
    * @return Time series collection
    */
   public TimeSeriesCollection getTimeSeriesCollection()
@@ -94,7 +94,7 @@ public class DaylightChartBand
 
   /**
    * Gets the chart renderer for the daylight band.
-   * 
+   *
    * @return Chart renderer
    */
   private XYItemRenderer getRenderer(final DaylightBandType daylightBandType)
@@ -120,7 +120,7 @@ public class DaylightChartBand
 
   /**
    * A utility method for creating a value based on a date.
-   * 
+   *
    * @param date
    *        Date
    */

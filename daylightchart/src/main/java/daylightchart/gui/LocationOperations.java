@@ -7,7 +7,7 @@ import org.geoname.data.Location;
 
 /**
  * User interface operations on the list of locations.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public interface LocationOperations
@@ -15,7 +15,7 @@ public interface LocationOperations
 
   /**
    * Add a location to the list, in sorted order.
-   * 
+   *
    * @param location
    *        Location to add
    */
@@ -23,21 +23,21 @@ public interface LocationOperations
 
   /**
    * Gets all locations in the list.
-   * 
+   *
    * @return Locations list.
    */
   List<Location> getLocations();
 
   /**
    * Get the currently selected location.
-   * 
+   *
    * @return Currently selected location.
    */
   Location getSelectedLocation();
 
   /**
    * Removes the specified location.
-   * 
+   *
    * @param location
    *        Location
    */
@@ -45,7 +45,7 @@ public interface LocationOperations
 
   /**
    * Replaces a location on the list with another.
-   * 
+   *
    * @param location
    *        Location to replace
    * @param newLocation
@@ -55,7 +55,7 @@ public interface LocationOperations
 
   /**
    * Set the locations list.
-   * 
+   *
    * @param locations
    *        Locations list.
    */

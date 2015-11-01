@@ -1,23 +1,23 @@
-/* 
- * 
+/*
+ *
  * Daylight Chart
  * http://sourceforge.net/projects/daylightchart
  * Copyright (c) 2007-2015, Sualeh Fatehi.
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- * 
+ *
  */
 package daylightchart.gui;
 
@@ -49,7 +49,7 @@ import daylightchart.options.UserPreferences;
 
 /**
  * Locations list component.
- * 
+ *
  * @author Sualeh Fatehi
  */
 class LocationsList
@@ -65,7 +65,7 @@ class LocationsList
 
   /**
    * Create a new locations list component.
-   * 
+   *
    * @param mainWindow
    *        Main window.
    */
@@ -126,14 +126,17 @@ class LocationsList
     });
     locationsList.addKeyListener(new KeyListener()
     {
+      @Override
       public void keyPressed(final KeyEvent e)
       {
       }
 
+      @Override
       public void keyReleased(final KeyEvent e)
       {
       }
 
+      @Override
       public void keyTyped(final KeyEvent e)
       {
         if (e.getKeyChar() == KeyEvent.VK_ENTER)
@@ -145,16 +148,18 @@ class LocationsList
     });
 
     final List<Location> locations = UserPreferences.locationsFile().getData();
-    Collections.sort(locations, UserPreferences.optionsFile().getData()
-      .getLocationsSortOrder());
+    Collections
+      .sort(locations,
+            UserPreferences.optionsFile().getData().getLocationsSortOrder());
     setLocations(locations);
   }
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see daylightchart.gui.LocationOperations#addLocation(org.geoname.data.Location)
    */
+  @Override
   public void addLocation(final Location location)
   {
     if (location != null)
@@ -166,9 +171,10 @@ class LocationsList
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see daylightchart.gui.LocationOperations#getLocations()
    */
+  @Override
   public List<Location> getLocations()
   {
     return new ArrayList<Location>(locations);
@@ -176,23 +182,25 @@ class LocationsList
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see daylightchart.gui.LocationOperations#getSelectedLocation()
    */
+  @Override
   public Location getSelectedLocation()
   {
     if (locationsList.getSelectedIndex() == -1)
     {
       locationsList.setSelectedIndex(0);
     }
-    return (Location) locationsList.getSelectedValue();
+    return locationsList.getSelectedValue();
   }
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see daylightchart.gui.LocationOperations#removeLocation(org.geoname.data.Location)
    */
+  @Override
   public void removeLocation(final Location location)
   {
     if (location != null)
@@ -204,10 +212,11 @@ class LocationsList
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see daylightchart.gui.LocationOperations#replaceLocation(org.geoname.data.Location,
    *      org.geoname.data.Location)
    */
+  @Override
   public void replaceLocation(final Location location,
                               final Location newLocation)
   {
@@ -221,15 +230,17 @@ class LocationsList
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see daylightchart.gui.LocationOperations#setLocations(java.util.List)
    */
+  @Override
   public void setLocations(final List<Location> locations)
   {
     if (locations != null && locations.size() > 0)
     {
-      Collections.sort(locations, UserPreferences.optionsFile().getData()
-        .getLocationsSortOrder());
+      Collections
+        .sort(locations,
+              UserPreferences.optionsFile().getData().getLocationsSortOrder());
       this.locations = locations;
       locationsList.setListData(new Vector<Location>(locations));
       locationsList.setSelectedIndex(0);
@@ -239,9 +250,10 @@ class LocationsList
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see daylightchart.gui.LocationOperations#sortLocations()
    */
+  @Override
   public void sortLocations()
   {
     setLocations(locations);

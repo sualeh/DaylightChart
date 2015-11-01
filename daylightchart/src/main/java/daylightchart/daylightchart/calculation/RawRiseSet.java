@@ -1,23 +1,23 @@
-/* 
- * 
+/*
+ *
  * Daylight Chart
  * http://sourceforge.net/projects/daylightchart
  * Copyright (c) 2007-2015, Sualeh Fatehi.
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- * 
+ *
  */
 package daylightchart.daylightchart.calculation;
 
@@ -31,7 +31,7 @@ import org.geoname.data.Location;
 
 /**
  * Sunrise and sunset at a given location, and a given date.
- * 
+ *
  * @author Sualeh Fatehi
  */
 final class RawRiseSet
@@ -62,9 +62,10 @@ final class RawRiseSet
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see java.lang.Comparable#compareTo(java.lang.Object)
    */
+  @Override
   public int compareTo(final RawRiseSet o)
   {
     return date.compareTo(o.getDate());
@@ -72,7 +73,7 @@ final class RawRiseSet
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see java.lang.Object#toString()
    */
   @SuppressWarnings("boxing")
@@ -86,19 +87,18 @@ final class RawRiseSet
     else
     {
       final StringWriter writer = new StringWriter();
-      new PrintWriter(writer, true)
-        .printf("%s, %s: sunrise %6.3f sunset %6.4f",
-                location.getDescription(),
-                date,
-                sunrise,
-                sunset);
+      new PrintWriter(writer, true).printf("%s, %s: sunrise %6.3f sunset %6.4f",
+                                           location.getDescription(),
+                                           date,
+                                           sunrise,
+                                           sunset);
       return writer.toString();
     }
   }
 
   /**
    * Date.
-   * 
+   *
    * @return Date
    */
   LocalDate getDate()
@@ -108,7 +108,7 @@ final class RawRiseSet
 
   /**
    * Location.
-   * 
+   *
    * @return Location
    */
   Location getLocation()
@@ -118,7 +118,7 @@ final class RawRiseSet
 
   /**
    * Sunrise time.
-   * 
+   *
    * @return Sunrise time
    */
   double getSunrise()
@@ -128,7 +128,7 @@ final class RawRiseSet
 
   /**
    * Sunset time.
-   * 
+   *
    * @return Sunset time
    */
   double getSunset()

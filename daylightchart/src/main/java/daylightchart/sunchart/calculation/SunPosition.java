@@ -16,7 +16,7 @@ import us.fatehi.calculation.ExtendedSunPositionAlgorithm.SolarEphemerides;
 
 /**
  * Solar ephemerides at a given date and time.
- * 
+ *
  * @author sfatehi
  */
 public class SunPosition
@@ -30,7 +30,7 @@ public class SunPosition
 
   /**
    * Solar ephemerides at a given date and time.
-   * 
+   *
    * @param dateTime
    * @param solarEphemerides
    */
@@ -43,9 +43,10 @@ public class SunPosition
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see java.lang.Comparable#compareTo(java.lang.Object)
    */
+  @Override
   public int compareTo(final SunPosition o)
   {
     return CompareToBuilder.reflectionCompare(this, o);
@@ -53,7 +54,7 @@ public class SunPosition
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see java.lang.Object#equals(java.lang.Object)
    */
   @Override
@@ -65,6 +66,7 @@ public class SunPosition
   /**
    * @return the altitude
    */
+  @Override
   public double getAltitude()
   {
     return solarEphemerides.getAltitude();
@@ -73,6 +75,7 @@ public class SunPosition
   /**
    * @return the azimuth
    */
+  @Override
   public double getAzimuth()
   {
     return solarEphemerides.getAzimuth();
@@ -96,9 +99,10 @@ public class SunPosition
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see org.sunposition.calculation.ExtendedSunPositionAlgorithm.SolarEphemerides#getDeclination()
    */
+  @Override
   public double getDeclination()
   {
     return solarEphemerides.getDeclination();
@@ -106,9 +110,10 @@ public class SunPosition
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see org.sunposition.calculation.ExtendedSunPositionAlgorithm.SolarEphemerides#getEquationOfTime()
    */
+  @Override
   public double getEquationOfTime()
   {
     return solarEphemerides.getEquationOfTime();
@@ -116,9 +121,10 @@ public class SunPosition
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see org.sunposition.calculation.ExtendedSunPositionAlgorithm.SolarEphemerides#getHourAngle()
    */
+  @Override
   public double getHourAngle()
   {
     return solarEphemerides.getHourAngle();
@@ -126,9 +132,10 @@ public class SunPosition
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see org.sunposition.calculation.ExtendedSunPositionAlgorithm.SolarEphemerides#getRightAscension()
    */
+  @Override
   public double getRightAscension()
   {
     return solarEphemerides.getRightAscension();
@@ -144,7 +151,7 @@ public class SunPosition
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see java.lang.Object#hashCode()
    */
   @Override
@@ -155,7 +162,7 @@ public class SunPosition
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see java.lang.Object#toString()
    */
   @Override

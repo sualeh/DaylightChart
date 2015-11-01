@@ -1,23 +1,23 @@
-/* 
- * 
+/*
+ *
  * Daylight Chart
  * http://sourceforge.net/projects/daylightchart
  * Copyright (c) 2007-2015, Sualeh Fatehi.
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- * 
+ *
  */
 package daylightchart.gui.actions;
 
@@ -44,7 +44,7 @@ import daylightchart.options.UserPreferences;
 
 /**
  * Saves locations into a file.
- * 
+ *
  * @author sfatehi
  */
 public final class SaveLocationsFileAction
@@ -63,9 +63,10 @@ public final class SaveLocationsFileAction
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
+    @Override
     public void actionPerformed(final ActionEvent actionevent)
     {
       final List<ExtensionFileFilter<LocationFileType>> fileFilters = new ArrayList<ExtensionFileFilter<LocationFileType>>();
@@ -77,28 +78,37 @@ public final class SaveLocationsFileAction
                           .getString("DaylightChartGui.Menu.File.SaveLocations"),
                         fileFilters,
                         new File(UserPreferences.optionsFile().getData()
-                          .getWorkingDirectory(), "locations.data"),
+                          .getWorkingDirectory().toString(), "locations.data"),
                         Messages
                           .getString("DaylightChartGui.Message.Confirm.FileOverwrite")); //$NON-NLS-1$
       if (selectedFile.isSelected())
       {
         try
         {
-          LocationsDataFile locationDataFile = new LocationsDataFile(selectedFile);
+          final LocationsDataFile locationDataFile = new LocationsDataFile(selectedFile);
           locationDataFile.save(mainWindow.getLocations());
         }
         catch (final Exception e)
         {
-          LOGGER.log(Level.WARNING, Messages
-            .getString("DaylightChartGui.Message.Error.CannotSaveFile"), e); //$NON-NLS-1$
-          LOGGER.log(Level.WARNING, Messages
-            .getString("DaylightChartGui.Message.Error.CannotSaveFile"), e); //$NON-NLS-1$
-          JOptionPane.showMessageDialog(mainWindow, Messages
-            .getString("DaylightChartGui.Message.Error.CannotSaveFile") //$NON-NLS-1$
-                                                    + "\n" //$NON-NLS-1$
-                                                    + selectedFile, Messages
-            .getString("DaylightChartGui.Message.Error.CannotSaveFile"), //$NON-NLS-1$
-                                        JOptionPane.ERROR_MESSAGE);
+          LOGGER
+            .log(Level.WARNING,
+                 Messages
+                   .getString("DaylightChartGui.Message.Error.CannotSaveFile"), //$NON-NLS-1$
+                 e);
+          LOGGER
+            .log(Level.WARNING,
+                 Messages
+                   .getString("DaylightChartGui.Message.Error.CannotSaveFile"), //$NON-NLS-1$
+                 e);
+          JOptionPane
+            .showMessageDialog(mainWindow,
+                               Messages
+                                 .getString("DaylightChartGui.Message.Error.CannotSaveFile") //$NON-NLS-1$
+                                           + "\n" //$NON-NLS-1$
+                                           + selectedFile,
+                               Messages
+                                 .getString("DaylightChartGui.Message.Error.CannotSaveFile"), //$NON-NLS-1$
+                               JOptionPane.ERROR_MESSAGE);
         }
       }
     }
@@ -111,14 +121,14 @@ public final class SaveLocationsFileAction
 
   /**
    * Saves locations into a file.
-   * 
+   *
    * @param mainWindow
    *        Main window.
    */
   public SaveLocationsFileAction(final DaylightChartGui mainWindow)
   {
 
-    super(Messages.getString("DaylightChartGui.Menu.File.SaveLocations"), //$NON-NLS-1$ 
+    super(Messages.getString("DaylightChartGui.Menu.File.SaveLocations"), //$NON-NLS-1$
           "/icons/save_locations.gif" //$NON-NLS-1$
     );
     setShortcutKey(KeyStroke.getKeyStroke("control alt S"));

@@ -1,23 +1,23 @@
-/* 
- * 
+/*
+ *
  * Daylight Chart
  * http://sourceforge.net/projects/daylightchart
  * Copyright (c) 2007-2015, Sualeh Fatehi.
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- * 
+ *
  */
 package daylightchart.gui;
 
@@ -52,22 +52,21 @@ import org.geoname.data.Location;
 import org.geoname.parser.DefaultTimezones;
 import org.geoname.parser.TimeZoneDisplay;
 
-import us.fatehi.pointlocation6709.Latitude;
-import us.fatehi.pointlocation6709.Longitude;
-import us.fatehi.pointlocation6709.PointLocation;
-import us.fatehi.pointlocation6709.parse.CoordinateParser;
-
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.factories.ButtonBarFactory;
 import com.jgoodies.forms.layout.FormLayout;
 
 import daylightchart.gui.actions.LocationsListOperation;
+import us.fatehi.pointlocation6709.Latitude;
+import us.fatehi.pointlocation6709.Longitude;
+import us.fatehi.pointlocation6709.PointLocation;
+import us.fatehi.pointlocation6709.parse.CoordinateParser;
 
 /**
  * This class is used for the display of the location editor. The user
  * is allowed to add new locations, and delete or modify existing
  * locations.
- * 
+ *
  * @author Pradnya Devare, Sualeh Fatehi
  */
 public class LocationDialog
@@ -79,9 +78,10 @@ public class LocationDialog
   {
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
+    @Override
     public void actionPerformed(final ActionEvent actionEvent)
     {
       doAction(actionEvent);
@@ -89,27 +89,30 @@ public class LocationDialog
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see java.awt.event.KeyListener#keyPressed(java.awt.event.KeyEvent)
      */
+    @Override
     public void keyPressed(final KeyEvent keyEvent)
     {
     }
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see java.awt.event.KeyListener#keyReleased(java.awt.event.KeyEvent)
      */
+    @Override
     public void keyReleased(final KeyEvent keyEvents)
     {
     }
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see java.awt.event.KeyListener#keyTyped(java.awt.event.KeyEvent)
      */
+    @Override
     public void keyTyped(final KeyEvent keyEvent)
     {
       doAction(keyEvent);
@@ -132,13 +135,13 @@ public class LocationDialog
 
   private static final long serialVersionUID = -5161588534167787490L;
 
-  private static final Logger LOGGER = Logger.getLogger(LocationDialog.class
-    .getName());
+  private static final Logger LOGGER = Logger
+    .getLogger(LocationDialog.class.getName());
 
   /**
    * Show a dialog for location delete, add or edit operation to be
    * performed.
-   * 
+   *
    * @param mainWindow
    *        Main window
    * @param operation
@@ -184,13 +187,16 @@ public class LocationDialog
     this.operation = operation;
 
     city = new JTextField();
-    countries = new JComboBox<>(new Vector<Country>(Countries.getAllCountries()));
+    countries = new JComboBox<>(new Vector<Country>(Countries
+      .getAllCountries()));
     latitudeValue = new JTextField();
     longitudeValue = new JTextField();
-    timeZone = new JComboBox<>(new Vector<TimeZoneDisplay>(DefaultTimezones.getAllTimeZonesForDisplay()));
+    timeZone = new JComboBox<>(new Vector<TimeZoneDisplay>(DefaultTimezones
+      .getAllTimeZonesForDisplay()));
 
     ok = new JButton(Messages.getString("DaylightChartGui.LocationEditor.Ok")); //$NON-NLS-1$
-    cancel = new JButton(Messages.getString("DaylightChartGui.LocationEditor.Cancel")); //$NON-NLS-1$
+    cancel = new JButton(Messages
+      .getString("DaylightChartGui.LocationEditor.Cancel")); //$NON-NLS-1$
 
     final DialogButtonListener listener = new DialogButtonListener();
     ok.addActionListener(listener);
@@ -200,11 +206,13 @@ public class LocationDialog
 
     final FocusListener focusListener = new FocusListener()
     {
-      public void focusGained(FocusEvent e)
+      @Override
+      public void focusGained(final FocusEvent e)
       {
       }
 
-      public void focusLost(FocusEvent event)
+      @Override
+      public void focusLost(final FocusEvent event)
       {
         if (!event.isTemporary())
         {
@@ -225,7 +233,7 @@ public class LocationDialog
 
           if (isCurrentLocationValid())
           {
-            String timeZoneId = DefaultTimezones
+            final String timeZoneId = DefaultTimezones
               .attemptTimeZoneMatch(getCity(), getCountry(), getLongitude());
             setTimeZoneId(timeZoneId);
           }
@@ -241,16 +249,24 @@ public class LocationDialog
     final FormLayout layout = new FormLayout("right:pref, 3dlu, min"); //$NON-NLS-1$
     final DefaultFormBuilder builder = new DefaultFormBuilder(layout);
     builder.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-    builder
-      .append(Messages.getString("DaylightChartGui.LocationEditor.City"), city); //$NON-NLS-1$
-    builder.append(Messages
-      .getString("DaylightChartGui.LocationEditor.Country"), countries); //$NON-NLS-1$
-    builder.append(Messages
-      .getString("DaylightChartGui.LocationEditor.Latitude"), latitudeValue); //$NON-NLS-1$
-    builder.append(Messages
-      .getString("DaylightChartGui.LocationEditor.Longitude"), longitudeValue); //$NON-NLS-1$
-    builder.append(Messages
-      .getString("DaylightChartGui.LocationEditor.TimeZone"), timeZone); //$NON-NLS-1$
+    builder.append(Messages.getString("DaylightChartGui.LocationEditor.City"), //$NON-NLS-1$
+                   city);
+    builder.append(
+                   Messages
+                     .getString("DaylightChartGui.LocationEditor.Country"), //$NON-NLS-1$
+                   countries);
+    builder.append(
+                   Messages
+                     .getString("DaylightChartGui.LocationEditor.Latitude"), //$NON-NLS-1$
+                   latitudeValue);
+    builder.append(
+                   Messages
+                     .getString("DaylightChartGui.LocationEditor.Longitude"), //$NON-NLS-1$
+                   longitudeValue);
+    builder.append(
+                   Messages
+                     .getString("DaylightChartGui.LocationEditor.TimeZone"), //$NON-NLS-1$
+                   timeZone);
     builder.append(ButtonBarFactory.buildOKCancelBar(ok, cancel), 3);
 
     getContentPane().add(builder.getPanel());
@@ -296,7 +312,8 @@ public class LocationDialog
 
       private static final long serialVersionUID = -180000433351276424L;
 
-      public void actionPerformed(ActionEvent actionEvent)
+      @Override
+      public void actionPerformed(final ActionEvent actionEvent)
       {
         dispose();
       }
@@ -343,8 +360,8 @@ public class LocationDialog
     Longitude longitude = null;
     try
     {
-      longitude = new CoordinateParser().parseLongitude(longitudeValue
-        .getText());
+      longitude = new CoordinateParser()
+        .parseLongitude(longitudeValue.getText());
     }
     catch (final us.fatehi.pointlocation6709.parse.ParserException e)
     {

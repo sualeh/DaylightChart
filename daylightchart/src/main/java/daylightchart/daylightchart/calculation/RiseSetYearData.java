@@ -1,23 +1,23 @@
-/* 
- * 
+/*
+ *
  * Daylight Chart
  * http://sourceforge.net/projects/daylightchart
  * Copyright (c) 2007-2015, Sualeh Fatehi.
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- * 
+ *
  */
 package daylightchart.daylightchart.calculation;
 
@@ -32,7 +32,7 @@ import org.geoname.data.Location;
 
 /**
  * A full year's sunrise and sunset times for a location.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public final class RiseSetYearData
@@ -65,7 +65,7 @@ public final class RiseSetYearData
 
   /**
    * Gets all the daylight bands.
-   * 
+   *
    * @return Daylight bands
    */
   public List<DaylightBand> getBands()
@@ -75,7 +75,7 @@ public final class RiseSetYearData
 
   /**
    * Gets the end of DST.
-   * 
+   *
    * @return End of DST.
    */
   public LocalDate getDstEndDate()
@@ -89,7 +89,7 @@ public final class RiseSetYearData
 
   /**
    * Gets the start of DST.
-   * 
+   *
    * @return Start of DST.
    */
   public LocalDate getDstStartDate()
@@ -103,7 +103,7 @@ public final class RiseSetYearData
 
   /**
    * Location.
-   * 
+   *
    * @return Location.
    */
   public Location getLocation()
@@ -113,7 +113,7 @@ public final class RiseSetYearData
 
   /**
    * Sunrise and sunset data for the year.
-   * 
+   *
    * @return Sunrise and sunset data for the year
    */
   public List<RiseSetData> getRiseSetData()
@@ -132,7 +132,7 @@ public final class RiseSetYearData
 
   /**
    * Gets the twilight type.
-   * 
+   *
    * @return TwilightType type.
    */
   public TwilightType getTwilight()
@@ -142,7 +142,7 @@ public final class RiseSetYearData
 
   /**
    * Gets the year.
-   * 
+   *
    * @return Year.
    */
   public int getYear()
@@ -152,7 +152,7 @@ public final class RiseSetYearData
 
   /**
    * Whether the location uses DST rules.
-   * 
+   *
    * @return Whether the location uses DST rules.
    */
   public boolean usesDaylightTime()
@@ -182,7 +182,7 @@ public final class RiseSetYearData
 
   /**
    * Gets a list of twilight timings.
-   * 
+   *
    * @return List of rise/ set timings.
    */
   List<RawRiseSet> getRawTwilights()
@@ -192,13 +192,13 @@ public final class RiseSetYearData
 
   /**
    * Gets a list of rise/ set timings.
-   * 
+   *
    * @param adjustedForDaylightSavings
    *        Whether the times need to be adjusted for daylight savings
    *        time
    * @return List of rise/ set timings.
    */
-  List<RiseSet> getRiseSets(boolean adjustedForDaylightSavings)
+  List<RiseSet> getRiseSets(final boolean adjustedForDaylightSavings)
   {
     List<RiseSet> copiedRiseSets;
     if (!adjustedForDaylightSavings)
@@ -225,7 +225,7 @@ public final class RiseSetYearData
 
   /**
    * Gets a list of twilight timings.
-   * 
+   *
    * @return List of rise/ set timings.
    */
   List<RiseSet> getTwilights()

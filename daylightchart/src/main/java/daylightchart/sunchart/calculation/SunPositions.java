@@ -16,7 +16,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 
 /**
  * Sun positions on a given date.
- * 
+ *
  * @author sfatehi
  */
 public class SunPositions
@@ -30,7 +30,7 @@ public class SunPositions
 
   /**
    * Sun positions on a given date.
-   * 
+   *
    * @param date
    *        Date
    */
@@ -42,9 +42,10 @@ public class SunPositions
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see java.lang.Comparable#compareTo(java.lang.Object)
    */
+  @Override
   public int compareTo(final SunPositions o)
   {
     return CompareToBuilder.reflectionCompare(this, o);
@@ -52,7 +53,7 @@ public class SunPositions
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see java.lang.Object#equals(java.lang.Object)
    */
   @Override
@@ -71,7 +72,7 @@ public class SunPositions
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see java.lang.Object#hashCode()
    */
   @Override
@@ -82,9 +83,10 @@ public class SunPositions
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see java.lang.Iterable#iterator()
    */
+  @Override
   public Iterator<SunPosition> iterator()
   {
     return sunPositions.iterator();
@@ -92,7 +94,7 @@ public class SunPositions
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see java.lang.Object#toString()
    */
   @Override

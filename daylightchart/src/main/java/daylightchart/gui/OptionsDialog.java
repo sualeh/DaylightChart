@@ -1,23 +1,23 @@
-/* 
- * 
+/*
+ *
  * Daylight Chart
  * http://sourceforge.net/projects/daylightchart
  * Copyright (c) 2007-2015, Sualeh Fatehi.
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- * 
+ *
  */
 package daylightchart.gui;
 
@@ -54,7 +54,7 @@ import daylightchart.options.Options;
 
 /**
  * This class is used for the display of the options.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public class OptionsDialog
@@ -66,9 +66,10 @@ public class OptionsDialog
   {
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
+    @Override
     public void actionPerformed(final ActionEvent actionEvent)
     {
       doAction(actionEvent);
@@ -76,27 +77,30 @@ public class OptionsDialog
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see java.awt.event.KeyListener#keyPressed(java.awt.event.KeyEvent)
      */
+    @Override
     public void keyPressed(final KeyEvent keyEvent)
     {
     }
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see java.awt.event.KeyListener#keyReleased(java.awt.event.KeyEvent)
      */
+    @Override
     public void keyReleased(final KeyEvent keyEvents)
     {
     }
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see java.awt.event.KeyListener#keyTyped(java.awt.event.KeyEvent)
      */
+    @Override
     public void keyTyped(final KeyEvent keyEvent)
     {
       doAction(keyEvent);
@@ -118,7 +122,7 @@ public class OptionsDialog
 
   /**
    * Show a dialog for options.
-   * 
+   *
    * @param mainWindow
    *        Main Daylight Chart window
    * @param options
@@ -161,7 +165,8 @@ public class OptionsDialog
     checkShowChartLegend = new JCheckBox();
 
     ok = new JButton(Messages.getString("DaylightChartGui.OptionsEditor.Ok")); //$NON-NLS-1$
-    cancel = new JButton(Messages.getString("DaylightChartGui.OptionsEditor.Cancel")); //$NON-NLS-1$
+    cancel = new JButton(Messages
+      .getString("DaylightChartGui.OptionsEditor.Cancel")); //$NON-NLS-1$
 
     final DialogButtonListener listener = new DialogButtonListener();
     ok.addActionListener(listener);
@@ -172,19 +177,23 @@ public class OptionsDialog
     final FormLayout layout = new FormLayout("right:pref, 3dlu, min"); //$NON-NLS-1$
     final DefaultFormBuilder builder = new DefaultFormBuilder(layout);
     builder.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-    builder
-      .append(Messages
-                .getString("DaylightChartGui.OptionsEditor.LocationsSortOrder"), listLocationsSortOrder); //$NON-NLS-1$
-    builder
-      .append(Messages
-                .getString("DaylightChartGui.OptionsEditor.TimeZoneOption"), listTimeZoneOption); //$NON-NLS-1$
-    builder
-      .append(Messages
-                .getString("DaylightChartGui.OptionsEditor.ChartOrientation"), listChartOrientation); //$NON-NLS-1$
-    builder
-      .append(Messages.getString("DaylightChartGui.OptionsEditor.TwilightType"), listTwilightType); //$NON-NLS-1$
-    builder
-      .append(Messages.getString("DaylightChartGui.OptionsEditor.ShowLegend"), checkShowChartLegend); //$NON-NLS-1$
+    builder.append(Messages
+      .getString("DaylightChartGui.OptionsEditor.LocationsSortOrder"), //$NON-NLS-1$
+                   listLocationsSortOrder);
+    builder.append(Messages
+      .getString("DaylightChartGui.OptionsEditor.TimeZoneOption"), //$NON-NLS-1$
+                   listTimeZoneOption);
+    builder.append(Messages
+      .getString("DaylightChartGui.OptionsEditor.ChartOrientation"), //$NON-NLS-1$
+                   listChartOrientation);
+    builder.append(
+                   Messages
+                     .getString("DaylightChartGui.OptionsEditor.TwilightType"), //$NON-NLS-1$
+                   listTwilightType);
+    builder.append(
+                   Messages
+                     .getString("DaylightChartGui.OptionsEditor.ShowLegend"), //$NON-NLS-1$
+                   checkShowChartLegend);
     builder.append(ButtonBarFactory.buildOKCancelBar(ok, cancel), 3);
 
     getContentPane().add(builder.getPanel());
@@ -200,7 +209,7 @@ public class OptionsDialog
 
   /**
    * Get the options from the dialog.
-   * 
+   *
    * @return Options from the dialog.
    */
   public Options getOptions()
@@ -215,7 +224,8 @@ public class OptionsDialog
 
       private static final long serialVersionUID = -180000433351276424L;
 
-      public void actionPerformed(ActionEvent actionEvent)
+      @Override
+      public void actionPerformed(final ActionEvent actionEvent)
       {
         dispose();
       }
@@ -245,8 +255,8 @@ public class OptionsDialog
   {
     options.setLocationsSortOrder((LocationsSortOrder) listLocationsSortOrder
       .getSelectedItem());
-    options.setTimeZoneOption((TimeZoneOption) listTimeZoneOption
-      .getSelectedItem());
+    options
+      .setTimeZoneOption((TimeZoneOption) listTimeZoneOption.getSelectedItem());
     options.setChartOrientation((ChartOrientation) listChartOrientation
       .getSelectedItem());
     options.setTwilightType((TwilightType) listTwilightType.getSelectedItem());

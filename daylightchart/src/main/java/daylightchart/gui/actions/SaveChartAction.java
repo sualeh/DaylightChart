@@ -1,30 +1,31 @@
-/* 
- * 
+/*
+ *
  * Daylight Chart
  * http://sourceforge.net/projects/daylightchart
  * Copyright (c) 2007-2015, Sualeh Fatehi.
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- * 
+ *
  */
 package daylightchart.gui.actions;
 
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -45,7 +46,7 @@ import daylightchart.options.UserPreferences;
 
 /**
  * Saves locations into a file.
- * 
+ *
  * @author sfatehi
  */
 public final class SaveChartAction
@@ -64,9 +65,10 @@ public final class SaveChartAction
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
+    @Override
     public void actionPerformed(final ActionEvent actionevent)
     {
       final DaylightChartReport daylightChartReport = new DaylightChartReport(mainWindow
@@ -78,28 +80,32 @@ public final class SaveChartAction
       }
       final String reportFilename = daylightChartReport
         .getReportFileName(ChartFileType.png);
+      final Path chartFile = Paths.get(
+                                       UserPreferences.optionsFile().getData()
+                                         .getWorkingDirectory().toString(),
+                                       reportFilename);
       final SelectedFile<ChartFileType> selectedFile = Actions
         .showSaveDialog(mainWindow,
                         Messages
                           .getString("DaylightChartGui.Menu.File.SaveChart"),
                         fileFilters,
-                        new File(UserPreferences.optionsFile().getData()
-                          .getWorkingDirectory(), reportFilename),
+                        chartFile.toFile(),
                         Messages
                           .getString("DaylightChartGui.Message.Confirm.FileOverwrite")); //$NON-NLS-1$
       if (selectedFile.isSelected())
       {
         try
         {
-          daylightChartReport.write(selectedFile.getFile().toPath(),
+          daylightChartReport.write(selectedFile.getFile(),
                                     selectedFile.getFileType());
         }
         catch (final Exception e)
         {
-          LOGGER.log(Level.WARNING,
-                     Messages
-                       .getString("DaylightChartGui.Message.Error.CannotSaveFile"), //$NON-NLS-1$
-                     e);
+          LOGGER
+            .log(Level.WARNING,
+                 Messages
+                   .getString("DaylightChartGui.Message.Error.CannotSaveFile"), //$NON-NLS-1$
+                 e);
           JOptionPane
             .showMessageDialog(mainWindow,
                                Messages
@@ -121,7 +127,7 @@ public final class SaveChartAction
 
   /**
    * Saves locations into a file.
-   * 
+   *
    * @param mainWindow
    *        Main window.
    */

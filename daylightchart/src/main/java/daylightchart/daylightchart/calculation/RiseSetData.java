@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 /**
  * Contains a data point for the sunrise and sunset, and twilight times
  * for single day.
- * 
+ *
  * @author sfatehi
  */
 public final class RiseSetData
@@ -23,7 +23,7 @@ public final class RiseSetData
 
   /**
    * Date for this data point.
-   * 
+   *
    * @return Date for this data point
    */
   public LocalDate getDate()
@@ -33,7 +33,7 @@ public final class RiseSetData
 
   /**
    * Sunrise.
-   * 
+   *
    * @return Sunrise.
    */
   public LocalDateTime getSunrise()
@@ -43,7 +43,7 @@ public final class RiseSetData
 
   /**
    * Sunset.
-   * 
+   *
    * @return Sunset.
    */
   public LocalDateTime getSunset()
@@ -53,7 +53,7 @@ public final class RiseSetData
 
   /**
    * Twilight, before sunrise.
-   * 
+   *
    * @return Twilight, before sunrise.
    */
   public LocalDateTime getTwilightRise()
@@ -63,7 +63,7 @@ public final class RiseSetData
 
   /**
    * Twilight, after sunset.
-   * 
+   *
    * @return Twilight, after sunset.
    */
   public LocalDateTime getTwilightSet()

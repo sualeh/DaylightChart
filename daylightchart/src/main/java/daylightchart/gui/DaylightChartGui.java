@@ -1,23 +1,23 @@
-/* 
- * 
+/*
+ *
  * Daylight Chart
  * http://sourceforge.net/projects/daylightchart
  * Copyright (c) 2007-2015, Sualeh Fatehi.
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- * 
+ *
  */
 package daylightchart.gui;
 
@@ -68,7 +68,7 @@ import daylightchart.options.UserPreferences;
 
 /**
  * Provides an GUI for daylight charts.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public final class DaylightChartGui
@@ -88,7 +88,7 @@ public final class DaylightChartGui
 
   /**
    * Creates a new instance of a Daylight Chart main window.
-   * 
+   *
    * @param slimUi
    *        Whether to show the slim user interface
    */
@@ -99,7 +99,7 @@ public final class DaylightChartGui
 
   /**
    * Creates a new instance of a Daylight Chart main window.
-   * 
+   *
    * @param location
    *        Location for a single chart window, or null for the full UI
    * @param slimUi
@@ -150,8 +150,8 @@ public final class DaylightChartGui
 
       // Open the first location
       Location firstTabLocation;
-      List<Location> recentLocations = UserPreferences.recentLocationsFile()
-        .getData();
+      final List<Location> recentLocations = UserPreferences
+        .recentLocationsFile().getData();
       if (recentLocations.size() > 0)
       {
         firstTabLocation = recentLocations.get(0);
@@ -181,17 +181,18 @@ public final class DaylightChartGui
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see daylightchart.gui.LocationOperations#addLocation(org.geoname.data.Location)
    */
-  public void addLocation(Location location)
+  @Override
+  public void addLocation(final Location location)
   {
     locationsList.addLocation(location);
   }
 
   /**
    * Add a new location tab.
-   * 
+   *
    * @param location
    *        Location
    */
@@ -208,7 +209,7 @@ public final class DaylightChartGui
     if (slimUi)
     {
       final Path reportFile = Paths
-        .get(UserPreferences.getScratchDirectory().getAbsolutePath(),
+        .get(UserPreferences.getScratchDirectory().toString(),
              daylightChartReport.getReportFileName(ChartFileType.png));
       daylightChartReport.write(reportFile, ChartFileType.png);
       try
@@ -232,7 +233,7 @@ public final class DaylightChartGui
     final List<Location> recentLocations = UserPreferences.recentLocationsFile()
       .getData();
     recentLocationsMenu.removeAll();
-    for (Location recentLocation: recentLocations)
+    for (final Location recentLocation: recentLocations)
     {
       recentLocationsMenu
         .add(new OpenLocationTabAction(this,
@@ -243,9 +244,10 @@ public final class DaylightChartGui
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see daylightchart.gui.LocationOperations#getLocations()
    */
+  @Override
   public List<Location> getLocations()
   {
     return locationsList.getLocations();
@@ -253,9 +255,10 @@ public final class DaylightChartGui
 
   /**
    * Get the currently selected location.
-   * 
+   *
    * @return Currently selected location.
    */
+  @Override
   public Location getSelectedLocation()
   {
     return locationsList.getSelectedLocation();
@@ -271,32 +274,35 @@ public final class DaylightChartGui
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see daylightchart.gui.LocationOperations#removeLocation(org.geoname.data.Location)
    */
-  public void removeLocation(Location location)
+  @Override
+  public void removeLocation(final Location location)
   {
     locationsList.removeLocation(location);
   }
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see daylightchart.gui.LocationOperations#replaceLocation(org.geoname.data.Location,
    *      org.geoname.data.Location)
    */
-  public void replaceLocation(Location selectedLocation,
-                              Location editedLocation)
+  @Override
+  public void replaceLocation(final Location selectedLocation,
+                              final Location editedLocation)
   {
     locationsList.replaceLocation(selectedLocation, editedLocation);
   }
 
   /**
    * Sets the locations list on the GUI.
-   * 
+   *
    * @param locations
    *        Locations
    */
+  @Override
   public void setLocations(final List<Location> locations)
   {
     if (locations != null && locations.size() > 0)
@@ -309,6 +315,7 @@ public final class DaylightChartGui
   /**
    * Sorts the locations list on the GUI.
    */
+  @Override
   public void sortLocations()
   {
     locationsList.sortLocations();
@@ -424,6 +431,7 @@ public final class DaylightChartGui
     slimUiMenuItem.setState(isSlimUi());
     slimUiMenuItem.addItemListener(new ItemListener()
     {
+      @Override
       public void itemStateChanged(final ItemEvent e)
       {
         final boolean slimUi = e.getStateChange() == ItemEvent.SELECTED;

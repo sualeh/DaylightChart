@@ -1,23 +1,23 @@
-/* 
- * 
+/*
+ *
  * Daylight Chart
  * http://sourceforge.net/projects/daylightchart
  * Copyright (c) 2007-2015, Sualeh Fatehi.
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- * 
+ *
  */
 package daylightchart.sunchart.calculation;
 
@@ -43,21 +43,21 @@ import us.fatehi.calculation.SunPositionAlgorithmFactory;
 
 /**
  * Calculator for sunrise and sunset times for a year.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public final class SunChartUtility
 {
 
-  private static final Logger LOGGER = Logger.getLogger(SunChartUtility.class
-    .getName());
+  private static final Logger LOGGER = Logger
+    .getLogger(SunChartUtility.class.getName());
 
   private static final ExtendedSunPositionAlgorithm sunAlgorithm = SunPositionAlgorithmFactory
     .getExtendedSunPositionAlgorithmInstance();
 
   /**
    * Calculator for sunrise and sunset times for a year.
-   * 
+   *
    * @param location
    *        Location
    * @param year
@@ -79,12 +79,13 @@ public final class SunChartUtility
       {
         final SolarEphemerides solarEphemerides = sunAlgorithm
           .calcSolarEphemerides(hour);
-        final LocalDateTime dateTime = LocalDateTime.of(date.getYear(),
-                                                        date.getMonthValue(),
-                                                        date.getDayOfMonth(),
-                                                        hour,
-                                                        0,
-                                                        0);
+        final LocalDateTime dateTime = LocalDateTime
+          .of(date.getYear(),
+              date.getMonthValue(),
+              date.getDayOfMonth(),
+              hour,
+              0,
+              0);
         final SunPosition sunPosition = new SunPosition(dateTime,
                                                         solarEphemerides);
         sunPositions.add(sunPosition);
@@ -96,7 +97,7 @@ public final class SunChartUtility
 
   /**
    * Writes calculations to a writer.
-   * 
+   *
    * @param location
    * @param writer
    */
@@ -142,7 +143,7 @@ public final class SunChartUtility
 
   /**
    * Generate a year's worth of dates
-   * 
+   *
    * @return All the dates for the year
    */
   private static List<LocalDate> getYearsDates(final int year)
@@ -175,7 +176,7 @@ public final class SunChartUtility
     return dates;
   }
 
-  private static LocalDate toLocalDate(DateTime equinox3)
+  private static LocalDate toLocalDate(final DateTime equinox3)
   {
     LocalDate date;
     date = LocalDate.of(equinox3.getYear(),

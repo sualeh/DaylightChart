@@ -1,29 +1,30 @@
-/* 
- * 
+/*
+ *
  * Daylight Chart
  * http://sourceforge.net/projects/daylightchart
  * Copyright (c) 2007-2015, Sualeh Fatehi.
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- * 
+ *
  */
 package daylightchart.options;
 
 
-import java.io.File;
 import java.io.Serializable;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -33,10 +34,11 @@ import daylightchart.daylightchart.calculation.TwilightType;
 import daylightchart.daylightchart.chart.ChartOrientation;
 import daylightchart.daylightchart.chart.TimeZoneOption;
 import daylightchart.options.chart.ChartOptions;
+import sf.util.FileUtils;
 
 /**
  * All Daylight Chart options.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public class Options
@@ -51,7 +53,7 @@ public class Options
   private TwilightType twilightType;
   private boolean showChartLegend;
   private ChartOptions chartOptions;
-  private File workingDirectory;
+  private Path workingDirectory;
   private boolean slimUi;
 
   /**
@@ -69,7 +71,7 @@ public class Options
 
   /**
    * Get just the chart options.
-   * 
+   *
    * @return Chart options.
    */
   public final ChartOptions getChartOptions()
@@ -79,7 +81,7 @@ public class Options
 
   /**
    * Gets the chart orientation.
-   * 
+   *
    * @return Chart orientation
    */
   public ChartOrientation getChartOrientation()
@@ -105,7 +107,7 @@ public class Options
 
   /**
    * Gets the twilight display setting for the chart.
-   * 
+   *
    * @return TwilightType setting
    */
   public TwilightType getTwilightType()
@@ -115,24 +117,24 @@ public class Options
 
   /**
    * Get the working directory.
-   * 
+   *
    * @return Working directory.
    */
-  public File getWorkingDirectory()
+  public Path getWorkingDirectory()
   {
-    if (isDirectoryValid(workingDirectory))
+    if (FileUtils.isDirectoryValid(workingDirectory))
     {
       return workingDirectory;
     }
     else
     {
-      return new File(".");
+      return Paths.get(".");
     }
   }
 
   /**
    * Whether to show the chart legend.
-   * 
+   *
    * @return Whether to show the chart legend
    */
   public boolean isShowChartLegend()
@@ -162,7 +164,7 @@ public class Options
 
   /**
    * Sets the chart orientation.
-   * 
+   *
    * @param chartOrientation
    *        Chart orientation
    */
@@ -188,7 +190,7 @@ public class Options
 
   /**
    * Whether to show the chart legend.
-   * 
+   *
    * @param showChartLegend
    *        Whether to show the chart legend
    */
@@ -199,7 +201,7 @@ public class Options
 
   /**
    * Whether the UI should work in "slim" mode.
-   * 
+   *
    * @param slimUi
    *        Slim mode setting.
    */
@@ -222,7 +224,7 @@ public class Options
 
   /**
    * Sets the twilight display setting for the chart.
-   * 
+   *
    * @param twilight
    *        TwilightType setting
    */
@@ -236,13 +238,13 @@ public class Options
 
   /**
    * Working directory.
-   * 
+   *
    * @param workingDirectory
    *        Working directory.
    */
-  public void setWorkingDirectory(final File workingDirectory)
+  public void setWorkingDirectory(final Path workingDirectory)
   {
-    if (isDirectoryValid(workingDirectory))
+    if (FileUtils.isDirectoryValid(workingDirectory))
     {
       this.workingDirectory = workingDirectory;
     }
@@ -250,7 +252,7 @@ public class Options
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see java.lang.Object#toString()
    */
   @Override
@@ -258,11 +260,6 @@ public class Options
   {
     return ReflectionToStringBuilder.toString(this,
                                               ToStringStyle.MULTI_LINE_STYLE);
-  }
-
-  private boolean isDirectoryValid(final File directory)
-  {
-    return directory != null && directory.exists() && directory.isDirectory();
   }
 
 }

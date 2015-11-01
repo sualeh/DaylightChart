@@ -1,29 +1,31 @@
-/* 
- * 
+/*
+ *
  * Daylight Chart
  * http://sourceforge.net/projects/daylightchart
  * Copyright (c) 2007-2015, Sualeh Fatehi.
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- * 
+ *
  */
 package daylightchart.gui.util;
 
 
 import java.awt.Component;
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 
 import javax.swing.JFileChooser;
@@ -33,10 +35,11 @@ import javax.swing.filechooser.FileFilter;
 import daylightchart.options.FileType;
 import daylightchart.options.Options;
 import daylightchart.options.UserPreferences;
+import sf.util.FileUtils;
 
 /**
  * GUI helper methods.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public class Actions
@@ -44,13 +47,13 @@ public class Actions
 
   /**
    * Sets the working directory.
-   * 
+   *
    * @param workingDirectory
    *        Working directory
    */
-  public static void setWorkingDirectory(final File workingDirectory)
+  public static void setWorkingDirectory(final Path workingDirectory)
   {
-    Options options = UserPreferences.optionsFile().getData();
+    final Options options = UserPreferences.optionsFile().getData();
     options.setWorkingDirectory(workingDirectory);
     UserPreferences.optionsFile().save(options);
   }
@@ -58,7 +61,7 @@ public class Actions
   /**
    * Shows an open file dialog, and returns the selected file. Checks if
    * the file is readable.
-   * 
+   *
    * @param <T>
    *        File type for the selected file
    * @param parent
@@ -92,13 +95,13 @@ public class Actions
     }
     fileDialog.setFileSelectionMode(JFileChooser.FILES_ONLY);
 
-    File file = null;
+    Path file = null;
 
     final int dialogReturnValue = fileDialog.showOpenDialog(parent);
     if (dialogReturnValue == JFileChooser.APPROVE_OPTION)
     {
       file = getSelectedFileWithExtension(fileDialog);
-      if (file == null || !file.exists() || !file.canRead())
+      if (!FileUtils.isFileReadable(file))
       {
         JOptionPane.showMessageDialog(parent, file + "\n" + cannotReadMessage);
         file = null;
@@ -120,7 +123,7 @@ public class Actions
 
   /**
    * Shows the save dialog.
-   * 
+   *
    * @param <T>
    *        File type for the selected file
    * @param parent
@@ -154,13 +157,13 @@ public class Actions
     }
     fileDialog.setFileSelectionMode(JFileChooser.FILES_ONLY);
 
-    File file = null;
+    Path file = null;
 
     final int dialogReturnValue = fileDialog.showSaveDialog(parent);
     if (dialogReturnValue == JFileChooser.APPROVE_OPTION)
     {
       file = getSelectedFileWithExtension(fileDialog);
-      if (file != null && file.exists())
+      if (file != null && Files.exists(file))
       {
         final int confirm = JOptionPane
           .showConfirmDialog(parent,
@@ -189,25 +192,25 @@ public class Actions
 
   /**
    * Get the selected file, and add extension, if it is not provided.
-   * 
+   *
    * @param fileDialog
    *        File dialog for the file.
    * @return File, with extension
    */
-  private static File getSelectedFileWithExtension(final JFileChooser fileDialog)
+  private static Path getSelectedFileWithExtension(final JFileChooser fileDialog)
   {
     File file = fileDialog.getSelectedFile();
     if (file != null)
     {
       final ExtensionFileFilter<?> fileFilter = (ExtensionFileFilter<?>) fileDialog
         .getFileFilter();
-      if (!ExtensionFileFilter.getExtension(file).equals(fileFilter
-        .getFileType().getFileExtension()))
+      if (!ExtensionFileFilter.getExtension(file)
+        .equals(fileFilter.getFileType().getFileExtension()))
       {
         file = new File(file.getAbsoluteFile() + fileFilter.getFileExtension());
       }
     }
-    return file;
+    return file.toPath();
   }
 
   private Actions()

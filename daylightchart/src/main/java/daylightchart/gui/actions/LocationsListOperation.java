@@ -1,23 +1,23 @@
-/* 
- * 
+/*
+ *
  * Daylight Chart
  * http://sourceforge.net/projects/daylightchart
  * Copyright (c) 2007-2015, Sualeh Fatehi.
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- * 
+ *
  */
 package daylightchart.gui.actions;
 
@@ -49,27 +49,27 @@ import daylightchart.gui.util.GuiAction;
 
 /**
  * Operations that possible on the list of locations.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public enum LocationsListOperation
 {
 
-  /** Add location. */
-  add(
-    Messages.getString("DaylightChartGui.Menu.Actions.AddLocation"), "/icons/add_location.gif", "shift INSERT"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-  /** Edit location. */
-  edit(
-    Messages.getString("DaylightChartGui.Menu.Actions.EditLocation"), "/icons/edit_location.gif", "control E"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-  /** Delete location. */
-  delete(
-    Messages.getString("DaylightChartGui.Menu.Actions.DeleteLocation"), "/icons/delete_location.gif", "shift DELETE"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-  /** Copy location. */
-  copy(
-    Messages.getString("DaylightChartGui.Menu.Actions.CopyLocation"), "/icons/copy_location.gif", "ctrl C"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$    
-  /** Paste location. */
-  paste(
-    Messages.getString("DaylightChartGui.Menu.Actions.PasteLocation"), "/icons/paste_location.gif", "ctrl V"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+ /** Add location. */
+  add(Messages.getString("DaylightChartGui.Menu.Actions.AddLocation"), //$NON-NLS-1$
+    "/icons/add_location.gif", "shift INSERT"), //$NON-NLS-1$ //$NON-NLS-2$
+ /** Edit location. */
+  edit(Messages.getString("DaylightChartGui.Menu.Actions.EditLocation"), //$NON-NLS-1$
+    "/icons/edit_location.gif", "control E"), //$NON-NLS-1$ //$NON-NLS-2$
+ /** Delete location. */
+  delete(Messages.getString("DaylightChartGui.Menu.Actions.DeleteLocation"), //$NON-NLS-1$
+    "/icons/delete_location.gif", "shift DELETE"), //$NON-NLS-1$ //$NON-NLS-2$
+ /** Copy location. */
+  copy(Messages.getString("DaylightChartGui.Menu.Actions.CopyLocation"), //$NON-NLS-1$
+    "/icons/copy_location.gif", "ctrl C"), //$NON-NLS-1$ //$NON-NLS-2$
+ /** Paste location. */
+  paste(Messages.getString("DaylightChartGui.Menu.Actions.PasteLocation"), //$NON-NLS-1$
+    "/icons/paste_location.gif", "ctrl V"); //$NON-NLS-1$ //$NON-NLS-2$
 
   private static final Logger LOGGER = Logger
     .getLogger(LocationsListOperation.class.getName());
@@ -89,7 +89,7 @@ public enum LocationsListOperation
 
   /**
    * Creates an action for this operation, on the given locations list.
-   * 
+   *
    * @param mainWindow
    *        Main window.
    * @return Action
@@ -100,6 +100,7 @@ public enum LocationsListOperation
     action.setShortcutKey(keyStroke);
     action.addActionListener(new ActionListener()
     {
+      @Override
       public void actionPerformed(final ActionEvent event)
       {
         final Location selectedLocation = mainWindow.getSelectedLocation();
@@ -213,7 +214,7 @@ public enum LocationsListOperation
 
   /**
    * Text of the operation.
-   * 
+   *
    * @return Text
    */
   public final String getText()

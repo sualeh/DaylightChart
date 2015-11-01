@@ -1,39 +1,49 @@
-/* 
- * 
+/*
+ *
  * Daylight Chart
  * http://sourceforge.net/projects/daylightchart
  * Copyright (c) 2007-2015, Sualeh Fatehi.
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- * 
+ *
  */
 package daylightchart.options;
 
 
-import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import sf.util.FileUtils;
 
 /**
  * Selected file.
- * 
+ *
  * @author Sualeh Fatehi
  * @param <T>
  *        File type
  */
 public abstract class BaseTypedFile<T extends FileType>
 {
-  private final File file;
+
+  private static final Logger LOGGER = Logger
+    .getLogger(BaseTypedFile.class.getName());
+
+  private final Path file;
   private final T fileType;
 
   protected BaseTypedFile()
@@ -41,7 +51,7 @@ public abstract class BaseTypedFile<T extends FileType>
     this(null, null);
   }
 
-  protected BaseTypedFile(final File file, final T fileType)
+  protected BaseTypedFile(final Path file, final T fileType)
   {
     this.file = file;
     this.fileType = fileType;
@@ -49,24 +59,25 @@ public abstract class BaseTypedFile<T extends FileType>
 
   /**
    * Deletes the file if it exists.
-   * 
+   *
    * @return True if the file got deleted
    */
   public final boolean delete()
   {
-    if (exists())
+    try
     {
-      return file.delete();
+      return Files.deleteIfExists(file);
     }
-    else
+    catch (final IOException e)
     {
+      LOGGER.log(Level.SEVERE, "Could not delete file, " + file, e);
       return false;
     }
   }
 
   /**
    * Checks whether the file exists, and is readable.
-   * 
+   *
    * @return Whether the file exists
    */
   public boolean exists()
@@ -77,20 +88,20 @@ public abstract class BaseTypedFile<T extends FileType>
     }
     else
     {
-      return file.exists() && file.isFile() && file.canRead();
+      return FileUtils.isFileReadable(file);
     }
   }
 
   /**
    * Directory of the selected file.
-   * 
+   *
    * @return Directory of the selected file.
    */
-  public final File getDirectory()
+  public final Path getDirectory()
   {
     if (hasFile())
     {
-      return file.getParentFile();
+      return file.getParent();
 
     }
     else
@@ -101,10 +112,10 @@ public abstract class BaseTypedFile<T extends FileType>
 
   /**
    * The selected file.
-   * 
+   *
    * @return Selected file
    */
-  public final File getFile()
+  public final Path getFile()
   {
     if (hasFile())
     {
@@ -118,14 +129,14 @@ public abstract class BaseTypedFile<T extends FileType>
 
   /**
    * The selected filename.
-   * 
+   *
    * @return Selected filename
    */
   public final String getFilename()
   {
     if (hasFile())
     {
-      return file.getName();
+      return file.getFileName().toString();
     }
     else
     {
@@ -135,7 +146,7 @@ public abstract class BaseTypedFile<T extends FileType>
 
   /**
    * Gets the file type.
-   * 
+   *
    * @return File type.
    */
   public final T getFileType()
@@ -153,7 +164,7 @@ public abstract class BaseTypedFile<T extends FileType>
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see java.lang.Object#toString()
    */
   @Override

@@ -1,23 +1,23 @@
-/* 
- * 
+/*
+ *
  * Daylight Chart
  * http://sourceforge.net/projects/daylightchart
  * Copyright (c) 2007-2015, Sualeh Fatehi.
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- * 
+ *
  */
 
 package sf.util;
@@ -34,14 +34,14 @@ import java.util.Map;
 
 /**
  * Command-line options parser.
- * 
+ *
  * @author Steve Purcell, Sualeh Fatehi
  */
 public final class CommandLineParser
 {
   /**
    * Representation of a command-line option.
-   * 
+   *
    * @author Sualeh Fatehi
    * @param <T>
    *        Option type
@@ -72,9 +72,10 @@ public final class CommandLineParser
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see Option#getDefaultValue()
      */
+    @Override
     public T getDefaultValue()
     {
       return defaultValue;
@@ -82,9 +83,10 @@ public final class CommandLineParser
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see Option#getLongForm()
      */
+    @Override
     public String getLongForm()
     {
       return longForm;
@@ -92,9 +94,10 @@ public final class CommandLineParser
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see Option#getShortForm()
      */
+    @Override
     public String getShortForm()
     {
       return shortForm;
@@ -102,9 +105,10 @@ public final class CommandLineParser
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see Option#getValue()
      */
+    @Override
     public T getValue()
     {
       T returnValue;
@@ -121,9 +125,10 @@ public final class CommandLineParser
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see Option#hasLongForm()
      */
+    @Override
     public boolean hasLongForm()
     {
       return hasLongForm;
@@ -131,9 +136,10 @@ public final class CommandLineParser
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see Option#hasShortForm()
      */
+    @Override
     public boolean hasShortForm()
     {
       return hasShortForm;
@@ -141,9 +147,10 @@ public final class CommandLineParser
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see Option#isFound()
      */
+    @Override
     public boolean isFound()
     {
       return value != null;
@@ -151,7 +158,7 @@ public final class CommandLineParser
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see java.lang.Object#toString()
      */
     @Override
@@ -166,7 +173,7 @@ public final class CommandLineParser
     /**
      * Override to extract and convert an option value passed on the
      * command-line.
-     * 
+     *
      * @param valueString
      * @return Parsed value
      */
@@ -208,7 +215,7 @@ public final class CommandLineParser
                                            + shortForm);
       }
       this.shortForm = new String(new char[] {
-        shortForm
+                                               shortForm
       });
       hasShortForm = true;
     }
@@ -224,7 +231,7 @@ public final class CommandLineParser
     /**
      * Constructor that takes the short form and long form of the
      * switch.
-     * 
+     *
      * @param shortForm
      *        Short form of the switch
      * @param longForm
@@ -238,7 +245,7 @@ public final class CommandLineParser
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see Option#isFound()
      */
     @Override
@@ -268,7 +275,7 @@ public final class CommandLineParser
 
   /**
    * An option that expects a floating-point value.
-   * 
+   *
    * @param <N>
    *        Option type
    */
@@ -279,7 +286,7 @@ public final class CommandLineParser
     /**
      * Constructor that takes the short form and long form of the
      * switch.
-     * 
+     *
      * @param shortForm
      *        Short form of the switch
      * @param longForm
@@ -310,7 +317,7 @@ public final class CommandLineParser
 
   /**
    * Representation of a command-line option.
-   * 
+   *
    * @author Sualeh Fatehi
    * @param <T>
    *        Option type
@@ -324,49 +331,49 @@ public final class CommandLineParser
 
     /**
      * Gets the default value for the option.
-     * 
+     *
      * @return Default value.
      */
     T getDefaultValue();
 
     /**
      * Gets the long form of the switch for the option.
-     * 
+     *
      * @return Long form of the switch
      */
     String getLongForm();
 
     /**
      * Gets the short form of the switch for the option.
-     * 
+     *
      * @return Short form of the switch
      */
     String getShortForm();
 
     /**
      * Gets the value for the option.
-     * 
+     *
      * @return Option value
      */
     T getValue();
 
     /**
      * Whether the option has the long form of the switch.
-     * 
+     *
      * @return Whether the option has the long form of the switch
      */
     boolean hasLongForm();
 
     /**
      * Whether the option has the short form of the switch.
-     * 
+     *
      * @return Whether the option has the short form of the switch
      */
     boolean hasShortForm();
 
     /**
      * Whether the option was found.
-     * 
+     *
      * @return Whether the option was found
      */
     boolean isFound();
@@ -383,7 +390,7 @@ public final class CommandLineParser
     /**
      * Constructor that takes the short form and long form of the
      * switch.
-     * 
+     *
      * @param shortForm
      *        Short form of the switch
      * @param longForm
@@ -413,7 +420,7 @@ public final class CommandLineParser
 
   /**
    * Add the specified Option to the list of accepted options.
-   * 
+   *
    * @param option
    *        Option to add
    */
@@ -431,7 +438,7 @@ public final class CommandLineParser
 
   /**
    * Get an option value by name.
-   * 
+   *
    * @param optionName
    *        Name of the option
    * @return Option
@@ -456,7 +463,7 @@ public final class CommandLineParser
 
   /**
    * Get an option by name.
-   * 
+   *
    * @param optionName
    *        Name of the option
    * @return Option
@@ -468,7 +475,7 @@ public final class CommandLineParser
 
   /**
    * Get all the command line options.
-   * 
+   *
    * @return Command line options
    */
   public Collection<Option<?>> getOptions()
@@ -488,7 +495,7 @@ public final class CommandLineParser
 
   /**
    * Remaining arguments, that are not parsed.
-   * 
+   *
    * @return The non-option arguments
    */
   public String[] getRemainingArgs()
@@ -504,7 +511,7 @@ public final class CommandLineParser
 
   /**
    * Get an option value by name.
-   * 
+   *
    * @param optionName
    *        Name of the option
    * @return Option
@@ -523,7 +530,7 @@ public final class CommandLineParser
    * Extract the options and non-option arguments from the given list of
    * command-line arguments. The default locale is used for parsing
    * options whose values might be locale-specific.
-   * 
+   *
    * @param args
    *        Command line arguments
    */

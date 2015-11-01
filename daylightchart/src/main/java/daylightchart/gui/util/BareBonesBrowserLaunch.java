@@ -23,7 +23,7 @@ import javax.swing.JOptionPane;
  * appropriate when a compact lightweight method to open a web page is
  * needed. Bare Bones is free and works on Mac OS X, GNU/Linux, Unix
  * (Solaris), and Windows XP.
- * 
+ *
  * @see <a href="http://www.centerkey.com/java/browser/">Bare Bones
  *      Browser Launch for Java</a>
  */
@@ -36,7 +36,7 @@ public class BareBonesBrowserLaunch
    * This is a fire and forget method -- no further communication or
    * confirmation is provided. However, a pop-up error message will be
    * displayed to the user in most cases if a failure is encountered.
-   * 
+   *
    * @param url
    *        URL to launch in a browser
    */
@@ -50,10 +50,10 @@ public class BareBonesBrowserLaunch
         final Class<?> fileMgr = Class.forName("com.apple.eio.FileManager");
         final Method openURL = fileMgr.getDeclaredMethod("openURL",
                                                          new Class[] {
-                                                           String.class
-                                                         });
+                                                                       String.class
+        });
         openURL.invoke(null, new Object[] {
-          url
+                                            url
         });
       }
       else if (osName.startsWith("Windows"))
@@ -64,13 +64,19 @@ public class BareBonesBrowserLaunch
       else
       { // assume Unix or Linux
         final String[] browsers = {
-            "firefox", "opera", "konqueror", "epiphany", "mozilla", "netscape"
+                                    "firefox",
+                                    "opera",
+                                    "konqueror",
+                                    "epiphany",
+                                    "mozilla",
+                                    "netscape"
         };
         String browser = null;
         for (int count = 0; count < browsers.length && browser == null; count++)
         {
           if (Runtime.getRuntime().exec(new String[] {
-              "which", browsers[count]
+                                                       "which",
+                                                       browsers[count]
           }).waitFor() == 0)
           {
             browser = browsers[count];
@@ -83,7 +89,8 @@ public class BareBonesBrowserLaunch
         else
         {
           Runtime.getRuntime().exec(new String[] {
-              browser, url
+                                                   browser,
+                                                   url
           });
         }
       }

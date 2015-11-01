@@ -1,23 +1,23 @@
-/* 
- * 
+/*
+ *
  * Daylight Chart
  * http://sourceforge.net/projects/daylightchart
  * Copyright (c) 2007-2015, Sualeh Fatehi.
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- * 
+ *
  */
 package daylightchart.gui.actions;
 
@@ -25,7 +25,8 @@ package daylightchart.gui.actions;
 import java.awt.Cursor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -47,7 +48,7 @@ import daylightchart.options.UserPreferences;
 
 /**
  * Opens a locations file.
- * 
+ *
  * @author sfatehi
  */
 public final class OpenLocationsFileAction
@@ -66,9 +67,10 @@ public final class OpenLocationsFileAction
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
+    @Override
     public void actionPerformed(final ActionEvent actionevent)
     {
       final List<ExtensionFileFilter<LocationFileType>> fileFilters = new ArrayList<ExtensionFileFilter<LocationFileType>>();
@@ -82,13 +84,14 @@ public final class OpenLocationsFileAction
         .add(new ExtensionFileFilter<LocationFileType>(LocationFileType.gnis_state_file));
       fileFilters
         .add(new ExtensionFileFilter<LocationFileType>(LocationFileType.gnis_state_file_zipped));
+      final Path locationsFile = Paths.get(UserPreferences.optionsFile()
+        .getData().getWorkingDirectory().toString(), "locations.data");
       final SelectedFile<LocationFileType> selectedFile = Actions
         .showOpenDialog(mainWindow,
                         Messages
                           .getString("DaylightChartGui.Menu.File.LoadLocations"),
                         fileFilters,
-                        new File(UserPreferences.optionsFile().getData()
-                          .getWorkingDirectory(), "locations.data"),
+                        locationsFile.toFile(),
                         Messages
                           .getString("DaylightChartGui.Message.Error.CannotOpenFile"));
 
@@ -99,7 +102,7 @@ public final class OpenLocationsFileAction
         boolean loadedLocations = false;
         try
         {
-          LocationsDataFile locationDataFile = new LocationsDataFile(selectedFile);
+          final LocationsDataFile locationDataFile = new LocationsDataFile(selectedFile);
           locationDataFile.load();
           final List<Location> locations = locationDataFile.getData();
           if (locations != null && !locations.isEmpty())
@@ -117,14 +120,19 @@ public final class OpenLocationsFileAction
 
         if (!loadedLocations)
         {
-          LOGGER.log(Level.WARNING, Messages
-            .getString("DaylightChartGui.Message.Error.CannotOpenFile")); //$NON-NLS-1$
-          JOptionPane.showMessageDialog(mainWindow, Messages
-            .getString("DaylightChartGui.Message.Error.CannotOpenFile") //$NON-NLS-1$
-                                                    + "\n" //$NON-NLS-1$
-                                                    + selectedFile, Messages
-            .getString("DaylightChartGui.Message.Error.CannotOpenFile"), //$NON-NLS-1$
-                                        JOptionPane.ERROR_MESSAGE);
+          LOGGER
+            .log(Level.WARNING,
+                 Messages
+                   .getString("DaylightChartGui.Message.Error.CannotOpenFile")); //$NON-NLS-1$
+          JOptionPane
+            .showMessageDialog(mainWindow,
+                               Messages
+                                 .getString("DaylightChartGui.Message.Error.CannotOpenFile") //$NON-NLS-1$
+                                           + "\n" //$NON-NLS-1$
+                                           + selectedFile,
+                               Messages
+                                 .getString("DaylightChartGui.Message.Error.CannotOpenFile"), //$NON-NLS-1$
+                               JOptionPane.ERROR_MESSAGE);
         }
 
         mainWindow.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
@@ -139,14 +147,14 @@ public final class OpenLocationsFileAction
 
   /**
    * Shows an open dialog to open a locations file.
-   * 
+   *
    * @param mainWindow
    *        Main Daylight Chart window
    */
   public OpenLocationsFileAction(final DaylightChartGui mainWindow)
   {
 
-    super(Messages.getString("DaylightChartGui.Menu.File.LoadLocations"),//$NON-NLS-1$
+    super(Messages.getString("DaylightChartGui.Menu.File.LoadLocations"), //$NON-NLS-1$
           "/icons/load_locations.gif" //$NON-NLS-1$
     );
     setShortcutKey(KeyStroke.getKeyStroke("control O"));

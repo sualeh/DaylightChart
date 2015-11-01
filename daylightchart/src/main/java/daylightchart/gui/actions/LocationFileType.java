@@ -1,23 +1,23 @@
-/* 
- * 
+/*
+ *
  * Daylight Chart
  * http://sourceforge.net/projects/daylightchart
  * Copyright (c) 2007-2015, Sualeh Fatehi.
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- * 
+ *
  */
 package daylightchart.gui.actions;
 
@@ -26,23 +26,23 @@ import daylightchart.options.FileType;
 
 /**
  * Types of locations specifications files.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public enum LocationFileType
-  implements FileType
+    implements FileType
 {
 
-  /** Daylight Chart data file */
+ /** Daylight Chart data file */
   data("Daylight Chart data file", ".data"),
-  /** GNS Country File */
+ /** GNS Country File */
   gns_country_file("GNS Country File", ".txt"),
-  /** GNS Country File, zipped */
+ /** GNS Country File, zipped */
   gns_country_file_zipped("GNS Country File, zipped", ".zip"),
-  /** GNIS states file */
+ /** GNIS states file */
   gnis_state_file("GNIS states file", ".txt"),
-  /** GNIS states file, zipped */
-  gnis_state_file_zipped("GNIS states file, zipped", ".zip"), ;
+ /** GNIS states file, zipped */
+  gnis_state_file_zipped("GNIS states file, zipped", ".zip"),;
 
   private final String description;
   private final String fileExtension;
@@ -55,9 +55,10 @@ public enum LocationFileType
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see daylightchart.options.FileType#getDescription()
    */
+  @Override
   public String getDescription()
   {
     return description;
@@ -65,9 +66,10 @@ public enum LocationFileType
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see daylightchart.options.FileType#getFileExtension()
    */
+  @Override
   public String getFileExtension()
   {
     return fileExtension;
@@ -75,7 +77,7 @@ public enum LocationFileType
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see java.lang.Enum#toString()
    */
   @Override

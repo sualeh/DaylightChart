@@ -1,23 +1,23 @@
-/* 
- * 
+/*
+ *
  * Daylight Chart
  * http://sourceforge.net/projects/daylightchart
  * Copyright (c) 2007-2015, Sualeh Fatehi.
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- * 
+ *
  */
 package daylightchart.daylightchart.layout;
 
@@ -44,7 +44,7 @@ import daylightchart.options.Options;
 
 /**
  * The Daylight Chart report that can be written to a file.
- * 
+ *
  * @author sfatehi
  */
 public class DaylightChartReport
@@ -58,7 +58,7 @@ public class DaylightChartReport
 
   /**
    * Constructor.
-   * 
+   *
    * @param location
    *        Location for the report.
    * @param options
@@ -78,7 +78,7 @@ public class DaylightChartReport
 
   /**
    * Daylight Chart chart.
-   * 
+   *
    * @return Chart
    */
   public DaylightChart getChart()
@@ -88,7 +88,7 @@ public class DaylightChartReport
 
   /**
    * The location for the chart.
-   * 
+   *
    * @return Location
    */
   public Location getLocation()
@@ -98,7 +98,7 @@ public class DaylightChartReport
 
   /**
    * Filename for the generated report.
-   * 
+   *
    * @param chartFileType
    *        Type of chart file.
    * @return Report file name
@@ -116,7 +116,7 @@ public class DaylightChartReport
       locationDescription = locationDescription.replaceAll(", ", "_");
       locationDescription = locationDescription.replaceAll(" ", "_");
     }
-    catch (UnsupportedEncodingException e)
+    catch (final UnsupportedEncodingException e)
     {
       locationDescription = "";
     }
@@ -126,7 +126,7 @@ public class DaylightChartReport
 
   /**
    * Write the Daylight Chart report to a file.
-   * 
+   *
    * @param file
    *        File to write to.
    * @param chartFileType

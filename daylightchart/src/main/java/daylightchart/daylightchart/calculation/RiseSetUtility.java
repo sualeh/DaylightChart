@@ -1,23 +1,23 @@
-/* 
- * 
+/*
+ *
  * Daylight Chart
  * http://sourceforge.net/projects/daylightchart
  * Copyright (c) 2007-2015, Sualeh Fatehi.
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- * 
+ *
  */
 package daylightchart.daylightchart.calculation;
 
@@ -55,7 +55,7 @@ import us.fatehi.calculation.SunPositionAlgorithmFactory;
 
 /**
  * Calculator for sunrise and sunset times for a year.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public final class RiseSetUtility
@@ -69,7 +69,7 @@ public final class RiseSetUtility
 
   /**
    * Calculator for sunrise and sunset times for a year.
-   * 
+   *
    * @param location
    *        Location
    * @param year
@@ -163,7 +163,7 @@ public final class RiseSetUtility
 
   /**
    * Shows the calculations.
-   * 
+   *
    * @param args
    *        Location
    * @throws Exception
@@ -180,7 +180,7 @@ public final class RiseSetUtility
 
   /**
    * Writes chart calculations to a file.
-   * 
+   *
    * @param location
    *        Location
    * @return File that was written
@@ -227,7 +227,7 @@ public final class RiseSetUtility
 
   /**
    * Creates daylight bands for plotting.
-   * 
+   *
    * @param riseSetData
    *        Rise/ set data for the year
    * @param daylightSavingsMode
@@ -332,7 +332,7 @@ public final class RiseSetUtility
 
   /**
    * Splits the given rise/ set at midnight.
-   * 
+   *
    * @param riseSet
    *        Rise/ set to split
    * @return Split RiseSet(s)
@@ -412,8 +412,8 @@ public final class RiseSetUtility
 
     final RawRiseSet riseSet = new RawRiseSet(location,
                                               date,
-                                              (useDaylightTime
-                                               && inDaylightSavings),
+                                              useDaylightTime
+                                                    && inDaylightSavings,
                                               sunriseSunset[0],
                                               sunriseSunset[1]);
     return riseSet;
@@ -422,7 +422,7 @@ public final class RiseSetUtility
 
   /**
    * Generate a year's worth of dates
-   * 
+   *
    * @return All the dates for the year
    */
   private static List<LocalDate> getYearsDates(final int year)
@@ -439,7 +439,7 @@ public final class RiseSetUtility
 
   /**
    * Debug calculations.
-   * 
+   *
    * @param writer
    *        Writer to write to
    * @param location
@@ -456,7 +456,7 @@ public final class RiseSetUtility
 
   /**
    * Debug calculations.
-   * 
+   *
    * @param writer
    *        Writer to write to
    * @param location

@@ -1,41 +1,46 @@
-/* 
- * 
+/*
+ *
  * Daylight Chart
  * http://sourceforge.net/projects/daylightchart
  * Copyright (c) 2007-2015, Sualeh Fatehi.
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- * 
+ *
  */
 package daylightchart.options;
 
 
 import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import sf.util.FileUtils;
+
 /**
  * Represents a data file, with data.
- * 
+ *
  * @author sfatehi
  * @param <T>
  *        File type
@@ -46,14 +51,14 @@ abstract class BaseDataFile<T extends FileType, D>
   extends BaseTypedFile<T>
 {
 
-  private static final Logger LOGGER = Logger.getLogger(BaseDataFile.class
-    .getName());
+  private static final Logger LOGGER = Logger
+    .getLogger(BaseDataFile.class.getName());
 
   protected D data;
 
   /**
    * Constructor.
-   * 
+   *
    * @param typedFile
    *        File
    */
@@ -64,13 +69,13 @@ abstract class BaseDataFile<T extends FileType, D>
 
   /**
    * Constructor.
-   * 
+   *
    * @param file
    *        File
    * @param fileType
    *        File type
    */
-  public BaseDataFile(final File file, final T fileType)
+  public BaseDataFile(final Path file, final T fileType)
   {
     super(file, fileType);
 
@@ -87,7 +92,7 @@ abstract class BaseDataFile<T extends FileType, D>
 
   /**
    * Constructor.
-   * 
+   *
    * @param settingsDirectory
    *        Settings directory
    * @param resource
@@ -95,13 +100,13 @@ abstract class BaseDataFile<T extends FileType, D>
    * @param fileType
    *        File type
    */
-  BaseDataFile(final File settingsDirectory,
+  BaseDataFile(final Path settingsDirectory,
                final String resource,
                final T fileType)
   {
-    this(new File(settingsDirectory, resource), fileType);
+    this(Paths.get(settingsDirectory.toString(), resource), fileType);
     // Validation
-    if (!settingsDirectory.isDirectory() || !settingsDirectory.exists())
+    if (!FileUtils.isDirectoryValid(settingsDirectory))
     {
       throw new IllegalArgumentException("Settings directory is not a directory");
     }
@@ -111,7 +116,7 @@ abstract class BaseDataFile<T extends FileType, D>
 
   /**
    * Gets data.
-   * 
+   *
    * @return Data
    */
   public final D getData()
@@ -121,11 +126,11 @@ abstract class BaseDataFile<T extends FileType, D>
 
   /**
    * Sets data, and saves it.
-   * 
+   *
    * @param data
    *        Data
    */
-  public final void save(D data)
+  public final void save(final D data)
   {
     if (data != null)
     {
@@ -134,11 +139,16 @@ abstract class BaseDataFile<T extends FileType, D>
     }
   }
 
-  protected final Writer getFileWriter(final File file)
+  protected final Writer getFileWriter(final Path file)
   {
     try
     {
-      final BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file),
+      final OutputStream fileOutputStream = Files
+        .newOutputStream(file,
+                         StandardOpenOption.CREATE,
+                         StandardOpenOption.WRITE,
+                         StandardOpenOption.TRUNCATE_EXISTING);
+      final BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(fileOutputStream,
                                                                               "UTF-8"));
       return writer;
     }
@@ -147,7 +157,7 @@ abstract class BaseDataFile<T extends FileType, D>
       LOGGER.log(Level.WARNING, "Cannot write file " + file, e);
       return null;
     }
-    catch (final FileNotFoundException e)
+    catch (final IOException e)
     {
       LOGGER.log(Level.WARNING, "Cannot write file " + file, e);
       return null;

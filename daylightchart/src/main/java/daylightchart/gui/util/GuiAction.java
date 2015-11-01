@@ -1,23 +1,23 @@
-/* 
- * 
+/*
+ *
  * Daylight Chart
  * http://sourceforge.net/projects/daylightchart
  * Copyright (c) 2007-2015, Sualeh Fatehi.
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- * 
+ *
  */
 package daylightchart.gui.util;
 
@@ -37,7 +37,7 @@ import org.apache.commons.lang3.StringUtils;
 
 /**
  * An abstract action, which takes listeners.
- * 
+ *
  * @author sfatehi
  */
 public class GuiAction
@@ -46,14 +46,14 @@ public class GuiAction
 
   private static final long serialVersionUID = -5319269508462388520L;
 
-  private static final Logger LOGGER = Logger.getLogger(GuiAction.class
-    .getName());
+  private static final Logger LOGGER = Logger
+    .getLogger(GuiAction.class.getName());
 
   private final EventListenerList listeners = new EventListenerList();
 
   /**
    * Creates a new action.
-   * 
+   *
    * @param text
    *        Text of the action
    */
@@ -65,7 +65,7 @@ public class GuiAction
 
   /**
    * Creates a new action.
-   * 
+   *
    * @param text
    *        Text of the action
    * @param iconResource
@@ -87,9 +87,10 @@ public class GuiAction
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
    */
+  @Override
   public void actionPerformed(final ActionEvent e)
   {
     try
@@ -103,14 +104,15 @@ public class GuiAction
     }
     catch (final Exception ex)
     {
-      LOGGER.log(Level.WARNING, "Cannot perform action - "
-                                + getValue(SHORT_DESCRIPTION), ex);
+      LOGGER.log(Level.WARNING,
+                 "Cannot perform action - " + getValue(SHORT_DESCRIPTION),
+                 ex);
     }
   }
 
   /**
    * Adds an action listener
-   * 
+   *
    * @param l
    *        Listener
    */
@@ -121,7 +123,7 @@ public class GuiAction
 
   /**
    * Gets the descripion.
-   * 
+   *
    * @return Description
    */
   public String getDescription()
@@ -131,7 +133,7 @@ public class GuiAction
 
   /**
    * Gets the icon.
-   * 
+   *
    * @return Icon
    */
   public ImageIcon getIcon()
@@ -149,7 +151,7 @@ public class GuiAction
 
   /**
    * Gets the shortcut key.
-   * 
+   *
    * @return Shortcut key
    */
   public KeyStroke getShortcutKey()
@@ -167,7 +169,7 @@ public class GuiAction
 
   /**
    * Gets the text.
-   * 
+   *
    * @return text
    */
   public String getText()
@@ -177,7 +179,7 @@ public class GuiAction
 
   /**
    * Gets the description.
-   * 
+   *
    * @param description
    *        Description
    */
@@ -188,7 +190,7 @@ public class GuiAction
 
   /**
    * Gets the icon.
-   * 
+   *
    * @param icon
    *        Icon
    */
@@ -199,7 +201,7 @@ public class GuiAction
 
   /**
    * Gets the shortcut key.
-   * 
+   *
    * @param keyStroke
    *        Shortcut key
    */
@@ -210,7 +212,7 @@ public class GuiAction
 
   /**
    * Gets the text.
-   * 
+   *
    * @param text
    *        Text
    */

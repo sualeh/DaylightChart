@@ -1,32 +1,32 @@
-/* 
- * 
+/*
+ *
  * Daylight Chart
  * http://sourceforge.net/projects/daylightchart
  * Copyright (c) 2007-2015, Sualeh Fatehi.
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- * 
+ *
  */
 package daylightchart.options;
 
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Writer;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -46,7 +46,7 @@ import daylightchart.gui.actions.LocationFileType;
 
 /**
  * Represents a location file, with data.
- * 
+ *
  * @author sfatehi
  */
 abstract class BaseLocationsDataFile
@@ -58,13 +58,13 @@ abstract class BaseLocationsDataFile
 
   /**
    * Constructor.
-   * 
+   *
    * @param file
    *        File
    * @param fileType
    *        Location file type
    */
-  protected BaseLocationsDataFile(final File file,
+  protected BaseLocationsDataFile(final Path file,
                                   final LocationFileType fileType)
   {
     super(file, fileType);
@@ -72,7 +72,7 @@ abstract class BaseLocationsDataFile
 
   /**
    * Constructor.
-   * 
+   *
    * @param settingsDirectory
    *        Settings directory
    * @param resource
@@ -80,9 +80,9 @@ abstract class BaseLocationsDataFile
    * @param fileType
    *        File type
    */
-  protected BaseLocationsDataFile(File settingsDirectory,
-                                  String resource,
-                                  LocationFileType fileType)
+  protected BaseLocationsDataFile(final Path settingsDirectory,
+                                  final String resource,
+                                  final LocationFileType fileType)
   {
     super(settingsDirectory, resource, fileType);
   }
@@ -90,6 +90,7 @@ abstract class BaseLocationsDataFile
   /**
    * Loads a list of locations from a file of a given format.
    */
+  @Override
   public final void load()
   {
     if (!exists())
@@ -100,7 +101,7 @@ abstract class BaseLocationsDataFile
     }
 
     final List<InputStream> inputs = new ArrayList<InputStream>();
-    final File file = getFile();
+    final Path file = getFile();
     try
     {
       switch (getFileType())
@@ -108,11 +109,11 @@ abstract class BaseLocationsDataFile
         case data:
         case gns_country_file:
         case gnis_state_file:
-          inputs.add(new FileInputStream(file));
+          inputs.add(Files.newInputStream(file));
           break;
         case gns_country_file_zipped:
         case gnis_state_file_zipped:
-          final ZipFile zipFile = new ZipFile(file);
+          final ZipFile zipFile = new ZipFile(file.toFile());
           for (final ZipEntry zipEntry: Collections.list(zipFile.entries()))
           {
             inputs.add(zipFile.getInputStream(zipEntry));
@@ -129,6 +130,7 @@ abstract class BaseLocationsDataFile
     load(inputs.toArray(new InputStream[inputs.size()]));
   }
 
+  @Override
   protected final void load(final InputStream... inputs)
   {
     data = new ArrayList<Location>();
@@ -192,9 +194,10 @@ abstract class BaseLocationsDataFile
   /**
    * Saves locations to a file.
    */
+  @Override
   protected final void save()
   {
-    final File file = getFile();
+    final Path file = getFile();
     if (file == null)
     {
       LOGGER.log(Level.WARNING, "No locations file provided");
@@ -203,7 +206,7 @@ abstract class BaseLocationsDataFile
 
     try
     {
-      file.delete();
+      Files.deleteIfExists(file);
 
       final Writer writer = getFileWriter(file);
       if (writer == null)
