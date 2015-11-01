@@ -70,7 +70,7 @@ public class TestGeoNameFiles
     throws ParserException, IOException
   {
     final String date = "20100607";
-    parseGNISUSStates("MA", date, 2428);
+    parseGNISUSStates("MA", date, 2422);
     parseGNISUSStates("HI", date, 541);
   }
 
@@ -78,7 +78,7 @@ public class TestGeoNameFiles
   public void GNSCountries()
     throws ParserException, IOException
   {
-    parseGNSCountryFile("uz.zip", 3757);
+    parseGNSCountryFile("uz.zip", 3756);
     parseGNSCountryFile("lo.zip", 4969);
   }
 
