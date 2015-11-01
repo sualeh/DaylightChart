@@ -24,6 +24,7 @@ package daylightchart.options;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.geoname.data.Location;
 
@@ -63,16 +64,19 @@ public final class RecentLocationsDataFile
     {
       return;
     }
+
+    List<Location> data = new ArrayList<>(this.data);
     if (data.contains(location))
     {
       data.remove(location);
     }
-    data.add(0, location);
+    data.add(location);
 
     if (data.size() > NUMBER_RECENT_LOCATIONS)
     {
       data = data.subList(0, NUMBER_RECENT_LOCATIONS);
     }
+    this.data = data;
 
     save();
   }

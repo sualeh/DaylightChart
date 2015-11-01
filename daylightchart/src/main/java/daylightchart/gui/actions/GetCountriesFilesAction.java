@@ -33,7 +33,7 @@ public final class GetCountriesFilesAction
   public GetCountriesFilesAction()
   {
     super(Messages.getString("DaylightChartGui.Menu.Actions.GetCountriesFiles"), //$NON-NLS-1$
-          "http://earth-info.nga.mil/gns/html/namefiles.htm" //$NON-NLS-1$
+          "http://geonames.nga.mil/gns/html/namefiles.html" //$NON-NLS-1$
     );
   }
 

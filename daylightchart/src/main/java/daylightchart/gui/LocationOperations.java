@@ -1,6 +1,7 @@
 package daylightchart.gui;
 
 
+import java.util.Collection;
 import java.util.List;
 
 import org.geoname.data.Location;
@@ -59,7 +60,7 @@ public interface LocationOperations
    * @param locations
    *        Locations list.
    */
-  void setLocations(final List<Location> locations);
+  void setLocations(final Collection<Location> locations);
 
   /**
    * Sort the locations in the list.

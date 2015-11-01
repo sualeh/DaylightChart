@@ -161,6 +161,9 @@ public final class OptionsDataFile
 
       final XStream xStream = new XStream();
       xStream.toXML(data, writer);
+
+      writer.flush();
+      writer.close();
     }
     catch (final Exception e)
     {

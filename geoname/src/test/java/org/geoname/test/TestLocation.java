@@ -25,7 +25,7 @@ package org.geoname.test;
 import static org.junit.Assert.assertEquals;
 
 import java.io.InputStream;
-import java.util.List;
+import java.util.Collection;
 
 import org.geoname.data.Location;
 import org.geoname.parser.FormatterException;
@@ -55,7 +55,7 @@ public class TestLocation
   {
     final InputStream dataStream = this.getClass().getClassLoader()
       .getResourceAsStream("locations.data");
-    final List<Location> locations = new LocationsListParser(dataStream)
+    final Collection<Location> locations = new LocationsListParser(dataStream)
       .parseLocations();
 
     assertEquals(109, locations.size());

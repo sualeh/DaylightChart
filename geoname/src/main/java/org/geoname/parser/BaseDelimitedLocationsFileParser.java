@@ -25,10 +25,11 @@ package org.geoname.parser;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -52,7 +53,7 @@ abstract class BaseDelimitedLocationsFileParser
 
   protected BaseDelimitedLocationsFileParser(final InputStream stream,
                                              final String delimiter)
-    throws ParserException
+                                               throws ParserException
   {
     if (stream == null)
     {
@@ -92,10 +93,10 @@ abstract class BaseDelimitedLocationsFileParser
    * 
    * @see org.geoname.parser.LocationsParser#parseLocations()
    */
-  public final List<Location> parseLocations()
+  public final Collection<Location> parseLocations()
     throws ParserException
   {
-    final List<Location> locations = new ArrayList<Location>();
+    final Set<Location> locations = new HashSet<Location>();
     try
     {
       final Map<String, String> locationDataMap = new HashMap<String, String>();
@@ -146,7 +147,7 @@ abstract class BaseDelimitedLocationsFileParser
 
   private final double getDouble(final Map<String, String> locationDataMap,
                                  final String key)
-    throws ParserException
+                                   throws ParserException
   {
     if (locationDataMap == null || !locationDataMap.containsKey(key))
     {
@@ -204,12 +205,12 @@ abstract class BaseDelimitedLocationsFileParser
                                        final String latitudeKey,
                                        final String longitudeKey,
                                        final String altitudeKey)
-    throws ParserException
+                                         throws ParserException
   {
-    final Latitude latitude = new Latitude(Angle.fromDegrees(getDouble(locationDataMap,
-                                                                       latitudeKey)));
-    final Longitude longitude = new Longitude(Angle.fromDegrees(getDouble(locationDataMap,
-                                                                          longitudeKey)));
+    final Latitude latitude = new Latitude(Angle
+      .fromDegrees(getDouble(locationDataMap, latitudeKey)));
+    final Longitude longitude = new Longitude(Angle
+      .fromDegrees(getDouble(locationDataMap, longitudeKey)));
     final double altitude = getDouble(locationDataMap, altitudeKey, 0D);
 
     final PointLocation pointLocation = new PointLocation(latitude,

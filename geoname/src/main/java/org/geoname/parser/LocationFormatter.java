@@ -27,7 +27,7 @@ import static us.fatehi.pointlocation6709.format.PointLocationFormatter.formatPo
 
 import java.io.IOException;
 import java.io.Writer;
-import java.util.List;
+import java.util.Collection;
 
 import org.geoname.data.Country;
 import org.geoname.data.Location;
@@ -82,7 +82,7 @@ public final class LocationFormatter
    * @throws org.geoname.parser.FormatterException
    *         On an exception.
    */
-  public static void formatLocations(final List<Location> locations,
+  public static void formatLocations(final Collection<Location> locations,
                                      final Writer writer)
                                        throws org.geoname.parser.FormatterException
   {

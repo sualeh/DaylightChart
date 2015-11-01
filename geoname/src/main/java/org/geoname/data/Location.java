@@ -54,8 +54,8 @@ public final class Location
 
   private static final long serialVersionUID = 7929385835483597186L;
 
-  private static final Logger LOGGER = Logger.getLogger(Location.class
-    .getName());
+  private static final Logger LOGGER = Logger
+    .getLogger(Location.class.getName());
 
   private final String city;
   private final Country country;
@@ -71,7 +71,7 @@ public final class Location
                                                       ZoneId.systemDefault()
                                                         .getId(),
                                                       new PointLocation(new Latitude(Angle
-                                                                          .fromDegrees(0)),
+                                                        .fromDegrees(0)),
                                                                         new Longitude(Angle
                                                                           .fromDegrees(0))));
 
@@ -148,27 +148,22 @@ public final class Location
     return toString().compareTo(location.toString());
   }
 
-  /**
-   * {@inheritDoc}
-   * 
-   * @see java.lang.Object#equals(java.lang.Object)
-   */
   @Override
-  public boolean equals(final Object obj)
+  public boolean equals(Object obj)
   {
     if (this == obj)
     {
       return true;
     }
-    if (!super.equals(obj))
+    if (obj == null)
     {
       return false;
     }
-    if (getClass() != obj.getClass())
+    if (!(obj instanceof Location))
     {
       return false;
     }
-    final Location other = (Location) obj;
+    Location other = (Location) obj;
     if (city == null)
     {
       if (other.city != null)
@@ -276,21 +271,16 @@ public final class Location
     return timeZoneId;
   }
 
-  /**
-   * {@inheritDoc}
-   * 
-   * @see java.lang.Object#hashCode()
-   */
   @Override
   public int hashCode()
   {
     final int prime = 31;
-    int result = super.hashCode();
-    result = prime * result + (city == null? 0: city.hashCode());
-    result = prime * result + (country == null? 0: country.hashCode());
+    int result = 1;
+    result = prime * result + ((city == null)? 0: city.hashCode());
+    result = prime * result + ((country == null)? 0: country.hashCode());
     result = prime * result
-             + (pointLocation == null? 0: pointLocation.hashCode());
-    result = prime * result + (timeZoneId == null? 0: timeZoneId.hashCode());
+             + ((pointLocation == null)? 0: pointLocation.hashCode());
+    result = prime * result + ((timeZoneId == null)? 0: timeZoneId.hashCode());
     return result;
   }
 
@@ -341,9 +331,8 @@ public final class Location
     final ZoneId zoneId = ZoneId.of(timeZoneId);
     try
     {
-      details = PointLocationFormatter
-        .formatPointLocation(getPointLocation(),
-                             PointLocationFormatType.HUMAN_MEDIUM)
+      details = PointLocationFormatter.formatPointLocation(getPointLocation(),
+                                                           PointLocationFormatType.HUMAN_MEDIUM)
                 + ", "
                 + zoneId.getDisplayName(TextStyle.FULL, Locale.getDefault());
     }
@@ -361,17 +350,17 @@ public final class Location
     final double tzOffsetHours = DefaultTimezones
       .getStandardTimeZoneOffsetHours(timeZoneId);
     final double longitiudeTzOffsetHours = longitude.getDegrees() / 15D;
-    final double hoursDifference = Math.abs(longitiudeTzOffsetHours
-                                            - tzOffsetHours);
+    final double hoursDifference = Math
+      .abs(longitiudeTzOffsetHours - tzOffsetHours);
     // The tolerance band is a half hour on each side of the time zone,
     // plus about 10 minutes
     final double toleranceBand = 0.5 + 0.17;
     if (!(hoursDifference <= toleranceBand))
     {
-      LOGGER.log(Level.FINE, toString() + ": Longitude (" + longitude
-                             + ") and timezone (" + timeZoneId
-                             + ") do not match (difference " + hoursDifference
-                             + " hours)");
+      LOGGER.log(Level.FINE,
+                 toString() + ": Longitude (" + longitude + ") and timezone ("
+                             + timeZoneId + ") do not match (difference "
+                             + hoursDifference + " hours)");
     }
   }
 

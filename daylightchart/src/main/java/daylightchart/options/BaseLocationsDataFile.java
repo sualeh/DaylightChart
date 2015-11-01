@@ -28,6 +28,7 @@ import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
@@ -50,7 +51,7 @@ import daylightchart.gui.actions.LocationFileType;
  * @author sfatehi
  */
 abstract class BaseLocationsDataFile
-  extends BaseDataFile<LocationFileType, List<Location>>
+  extends BaseDataFile<LocationFileType, Collection<Location>>
 {
 
   private static final Logger LOGGER = Logger

@@ -27,7 +27,7 @@ import static org.junit.Assert.assertEquals;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
 import java.util.logging.Handler;
 import java.util.logging.Logger;
 import java.util.zip.ZipEntry;
@@ -88,7 +88,7 @@ public class TestGeoNameFiles
                                    throws ParserException, IOException
   {
     final String filename = state + "_Features_" + date + ".zip";
-    List<Location> locations = new ArrayList<Location>();
+    Collection<Location> locations = new ArrayList<Location>();
 
     final InputStream dataStream = this.getClass().getClassLoader()
       .getResourceAsStream(filename);
@@ -111,7 +111,7 @@ public class TestGeoNameFiles
                                    final int numLocations)
                                      throws ParserException, IOException
   {
-    List<Location> locations = new ArrayList<Location>();
+    Collection<Location> locations = new ArrayList<Location>();
 
     final InputStream dataStream = this.getClass().getClassLoader()
       .getResourceAsStream(filename);

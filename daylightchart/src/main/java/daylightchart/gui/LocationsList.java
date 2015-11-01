@@ -29,6 +29,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Vector;
@@ -147,7 +148,9 @@ class LocationsList
       }
     });
 
-    final List<Location> locations = UserPreferences.locationsFile().getData();
+    final Collection<Location> locationsCollection = UserPreferences
+      .locationsFile().getData();
+    List<Location> locations = new ArrayList<Location>(locationsCollection);
     Collections
       .sort(locations,
             UserPreferences.optionsFile().getData().getLocationsSortOrder());
@@ -234,10 +237,11 @@ class LocationsList
    * @see daylightchart.gui.LocationOperations#setLocations(java.util.List)
    */
   @Override
-  public void setLocations(final List<Location> locations)
+  public void setLocations(final Collection<Location> locationsCollection)
   {
-    if (locations != null && locations.size() > 0)
+    if (locationsCollection != null && locationsCollection.size() > 0)
     {
+      List<Location> locations = new ArrayList<Location>(locationsCollection);
       Collections
         .sort(locations,
               UserPreferences.optionsFile().getData().getLocationsSortOrder());

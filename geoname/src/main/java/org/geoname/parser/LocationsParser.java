@@ -22,7 +22,7 @@
 package org.geoname.parser;
 
 
-import java.util.List;
+import java.util.Collection;
 
 import org.geoname.data.Location;
 
@@ -41,7 +41,7 @@ public interface LocationsParser
    * @throws ParserException
    *         On an exception
    */
-  List<Location> parseLocations()
+  Collection<Location> parseLocations()
     throws ParserException;
 
 }

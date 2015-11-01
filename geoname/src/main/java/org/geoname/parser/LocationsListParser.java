@@ -26,6 +26,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -109,7 +110,7 @@ public final class LocationsListParser
    * 
    * @see org.geoname.parser.LocationsParser#parseLocations()
    */
-  public List<Location> parseLocations()
+  public Collection<Location> parseLocations()
     throws ParserException
   {
 

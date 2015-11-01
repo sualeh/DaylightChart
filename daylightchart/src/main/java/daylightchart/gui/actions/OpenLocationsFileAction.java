@@ -28,6 +28,7 @@ import java.awt.event.ActionListener;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -104,7 +105,7 @@ public final class OpenLocationsFileAction
         {
           final LocationsDataFile locationDataFile = new LocationsDataFile(selectedFile);
           locationDataFile.load();
-          final List<Location> locations = locationDataFile.getData();
+          final Collection<Location> locations = locationDataFile.getData();
           if (locations != null && !locations.isEmpty())
           {
             loadedLocations = true;

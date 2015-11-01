@@ -28,6 +28,7 @@ import java.awt.event.ItemListener;
 import java.net.MalformedURLException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Collection;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -150,11 +151,11 @@ public final class DaylightChartGui
 
       // Open the first location
       Location firstTabLocation;
-      final List<Location> recentLocations = UserPreferences
+      final Collection<Location> recentLocations = UserPreferences
         .recentLocationsFile().getData();
       if (recentLocations.size() > 0)
       {
-        firstTabLocation = recentLocations.get(0);
+        firstTabLocation = recentLocations.iterator().next();
       }
       else
       {
@@ -230,8 +231,8 @@ public final class DaylightChartGui
 
     // Add to recent locations
     UserPreferences.recentLocationsFile().add(location);
-    final List<Location> recentLocations = UserPreferences.recentLocationsFile()
-      .getData();
+    final Collection<Location> recentLocations = UserPreferences
+      .recentLocationsFile().getData();
     recentLocationsMenu.removeAll();
     for (final Location recentLocation: recentLocations)
     {
@@ -303,7 +304,7 @@ public final class DaylightChartGui
    *        Locations
    */
   @Override
-  public void setLocations(final List<Location> locations)
+  public void setLocations(final Collection<Location> locations)
   {
     if (locations != null && locations.size() > 0)
     {
