@@ -1,1 +1,1 @@
-@javaw -cp ./lib/* daylightchart.Main
+@javaw -classpath lib/*;. daylightchart.Main %*

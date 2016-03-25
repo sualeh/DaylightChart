@@ -1,1 +1,2 @@
-java -cp ./lib/* daylightchart.Main
+#!/bin/sh
+java -cp $(echo lib/*.jar | tr ' ' ':') daylightchart.Main $*
