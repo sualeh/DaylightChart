@@ -2,7 +2,7 @@
  *
  * Daylight Chart
  * http://sualeh.github.io/DaylightChart
- * Copyright (c) 2007-2015, Sualeh Fatehi.
+ * Copyright (c) 2007-2016, Sualeh Fatehi.
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License

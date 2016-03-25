@@ -2,7 +2,7 @@
  *
  * Daylight Chart
  * http://sualeh.github.io/DaylightChart
- * Copyright (c) 2007-2015, Sualeh Fatehi.
+ * Copyright (c) 2007-2016, Sualeh Fatehi.
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -33,7 +33,7 @@ public final class Version
 {
 
   private static final String PRODUCTNAME = "Daylight Chart"; //$NON-NLS-1$
-  private static final String VERSION = "4.1.0"; //$NON-NLS-1$
+  private static final String VERSION = "4.1.1"; //$NON-NLS-1$
 
   /**
    * Information about this product.
@@ -44,7 +44,7 @@ public final class Version
   {
     final StringBuffer about = new StringBuffer();
     about.append(getProductName()).append(" ").append(getVersion()) //$NON-NLS-1$
-      .append("\n").append("\u00A9 2007-2015, Sualeh Fatehi."); //$NON-NLS-1$ //$NON-NLS-2$
+      .append("\n").append("\u00A9 2007-2016, Sualeh Fatehi."); //$NON-NLS-1$ //$NON-NLS-2$
     return new String(about);
   }
 
