@@ -22,6 +22,9 @@
 package daylightchart.gui;
 
 
+import static com.jgoodies.forms.layout.CellConstraints.BOTTOM;
+import static com.jgoodies.forms.layout.CellConstraints.RIGHT;
+
 import java.awt.AWTEvent;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
@@ -33,19 +36,17 @@ import java.util.Vector;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.KeyStroke;
+import javax.swing.border.EmptyBorder;
 
 import org.geoname.data.LocationsSortOrder;
 
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.factories.ButtonBarFactory;
-import com.jgoodies.forms.layout.FormLayout;
+import com.jgoodies.forms.builder.FormBuilder;
 
 import daylightchart.daylightchart.calculation.TwilightType;
 import daylightchart.daylightchart.chart.ChartOrientation;
@@ -164,9 +165,9 @@ public class OptionsDialog
     listTwilightType = enumDropDown(TwilightType.class);
     checkShowChartLegend = new JCheckBox();
 
-    ok = new JButton(Messages.getString("DaylightChartGui.OptionsEditor.Ok")); //$NON-NLS-1$
+    ok = new JButton(Messages.getString("DaylightChartGui.OptionsEditor.Ok"));
     cancel = new JButton(Messages
-      .getString("DaylightChartGui.OptionsEditor.Cancel")); //$NON-NLS-1$
+      .getString("DaylightChartGui.OptionsEditor.Cancel"));
 
     final DialogButtonListener listener = new DialogButtonListener();
     ok.addActionListener(listener);
@@ -174,27 +175,38 @@ public class OptionsDialog
     cancel.addActionListener(listener);
     cancel.addKeyListener(listener);
 
-    final FormLayout layout = new FormLayout("right:pref, 3dlu, min"); //$NON-NLS-1$
-    final DefaultFormBuilder builder = new DefaultFormBuilder(layout);
-    builder.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-    builder.append(Messages
-      .getString("DaylightChartGui.OptionsEditor.LocationsSortOrder"), //$NON-NLS-1$
-                   listLocationsSortOrder);
-    builder.append(Messages
-      .getString("DaylightChartGui.OptionsEditor.TimeZoneOption"), //$NON-NLS-1$
-                   listTimeZoneOption);
-    builder.append(Messages
-      .getString("DaylightChartGui.OptionsEditor.ChartOrientation"), //$NON-NLS-1$
-                   listChartOrientation);
-    builder.append(
-                   Messages
-                     .getString("DaylightChartGui.OptionsEditor.TwilightType"), //$NON-NLS-1$
-                   listTwilightType);
-    builder.append(
-                   Messages
-                     .getString("DaylightChartGui.OptionsEditor.ShowLegend"), //$NON-NLS-1$
-                   checkShowChartLegend);
-    builder.append(ButtonBarFactory.buildOKCancelBar(ok, cancel), 3);
+    final FormBuilder builder = FormBuilder.create()
+      .border(new EmptyBorder(15, 15, 15, 15)).columns("right:pref, 5dlu, pref")
+      .rows("pref, 5dlu, pref, 5dlu, pref, 5dlu, pref, 5dlu, pref, 10dlu, pref");
+
+    builder
+      .addLabel(Messages
+        .getString("DaylightChartGui.OptionsEditor.LocationsSortOrder"))
+      .labelFor(listLocationsSortOrder).rc(1, 1).add(listLocationsSortOrder)
+      .rc(1, 3);
+
+    builder
+      .addLabel(Messages
+        .getString("DaylightChartGui.OptionsEditor.TimeZoneOption"))
+      .labelFor(listTimeZoneOption).rc(3, 1).add(listTimeZoneOption).rc(3, 3);
+
+    builder
+      .addLabel(Messages
+        .getString("DaylightChartGui.OptionsEditor.ChartOrientation"))
+      .labelFor(listChartOrientation).rc(5, 1).add(listChartOrientation)
+      .rc(5, 3);
+
+    builder
+      .addLabel(Messages
+        .getString("DaylightChartGui.OptionsEditor.TwilightType"))
+      .labelFor(listTwilightType).rc(7, 1).add(listTwilightType).rc(7, 3);
+
+    builder
+      .addLabel(Messages.getString("DaylightChartGui.OptionsEditor.ShowLegend"))
+      .labelFor(checkShowChartLegend).rc(9, 1).add(checkShowChartLegend)
+      .rc(9, 3);
+
+    builder.addBar(ok, cancel).rc(11, 3, BOTTOM, RIGHT);
 
     getContentPane().add(builder.getPanel());
 

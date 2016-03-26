@@ -136,9 +136,9 @@
       <version>2.7.0</version>
     </dependency>
     <dependency>
-      <groupId>jgoodies</groupId>
-      <artifactId>forms</artifactId>
-      <version>1.0.5</version>
+      <groupId>com.jgoodies</groupId>
+      <artifactId>jgoodies-forms</artifactId>
+      <version>1.9.0</version>
     </dependency>
     <dependency>
       <groupId>com.thoughtworks.xstream</groupId>

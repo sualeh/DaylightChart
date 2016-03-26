@@ -22,6 +22,9 @@
 package daylightchart.gui;
 
 
+import static com.jgoodies.forms.layout.CellConstraints.BOTTOM;
+import static com.jgoodies.forms.layout.CellConstraints.RIGHT;
+
 import java.awt.AWTEvent;
 import java.awt.Color;
 import java.awt.Component;
@@ -38,13 +41,13 @@ import java.util.logging.Logger;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
+import javax.swing.border.EmptyBorder;
 
 import org.geoname.data.Countries;
 import org.geoname.data.Country;
@@ -52,9 +55,7 @@ import org.geoname.data.Location;
 import org.geoname.parser.DefaultTimezones;
 import org.geoname.parser.TimeZoneDisplay;
 
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.factories.ButtonBarFactory;
-import com.jgoodies.forms.layout.FormLayout;
+import com.jgoodies.forms.builder.FormBuilder;
 
 import daylightchart.gui.actions.LocationsListOperation;
 import us.fatehi.pointlocation6709.Latitude;
@@ -246,28 +247,30 @@ public class LocationDialog
     city.addFocusListener(focusListener);
     countries.addFocusListener(focusListener);
 
-    final FormLayout layout = new FormLayout("right:pref, 3dlu, min"); //$NON-NLS-1$
-    final DefaultFormBuilder builder = new DefaultFormBuilder(layout);
-    builder.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-    builder.append(Messages.getString("DaylightChartGui.LocationEditor.City"), //$NON-NLS-1$
-                   city);
-    builder.append(
-                   Messages
-                     .getString("DaylightChartGui.LocationEditor.Country"), //$NON-NLS-1$
-                   countries);
-    builder.append(
-                   Messages
-                     .getString("DaylightChartGui.LocationEditor.Latitude"), //$NON-NLS-1$
-                   latitudeValue);
-    builder.append(
-                   Messages
-                     .getString("DaylightChartGui.LocationEditor.Longitude"), //$NON-NLS-1$
-                   longitudeValue);
-    builder.append(
-                   Messages
-                     .getString("DaylightChartGui.LocationEditor.TimeZone"), //$NON-NLS-1$
-                   timeZone);
-    builder.append(ButtonBarFactory.buildOKCancelBar(ok, cancel), 3);
+    final FormBuilder builder = FormBuilder.create()
+      .border(new EmptyBorder(15, 15, 15, 15)).columns("right:pref, 5dlu, pref")
+      .rows("pref, 5dlu, pref, 5dlu, pref, 5dlu, pref, 5dlu, pref, 10dlu, pref");
+
+    builder.addLabel(Messages.getString("DaylightChartGui.LocationEditor.City"))
+      .labelFor(city).rc(1, 1).add(city).rc(1, 3);
+
+    builder
+      .addLabel(Messages.getString("DaylightChartGui.LocationEditor.Country"))
+      .labelFor(countries).rc(3, 1).add(countries).rc(3, 3);
+
+    builder
+      .addLabel(Messages.getString("DaylightChartGui.LocationEditor.Latitude"))
+      .labelFor(latitudeValue).rc(5, 1).add(latitudeValue).rc(5, 3);
+
+    builder
+      .addLabel(Messages.getString("DaylightChartGui.LocationEditor.Longitude"))
+      .labelFor(longitudeValue).rc(7, 1).add(longitudeValue).rc(7, 3);
+
+    builder
+      .addLabel(Messages.getString("DaylightChartGui.LocationEditor.TimeZone"))
+      .labelFor(timeZone).rc(9, 1).add(timeZone).rc(9, 3);
+
+    builder.addBar(ok, cancel).rc(11, 3, BOTTOM, RIGHT);
 
     getContentPane().add(builder.getPanel());
 
