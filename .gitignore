@@ -173,7 +173,6 @@ fabric.properties
 *.war
 *.nar
 *.ear
-*.zip
 # Test data zip files for geoname module
 !geoname/src/test/resources/*.zip
 *.tar.gz
