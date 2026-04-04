@@ -40,7 +40,7 @@ jobs:
 # SETUP BUILD ENVIRONMENT
     - id: checkout
       name: Check out repository
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
 
 # BUILD AND PUBLISH DOCKER IMAGE
     - id: setup-qemu
