@@ -40,7 +40,7 @@ Then access the app at `http://localhost:9090`.
 
 ## Desktop Application
 
-![DaylightChart Screenshot](https://github.com/sualeh/DaylightChart/blob/master/daylightchart/src/site/resources/screenshot.jpg)
+![DaylightChart Screenshot](https://github.com/sualeh/DaylightChart/blob/main/daylightchart/src/site/resources/screenshot.jpg?raw=true)
 
 ### Prerequisites
 
