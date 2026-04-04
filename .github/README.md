@@ -1,4 +1,3 @@
-[![Project Website](https://img.shields.io/badge/project_website-DaylightChart-7B2A90.svg)](http://sualeh.github.io/DaylightChart)
 [![Quick Build](https://github.com/sualeh/daylight-chart/actions/workflows/quick-build.yml/badge.svg)](https://github.com/sualeh/daylight-chart/actions/workflows/quick-build.yml)
 [![Release Desktop](https://github.com/sualeh/daylight-chart/actions/workflows/release-desktop.yml/badge.svg)](https://github.com/sualeh/daylight-chart/actions/workflows/release-desktop.yml)
 
