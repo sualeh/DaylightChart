@@ -1,79 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <parent>
     <artifactId>daylightchart-all</artifactId>
     <groupId>daylightchart</groupId>
-    <version>4.1.1</version>
+    <version>5.0.2</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>daylightchart</artifactId>
   <name>Daylight Chart</name>
-  <licenses>
-    <license>
-      <name>GNU General Public License</name>
-      <url>http://www.gnu.org/licenses/gpl.txt</url>
-    </license>
-  </licenses>
   <build>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-antrun-plugin</artifactId>
-        <version>1.8</version>
-        <executions>
-          <execution>
-            <id>download-licenses</id>
-            <phase>package</phase>
-            <goals>
-              <goal>run</goal>
-            </goals>
-            <configuration>
-              <tasks>
-                <property name="licenses.dir" location="target/licenses" />
-                <mkdir dir="${licenses.dir}" />
-                <get src="http://www.apache.org/licenses/LICENSE-2.0"
-                  dest="${licenses.dir}/LICENSE.ApacheCommons.html"
-                  usetimestamp="true" 
-                  ignoreerrors="true" />
-                <get src="http://www.object-refinery.com/lgpl.html"
-                  dest="${licenses.dir}/LICENSE.JFreeChart.html"
-                  usetimestamp="true"  
-                  ignoreerrors="true" />
-                <get src="http://xml.apache.org/xalan-j/#license1.1"
-                  dest="${licenses.dir}/LICENSE.ApacheXML.html"
-                  usetimestamp="true"  
-                  ignoreerrors="true" />
-                <get src="http://x-stream.github.io/license.html"
-                  dest="${licenses.dir}/LICENSE.XStream.html"
-                  usetimestamp="true"  
-                  ignoreerrors="true" />
-                <get src="http://www.jgoodies.com/freeware/libraries/"
-                  dest="${licenses.dir}/LICENSE.JGoodies.html"
-                  usetimestamp="true"  
-                  ignoreerrors="true" />
-              </tasks>
-            </configuration>
-          </execution>
-        </executions>
-        <dependencies>
-          <dependency>
-            <groupId>org.apache.ant</groupId>
-            <artifactId>ant</artifactId>
-            <version>1.9.15</version>
-          </dependency>
-          <dependency>
-            <groupId>org.apache.ant</groupId>
-            <artifactId>ant-apache-regexp</artifactId>
-            <version>1.9.6</version>
-          </dependency>
-        </dependencies>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jar-plugin</artifactId>
-        <version>2.6</version>
+        <version>3.5.0</version>
         <configuration>
           <archive>
             <index>true</index>
@@ -91,13 +33,13 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-assembly-plugin</artifactId>
-        <version>2.5.5</version>
+        <version>3.8.0</version>
         <executions>
           <execution>
             <id>assembly</id>
             <phase>package</phase>
             <goals>
-              <goal>attached</goal>
+              <goal>single</goal>
             </goals>
             <configuration>
               <descriptors>
@@ -111,14 +53,24 @@
   </build>
   <dependencies>
     <dependency>
-      <groupId>us.fatehi</groupId>
-      <artifactId>pointlocation6709</artifactId>
-      <version>4.1</version>
+      <groupId>daylightchart</groupId>
+      <artifactId>daylightchart-options</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>daylightchart</groupId>
+      <artifactId>daylightchart-chart</artifactId>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>us.fatehi</groupId>
-      <artifactId>sunposition</artifactId>
-      <version>4.0</version>
+      <artifactId>pointlocation6709</artifactId>
+      <version>5.0.1</version>
+    </dependency>
+    <dependency>
+      <groupId>net.e175.klaus</groupId>
+      <artifactId>solarpositioning</artifactId>
+      <version>2.0.12</version>
     </dependency>
     <dependency>
       <groupId>geoname</groupId>
@@ -128,7 +80,7 @@
     <dependency>
       <groupId>org.jfree</groupId>
       <artifactId>jfreechart</artifactId>
-      <version>1.0.19</version>
+      <version>1.5.6</version>
     </dependency>
     <dependency>
       <groupId>com.jgoodies</groupId>
@@ -141,9 +93,9 @@
       <version>1.9.0</version>
     </dependency>
     <dependency>
-      <groupId>com.thoughtworks.xstream</groupId>
-      <artifactId>xstream</artifactId>
-      <version>1.4.14</version>
+      <groupId>tools.jackson.dataformat</groupId>
+      <artifactId>jackson-dataformat-yaml</artifactId>
+      <version>3.1.1</version>
     </dependency>
   </dependencies>
 </project>

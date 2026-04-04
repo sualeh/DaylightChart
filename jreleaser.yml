@@ -1,0 +1,27 @@
+project:
+  name: daylight-chart
+  version: 5.0.2
+  description: Daylight Chart shows sunrise and sunset times in an attractive chart, for any location in the world.
+  longDescription: |
+    Daylight Chart shows sunrise and sunset times in an attractive chart,
+    for any location in the world. The effect of daylight savings time is
+    also displayed. Charts can be exported to image files.
+  authors:
+    - Sualeh Fatehi
+  license: EPL-2.0
+  links:
+    homepage: https://github.com/sualeh/DaylightChart
+    documentation: https://github.com/sualeh/DaylightChart
+  java:
+    version: 21
+    mainClass: daylightchart.Main
+
+release:
+  github:
+    skipRelease: true
+
+distributions:
+  daylight-chart:
+    type: JAVA_BINARY
+    artifacts:
+      - path: daylightchart/target/daylightchart-{{projectVersion}}-distrib.zip

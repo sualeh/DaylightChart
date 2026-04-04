@@ -1,69 +1,38 @@
 /*
- *
  * Daylight Chart
  * http://sualeh.github.io/DaylightChart
- * Copyright (c) 2007-2016, Sualeh Fatehi.
- *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
+ * Copyright (c) 2007-2026, Sualeh Fatehi <sualeh@hotmail.com>.
+ * All rights reserved.
+ * SPDX-License-Identifier: EPL-2.0
  */
+
 package org.geoname.data;
 
-
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVRecord;
 
-import org.geoname.parser.UnicodeReader;
+/** In-memory database of locations. */
+public final class Countries {
 
-/**
- * In-memory database of locations.
- *
- * @author Sualeh Fatehi
- */
-public final class Countries
-{
+  private static final Map<String, Country> iso3166_alpha2Map;
+  private static final Map<String, Country> iso3166_alpha3Map;
+  private static final Map<String, Country> countryNameMap;
 
-  private static final Map<String, Country> iso3166CountryCodeMap;
-  private static final Map<String, Country> fips10CountryCodeMap;
-  private static final Map<String, Country> countryNameMap = new HashMap<String, Country>();
+  /** Loads data from internal database. */
+  static {
+    iso3166_alpha2Map = new HashMap<>();
+    iso3166_alpha3Map = new HashMap<>();
+    countryNameMap = new HashMap<>();
 
-  /**
-   * Loads data from internal database.
-   */
-  static
-  {
-    iso3166CountryCodeMap = readISOCountryData("iso_countries.data");
-    fips10CountryCodeMap = readFips10CountryData("fips10_countries.data");
-
-    final Collection<Country> countries = new HashSet<>();
-    countries.addAll(iso3166CountryCodeMap.values());
-    countries.addAll(fips10CountryCodeMap.values());
-
-    for (final Country country: countries)
-    {
-      countryNameMap.put(country.getName(), country);
-    }
+    loadISO3166_1();
   }
 
   /**
@@ -71,167 +40,91 @@ public final class Countries
    *
    * @return All countries.
    */
-  public static List<Country> getAllCountries()
-  {
-    final ArrayList<Country> countries = new ArrayList<Country>(iso3166CountryCodeMap
-      .values());
+  public static List<Country> getAllCountries() {
+    final ArrayList<Country> countries = new ArrayList<>(iso3166_alpha2Map.values());
     Collections.sort(countries);
     return countries;
   }
 
   /**
-   * Looks up a country from the provided string - whether a country
-   * code or a country name.
+   * Looks up a country from the provided string - whether a country code or a country name.
    *
-   * @param countryString
-   *        Country
+   * @param countryString Country
    * @return Country ojbect, or null
    */
-  public static Country lookupCountry(final String countryString)
-  {
-    Country country;
-    if (countryString == null)
-    {
-      country = null;
+  public static Country lookupCountry(final String countryString) {
+    if (countryString == null) {
+      return null;
     }
-    else if (countryString.length() == 2)
-    {
-      if (iso3166CountryCodeMap.containsKey(countryString))
-      {
-        country = lookupIso3166CountryCode2(countryString);
-      }
-      else
-      {
-        country = lookupFips10CountryCode(countryString);
-        if (country == null)
-        {
-          final Collection<Country> countries = fips10CountryCodeMap.values();
-          for (final Country fips10Country: countries)
-          {
-            if (fips10Country.getCode().equals(countryString))
-            {
-              country = fips10Country;
-              break;
-            }
-          }
-        }
-      }
+    if (countryNameMap.containsKey(countryString)) {
+      return countryNameMap.get(countryString);
     }
-    else
-    {
-      country = lookupCountryName(countryString);
+    if (iso3166_alpha2Map.containsKey(countryString)) {
+      return iso3166_alpha2Map.get(countryString);
     }
-    return country;
+    if (iso3166_alpha3Map.containsKey(countryString)) {
+      return iso3166_alpha3Map.get(countryString);
+    }
+    return null;
   }
 
   /**
    * Looks up a country from the country name.
    *
-   * @param countryName
-   *        Country name
+   * @param countryName Country name
    * @return Country ojbect, or null
    */
-  public static Country lookupCountryName(final String countryName)
-  {
+  public static Country lookupCountryName(final String countryName) {
     return countryNameMap.get(countryName);
-  }
-
-  /**
-   * Looks up a country from the FIPS-10 country code.
-   *
-   * @param fips10CountryCode
-   *        FIPS-10 country code
-   * @return Country ojbect, or null
-   */
-  public static Country lookupFips10CountryCode(final String fips10CountryCode)
-  {
-    return fips10CountryCodeMap.get(fips10CountryCode);
   }
 
   /**
    * Looks up a country from the two-letter ISO 3166 country code.
    *
-   * @param iso3166CountryCode2
-   *        ISO 3166 country code
+   * @param iso3166CountryCode2 ISO 3166 country code
    * @return Country ojbect, or null
    */
-  public static Country lookupIso3166CountryCode2(final String iso3166CountryCode2)
-  {
-    return iso3166CountryCodeMap.get(iso3166CountryCode2);
+  public static Country lookupIso3166CountryCode2(final String iso3166CountryCode2) {
+    return iso3166_alpha2Map.get(iso3166CountryCode2);
   }
 
-  private static Map<String, Country> readFips10CountryData(final String dataResource)
-  {
-    final Map<String, Country> countryCodeMap = new HashMap<>();
-    try (final BufferedReader reader = new BufferedReader(new UnicodeReader(Countries.class
-                                                                              .getClassLoader()
-                                                                              .getResourceAsStream(dataResource),
-                                                                            "UTF-8"));)
-    {
-      reader.lines().map(line -> line.split(","))
-        .filter(fields -> fields.length == 3)
-        .filter(fields -> fields[0] != null & fields[1] != null)
-        .filter(fields -> fields[0].length() <= 2 && !fields[1].isEmpty())
-        .forEach(fields -> {
-          final String iso3166CountryCode = fields[1];
-          final String fips10CountryCode = fields[0];
-          final Country country;
-          if (iso3166CountryCodeMap.containsKey(iso3166CountryCode))
-          {
-            country = iso3166CountryCodeMap.get(iso3166CountryCode);
-          }
-          else
-          {
-            final String countryName = fields[2];
-            if (iso3166CountryCode.length() == 2)
-            {
-              country = new Country(iso3166CountryCode, countryName);
-            }
-            else if (fips10CountryCode.length() == 2)
-            {
-              country = new Country(fips10CountryCode, countryName);
-            }
-            else
-            {
-              country = null;
-            }
-          }
-          if (country != null)
-          {
-            countryCodeMap.put(fips10CountryCode, country);
-          }
-        });
-    }
-    catch (final IOException e)
-    {
-      throw new IllegalStateException("Cannot read data from internal database",
-                                      e);
-    }
-    return countryCodeMap;
+  /**
+   * Looks up a country from the two-letter ISO 3166 country code.
+   *
+   * @param iso3166CountryCode3 ISO 3166 country code
+   * @return Country ojbect, or null
+   */
+  public static Country lookupIso3166CountryCode3(final String iso3166CountryCode3) {
+    return iso3166_alpha3Map.get(iso3166CountryCode3);
   }
 
-  private static Map<String, Country> readISOCountryData(final String dataResource)
-  {
-    final Map<String, Country> countryCodeMap = new HashMap<>();
-    try (final BufferedReader reader = new BufferedReader(new InputStreamReader(Countries.class
-                                                                                  .getClassLoader()
-                                                                                  .getResourceAsStream(dataResource),
-                                                                                Charset
-                                                                                  .forName("UTF8")));)
-    {
-      reader.lines().map(line -> line.split(","))
-        .filter(fields -> fields.length == 2)
-        .filter(fields -> fields[0] != null && fields[1] != null)
-        .filter(fields -> fields[0].length() == 2 || !fields[1].isEmpty())
-        .map(fields -> new Country(fields[0], fields[1]))
-        .forEach(country -> countryCodeMap.put(country.getCode(), country));
+  private static void loadISO3166_1() {
+    final String dataResource = "iso3166-1.data";
+    final CSVFormat format =
+        CSVFormat.DEFAULT
+            .builder()
+            .setHeader()
+            .setSkipHeaderRecord(true)
+            .setIgnoreEmptyLines(true)
+            .get();
+    try (CSVParser csvParser =
+        format.parse(
+            new InputStreamReader(
+                Countries.class.getClassLoader().getResourceAsStream(dataResource), "UTF-8"))) {
+      for (final CSVRecord record : csvParser) {
+        final String name = record.get("name");
+        final String alpha2 = record.get("alpha-2");
+        final String alpha3 = record.get("alpha-3");
+        if (alpha2 == null || alpha3 == null || name == null || name.isEmpty()) {
+          continue;
+        }
+        final Country country = new Country(name, alpha2, alpha3);
+        countryNameMap.put(country.name(), country);
+        iso3166_alpha2Map.put(country.alpha2Code(), country);
+        iso3166_alpha3Map.put(country.alpha3Code(), country);
+      }
+    } catch (final IOException e) {
+      throw new IllegalStateException("Cannot read data from internal database", e);
     }
-    catch (final IOException e)
-    {
-      throw new IllegalStateException("Cannot read data from internal database",
-                                      e);
-    }
-    return countryCodeMap;
   }
-
 }

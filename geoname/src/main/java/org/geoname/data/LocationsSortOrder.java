@@ -1,86 +1,61 @@
-/* 
- * 
+/*
  * Daylight Chart
  * http://sualeh.github.io/DaylightChart
- * Copyright (c) 2007-2016, Sualeh Fatehi.
- * 
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * 
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- * 
+ * Copyright (c) 2007-2026, Sualeh Fatehi <sualeh@hotmail.com>.
+ * All rights reserved.
+ * SPDX-License-Identifier: EPL-2.0
  */
+
 package org.geoname.data;
 
-
+import java.io.Serial;
 import java.util.Comparator;
-
 import us.fatehi.pointlocation6709.Latitude;
 
-/**
- * Sort order for locations.
- * 
- * @author Sualeh Fatehi
- */
-public enum LocationsSortOrder
-  implements Comparator<Location>
-{
-
-  BY_NAME("Sort locations by name")
-  {
-    public int compare(final Location location1, final Location location2)
-    {
-      return location1.getDescription().toLowerCase()
-        .compareTo(location2.getDescription().toLowerCase());
+/** Sort order for locations. */
+public enum LocationsSortOrder implements Comparator<Location> {
+  BY_NAME("Sort locations by name") {
+    @Override
+    public int compare(final Location location1, final Location location2) {
+      return location1
+          .getDescription()
+          .toLowerCase()
+          .compareTo(location2.getDescription().toLowerCase());
     }
   },
-  BY_LATITUDE("Sort locations by latitude")
-  {
-    public int compare(final Location location1, final Location location2)
-    {
+  BY_LATITUDE("Sort locations by latitude") {
+    @Override
+    public int compare(final Location location1, final Location location2) {
       final Latitude latitude1 = location1.getPointLocation().getLatitude();
       final Latitude latitude2 = location2.getPointLocation().getLatitude();
       return (int) Math.signum(latitude2.getRadians() - latitude1.getRadians());
     }
   };
 
-  private static final long serialVersionUID = 4483200154586111166L;
+  @Serial private static final long serialVersionUID = 4483200154586111166L;
 
   private final String description;
 
-  private LocationsSortOrder(final String description)
-  {
+  LocationsSortOrder(final String description) {
     this.description = description;
   }
 
   /**
    * Description.
-   * 
+   *
    * @return Description
    */
-  public String getDescription()
-  {
+  public String getDescription() {
     return description;
   }
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see java.lang.Enum#toString()
    */
   @Override
-  public String toString()
-  {
+  public String toString() {
     return description;
   }
-
 }

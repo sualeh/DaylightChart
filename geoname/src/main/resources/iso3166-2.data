@@ -1,0 +1,5078 @@
+country_code;region_name;region_type;regional_code;regional_number_code
+AF;"Badakhshān";Province;"BDS";12267
+AF;"Baghlān";Province;"BGL";12268
+AF;"Balkh";Province;"BAL";12273
+AF;"Bādghīs";Province;"BDG";12272
+AF;"Bāmyān";Province;"BAM";12269
+AF;"Dāykundī";Province;"DAY";20221
+AF;"Farāh";Province;"FRA";12274
+AF;"Fāryāb";Province;"FYB";12270
+AF;"Ghaznī";Province;"GHA";12271
+AF;"Ghōr";Province;"GHO";12275
+AF;"Helmand";Province;"HEL";12277
+AF;"Herāt";Province;"HER";12262
+AF;"Jowzjān";Province;"JOW";12283
+AF;"Kandahār";Province;"KAN";12263
+AF;"Khōst";Province;"KHO";12276
+AF;"Kunar";Province;"KNR";12284
+AF;"Kunduz";Province;"KDZ";12256
+AF;"Kābul";Province;"KAB";12278
+AF;"Kāpīsā";Province;"KAP";12261
+AF;"Laghmān";Province;"LAG";12279
+AF;"Lōgar";Province;"LOW";12260
+AF;"Nangarhār";Province;"NAN";12280
+AF;"Nīmrōz";Province;"NIM";12285
+AF;"Nūristān";Province;"NUR";12281
+AF;"Paktia";Province;"PIA";12282
+AF;"Paktika";Province;"PKA";12259
+AF;"Panjshayr";Province;"PAN";20222
+AF;"Parwān";Province;"PAR";12257
+AF;"Samangan";Province;"SAM";12264
+AF;"Sar-e Pul";Province;"SAR";12258
+AF;"Takhar";Province;"TAK";12265
+AF;"Uruzgān";Province;"URU";12255
+AF;"Uruzgān";Province;"ORU";48898
+AF;"Wardak";Province;"WAR";12266
+AF;"Zābul";Province;"ZAB";12254
+AL;"Berat";District;"BR";12316
+AL;"Berat";county;"01";48288
+AL;"Bulqizë";District;"BU";12309
+AL;"Delvinë";District;"DL";12310
+AL;"Devoll";District;"DV";12317
+AL;"Dibër";District;"DI";12311
+AL;"Dibër";county;"09";48289
+AL;"Durrës";county;"02";48290
+AL;"Durrës";District;"DR";12312
+AL;"Elbasan";District;"EL";12315
+AL;"Elbasan";county;"03";48291
+AL;"Fier";county;"04";48292
+AL;"Fier";District;"FR";12313
+AL;"Gjirokastër";District;"GJ";12314
+AL;"Gjirokastër";county;"05";48293
+AL;"Gramsh";District;"GR";12318
+AL;"Has";District;"HA";12300
+AL;"Kavajë";District;"KA";12301
+AL;"Kolonjë";District;"ER";12290
+AL;"Korçë";District;"KO";12302
+AL;"Korçë";county;"06";48294
+AL;"Krujë";District;"KR";12303
+AL;"Kukës";District;"KU";12304
+AL;"Kukës";county;"07";48295
+AL;"Kurbin";District;"KB";12305
+AL;"Kuçovë";District;"KC";12319
+AL;"Lezhë";District;"LE";12320
+AL;"Lezhë";county;"08";48296
+AL;"Librazhd";District;"LB";12306
+AL;"Lushnjë";District;"LU";12307
+AL;"Mallakastër";District;"MK";12321
+AL;"Malësi e Madhe";District;"MM";12308
+AL;"Mat";District;"MT";12291
+AL;"Mirditë";District;"MR";12289
+AL;"Peqin";District;"PQ";12292
+AL;"Pogradec";District;"PG";12288
+AL;"Pukë";District;"PU";12294
+AL;"Përmet";District;"PR";12293
+AL;"Sarandë";District;"SR";12295
+AL;"Shkodër";District;"SH";12287
+AL;"Shkodër";county;"10";48297
+AL;"Skrapar";District;"SK";12296
+AL;"Tepelenë";District;"TE";12297
+AL;"Tiranë";District;"TR";12286
+AL;"Tiranë";county;"11";48298
+AL;"Tropojë";District;"TP";12298
+AL;"Vlorë";county;"12";48299
+AL;"Vlorë";District;"VL";12299
+DZ;"Adrar";Province;"01";12363
+DZ;"Alger";Province;"16";12344
+DZ;"Annaba";Province;"23";12332
+DZ;"Aïn Defla";Province;"44";12351
+DZ;"Aïn Témouchent";Province;"46";12333
+DZ;"Batna";Province;"05";12334
+DZ;"Biskra";Province;"07";12354
+DZ;"Blida";Province;"09";12336
+DZ;"Bordj Bou Arréridj";Province;"34";12342
+DZ;"Bouira";Province;"10";12341
+DZ;"Boumerdès";Province;"35";12337
+DZ;"Béchar";Province;"08";12352
+DZ;"Béjaïa";Province;"06";12335
+DZ;"Chlef";Province;"02";12367
+DZ;"Constantine";Province;"25";12348
+DZ;"Djelfa";Province;"17";12345
+DZ;"El Bayadh";Province;"32";12353
+DZ;"El Oued";Province;"39";12323
+DZ;"El Tarf";Province;"36";12357
+DZ;"Ghardaïa";Province;"47";12343
+DZ;"Guelma";Province;"24";12366
+DZ;"Illizi";Province;"33";12340
+DZ;"Jijel";Province;"18";12330
+DZ;"Khenchela";Province;"40";12339
+DZ;"Laghouat";Province;"03";12350
+DZ;"Mascara";Province;"29";12365
+DZ;"Mila";Province;"43";12329
+DZ;"Mostaganem";Province;"27";12347
+DZ;"Msila";Province;"28";12364
+DZ;"Médéa";Province;"26";12346
+DZ;"Naama";Province;"45";12328
+DZ;"Oran";Province;"31";12362
+DZ;"Ouargla";Province;"30";12322
+DZ;"Oum el Bouaghi";Province;"04";12361
+DZ;"Relizane";Province;"48";12338
+DZ;"Saïda";Province;"20";12327
+DZ;"Sidi Bel Abbès";Province;"22";12326
+DZ;"Skikda";Province;"21";12349
+DZ;"Souk Ahras";Province;"41";12356
+DZ;"Sétif";Province;"19";12355
+DZ;"Tamanghasset";Province;"11";12368
+DZ;"Tiaret";Province;"14";12360
+DZ;"Tindouf";Province;"37";12359
+DZ;"Tipaza";Province;"42";12369
+DZ;"Tissemsilt";Province;"38";12325
+DZ;"Tizi Ouzou";Province;"15";12324
+DZ;"Tlemcen";Province;"13";12370
+DZ;"Tébessa";Province;"12";12358
+AD;"Andorra la Vella";Parish;"07";12382
+AD;"Canillo";Parish;"02";12381
+AD;"Encamp";Parish;"03";12383
+AD;"Escaldes-Engordany";Parish;"08";12380
+AD;"La Massana";Parish;"04";12384
+AD;"Ordino";Parish;"05";12379
+AD;"Sant Julià de Lòria";Parish;"06";12378
+AO;"Bengo";Province;"BGO";12390
+AO;"Benguela";Province;"BGU";12391
+AO;"Bié";Province;"BIE";12395
+AO;"Cabinda";Province;"CAB";12392
+AO;"Cuando-Cubango";Province;"CCU";12394
+AO;"Cuanza Norte";Province;"CNO";12388
+AO;"Cuanza Sul";Province;"CUS";12397
+AO;"Cunene";Province;"CNN";12389
+AO;"Huambo";Province;"HUA";12393
+AO;"Huíla";Province;"HUI";12396
+AO;"Luanda";Province;"LUA";12387
+AO;"Lunda Norte";Province;"LNO";12398
+AO;"Lunda Sul";Province;"LSU";12386
+AO;"Malange";Province;"MAL";12399
+AO;"Moxico";Province;"MOX";12401
+AO;"Namibe";Province;"NAM";12402
+AO;"Uíge";Province;"UIG";12400
+AO;"Zaire";Province;"ZAI";12385
+AG;"Barbuda";Dependency;"10";12426
+AG;"Redonda";Dependency;"11";12425
+AG;"Redonda";Dependency;"X2~";48127
+AG;"Saint George";Parish;"03";12427
+AG;"Saint John’s";Parish;"04";12431
+AG;"Saint Mary";Parish;"05";12428
+AG;"Saint Paul";Parish;"06";12429
+AG;"Saint Peter";Parish;"07";12432
+AG;"Saint Philip";Parish;"08";12430
+AR;"Buenos Aires";province;"B";12439
+AR;"Catamarca";province;"K";12438
+AR;"Chaco";province;"H";12440
+AR;"Chubut";province;"U";12454
+AR;"Ciudad Autónoma de Buenos Aires";federal district;"C";12437
+AR;"Corrientes";province;"W";12442
+AR;"Córdoba";province;"X";12441
+AR;"Entre Ríos";province;"E";12443
+AR;"Formosa";province;"P";12455
+AR;"Jujuy";province;"Y";12444
+AR;"La Pampa";province;"L";12445
+AR;"La Rioja";province;"F";12436
+AR;"Mendoza";province;"M";12446
+AR;"Misiones";province;"N";12456
+AR;"Neuquén";province;"Q";12447
+AR;"Río Negro";province;"R";12448
+AR;"Salta";province;"A";12435
+AR;"San Juan";province;"J";12449
+AR;"San Luis";province;"D";12450
+AR;"Santa Cruz";province;"Z";12434
+AR;"Santa Fe";province;"S";12451
+AR;"Santiago del Estero";province;"G";12433
+AR;"Tierra del Fuego";province;"V";12452
+AR;"Tucumán";province;"T";12453
+AM;"Aragac?otn";Province;"AG";12466
+AM;"Ararat";Province;"AR";12461
+AM;"Armavir";Province;"AV";12467
+AM;"Erevan";city;"ER";12464
+AM;"Gegark'unik'";Province;"GR";12460
+AM;"Kotayk'";Province;"KT";12462
+AM;"Lo?y";Province;"LO";12465
+AM;"Syunik'";Province;"SU";12463
+AM;"Tavuš";Province;"TV";12457
+AM;"Vayoc Jor";Province;"VD";12458
+AM;"Širak";Province;"SH";12459
+AU;"Australian Capital Territory";territory;"ACT";12471
+AU;"New South Wales";state;"NSW";12477
+AU;"Northern Territory";territory;"NT";12475
+AU;"Queensland";state;"QLD";12476
+AU;"South Australia";state;"SA";12472
+AU;"Tasmania";state;"TAS";12474
+AU;"Victoria";state;"VIC";12473
+AU;"Western Australia";state;"WA";12470
+AT;"Burgenland";State;"1";12480
+AT;"Kärnten";State;"2";12481
+AT;"Niederösterreich";State;"3";12485
+AT;"Oberösterreich";State;"4";12482
+AT;"Salzburg";State;"5";12479
+AT;"Steiermark";State;"6";12483
+AT;"Tirol";State;"7";12486
+AT;"Vorarlberg";State;"8";12484
+AT;"Wien";State;"9";12478
+AZ;"Abseron";District;"ABS";12521
+AZ;"Agcabädi";District;"AGC";12522
+AZ;"Agdam";District;"AGM";12550
+AZ;"Agdas";District;"AGS";12523
+AZ;"Agstafa";District;"AGA";12493
+AZ;"Agsu";District;"AGU";12524
+AZ;"Astara";District;"AST";12525
+AZ;"Babäk";District;"BAB";12494
+AZ;"Baki";municipality;"BA";12526
+AZ;"Balakän";District;"BAL";12527
+AZ;"Beyläqan";District;"BEY";12528
+AZ;"Biläsuvar";District;"BIL";12529
+AZ;"Bärdä";District;"BAR";12495
+AZ;"Culfa";District;"CUL";12531
+AZ;"Cäbrayil";District;"CAB";12496
+AZ;"Cälilabab";District;"CAL";12530
+AZ;"Daskäsän";District;"DAS";12497
+AZ;"Däväçi";District;"DAV";12532
+AZ;"Füzuli";District;"FUZ";12533
+AZ;"Goranboy";District;"GOR";12512
+AZ;"Gädäbäy";District;"GAD";12534
+AZ;"Göygöl";District;"GYG";48902
+AZ;"Göyçay";District;"GOY";12513
+AZ;"Gəncə";municipality;"GA";12499
+AZ;"Haciqabul";District;"HAC";12500
+AZ;"Imisli";District;"IMI";12514
+AZ;"Ismayilli";District;"ISM";12501
+AZ;"Kälbäcär";District;"KAL";12515
+AZ;"Kürdämir";District;"KUR";12516
+AZ;"Kǝngǝrli";District;"KAN";48903
+AZ;"Laçin";District;"LAC";12551
+AZ;"Lerik";District;"LER";12518
+AZ;"Länkäran";District;"LAN";12517
+AZ;"Lənkəran";municipality;"LA";20104
+AZ;"Masalli";District;"MAS";12552
+AZ;"Mingəçevir";municipality;"MI";12519
+AZ;"Naftalan";municipality;"NA";12520
+AZ;"Naxçivan";autonomous republic;"NX";12553
+AZ;"Naxçıvan";municipality;"NV";48899
+AZ;"Neftçala";District;"NEF";12535
+AZ;"Oguz";District;"OGU";12554
+AZ;"Ordubad";District;"ORD";12536
+AZ;"Qax";District;"QAX";12537
+AZ;"Qazax";District;"QAZ";12555
+AZ;"Qobustan";District;"QOB";12539
+AZ;"Quba";District;"QBA";12556
+AZ;"Qubadli";District;"QBI";12540
+AZ;"Qusar";District;"QUS";12541
+AZ;"Qäbälä";District;"QAB";12538
+AZ;"Saatli";District;"SAT";12557
+AZ;"Sabirabad";District;"SAB";12542
+AZ;"Sahbuz";District;"SAH";12502
+AZ;"Salyan";District;"SAL";12558
+AZ;"Samaxi";District;"SMI";12503
+AZ;"Samux";District;"SMX";12492
+AZ;"Siyäzän";District;"SIY";12507
+AZ;"Sumqayıt";municipality;"SM";12491
+AZ;"Susa";District;"SUS";12508
+AZ;"Susa City";municipality;"SS";20106
+AZ;"Sädäräk";District;"SAD";12504
+AZ;"Säki";District;"SAK";12505
+AZ;"Sämkir";District;"SKR";12559
+AZ;"Särur";District;"SAR";12506
+AZ;"Tovuz";District;"TOV";12560
+AZ;"Tärtär";District;"TAR";12509
+AZ;"Ucar";District;"UCA";12510
+AZ;"Xankəndi";municipality;"XA";12490
+AZ;"Xanlar";District;"XAN";12544
+AZ;"Xaçmaz";District;"XAC";12543
+AZ;"Xizi";District;"XIZ";12545
+AZ;"Xocali";District;"XCI";12489
+AZ;"Xocavänd";District;"XVD";12546
+AZ;"Yardimli";District;"YAR";12488
+AZ;"Yevlax";District;"YEV";12547
+AZ;"Yevlax City";municipality;"YE";20107
+AZ;"Zaqatala";District;"ZAQ";12548
+AZ;"Zängilan";District;"ZAN";12487
+AZ;"Zärdab";District;"ZAR";12549
+AZ;"Äli Bayramli";municipality;"AB";12498
+AZ;"Şabran";District;"SBN";48901
+AZ;"Şirvan";municipality;"SR";48900
+AZ;"Şəki";municipality;"SA";20105
+BS;"Acklins  Islands";District;"AK";12567
+BS;"Acklins and Crooked Islands";District;"AC";48139
+BS;"Berry Islands";district;"BY";48140
+BS;"Bimini and Cat Cay";District;"BI";12574
+BS;"Black Point";district;"BP";48141
+BS;"Cat Island";District;"CI";12575
+BS;"Central Abaco";district;"CO";48142
+BS;"Central Andros";district;"CS";48143
+BS;"Central Eleuthera";district;"CE";48144
+BS;"City of Freeport";district;"FP";12566
+BS;"Crooked Island and Long Cay";district;"CK";48146
+BS;"East Grand Bahama";district;"EG";48147
+BS;"Exuma";District;"EX";12578
+BS;"Governor's Harbour";District;"GH";12577
+BS;"Grand Cay";District;"GC";12572
+BS;"Green Turtle Cay";District;"GT";12571
+BS;"Harbour Island";District;"HI";12579
+BS;"High Rock";District;"HR";20112
+BS;"Hope Town";district;"HT";48148
+BS;"Inagua";District;"IN";12565
+BS;"Kemps Bay";District;"KB";20113
+BS;"Long Island";District;"LI";12580
+BS;"Mangrove Cay";district;"MC";48149
+BS;"Marsh Harbour";District;"MH";20114
+BS;"Mayaguana";District;"MG";12564
+BS;"Moore’s Island";district;"MI";48150
+BS;"New Providence";District;"NP";12563
+BS;"Nicholls Town and Berry Islands";District;"NB";12573
+BS;"North Abaco";district;"NO";48151
+BS;"North Andros";district;"NS";48152
+BS;"North Eleuthera";district;"NE";48153
+BS;"Ragged Island";District;"RI";12568
+BS;"Rock Sound";District;"RS";20115
+BS;"Rum Cay";district;"RC";48154
+BS;"San Salvador";district;"SS";48155
+BS;"San Salvador and Rum Cay";District;"SR";12569
+BS;"Sandy Point";District;"SP";20116
+BS;"South Abaco";district;"SO";48156
+BS;"South Andros";district;"SA";48157
+BS;"South Eleuthera";district;"SE";48158
+BS;"Spanish Wells";district;"SW";48159
+BS;"West Grand Bahama";district;"WG";48160
+BH;"Al Janubiyah";Governorate;"14";12592
+BH;"Al Manamah (Al ‘Asimah)";Governorate;"13";12589
+BH;"Al Muharraq";Governorate;"15";12583
+BH;"Al Wustá";Governorate;"16";12581
+BH;"Ash Shamaliyah";Governorate;"17";12582
+BD;"Bagerhat";District;"05";12600
+BD;"Bandarban";District;"01";12601
+BD;"Barguna";District;"02";12602
+BD;"Barisal";division;"A";48675
+BD;"Barisal";District;"06";12612
+BD;"Barisal";division;"1";48257
+BD;"Bhola";District;"07";12613
+BD;"Bogra";District;"03";12614
+BD;"Brahmanbaria";District;"04";12630
+BD;"Chandpur";District;"09";12615
+BD;"Chittagong";division;"2";48258
+BD;"Chittagong";division;"B";48676
+BD;"Chittagong";District;"10";12631
+BD;"Chuadanga";District;"12";12632
+BD;"Comilla";District;"08";12606
+BD;"Cox's Bazar";District;"11";12641
+BD;"Dhaka";District;"13";12616
+BD;"Dhaka";division;"C";48677
+BD;"Dhaka";division;"3";48259
+BD;"Dinajpur";District;"14";12633
+BD;"Faridpur";District;"15";12617
+BD;"Feni";District;"16";12618
+BD;"Gaibandha";District;"19";12634
+BD;"Gazipur";District;"18";12635
+BD;"Gopalganj";District;"17";12619
+BD;"Habiganj";District;"20";12636
+BD;"Jaipurhat";District;"24";12620
+BD;"Jamalpur";District;"21";12637
+BD;"Jessore";District;"22";12603
+BD;"Jhalakati";District;"25";12638
+BD;"Jhenaidah";District;"23";12604
+BD;"Khagrachari";District;"29";12639
+BD;"Khulna";division;"4";48260
+BD;"Khulna";division;"D";48678
+BD;"Khulna";District;"27";12640
+BD;"Kishoreganj";District;"26";12605
+BD;"Kurigram";District;"28";12642
+BD;"Kushtia";District;"30";12607
+BD;"Lakshmipur";District;"31";12643
+BD;"Lalmonirhat";District;"32";12608
+BD;"Madaripur";District;"36";12644
+BD;"Magura";District;"37";12609
+BD;"Manikganj";District;"33";12610
+BD;"Meherpur";District;"39";12611
+BD;"Moulvibazar";District;"38";12622
+BD;"Munshiganj";District;"35";12623
+BD;"Mymensingh";District;"34";12621
+BD;"Naogaon";District;"48";12626
+BD;"Narail";District;"43";12624
+BD;"Narayanganj";District;"40";12599
+BD;"Narsingdi";District;"42";12625
+BD;"Natore";District;"44";12653
+BD;"Nawabganj";District;"45";12598
+BD;"Netrakona";District;"41";12627
+BD;"Nilphamari";District;"46";12654
+BD;"Noakhali";District;"47";12628
+BD;"Pabna";District;"49";12629
+BD;"Panchagarh";District;"52";12597
+BD;"Patuakhali";District;"51";12645
+BD;"Pirojpur";District;"50";12655
+BD;"Rajbari";District;"53";12646
+BD;"Rajshahi";District;"54";12596
+BD;"Rajshahi";division;"5";48261
+BD;"Rajshahi";division;"E";48679
+BD;"Rangamati   Parbattya Chattagram";District;"56";12647
+BD;"Rangpur";District;"55";12648
+BD;"Rangpur";division;"F";48681
+BD;"Satkhira";District;"58";12656
+BD;"Shariatpur";District;"62";12649
+BD;"Sherpur";District;"57";12595
+BD;"Sirajganj";District;"59";12594
+BD;"Sunamganj";District;"61";12651
+BD;"Sylhet";division;"6";48262
+BD;"Sylhet";District;"60";12650
+BD;"Sylhet";division;"G";48680
+BD;"Tangail";District;"63";12593
+BD;"Thakurgaon";District;"64";12652
+BB;"Christ Church";Parish;"01";12661
+BB;"Saint Andrew";Parish;"02";12663
+BB;"Saint George";Parish;"03";12662
+BB;"Saint James";Parish;"04";12660
+BB;"Saint John";Parish;"05";12664
+BB;"Saint Joseph";Parish;"06";12659
+BB;"Saint Lucy";Parish;"07";12665
+BB;"Saint Michael";Parish;"08";12658
+BB;"Saint Peter";Parish;"09";12666
+BB;"Saint Philip";Parish;"10";12667
+BB;"Saint Thomas";Parish;"11";12657
+BY;"Brestskaya voblasts";Region;"BR";12669
+BY;"Homyel'skaya voblasts";Region;"HO";12670
+BY;"Horad Minsk";city;"HM";12674
+BY;"Horad Minsk";Municipality;"X1~";48130
+BY;"Hrodzenskaya voblasts";Region;"HR";12672
+BY;"Mahilyowskaya voblasts";Region;"MA";12671
+BY;"Minskaya voblasts";Region;"MI";12673
+BY;"Vitsyebskaya voblasts";Region;"VI";12668
+BE;"Antwerpen";Province;"VAN";12683
+BE;"Brabant Wallon";Province;"WBR";12679
+BE;"Brussels";Capital Region;"BRU";12682
+BE;"Flemish Region";region;"VLG";48264
+BE;"Hainaut";Province;"WHT";12678
+BE;"Limburg";Province;"VLI";12680
+BE;"Liège";Province;"WLG";12684
+BE;"Luxembourg";Province;"WLX";12676
+BE;"Namur";Province;"WNA";12685
+BE;"Oost-Vlaanderen";Province;"VOV";12677
+BE;"Vlaams Brabant";Province;"VBR";12675
+BE;"Wallonia";region;"WAL";48265
+BE;"West-Vlaanderen";Province;"VWV";12681
+BZ;"Belize";District;"BZ";12687
+BZ;"Cayo";District;"CY";12691
+BZ;"Corozal";District;"CZL";12688
+BZ;"Orange Walk";District;"OW";12689
+BZ;"Stann Creek";District;"SC";12686
+BZ;"Toledo";District;"TOL";12690
+BJ;"Alibori";Department;"AL";12696
+BJ;"Atakora";Department;"AK";12702
+BJ;"Atlantique";Department;"AQ";12697
+BJ;"Borgou";Department;"BO";12698
+BJ;"Collines";Department;"CO";12704
+BJ;"Donga";Department;"DO";12705
+BJ;"Kouffo";Department;"KO";12699
+BJ;"Littoral";Department;"LI";12694
+BJ;"Mono";Department;"MO";12700
+BJ;"Ouémé";Department;"OU";12701
+BJ;"Plateau";Department;"PL";12693
+BJ;"Zou";Department;"ZO";12692
+BM;"Devonshire";Parish;"DEV";12708
+BM;"Hamilton";Parish;"HAM";12707
+BM;"Hamilton municipality";Municipality;"HA";12709
+BM;"Paget";Parish;"PAG";12710
+BM;"Pembroke";Parish;"PEM";12711
+BM;"Saint George";Parish;"SGE";12712
+BM;"Saint George municipality";Municipality;"SG";12716
+BM;"Sandys";Parish;"SAN";12713
+BM;"Smiths";Parish;"SMI";12706
+BM;"Southampton";Parish;"SOU";12714
+BM;"Warwick";Parish;"WAR";12715
+BT;"Bumthang";District;"33";12724
+BT;"Chhukha";District;"12";12735
+BT;"Dagana";District;"22";12723
+BT;"Gasa";District;"GA";12733
+BT;"Ha";District;"13";12736
+BT;"Lhuentse";District;"44";12727
+BT;"Monggar";District;"42";12722
+BT;"Paro";District;"11";12729
+BT;"Pemagatshel";District;"43";12728
+BT;"Punakha";District;"23";12719
+BT;"Samdrup Jongkha";District;"45";12730
+BT;"Samtse";District;"14";12718
+BT;"Sarpang";District;"31";12726
+BT;"Thimphu";District;"15";12731
+BT;"Trashi Yangtse";District;"TY";12734
+BT;"Trashigang";District;"41";12721
+BT;"Trongsa";District;"32";12717
+BT;"Tsirang";District;"21";12725
+BT;"Wangdue Phodrang";District;"24";12732
+BT;"Zhemgang";District;"34";12720
+BO;"Chuquisaca";Department;"H";12739
+BO;"Cochabamba";Department;"C";12741
+BO;"El Beni";Department;"B";12740
+BO;"La Paz";Department;"L";12742
+BO;"Oruro";Department;"O";12738
+BO;"Pando";Department;"N";12743
+BO;"Potosí";Department;"P";12737
+BO;"Santa Cruz";Department;"S";12744
+BO;"Tarija";Department;"T";12745
+BQ;"Bonaire";municipality;"BO";48682
+BQ;"Saba";municipality;"SA";48683
+BQ;"Sint Eustatius";municipality;"SE";48684
+BA;"Bosansko-podrinjski kanton";canton;"05";48161
+BA;"Brčko distrikt";District;"BRC";42644
+BA;"Federacija Bosna i Hercegovina";Entity;"BIH";12746
+BA;"Hercegova?ko-neretvanski kanton";canton;"07";48162
+BA;"Kanton br. 10 (Livanjski kanton)";canton;"10";48163
+BA;"Kanton Sarajevo";canton;"09";48164
+BA;"Posavski kanton";canton;"02";48165
+BA;"Republika Srpska";Entity;"SRP";12747
+BA;"Srednjobosanski kanton";canton;"06";48166
+BA;"Tuzlanski kanton";canton;"03";48167
+BA;"Unsko-sanski kanton";canton;"01";48168
+BA;"Zapadnohercegova?ki kanton";canton;"08";48169
+BA;"Zeni?ko-dobojski kanton";canton;"04";48170
+BW;"Central";District;"CE";19401
+BW;"Ghanzi";District;"GH";12759
+BW;"Kgalagadi";District;"KG";19402
+BW;"Kgatleng";District;"KL";12770
+BW;"Kweneng";District;"KW";12762
+BW;"North-East";District;"NE";12749
+BW;"North-West";District;"NW";19403
+BW;"South-East";District;"SE";12751
+BW;"Southern";District;"SO";19404
+BR;"Acre";state;"AC";12793
+BR;"Alagoas";state;"AL";12784
+BR;"Amapá";state;"AP";12775
+BR;"Amazonas";state;"AM";12794
+BR;"Bahia";state;"BA";12776
+BR;"Ceará";state;"CE";12795
+BR;"Distrito Federal";federal district;"DF";12777
+BR;"Espírito Santo";state;"ES";12778
+BR;"Goiás";state;"GO";12796
+BR;"Maranhão";state;"MA";12779
+BR;"Mato Grosso";state;"MT";12780
+BR;"Mato Grosso do Sul";state;"MS";12774
+BR;"Minas Gerais";state;"MG";12781
+BR;"Paraná";state;"PR";12783
+BR;"Paraíba";state;"PB";12782
+BR;"Pará";state;"PA";12797
+BR;"Pernambuco";state;"PE";12773
+BR;"Piauí";state;"PI";12785
+BR;"Rio de Janeiro";state;"RJ";12786
+BR;"Rio Grande do Norte";state;"RN";12798
+BR;"Rio Grande do Sul";state;"RS";12787
+BR;"Rondônia";state;"RO";12772
+BR;"Roraima";state;"RR";12788
+BR;"Santa Catarina";state;"SC";12789
+BR;"Sergipe";state;"SE";12790
+BR;"São Paulo";state;"SP";12771
+BR;"Tocantins";state;"TO";12791
+BN;"Belait";District;"BE";12805
+BN;"Brunei-Muara";District;"BM";12807
+BN;"Temburong";District;"TE";12806
+BN;"Tutong";District;"TU";12804
+BG;"Blagoevgrad";Region;"01";12829
+BG;"Burgas";Region;"02";12813
+BG;"Dobrich";Region;"08";12830
+BG;"Gabrovo";Region;"07";12823
+BG;"Haskovo";Region;"26";12824
+BG;"Kardzhali";Region;"09";12825
+BG;"Kjustendil";Region;"10";12831
+BG;"Lovech";Region;"11";12826
+BG;"Montana";Region;"12";12811
+BG;"Pazardzhik";Region;"13";12827
+BG;"Pernik";Region;"14";12832
+BG;"Pleven";Region;"15";12828
+BG;"Plovdiv";Region;"16";12814
+BG;"Razgrad";Region;"17";12810
+BG;"Ruse";Region;"18";12815
+BG;"Silistra";Region;"19";12833
+BG;"Sliven";Region;"20";12816
+BG;"Smolyan";Region;"21";12809
+BG;"Sofia";Region;"23";12834
+BG;"Sofia-Grad";Region;"22";12817
+BG;"Stara Zagora";Region;"24";12818
+BG;"Targovishte";Region;"25";12835
+BG;"Varna";Region;"03";12820
+BG;"Veliko Tarnovo";Region;"04";12808
+BG;"Vidin";Region;"05";12821
+BG;"Vratsa";Region;"06";12822
+BG;"Yambol";Region;"28";12812
+BG;"Šumen";Region;"27";12819
+BF;"Balé";Province;"BAL";12846
+BF;"Bam";Province;"BAM";12855
+BF;"Banwa";Province;"BAN";12847
+BF;"Bazèga";Province;"BAZ";12856
+BF;"Boucle du Mouhoun";region;"01";48171
+BF;"Bougouriba";Province;"BGR";12857
+BF;"Boulgou";Province;"BLG";12848
+BF;"Boulkiemdé";Province;"BLK";12858
+BF;"Cascades";region;"02";48172
+BF;"Centre";region;"03";48173
+BF;"Centre-Est";region;"04";48174
+BF;"Centre-Nord";region;"05";48175
+BF;"Centre-Ouest";region;"06";48176
+BF;"Centre-Sud";region;"07";48177
+BF;"Comoé";Province;"COM";12849
+BF;"Est";region;"08";48178
+BF;"Ganzourgou";Province;"GAN";12859
+BF;"Gnagna";Province;"GNA";12860
+BF;"Gourma";Province;"GOU";12850
+BF;"Hauts-Bassins";region;"09";48179
+BF;"Houet";Province;"HOU";12861
+BF;"Ioba";Province;"IOB";12851
+BF;"Kadiogo";Province;"KAD";12862
+BF;"Komondjari";Province;"KMD";12863
+BF;"Kompienga";Province;"KMP";12864
+BF;"Kossi";Province;"KOS";12853
+BF;"Koulpélogo";Province;"KOP";12865
+BF;"Kouritenga";Province;"KOT";12854
+BF;"Kourwéogo";Province;"KOW";12866
+BF;"Kénédougou";Province;"KEN";12852
+BF;"Loroum";Province;"LOR";12837
+BF;"Léraba";Province;"LER";12867
+BF;"Mouhoun";Province;"MOU";12868
+BF;"Nahouri";Province;"NAO";12838
+BF;"Namentenga";Province;"NAM";12869
+BF;"Nayala";Province;"NAY";12870
+BF;"Nord";region;"10";48180
+BF;"Noumbiel";Province;"NOU";12839
+BF;"Oubritenga";Province;"OUB";12871
+BF;"Oudalan";Province;"OUD";12840
+BF;"Passoré";Province;"PAS";12872
+BF;"Plateau-Central";region;"11";48181
+BF;"Poni";Province;"PON";12873
+BF;"Sahel";region;"12";48182
+BF;"Sanguié";Province;"SNG";12841
+BF;"Sanmatenga";Province;"SMT";12874
+BF;"Sissili";Province;"SIS";12843
+BF;"Soum";Province;"SOM";12844
+BF;"Sourou";Province;"SOR";12845
+BF;"Sud-Ouest";region;"13";48183
+BF;"Séno";Province;"SEN";12842
+BF;"Tapoa";Province;"TAP";12879
+BF;"Tui";Province;"TUI";12880
+BF;"Yagha";Province;"YAG";12878
+BF;"Yatenga";Province;"YAT";12877
+BF;"Ziro";Province;"ZIR";12876
+BF;"Zondoma";Province;"ZON";12881
+BF;"Zoundwéogo";Province;"ZOU";12882
+BI;"Bubanza";Province;"BB";12893
+BI;"Bujumbura";Province;"BJ";12884
+BI;"Bujumbura Mairie";Province;"BM";48128
+BI;"Bujumbura Rural";Province;"BL";48129
+BI;"Bururi";Province;"BR";12895
+BI;"Cankuzo";Province;"CA";12885
+BI;"Cibitoke";Province;"CI";12896
+BI;"Gitega";Province;"GI";12886
+BI;"Karuzi";Province;"KR";12887
+BI;"Kayanza";Province;"KY";12894
+BI;"Kirundo";Province;"KI";12888
+BI;"Makamba";Province;"MA";12889
+BI;"Muramvya";Province;"MU";12897
+BI;"Muyinga";Province;"MY";12890
+BI;"Mwaro";Province;"MW";12898
+BI;"Ngozi";Province;"NG";12891
+BI;"Rutana";Province;"RT";12892
+BI;"Ruyigi";Province;"RY";12883
+KH;"Baat Dambang [Batdâmbâng]";province;"2";12918
+KH;"Banteay Mean Chey [Bântéay Méanchey]";province;"1";12911
+KH;"Kampong Chaam [Kâmpóng Cham]";province;"3";12912
+KH;"Kampong Chhnang [Kâmpóng Chhnang]";province;"4";12919
+KH;"Kampong Spueu [Kâmpóng Spœ]";province;"5";12920
+KH;"Kampong Thum [Kâmpóng Thum]";province;"6";12902
+KH;"Kampot [Kâmpôt]";province;"7";12903
+KH;"Kandaal [Kândal]";province;"8";12904
+KH;"Kaoh Kong [Kaôh Kong]";province;"9";12905
+KH;"Kracheh [Krâchéh]";province;"10";12906
+KH;"Krong Kaeb [Krong Kêb]";autonomous municipality;"23";12907
+KH;"Krong Pailin [Krong Pailin]";autonomous municipality;"24";12908
+KH;"Krong Preah Sihanouk [Krong Preah Sihanouk]";autonomous municipality;"18";12909
+KH;"Mondol Kiri [Môndól Kiri]";province;"11";12910
+KH;"Otdar Mean Chey [Otdâr Méanchey]";province;"22";12901
+KH;"Phnom Penh [Phnum Pénh]";autonomous municipality;"12";12921
+KH;"Pousaat [Pouthisat]";province;"15";12900
+KH;"Preah Vihear [Preah Vihéar]";province;"13";12913
+KH;"Prey Veaeng [Prey Vêng]";province;"14";12914
+KH;"Rotanak Kiri [Rôtânôkiri]";province;"16";12922
+KH;"Siem Reab [Siemréab]";province;"17";12915
+KH;"Stueng Traeng [Stœ?ng Trêng]";province;"19";12925
+KH;"Svaay Rieng [Svay Rieng]";province;"20";12916
+KH;"Taakaev [Takêv]";province;"21";12924
+CM;"Adamaoua";Region;"AD";12932
+CM;"Centre";Region;"CE";12928
+CM;"East";Region;"ES";12933
+CM;"Far North";Region;"EN";12934
+CM;"Littoral";Region;"LT";12929
+CM;"North";Region;"NO";12931
+CM;"North-West";Region;"NW";12927
+CM;"South";Region;"SU";12935
+CM;"South-West";Region;"SW";12926
+CM;"West";Region;"OU";12930
+CA;"Alberta";province;"AB";12940
+CA;"British Columbia";province;"BC";12938
+CA;"Manitoba";province;"MB";12941
+CA;"New Brunswick";province;"NB";12937
+CA;"Newfoundland and Labrador";province;"NL";12942
+CA;"Northwest Territories";territory;"NT";12939
+CA;"Nova Scotia";province;"NS";12943
+CA;"Nunavut";territory;"NU";12944
+CA;"Ontario";province;"ON";12948
+CA;"Prince Edward Island";province;"PE";12945
+CA;"Quebec";province;"QC";12946
+CA;"Saskatchewan";province;"SK";12936
+CA;"Yukon Territory";territory;"YT";12947
+CV;"Boa Vista";municipality;"BV";12953
+CV;"Brava";municipality;"BR";12957
+CV;"Calheta de São Miguel";;"CS";19405
+CV;"Ilhas de Barlavento";geographical region;"B";48184
+CV;"Ilhas de Sotavento";geographical region;"S";48185
+CV;"Maio";municipality;"MA";12954
+CV;"Mosteiros";municipality;"MO";19406
+CV;"Paul";municipality;"PA";19407
+CV;"Porto Novo";municipality;"PN";19408
+CV;"Praia";municipality;"PR";19409
+CV;"Ribeira Brava";municipality;"RB";48244
+CV;"Ribeira Grande";municipality;"RG";12955
+CV;"Ribeira Grande de Santiago";municipality;"RS";48245
+CV;"Sal";municipality;"SL";12956
+CV;"Santa Catarina";municipality;"CA";19411
+CV;"Santa Catarina do Fogo";municipality;"CF";48246
+CV;"Santa Cruz";municipality;"CR";19412
+CV;"São Domingos";municipality;"SD";19413
+CV;"São Filipe";municipality;"SF";19414
+CV;"São Lourenço dos Órgãos";municipality;"SO";48904
+CV;"São Miguel";municipality;"SM";48247
+CV;"São Nicolau";;"SN";12949
+CV;"São Salvador do Mundo";municipality;"SS";48248
+CV;"São Vicente";municipality;"SV";12950
+CV;"Tarrafal";municipality;"TA";19415
+CV;"Tarrafal de São Nicolau";municipality;"TS";48249
+KY;"Bodden Town";District;"01~";48080
+KY;"Cayman Brac";District;"02~";12962
+KY;"East End";District;"03~";20891
+KY;"George Town";District;"04~";48081
+KY;"Little Cayman";District;"05~";12958
+KY;"North Side";District;"06~";48082
+KY;"West Bay";District;"07~";48083
+CF;"Bamingui-Bangoran";prefecture;"BB";12972
+CF;"Bangui";commune;"BGF";12969
+CF;"Basse-Kotto";prefecture;"BK";12973
+CF;"Gribingui";economic prefecture;"KB";12965
+CF;"Haut-Mbomou";prefecture;"HM";12974
+CF;"Haute-Kotto";prefecture;"HK";12968
+CF;"Haute-Sangha / Mambéré-Kadéï";prefecture;"HS";12966
+CF;"Kémo-Gribingui";prefecture;"KG";12967
+CF;"Lobaye";prefecture;"LB";12975
+CF;"Mbomou";prefecture;"MB";12976
+CF;"Nana-Mambéré";prefecture;"NM";12977
+CF;"Ombella-Mpoko";prefecture;"MP";12964
+CF;"Ouaka";prefecture;"UK";12979
+CF;"Ouham";prefecture;"AC";12978
+CF;"Ouham-Pendé";prefecture;"OP";12970
+CF;"Sangha";economic prefecture;"SE";12963
+CF;"Vakaga";prefecture;"VK";12971
+TD;"Al Baṭḩah";Region;"BA";12981
+TD;"Al Buḩayrah";Region;"LC";12985
+TD;"Baḩr al Ghazāl";region;"BG";48189
+TD;"Borkou-Ennedi-Tibesti";Region;"BET";12982
+TD;"Būrkū";region;"BO";48190
+TD;"Innīdī";region;"EN";48191
+TD;"Kānim";Region;"KA";12984
+TD;"Lūqūn al Gharbī";Region;"LO";12986
+TD;"Lūqūn ash Sharqī";Region;"LR";12987
+TD;"Madīnat Injamīnā";Region;"ND";19420
+TD;"Māndūl";Region;"MA";19417
+TD;"Māyū Kībbī al Gharbī";Region;"MO";19419
+TD;"Māyū Kībbī ash Sharqī";Region;"ME";19418
+TD;"Qīrā";Region;"GR";12983
+TD;"Salāmāt";Region;"SA";12992
+TD;"Shārī al Awsaṭ";Region;"MC";12991
+TD;"Shārī Bāqirmī";Region;"CB";12990
+TD;"Sīlā";region;"SI";48192
+TD;"Tibastī";region;"TI";48193
+TD;"Tānjilī";Region;"TA";12980
+TD;"Waddāy";Region;"OD";12988
+TD;"Wādī Fīrā";Region;"WF";19421
+TD;"Ḥajjar Lamīs";Region;"HL";19416
+CL;"Aisén del General Carlos Ibáñez del Campo";Region;"AI";13004
+CL;"Antofagasta";Region;"AN";12998
+CL;"Araucanía";Region;"AR";12997
+CL;"Arica y Parinacota";Region;"AP";21383
+CL;"Atacama";Region;"AT";12999
+CL;"Bío-Bío";Region;"BI";13005
+CL;"Coquimbo";Region;"CO";12996
+CL;"Libertador General Bernardo O'Higgins";Region;"LI";13000
+CL;"Los Lagos";Region;"LL";13006
+CL;"Los Ríos";Region;"LR";21384
+CL;"Magallanes";Region;"MA";13001
+CL;"Maule";Region;"ML";12995
+CL;"Región Metropolitana de Santiago";Region;"RM";13002
+CL;"Tarapacá";Region;"TA";12994
+CL;"Valparaíso";Region;"VS";13003
+CN;"Anhui";province;"34";13012
+CN;"Aomen (zh) ***";special administrative region;"92";13034
+CN;"Beijing";municipality;"11";13013
+CN;"Chongqing";municipality;"50";13014
+CN;"Fujian";province;"35";13035
+CN;"Gansu";province;"62";13015
+CN;"Guangdong";province;"44";13016
+CN;"Guangxi";autonomous region;"45";13036
+CN;"Guizhou";province;"52";13017
+CN;"Hainan";province;"46";13018
+CN;"Hebei";province;"13";13019
+CN;"Heilongjiang";province;"23";13028
+CN;"Henan";province;"41";13029
+CN;"Hubei";province;"42";13020
+CN;"Hunan";province;"43";13030
+CN;"Jiangsu";province;"32";13031
+CN;"Jiangxi";province;"36";13021
+CN;"Jilin";province;"22";13022
+CN;"Liaoning";province;"21";13023
+CN;"Nei Mongol (mn)";autonomous region;"15";13024
+CN;"Ningxia";autonomous region;"64";13025
+CN;"Qinghai";province;"63";13026
+CN;"Shaanxi";province;"61";13027
+CN;"Shandong";province;"37";13011
+CN;"Shanghai";municipality;"31";13037
+CN;"Shanxi";province;"14";13010
+CN;"Sichuan";province;"51";13038
+CN;"Taiwan *";province;"71";18995
+CN;"Tianjin";municipality;"12";13009
+CN;"Xianggang (zh) **";special administrative region;"91";13039
+CN;"Xinjiang";autonomous region;"65";13008
+CN;"Xizang";autonomous region;"54";13032
+CN;"Yunnan";province;"53";13033
+CN;"Zhejiang";province;"33";13007
+CO;"Amazonas";department;"AMA";13045
+CO;"Antioquia";department;"ANT";13055
+CO;"Arauca";department;"ARA";13046
+CO;"Atlántico";department;"ATL";13047
+CO;"Bolívar";department;"BOL";13048
+CO;"Boyacá";department;"BOY";13057
+CO;"Caldas";department;"CAL";13049
+CO;"Caquetá";department;"CAQ";13050
+CO;"Casanare";department;"CAS";13058
+CO;"Cauca";department;"CAU";13051
+CO;"Cesar";department;"CES";13059
+CO;"Chocó";department;"CHO";13052
+CO;"Cundinamarca";department;"CUN";13060
+CO;"Córdoba";department;"COR";13053
+CO;"Distrito Capital de Bogotá";capital district;"DC";13056
+CO;"Guainía";department;"GUA";13054
+CO;"Guaviare";department;"GUV";13061
+CO;"Huila";department;"HUI";13063
+CO;"La Guajira";department;"LAG";13064
+CO;"Magdalena";department;"MAG";13062
+CO;"Meta";department;"MET";13065
+CO;"Nariño";department;"NAR";13044
+CO;"Norte de Santander";department;"NSA";13066
+CO;"Putumayo";department;"PUT";13067
+CO;"Quindío";department;"QUI";13042
+CO;"Risaralda";department;"RIS";13068
+CO;"Providencia y Santa Catalina San Andrés";department;"SAP";13043
+CO;"Santander";department;"SAN";13069
+CO;"Sucre";department;"SUC";13041
+CO;"Tolima";department;"TOL";13070
+CO;"Valle del Cauca";department;"VAC";13071
+CO;"Vaupés";department;"VAU";13040
+CO;"Vichada";department;"VID";13072
+KM;"Andjazîdja";island;"G";13074
+KM;"Andjouân (Anjwān)";island;"A";13073
+KM;"Moûhîlî (Mūhīlī)";island;"M";13075
+CG;"Bouenza";Department;"11";13078
+CG;"Brazzaville";Commune;"BZV";13080
+CG;"Cuvette";Department;"8";13077
+CG;"Cuvette-Ouest";Department;"15";13076
+CG;"Kouilou";Department;"5";13081
+CG;"Likouala";Department;"7";13079
+CG;"Lékoumou";Department;"2";13082
+CG;"Niari";Department;"9";13083
+CG;"Plateaux";Department;"14";13086
+CG;"Pool";Department;"12";13084
+CG;"Sangha";Department;"13";13085
+CD;"Bandundu";province;"BN";13094
+CD;"Bas-Congo";province;"BC";13088
+CD;"Kasai-Occidental";province;"KW";13092
+CD;"Kasai-Oriental";province;"KE";13090
+CD;"Katanga";province;"KA";13097
+CD;"Kinshasa";city;"KN";13091
+CD;"Maniema";province;"MA";13095
+CD;"Nord-Kivu";province;"NK";13087
+CD;"Orientale";province;"OR";13089
+CD;"Sud-Kivu";province;"SK";13096
+CD;"Équateur";province;"EQ";13093
+CR;"Alajuela";Province;"A";13119
+CR;"Cartago";Province;"C";13115
+CR;"Guanacaste";Province;"G";13116
+CR;"Heredia";Province;"H";13118
+CR;"Limón";Province;"L";13114
+CR;"Puntarenas";Province;"P";13113
+CR;"San José";Province;"SJ";13117
+HR;"Bjelovarsko-bilogorska županija";county;"07";13135
+HR;"Brodsko-posavska županija";county;"12";13130
+HR;"Dubrovacko-neretvanska županija";county;"19";13122
+HR;"Grad Zagreb";city;"21";13123
+HR;"Istarska županija";county;"18";13121
+HR;"Karlovacka županija";county;"04";13124
+HR;"Koprivnicko-križevacka županija";county;"06";13136
+HR;"Krapinsko-zagorska županija";county;"02";13125
+HR;"Licko-senjska županija";county;"09";13126
+HR;"Medimurska županija";county;"20";13140
+HR;"Osjecko-baranjska županija";county;"14";13127
+HR;"Požeško-slavonska županija";county;"11";13139
+HR;"Primorsko-goranska županija";county;"08";13128
+HR;"Sisacko-moslavacka županija";county;"03";13138
+HR;"Splitsko-dalmatinska županija";county;"17";13137
+HR;"Varaždinska županija";county;"05";13131
+HR;"Viroviticko-podravska županija";county;"10";13132
+HR;"Vukovarsko-srijemska županija";county;"16";13120
+HR;"Zadarska županija";county;"13";13133
+HR;"Zagrebacka županija";county;"01";13134
+HR;"Šibensko-kninska županija";county;"15";13129
+CU;"Camagüey";province;"09";13152
+CU;"Ciego de Ávila";province;"08";13153
+CU;"Cienfuegos";province;"06";13154
+CU;"Ciudad de La Habana";province;"03";13142
+CU;"Granma";province;"12";13155
+CU;"Guantánamo";province;"14";13157
+CU;"Holguín";province;"11";13156
+CU;"Isla de la Juventud";special municipality;"99";13143
+CU;"La Habana";province;"02";13159
+CU;"Las Tunas";province;"10";13144
+CU;"Matanzas";province;"04";13145
+CU;"Pinar del Río";province;"01";13160
+CU;"Sancti Spíritus";province;"07";13146
+CU;"Santiago de Cuba";province;"13";13158
+CU;"Villa Clara";province;"05";13147
+CY;"Ammochostos";District;"04";20225
+CY;"Keryneia";District;"06";19428
+CY;"Larnaka";District;"03";19429
+CY;"Lefkosia";District;"01";19430
+CY;"Lemesos";District;"02";19431
+CY;"Pafos";District;"05";19433
+CZ;"Benešov";district;"201 ";13247
+CZ;"Beroun";district;"202 ";13201
+CZ;"Blansko";district;"621 ";13231
+CZ;"Brno-město";district;"622 ";13192
+CZ;"Brno-venkov";district;"623 ";13233
+CZ;"Bruntál";district;"801 ";13180
+CZ;"Břeclav";district;"624 ";13232
+CZ;"Cheb";district;"411 ";13175
+CZ;"Chomutov";district;"422 ";13173
+CZ;"Chrudim";district;"531 ";13240
+CZ;"Domažlice";district;"321 ";13242
+CZ;"Děčín";district;"421 ";13164
+CZ;"Frýdek Místek";district;"802 ";13213
+CZ;"Havlíčkův Brod";district;"611 ";13204
+CZ;"Hodonín";district;"625 ";13174
+CZ;"Hradec Králové";district;"521 ";13237
+CZ;"Jablonec nad Nisou";district;"512 ";13179
+CZ;"Jeseník";district;"711 ";13216
+CZ;"Jihlava";district;"612 ";13205
+CZ;"Jihoceský kraj";Region;"JC";13219
+CZ;"Jihomoravský kraj";Region;"JM";13220
+CZ;"Jindřichův Hradec";district;"313 ";13228
+CZ;"Jičín";district;"522 ";13177
+CZ;"Karlovarský kraj";Region;"KA";13183
+CZ;"Karlovy Vary";district;"412 ";13236
+CZ;"Karviná";district;"803 ";13181
+CZ;"Kladno";district;"203 ";13200
+CZ;"Klatovy";district;"322 ";13243
+CZ;"Kolín";district;"204 ";13202
+CZ;"Kromĕříž";district;"721 ";13207
+CZ;"Královéhradecký kraj";Region;"KR";13221
+CZ;"Kutná Hora";district;"205 ";13165
+CZ;"Liberec";district;"513 ";13211
+CZ;"Liberecký kraj";Region;"LI";13184
+CZ;"Litoměřice";district;"423 ";13248
+CZ;"Louny";district;"424 ";13252
+CZ;"Mladá Boleslav";district;"207 ";13167
+CZ;"Moravskoslezský kraj";Region;"MO";13222
+CZ;"Most";district;"425 ";13251
+CZ;"Mělník";district;"206 ";13166
+CZ;"Nový Jičín";district;"804 ";13214
+CZ;"Nymburk";district;"208 ";13168
+CZ;"Náchod";district;"523 ";13238
+CZ;"Olomouc";district;"712 ";13193
+CZ;"Olomoucký kraj";Region;"OL";13185
+CZ;"Opava";district;"805 ";13182
+CZ;"Ostrava město";district;"806 ";13215
+CZ;"Pardubice";district;"532 ";13195
+CZ;"Pardubický kraj";Region;"PA";13223
+CZ;"Pelhřimov";district;"613 ";13253
+CZ;"Plzenský kraj";Region;"PL";13186
+CZ;"Plzeň jih";district;"324 ";13197
+CZ;"Plzeň město";district;"323 ";13244
+CZ;"Plzeň sever";district;"325 ";13198
+CZ;"Prachatice";district;"315 ";13190
+CZ;"Praha 1";district;"101";48300
+CZ;"Praha 10";district;"10A";48309
+CZ;"Praha 11";district;"10B";48310
+CZ;"Praha 12";district;"10C";48311
+CZ;"Praha 13";district;"10D";48312
+CZ;"Praha 14";district;"10E";48313
+CZ;"Praha 15";district;"10F";48314
+CZ;"Praha 2";district;"102";48301
+CZ;"Praha 3";district;"103";48302
+CZ;"Praha 4";district;"104";48303
+CZ;"Praha 5";district;"105";48304
+CZ;"Praha 6";district;"106";48305
+CZ;"Praha 7";district;"107";48306
+CZ;"Praha 8";district;"108";48307
+CZ;"Praha 9";district;"109";48308
+CZ;"Praha východ";district;"209 ";13170
+CZ;"Praha západ";district;"20A ";13171
+CZ;"hlavní mesto Praha";Region;"PR";13224
+CZ;"Prostĕjov";district;"713 ";13194
+CZ;"Písek";district;"314 ";13229
+CZ;"Přerov";district;"714 ";13217
+CZ;"Příbram";district;"20B ";13169
+CZ;"Rakovník";district;"20C ";13172
+CZ;"Rokycany";district;"326 ";13245
+CZ;"Rychnov nad Kněžnou";district;"524 ";13239
+CZ;"Semily";district;"514 ";13212
+CZ;"Sokolov";district;"413 ";13176
+CZ;"Strakonice";district;"316 ";13230
+CZ;"Stredoceský kraj";Region;"ST";13187
+CZ;"Svitavy";district;"533 ";13241
+CZ;"Tachov";district;"327 ";13246
+CZ;"Teplice";district;"426 ";13203
+CZ;"Trutnov";district;"525 ";13178
+CZ;"Tábor";district;"317 ";13191
+CZ;"Třebíč";district;"614 ";13206
+CZ;"Uherské Hradištĕ";district;"722 ";13208
+CZ;"Vsetín";district;"723 ";13163
+CZ;"Vysocina";Region;"VY";13188
+CZ;"Vyškov";district;"626 ";13234
+CZ;"Zlín";district;"724 ";13209
+CZ;"Zlínský kraj";Region;"ZL";13226
+CZ;"Znojmo";district;"627 ";13235
+CZ;"Ústecký kraj";Region;"US";13225
+CZ;"Ústí nad Labem";district;"427 ";13250
+CZ;"Ústí nad Orlicí";district;"534 ";13196
+CZ;"Česká Lípa";district;"511 ";13210
+CZ;"České Budějovice";district;"311 ";13227
+CZ;"Český Krumlov";district;"312 ";13189
+CZ;"Šumperk";district;"715 ";13218
+CZ;"Žd’ár nad Sázavou";district;"615 ";13249
+CI;"18 Montagnes (Région des)";Region;"06";18974
+CI;"Agnébi (Région de l')";Region;"16";18975
+CI;"Bafing (Région du)";Region;"17";18976
+CI;"Bas-Sassandra (Région du)";Region;"09";18977
+CI;"Denguélé (Région du)";Region;"10";18978
+CI;"Fromager (Région du)";Region;"18";18979
+CI;"Haut-Sassandra (Région du)";Region;"02";18980
+CI;"Lacs (Région des)";Region;"07";18981
+CI;"Lagunes (Région des)";Region;"01";18982
+CI;"Marahoué (Région de la)";Region;"12";18983
+CI;"Moyen-Cavally (Région du)";Region;"19";18984
+CI;"Moyen-Comoé (Région du)";Region;"05";18985
+CI;"Nzi-Comoé (Région)";Region;"11";18986
+CI;"Savanes (Région des)";Region;"03";18987
+CI;"Sud-Bandama (Région du)";Region;"15";18988
+CI;"Sud-Comoé (Région du)";Region;"13";18989
+CI;"Vallée du Bandama (Région de la)";Region;"04";18990
+CI;"Worodougou (Région du)";Region;"14";18991
+CI;"Zanzan (Région du)";Region;"08";18992
+DK;"Bornholm";county;"040";13256
+DK;"Capital";Region;"84";19434
+DK;"Central Jutland";Region;"82";19435
+DK;"Frederiksberg City";city;"147";13275
+DK;"Frederiksborg";county;"020";13257
+DK;"Fyn";county;"042";13265
+DK;"København";county;"015";13266
+DK;"København City";city;"101";13258
+DK;"Nordjylland";county;"080";13267
+DK;"North Jutland";Region;"81";19436
+DK;"Ribe";county;"055";13268
+DK;"Ringkøbing";county;"065";13259
+DK;"Roskilde";county;"025";13269
+DK;"South Denmark";Region;"83";19438
+DK;"Storstrøm";county;"035";13261
+DK;"Sønderjylland";county;"050";13260
+DK;"Vejle";county;"060";13262
+DK;"Vestsjælland";county;"030";13263
+DK;"Viborg";county;"076";13264
+DK;"Zeeland";Region;"85";19437
+DK;"Århus";county;"070";13274
+DJ;"Ali Sabieh";Region;"AS";13283
+DJ;"Arta";Region;"AR";19439
+DJ;"Dikhil";Region;"DI";13282
+DJ;"Djibouti";City;"DJ";13280
+DJ;"Obock";Region;"OB";13281
+DJ;"Tadjourah";Region;"TA";13284
+DM;"Saint Andrew";Parish;"02";13286
+DM;"Saint David";Parish;"03";13289
+DM;"Saint George";Parish;"04";13293
+DM;"Saint John";Parish;"05";13292
+DM;"Saint Joseph";Parish;"06";13291
+DM;"Saint Luke";Parish;"07";13294
+DM;"Saint Mark";Parish;"08";13290
+DM;"Saint Patrick";Parish;"09";13285
+DM;"Saint Paul";Parish;"10";13287
+DM;"Saint Peter";Parish;"11";13288
+DO;"Azua";province;"02";13506
+DO;"Bahoruco";province;"03";13489
+DO;"Barahona";province;"04";13477
+DO;"Dajabón";province;"05";13490
+DO;"Distrito Nacional (Santo Domingo)";province;"01";13520
+DO;"Duarte";province;"06";13491
+DO;"El Seybo [El Seibo]";province;"08";13492
+DO;"Espaillat";province;"09";13493
+DO;"Hato Mayor";province;"30";13510
+DO;"Independencia";province;"10";13494
+DO;"La Altagracia";province;"11";13511
+DO;"La Estrelleta [Elías Piña]";province;"07";13509
+DO;"La Romana";province;"12";13487
+DO;"La Vega";province;"13";13512
+DO;"María Trinidad Sánchez";province;"14";13496
+DO;"Monseñor Nouel";province;"28";13513
+DO;"Monte Cristi";province;"15";13497
+DO;"Monte Plata";province;"29";13514
+DO;"Pedernales";province;"16";13498
+DO;"Peravia";province;"17";13499
+DO;"Puerto Plata";province;"18";13515
+DO;"Salcedo";province;"19";13500
+DO;"Samaná";province;"20";13516
+DO;"San Cristóbal";province;"21";13517
+DO;"San Jose de Ocoa";province;"31";13502
+DO;"San Juan";province;"22";13518
+DO;"San Pedro de Macorís";province;"23";13503
+DO;"Santiago";province;"25";13519
+DO;"Santiago Rodríguez";province;"26";13504
+DO;"Santo Domingo";;"32";13508
+DO;"Sánchez Ramírez";province;"24";13501
+DO;"Valverde";province;"27";13505
+EC;"Azuay";Province;"A";13570
+EC;"Bolívar";Province;"B";13571
+EC;"Carchi";Province;"C";13572
+EC;"Cañar";Province;"F";13578
+EC;"Chimborazo";Province;"H";13579
+EC;"Cotopaxi";Province;"X";13573
+EC;"El Oro";Province;"O";13574
+EC;"Esmeraldas";Province;"E";13580
+EC;"Galápagos";Province;"W";13575
+EC;"Guayas";Province;"G";13576
+EC;"Imbabura";Province;"I";13581
+EC;"Loja";Province;"L";13577
+EC;"Los Ríos";Province;"R";13582
+EC;"Manabí";Province;"M";13583
+EC;"Morona-Santiago";Province;"S";13584
+EC;"Napo";Province;"N";13569
+EC;"Orellana";Province;"D";13585
+EC;"Pastaza";Province;"Y";13568
+EC;"Pichincha";Province;"P";13586
+EC;"Santa Elena";Province;"X1~";48131
+EC;"Santa Elena";Province;"SE";21342
+EC;"Santo Domingo de los Tsachilas";Province;"SD";21343
+EC;"Santo Domingo de los Tsachilas";Province;"X2~";48132
+EC;"Sucumbíos";Province;"U";13567
+EC;"Tungurahua";Province;"T";13587
+EC;"Zamora-Chinchipe";Province;"Z";13566
+EG;"Ad Daqahliyah";Governorate;"DK";13607
+EG;"Al Bahr al Ahmar";Governorate;"BA";13605
+EG;"Al Buhayrah";Governorate;"BH";13606
+EG;"Al Fayyum";Governorate;"FYM";13608
+EG;"Al Gharbiyah";Governorate;"GH";13609
+EG;"Al Iskandariyah";Governorate;"ALX";13595
+EG;"Al Ismā`īlīyah";Governorate;"IS";13610
+EG;"Al Jizah";Governorate;"GZ";13596
+EG;"Al Minufiyah";Governorate;"MNF";13612
+EG;"Al Minya";Governorate;"MN";13591
+EG;"Al Qahirah";Governorate;"C";13598
+EG;"Al Qalyubiyah";Governorate;"KB";13613
+EG;"Al Wadi al Jadid";Governorate;"WAD";13588
+EG;"al-Uqsur";Governorate;"LX";13589
+EG;"As Suways";Governorate;"SUZ";13601
+EG;"As Sādis min Uktūbar";governorate;"SU";48194
+EG;"Ash Sharqiyah";Governorate;"SHR";13600
+EG;"Aswan";Governorate;"ASN";13602
+EG;"Asyut";Governorate;"AST";13604
+EG;"Bani Suwayf";Governorate;"BNS";13603
+EG;"Būr Sa`īd";Governorate;"PTS";13593
+EG;"Dumyat";Governorate;"DT";13594
+EG;"Ḩulwān";governorate;"HU";48195
+EG;"Janub Sina'";Governorate;"JS";13611
+EG;"Kafr ash Shaykh";Governorate;"KFS";13592
+EG;"Matrūh";Governorate;"MT";13597
+EG;"Qina";Governorate;"KN";13599
+EG;"Shamal Sina'";Governorate;"SIN";13590
+EG;"Suhaj";Governorate;"SHG";13614
+SV;"Ahuachapán";Department;"AH";13619
+SV;"Cabañas";Department;"CA";13620
+SV;"Chalatenango";Department;"CH";13618
+SV;"Cuscatlán";Department;"CU";13621
+SV;"La Libertad";Department;"LI";13627
+SV;"La Paz";Department;"PA";13622
+SV;"La Unión";Department;"UN";13623
+SV;"Morazán";Department;"MO";13617
+SV;"San Miguel";Department;"SM";13624
+SV;"San Salvador";Department;"SS";13628
+SV;"San Vicente";Department;"SV";13616
+SV;"Santa Ana";Department;"SA";13625
+SV;"Sonsonate";Department;"SO";13626
+SV;"Usulután";Department;"US";13615
+GQ;"Annobón";province;"AN";13635
+GQ;"Bioko Norte";province;"BN";13632
+GQ;"Bioko Sur";province;"BS";13634
+GQ;"Centro Sur";province;"CS";13633
+GQ;"Kie-Ntem";province;"KN";13630
+GQ;"Litoral";province;"LI";13631
+GQ;"Región Continental";region;"C";19440
+GQ;"Región Insular";region;"I";19441
+GQ;"Wele-Nzás";province;"WN";13629
+ER;"Anseba";Region;"AN";13638
+ER;"Debub";Region;"DU";13641
+ER;"Debubawi K’eyyĭḥ Baḥri";Region;"DK";13639
+ER;"Gash-Barka";Region;"GB";13637
+ER;"Ma’ĭkel";Region;"MA";13640
+ER;"Semienawi K’eyyĭḥ Baḥri";Region;"SK";13636
+EE;"Harjumaa";County;"37";13653
+EE;"Hiiumaa";County;"39";13654
+EE;"Ida-Virumaa";County;"44";13646
+EE;"Järvamaa";County;"51";13652
+EE;"Jõgevamaa";County;"49";13647
+EE;"Lääne-Virumaa";County;"59";13655
+EE;"Läänemaa";County;"57";13648
+EE;"Pärnumaa";County;"67";13649
+EE;"Põlvamaa";County;"65";13650
+EE;"Raplamaa";County;"70";13643
+EE;"Saaremaa";County;"74";13645
+EE;"Tartumaa";County;"78";13656
+EE;"Valgamaa";County;"82";13651
+EE;"Viljandimaa";County;"84";13644
+EE;"Võrumaa";County;"86";13642
+ET;"Adis Abeba";administration;"AA";13661
+ET;"Afar";state;"AF";13662
+ET;"Amara";state;"AM";13658
+ET;"Binshangul Gumuz";state;"BE";13663
+ET;"Dire Dawa";administration;"DD";13667
+ET;"Gambela Hizboch";state;"GA";13666
+ET;"Hareri Hizb";state;"HA";13665
+ET;"Oromiya";state;"OR";13668
+ET;"Sumale";state;"SO";13664
+ET;"Tigray";state;"TI";13659
+ET;"YeDebub Biheroch Bihereseboch na Hizboch";state;"SN";13657
+FJ;"Central";division;"C";13683
+FJ;"Eastern";division;"E";13682
+FJ;"Northern";division;"N";13684
+FJ;"Rotuma";dependency;"R";18998
+FJ;"Western";division;"W";13681
+FI;"Ahvenanmaan lääni";;"AL";13703
+FI;"Ahvenanmaan maakunta";region;"01";48686
+FI;"Etelä-Karjala";region;"02";48687
+FI;"Etelä-Pohjanmaa";region;"03";48688
+FI;"Etelä-Savo";region;"04";48689
+FI;"Etelä-Suomen lääni";;"ES";20230
+FI;"Itä-Suomen lääni";;"IS";13706
+FI;"Kainuu";region;"05";48690
+FI;"Kanta-Häme";region;"06";48691
+FI;"Keski-Pohjanmaa";region;"07";48692
+FI;"Keski-Suomi";region;"08";48693
+FI;"Kymenlaakso";region;"09";48694
+FI;"Lapin lääni";;"LL";13690
+FI;"Lappi";region;"10";48695
+FI;"Länsi-Suomen lääni";;"LS";20233
+FI;"Oulun lääni";;"OL";20234
+FI;"Pirkanmaa";region;"11";48696
+FI;"Pohjanmaa";region;"12";48697
+FI;"Pohjois-Karjala";region;"13";48698
+FI;"Pohjois-Pohjanmaa";region;"14";48699
+FI;"Pohjois-Savo";region;"15";48700
+FI;"Päijät-Häme";region;"16";48701
+FI;"Satakunta";region;"17";48702
+FI;"Uusimaa";region;"18";48703
+FI;"Varsinais-Suomi";region;"19";48704
+FR;"Ain";metropolitan department;"01";13736
+FR;"Aisne";metropolitan department;"02";13737
+FR;"Allier";metropolitan department;"03";13717
+FR;"Alpes-de-Haute-Provence";metropolitan department;"04";13738
+FR;"Alpes-Maritimes";metropolitan department;"06";13718
+FR;"Alsace";Metropolitan regions;"A ";48315
+FR;"Aquitaine";Metropolitan regions;"B ";48316
+FR;"Ardennes";metropolitan department;"08";13719
+FR;"Ardèche";metropolitan department;"07";13739
+FR;"Ariège";metropolitan department;"09";13740
+FR;"Aube";metropolitan department;"10";13741
+FR;"Aude";metropolitan department;"11";13720
+FR;"Auvergne";Metropolitan regions;"C ";48317
+FR;"Aveyron";metropolitan department;"12";13742
+FR;"Bas-Rhin";metropolitan department;"67";13721
+FR;"Basse-Normandie";Metropolitan regions;"P ";48318
+FR;"Bouches-du-Rhône";metropolitan department;"13";13743
+FR;"Bourgogne";Metropolitan regions;"D ";48319
+FR;"Bretagne";Metropolitan regions;"E ";48320
+FR;"Calvados";metropolitan department;"14";13722
+FR;"Cantal";metropolitan department;"15";13744
+FR;"Centre";Metropolitan regions;"F ";48321
+FR;"Champagne-Ardenne";Metropolitan regions;"G ";48322
+FR;"Charente";metropolitan department;"16";13723
+FR;"Charente-Maritime";metropolitan department;"17";13745
+FR;"Cher";metropolitan department;"18";13746
+FR;"Clipperton";Dependency;"CP";21344
+FR;"Corrèze";metropolitan department;"19";13791
+FR;"Corse";Metropolitan regions;"H ";48323
+FR;"Corse-du-Sud";metropolitan department;"2A";13747
+FR;"Creuse";metropolitan department;"23";13794
+FR;"Côte-d'Or";metropolitan department;"21";13792
+FR;"Côtes-d'Armor";metropolitan department;"22";13793
+FR;"Deux-Sèvres";metropolitan department;"79";13795
+FR;"Dordogne";metropolitan department;"24";13796
+FR;"Doubs";metropolitan department;"25";13797
+FR;"Drôme";metropolitan department;"26";13816
+FR;"Essonne";metropolitan department;"91";13817
+FR;"Eure";metropolitan department;"27";13818
+FR;"Eure-et-Loir";metropolitan department;"28";13819
+FR;"Finistère";metropolitan department;"29";13820
+FR;"Franche-Comté";Metropolitan regions;"I ";48324
+FR;"Gard";metropolitan department;"30";13821
+FR;"Gers";metropolitan department;"32";13822
+FR;"Gironde";metropolitan department;"33";13823
+FR;"Guadeloupe (see also separate entry under GP)";overseas regions;"GP ";48337
+FR;"Guyane (française) (see also separate entry under GF)";overseas regions;"GF ";48338
+FR;"Haut-Rhin";metropolitan department;"68";13753
+FR;"Haute-Corse";metropolitan department;"2B";13748
+FR;"Haute-Garonne";metropolitan department;"31";13824
+FR;"Haute-Loire";metropolitan department;"43";13749
+FR;"Haute-Marne";metropolitan department;"52";13807
+FR;"Haute-Normandie";Metropolitan regions;"Q ";48325
+FR;"Haute-Savoie";metropolitan department;"74";13751
+FR;"Haute-Saône";metropolitan department;"70";13808
+FR;"Haute-Vienne";metropolitan department;"87";13809
+FR;"Hautes-Alpes";metropolitan department;"05";13750
+FR;"Hautes-Pyrénées";metropolitan department;"65";13752
+FR;"Hauts-de-Seine";metropolitan department;"92";13810
+FR;"Hérault";metropolitan department;"34";13754
+FR;"Ille-et-Vilaine";metropolitan department;"35";13811
+FR;"Indre";metropolitan department;"36";13755
+FR;"Indre-et-Loire";metropolitan department;"37";13756
+FR;"Isère";metropolitan department;"38";13812
+FR;"Jura";metropolitan department;"39";13757
+FR;"La Réunion (see also separate entry under RE)";overseas regions;"RE ";48340
+FR;"Landes";metropolitan department;"40";13813
+FR;"Languedoc-Roussillon";Metropolitan regions;"K ";48327
+FR;"Limousin";Metropolitan regions;"L ";48328
+FR;"Loir-et-Cher";metropolitan department;"41";13760
+FR;"Loire";metropolitan department;"42";13758
+FR;"Loire-Atlantique";metropolitan department;"44";13814
+FR;"Loiret";metropolitan department;"45";13759
+FR;"Lorraine";Metropolitan regions;"M ";48329
+FR;"Lot";metropolitan department;"46";13815
+FR;"Lot-et-Garonne";metropolitan department;"47";13761
+FR;"Lozère";metropolitan department;"48";13798
+FR;"Maine-et-Loire";metropolitan department;"49";13762
+FR;"Manche";metropolitan department;"50";13799
+FR;"Marne";metropolitan department;"51";13763
+FR;"Martinique (see also separate entry under MQ)";overseas regions;"MQ ";48339
+FR;"Mayenne";metropolitan department;"53";13764
+FR;"Mayotte (see also separate entry under YT)";territorial collectivity;"YT";18999
+FR;"Meurthe-et-Moselle";metropolitan department;"54";13800
+FR;"Meuse";metropolitan department;"55";13765
+FR;"Midi-Pyrénées";Metropolitan regions;"N ";48330
+FR;"Morbihan";metropolitan department;"56";13801
+FR;"Moselle";metropolitan department;"57";13766
+FR;"Nièvre";metropolitan department;"58";13802
+FR;"Nord";metropolitan department;"59";13767
+FR;"Nord-Pas-de-Calais";Metropolitan regions;"O ";48331
+FR;"Nouvelle-Calédonie (see also separate entry under NC)";overseas territory;"NC";19000
+FR;"Oise";metropolitan department;"60";13768
+FR;"Orne";metropolitan department;"61";13803
+FR;"Paris";metropolitan department;"75";13769
+FR;"Pas-de-Calais";metropolitan department;"62";13804
+FR;"Pays-de-la-Loire";Metropolitan regions;"R ";48332
+FR;"Picardie";Metropolitan regions;"S ";48333
+FR;"Poitou-Charentes";Metropolitan regions;"T ";48334
+FR;"Polynésie française (see also separate entry under PF)";overseas territory;"PF";19001
+FR;"Provence-Alpes-Côte-d'Azur";Metropolitan regions;"U ";48335
+FR;"Puy-de-Dôme";metropolitan department;"63";13770
+FR;"Pyrénées-Atlantiques";metropolitan department;"64";13805
+FR;"Pyrénées-Orientales";metropolitan department;"66";13771
+FR;"Rhône";metropolitan department;"69";13772
+FR;"Rhône-Alpes";Metropolitan regions;"V ";48336
+FR;"Saint-Barthélemy (see also separate entry under BL)";Overseas territorial collectivity;"BL";21345
+FR;"Saint-Martin (see also separate entry under MF)";Overseas territorial collectivity;"MF";21346
+FR;"Saint-Pierre-et-Miquelon (see also separate entry under PM)";territorial collectivity;"PM";19002
+FR;"Sarthe";metropolitan department;"72";13773
+FR;"Savoie";metropolitan department;"73";13714
+FR;"Saône-et-Loire";metropolitan department;"71";13806
+FR;"Seine-et-Marne";metropolitan department;"77";13774
+FR;"Seine-Maritime";metropolitan department;"76";13710
+FR;"Seine-Saint-Denis";metropolitan department;"93";13775
+FR;"Somme";metropolitan department;"80";13711
+FR;"Tarn";metropolitan department;"81";13776
+FR;"Tarn-et-Garonne";metropolitan department;"82";13712
+FR;"Terres Australes Françaises (see also separate entry under TF)";overseas territory;"TF";19003
+FR;"Territoire de Belfort";metropolitan department;"90";13777
+FR;"Val-d'Oise";metropolitan department;"95";13709
+FR;"Val-de-Marne";metropolitan department;"94";13778
+FR;"Var";metropolitan department;"83";13779
+FR;"Vaucluse";metropolitan department;"84";13713
+FR;"Vendée";metropolitan department;"85";13780
+FR;"Vienne";metropolitan department;"86";13781
+FR;"Vosges";metropolitan department;"88";13708
+FR;"Wallis et Futuna (see also separate entry under WF)";overseas territory;"WF";19004
+FR;"Yonne";metropolitan department;"89";13782
+FR;"Yvelines";metropolitan department;"78";13707
+FR;"Île-de-France";Metropolitan regions;"J ";48326
+TF;"Crozet Islands";district;"X2~";13836
+TF;"Ile Saint-Paul et Ile Amsterdam";district;"X1~";13834
+TF;"Iles Eparses";district;"X4~";21356
+TF;"Kerguelen";district;"X3~";13837
+GA;"Estuaire";Province;"1";13839
+GA;"Haut-Ogooué";Province;"2";13845
+GA;"Moyen-Ogooué";Province;"3";13841
+GA;"Ngounié";Province;"4";13844
+GA;"Nyanga";Province;"5";13846
+GA;"Ogooué-Ivindo";Province;"6";13842
+GA;"Ogooué-Lolo";Province;"7";13843
+GA;"Ogooué-Maritime";Province;"8";13840
+GA;"Woleu-Ntem";Province;"9";13838
+GM;"Banjul";city;"B";13880
+GM;"Lower River";division;"L";13887
+GM;"MacCarthy Island";division;"M";13877
+GM;"North Bank";division;"N";13885
+GM;"Upper River";division;"U";13881
+GM;"Western";division;"W";13882
+GE;"Abkhazia";autonomous republic;"AB";13902
+GE;"Ajaria";autonomous republic;"AJ";13896
+GE;"Guria";region;"GU";13897
+GE;"Imereti";region;"IM";13901
+GE;"Kakheti";region;"KA";13898
+GE;"Kvemo Kartli";region;"KK";13900
+GE;"Mtskheta-Mtianeti";region;"MM";13905
+GE;"Racha-Lechkhumi [and] Kvemo Svaneti";region;"RL";13899
+GE;"Samegrelo-Zemo Svaneti";region;"SZ";13906
+GE;"Samtskhe-Javakheti";region;"SJ";13903
+GE;"Shida Kartli";region;"SK";13904
+GE;"Tbilisi";city;"TB";13895
+DE;"Baden-Württemberg";State;"BW";14337
+DE;"Bayern";State;"BY";14044
+DE;"Berlin";State;"BE";14338
+DE;"Brandenburg";State;"BB";14045
+DE;"Bremen";State;"HB";14339
+DE;"Hamburg";State;"HH";14046
+DE;"Hessen";State;"HE";14340
+DE;"Mecklenburg-Vorpommern";State;"MV";14047
+DE;"Niedersachsen";State;"NI";14341
+DE;"Nordrhein-Westfalen";State;"NW";14048
+DE;"Rheinland-Pfalz";State;"RP";14342
+DE;"Saarland";State;"SL";14049
+DE;"Sachsen";State;"SN";14343
+DE;"Sachsen-Anhalt";State;"ST";14050
+DE;"Schleswig-Holstein";State;"SH";14344
+DE;"Thüringen";State;"TH";14051
+GH;"Ashanti";Region;"AH";14403
+GH;"Brong-Ahafo";Region;"BA";14400
+GH;"Central";Region;"CP";14404
+GH;"Eastern";Region;"EP";14405
+GH;"Greater Accra";Region;"AA";14399
+GH;"Northern";Region;"NP";14402
+GH;"Upper East";Region;"UE";14406
+GH;"Upper West";Region;"UW";14397
+GH;"Volta";Region;"TV";14401
+GH;"Western";Region;"WP";14398
+GR;"Achaïa";department;"13";14414
+GR;"Agio Oros";self-governed part;"69";14417
+GR;"Aitolia kai Akarnania";department;"01";14423
+GR;"Anatoliki Makedonia kai Thraki";administrative regions;"A";48444
+GR;"Argolida";department;"11";14415
+GR;"Arkadia";department;"12";14424
+GR;"Arta";department;"31";14425
+GR;"Attiki";administrative regions;"I";48445
+GR;"Attiki";department;"A1";14416
+GR;"Chalkidiki";department;"64";14421
+GR;"Chania";department;"94";14432
+GR;"Chios";department;"85";14422
+GR;"Dodekanisos";department;"81";14426
+GR;"Drama";department;"52";14427
+GR;"Dytiki Ellada";administrative regions;"G";48446
+GR;"Dytiki Makedonia";administrative regions;"C";48447
+GR;"Evros";department;"71";14428
+GR;"Evrytania";department;"05";14418
+GR;"Evvoia";department;"04";14419
+GR;"Florina";department;"63";14429
+GR;"Fokida";department;"07";14430
+GR;"Fthiotida";department;"06";14420
+GR;"Grevena";department;"51";14431
+GR;"Ileia";department;"14";14433
+GR;"Imathia";department;"53";14450
+GR;"Ioannina";department;"33";14451
+GR;"Ionia Nisia";administrative regions;"F";48448
+GR;"Ipeiros";administrative regions;"D";48449
+GR;"Irakleio";department;"91";14434
+GR;"Karditsa";department;"41";14435
+GR;"Kastoria";department;"56";14452
+GR;"Kavala";department;"55";14436
+GR;"Kefallonia";department;"23";14453
+GR;"Kentriki Makedonia";administrative regions;"B";48450
+GR;"Kerkyra";department;"22";14454
+GR;"Kilkis";department;"57";14455
+GR;"Korinthia";department;"15";14438
+GR;"Kozani";department;"58";14456
+GR;"Kriti";administrative regions;"M";48451
+GR;"Kyklades";department;"82";14437
+GR;"Lakonia";department;"16";14439
+GR;"Larisa";department;"42";14457
+GR;"Lasithi";department;"92";14440
+GR;"Lefkada";department;"24";14441
+GR;"Lesvos";department;"83";14413
+GR;"Magnisia";department;"43";14458
+GR;"Messinia";department;"17";14442
+GR;"Notio Aigaio";administrative regions;"L";48452
+GR;"Pella";department;"59";14443
+GR;"Peloponnisos";administrative regions;"J";48453
+GR;"Pieria";department;"61";14412
+GR;"Preveza";department;"34";14444
+GR;"Rethymno";department;"93";14459
+GR;"Rodopi";department;"73";14445
+GR;"Samos";department;"84";14411
+GR;"Serres";department;"62";14446
+GR;"Sterea Ellada";administrative regions;"H";48454
+GR;"Thesprotia";department;"32";14410
+GR;"Thessalia";administrative regions;"E";48455
+GR;"Thessaloniki";department;"54";14447
+GR;"Trikala";department;"44";14409
+GR;"Voiotia";department;"03";14448
+GR;"Voreio Aigaio";administrative regions;"K";48456
+GR;"Xanthi";department;"72";14408
+GR;"Zakynthos";department;"21";14449
+GL;"Kommune Kujalleq (kl)";municipality;"KU";48225
+GL;"Kommuneqarfik Sermersooq (kl)";municipality;"SM";48226
+GL;"Qaasuitsup Kommunia (kl)";municipality;"QA";48227
+GL;"Qeqqata Kommunia (kl)";municipality;"QE";48228
+GD;"Saint Andrew";Parish;"01";14484
+GD;"Saint David";Parish;"02";14486
+GD;"Saint George";Parish;"03";14485
+GD;"Saint John";Parish;"04";14483
+GD;"Saint Mark";Parish;"05";14480
+GD;"Saint Patrick";Parish;"06";14482
+GD;"Southern Grenadine Islands";Dependency;"10";14481
+GT;"Alta Verapaz";Department;"AV";14531
+GT;"Baja Verapaz";Department;"BV";14526
+GT;"Chimaltenango";Department;"CM";14532
+GT;"Chiquimula";Department;"CQ";14527
+GT;"El Progreso";Department;"PR";14533
+GT;"Escuintla";Department;"ES";14528
+GT;"Guatemala";Department;"GU";14529
+GT;"Huehuetenango";Department;"HU";14534
+GT;"Izabal";Department;"IZ";14535
+GT;"Jalapa";Department;"JA";14536
+GT;"Jutiapa";Department;"JU";14537
+GT;"Petén";Department;"PE";14538
+GT;"Quetzaltenango";Department;"QZ";14525
+GT;"Quiché";Department;"QC";14539
+GT;"Retalhuleu";Department;"RE";14524
+GT;"Sacatepéquez";Department;"SA";14540
+GT;"San Marcos";Department;"SM";14523
+GT;"Santa Rosa";Department;"SR";14541
+GT;"Sololá";Department;"SO";14522
+GT;"Suchitepéquez";Department;"SU";14542
+GT;"Totonicapán";Department;"TO";14521
+GT;"Zacapa";Department;"ZA";14530
+GN;"Beyla";Perfecture;"BE";14565
+GN;"Boffa";Perfecture;"BF";14566
+GN;"Boké";governorates;"B";48437
+GN;"Boké";Perfecture;"BK";14567
+GN;"Conakry";special zone.;"C";14568
+GN;"Coyah";Perfecture;"CO";14569
+GN;"Dabola";Perfecture;"DB";14575
+GN;"Dalaba";Perfecture;"DL";14570
+GN;"Dinguiraye";Perfecture;"DI";14576
+GN;"Dubréka";Perfecture;"DU";14573
+GN;"Faranah";Perfecture;"FA";14577
+GN;"faranah";governorates;"F";48438
+GN;"Forécariah";Perfecture;"FO";14571
+GN;"Fria";Perfecture;"FR";14578
+GN;"Gaoual";Perfecture;"GA";14572
+GN;"Guékédou";Perfecture;"GU";14579
+GN;"Kankan";governorates;"K";48439
+GN;"Kankan";Perfecture;"KA";14580
+GN;"Kindia";Perfecture;"KD";14581
+GN;"Kindia";governorates;"D";48440
+GN;"Kissidougou";Perfecture;"KS";14592
+GN;"Koubia";Perfecture;"KB";14582
+GN;"Koundara";Perfecture;"KN";14583
+GN;"Kouroussa";Perfecture;"KO";14560
+GN;"Kérouané";Perfecture;"KE";14561
+GN;"Labé";governorates;"L";48441
+GN;"Labé";Perfecture;"LA";14584
+GN;"Lola";Perfecture;"LO";14585
+GN;"Lélouma";Perfecture;"LE";14593
+GN;"Macenta";Perfecture;"MC";14586
+GN;"Mali";Perfecture;"ML";14559
+GN;"Mamou";Perfecture;"MM";14587
+GN;"Mamou";governorates;"M";48442
+GN;"Mandiana";Perfecture;"MD";14558
+GN;"Nzérékoré";governorates;"N";48443
+GN;"Nzérékoré";Perfecture;"NZ";14588
+GN;"Pita";Perfecture;"PI";14557
+GN;"Siguiri";Perfecture;"SI";14589
+GN;"Tougué";Perfecture;"TO";14556
+GN;"Télimélé";Perfecture;"TE";14590
+GN;"Yomou";Perfecture;"YO";14591
+GW;"Bafatá";region;"BA";14595
+GW;"Biombo";region;"BM";14598
+GW;"Bissau";autonomous sector;"BS";14597
+GW;"Bolama";region;"BL";14601
+GW;"Cacheu";region;"CA";14599
+GW;"Gabú";region;"GA";14602
+GW;"Leste";province;"L";48457
+GW;"Norte";province;"N";48458
+GW;"Oio";region;"OI";14596
+GW;"Quinara";region;"QU";14594
+GW;"Sul";province;"S";48459
+GW;"Tombali";region;"TO";14600
+GY;"Barima-Waini";Region;"BA";14605
+GY;"Cuyuni-Mazaruni";Region;"CU";14612
+GY;"Demerara-Mahaica";Region;"DE";14606
+GY;"East Berbice-Corentyne";Region;"EB";14611
+GY;"Essequibo Islands-West Demerara";Region;"ES";14607
+GY;"Mahaica-Berbice";Region;"MA";14608
+GY;"Pomeroon-Supenaam";Region;"PM";14604
+GY;"Potaro-Siparuni";Region;"PT";14609
+GY;"Upper Demerara-Berbice";Region;"UD";14603
+GY;"Upper Takutu-Upper Essequibo";Region;"UT";14610
+HT;"Artibonite";Department;"AR";14621
+HT;"Centre";Department;"CE";14617
+HT;"Grande-Anse";Department;"GA";14620
+HT;"Nippes";Department;"NI";48705
+HT;"Nord";Department;"ND";14616
+HT;"Nord-Est";Department;"NE";14618
+HT;"Nord-Ouest";Department;"NO";14614
+HT;"Ouest";Department;"OU";14615
+HT;"Sud";Department;"SD";14613
+HT;"Sud-Est";Department;"SE";14619
+HN;"Atlántida";Department;"AT";14635
+HN;"Choluteca";Department;"CH";14624
+HN;"Colón";Department;"CL";14625
+HN;"Comayagua";Department;"CM";14636
+HN;"Copán";Department;"CP";14626
+HN;"Cortés";Department;"CR";14637
+HN;"El Paraíso";Department;"EP";14638
+HN;"Francisco Morazán";Department;"FM";14628
+HN;"Gracias a Dios";Department;"GD";14629
+HN;"Intibucá";Department;"IN";14623
+HN;"Islas de la Bahía";Department;"IB";14630
+HN;"La Paz";Department;"LP";14639
+HN;"Lempira";Department;"LE";14631
+HN;"Ocotepeque";Department;"OC";14640
+HN;"Olancho";Department;"OL";14632
+HN;"Santa Bárbara";Department;"SB";14633
+HN;"Valle";Department;"VA";14622
+HN;"Yoro";Department;"YO";14634
+HU;"Baranya";county;"BA";14646
+HU;"Borsod-Abaúj-Zemplén";county;"BZ";14660
+HU;"Budapest";capital city;"BU";14649
+HU;"Bács-Kiskun";county;"BK";14647
+HU;"Békés";county;"BE";14648
+HU;"Békéscsaba";city of county right;"BC";19442
+HU;"Csongrád";county;"CS";14650
+HU;"Debrecen";city of county right;"DE";19443
+HU;"Dunaújváros";city of county right;"DU";19444
+HU;"Eger";city of county right;"EG";19445
+HU;"Erd";County;"ER";21352
+HU;"Erd";County;"X1~";48133
+HU;"Fejér";county;"FE";14645
+HU;"Gyor";city of county right;"GY";19446
+HU;"Gyor-Moson-Sopron";county;"GS";14651
+HU;"Hajdú-Bihar";county;"HB";14661
+HU;"Heves";county;"HE";14652
+HU;"Hódmezovásárhely";city of county right;"HV";19447
+HU;"Jász-Nagykun-Szolnok";county;"JN";14653
+HU;"Kaposvár";city of county right;"KV";19448
+HU;"Kecskemét";city of county right;"KM";19449
+HU;"Komárom-Esztergom";county;"KE";14644
+HU;"Miskolc";city of county right;"MI";19450
+HU;"Nagykanizsa";city of county right;"NK";19451
+HU;"Nyíregyháza";city of county right;"NY";19452
+HU;"Nógrád";county;"NO";14654
+HU;"Pest";county;"PE";14643
+HU;"Pécs";city of county right;"PS";19453
+HU;"Salgótarján";city of county right;"ST";19454
+HU;"Somogy";county;"SO";14655
+HU;"Sopron";city of county right;"SN";19455
+HU;"Szabolcs-Szatmár-Bereg";county;"SZ";14656
+HU;"Szeged";city of county right;"SD";19456
+HU;"Szekszárd";city of county right;"SS";19458
+HU;"Szolnok";city of county right;"SK";19459
+HU;"Szombathely";city of county right;"SH";19460
+HU;"Székesfehérvár";city of county right;"SF";19457
+HU;"Tatabánya";city of county right;"TB";19461
+HU;"Tolna";county;"TO";14642
+HU;"Vas";county;"VA";14657
+HU;"Veszprém";county;"VE";14658
+HU;"Veszprém City";city of county right;"VM";19462
+HU;"Zala";county;"ZA";14641
+HU;"Zalaegerszeg";city of county right;"ZE";19463
+IS;"Austurland";Region;"7";14670
+IS;"Höfuðborgarsvæði utan Reykjavíkur";Region;"1";14666
+IS;"Norðurland eystra";Region;"6";14669
+IS;"Norðurland vestra";Region;"5";14664
+IS;"Reykjavík";City;"0";19009
+IS;"Suðurland";Region;"8";14668
+IS;"Suðurnes";Region;"2";14667
+IS;"Vestfirðir";Region;"4";14663
+IS;"Vesturland";Region;"3";14662
+IN;"Andaman and Nicobar Islands";union territory;"AN";14673
+IN;"Andhra Pradesh";state;"AP";14695
+IN;"Arunachal Pradesh";state;"AR";14674
+IN;"Assam";state;"AS";14675
+IN;"Bihar";state;"BR";14676
+IN;"Chandigarh";union territory;"CH";14697
+IN;"Chhattisgarh";state;"CT";14677
+IN;"Dadra and Nagar Haveli";union territory;"DN";14678
+IN;"Daman and Diu";union territory;"DD";14698
+IN;"Delhi";union territory;"DL";14679
+IN;"Goa";state;"GA";14699
+IN;"Gujarat";state;"GJ";14680
+IN;"Haryana";state;"HR";14681
+IN;"Himachal Pradesh";state;"HP";14672
+IN;"Jammu and Kashmir";state;"JK";14682
+IN;"Jharkhand";state;"JH";14700
+IN;"Karnataka";state;"KA";14683
+IN;"Kerala";state;"KL";14684
+IN;"Lakshadweep";union territory;"LD";14704
+IN;"Madhya Pradesh";state;"MP";14685
+IN;"Maharashtra";state;"MH";14686
+IN;"Manipur";state;"MN";14703
+IN;"Meghalaya";state;"ML";14687
+IN;"Mizoram";state;"MZ";14702
+IN;"Nagaland";state;"NL";14688
+IN;"Orissa";state;"OR";14689
+IN;"Pondicherry";union territory;"PY";14705
+IN;"Punjab";state;"PB";14690
+IN;"Rajasthan";state;"RJ";14691
+IN;"Sikkim";state;"SK";14701
+IN;"Tamil Nadu";state;"TN";14692
+IN;"Tripura";state;"TR";14693
+IN;"Uttar Pradesh";state;"UP";14694
+IN;"Uttaranchal";state;"UL";14671
+IN;"West Bengal";state;"WB";14696
+ID;"Aceh";autonomous province;"AC";14720
+ID;"Bali";province;"BA";14719
+ID;"Bangka Belitung";province;"BB";14721
+ID;"Banten";province;"BT";14723
+ID;"Bengkulu";province;"BE";14722
+ID;"Gorontalo";province;"GO";14711
+ID;"Jakarta Raya";special district;"JK";14724
+ID;"Jambi";province;"JA";14712
+ID;"Jawa";geographic units;"JW";48462
+ID;"Jawa Barat";province;"JB";14725
+ID;"Jawa Tengah";province;"JT";14713
+ID;"Jawa Timur";province;"JI";14726
+ID;"Kalimantan";geographic units;"KA";48463
+ID;"Kalimantan Barat";province;"KB";14714
+ID;"Kalimantan Selatan";province;"KS";14715
+ID;"Kalimantan Tengah";province;"KT";14727
+ID;"Kalimantan Timur";province;"KI";14728
+ID;"Kepulauan Riau";province;"KR";14733
+ID;"Lampung";province;"LA";14729
+ID;"Maluku";geographic units;"ML";48905
+ID;"Maluku";province;"MA";14730
+ID;"Maluku Utara";province;"MU";14710
+ID;"Nusa Tenggara";geographic units;"NU";48465
+ID;"Nusa Tenggara Barat";province;"NB";14731
+ID;"Nusa Tenggara Timur";province;"NT";14709
+ID;"Papua";province;"PA";14732
+ID;"Papua";geographic units;"IJ";48466
+ID;"Papua Barat";;"X1~";48084
+ID;"Papua Barat";province;"PB";19010
+ID;"Riau";province;"RI";14708
+ID;"Sulawesi";geographic units;"SL";48467
+ID;"Sulawesi Barat";province;"SR";19011
+ID;"Sulawesi Selatan";province;"SN";14707
+ID;"Sulawesi Tengah";province;"ST";14734
+ID;"Sulawesi Tenggara";province;"SG";14736
+ID;"Sulawesi Utara";province;"SA";14716
+ID;"Sumatera";geographic units;"SM";48468
+ID;"Sumatera Barat";province;"SB";14735
+ID;"Sumatera Selatan";province;"SS";14717
+ID;"Sumatera Utara";province;"SU";14706
+ID;"Yogyakarta";special region;"YO";14718
+IR;"Ardabil";Province;"03";14748
+IR;"Az¯arbayjan-e Gharbi";Province;"02";14756
+IR;"Az¯arbayjan-e Sharqi";Province;"01";14749
+IR;"Bushehr";Province;"06";14757
+IR;"Chahar Mah¸all va Bakhtiari";Province;"08";14750
+IR;"Esfahan";Province;"04";14758
+IR;"Fars";Province;"14";14751
+IR;"Gilan";Province;"19";14759
+IR;"Golestan";Province;"27";14760
+IR;"Hamadan";Province;"24";14752
+IR;"Hormozgan";Province;"23";14761
+IR;"Ilam";Province;"05";14753
+IR;"Kerman";Province;"15";14762
+IR;"Kermanshah";Province;"17";14739
+IR;"Khorasan";;"09";14740
+IR;"Khorasan-e Janubi";Province;"29";19012
+IR;"Khorasan-e Razavi";Province;"30";19013
+IR;"Khorasan-e Shemali";Province;"31";19014
+IR;"Khuzestan";Province;"10";14741
+IR;"Kohkiluyeh va Buyer Ahmad";Province;"18";14742
+IR;"Kordestan";Province;"16";14743
+IR;"Lorestan";Province;"20";14744
+IR;"Markazi";Province;"22";14745
+IR;"Mazandaran";Province;"21";14746
+IR;"Qazvin";Province;"28";14747
+IR;"Qom";Province;"26";14738
+IR;"Semnan";Province;"12";14754
+IR;"Sistan va Baluchestan";Province;"13";14764
+IR;"Tehran";Province;"07";14755
+IR;"Yazd";Province;"25";14763
+IR;"Zanjan";Province;"11";14737
+IQ;"Al Anbar";Province;"AN";14771
+IQ;"Al Basrah";Province;"BA";14773
+IQ;"Al Muthanná";Province;"MU";14777
+IQ;"Al Qadisiyah";Province;"QA";14766
+IQ;"An Najaf";Province;"NA";14768
+IQ;"Arbil";Province;"AR";14769
+IQ;"As Sulaymaniyah";Province;"SU";14779
+IQ;"At Ta'mim";Province;"TS";14765
+IQ;"Babil";Province;"BB";14772
+IQ;"Baghdad";Province;"BG";14770
+IQ;"Dahuk";Province;"DA";14774
+IQ;"Dhi Qar";Province;"DQ";14781
+IQ;"Diyalá";Province;"DI";14775
+IQ;"Karbala'";Province;"KA";14776
+IQ;"Maysan";Province;"MA";14782
+IQ;"Ninawá";Province;"NI";14778
+IQ;"Salah ad Din";Province;"SD";14767
+IQ;"Wasit";Province;"WA";14780
+IE;"Carlow";County;"CW";14798
+IE;"Cavan";County;"CN";14795
+IE;"Clare";County;"CE";14799
+IE;"Connaught";province;"C";48469
+IE;"Cork";County;"CO";48897
+IE;"Cork";County;"C";14800
+IE;"Donegal";County;"DL";14796
+IE;"Dublin";County;"D";14801
+IE;"Galway";County;"G";14797
+IE;"Kerry";County;"KY";14802
+IE;"Kildare";County;"KE";14788
+IE;"Kilkenny";County;"KK";14803
+IE;"Laois";County;"LS";14807
+IE;"Leinster";province;"L";48470
+IE;"Leitrim";County;"LM";14804
+IE;"Limerick";County;"LK";14805
+IE;"Longford";County;"LD";14787
+IE;"Louth";County;"LH";14806
+IE;"Mayo";County;"MO";14808
+IE;"Meath";County;"MH";14789
+IE;"Monaghan";County;"MN";14786
+IE;"Munster";province;"M";48471
+IE;"Offaly";County;"OY";14790
+IE;"Roscommon";County;"RN";14809
+IE;"Sligo";County;"SO";14791
+IE;"Tipperary";County;"TA";14792
+IE;"Ulster";province;"U";48472
+IE;"Waterford";County;"WD";14784
+IE;"Westmeath";County;"WH";14793
+IE;"Wexford";County;"WX";14783
+IE;"Wicklow";County;"WW";14794
+IL;"HaDarom";District;"D";14847
+IL;"Haifa";District;"HA";14878
+IL;"HaMerkaz";District;"M";14877
+IL;"HaZafon";District;"Z";14848
+IL;"Tel-Aviv";District;"TA";14850
+IL;"Yerushalayim";District;"JM";14879
+IT;"Abruzzo";region;"65";14895
+IT;"Agrigento";Province;"AG";19465
+IT;"Alessandria";Province;"AL";19466
+IT;"Ancona";Province;"AN";19467
+IT;"Aosta";Province;"AO";19468
+IT;"Arezzo";Province;"AR";19469
+IT;"Ascoli Piceno";Province;"AP";19470
+IT;"Asti";Province;"AT";19471
+IT;"Avellino";Province;"AV";19472
+IT;"Bari";Province;"BA";19473
+IT;"Barletta-Andria-Trani";Province;"BT";48088
+IT;"Basilicata";region;"77";14897
+IT;"Belluno";Province;"BL";19474
+IT;"Benevento";Province;"BN";19475
+IT;"Bergamo";Province;"BG";19476
+IT;"Biella";Province;"BI";19477
+IT;"Bologna";Province;"BO";19478
+IT;"Bolzano";Province;"BZ";19479
+IT;"Brescia";Province;"BS";19480
+IT;"Brindisi";Province;"BR";19481
+IT;"Cagliari";Province;"CA";19482
+IT;"Calabria";region;"78";14896
+IT;"Caltanissetta";Province;"CL";19483
+IT;"Campania";region;"72";14898
+IT;"Campobasso";Province;"CB";19484
+IT;"Carbonia-Iglesias";Province;"CI";19485
+IT;"Caserta";Province;"CE";19486
+IT;"Catania";Province;"CT";19487
+IT;"Catanzaro";Province;"CZ";19488
+IT;"Chieti";Province;"CH";19489
+IT;"Como";Province;"CO";19490
+IT;"Cosenza";Province;"CS";19491
+IT;"Cremona";Province;"CR";19492
+IT;"Crotone";Province;"KR";19493
+IT;"Cuneo";Province;"CN";19494
+IT;"Emilia-Romagna";region;"45";14886
+IT;"Enna";Province;"EN";19495
+IT;"Fermo";Province;"FM";48086
+IT;"Ferrara";Province;"FE";19496
+IT;"Firenze";Province;"FI";19497
+IT;"Foggia";Province;"FG";19498
+IT;"Forli-Cesena";Province;"FC";19499
+IT;"Forlì";;"FO";48085
+IT;"Friuli-Venezia Giulia";region;"36";14885
+IT;"Frosinone";Province;"FR";19500
+IT;"Genova";Province;"GE";19501
+IT;"Gorizia";Province;"GO";19502
+IT;"Grosseto";Province;"GR";19503
+IT;"Imperia";Province;"IM";19504
+IT;"Isernia";Province;"IS";19505
+IT;"L'Aquila";Province;"AQ";19507
+IT;"La Spezia";Province;"SP";19506
+IT;"Latina";Province;"LT";19508
+IT;"Lazio";region;"62";14887
+IT;"Lecce";Province;"LE";19509
+IT;"Lecco";Province;"LC";19510
+IT;"Liguria";region;"42";14899
+IT;"Livorno";Province;"LI";19511
+IT;"Lodi";Province;"LO";19512
+IT;"Lombardia";region;"25";14888
+IT;"Lucca";Province;"LU";19513
+IT;"Macerata";Province;"MC";19514
+IT;"Mantova";Province;"MN";19515
+IT;"Marche";region;"57";14889
+IT;"Massa-Carrara";Province;"MS";19516
+IT;"Matera";Province;"MT";19517
+IT;"Medio Campidano";Province;"VS";19518
+IT;"Medio Campidano";Province;"MA";48224
+IT;"Messina";Province;"ME";19519
+IT;"Milano";Province;"MI";19520
+IT;"Modena";Province;"MO";19521
+IT;"Molise";region;"67";14884
+IT;"Monza e Brianza";Province;"MB";48087
+IT;"Napoli";Province;"NA";19522
+IT;"Novara";Province;"NO";19523
+IT;"Nuoro";Province;"NU";19524
+IT;"Ogliastra";Province;"OG";19525
+IT;"Olbia-Tempio";Province;"OT";19526
+IT;"Olbia-Tempio";Province;"OL";48223
+IT;"Oristano";Province;"OR";19527
+IT;"Padova";Province;"PD";19528
+IT;"Palermo";Province;"PA";19529
+IT;"Parma";Province;"PR";19530
+IT;"Pavia";Province;"PV";19531
+IT;"Perugia";Province;"PG";19532
+IT;"Pesaro e Urbino";Province;"PS";48222
+IT;"Pesaro e Urbino";Province;"PU";19533
+IT;"Pescara";Province;"PE";19534
+IT;"Piacenza";Province;"PC";19535
+IT;"Piemonte";region;"21";14900
+IT;"Pisa";Province;"PI";19536
+IT;"Pistoia";Province;"PT";19537
+IT;"Pordenone";Province;"PN";19538
+IT;"Potenza";Province;"PZ";19539
+IT;"Prato";Province;"PO";19540
+IT;"Puglia";region;"75";14890
+IT;"Ragusa";Province;"RG";19541
+IT;"Ravenna";Province;"RA";19542
+IT;"Reggio Calabria";Province;"RC";19543
+IT;"Reggio Emilia";Province;"RE";19544
+IT;"Rieti";Province;"RI";19545
+IT;"Rimini";Province;"RN";19546
+IT;"Roma";Province;"RM";19547
+IT;"Rovigo";Province;"RO";19548
+IT;"Salerno";Province;"SA";19549
+IT;"Sardegna";region;"88";14883
+IT;"Sassari";Province;"SS";19550
+IT;"Savona";Province;"SV";19551
+IT;"Sicilia";region;"82";14891
+IT;"Siena";Province;"SI";19552
+IT;"Siracusa";Province;"SR";19553
+IT;"Sondrio";Province;"SO";19554
+IT;"Taranto";Province;"TA";19555
+IT;"Teramo";Province;"TE";19556
+IT;"Terni";Province;"TR";19557
+IT;"Torino";Province;"TO";19558
+IT;"Toscana";region;"52";14901
+IT;"Trapani";Province;"TP";19559
+IT;"Trentino-Alto Adige";region;"32";14892
+IT;"Trento";Province;"TN";19560
+IT;"Treviso";Province;"TV";19561
+IT;"Trieste";Province;"TS";19562
+IT;"Udine";Province;"UD";19563
+IT;"Umbria";region;"55";14893
+IT;"Valle d'Aosta";region;"23";14882
+IT;"Varese";Province;"VA";19564
+IT;"Veneto";region;"34";14894
+IT;"Venezia";Province;"VE";19565
+IT;"Verbano-Cusio-Ossola";Province;"VB";19566
+IT;"Vercelli";Province;"VC";19567
+IT;"Verona";Province;"VR";19568
+IT;"Vibo Valentia";Province;"VV";19569
+IT;"Vicenza";Province;"VI";19570
+IT;"Viterbo";Province;"VT";19571
+JM;"Clarendon";Parish;"13";14905
+JM;"Hanover";Parish;"09";14915
+JM;"Kingston";Parish;"01";14906
+JM;"Manchester";Parish;"12";14914
+JM;"Portland";Parish;"04";14907
+JM;"Saint Andrew";Parish;"02";14908
+JM;"Saint Ann";Parish;"06";14904
+JM;"Saint Catherine";Parish;"14";14909
+JM;"Saint Elizabeth";Parish;"11";14903
+JM;"Saint James";Parish;"08";14910
+JM;"Saint Mary";Parish;"05";14911
+JM;"Saint Thomas";Parish;"03";14902
+JM;"Trelawny";Parish;"07";14912
+JM;"Westmoreland";Parish;"10";14913
+JP;"Aiti [Aichi]";Perfecture;"23";14931
+JP;"Akita";Perfecture;"05";14954
+JP;"Aomori";Perfecture;"02";14932
+JP;"Ehime";Perfecture;"38";14955
+JP;"Gihu [Gifu]";Perfecture;"21";14936
+JP;"Gunma";Perfecture;"10";14937
+JP;"Hirosima [Hiroshima]";Perfecture;"34";14938
+JP;"Hokkaidô [Hokkaido]";Territory;"01";14957
+JP;"Hukui [Fukui]";Perfecture;"18";14934
+JP;"Hukuoka [Fukuoka]";Perfecture;"40";14935
+JP;"Hukusima [Fukushima]";Perfecture;"07";14956
+JP;"Hyôgo [Hyogo]";Perfecture;"28";14939
+JP;"Ibaraki";Perfecture;"08";14958
+JP;"Isikawa [Ishikawa]";Perfecture;"17";14940
+JP;"Iwate";Perfecture;"03";14941
+JP;"Kagawa";Perfecture;"37";14942
+JP;"Kagosima [Kagoshima]";Perfecture;"46";14959
+JP;"Kanagawa";Perfecture;"14";14943
+JP;"Kumamoto";Perfecture;"43";14960
+JP;"Kyôto [Kyoto]";Urban Perfecture;"26";14945
+JP;"Kôti [Kochi]";Perfecture;"39";14944
+JP;"Mie";Perfecture;"24";14946
+JP;"Miyagi";Perfecture;"04";14921
+JP;"Miyazaki";Perfecture;"45";14947
+JP;"Nagano";Perfecture;"20";14948
+JP;"Nagasaki";Perfecture;"42";14961
+JP;"Nara";Perfecture;"29";14949
+JP;"Niigata";Perfecture;"15";14950
+JP;"Okayama";Perfecture;"33";14951
+JP;"Okinawa";Perfecture;"47";14952
+JP;"Saga";Perfecture;"41";14953
+JP;"Saitama";Perfecture;"11";14922
+JP;"Siga [Shiga]";Perfecture;"25";14919
+JP;"Simane [Shimane]";Perfecture;"32";14923
+JP;"Sizuoka [Shizuoka]";Perfecture;"22";14924
+JP;"Tiba [Chiba]";Perfecture;"12";14933
+JP;"Tokusima [Tokushima]";Perfecture;"36";14925
+JP;"Totigi [Tochigi]";Perfecture;"09";14918
+JP;"Tottori";Perfecture;"31";14917
+JP;"Toyama";Perfecture;"16";14927
+JP;"Tôkyô [Tokyo]";Metropolis;"13";14926
+JP;"Wakayama";Perfecture;"30";14928
+JP;"Yamagata";Perfecture;"06";14916
+JP;"Yamaguti [Yamaguchi]";Perfecture;"35";14929
+JP;"Yamanasi [Yamanashi]";Perfecture;"19";14930
+JP;"Ôita [Oita]";Perfecture;"44";14920
+JP;"Ôsaka [Osaka]";Urban Perfecture;"27";14962
+JO;"Al Balqa'";Province;"BA";14979
+JO;"Al Karak";Province;"KA";14984
+JO;"Al Mafraq";Province;"MA";14981
+JO;"Al ‘Aqabah";Province;"AQ";14985
+JO;"At Tafilah";Province;"AT";14975
+JO;"Az Zarqā'";Province;"AZ";14976
+JO;"Irbid";Province;"IR";14986
+JO;"Jarash";Province;"JA";14980
+JO;"Ma`an";Province;"MN";14977
+JO;"Mādabā";Province;"MD";14983
+JO;"‘Ajlūn";Province;"AJ";14982
+JO;"‘Ammān (Al ‘A̅ şimah)";Province;"AM";14978
+KZ;"Almaty";city;"ALA";14993
+KZ;"Almaty oblysy";region;"ALM";20264
+KZ;"Aqmola oblysy";region;"AKM";14991
+KZ;"Aqtöbe oblysy";region;"AKT";14992
+KZ;"Astana";city;"AST";20265
+KZ;"Atyrau oblysy";region;"ATY";14994
+KZ;"Batys Qazaqstan oblysy";region;"ZAP";14988
+KZ;"Bayqongyr";city;"BAY";21376
+KZ;"Mangghystau oblysy";region;"MAN";14995
+KZ;"Ongtüstik Qazaqstan oblysy";region;"YUZ";14999
+KZ;"Pavlodar oblysy";region;"PAV";14998
+KZ;"Qaraghandy oblysy";region;"KAR";14997
+KZ;"Qostanay oblysy";region;"KUS";15000
+KZ;"Qyzylorda oblysy";region;"KZY";14990
+KZ;"Shyghys Qazaqstan oblysy";region;"VOS";14996
+KZ;"Soltüstik Qazaqstan oblysy";region;"SEV";14989
+KZ;"Zhambyl oblysy";region;"ZHA";14987
+KE;"Central";province;"200";15009
+KE;"Coast";province;"300";15005
+KE;"Eastern";province;"400";15006
+KE;"Nairobi";province;"110";15010
+KE;"North-Eastern";province;"500";15004
+KE;"Nyanza";province;"600";15001
+KE;"Rift Valley";province;"700";15007
+KE;"Western";province;"900";15003
+KI;"Gilbert Islands";Island group;"G";19016
+KI;"Line Islands";Island group;"L";15018
+KI;"Phoenix Islands";Island group;"P";15033
+KP;"Chagang-do";province;"04";21370
+KP;"Chagang-do";province;"CHA";48098
+KP;"Hamgyong-bukdo";province;"09";21369
+KP;"Hamgyong-namdo";province;"08";21368
+KP;"Hamgyongbuk-do";province;"HAB";48096
+KP;"Hamgyongnam-do";province;"HAN";48095
+KP;"Hwanghae-bukto";province;"06";21367
+KP;"Hwanghae-namdo";province;"05";21366
+KP;"Hwanghaebuk-do";province;"HWB";48092
+KP;"Hwanghaenam-do";province;"HWN";48091
+KP;"Kaesong-si";special city;"KAE";21373
+KP;"Kangwon-do";province;"KAN";48097
+KP;"Kangwon-do";province;"07";15053
+KP;"Najin Sonbong-si";special city;"NAJ";21374
+KP;"Nampo-si";special city;"NAM";21375
+KP;"Nason";Special City;"13";21371
+KP;"Pyongan-bukdo";province;"03";21363
+KP;"Pyongan-namdo";province;"02";21364
+KP;"Pyonganbuk-do";province;"PYB";48093
+KP;"Pyongannam-do";province;"PYN";48094
+KP;"Pyongyang";Capital City;"01";21372
+KP;"Pyongyang-si";special city;"PYO";48099
+KP;"Rason";;"X1~";48089
+KP;"Yanggang-do";province;"10";21365
+KP;"Yanggang-do";province;"YAN";48090
+KR;"Busan Gwang'yeogsi [Pusan-Kwangyokshi]";metropolitan city;"26";20247
+KR;"Chungcheongbugdo [Ch'ungch'ongbuk-do]";province;"43";20255
+KR;"Chungcheongnamdo [Ch'ungch'ongnam-do]";province;"44";20256
+KR;"Daegu Gwang'yeogsi [Taegu-Kwangyokshi]";metropolitan city;"27";20248
+KR;"Daejeon Gwang'yeogsi [Taejon-Kwangyokshi]";metropolitan city;"30";20251
+KR;"Gang'weondo [Kang-won-do]";province;"42";15042
+KR;"Gwangju Gwang'yeogsi [Kwangju-Kwangyokshi]";metropolitan city;"29";20250
+KR;"Gyeonggido [Kyonggi-do]";province;"41";20253
+KR;"Gyeongsangbugdo [Kyongsangbuk-do]";province;"47";20259
+KR;"Gyeongsangnamdo [Kyongsangnam-do]";province;"48";20260
+KR;"Incheon Gwang'yeogsi [Inch'n-Kwangyokshi]";metropolitan city;"28";20249
+KR;"Jejudo [Cheju-do]";province;"49";20261
+KR;"Jeonrabugdo[Chollabuk-do]";province;"45";20257
+KR;"Jeonranamdo [Chollanam-do]";province;"46";20258
+KR;"Seoul Teugbyeolsi [Seoul-T'ukpyolshi]";capital metropolitan city;"11";20246
+KR;"Ulsan Gwang'yeogsi [Ulsan-Kwangyokshi]";metropolitan city;"31";20252
+KW;"Al Ahmadi";Governorate;"AH";15064
+KW;"Al Farwaniyah";Governorate;"FA";15068
+KW;"Al Jahrah";Governorate;"JA";15063
+KW;"Al Kuwayt (Al ‘Āşimah)";Governorate;"KU";15066
+KW;"Hawalli";Governorate;"HA";15067
+KW;"Mubarak al-Kabir";Governorate;"MU";15065
+KG;"Batken";region;"B";15070
+KG;"Bishkek";city;"GB";15072
+KG;"Chü";region;"C";15078
+KG;"Jalal-Abad";region;"J";15077
+KG;"Naryn";region;"N";15071
+KG;"Osh";region;"O";15069
+KG;"Talas";region;"T";15075
+KG;"Ysyk-Köl";region;"Y";15074
+LA;"Attapu [Attopeu]";province;"AT";15080
+LA;"Bokèo";province;"BK";15081
+LA;"Bolikhamxai [Borikhane]";province;"BL";15089
+LA;"Champasak [Champassak]";province;"CH";15082
+LA;"Houaphan";province;"HO";15093
+LA;"Khammouan";province;"KH";15094
+LA;"Louang Namtha";province;"LM";15083
+LA;"Louangphabang [Louang Prabang]";province;"LP";15092
+LA;"Oudômxai [Oudomsai]";province;"OU";15084
+LA;"Phôngsali [Phong Saly]";province;"PH";15085
+LA;"Salavan [Saravane]";province;"SL";15091
+LA;"Savannakhét";province;"SV";15086
+LA;"Vientiane";province;"VI";15095
+LA;"Vientiane Prefecture";prefecture;"VT";15087
+LA;"Xaignabouli [Sayaboury]";province;"XA";15088
+LA;"Xaisômboun";special zone;"XN";15096
+LA;"Xiangkhoang [Xieng Khouang]";province;"XI";15079
+LA;"Xékong [Sékong]";province;"XE";15090
+LV;"Aglonas novads (Aglona)";District;"001";48896
+LV;"Aizkraukles Aprinkis";district;"AI";15106
+LV;"Aizkraukles novads (Aizkraukle)";District;"002";48728
+LV;"Aizputes novads (Aizpute)";District;"003";48729
+LV;"Aknīstes novads (Aknīste)";District;"004";48730
+LV;"Alojas novads (Aloja)";District;"005";48731
+LV;"Alsungas novads (Alsunga)";District;"006";48732
+LV;"Aluksnes Aprinkis";district;"AL";15107
+LV;"Alūksnes novads (Alūksne)";District;"007";48733
+LV;"Amatas novads (Amata)";District;"008";48734
+LV;"Apes novads (Ape)";District;"009";48735
+LV;"Auces novads (Auce)";District;"010";48736
+LV;"Babītes novads (Babīte)";District;"012";48738
+LV;"Baldones novads (Baldone)";District;"013";48739
+LV;"Baltinavas novads (Baltinava)";District;"014";48740
+LV;"Balvu Aprinkis";district;"BL";15108
+LV;"Balvu novads (Balvi)";District;"015";48741
+LV;"Bauskas Aprinkis";district;"BU";15109
+LV;"Bauskas novads (Bauska)";District;"016";48742
+LV;"Beverīnas novads (Beverīna)";District;"017";48743
+LV;"Brocēnu novads (Brocēni)";District;"018";48744
+LV;"Burtnieku novads (Burtnieki)";District;"019";48745
+LV;"Carnikavas novads (Carnikava)";District;"020";48746
+LV;"Cesu Aprinkis";district;"CE";15110
+LV;"Cesvaines novads (Cesvaine)";District;"021";48747
+LV;"Ciblas novads (Cibla)";District;"023";48749
+LV;"Cēsu novads (Cēsis)";District;"022";48748
+LV;"Dagdas novads (Dagda)";District;"024";48750
+LV;"Daugavpils";city;"DGV";15111
+LV;"Daugavpils Aprinkis";district;"DA";15112
+LV;"Daugavpils novads (Daugavpils)";District;"025";48751
+LV;"Dobeles Aprinkis";district;"DO";15113
+LV;"Dobeles novads (Dobele)";District;"026";48752
+LV;"Dundagas novads (Dundaga)";District;"027";48753
+LV;"Durbes novads (Durbe)";District;"028";48754
+LV;"Engures novads (Engure)";District;"029";48755
+LV;"Garkalnes novads (Garkalne)";District;"031";48757
+LV;"Grobiņas novads (Grobiņa)";District;"032";48758
+LV;"Gulbenes Aprinkis";district;"GU";15124
+LV;"Gulbenes novads (Gulbene)";District;"033";48759
+LV;"Iecavas novads (Iecava)";District;"034";48760
+LV;"Ikšķiles novads (Ikšķile)";District;"035";48761
+LV;"Ilūkstes novads (Ilūkste)";District;"036";48762
+LV;"Inčukalna novads (Inčukalns)";District;"037";48763
+LV;"Jaunjelgavas novads (Jaunjelgava)";District;"038";48764
+LV;"Jaunpiebalgas novads (Jaunpiebalga)";District;"039";48765
+LV;"Jaunpils novads (Jaunpils)";District;"040";48766
+LV;"Jekabpils Aprinkis";district;"JK";15114
+LV;"Jelgava";city;"JEL";15125
+LV;"Jelgavas Aprinkis";district;"JL";15126
+LV;"Jelgavas novads (Jelgava)";District;"041";48767
+LV;"Jurmala";city;"JUR";15127
+LV;"Jēkabpils";City;"JKB";48838
+LV;"Jēkabpils novads (Jēkabpils)";District;"042";48768
+LV;"Kandavas novads (Kandava)";District;"043";48769
+LV;"Kocēnu novads";District;"045";48771
+LV;"Kokneses novads (Koknese)";District;"046";48772
+LV;"Kraslavas Aprinkis";district;"KR";15115
+LV;"Krimuldas novads (Krimulda)";District;"048";48774
+LV;"Krustpils novads (Krustpils)";District;"049";48775
+LV;"Krāslavas novads (Krāslava)";District;"047";48773
+LV;"Kuldigas Aprinkis";district;"KU";15116
+LV;"Kuldīgas novads (Kuldīga)";District;"050";48776
+LV;"Kārsavas novads (Kārsava)";District;"044";48770
+LV;"Lielvārdes novads (Lielvārde)";District;"053";48779
+LV;"Liepaja";city;"LPX";15128
+LV;"Liepajas Aprinkis";district;"LE";15117
+LV;"Limbažu Aprinkis";district;"LM";15118
+LV;"Limbažu novads (Limbaži)";District;"054";48781
+LV;"Lubānas novads (Lubāna)";District;"057";48784
+LV;"Ludzas Aprinkis";district;"LU";15123
+LV;"Ludzas novads (Ludza)";District;"058";48785
+LV;"Līgatnes novads (Līgatne)";District;"055";48782
+LV;"Līvānu novads (Līvāni)";District;"056";48783
+LV;"Madonas Aprinkis";district;"MA";15119
+LV;"Madonas novads (Madona)";District;"059";48786
+LV;"Mazsalacas novads (Mazsalaca)";District;"060";48787
+LV;"Mālpils novads (Mālpils)";District;"061";48788
+LV;"Mārupes novads (Mārupe)";District;"062";48789
+LV;"Mērsraga novads";District;"063";48790
+LV;"Naukšēnu novads (Naukšēni)";District;"064";48791
+LV;"Neretas novads (Nereta)";District;"065";48792
+LV;"Nīcas novads (Nīca)";District;"066";48793
+LV;"Ogres Aprinkis";district;"OG";15098
+LV;"Ogres novads (Ogre)";District;"067";48794
+LV;"Olaines novads (Olaine)";District;"068";48795
+LV;"Ozolnieku novads (Ozolnieki)";District;"069";48796
+LV;"Preilu Aprinkis";district;"PR";15122
+LV;"Preiļu novads (Preiļi)";District;"073";48800
+LV;"Priekules novads (Priekule)";District;"074";48801
+LV;"Priekuļu novads (Priekuļi)";District;"075";48802
+LV;"Pārgaujas novads (Pārgauja)";District;"070";48797
+LV;"Pāvilostas novads (Pāvilosta)";District;"071";48798
+LV;"Pļaviņu novads (Pļaviņas)";District;"072";48799
+LV;"Raunas novads (Rauna)";District;"076";48803
+LV;"Rezekne";city;"REZ";15099
+LV;"Rezeknes Aprinkis";district;"RE";15100
+LV;"Riebiņu novads (Riebiņi)";District;"078";48805
+LV;"Riga";city;"RIX";15121
+LV;"Rigas Aprinkis";district;"RI";15101
+LV;"Rojas novads (Roja)";District;"079";48806
+LV;"Ropažu novads (Ropaži)";District;"080";48807
+LV;"Rucavas novads (Rucava)";District;"081";48808
+LV;"Rugāju novads (Rugāji)";District;"082";48809
+LV;"Rundāles novads (Rundāle)";District;"083";48810
+LV;"Rēzeknes novads (Rēzekne)";District;"077";48804
+LV;"Rūjienas novads (Rūjiena)";District;"084";48811
+LV;"Salacgrīvas novads (Salacgrīva)";District;"086";48813
+LV;"Salas novads (Sala)";District;"085";48812
+LV;"Salaspils novads (Salaspils)";District;"087";48814
+LV;"Saldus Aprinkis";district;"SA";15102
+LV;"Saldus novads (Saldus)";District;"088";48815
+LV;"Saulkrastu novads (Saulkrasti)";District;"089";48816
+LV;"Siguldas novads (Sigulda)";District;"091";48818
+LV;"Skrundas novads (Skrunda)";District;"093";48820
+LV;"Skrīveru novads (Skrīveri)";District;"092";48819
+LV;"Smiltenes novads (Smiltene)";District;"094";48821
+LV;"Stopiņu novads (Stopiņi)";District;"095";48822
+LV;"Strenču novads (Strenči)";District;"096";48823
+LV;"Sējas novads (Sēja)";District;"090";48817
+LV;"Talsu Aprinkis";district;"TA";15129
+LV;"Talsu novads (Talsi)";District;"097";48824
+LV;"Tukuma Aprinkis";district;"TU";15103
+LV;"Tukuma novads (Tukums)";District;"099";48826
+LV;"Tērvetes novads (Tērvete)";District;"098";48825
+LV;"Vaiņodes novads (Vaiņode)";District;"100";48827
+LV;"Valkas Aprinkis";district;"VK";15104
+LV;"Valkas novads (Valka)";District;"101";48828
+LV;"Valmiera";city;"VMR";48839
+LV;"Valmieras Aprinkis";district;"VM";15130
+LV;"Varakļānu novads (Varakļāni)";District;"102";48829
+LV;"Vecpiebalgas novads (Vecpiebalga)";District;"104";48831
+LV;"Vecumnieku novads (Vecumnieki)";District;"105";48832
+LV;"Ventspils";city;"VEN";15105
+LV;"Ventspils Aprinkis";district;"VE";15097
+LV;"Ventspils novads (Ventspils)";District;"106";48833
+LV;"Viesītes novads (Viesīte)";District;"107";48834
+LV;"Viļakas novads (Viļaka)";District;"108";48835
+LV;"Viļānu novads (Viļāni)";District;"109";48836
+LV;"Vārkavas novads (Vārkava)";District;"103";48830
+LV;"Zilupes novads (Zilupe)";District;"110";48837
+LV;"Ādažu novads (Ādaži)";District;"011";48737
+LV;"Ērgļu novads (Ērgļi)";District;"030";48756
+LV;"Ķeguma novads (Ķegums)";District;"051";48777
+LV;"Ķekavas novads (Ķekava)";District;"052";48778
+LB;"Aakkar";Province;"AK";48255
+LB;"Baalbek-Hermel";Province;"BH";48256
+LB;"Beirut";Province;"BA";15134
+LB;"El Béqaa";Province;"BI";15135
+LB;"Jabal Loubnâne";Province;"JL";15133
+LB;"Loubnâne ech Chemâli";Province;"AS";15131
+LB;"Loubnâne ej Jnoûbi";Province;"JA";15136
+LB;"Nabatîyé";Province;"NA";15132
+LS;"Berea";District;"D";15138
+LS;"Butha-Buthe";District;"B";15139
+LS;"Leribe";District;"C";15145
+LS;"Mafeteng";District;"E";15140
+LS;"Maseru";District;"A";15146
+LS;"Mohale's Hoek";District;"F";15141
+LS;"Mokhotlong";District;"J";15142
+LS;"Qacha's Nek";District;"H";15137
+LS;"Quthing";District;"G";15143
+LS;"Thaba-Tseka";District;"K";15144
+LR;"Bomi";County;"BM";15152
+LR;"Bong";County;"BG";15148
+LR;"Gbarpolu";County;"X1~";19021
+LR;"Grand Bassa";County;"GB";15153
+LR;"Grand Cape Mount";County;"CM";15156
+LR;"Grand Gedeh";County;"GG";15151
+LR;"Grand Kru";County;"GK";19023
+LR;"Lofa";County;"LO";15154
+LR;"Margibi";County;"MG";15158
+LR;"Maryland";County;"MY";15150
+LR;"Montserrado";County;"MO";15157
+LR;"Nimba";County;"NI";15155
+LR;"River Gee";County;"X2~";19022
+LR;"Rivercess";County;"RI";15149
+LR;"Sinoe";County;"SI";15147
+LY;"Ajdabiya";;"AJ";15169
+LY;"Al ?izam al Akh?ar";;"HZ";15180
+LY;"Al Butnan";popularate;"BU";15171
+LY;"Al Jabal al Akh?ar";popularate;"JA";15174
+LY;"Al Jabal al Gharbī";popularate;"JG";48229
+LY;"Al Jifarah";popularate;"JI";15181
+LY;"Al Jufrah";popularate;"JU";15175
+LY;"Al Kufrah";popularate;"KF";15176
+LY;"Al Marj";popularate;"MJ";15182
+LY;"Al Marqab";popularate;"MB";15160
+LY;"Al Qatrun";;"QT";20297
+LY;"Al Qubbah";;"QB";15163
+LY;"Al Wāḩāt";popularate;"WA";15167
+LY;"An Nuqat al Khams";popularate;"NQ";15185
+LY;"Ash Shati'";District;"SH";15189
+LY;"Az Zawiyah";popularate;"ZA";15168
+LY;"Banghazi";popularate;"BA";15177
+LY;"Bani Walid";;"BW";15170
+LY;"Darnah";popularate;"DR";15178
+LY;"Ghadamis";;"GD";15172
+LY;"Gharyan";;"GR";15179
+LY;"Ghat";popularate;"GT";15173
+LY;"Jaghbub";;"JB";20286
+LY;"Misratah";popularate;"MI";15161
+LY;"Mizdah";;"MZ";15187
+LY;"Murzuq";popularate;"MQ";15186
+LY;"Nalut";popularate;"NL";15162
+LY;"Sabha";popularate;"SB";15184
+LY;"Sabratah Surman";;"SS";15164
+LY;"Surt";popularate;"SR";15183
+LY;"Tajura' wa an Nawahi Arba";;"TN";20303
+LY;"Tarabulus";popularate;"TB";15165
+LY;"Tarhunah-Masallatah";;"TM";15188
+LY;"Wadi al ?ayat";popularate;"WD";15166
+LY;"Wādī ash Shāţiʾ";popularate;"WS";48230
+LY;"Yafran-Jadu";;"YJ";15159
+LI;"Balzers";Commune;"01";15193
+LI;"Eschen";Commune;"02";15194
+LI;"Gamprin";Commune;"03";15192
+LI;"Mauren";Commune;"04";15195
+LI;"Planken";Commune;"05";15196
+LI;"Ruggell";Commune;"06";15191
+LI;"Schaan";Commune;"07";15197
+LI;"Schellenberg";Commune;"08";15200
+LI;"Triesen";Commune;"09";15198
+LI;"Triesenberg";Commune;"10";15199
+LI;"Vaduz";Commune;"11";15190
+LT;"Alytaus Apskritis";County;"AL";15209
+LT;"Kauno Apskritis";County;"KU";15205
+LT;"Klaipedos Apskritis";County;"KL";15208
+LT;"Marijampoles Apskritis";County;"MR";15206
+LT;"Panevežio Apskritis";County;"PN";15202
+LT;"Taurages Apskritis";County;"TA";15210
+LT;"Telšiu Apskritis";County;"TE";15207
+LT;"Utenos Apskritis";County;"UT";15203
+LT;"Vilniaus Apskritis";County;"VL";15201
+LT;"Šiauliu Apskritis";County;"SA";15204
+LU;"Diekirch";District;"D";15216
+LU;"Grevenmacher";District;"G";15215
+LU;"Luxembourg (fr)";District;"L";15220
+MO;"Ilhas";;"I";48266
+MO;"Macau";;"M";48267
+MK;"Aerodrom";municipality;"01";48906
+MK;"Aerodrom *";Municipality;"AD";20121
+MK;"Aracinovo";Municipality;"AR";20122
+MK;"Aračinovo";municipality;"02";48907
+MK;"Berovo";Municipality;"BR";15224
+MK;"Berovo";municipality;"03";48908
+MK;"Bitola";municipality;"04";48909
+MK;"Bitola";Municipality;"TL";15225
+MK;"Bogdanci";municipality;"05";48910
+MK;"Bogdanci";Municipality;"BG";20123
+MK;"Bogovinje";municipality;"06";48911
+MK;"Bogovinje";Municipality;"VJ";20124
+MK;"Bosilovo";Municipality;"BS";20125
+MK;"Bosilovo";municipality;"07";48912
+MK;"Brvenica";Municipality;"BN";20126
+MK;"Brvenica";municipality;"08";48913
+MK;"Butel";municipality;"09";48914
+MK;"Butel *";Municipality;"BU";20127
+MK;"Cair *";Municipality;"CI";20128
+MK;"Caška";Municipality;"CA";20129
+MK;"Centar";municipality;"77";48915
+MK;"Centar *";Municipality;"CE";20130
+MK;"Centar Župa";Municipality;"CZ";20131
+MK;"Centar Župa";municipality;"78";48916
+MK;"Cešinovo-Obleševo";Municipality;"CH";20132
+MK;"Cucer Sandevo";Municipality;"CS";20133
+MK;"Debar";Municipality;"DB";15227
+MK;"Debar";municipality;"21";48921
+MK;"Debarca";municipality;"22";48922
+MK;"Debarca";Municipality;"DA";20138
+MK;"Delcevo";Municipality;"DL";15228
+MK;"Delčevo";municipality;"23";48923
+MK;"Demir Hisar";municipality;"25";48924
+MK;"Demir Hisar";Municipality;"DM";15229
+MK;"Demir Kapija";Municipality;"DK";20134
+MK;"Demir Kapija";municipality;"24";48925
+MK;"Dojran";Municipality;"SD";20135
+MK;"Dojran";municipality;"26";48926
+MK;"Dolneni";municipality;"27";48927
+MK;"Dolneni";Municipality;"DE";20136
+MK;"Drugovo";Municipality;"DR";20137
+MK;"Drugovo";municipality;"28";48928
+MK;"Gazi Baba";municipality;"17";48929
+MK;"Gazi Baba *";Municipality;"GB";20310
+MK;"Gevgelija";municipality;"18";48930
+MK;"Gevgelija";Municipality;"GV";15230
+MK;"Gjorce Petrov *";Municipality;"GP";20311
+MK;"Gjorče Petrov";municipality;"29";48931
+MK;"Gostivar";municipality;"19";48932
+MK;"Gostivar";Municipality;"GT";15233
+MK;"Gradsko";Municipality;"GR";20312
+MK;"Gradsko";municipality;"20";48933
+MK;"Ilinden";Municipality;"IL";20313
+MK;"Ilinden";municipality;"34";48934
+MK;"Jegunovce";Municipality;"JG";20314
+MK;"Jegunovce";municipality;"35";48935
+MK;"Karbinci";municipality;"37";48936
+MK;"Karbinci";Municipality;"KB";20315
+MK;"Karpoš";municipality;"38";48937
+MK;"Karpoš *";Municipality;"KX";20316
+MK;"Kavadarci";municipality;"36";48938
+MK;"Kavadarci";Municipality;"AV";15231
+MK;"Kicevo";Municipality;"KH";15234
+MK;"Kisela Voda";municipality;"39";48940
+MK;"Kisela Voda *";Municipality;"VD";20139
+MK;"Kičevo";municipality;"40";48939
+MK;"Kocani";Municipality;"OC";15232
+MK;"Konce";Municipality;"KN";20140
+MK;"Konče";municipality;"41";48942
+MK;"Kočani";municipality;"42";48941
+MK;"Kratovo";municipality;"43";48943
+MK;"Kratovo";Municipality;"KY";15235
+MK;"Kriva Palanka";Municipality;"KZ";15249
+MK;"Kriva Palanka";municipality;"44";48944
+MK;"Krivogaštani";municipality;"45";48945
+MK;"Krivogaštani";Municipality;"KG";20141
+MK;"Kruševo";municipality;"46";48946
+MK;"Kruševo";Municipality;"KS";15236
+MK;"Kumanovo";municipality;"47";48947
+MK;"Kumanovo";Municipality;"UM";15250
+MK;"Lipkovo";Municipality;"LI";20142
+MK;"Lipkovo";municipality;"48";48948
+MK;"Lozovo";Municipality;"LO";20143
+MK;"Lozovo";municipality;"49";48949
+MK;"Makedonska Kamenica";municipality;"51";48950
+MK;"Makedonska Kamenica";Municipality;"MK";20144
+MK;"Makedonski Brod";municipality;"52";48951
+MK;"Makedonski Brod";Municipality;"MD";20145
+MK;"Mavrovo i Rostuša";municipality;"50";48952
+MK;"Mavrovo-i-Rostuša";Municipality;"MR";20146
+MK;"Mogila";Municipality;"MG";20147
+MK;"Mogila";municipality;"53";48953
+MK;"Negotino";municipality;"54";48954
+MK;"Negotino";Municipality;"NG";15237
+MK;"Novaci";Municipality;"NV";20148
+MK;"Novaci";municipality;"55";48955
+MK;"Novo Selo";Municipality;"NS";20149
+MK;"Novo Selo";municipality;"56";48956
+MK;"Ohrid";municipality;"58";48957
+MK;"Ohrid";Municipality;"OD";15238
+MK;"Oslomej";Municipality;"OS";20150
+MK;"Oslomej";municipality;"57";48958
+MK;"Pehcevo";Municipality;"PH";20151
+MK;"Pehčevo";municipality;"60";48959
+MK;"Petrovec";municipality;"59";48960
+MK;"Petrovec";Municipality;"PE";20152
+MK;"Plasnica";municipality;"61";48961
+MK;"Plasnica";Municipality;"PN";20153
+MK;"Prilep";Municipality;"PP";15248
+MK;"Prilep";municipality;"62";48962
+MK;"Probištip";Municipality;"PT";15239
+MK;"Probištip";municipality;"63";48963
+MK;"Radoviš";Municipality;"RV";15247
+MK;"Radoviš";municipality;"64";48964
+MK;"Rankovce";Municipality;"RN";20154
+MK;"Rankovce";municipality;"65";48965
+MK;"Resen";municipality;"66";48966
+MK;"Resen";Municipality;"RE";15240
+MK;"Rosoman";municipality;"67";48967
+MK;"Rosoman";Municipality;"RM";20155
+MK;"Saraj";municipality;"68";48968
+MK;"Saraj *";Municipality;"AJ";20156
+MK;"Skopje";;"X1~";15246
+MK;"Sopište";municipality;"70";48969
+MK;"Sopište";Municipality;"SS";20157
+MK;"Staro Nagoricane";Municipality;"NA";20158
+MK;"Staro Nagoričane";municipality;"71";48970
+MK;"Struga";Municipality;"UG";15242
+MK;"Struga";municipality;"72";48971
+MK;"Strumica";municipality;"73";48972
+MK;"Strumica";Municipality;"RU";15251
+MK;"Studenicani";Municipality;"SU";20159
+MK;"Studeničani";municipality;"74";48973
+MK;"Sveti Nikole";Municipality;"SL";15243
+MK;"Sveti Nikole";municipality;"69";48974
+MK;"Tearce";municipality;"75";48977
+MK;"Tearce";Municipality;"TR";20160
+MK;"Tetovo";Municipality;"ET";15252
+MK;"Tetovo";municipality;"76";48978
+MK;"Valandovo";municipality;"10";48979
+MK;"Valandovo";Municipality;"VA";15244
+MK;"Vasilevo";municipality;"11";48980
+MK;"Vasilevo";Municipality;"VL";20161
+MK;"Veles";Municipality;"VE";15223
+MK;"Veles";municipality;"13";48981
+MK;"Vevcani";Municipality;"VV";20162
+MK;"Vevčani";municipality;"12";48982
+MK;"Vinica";municipality;"14";48983
+MK;"Vinica";Municipality;"NI";15245
+MK;"Vraneštica";municipality;"15";48984
+MK;"Vraneštica";Municipality;"VC";20163
+MK;"Vrapcište";Municipality;"VH";20164
+MK;"Vrapčište";municipality;"16";48985
+MK;"Zajas";municipality;"31";48986
+MK;"Zajas";Municipality;"ZA";20165
+MK;"Zelenikovo";municipality;"32";48987
+MK;"Zelenikovo";Municipality;"ZK";20166
+MK;"Zrnovci";municipality;"33";48988
+MK;"Zrnovci";Municipality;"ZR";20167
+MK;"Čair";municipality;"79";48917
+MK;"Čaška";municipality;"80";48918
+MK;"Češinovo-Obleševo";municipality;"81";48919
+MK;"Čučer Sandevo";municipality;"82";48920
+MK;"Štip";municipality;"83";48975
+MK;"Štip";Municipality;"ST";15241
+MK;"Šuto Orizari";municipality;"84";48976
+MK;"Šuto Orizari *";Municipality;"SO";20169
+MK;"Želino";municipality;"30";48989
+MK;"Želino";Municipality;"ZE";20170
+MG;"Antananarivo";Province;"T";15255
+MG;"Antsiranana";Province;"D";15254
+MG;"Fianarantsoa";Province;"F";15258
+MG;"Mahajanga";Province;"M";15257
+MG;"Toamasina";Province;"A";15253
+MG;"Toliara";Province;"U";15256
+MW;"Balaka";District;"BA";15279
+MW;"Blantyre";District;"BL";15261
+MW;"Central Region";region;"C";48232
+MW;"Chikwawa";District;"CK";15280
+MW;"Chiradzulu";District;"CR";15262
+MW;"Chitipa";District;"CT";15281
+MW;"Dedza";District;"DE";15263
+MW;"Dowa";District;"DO";15264
+MW;"Karonga";District;"KR";15285
+MW;"Kasungu";District;"KS";15265
+MW;"Likoma";District;"LK";19024
+MW;"Lilongwe";District;"LI";15286
+MW;"Machinga";District;"MH";15267
+MW;"Mangochi";District;"MG";15268
+MW;"Mchinji";District;"MC";15284
+MW;"Mulanje";District;"MU";15269
+MW;"Mwanza";District;"MW";15270
+MW;"Mzimba";District;"MZ";15283
+MW;"Neno";district;"NE";48231
+MW;"Nkhata Bay";District;"NB";15282
+MW;"Nkhotakota";District;"NK";15272
+MW;"Northern Region";region;"N";48233
+MW;"Nsanje";District;"NS";15273
+MW;"Ntcheu";District;"NU";15287
+MW;"Ntchisi";District;"NI";15274
+MW;"Phalombe";District;"PH";15275
+MW;"Rumphi";District;"RU";15288
+MW;"Salima";District;"SA";15276
+MW;"Southern Region";region;"S";48234
+MW;"Thyolo";District;"TH";15277
+MW;"Zomba";District;"ZO";15278
+MY;"Johor";state;"01";15290
+MY;"Kedah";state;"02";15299
+MY;"Kelantan";state;"03";15291
+MY;"Melaka";state;"04";15293
+MY;"Negeri Sembilan";state;"05";15301
+MY;"Pahang";state;"06";15294
+MY;"Perak";state;"08";15295
+MY;"Perlis";state;"09";15302
+MY;"Pulau Pinang";state;"07";15296
+MY;"Sabah";state;"12";15297
+MY;"Sarawak";state;"13";15303
+MY;"Selangor";state;"10";15298
+MY;"Terengganu";state;"11";15289
+MY;"Wilayah Persekutuan Kuala Lumpur";federal territory;"14";15300
+MY;"Wilayah Persekutuan Labuan";federal territory;"15";15292
+MY;"Wilayah Persekutuan Putrajaya";federal territory;"16";19025
+MV;"Alif";administrative atoll;"02";15307
+MV;"Alif Dhaal";;"X1~";48268
+MV;"Alif Dhaal";;"00";15308
+MV;"Baa";administrative atoll;"20";15309
+MV;"Central";Province;"CE";48272
+MV;"Dhaalu";administrative atoll;"17";15310
+MV;"Faafu";administrative atoll;"14";15311
+MV;"Gaaf Alif";administrative atoll;"27";15312
+MV;"Gaafu Dhaalu";administrative atoll;"28";15313
+MV;"Gnaviyani";administrative atoll;"29";15306
+MV;"Haa Alif";administrative atoll;"07";15314
+MV;"Haa Dhaalu";administrative atoll;"23";15315
+MV;"Kaafu";administrative atoll;"26";15305
+MV;"Laamu";administrative atoll;"05";15316
+MV;"Lhaviyani";administrative atoll;"03";15321
+MV;"Male";capital;"MLE";15317
+MV;"Meemu";administrative atoll;"12";15324
+MV;"Noonu";administrative atoll;"25";15323
+MV;"North";Province;"NO";48275
+MV;"North Central";Province;"NC";48274
+MV;"Raa";administrative atoll;"13";15318
+MV;"Seenu";administrative atoll;"01";15319
+MV;"Shaviyani";administrative atoll;"24";15322
+MV;"South";Province;"SU";48269
+MV;"South Central";Province;"SC";48273
+MV;"Thaa";administrative atoll;"08";15304
+MV;"Upper North";Province;"UN";48271
+MV;"Upper South";Province;"US";48270
+MV;"Vaavu";administrative atoll;"04";15320
+ML;"Bamako";district;"BKO";15327
+ML;"Gao";region;"7";15329
+ML;"Kayes";region;"1";15330
+ML;"Kidal";region;"8";15328
+ML;"Koulikoro";region;"2";15331
+ML;"Mopti";region;"5";15326
+ML;"Sikasso";region;"3";15333
+ML;"Ségou";region;"4";15332
+ML;"Tombouctou";region;"6";15325
+MH;"Ailinglaplap";Municipality;"ALL";15362
+MH;"Ailuk";Municipality;"ALK";15347
+MH;"Arno";Municipality;"ARN";15348
+MH;"Aur";Municipality;"AUR";15363
+MH;"Ebon";Municipality;"EBO";15351
+MH;"Enewetak";Municipality;"ENI";15365
+MH;"Jabat";Municipality;"JAB";48101
+MH;"Jaluit";Municipality;"JAL";15353
+MH;"Kili";Municipality;"KIL";15367
+MH;"Kwajalein";Municipality;"KWA";15355
+MH;"Lae";Municipality;"LAE";15368
+MH;"Lib";Municipality;"LIB";15356
+MH;"Likiep";Municipality;"LIK";15357
+MH;"Majuro";Municipality;"MAJ";15345
+MH;"Maloelap";Municipality;"MAL";15358
+MH;"Mejit";Municipality;"MEJ";15369
+MH;"Mili";Municipality;"MIL";15359
+MH;"Namdrik";Municipality;"NMK";15360
+MH;"Namu";Municipality;"NMU";15344
+MH;"Ralik chain";Chain of Islands;"L";48510
+MH;"Ratak chain";Chain of Islands;"T";48674
+MH;"Rongelap";Municipality;"RON";15361
+MH;"Ujae";Municipality;"UJA";15371
+MH;"Ujelang";Municipality;"UJL";15342
+MH;"Utirik";Municipality;"UTI";15372
+MH;"Wotho";Municipality;"WTH";15341
+MH;"Wotje";Municipality;"WTJ";15340
+MR;"Adrar";region;"07";15379
+MR;"Assaba";region;"03";15378
+MR;"Brakna";region;"05";15384
+MR;"Dakhlet Nouâdhibou";region;"08";15380
+MR;"Gorgol";region;"04";15387
+MR;"Guidimaka";region;"10";15388
+MR;"Hodh ech Chargui";region;"01";15386
+MR;"Hodh el Gharbi";region;"02";15381
+MR;"Inchiri";region;"12";15382
+MR;"Nouakchott";district;"NKC";15389
+MR;"Tagant";region;"09";15385
+MR;"Tiris Zemmour";region;"11";15383
+MR;"Trarza";region;"06";15377
+MU;"Agalega Islands";dependency;"AG";19026
+MU;"Beau Bassin-Rose Hill";city;"BR";19027
+MU;"Black River";district;"BL";15392
+MU;"Cargados Carajos Shoals [Saint Brandon Islands]";dependency;"CC";19028
+MU;"Curepipe";city;"CU";19029
+MU;"Flacq";district;"FL";15395
+MU;"Grand Port";district;"GP";15393
+MU;"Moka";district;"MO";15394
+MU;"Pamplemousses";district;"PA";15396
+MU;"Plaines Wilhems";district;"PW";15391
+MU;"Port Louis City";district;"PL";15397
+MU;"Port Louis District";city;"PU";19030
+MU;"Quatre Bornes";city;"QB";19033
+MU;"Rivière du Rempart";district;"RR";15399
+MU;"Rodrigues Island";dependency;"RO";15398
+MU;"Savanne";district;"SA";15390
+MU;"Vacoas-Phoenix";city;"VP";19032
+MX;"Aguascalientes";state;"AGU";15423
+MX;"Baja California";state;"BCN";15412
+MX;"Baja California Sur";state;"BCS";15413
+MX;"Campeche";state;"CAM";15424
+MX;"Chiapas";state;"CHP";15414
+MX;"Chihuahua";state;"CHH";15425
+MX;"Coahuila";state;"COA";15415
+MX;"Colima";state;"COL";15416
+MX;"Distrito Federal";federal district;"DIF";15426
+MX;"Durango";state;"DUR";15417
+MX;"Guanajuato";state;"GUA";15418
+MX;"Guerrero";state;"GRO";15427
+MX;"Hidalgo";state;"HID";15419
+MX;"Jalisco";state;"JAL";15420
+MX;"Michoacán";state;"MIC";15421
+MX;"Morelos";state;"MOR";15422
+MX;"México";state;"MEX";15428
+MX;"Nayarit";state;"NAY";15429
+MX;"Nuevo León";state;"NLE";15403
+MX;"Oaxaca";state;"OAX";15430
+MX;"Puebla";state;"PUE";15404
+MX;"Querétaro";state;"QUE";15405
+MX;"Quintana Roo";state;"ROO";15432
+MX;"San Luis Potosí";state;"SLP";15406
+MX;"Sinaloa";state;"SIN";15407
+MX;"Sonora";state;"SON";15433
+MX;"Tabasco";state;"TAB";15408
+MX;"Tamaulipas";state;"TAM";15431
+MX;"Tlaxcala";state;"TLA";15409
+MX;"Veracruz";state;"VER";15410
+MX;"Yucatán";state;"YUC";15402
+MX;"Zacatecas";state;"ZAC";15411
+FM;"Chuuk";State;"TRK";15437
+FM;"Kosrae";State;"KSA";15436
+FM;"Pohnpei";State;"PNI";15434
+FM;"Yap";State;"YAP";15438
+MD;"Anenii Noi";district;"AN";15471
+MD;"Basarabeasca";district;"BS";15454
+MD;"Briceni";district;"BR";15472
+MD;"Bălţi";city;"BA";15453
+MD;"Cahul";district;"CA";15455
+MD;"Cantemir";district;"CT";15458
+MD;"Chisinau";city;"CU";15459
+MD;"Chisinau City";city;"CH";20309
+MD;"Cimişlia";district;"CM";15460
+MD;"Criuleni";district;"CR";15475
+MD;"Călăraşi";district;"CL";15473
+MD;"Căuşeni";district;"CS";15474
+MD;"Donduşeni";district;"DO";15461
+MD;"Drochia";district;"DR";15476
+MD;"Dubăsari";district;"DU";15444
+MD;"Edinet";district;"ED";15477
+MD;"Floreşti";district;"FL";15443
+MD;"Făleşti";district;"FA";15445
+MD;"Unitatea teritoriala autonoma (UTAG) Gagauzia";autonomous territorial unit;"GA";15446
+MD;"Glodeni";district;"GL";15478
+MD;"Hînceşti";district;"HI";15448
+MD;"Ialoveni";district;"IA";15442
+MD;"Leova";district;"LE";15449
+MD;"Lăpuşina";district;"LA";20171
+MD;"Nisporeni";district;"NI";15450
+MD;"Ocniţa";district;"OC";15479
+MD;"Orhei";district;"OR";15451
+MD;"Rezina";district;"RE";15441
+MD;"Rîşcani";district;"RI";15463
+MD;"Soroca";district;"SO";15466
+MD;"Străşeni";district;"ST";15467
+MD;"unitatea teritoriala din Stînga Nistrului";territorial unit;"SN";20172
+MD;"Sîngerei";district;"SI";15464
+MD;"Taraclia";district;"TA";15481
+MD;"Teleneşti";district;"TE";15468
+MD;"Tighina";city;"BD";15469
+MD;"Tighina";district;"TI";48215
+MD;"Ungheni";district;"UN";15470
+MD;"Şoldăneşti";district;"SD";15465
+MD;"Ştefan Vodă";district;"SV";15440
+MC;"Fontvieille";quarter;"FO";48841
+MC;"Jardin Exotique";quarter;"JE";48842
+MC;"La Colle";quarter;"CL";48843
+MC;"La Condamine";quarter;"CO";48840
+MC;"La Gare";quarter;"GA";48844
+MC;"La Source";quarter;"SO";48845
+MC;"Larvotto";quarter;"LA";48846
+MC;"Malbousquet";quarter;"MA";48847
+MC;"Monaco-Ville";quarter;"MO";48848
+MC;"Moneghetti";quarter;"MG";48849
+MC;"Monte-Carlo";quarter;"MC";48850
+MC;"Moulins";quarter;"MU";48851
+MC;"Port-Hercule";quarter;"PH";48852
+MC;"Saint-Roman";quarter;"SR";48853
+MC;"Sainte-Dévote";quarter;"SD";48854
+MC;"Spélugues";quarter;"SP";48855
+MC;"Vallon de la Rousse";quarter;"VR";48856
+MN;"Arhangay";province;"073";15504
+MN;"Bayan-Ölgiy";province;"071";15490
+MN;"Bayanhongor";province;"069";15491
+MN;"Bulgan";province;"067";15492
+MN;"Darhan uul";municipality;"037";15493
+MN;"Dornod";province;"061";15505
+MN;"Dornogovi";province;"063";15494
+MN;"Dundgovi";province;"059";15489
+MN;"Dzavhan";province;"057";15503
+MN;"Govi-Altay";province;"065";15495
+MN;"Govi-Sümber";municipality;"064";15506
+MN;"Hentiy";province;"039";15496
+MN;"Hovd";province;"043";15497
+MN;"Hövsgöl";province;"041";15488
+MN;"Orhon";municipality;"035";15507
+MN;"Selenge";province;"049";15487
+MN;"Sühbaatar";province;"051";15500
+MN;"Töv";province;"047";15501
+MN;"Ulaanbaatar";municipality;"1";15486
+MN;"Uvs";province;"046";15502
+MN;"Ömnögovi";province;"053";15498
+MN;"Övörhangay";province;"055";15499
+ME;"Andrijevica";Commune;"01";42617
+ME;"Bar";Commune;"02";42616
+ME;"Berane";Commune;"03";42615
+ME;"Bijelo Polje";Commune;"04";42614
+ME;"Budva";Commune;"05";42613
+ME;"Cetinje";Commune;"06";42598
+ME;"Danilovgrad";Commune;"07";42612
+ME;"Herceg-Novi";Commune;"08";42599
+ME;"Kolašin";Commune;"09";42610
+ME;"Kotor";Commune;"10";42609
+ME;"Mojkovac";Commune;"11";42608
+ME;"Nikšic´";Commune;"12";42607
+ME;"Plav";Commune;"13";42606
+ME;"Pljevlja";Commune;"14";42604
+ME;"Plužine";Commune;"15";42605
+ME;"Podgorica";Commune;"16";42603
+ME;"Rožaje";Commune;"17";42602
+ME;"Tivat";Commune;"19";42601
+ME;"Ulcinj";Commune;"20";42600
+ME;"Šavnik";Commune;"18";42597
+ME;"Žabljak";Commune;"21";42611
+MA;"Agadir-Ida-Outanane";prefecture;"AGD";15554
+MA;"Al Haouz";province;"HAO";15543
+MA;"Al Hoceïma";province;"HOC";15516
+MA;"Aousserd";prefecture;"AOU";48475
+MA;"Assa-Zag";province;"ASZ";15541
+MA;"Azilal";province;"AZI";15583
+MA;"Aït Baha";province;"BAH";15518
+MA;"Aït Melloul";;"MEL";15555
+MA;"Ben Slimane";province;"BES";15572
+MA;"Beni Mellal";province;"BEM";15558
+MA;"Berkane";province;"BER";15526
+MA;"Boujdour (EH)";province;"BOD";20173
+MA;"Boulemane";province;"BOM";15576
+MA;"Casablanca [Dar el Beïda]*";prefecture;"CAS";15579
+MA;"Chaouia-Ouardigh";Region;"09";15529
+MA;"Chefchaouen";province;"CHE";15559
+MA;"Chichaoua";province;"CHI";15522
+MA;"Chtouka-Ait Baha";;"CHT";48100
+MA;"Connaught Salé";prefecture;"SAL";48482
+MA;"Doukkala-Abda";Region;"10";15565
+MA;"El Hajeb";province;"HAJ";15524
+MA;"El Jadida";province;"JDI";15575
+MA;"Errachidia";province;"ERR";15547
+MA;"Es Smara (EH)";province;"ESM";20174
+MA;"Essaouira";province;"ESI";15523
+MA;"Fahs-Beni Makada";prefecture;"FAH";48476
+MA;"Fes-Boulemane";Region;"05";15566
+MA;"Figuig";province;"FIG";15549
+MA;"Fès-Dar-Dbibegh";prefecture;"FES";15536
+MA;"Gharb-Chrarda-Beni Hssen";Region;"02";15530
+MA;"Grand Casablanca";Region;"08";15564
+MA;"Guelmim";province;"GUE";15520
+MA;"Guelmim-Es Smar";Region;"14";15567
+MA;"Ifrane";province;"IFR";15525
+MA;"Inezgane-Ait Melloul";prefecture;"INE";48477
+MA;"Jrada";province;"JRA";15550
+MA;"Kelaat es Sraghna";province;"KES";15544
+MA;"Khemisset";province;"KHE";15552
+MA;"Khenifra";province;"KHN";15548
+MA;"Khouribga";province;"KHO";15573
+MA;"Kénitra";province;"KEN";15578
+MA;"L'Oriental";Rerion;"04";15569
+MA;"Laayoune-Boujdour-Sakia El Hamra";Region;"15";21378
+MA;"Laayoune-Boujdour-Sakia El Hamra";;"X1~";48276
+MA;"Larache";province;"LAR";15560
+MA;"Laâyoune*";province;"LAA";20175
+MA;"Marrakech*";;"MAR";15545
+MA;"Marrakech-Medina";prefecture;"MMD";48478
+MA;"Marrakech-Menara";prefecture;"MMN";48479
+MA;"Marrakech-Tensift-Al Haouz";Region;"11";15531
+MA;"Mediouna";province;"MED";15539
+MA;"Meknes-Tafilalet";Region;"06";15568
+MA;"Meknès";prefecture;"MEK";15546
+MA;"Mohammadia";prefecture;"MOH";48480
+MA;"Moulay Yacoub";;"MOU";15537
+MA;"Nador";province;"NAD";15527
+MA;"Nouaceur";province;"NOU";15580
+MA;"Ouarzazate";province;"OUA";15582
+MA;"Oued ed Dahab (EH)";province;"OUD";20176
+MA;"Oued ed Dahab-Lagouira";Region;"16";48474
+MA;"Oujda*";prefecture;"OUJ";15551
+MA;"Rabat";prefecture;"RAB";48481
+MA;"Rabat-Salé*";;"RBA";15532
+MA;"Rabat-Salé-Zemmour-Zaer";Region;"07";48277
+MA;"Safi";province;"SAF";15535
+MA;"Sefrou";;"SEF";15577
+MA;"Settat";province;"SET";15574
+MA;"Sidi Kacem";province;"SIK";15538
+MA;"Sidi Youssef Ben Ali";prefecture;"SYB";48483
+MA;"Skhirate-Témara";prefecture;"SKH";48484
+MA;"Souss-Massa-Draa";Region;"13";15570
+MA;"Tadla-Azilal";Region;"12";15533
+MA;"Tan-Tan";province;"TNT";15542
+MA;"Tanger";;"TNG";15584
+MA;"Tanger-Assilah";prefecture;"TNG";48485
+MA;"Tanger-Tetouan";Region;"01";15571
+MA;"Taounate";province;"TAO";15562
+MA;"Taourirt";province;"TAI";15528
+MA;"Taroudant";province;"TAR";15556
+MA;"Tata";province;"TAT";15521
+MA;"Taza";province;"TAZ";15563
+MA;"Taza-Al Hoceima-Taounate";Region;"03";15534
+MA;"Tiznit";province;"TIZ";15517
+MA;"Tétouan*";;"TET";15561
+MA;"Zagora";province;"ZAG";15557
+MZ;"Cabo Delgado";province;"P";15599
+MZ;"Gaza";province;"G";15602
+MZ;"Inhambane";province;"I";15589
+MZ;"Manica";province;"B";15590
+MZ;"Maputo";province;"L";15591
+MZ;"Maputo City";city;"MPM";15603
+MZ;"Nampula";province;"N";15604
+MZ;"Niassa";province;"A";15592
+MZ;"Sofala";province;"S";15605
+MZ;"Tete";province;"T";15593
+MZ;"Zambézia";province;"Q";15606
+MM;"Ayeyarwady";division;"07";15608
+MM;"Bago";division;"02";15609
+MM;"Chin";state;"14";15617
+MM;"Kachin";state;"11";15610
+MM;"Kayah";state;"12";15618
+MM;"Kayin";state;"13";15611
+MM;"Magway";division;"03";15612
+MM;"Mandalay";division;"04";15620
+MM;"Mon";state;"15";15613
+MM;"Rakhine";state;"16";15619
+MM;"Sagaing";division;"01";15614
+MM;"Shan";state;"17";15615
+MM;"Tanintharyi";division;"05";15607
+MM;"Yangon";division;"06";15616
+NA;"Caprivi";Region;"CA";15625
+NA;"Erongo";Region;"ER";15626
+NA;"Hardap";Region;"HA";15623
+NA;"Karas";Region;"KA";15627
+NA;"Khomas";Region;"KH";15624
+NA;"Kunene";Region;"KU";15629
+NA;"Ohangwena";Region;"OW";15630
+NA;"Okavango";Region;"OK";15628
+NA;"Omaheke";Region;"OH";15622
+NA;"Omusati";Region;"OS";15631
+NA;"Oshana";Region;"ON";15632
+NA;"Oshikoto";Region;"OT";15621
+NA;"Otjozondjupa";Region;"OD";15633
+NR;"Aiwo";District;"01";15642
+NR;"Anabar";District;"02";15637
+NR;"Anetan";District;"03";15643
+NR;"Anibare";District;"04";15641
+NR;"Baiti";District;"05";15647
+NR;"Boe";District;"06";15644
+NR;"Buada";District;"07";15640
+NR;"Denigomodu";District;"08";15648
+NR;"Ewa";District;"09";15645
+NR;"Ijuw";District;"10";15639
+NR;"Meneng";District;"11";15646
+NR;"Nibok";District;"12";15636
+NR;"Uaboe";District;"13";15638
+NR;"Yaren";District;"14";15635
+NP;"Bagmati";zone;"BA";20177
+NP;"Bheri";zone;"BH";20178
+NP;"Dhawalagiri";zone;"DH";20179
+NP;"Gandaki";zone;"GA";20180
+NP;"Janakpur";zone;"JA";20181
+NP;"Karnali";zone;"KA";20182
+NP;"Kosi [Koshi]";zone;"KO";20183
+NP;"Lumbini";zone;"LU";20184
+NP;"Madhya Pashchimanchal";development regions;"2";48537
+NP;"Madhyamanchal";development regions;"1";48536
+NP;"Mahakali";zone;"MA";20185
+NP;"Mechi";zone;"ME";20186
+NP;"Narayani";zone;"NA";20187
+NP;"Pashchimanchal";development regions;"3";48538
+NP;"Purwanchal";development regions;"4";48539
+NP;"Rapti";zone;"RA";20188
+NP;"Sagarmatha";zone;"SA";20189
+NP;"Seti";zone;"SE";20190
+NP;"Sudur Pashchimanchal";development regions;"5";48540
+NL;"Aruba (see also separate entry under AW)";country;"AW";48857
+NL;"Bonaire (see also separate entry under BQ)";Special municipality;"BQ1";48860
+NL;"Curaçao (see also separate entry under CW)";country;"CW";48858
+NL;"Drenthe";Province;"DR";15727
+NL;"Flevoland";Province;"FL";15731
+NL;"Friesland";Province;"FR";15730
+NL;"Gelderland";Province;"GE";15726
+NL;"Groningen";Province;"GR";15732
+NL;"Limburg";Province;"LI";15735
+NL;"Noord-Brabant";Province;"NB";15729
+NL;"Noord-Holland";Province;"NH";15736
+NL;"Overijssel";Province;"OV";15733
+NL;"Saba (see also separate entry under BQ)";Special municipality;"BQ2";48861
+NL;"Sint Eustatius (see also separate entry under BQ)";Special municipality;"BQ3";48862
+NL;"Sint Maarten (see also separate entry under SX)";country;"SX";48859
+NL;"Utrecht";Province;"UT";15725
+NL;"Zeeland";Province;"ZE";15728
+NL;"Zuid-Holland";Province;"ZH";15734
+NZ;"Auckland";Regional Council;"AUK";15748
+NZ;"Bay of Plenty";Regional Council;"BOP";15753
+NZ;"Canterbury";Regional Council;"CAN";15754
+NZ;"Chatham  Islands Territory";Special Island Authority;"X1~";48138
+NZ;"Chatham  Islands Territory";Special Island Authority;"CIT";19036
+NZ;"Gisborne District";Unitary Authority;"GIS";15749
+NZ;"Hawkes's Bay";Regional Council;"HKB";15755
+NZ;"Manawatu-Wanganui";Regional Council;"MWT";15750
+NZ;"Marlborough District";Unitary Authority;"MBH";15756
+NZ;"Nelson City";Unitary Authority;"NSN";15757
+NZ;"North Island";island;"N";48235
+NZ;"Northland";Regional Council;"NTL";15747
+NZ;"Otago";Regional Council;"OTA";15758
+NZ;"South Island";island;"S";48236
+NZ;"Southland";Regional Council;"STL";15759
+NZ;"Taranaki";Regional Council;"TKI";15751
+NZ;"Tasman District";Unitary Authority;"TAS";15760
+NZ;"Waikato";Regional Council;"WKO";15746
+NZ;"Wellington";Regional Council;"WGN";15761
+NZ;"West Coast";Regional Council;"WTC";15762
+NI;"Atlántico Norte*";autonomous region;"AN";15779
+NI;"Atlántico Sur*";autonomous region;"AS";15771
+NI;"Boaco";department;"BO";15772
+NI;"Carazo";department;"CA";15766
+NI;"Chinandega";department;"CI";15770
+NI;"Chontales";department;"CO";15765
+NI;"Estelí";department;"ES";15773
+NI;"Granada";department;"GR";15777
+NI;"Jinotega";department;"JI";15769
+NI;"León";department;"LE";15774
+NI;"Madriz";department;"MD";15778
+NI;"Managua";department;"MN";15768
+NI;"Masaya";department;"MS";15764
+NI;"Matagalpa";department;"MT";15775
+NI;"Nueva Segovia";department;"NS";15767
+NI;"Rivas";department;"RI";15776
+NI;"Río San Juan";department;"SJ";15763
+NE;"Agadez";Region;"1";15782
+NE;"Diffa";Region;"2";15783
+NE;"Dosso";Region;"3";15784
+NE;"Maradi";Region;"4";15785
+NE;"Niamey";Capital District;"8";15786
+NE;"Tahoua";Region;"5";15787
+NE;"Tillabéri";Region;"6";15788
+NE;"Zinder";Region;"7";15789
+NG;"Abia";state;"AB";21217
+NG;"Abuja Federal Capital Territory";capital territory;"FC";15801
+NG;"Adamawa";state;"AD";15802
+NG;"Akwa Ibom";state;"AK";15803
+NG;"Anambra";state;"AN";15804
+NG;"Bauchi";state;"BA";15805
+NG;"Bayelsa";state;"BY";15826
+NG;"Benue";state;"BE";15817
+NG;"Borno";state;"BO";15806
+NG;"Cross River";state;"CR";15818
+NG;"Delta";state;"DE";15799
+NG;"Ebonyi";state;"EB";15819
+NG;"Edo";state;"ED";15820
+NG;"Ekiti";state;"EK";15807
+NG;"Enugu";state;"EN";15821
+NG;"Gombe";state;"GO";15822
+NG;"Imo";state;"IM";15798
+NG;"Jigawa";state;"JI";15823
+NG;"Kaduna";state;"KD";15824
+NG;"Kano";state;"KN";15828
+NG;"Katsina";state;"KT";15825
+NG;"Kebbi";state;"KE";15808
+NG;"Kogi";state;"KO";15797
+NG;"Kwara";state;"KW";15809
+NG;"Lagos";state;"LA";15810
+NG;"Nassarawa";state;"NA";15794
+NG;"Niger";state;"NI";15811
+NG;"Ogun";state;"OG";15812
+NG;"Ondo";state;"ON";15795
+NG;"Osun";state;"OS";15813
+NG;"Oyo";state;"OY";15814
+NG;"Plateau";state;"PL";15796
+NG;"Rivers";state;"RI";15815
+NG;"Sokoto";state;"SO";15816
+NG;"Taraba";state;"TA";15793
+NG;"Yobe";state;"YO";15827
+NG;"Zamfara";state;"ZA";15792
+NO;"Akershus";County;"02";15866
+NO;"Aust-Agder";County;"09";15853
+NO;"Buskerud";County;"06";15854
+NO;"Finnmark";County;"20";15852
+NO;"Hedmark";County;"04";15855
+NO;"Hordaland";County;"12";15867
+NO;"Jan Mayen (Arctic Region) (See also country code SJ)";;"22";19038
+NO;"Møre og Romsdal";County;"15";15856
+NO;"Nord-Trøndelag";County;"17";15851
+NO;"Nordland";County;"18";15857
+NO;"Oppland";County;"05";15858
+NO;"Oslo";County;"03";15859
+NO;"Rogaland";County;"11";15860
+NO;"Sogn og Fjordane";County;"14";15861
+NO;"Svalbard (Arctic Region) (See also country code SJ)";;"21";19039
+NO;"Sør-Trøndelag";County;"16";15849
+NO;"Telemark";County;"08";15862
+NO;"Troms";County;"19";15863
+NO;"Vest-Agder";County;"10";15848
+NO;"Vestfold";County;"07";15864
+NO;"Østfold";County;"01";15850
+OM;"Ad Dakhiliyah";Region;"DA";15871
+OM;"Al Batinah";Region;"BA";15873
+OM;"Al Buraymi";Governorate;"X1~";48137
+OM;"Al Buraymi";Governorate;"BU";21361
+OM;"Al Wustá";Region;"WU";15872
+OM;"Ash Sharqiyah";Region;"SH";15870
+OM;"Az̧ Z̧āhirah";Region;"ZA";15868
+OM;"Dhofar";Governorate;"JA";15869
+OM;"Masqat";Governorate;"MA";15875
+OM;"Musandam";Governorate;"MU";15874
+OM;"Z̧ufār";governorate;"ZU";48237
+PK;"Azad Kashmir";Pakistan administered area;"JK";15882
+PK;"Baluchistan (en)";province;"BA";15881
+PK;"Federally Administered Tribal Areas";territory;"TA";15878
+PK;"Gilgit-Baltistan";administered areas;"GB";48707
+PK;"Islamabad";federal capital territory;"IS";15883
+PK;"Khyber Pakhtunkhwa";province;"KP";48709
+PK;"North-West Frontier";province;"NW";15879
+PK;"Northern Areas";Pakistan administered area;"NA";15877
+PK;"Punjab";province;"PB";15876
+PK;"Sindh";province;"SD";15880
+PW;"Aimeliik";State;"002";15887
+PW;"Airai";State;"004";15898
+PW;"Angaur";State;"010";15889
+PW;"Hatobohei";State;"050";15886
+PW;"Kayangel";State;"100";15890
+PW;"Koror";State;"150";15891
+PW;"Melekeok";State;"212";15888
+PW;"Ngaraard";State;"214";15892
+PW;"Ngarchelong";State;"218";15899
+PW;"Ngardmau";State;"222";15893
+PW;"Ngatpang";State;"224";15894
+PW;"Ngchesar";State;"226";15895
+PW;"Ngeremlengui";State;"227";15885
+PW;"Ngiwal";State;"228";15896
+PW;"Peleliu";State;"350";15897
+PW;"Sonsorol";State;"370";15884
+PS;"Bethlehem Bayt Laḩm";governorates;"BTH";48863
+PS;"Deir El Balah Dayr al Balaḩ";governorates;"DEB";48864
+PS;"Gaza Ghazzah";governorates;"GZA";48865
+PS;"Hebron Al Khalīl";governorates;"HBN";48866
+PS;"Jenin Janīn";governorates;"JEN";48867
+PS;"Jericho – Al Aghwar Arīḩā wa al Aghwār";governorates;"JRH";48868
+PS;"Jerusalem Al Quds";governorates;"JEM";48869
+PS;"Khan Yunis Khān Yūnis";governorates;"KYS";48870
+PS;"Nablus Nāblus";governorates;"NBS";48871
+PS;"North Gaza Shamāl Ghazzah";governorates;"NGZ";48872
+PS;"Qalqilya Qalqīlyah";governorates;"QQA";48873
+PS;"Rafah Rafaḩ";governorates;"RFH";48874
+PS;"Ramallah Rām Allāh wa al Bīrah";governorates;"RBH";48875
+PS;"Salfit Salfīt";governorates;"SLT";48876
+PS;"Tubas Ţūbās";governorates;"TBS";48877
+PS;"Tulkarm Ţūlkarm";governorates;"TKM";48878
+PA;"Bocas del Toro";province;"1";15928
+PA;"Chiriquí";province;"4";15920
+PA;"Coclé";province;"2";15929
+PA;"Colón";province;"3";15921
+PA;"Comarca de San Blas";Comarca;"0";15925
+PA;"Darién";province;"5";15922
+PA;"Emberá";indigenous region;"EM";15926
+PA;"Herrera";province;"6";15923
+PA;"Los Santos";province;"7";15917
+PA;"Ngöbe-Buglé";indigenous region;"NB";15919
+PA;"Panamá";province;"8";15916
+PA;"Kuna Yala";indigenous region;"KY";48238
+PA;"Veraguas";province;"9";15927
+PG;"Bougainville";autonomous region;"NSB";48706
+PG;"Central";province;"CPM";15935
+PG;"Chimbu";province;"CPK";15931
+PG;"East New Britain";province;"EBR";15946
+PG;"East Sepik";province;"ESW";15937
+PG;"Eastern Highlands";province;"EHG";15936
+PG;"Enga";province;"EPW";15934
+PG;"Gulf";province;"GPK";15947
+PG;"Madang";province;"MPM";15939
+PG;"Manus";province;"MRL";15933
+PG;"Milne Bay";province;"MBA";15940
+PG;"Morobe";province;"MPL";15941
+PG;"National Capital District (Port Moresby)";district;"NCD";15948
+PG;"New Ireland";province;"NIK";15932
+PG;"North Solomons";province;"NSA";15942
+PG;"Northern";province;"NPP";15949
+PG;"Sandaun [West Sepik]";province;"SAN";15943
+PG;"Southern Highlands";province;"SHM";15944
+PG;"West New Britain";province;"WBK";15945
+PG;"Western";province;"WPD";15938
+PG;"Western Highlands";province;"WHM";15950
+PY;"Alto Paraguay";department;"16";15963
+PY;"Alto Paraná";department;"10";15964
+PY;"Amambay";department;"13";15965
+PY;"Asunción";capital;"ASU";15954
+PY;"Boquerón";department;"19";15953
+PY;"Caaguazú";department;"5";15955
+PY;"Caazapá";department;"6";15966
+PY;"Canindeyú";department;"14";15956
+PY;"Central";department;"11";15952
+PY;"Concepción";department;"1";15957
+PY;"Cordillera";department;"3";15958
+PY;"Guairá";department;"4";15967
+PY;"Itapúa";department;"7";15959
+PY;"Misiones";department;"8";15968
+PY;"Paraguarí";department;"9";15951
+PY;"Presidente Hayes";department;"15";15961
+PY;"San Pedro";department;"2";15962
+PY;"Ñeembucú";department;"12";15960
+PE;"Amazonas";department;"AMA";15982
+PE;"Ancash";department;"ANC";15981
+PE;"Apurímac";department;"APU";15983
+PE;"Arequipa";department;"ARE";15972
+PE;"Ayacucho";department;"AYA";15984
+PE;"Cajamarca";department;"CAJ";15985
+PE;"Cusco [Cuzco]";department;"CUS";15989
+PE;"El Callao";constitutional province;"CAL";15992
+PE;"Huancavelica";department;"HUV";15986
+PE;"Huánuco";department;"HUC";15987
+PE;"Ica";department;"ICA";15971
+PE;"Junín";department;"JUN";15988
+PE;"La Libertad";department;"LAL";15990
+PE;"Lambayeque";department;"LAM";15973
+PE;"Lima";department;"LIM";15969
+PE;"Loreto";department;"LOR";15974
+PE;"Madre de Dios";department;"MDD";15970
+PE;"Moquegua";department;"MOQ";15975
+PE;"Municipalidad Metropolitana de Lima";municipality;"LMA";42646
+PE;"Municipalidad Metropolitana de Lima";municipality;"X1~";48136
+PE;"Pasco";department;"PAS";15991
+PE;"Piura";department;"PIU";15976
+PE;"Puno";department;"PUN";15977
+PE;"San Martín";department;"SAM";15994
+PE;"Tacna";department;"TAC";15978
+PE;"Tumbes";department;"TUM";15979
+PE;"Ucayali";department;"UCA";15993
+PH;"Abra";province;"ABR";17214
+PH;"Agusan del Norte";province;"AGN";16310
+PH;"Agusan del Sur";province;"AGS";17293
+PH;"Aklan";province;"AKL";16347
+PH;"Albay";province;"ALB";16303
+PH;"Antique";province;"ANT";16348
+PH;"Apayao";province;"APA";17215
+PH;"Aurora";province;"AUR";17115
+PH;"Autonomous Region in Muslim Mindanao (ARMM)";region;"14";17207
+PH;"Basilan";province;"BAS";17237
+PH;"Bataan";province;"BAN";16312
+PH;"Batanes";province;"BTN";16307
+PH;"Batangas";province;"BTG";17233
+PH;"Benguet";province;"BEN";16315
+PH;"Bicol (Region V)";region;"05";17201
+PH;"Biliran";province;"BIL";17217
+PH;"Bohol";province;"BOH";17303
+PH;"Bukidnon";province;"BUK";16333
+PH;"Bulacan";province;"BUL";17295
+PH;"Cagayan";province;"CAG";17291
+PH;"Cagayan Valley (Region II)";region;"02";16298
+PH;"CALABARZON (Region IV-A)";region;"40";48239
+PH;"Camarines Norte";province;"CAN";16304
+PH;"Camarines Sur";province;"CAS";17289
+PH;"Camiguin";province;"CAM";16334
+PH;"Capiz";province;"CAP";17239
+PH;"Caraga (Region XIII)";region;"13";16299
+PH;"Catanduanes";province;"CAT";16305
+PH;"Cavite";province;"CAV";16340
+PH;"Cebu";province;"CEB";17304
+PH;"Central Luzon (Region III)";region;"03";17202
+PH;"Central Visayas (Region VII)";region;"07";17203
+PH;"Compostela Valley";province;"COM";17230
+PH;"Cordillera Administrative Region (CAR)";region;"15";17204
+PH;"Cotabato";province;"NCO";17298
+PH;"Davao (Region XI)";region;"11";48240
+PH;"Davao del Norte";province;"DAV";16336
+PH;"Davao del Sur";province;"DAS";17231
+PH;"Davao Oriental";province;"DAO";16337
+PH;"Dinagat Islands";province;"DIN";16521
+PH;"Dinagat Islands";;"X1~";48135
+PH;"Eastern Samar";province;"EAS";16318
+PH;"Eastern Visayas (Region VIII)";region;"08";17205
+PH;"Guimaras";province;"GUI";16349
+PH;"Ifugao";province;"IFU";16316
+PH;"Ilocos (Region I)";region;"01";17206
+PH;"Ilocos Norte";province;"ILN";16321
+PH;"Ilocos Sur";province;"ILS";17220
+PH;"Iloilo";province;"ILI";17240
+PH;"Isabela";province;"ISA";16308
+PH;"Kalinga";province;"KAL";17216
+PH;"La Union";province;"LUN";16322
+PH;"Laguna";province;"LAG";16341
+PH;"Lanao del Norte";province;"LAN";17300
+PH;"Lanao del Sur";province;"LAS";16301
+PH;"Leyte";province;"LEY";16765
+PH;"Maguindanao";province;"MAG";17287
+PH;"Marinduque";province;"MAD";17234
+PH;"Masbate";province;"MAS";17290
+PH;"MIMAROPA (Region IV-B)";region;"41";48241
+PH;"Mindoro Occidental";province;"MDC";16342
+PH;"Mindoro Oriental";province;"MDR";17235
+PH;"Misamis Occidental";province;"MSC";17229
+PH;"Misamis Oriental";province;"MSR";16335
+PH;"Mountain Province";province;"MOU";16317
+PH;"National Capital Region";region;"00";17208
+PH;"Negros Occidental";province;"NEC";16350
+PH;"Negros Oriental";province;"NER";17305
+PH;"Northern Mindanao (Region X)";region;"10";17209
+PH;"Northern Samar";province;"NSA";17218
+PH;"Nueva Ecija";province;"NUE";16313
+PH;"Nueva Vizcaya";province;"NUV";17292
+PH;"Palawan";province;"PLW";16343
+PH;"Pampanga";province;"PAM";16314
+PH;"Pangasinan";province;"PAN";16323
+PH;"Quezon";province;"QUE";17595
+PH;"Quirino";province;"QUI";16144
+PH;"Rizal";province;"RIZ";17583
+PH;"Romblon";province;"ROM";17082
+PH;"Sarangani";province;"SAR";17232
+PH;"Shariff Kabunsuan";;"X2~";21362
+PH;"Siquijor";province;"SIG";17306
+PH;"Soccsksargen (Region XII)";region;"12";48242
+PH;"Sorsogon";province;"SOR";16306
+PH;"South Cotabato";province;"SCO";16338
+PH;"Southern Leyte";province;"SLE";17219
+PH;"Sultan Kudarat";province;"SUK";17302
+PH;"Sulu";province;"SLU";16302
+PH;"Surigao del Norte";province;"SUN";16311
+PH;"Surigao del Sur";province;"SUR";17294
+PH;"Tarlac";province;"TAR";17296
+PH;"Tawi-Tawi";province;"TAW";17288
+PH;"Western Samar";province;"WSA";16320
+PH;"Western Visayas (Region VI)";region;"06";17213
+PH;"Zambales";province;"ZMB";17297
+PH;"Zamboanga del Norte";province;"ZAN";16346
+PH;"Zamboanga del Sur";province;"ZAS";17238
+PH;"Zamboanga Peninsula (Region IX)";region;"09";48243
+PH;"Zamboanga Sibuguey [Zamboanga Sibugay]";province;"ZSI";17672
+PH;"";;"MNL";48079
+PL;"Dolnoslaskie";Voivodship;"DS";17731
+PL;"Kujawsko-pomorskie";Voivodship;"KP";17732
+PL;"Lubelskie";Voivodship;"LU";17733
+PL;"Lubuskie";Voivodship;"LB";17740
+PL;"Lódzkie";Voivodship;"LD";17734
+PL;"Malopolskie";Voivodship;"MA";17744
+PL;"Mazowieckie";Voivodship;"MZ";17735
+PL;"Opolskie";Voivodship;"OP";17743
+PL;"Podkarpackie";Voivodship;"PK";17736
+PL;"Podlaskie";Voivodship;"PD";17742
+PL;"Pomorskie";Voivodship;"PM";17737
+PL;"Slaskie";Voivodship;"SL";17745
+PL;"Swietokrzyskie";Voivodship;"SK";17738
+PL;"Warminsko-mazurskie";Voivodship;"WN";17741
+PL;"Wielkopolskie";Voivodship;"WP";17739
+PL;"Zachodniopomorskie";Voivodship;"ZP";17730
+PT;"Aveiro";district;"01";19045
+PT;"Beja";district;"02";19046
+PT;"Braga";district;"03";19047
+PT;"Bragança";district;"04";19048
+PT;"Castelo Branco";district;"05";19049
+PT;"Coimbra";district;"06";19050
+PT;"Faro";district;"08";19052
+PT;"Guarda";district;"09";19053
+PT;"Leiria";district;"10";19054
+PT;"Lisboa";district;"11";19055
+PT;"Portalegre";district;"12";19056
+PT;"Porto";district;"13";19057
+PT;"Região Autónoma da Madeira";autonomous region;"30";17751
+PT;"Região Autónoma dos Açores";autonomous region;"20";17748
+PT;"Santarém";district;"14";19058
+PT;"Setúbal";district;"15";19059
+PT;"Viana do Castelo";district;"16";19060
+PT;"Vila Real";district;"17";19061
+PT;"Viseu";district;"18";19062
+PT;"Évora";district;"07";19051
+QA;"Ad Dawhah";Municipality;"DA";17769
+QA;"Al Ghuwayriyah";Municipality;"GH";17770
+QA;"Al Jumayliyah";Municipality;"JU";17764
+QA;"Al Khawr wa adh Dhakhīrah";Municipality;"KH";17765
+QA;"Al Wakrah";Municipality;"WA";17763
+QA;"Ar Rayyan";Municipality;"RA";17771
+QA;"Az̧ Z̧a‘āyin";Municipality;"ZA";48710
+QA;"Jariyan al Batnah";Municipality;"JB";17768
+QA;"Madinat ash Shamal";Municipality;"MS";17766
+QA;"Umm Sa'id";Municipality;"X1~";17767
+QA;"Umm Salal";Municipality;"US";17762
+RO;"Alba";County;"AB";17794
+RO;"Arad";County;"AR";17795
+RO;"Arges";County;"AG";17796
+RO;"Bacau";County;"BC";17797
+RO;"Bihor";County;"BH";17798
+RO;"Bistrita-Nasaud";County;"BN";17799
+RO;"Botosani";County;"BT";17800
+RO;"Braila";County;"BR";17801
+RO;"Brasov";County;"BV";17783
+RO;"Bucuresti";City;"B";17802
+RO;"Buzau";County;"BZ";17784
+RO;"Calarasi";County;"CL";17803
+RO;"Caras-Severin";County;"CS";17785
+RO;"Cluj";County;"CJ";17804
+RO;"Constanta";County;"CT";17786
+RO;"Covasna";County;"CV";17805
+RO;"Dolj";County;"DJ";17788
+RO;"Dâmbovita";County;"DB";17787
+RO;"Galati";County;"GL";17806
+RO;"Giurgiu";County;"GR";17789
+RO;"Gorj";County;"GJ";17790
+RO;"Harghita";County;"HR";17807
+RO;"Hunedoara";County;"HD";17791
+RO;"Ialomita";County;"IL";17782
+RO;"Iasi";County;"IS";17792
+RO;"Ilfov";County;"IF";17817
+RO;"Maramures";County;"MM";17793
+RO;"Mehedinti";County;"MH";17808
+RO;"Mures";County;"MS";17821
+RO;"Neamt";County;"NT";17809
+RO;"Olt";County;"OT";17820
+RO;"Prahova";County;"PH";17810
+RO;"Salaj";County;"SJ";17811
+RO;"Satu Mare";County;"SM";17819
+RO;"Sibiu";County;"SB";17812
+RO;"Suceava";County;"SV";17813
+RO;"Teleorman";County;"TR";17822
+RO;"Timis";County;"TM";17814
+RO;"Tulcea";County;"TL";17815
+RO;"Vaslui";County;"VS";17816
+RO;"Vrancea";County;"VN";17781
+RO;"Vâlcea";County;"VL";17818
+RU;"Respublika Adygeya";republic;"AD";17879
+RU;"Aginskiy Buryatskiy avtonomnyy okrug";autonomous district;"AGB";17880
+RU;"Respublika Altay";republic;"AL";17857
+RU;"Altayskiy kray";administrative territory;"ALT";17881
+RU;"Amurskaya oblast'";administrative region;"AMU";17882
+RU;"Arkhangel'skaya oblast'";administrative region;"ARK";17853
+RU;"Astrakhanskaya oblast'";administrative region;"AST";17883
+RU;"Respublika Bashkortostan";republic;"BA";17884
+RU;"Belgorodskaya oblast'";administrative region;"BEL";17854
+RU;"Bryanskaya oblast'";administrative region;"BRY";17885
+RU;"Respublika Buryatiya";republic;"BU";17886
+RU;"Chechenskaya Respublika";republic;"CE";17855
+RU;"Chelyabinskaya oblast'";administrative region;"CHE";17887
+RU;"Chitinskaya oblast'";administrative region;"CHI";17888
+RU;"Chukotskiy avtonomnyy okrug";autonomous district;"CHU";17889
+RU;"Chuvashskaya Respublika";republic;"CU";17856
+RU;"Respublika Dagestan";republic;"DA";17890
+RU;"Evenkiyskiy avtonomnyy okrug";autonomous district;"EVE";17891
+RU;"Ingushskaya Respublika [Respublika Ingushetiya]";republic;"IN";17894
+RU;"Irkutskaya oblast'";administrative region;"IRK";17895
+RU;"Ivanovskaya oblast'";administrative region;"IVA";17859
+RU;"Kabardino-Balkarskaya Respublika";republic;"KB";17899
+RU;"Kaliningradskaya oblast'";administrative region;"KGD";17900
+RU;"Respublika Kalmykiya";republic;"KL";17901
+RU;"Kaluzhskaya oblast'";administrative region;"KLU";17902
+RU;"Kamchatskaya oblast'";administrative territory;"KAM";17903
+RU;"Karachayevo-Cherkesskaya Respublika";republic;"KC";17904
+RU;"Respublika Kareliya";republic;"KR";17905
+RU;"Kemerovskaya oblast'";administrative region;"KEM";17843
+RU;"Khabarovskiy kray";administrative territory;"KHA";17892
+RU;"Respublika Khakasiya";republic;"KK";17893
+RU;"Khanty-Mansiyskiy avtonomnyy okrug [Yugra]";autonomous district;"KHM";17858
+RU;"Kirovskaya oblast'";administrative region;"KIR";17844
+RU;"Respublika Komi";republic;"KO";17845
+RU;"Komi-Permyak";;"X1~";17846
+RU;"Koryakskiy avtonomnyy okrug";autonomous district;"KOR";17860
+RU;"Kostromskaya oblast'";administrative region;"KOS";17847
+RU;"Krasnodarskiy kray";administrative territory;"KDA";17861
+RU;"Krasnoyarskiy kray";administrative territory;"KYA";17848
+RU;"Kurganskaya oblast'";administrative region;"KGN";17849
+RU;"Kurskaya oblast'";administrative region;"KRS";17862
+RU;"Leningradskaya oblast'";administrative region;"LEN";17850
+RU;"Lipetskaya oblast'";administrative region;"LIP";17863
+RU;"Magadanskaya oblast'";administrative region;"MAG";17851
+RU;"Respublika Mariy El";republic;"ME";17834
+RU;"Respublika Mordoviya";republic;"MO";17864
+RU;"Moskovskaya oblast'";administrative region;"MOS";17836
+RU;"Moskva";autonomous city;"MOW";17835
+RU;"Murmanskaya oblast'";administrative region;"MUR";17865
+RU;"Nenetskiy avtonomnyy okrug";autonomous district;"NEN";17837
+RU;"Nizhegorodskaya oblast'";administrative region;"NIZ";17838
+RU;"Novgorodskaya oblast'";administrative region;"NGR";17866
+RU;"Novosibirskaya oblast'";administrative region;"NVS";17839
+RU;"Omskaya oblast'";administrative region;"OMS";17867
+RU;"Orenburgskaya oblast'";administrative region;"ORE";17840
+RU;"Orlovskaya oblast'";administrative region;"ORL";17841
+RU;"Penzenskaya oblast'";administrative region;"PNZ";17868
+RU;"Perm";administrative territory;"PER";17842
+RU;"Primorskiy kray";administrative territory;"PRI";17825
+RU;"Pskovskaya oblast'";administrative region;"PSK";17869
+RU;"Rostovskaya oblast'";administrative region;"ROS";17870
+RU;"Ryazanskaya oblast'";administrative region;"RYA";17826
+RU;"Respublika [Yakutiya] Sakha";republic;"SA";17827
+RU;"Sakhalinskaya oblast'";administrative region;"SAK";17828
+RU;"Samarskaya oblast'";administrative region;"SAM";17871
+RU;"Sankt-Peterburg";autonomous city;"SPE";17829
+RU;"Saratovskaya oblast'";administrative region;"SAR";17872
+RU;"Respublika [Alaniya] [Respublika Severnaya Osetiya-Alaniya] Severnaya Osetiya";republic;"SE";17852
+RU;"Smolenskaya oblast'";administrative region;"SMO";17830
+RU;"Stavropol'skiy kray";administrative territory;"STA";17831
+RU;"Sverdlovskaya oblast'";administrative region;"SVE";17832
+RU;"Tambovskaya oblast'";administrative region;"TAM";17833
+RU;"Respublika Tatarstan";republic;"TA";17824
+RU;"Taymyrskiy (Dolgano-Nenetskiy) avtonomnyy okrug";autonomous district;"TAY";17873
+RU;"Tomskaya oblast'";administrative region;"TOM";17906
+RU;"Tul'skaya oblast'";administrative region;"TUL";17875
+RU;"Tverskaya oblast'";administrative region;"TVE";17910
+RU;"Tyumenskaya oblast'";administrative region;"TYU";17874
+RU;"Respublika [Tuva] Tyva";republic;"TY";17909
+RU;"Udmurtskaya Respublika";republic;"UD";17876
+RU;"Ul'yanovskaya oblast'";administrative region;"ULY";17908
+RU;"Ust'-Ordynskiy Buryatskiy avtonomnyy okrug";autonomous district;"UOB";17911
+RU;"Vladimirskaya oblast'";administrative region;"VLA";17877
+RU;"Volgogradskaya oblast'";administrative region;"VGG";17907
+RU;"Vologodskaya oblast'";administrative region;"VLG";17823
+RU;"Voronezhskaya oblast'";administrative region;"VOR";17878
+RU;"Yamalo-Nenetskiy avtonomnyy okrug";autonomous district;"YAN";17896
+RU;"Yaroslavskaya oblast'";administrative region;"YAR";17897
+RU;"Yevreyskaya avtonomnaya oblast'";autonomous region;"YEV";17898
+RU;"Zabajkal'skij kraj";administrative territory;"ZAB";48221
+RW;"Est";province;"02";19063
+RW;"Nord";province;"03";19064
+RW;"Ouest";province;"04";19065
+RW;"Sud";province;"05";17912
+RW;"Ville de Kigali";province;"01";17923
+SH;"Ascension";dependency;"AC";17926
+SH;"Ascension";geographical entities;"AC";48879
+SH;"Saint Helena";geographical entities;"HL";48880
+SH;"Saint Helena";administrative area;"SH";17930
+SH;"Tristan da Cunha";geographical entities;"TA";48881
+SH;"Tristan da Cunha";dependency;"TA";17925
+KN;"Christ Church Nichola Town";Parish;"01";17933
+KN;"Nevis";state;"N";48461
+KN;"Saint Anne Sandy Point";Parish;"02";17940
+KN;"Saint George Basseterre";Parish;"03";17934
+KN;"Saint George Gingerland";Parish;"04";17941
+KN;"Saint James Windward";Parish;"05";17935
+KN;"Saint John Capisterre";Parish;"06";17932
+KN;"Saint John Figtree";Parish;"07";17936
+KN;"Saint Kitts";state;"K";48460
+KN;"Saint Mary Cayon";Parish;"08";17942
+KN;"Saint Paul Capisterre";Parish;"09";17937
+KN;"Saint Paul Charlestown";Parish;"10";17944
+KN;"Saint Peter Basseterre";Parish;"11";17938
+KN;"Saint Thomas Lowland";Parish;"12";17943
+KN;"Saint Thomas Middle Island";Parish;"13";17939
+KN;"Trinity Palmetto Point";Parish;"15";17931
+VC;"Charlotte";Parish;"01";17963
+VC;"Grenadines";Parish;"06";17958
+VC;"Saint Andrew";Parish;"02";17962
+VC;"Saint David";Parish;"03";17959
+VC;"Saint George";Parish;"04";17957
+VC;"Saint Patrick";Parish;"05";17960
+WS;"A'ana";District;"AA";20647
+WS;"Aiga-i-le-Tai";District;"AL";20648
+WS;"Atua";District;"AT";20649
+WS;"Fa'asaleleaga";District;"FA";20650
+WS;"Gaga'emauga";District;"GE";20651
+WS;"Gagaifomauga";District;"GI";20652
+WS;"Palauli";District;"PA";20653
+WS;"Satupa'itea";District;"SA";20654
+WS;"Tuamasaga";District;"TU";20655
+WS;"Va'a-o-Fonoti";District;"VF";20656
+WS;"Vaisigano";District;"VS";20657
+SM;"Acquaviva";Municipality;"01";17972
+SM;"Borgo Maggiore";Municipality;"06";17971
+SM;"Chiesanuova";Municipality;"02";17973
+SM;"Domagnano";Municipality;"03";17970
+SM;"Faetano";Municipality;"04";17974
+SM;"Fiorentino";Municipality;"05";17969
+SM;"Montegiardino";Municipality;"08";17975
+SM;"San Marino";Municipality;"07";17976
+SM;"Serravalle";Municipality;"09";17968
+ST;"Príncipe";Municipality;"P";20324
+ST;"São Tomé";Municipality;"S";20325
+SA;"?a'il";Region;"06";17981
+SA;"?Asir";Region;"14";17984
+SA;"Al Bāḩah";Region;"11";17980
+SA;"Al Jawf";Region;"12";17982
+SA;"Al Madinah";Region;"03";17979
+SA;"Al Qasim";Region;"05";17988
+SA;"Al Ḩudūd ash Shamālīyah";Region;"08";17985
+SA;"Ar Riyāḑ";Region;"01";17978
+SA;"Ash Sharqiyah";Region;"04";17989
+SA;"Jizan";Region;"09";17986
+SA;"Makkah";Region;"02";17987
+SA;"Najran";Region;"10";17983
+SA;"Tabuk";Region;"07";17977
+SN;"Dakar";region;"DK";17998
+SN;"Diourbel";region;"DB";17991
+SN;"Fatick";region;"FK";17997
+SN;"Kaffrine";region;"KA";48218
+SN;"Kaolack";region;"KL";17999
+SN;"Kolda";region;"KD";17993
+SN;"Kédougou";region;"KE";48219
+SN;"Louga";region;"LG";17996
+SN;"Matam";region;"MT";17994
+SN;"Saint-Louis";region;"SL";17992
+SN;"Sédhiou";region;"SE";48220
+SN;"Tambacounda";region;"TC";18000
+SN;"Thiès";region;"TH";17995
+SN;"Ziguinchor";region;"ZG";17990
+RS;"Belgrade";city;"00";47890
+RS;"Borski okrug";district;"14";19066
+RS;"Braničevski okrug";district;"11";19067
+RS;"Jablanički okrug";district;"23";19068
+RS;"Južnobanatski okrug";district;"06";19069
+RS;"Južnobanatski okrug";district;"04";19070
+RS;"Kolubarski okrug";district;"09";19071
+RS;"Kosovski okrug";district;"25";18004
+RS;"Kosovsko-Mitrovački okrug";district;"28";19074
+RS;"Kosovsko-Pomoravski okrug";district;"29";19073
+RS;"Mačvanski okrug";district;"08";19075
+RS;"Moravički okrug";district;"17";19076
+RS;"Nišavski okrug";district;"20";19077
+RS;"Pećki okrug";district;"26";19079
+RS;"Pirotski okrug";district;"22";19080
+RS;"Podunavski okrug";district;"10";19081
+RS;"Pomoravski okrug";district;"13";19082
+RS;"Prizrenski okrug";district;"27";19083
+RS;"Pčinjski okrug";district;"24";19078
+RS;"Rasinski okrug";district;"19";19084
+RS;"Raška okrug";district;"18";19085
+RS;"Severnobanatski okrug";district;"03";19087
+RS;"Severnobački okrug";district;"01";19086
+RS;"Srednjebanatski okrug";district;"02";19088
+RS;"Sremski okrug";district;"07";19089
+RS;"Toplièki okrug";district;"21";19091
+RS;"Zajeèarski okrug";district;"15";19092
+RS;"Zapadnobaèki okrug";district;"05";19093
+RS;"Zlatiborski okrug";district;"16";19094
+RS;"Šumadijski okrug";district;"12";19090
+SC;"Anse aux Pins";District;"01";18014
+SC;"Anse Boileau";District;"02";18017
+SC;"Anse Royale";District;"05";18015
+SC;"Anse Étoile";District;"03";18018
+SC;"Au Cap";District;"04";18019
+SC;"Baie Lazare";District;"06";18006
+SC;"Baie Sainte Anne";District;"07";18020
+SC;"Beau Vallon";District;"08";18021
+SC;"Bel Air";District;"09";18025
+SC;"Bel Ombre";District;"10";18022
+SC;"Cascade";District;"11";18029
+SC;"English River";District;"16";18023
+SC;"Glacis";District;"12";18024
+SC;"Grand Anse Mahe";District;"13";18028
+SC;"Grand Anse Praslin";District;"14";18007
+SC;"La Digue";District;"15";18027
+SC;"Les Mamelles";District;"24";48216
+SC;"Mont Buxton";District;"17";18009
+SC;"Mont Fleuri";District;"18";18030
+SC;"Plaisance";District;"19";18026
+SC;"Pointe La Rue";District;"20";18011
+SC;"Port Glaud";District;"21";18012
+SC;"Roche Caiman";District;"25";48217
+SC;"Saint Louis";District;"22";18013
+SC;"Takamaka";District;"23";18005
+SL;"Eastern";province;"E";18044
+SL;"Northern";province;"N";18033
+SL;"Southern";province;"S";18045
+SL;"Western Area (Freetown)";area;"W";18034
+SG;"Central Singapore";District;"01";48250
+SG;"North East";District;"02";48251
+SG;"North West";District;"03";48252
+SG;"Singapore - No State";;"X1~";48078
+SG;"South East";District;"04";48253
+SG;"South West";District;"05";48254
+SK;"Banskobystrický kraj";Region;"BC";18060
+SK;"Bratislavský kraj";Region;"BL";18053
+SK;"Košický kraj";Region;"KI";18059
+SK;"Nitriansky kraj";Region;"NI";18054
+SK;"Prešovský kraj";Region;"PV";18055
+SK;"Trenciansky kraj";Region;"TC";18052
+SK;"Trnavský kraj";Region;"TA";18056
+SK;"Žilinský kraj";Region;"ZI";18057
+SI;"Ajdovšcina";;"001";20197
+SI;"Apače";commune;"195";48197
+SI;"Beltinci";;"002";20198
+SI;"Benedikt";;"148";20199
+SI;"Bistrica ob Sotli";;"149";20200
+SI;"Bled";;"003";20201
+SI;"Bloke";;"150";20202
+SI;"Bohinj";;"004";20203
+SI;"Borovnica";;"005";20204
+SI;"Bovec";;"006";20205
+SI;"Braslovce";;"151";20206
+SI;"Brda";;"007";20207
+SI;"Brezovica";;"008";20208
+SI;"Brežice";;"009";19899
+SI;"Cankova";;"152";19900
+SI;"Celje";;"011";19901
+SI;"Cerklje na Gorenjskem";;"012";19902
+SI;"Cerknica";;"013";19903
+SI;"Cerkno";;"014";19904
+SI;"Cerkvenjak";;"153";19905
+SI;"Cirkulane";commune;"197";48198
+SI;"Crenšovci";;"015";19906
+SI;"Crna na Koroškem";;"016";19907
+SI;"Crnomelj";;"017";19908
+SI;"Destrnik";;"018";19909
+SI;"Divaca";;"019";19910
+SI;"Dobje";;"154";19911
+SI;"Dobrepolje";;"020";19912
+SI;"Dobrna";;"155";19913
+SI;"Dobrova-Polhov Gradec";;"021";19914
+SI;"Dobrovnik/Dobronak";;"156";19915
+SI;"Dol pri Ljubljani";;"022";19916
+SI;"Dolenjske Toplice";;"157";19917
+SI;"Domžale";;"023";19918
+SI;"Dornava";;"024";19919
+SI;"Dravograd";;"025";19920
+SI;"Duplek";;"026";19921
+SI;"Gorenja vas-Poljane";;"027";19922
+SI;"Gorišnica";;"028";19923
+SI;"Gorje";commune;"207";48212
+SI;"Gornja Radgona";;"029";19924
+SI;"Gornji Grad";;"030";19925
+SI;"Gornji Petrovci";;"031";19926
+SI;"Grad";;"158";19927
+SI;"Grosuplje";;"032";19928
+SI;"Hajdina";;"159";19929
+SI;"Hoce-Slivnica";;"160";19930
+SI;"Hodoš/Hodos";;"161";19931
+SI;"Horjul";;"162";19932
+SI;"Hrastnik";;"034";19933
+SI;"Hrpelje-Kozina";;"035";19934
+SI;"Idrija";;"036";19935
+SI;"Ig";;"037";19936
+SI;"Ilirska Bistrica";;"038";19937
+SI;"Ivancna Gorica";;"039";19938
+SI;"Izola/Isola";;"040";19939
+SI;"Jesenice";;"041";19940
+SI;"Jezersko";;"163";19941
+SI;"Juršinci";;"042";19942
+SI;"Kamnik";;"043";19943
+SI;"Kanal";;"044";19944
+SI;"Kidricevo";;"045";19945
+SI;"Kobarid";;"046";19946
+SI;"Kobilje";;"047";19947
+SI;"Kocevje";;"048";19948
+SI;"Komen";;"049";19949
+SI;"Komenda";;"164";19950
+SI;"Koper/Capodistria";;"050";19951
+SI;"Kosanjevica na Krki";commune;"196";48199
+SI;"Kostel";;"165";19952
+SI;"Kozje";;"051";19953
+SI;"Kranj";;"052";19954
+SI;"Kranjska Gora";;"053";19955
+SI;"Križevci";;"166";19956
+SI;"Krško";;"054";19957
+SI;"Kungota";;"055";19958
+SI;"Kuzma";;"056";19959
+SI;"Laško";;"057";19960
+SI;"Lenart";;"058";19961
+SI;"Lendava/Lendva";;"059";19962
+SI;"Litija";;"060";19963
+SI;"Ljubljana";;"061";19964
+SI;"Ljubno";;"062";19965
+SI;"Ljutomer";;"063";19966
+SI;"Log-Dragomer";commune;"208";48213
+SI;"Logatec";;"064";19967
+SI;"Lovrenc na Pohorju";;"167";19970
+SI;"Loška dolina";;"065";19968
+SI;"Loški Potok";;"066";19969
+SI;"Luce";;"067";19971
+SI;"Lukovica";;"068";19972
+SI;"Majšperk";;"069";19973
+SI;"Makole";commune;"198";48200
+SI;"Maribor";;"070";19974
+SI;"Markovci";;"168";19975
+SI;"Medvode";;"071";19976
+SI;"Mengeš";;"072";19977
+SI;"Metlika";;"073";19978
+SI;"Mežica";;"074";19979
+SI;"Miklavž na Dravskem polju";;"169";19980
+SI;"Miren-Kostanjevica";;"075";19981
+SI;"Mirna Pec";;"170";19982
+SI;"Mislinja";;"076";19983
+SI;"Mokronog-Trebelno";commune;"199";48201
+SI;"Moravce";;"077";19984
+SI;"Moravske Toplice";;"078";19985
+SI;"Mozirje";;"079";19986
+SI;"Murska Sobota";;"080";19987
+SI;"Muta";;"081";19988
+SI;"Naklo";;"082";19989
+SI;"Nazarje";;"083";19990
+SI;"Nova Gorica";;"084";19991
+SI;"Novo mesto";;"085";19992
+SI;"Odranci";;"086";19993
+SI;"Oplotnica";;"171";19994
+SI;"Ormož";;"087";19995
+SI;"Osilnica";;"088";19996
+SI;"Pesnica";;"089";19997
+SI;"Piran/Pirano";;"090";19998
+SI;"Pivka";;"091";19999
+SI;"Podcetrtek";;"092";20000
+SI;"Podlehnik";;"172";20001
+SI;"Podvelka";;"093";20002
+SI;"Poljčane";commune;"200";48202
+SI;"Polzela";;"173";20003
+SI;"Postojna";;"094";20004
+SI;"Prebold";;"174";20005
+SI;"Preddvor";;"095";20006
+SI;"Prevalje";;"175";20007
+SI;"Ptuj";;"096";20008
+SI;"Puconci";;"097";20009
+SI;"Race-Fram";;"098";20010
+SI;"Radece";;"099";20011
+SI;"Radenci";;"100";20012
+SI;"Radlje ob Dravi";;"101";20013
+SI;"Radovljica";;"102";20014
+SI;"Ravne na Koroškem";;"103";20015
+SI;"Razkrižje";;"176";20016
+SI;"Renče-Vogrsko";commune;"201";48203
+SI;"Rečica ob Savinji";commune;"209";48204
+SI;"Ribnica";;"104";20017
+SI;"Ribnica na Pohorju";;"177";20018
+SI;"Rogatec";;"107";20021
+SI;"Rogaška Slatina";;"106";20019
+SI;"Rogašovci";;"105";20020
+SI;"Ruše";;"108";20022
+SI;"Selnica ob Dravi";;"178";20023
+SI;"Semic";;"109";20024
+SI;"Sevnica";;"110";20025
+SI;"Sežana";;"111";20026
+SI;"Slovenj Gradec";;"112";20027
+SI;"Slovenska Bistrica";;"113";20028
+SI;"Slovenske Konjice";;"114";20029
+SI;"Sodražica";;"179";20030
+SI;"Solcava";;"180";20031
+SI;"Središče ob Dravi";commune;"202";48206
+SI;"Starše";;"115";20032
+SI;"Straža";commune;"203";48207
+SI;"Sveta Ana";;"181";20033
+SI;"Sveta Trojica v Slovenskih Goricah";commune;"204";48208
+SI;"Sveti Andraž v Slovenskih goricah";;"182";20034
+SI;"Sveti Jurij";;"116";20035
+SI;"Sveti Jurij v Slovenskih Goricah";commune;"210";48205
+SI;"Sveti Tomaž";commune;"205";48209
+SI;"Tabor";;"184";20050
+SI;"Tišina";;"010";20051
+SI;"Tolmin";;"128";20052
+SI;"Trbovlje";;"129";20053
+SI;"Trebnje";;"130";20054
+SI;"Trnovska vas";;"185";20055
+SI;"Trzin";;"186";20057
+SI;"Tržic";;"131";20056
+SI;"Turnišce";;"132";20058
+SI;"Velenje";;"133";20059
+SI;"Velika Polana";;"187";20060
+SI;"Velike Lašce";;"134";20061
+SI;"Veržej";;"188";20062
+SI;"Videm";;"135";20063
+SI;"Vipava";;"136";20064
+SI;"Vitanje";;"137";20065
+SI;"Vodice";;"138";20066
+SI;"Vojnik";;"139";20067
+SI;"Vransko";;"189";20068
+SI;"Vrhnika";;"140";20069
+SI;"Vuzenica";;"141";20070
+SI;"Zagorje ob Savi";;"142";20071
+SI;"Zavrc";;"143";20072
+SI;"Zrece";;"144";20073
+SI;"Šalovci";;"033";20036
+SI;"Šempeter-Vrtojba";;"183";20037
+SI;"Šencur";;"117";20038
+SI;"Šentilj";;"118";20039
+SI;"Šentjernej";;"119";20040
+SI;"Šentjur pri Celju";;"120";20041
+SI;"Šentrupert";commune;"211";48210
+SI;"Škocjan";;"121";20042
+SI;"Škofja Loka";;"122";20043
+SI;"Škofljica";;"123";20044
+SI;"Šmarje pri Jelšah";;"124";20045
+SI;"Šmarješke Toplice";commune;"206";48211
+SI;"Šmartno ob Paki";;"125";20046
+SI;"Šmartno pri Litiji";;"194";20047
+SI;"Šmartno pri Litiji";commune;"194";48196
+SI;"Šoštanj";;"126";20048
+SI;"Štore";;"127";20049
+SI;"Žalec";;"190";20074
+SI;"Železniki";;"146";20075
+SI;"Žetale";;"191";20076
+SI;"Žiri";;"147";20077
+SI;"Žirovnica";;"192";20078
+SI;"Žužemberk";;"193";20079
+SB;"Capital Territory (Honiara)";capital territory;"CT";18079
+SB;"Central";province;"CE";18074
+SB;"Choiseul";province;"CH";18075
+SB;"Guadalcanal";province;"GU";18076
+SB;"Isabel";province;"IS";18081
+SB;"Makira";province;"MK";18080
+SB;"Malaita";province;"ML";18082
+SB;"Rennell and Bellona";province;"RB";18078
+SB;"Temotu";province;"TE";18073
+SB;"Western";province;"WE";18077
+SO;"Awdal";Region;"AW";18093
+SO;"Bakool";Region;"BK";18094
+SO;"Banaadir";Region;"BN";18098
+SO;"Bari";Region;"BR";18095
+SO;"Bay";Region;"BY";18097
+SO;"Galguduud";Region;"GA";18084
+SO;"Gedo";Region;"GE";18085
+SO;"Hiiraan";Region;"HI";18099
+SO;"Jubbada Dhexe";Region;"JD";18086
+SO;"Jubbada Hoose";Region;"JH";18087
+SO;"Mudug";Region;"MU";18096
+SO;"Nugaal";Region;"NU";18088
+SO;"Sanaag";Region;"SA";18090
+SO;"Shabeellaha Dhexe";Region;"SD";18100
+SO;"Shabeellaha Hoose";Region;"SH";18089
+SO;"Sool";Region;"SO";18083
+SO;"Togdheer";Region;"TO";18091
+SO;"Woqooyi Galbeed";Region;"WO";18092
+ZA;"Eastern Cape";Province;"EC";18103
+ZA;"Free State";Province;"FS";18104
+ZA;"Gauteng";Province;"GT";18109
+ZA;"Kwazulu-Natal";Province;"NL";18105
+ZA;"Limpopo";Province;"LP";18106
+ZA;"Mpumalanga";Province;"MP";18102
+ZA;"North-West";Province;"NW";18101
+ZA;"Northern Cape";Province;"NC";18107
+ZA;"Western Cape";Province;"WC";18108
+SS;"Central Equatoria";states;"EC";48882
+SS;"Eastern Equatoria";states;"EE";48883
+SS;"Jonglei";states;"JG";48884
+SS;"Lakes";states;"LK";48885
+SS;"Northern Bahr el-Ghazal";states;"BN";48886
+SS;"Unity";states;"UY";48887
+SS;"Upper Nile";states;"NU";48888
+SS;"Warrap";states;"WR";48889
+SS;"Western Bahr el-Ghazal";states;"BW";48890
+SS;"Western Equatoria";states;"EW";48891
+ES;"A Coruña";province;"C";18135
+ES;"Albacete";province;"AB";18137
+ES;"Alicante";province;"A";18136
+ES;"Almería";province;"AL";18138
+ES;"Andalucía";;"AN";19572
+ES;"Asturias";province;"O";18122
+ES;"Principado de Asturias";autonomous community;"AS";47901
+ES;"Badajoz";province;"BA";18140
+ES;"Baleares";province;"PM";18123
+ES;"Barcelona";province;"B";18141
+ES;"Burgos";province;"BU";18124
+ES;"Canarias";;"CN";19574
+ES;"Cantabria";autonomous community;"CB";47898
+ES;"Cantabria";province;"S";18125
+ES;"Castellón";province;"CS";18144
+ES;"Castilla y León";autonomous community;"CL";19575
+ES;"Castilla-La Mancha";autonomous community;"CM";19576
+ES;"Catalunya";autonomous community;"CT";19577
+ES;"Ceuta";Autonomous city;"CE";42631
+ES;"Ciudad Real";province;"CR";18126
+ES;"Cuenca";province;"CU";18154
+ES;"Cáceres";province;"CC";18142
+ES;"Cádiz";province;"CA";18143
+ES;"Córdoba";province;"CO";18127
+ES;"Extremadura";autonomous community;"EX";19578
+ES;"Galicia";autonomous community;"GA";19579
+ES;"Girona";province;"GI";18128
+ES;"Granada";province;"GR";18129
+ES;"Guadalajara";province;"GU";18155
+ES;"Guipúzcoa";province;"SS";18130
+ES;"Huelva";province;"H";18156
+ES;"Huesca";province;"HU";18131
+ES;"Illes Balears";autonomous community;"IB";48287
+ES;"Jaén";province;"J";18132
+ES;"La Rioja";province;"LO";18157
+ES;"Las Palmas";province;"GC";18133
+ES;"León";province;"LE";18158
+ES;"Lleida";province;"L";18134
+ES;"Lugo";province;"LU";18145
+ES;"Madrid";province;"M";18159
+ES;"Comunidad de Madrid";autonomous community;"MD";42628
+ES;"Melilla";Autonomous city;"ML";42627
+ES;"Murcia";province;"MU";18160
+ES;"Región de Murcia";autonomous community;"MC";47866
+ES;"Málaga";province;"MA";18146
+ES;"Navarra";province;"NA";18148
+ES;"Comunidad Foral de Navarra";autonomous community;"NC";42626
+ES;"Ourense";province;"OR";18116
+ES;"Palencia";province;"P";18149
+ES;"País Vasco";autonomous community;"PV";19580
+ES;"Pontevedra";province;"PO";18150
+ES;"Salamanca";province;"SA";18161
+ES;"Santa Cruz de Tenerife";province;"TF";18151
+ES;"Segovia";province;"SG";18115
+ES;"Sevilla";province;"SE";18152
+ES;"Soria";province;"SO";18117
+ES;"Tarragona";province;"T";18112
+ES;"Teruel";province;"TE";18118
+ES;"Toledo";province;"TO";18119
+ES;"Valencia";province;"V";18111
+ES;"Comunidad Valenciana";autonomous community;"VC";42625
+ES;"Valladolid";province;"VA";18120
+ES;"Vizcaya";province;"BI";18113
+ES;"Zamora";province;"ZA";18114
+ES;"Zaragoza";province;"Z";18110
+ES;"Álava";province;"VI";18121
+ES;"Ávila";province;"AV";18139
+ES;"";;"AR";19573
+ES;"";autonomous community;"RI";42629
+LK;"Ampāra";district;"52";18178
+LK;"Anurādhapura";district;"71";18175
+LK;"Badulla";district;"81";18179
+LK;"Basnāhira paḷāta";province;"1";48278
+LK;"Dakuṇu paḷāta";province;"3";48279
+LK;"Gampaha";district;"12";18176
+LK;"Gālla";district;"31";18180
+LK;"Hambantŏṭa";district;"33";18181
+LK;"Kalutara";district;"13";18177
+LK;"Kegalla";district;"92";18182
+LK;"Kilinŏchchi";district;"42";18168
+LK;"Kuruṇægala";district;"61";18186
+LK;"Kŏḷamba";district;"11";18183
+LK;"Madakalapuva";district;"51";18184
+LK;"Madhyama paḷāta";province;"2";48280
+LK;"Mahanuvara";district;"21";18167
+LK;"Mannārama";district;"43";18185
+LK;"Mattiya mākāṇam";province;"5";48281
+LK;"Mulativ";district;"45";18163
+LK;"Mātale";district;"22";18169
+LK;"Mātara";district;"32";18164
+LK;"Mŏṇarāgala";district;"82";18170
+LK;"Nuvara Ĕliya";district;"23";18171
+LK;"Puttalama";district;"62";18172
+LK;"Pŏḷŏnnaruva";district;"72";18165
+LK;"Ratnapura";district;"91";18166
+LK;"Sabaragamuva paḷāta";province;"9";48282
+LK;"Trikuṇāmalaya";district;"53";18173
+LK;"Uturu paḷāta";province;"4";48284
+LK;"Uturumæ̆da paḷāta";province;"7";48283
+LK;"Vavuniyāva";district;"44";18162
+LK;"Vayamba paḷāta";province;"6";48286
+LK;"Yāpanaya";district;"41";18174
+LK;"Ūva paḷāta";province;"8";48285
+SD;"A?ali an Nil";State;"23";18194
+SD;"Al Ba?r al A?mar";State;"26";48711
+SD;"Al Bah¸r al Ah¸mar";State;"RS";18206
+SD;"Al Bu?ayrat";State;"18";18207
+SD;"Al Jazirah";State;"07";48712
+SD;"Al Jazirah";State;"GZ";18193
+SD;"Al Khartum";State;"KH";18197
+SD;"Al Khartum";State;"03";48713
+SD;"Al Qa?arif";State;"06";48714
+SD;"Al Qaḑārif";State;"GD";18189
+SD;"Al Wa?dah";State;"22";18187
+SD;"An Nil";State;"04";48715
+SD;"An Nil";State;"NR";18200
+SD;"An Nil al Azraq";State;"NB";18201
+SD;"An Nil al Azraq";State;"24";48717
+SD;"An Nīl al Abyaḑ";State;"NW";18192
+SD;"An Nīl al Abyaḑ";State;"08";48716
+SD;"Ash Shamaliyah";State;"01";48718
+SD;"Ash Shamaliyah";State;"NO";18190
+SD;"Bahr al Jabal";State;"17";18195
+SD;"Gharb al Istiwa'iyah";State;"16";18208
+SD;"Gharb Ba?r al Ghazal";State;"14";18196
+SD;"Gharb Darfur";State;"DW";18209
+SD;"Gharb Darfur";State;"12";48719
+SD;"Gharb Kurdufan";;"10";18210
+SD;"Janub Darfur";State;"11";48720
+SD;"Janub Darfur";State;"DS";18211
+SD;"Janub Kurdufan";State;"KS";18198
+SD;"Janub Kurdufan";State;"13";48721
+SD;"Junqali";State;"20";18199
+SD;"Kassala";State;"KA";18212
+SD;"Kassala";State;"05";48722
+SD;"Shamal Ba?r al Ghazal";State;"15";18188
+SD;"Shamal Darfur";State;"DN";18202
+SD;"Shamal Darfur";State;"02";48723
+SD;"Shamal Kurdufan";State;"09";48724
+SD;"Shamal Kurdufan";State;"KN";18203
+SD;"Sharq al Istiwa'iyah";State;"19";18191
+SD;"Sharq Dārfūr";;"DE";48726
+SD;"Sinnar";State;"25";48725
+SD;"Sinnar";State;"SI";18204
+SD;"Warab";State;"21";18205
+SD;"Zalingei";;"DC";48727
+SR;"Brokopondo";District;"BR";18220
+SR;"Commewijne";District;"CM";18214
+SR;"Coronie";District;"CR";18215
+SR;"Marowijne";District;"MA";18221
+SR;"Nickerie";District;"NI";18216
+SR;"Para";District;"PR";18222
+SR;"Paramaribo";District;"PM";18217
+SR;"Saramacca";District;"SA";18218
+SR;"Sipaliwini";District;"SI";18213
+SR;"Wanica";District;"WA";18219
+SZ;"Hhohho";District;"HH";18226
+SZ;"Lubombo";District;"LU";18228
+SZ;"Manzini";District;"MA";18225
+SZ;"Shiselweni";District;"SH";18227
+SE;"Blekinge län [SE-10]";County;"K";18240
+SE;"Dalarnas län [SE-20]";County;"W";18248
+SE;"Gotlands län [SE-09]";County;"I";18249
+SE;"Gävleborgs län [SE-21]";County;"X";18241
+SE;"Hallands län [SE-13]";County;"N";18242
+SE;"Jämtlands län [SE-23]";County;"Z";18243
+SE;"Jönköpings län [SE-06]";County;"F";18250
+SE;"Kalmar län [SE-08]";County;"H";18244
+SE;"Kronobergs län [SE-07]";County;"G";18245
+SE;"Norrbottens län [SE-25]";County;"BD";18251
+SE;"Skåne län [SE-12]";County;"M";18247
+SE;"Stockholms län [SE-01]";County;"AB";18252
+SE;"Södermanlands län [SE-04]";County;"D";18231
+SE;"Uppsala län [SE-03]";County;"C";18232
+SE;"Värmlands län [SE-17]";County;"S";18233
+SE;"Västerbottens län [SE-24]";County;"AC";18254
+SE;"Västernorrlands län [SE-22]";County;"Y";18234
+SE;"Västmanlands län [SE-19]";County;"U";18253
+SE;"Västra Götalands län [SE-14]";County;"O";18235
+SE;"Örebro län [SE-18]";County;"T";18246
+SE;"Östergötlands län [SE-05]";County;"E";18230
+CH;"Aargau (de)";Canton;"AG";18257
+CH;"Appenzell Ausserrhoden (de)";Canton;"AR";18274
+CH;"Appenzell Innerrhoden (de)";Canton;"AI";18258
+CH;"Basel-Landschaft (de)";Canton;"BL";18275
+CH;"Basel-Stadt (de)";Canton;"BS";18259
+CH;"Bern (de)";Canton;"BE";18276
+CH;"Fribourg (fr)";Canton;"FR";18260
+CH;"Genève (fr)";Canton;"GE";18277
+CH;"Glarus (de)";Canton;"GL";18261
+CH;"Graubünden (de)";Canton;"GR";18265
+CH;"Jura (fr)";Canton;"JU";18262
+CH;"Luzern (de)";Canton;"LU";18266
+CH;"Neuchâtel (fr)";Canton;"NE";18263
+CH;"Nidwalden (de)";Canton;"NW";18267
+CH;"Obwalden (de)";Canton;"OW";18264
+CH;"Sankt Gallen (de)";Canton;"SG";18268
+CH;"Schaffhausen (de)";Canton;"SH";18279
+CH;"Schwyz (de)";Canton;"SZ";18269
+CH;"Solothurn (de)";Canton;"SO";18270
+CH;"Thurgau (de)";Canton;"TG";18280
+CH;"Ticino (it)";Canton;"TI";18271
+CH;"Uri (de)";Canton;"UR";18278
+CH;"Valais (fr)";Canton;"VS";18272
+CH;"Vaud (fr)";Canton;"VD";18255
+CH;"Zug (de)";Canton;"ZG";18273
+CH;"Zürich (de)";Canton;"ZH";18256
+SY;"?alab";Province;"HL";18285
+SY;"?amah";Province;"HM";18293
+SY;"?ims";Province;"HI";18284
+SY;"Al ?asakah";Province;"HA";18288
+SY;"Al Ladhiqiyah";Province;"LA";18289
+SY;"Al Qunaytirah";Province;"QU";18290
+SY;"Ar Raqqah";Province;"RA";18282
+SY;"As Suwayda'";Province;"SU";18291
+SY;"Dar?a";Province;"DR";18286
+SY;"Dayr az Zawr";Province;"DY";18292
+SY;"Dimashq";Province;"DI";18283
+SY;"Idlib";Province;"ID";18294
+SY;"Rif Dimashq";Province;"RD";18287
+SY;"Tartus";Province;"TA";18281
+TW;"Changhua";district;"CHA";18312
+TW;"Chiayi";district;"CYQ";18313
+TW;"Chiayi Municipality";municipality;"CYI";18308
+TW;"Hsinchu";district;"HSQ";18310
+TW;"Hsinchu Municipality";municipality;"HSZ";18309
+TW;"Hualien";district;"HUA";18314
+TW;"Ilan";district;"ILA";18311
+TW;"Kaohsiung";district;"KHQ";18315
+TW;"Kaohsiung Special Municipality";special municipality;"KHH";18320
+TW;"Keelung Municipality";municipality;"KEE";18316
+TW;"Miaoli";district;"MIA";18317
+TW;"Nantou";district;"NAN";18323
+TW;"Penghu";district;"PEN";18324
+TW;"Pingtung";district;"PIF";18318
+TW;"Taichung";district;"TXQ";18307
+TW;"Taichung Municipality";municipality;"TXG";18325
+TW;"Tainan";district;"TNQ";18306
+TW;"Tainan Municipality";municipality;"TNN";18319
+TW;"Taipei";district;"TPQ";18305
+TW;"Taipei Special Municipality";special municipality;"TPE";18326
+TW;"Taitung";district;"TTT";18304
+TW;"Taoyuan";district;"TAO";18303
+TW;"Yunlin";district;"YUN";18302
+TJ;"Gorno-Badakhshan";autonomous region;"GB";18331
+TJ;"Khatlon";region;"KT";18327
+TJ;"Sughd";region;"SU";18330
+TJ;"";city;"X1~";18329
+TZ;"Arusha";Region;"01";18349
+TZ;"Dar es Salaam";Region;"02";18350
+TZ;"Dodoma";Region;"03";18351
+TZ;"Iringa";Region;"04";18352
+TZ;"Kagera";Region;"05";18338
+TZ;"Kaskazini Pemba";Region;"06";18333
+TZ;"Kaskazini Unguja";Region;"07";19095
+TZ;"Kigoma";Region;"08";18339
+TZ;"Kilimanjaro";Region;"09";18340
+TZ;"Kusini Pemba";Region;"10";19096
+TZ;"Kusini Unguja";Region;"11";19097
+TZ;"Lindi";Region;"12";18353
+TZ;"Manyara";Region;"26";18341
+TZ;"Mara";Region;"13";18342
+TZ;"Mbeya";Region;"14";18337
+TZ;"Mjini Magharibi";Region;"15";19098
+TZ;"Morogoro";Region;"16";18343
+TZ;"Mtwara";Region;"17";18354
+TZ;"Mwanza";Region;"18";18344
+TZ;"Pwani";Region;"19";18345
+TZ;"Rukwa";Region;"20";18336
+TZ;"Ruvuma";Region;"21";18346
+TZ;"Shinyanga";Region;"22";18347
+TZ;"Singida";Region;"23";18335
+TZ;"Tabora";Region;"24";18348
+TZ;"Tanga";Region;"25";18334
+TH;"Amnat Charoen";province;"37";18402
+TH;"Ang Thong";province;"15";18403
+TH;"Buri Ram";province;"31";18421
+TH;"Chachoengsao";province;"24";18404
+TH;"Chai Nat";province;"18";18422
+TH;"Chaiyaphum";province;"36";18393
+TH;"Chanthaburi";province;"22";18394
+TH;"Chiang Mai";province;"50";18423
+TH;"Chiang Rai";province;"57";18395
+TH;"Chon Buri";province;"20";18424
+TH;"Chumphon";province;"86";18396
+TH;"Kalasin";province;"46";18425
+TH;"Kamphaeng Phet";province;"62";18397
+TH;"Kanchanaburi";province;"71";18398
+TH;"Khon Kaen";province;"40";18426
+TH;"Krabi";province;"81";18399
+TH;"Krung Thep Maha Nakhon [Bangkok]";metropolitan administration;"10";18427
+TH;"Lampang";province;"52";18400
+TH;"Lamphun";province;"51";18401
+TH;"Loei";province;"42";18366
+TH;"Lop Buri";province;"16";18405
+TH;"Mae Hong Son";province;"58";18406
+TH;"Maha Sarakham";province;"44";18367
+TH;"Mukdahan";province;"49";18407
+TH;"Nakhon Nayok";province;"26";18368
+TH;"Nakhon Pathom";province;"73";18408
+TH;"Nakhon Phanom";province;"48";18409
+TH;"Nakhon Ratchasima";province;"30";18369
+TH;"Nakhon Sawan";province;"60";18410
+TH;"Nakhon Si Thammarat";province;"80";18370
+TH;"Nan";province;"55";18411
+TH;"Narathiwat";province;"96";18412
+TH;"Nong Bua Lam Phu";province;"39";18371
+TH;"Nong Khai";province;"43";18384
+TH;"Nonthaburi";province;"12";18372
+TH;"Pathum Thani";province;"13";18385
+TH;"Pattani";province;"94";18386
+TH;"Phangnga";province;"82";18373
+TH;"Phatthalung";province;"93";18387
+TH;"Phatthaya";special administrative city;"S";20407
+TH;"Phayao";province;"56";18374
+TH;"Phetchabun";province;"67";18388
+TH;"Phetchaburi";province;"76";18389
+TH;"Phichit";province;"66";18357
+TH;"Phitsanulok";province;"65";18390
+TH;"Phra Nakhon Si Ayutthaya";province;"14";18358
+TH;"Phrae";province;"54";18391
+TH;"Phuket";province;"83";18392
+TH;"Prachin Buri";province;"25";18359
+TH;"Prachuap Khiri Khan";province;"77";18413
+TH;"Ranong";province;"85";18414
+TH;"Ratchaburi";province;"70";18360
+TH;"Rayong";province;"21";18415
+TH;"Roi Et";province;"45";18361
+TH;"Sa Kaeo";province;"27";18416
+TH;"Sakon Nakhon";province;"47";18417
+TH;"Samut Prakan";province;"11";18362
+TH;"Samut Sakhon";province;"74";18418
+TH;"Samut Songkhram";province;"75";18363
+TH;"Saraburi";province;"19";18419
+TH;"Satun";province;"91";18420
+TH;"Si Sa Ket";province;"33";18375
+TH;"Sing Buri";province;"17";18364
+TH;"Songkhla";province;"90";18376
+TH;"Sukhothai";province;"64";18365
+TH;"Suphan Buri";province;"72";18377
+TH;"Surat Thani";province;"84";18356
+TH;"Surin";province;"32";18378
+TH;"Tak";province;"63";18379
+TH;"Trang";province;"92";18428
+TH;"Trat";province;"23";18380
+TH;"Ubon Ratchathani";province;"34";18381
+TH;"Udon Thani";province;"41";18430
+TH;"Uthai Thani";province;"61";18382
+TH;"Uttaradit";province;"53";18429
+TH;"Yala";province;"95";18383
+TH;"Yasothon";province;"35";18355
+TL;"Aileu";District;"AL";13554
+TL;"Ainaro";District;"AN";13553
+TL;"Baucau";District;"BA";13562
+TL;"Bobonaro";District;"BO";13556
+TL;"Cova Lima";District;"CO";13557
+TL;"Díli";District;"DI";13564
+TL;"Ermera";District;"ER";13558
+TL;"Lautem";District;"LA";13563
+TL;"Liquiça";District;"LI";13559
+TL;"Manatuto";District;"MT";13560
+TL;"Manufahi";District;"MF";13552
+TL;"Oecussi";District;"OE";13555
+TL;"Viqueque";District;"VI";13561
+TG;"Centre";Region;"C";18433
+TG;"Kara";Region;"K";18432
+TG;"Maritime (Région)";Region;"M";18435
+TG;"Plateaux";Region;"P";18434
+TG;"Savannes";Region;"S";18431
+TO;"'Eua";Island group;"01";18442
+TO;"Ha'apai";Island group;"02";18440
+TO;"Niuas";Island group;"03";18443
+TO;"Tongatapu";Island group;"04";18441
+TO;"Vava'u";Island group;"05";18439
+TT;"Arima";municipality;"ARI";18446
+TT;"Chaguanas";municipality;"CHA";18456
+TT;"Couva-Tabaquite-Talparo";region;"CTT";18447
+TT;"Diego Martin";region;"DMN";18448
+TT;"Eastern Tobago";region;"ETO";20483
+TT;"Penal-Debe";region;"PED";18449
+TT;"Point Fortin";municipality;"PTF";18457
+TT;"Port of Spain";municipality;"POS";18450
+TT;"Princes Town";region;"PRT";18445
+TT;"Rio Claro-Mayaro";region;"RCM";18455
+TT;"San Fernando";municipality;"SFO";18451
+TT;"San Juan-Laventille";region;"SJL";18452
+TT;"Sangre Grande";region;"SGE";18458
+TT;"Siparia";region;"SIP";18453
+TT;"Tunapuna-Piarco";region;"TUP";18454
+TT;"Western Tobago";region;"WTO";20488
+TN;"Ariana";Governorate;"12";18463
+TN;"Ben Arous";Governorate;"13";18464
+TN;"Bizerte";Governorate;"23";18470
+TN;"Béja";Governorate;"31";18469
+TN;"Gabès";Governorate;"81";18474
+TN;"Gafsa";Governorate;"71";18475
+TN;"Jendouba";Governorate;"32";18465
+TN;"Kairouan";Governorate;"41";18477
+TN;"Kasserine";Governorate;"42";18476
+TN;"Kebili";Governorate;"73";18478
+TN;"La Manouba";Governorate;"14";18467
+TN;"Le Kef";Governorate;"33";18471
+TN;"Mahdia";Governorate;"53";18472
+TN;"Medenine";Governorate;"82";18466
+TN;"Monastir";Governorate;"52";18473
+TN;"Nabeul";Governorate;"21";18468
+TN;"Sfax";Governorate;"61";18462
+TN;"Sidi Bouzid";Governorate;"43";18479
+TN;"Siliana";Governorate;"34";18461
+TN;"Sousse";Governorate;"51";18480
+TN;"Tataouine";Governorate;"83";18460
+TN;"Tozeur";Governorate;"72";18481
+TN;"Tunis";Governorate;"11";18482
+TN;"Zaghouan";Governorate;"22";18459
+TR;"Adana";Province;"01";18551
+TR;"Adiyaman";Province;"02";18523
+TR;"Afyonkarahisar";Province;"03";18524
+TR;"Agri";Province;"04";18552
+TR;"Aksaray";Province;"68";18514
+TR;"Amasya";Province;"05";18515
+TR;"Ankara";Province;"06";18553
+TR;"Antalya";Province;"07";18516
+TR;"Ardahan";Province;"75";18517
+TR;"Artvin";Province;"08";18554
+TR;"Aydin";Province;"09";18518
+TR;"Balikesir";Province;"10";18519
+TR;"Bartin";Province;"74";18555
+TR;"Batman";Province;"72";18520
+TR;"Bayburt";Province;"69";18521
+TR;"Bilecik";Province;"11";18556
+TR;"Bingöl";Province;"12";18522
+TR;"Bitlis";Province;"13";18525
+TR;"Bolu";Province;"14";18526
+TR;"Burdur";Province;"15";18557
+TR;"Bursa";Province;"16";18527
+TR;"Denizli";Province;"20";18530
+TR;"Diyarbakir";Province;"21";18495
+TR;"Düzce";Province;"81";18531
+TR;"Edirne";Province;"22";18532
+TR;"Elazig";Province;"23";18541
+TR;"Erzincan";Province;"24";18505
+TR;"Erzurum";Province;"25";18506
+TR;"Eskisehir";Province;"26";18542
+TR;"Gaziantep";Province;"27";18507
+TR;"Giresun";Province;"28";18543
+TR;"Gümüshane";Province;"29";18508
+TR;"Hakkâri";Province;"30";18509
+TR;"Hatay";Province;"31";18510
+TR;"Igdir";Province;"76";18511
+TR;"Isparta";Province;"32";18545
+TR;"Istanbul";Province;"34";18512
+TR;"Izmir";Province;"35";18513
+TR;"Kahramanmaras";Province;"46";18546
+TR;"Karabük";Province;"78";18533
+TR;"Karaman";Province;"70";18534
+TR;"Kars";Province;"36";18547
+TR;"Kastamonu";Province;"37";18535
+TR;"Kayseri";Province;"38";18536
+TR;"Kilis";Province;"79";18548
+TR;"Kirikkale";Province;"71";18537
+TR;"Kirklareli";Province;"39";18486
+TR;"Kirsehir";Province;"40";18538
+TR;"Kocaeli";Province;"41";18539
+TR;"Konya";Province;"42";18540
+TR;"Kütahya";Province;"43";18559
+TR;"Malatya";Province;"44";18496
+TR;"Manisa";Province;"45";18497
+TR;"Mardin";Province;"47";18485
+TR;"Mersin";Province;"33";18544
+TR;"Mugla";Province;"48";18498
+TR;"Mus";Province;"49";18499
+TR;"Nevsehir";Province;"50";18560
+TR;"Nigde";Province;"51";18500
+TR;"Ordu";Province;"52";18501
+TR;"Osmaniye";Province;"80";18484
+TR;"Rize";Province;"53";18502
+TR;"Sakarya";Province;"54";18503
+TR;"Samsun";Province;"55";18561
+TR;"Sanliurfa";Province;"63";18504
+TR;"Siirt";Province;"56";18487
+TR;"Sinop";Province;"57";18564
+TR;"Sirnak";Province;"73";18488
+TR;"Sivas";Province;"58";18563
+TR;"Tekirdag";Province;"59";18489
+TR;"Tokat";Province;"60";18490
+TR;"Trabzon";Province;"61";18491
+TR;"Tunceli";Province;"62";18562
+TR;"Usak";Province;"64";18492
+TR;"Van";Province;"65";18493
+TR;"Yalova";Province;"77";18565
+TR;"Yozgat";Province;"66";18494
+TR;"Zonguldak";Province;"67";18483
+TR;"Çanakkale";Province;"17";18558
+TR;"Çankiri";Province;"18";18528
+TR;"Çorum";Province;"19";18529
+TM;"Ahal";region;"A";18569
+TM;"Balkan";region;"B";18568
+TM;"Dasoguz";region;"D";18571
+TM;"Lebap";region;"L";18572
+TM;"Mary";region;"M";18566
+TM;"";City;"S";18567
+TM;"";City;"X~";48134
+TV;"Funafuti";Island Council;"FUN";18586
+TV;"Nanumanga";Island Council;"NMG";18580
+TV;"Nanumea";Island Council;"NMA";18581
+TV;"Niutao";Island Council;"NIT";18582
+TV;"Nui";Island Council;"NIU";18583
+TV;"Nukufetau";Island Council;"NKF";18579
+TV;"Nukulaelae";Island Council;"NKL";18584
+TV;"Vaitupu";Island Council;"VAI";18585
+UG;"Abim";District;"317";48102
+UG;"Adjumani";District;"301";20547
+UG;"Amolatar";District;"314";48103
+UG;"Amuria";District;"216";48104
+UG;"Amuru";District;"319";48105
+UG;"Apac";District;"302";20548
+UG;"Arua";District;"303";20549
+UG;"Budaka";District;"217";48106
+UG;"Bududa";District;"223";48122
+UG;"Bugiri";District;"201";20532
+UG;"Bukedea";District;"224";48121
+UG;"Bukwa";District;"218";48107
+UG;"Buliisa";District;"419";48124
+UG;"Bundibugyo";District;"401";20560
+UG;"Bushenyi";District;"402";20561
+UG;"Busia";District;"202";20533
+UG;"Butaleja";District;"219";48108
+UG;"Central";geographic regions;"C";48541
+UG;"Dokolo";District;"318";48109
+UG;"Eastern";geographic regions;"E";48542
+UG;"Gulu";District;"304";20550
+UG;"Hoima";District;"403";20562
+UG;"Ibanda";District;"416";48110
+UG;"Iganga";District;"203";20534
+UG;"Isingiro";District;"417";48111
+UG;"Jinja";District;"204";20535
+UG;"Kaabong";District;"315";48112
+UG;"Kabale";District;"404";20563
+UG;"Kabarole";District;"405";20564
+UG;"Kaberamaido";District;"213";20544
+UG;"Kalangala";District;"101";20519
+UG;"Kaliro";District;"220";48113
+UG;"Kampala";District;"102";20520
+UG;"Kamuli";District;"205";20536
+UG;"Kamwenge";District;"413";20572
+UG;"Kanungu";District;"414";20573
+UG;"Kapchorwa";District;"206";20537
+UG;"Kasese";District;"406";20565
+UG;"Katakwi";District;"207";20538
+UG;"Kayunga";District;"112";20530
+UG;"Kibaale";District;"407";20566
+UG;"Kiboga";District;"103";20521
+UG;"Kiruhura";District;"418";48114
+UG;"Kisoro";District;"408";20567
+UG;"Kitgum";District;"305";20551
+UG;"Koboko";District;"316";48115
+UG;"Kotido";District;"306";20552
+UG;"Kumi";District;"208";20539
+UG;"Kyenjojo";District;"415";20574
+UG;"Lira";District;"307";20553
+UG;"Luwero";District;"104";20522
+UG;"Lyantonde";District;"116";48123
+UG;"Manafwa";District;"221";48116
+UG;"Maracha";District;"320";48117
+UG;"Masaka";District;"105";20523
+UG;"Masindi";District;"409";20568
+UG;"Mayuge";District;"214";20545
+UG;"Mbale";District;"209";20540
+UG;"Mbarara";District;"410";20569
+UG;"Mityana";District;"114";48125
+UG;"Moroto";District;"308";20554
+UG;"Moyo";District;"309";20555
+UG;"Mpigi";District;"106";20524
+UG;"Mubende";District;"107";20525
+UG;"Mukono";District;"108";20526
+UG;"Nakapiripirit";District;"311";20557
+UG;"Nakaseke";District;"115";48118
+UG;"Nakasongola";District;"109";20527
+UG;"Namutumba";District;"222";48119
+UG;"Nebbi";District;"310";20556
+UG;"Northern";geographic regions;"N";48543
+UG;"Ntungamo";District;"411";20570
+UG;"Oyam";District;"321";48126
+UG;"Pader";District;"312";20558
+UG;"Pallisa";District;"210";20541
+UG;"Rakai";District;"110";20528
+UG;"Rukungiri";District;"412";20571
+UG;"Sembabule";District;"111";20529
+UG;"Sironko";District;"215";20546
+UG;"Soroti";District;"211";20542
+UG;"Tororo";District;"212";20543
+UG;"Wakiso";District;"113";20531
+UG;"Western";geographic regions;"W";48544
+UG;"Yumbe";District;"313";20559
+UA;"Cherkas'ka Oblast'";region;"71";18594
+UA;"Chernihivs'ka Oblast'";region;"74";18595
+UA;"Chernivets'ka Oblast'";region;"77";18596
+UA;"Dnipropetrovs'ka Oblast'";region;"12";18603
+UA;"Donets'ka Oblast'";region;"14";18597
+UA;"Ivano-Frankivs'ka Oblast'";region;"26";18598
+UA;"Kharkivs'ka Oblast'";region;"63";18599
+UA;"Khersons'ka Oblast'";region;"65";18600
+UA;"Khmel'nyts'ka Oblast'";region;"68";18604
+UA;"Kirovohrads'ka Oblast'";region;"35";18601
+UA;"Kyïv";region;"30";18607
+UA;"Kyïvs'ka Oblast'";region;"32";18608
+UA;"L'vivs'ka Oblast'";region;"46";18609
+UA;"Luhans'ka Oblast'";region;"09";18605
+UA;"Mykolaïvs'ka Oblast'";region;"48";18610
+UA;"Odes'ka Oblast'";region;"51";18606
+UA;"Poltavs'ka Oblast'";region;"53";18611
+UA;"Respublika Krym";Autonomous Republic;"43";18602
+UA;"Rivnens'ka Oblast'";region;"56";18612
+UA;"Sevastopol'";region;"40";18613
+UA;"Sums'ka Oblast'";region;"59";18614
+UA;"Ternopil's'ka Oblast'";region;"61";18615
+UA;"Vinnyts'ka Oblast'";region;"05";18593
+UA;"Volyns'ka Oblast'";region;"07";18617
+UA;"Zakarpats'ka Oblast'";region;"21";18618
+UA;"Zaporiz'ka Oblast'";region;"23";18616
+UA;"Zhytomyrs'ka Oblast'";region;"18";18592
+AE;"Abu Z¸aby [Abu Dhabi]";Emirate;"AZ";18622
+AE;"Ajman";Emirate;"AJ";20215
+AE;"Al Fujayrah";Emirate;"FU";20218
+AE;"Ash Shariqah [Sharjah]";Emirate;"SH";20219
+AE;"Dubayy [Dubai]";Emirate;"DU";20217
+AE;"Ra’s al Khaymah";Emirate;"RK";18620
+AE;"Umm al Qaywayn";Emirate;"UQ";20220
+GB;"Aberdeen City";council area (Scotland);"ABE";47989
+GB;"Aberdeenshire";council area (Scotland);"ABD";47988
+GB;"Angus";council area (Scotland);"ANS";47987
+GB;"Antrim";district council area (Northern Ireland);"ANT";48015
+GB;"Ards";district council area (Northern Ireland);"ARD";48014
+GB;"Argyll and Bute";council area (Scotland);"AGB";47986
+GB;"Armagh";district council area (Northern Ireland);"ARM";48013
+GB;"Ballymena";district council area (Northern Ireland);"BLA";48012
+GB;"Ballymoney";district council area (Northern Ireland);"BLY";48011
+GB;"Banbridge";district council area (Northern Ireland);"BNB";48010
+GB;"Barking and Dagenham";borough;"BDG";19166
+GB;"Barnet";borough;"BNE";19167
+GB;"Barnsley";metropolitan district;"BNS";19168
+GB;"Bath and North East Somerset";unitary authority;"BAS";47935
+GB;"Bedfordshire";unitary authority;"BDF";47934
+GB;"Belfast";district council area (Northern Ireland);"BFS";48009
+GB;"Bexley";borough;"BEX";19172
+GB;"Birmingham";metropolitan district;"BIR";19173
+GB;"Blackburn with Darwen";unitary authority;"BBD";47933
+GB;"Blackpool";unitary authority;"BPL";47932
+GB;"Blaenau Gwent";unitary authority (Wales);"BGW";47956
+GB;"Bolton";metropolitan district;"BOL";19177
+GB;"Bournemouth";unitary authority;"BMH";47931
+GB;"Bracknell Forest";unitary authority;"BRC";47930
+GB;"Bradford";metropolitan district;"BRD";19180
+GB;"Brent";borough;"BEN";19181
+GB;"Bridgend [Pen-y-bont ar Ogwr GB-POG]";unitary authority (Wales);"BGE";47955
+GB;"Brighton and Hove";unitary authority;"BNH";47929
+GB;"City of Bristol";unitary authority;"BST";47928
+GB;"Bromley";borough;"BRY";19185
+GB;"Buckinghamshire";two-tier county;"BKM";47927
+GB;"Bury";metropolitan district;"BUR";19187
+GB;"Caerphilly [Caerffili GB-CAF]";unitary authority (Wales);"CAY";47954
+GB;"Calderdale";metropolitan district;"CLD";19189
+GB;"Cambridgeshire";two-tier county;"CAM";47926
+GB;"Camden";borough;"CMD";19191
+GB;"Cardiff [Caerdydd GB-CRD]";unitary authority (Wales);"CRF";47953
+GB;"Carmarthenshire [Sir Gaerfyrddin GB-GFY]";unitary authority (Wales);"CMN";47952
+GB;"Carrickfergus";district council area (Northern Ireland);"CKF";48008
+GB;"Castlereagh";district council area (Northern Ireland);"CSR";48007
+GB;"Ceredigion [Sir Ceredigion]";unitary authority (Wales);"CGN";47951
+GB;"Cheshire";;"CHS";47925
+GB;"Clackmannanshire";council area (Scotland);"CLK";47985
+GB;"Coleraine";district council area (Northern Ireland);"CLR";48006
+GB;"Conwy";unitary authority (Wales);"CWY";47950
+GB;"Cookstown";district council area (Northern Ireland);"CKT";48005
+GB;"Cornwall";unitary authority;"CON";47924
+GB;"Coventry";metropolitan district;"COV";19203
+GB;"Craigavon";district council area (Northern Ireland);"CGV";48004
+GB;"Croydon";borough;"CRY";19205
+GB;"Cumbria";two-tier county;"CMA";47923
+GB;"Darlington";unitary authority;"DAL";47922
+GB;"Denbighshire [Sir Ddinbych GB-DDB]";unitary authority (Wales);"DEN";47949
+GB;"Derby";unitary authority;"DER";47921
+GB;"Derbyshire";two-tier county;"DBY";47920
+GB;"Derry";district council area (Northern Ireland);"DRY";47997
+GB;"Devon";two-tier county;"DEV";47919
+GB;"Doncaster";metropolitan district;"DNC";19213
+GB;"Dorset";two-tier county;"DOR";47918
+GB;"Down";district council area (Northern Ireland);"DOW";48003
+GB;"Dudley";metropolitan district;"DUD";19216
+GB;"Dumfries and Galloway";council area (Scotland);"DGY";47984
+GB;"Dundee City";council area (Scotland);"DND";47983
+GB;"Dungannon and South Tyrone";district council area (Northern Ireland);"DGN";48002
+GB;"Durham";unitary authority;"DUR";47917
+GB;"Ealing";borough;"EAL";19221
+GB;"East Ayrshire";council area (Scotland);"EAY";47982
+GB;"East Dunbartonshire";council area (Scotland);"EDU";47981
+GB;"East Lothian";council area (Scotland);"ELN";47980
+GB;"East Renfrewshire";council area (Scotland);"ERW";47979
+GB;"East Riding of Yorkshire";unitary authority;"ERY";47916
+GB;"East Sussex";two-tier county;"ESX";47915
+GB;"City of Edinburgh";council area (Scotland);"EDH";47978
+GB;"Eilean Siar";council area (Scotland);"ELS";47977
+GB;"Enfield";borough;"ENF";19230
+GB;"Essex";two-tier county;"ESS";47914
+GB;"Falkirk";council area (Scotland);"FAL";47976
+GB;"Fermanagh";district council area (Northern Ireland);"FER";48001
+GB;"Fife";council area (Scotland);"FIF";47975
+GB;"Flintshire [Sir y Fflint GB-FFL]";unitary authority (Wales);"FLN";47948
+GB;"Gateshead";metropolitan district;"GAT";19236
+GB;"Glasgow City";council area (Scotland);"GLG";47974
+GB;"Gloucestershire";two-tier county;"GLS";47913
+GB;"Greenwich";borough;"GRE";19239
+GB;"Gwynedd";unitary authority (Wales);"GWN";47947
+GB;"Hackney";borough;"HCK";19241
+GB;"Halton";unitary authority;"HAL";47911
+GB;"Hammersmith and Fulham";borough;"HMF";19243
+GB;"Hampshire";two-tier county;"HAM";47910
+GB;"Haringey";borough;"HRY";19245
+GB;"Harrow";borough;"HRW";19246
+GB;"Hartlepool";unitary authority;"HPL";47909
+GB;"Havering";borough;"HAV";19248
+GB;"County of Herefordshire";unitary authority;"HEF";47908
+GB;"Hertfordshire";two-tier county;"HRT";47907
+GB;"Highland";council area (Scotland);"HLD";47973
+GB;"Hillingdon";borough;"HIL";19252
+GB;"Hounslow";borough;"HNS";19253
+GB;"Inverclyde";council area (Scotland);"IVC";47972
+GB;"Isle of Anglesey [Sir Ynys Môn GB-YNM]";unitary authority (Wales);"AGY";47957
+GB;"Isle of Wight";unitary authority;"IOW";47906
+GB;"Isles of Scilly";;"IOS";19257
+GB;"Islington";borough;"ISL";19258
+GB;"Kensington and Chelsea";borough;"KEC";19259
+GB;"Kent";two-tier county;"KEN";47905
+GB;"City of Kingston upon Hull";unitary authority;"KHL";47904
+GB;"Kingston upon Thames";borough;"KTT";19262
+GB;"Kirklees";metropolitan district;"KIR";19263
+GB;"Knowsley";metropolitan district;"KWL";19264
+GB;"Lambeth";borough;"LBH";19265
+GB;"Lancashire";two-tier county;"LAN";48070
+GB;"Larne";district council area (Northern Ireland);"LRN";48000
+GB;"Leeds";metropolitan district;"LDS";19268
+GB;"Leicester";unitary authority;"LCE";48069
+GB;"Leicestershire";two-tier county;"LEC";48068
+GB;"Lewisham";borough;"LEW";19271
+GB;"Limavady";district council area (Northern Ireland);"LMV";47999
+GB;"Lincolnshire";two-tier county;"LIN";48067
+GB;"Lisburn";district council area (Northern Ireland);"LSB";47998
+GB;"Liverpool";metropolitan district;"LIV";19275
+GB;"City of London";city corporation;"LND";47912
+GB;"Luton";unitary authority;"LUT";48065
+GB;"Magherafelt";district council area (Northern Ireland);"MFT";47996
+GB;"Manchester";metropolitan district;"MAN";48066
+GB;"Medway";unitary authority;"MDW";48064
+GB;"Merthyr Tydfil [Merthyr Tudful GB-MTU]";unitary authority (Wales);"MTY";47946
+GB;"Merton";borough;"MRT";19282
+GB;"Middlesbrough";unitary authority;"MDB";48062
+GB;"Midlothian";council area (Scotland);"MLN";47971
+GB;"Milton Keynes";unitary authority;"MIK";48061
+GB;"Monmouthshire [Sir Fynwy GB-FYN]";unitary authority (Wales);"MON";47945
+GB;"Moray";council area (Scotland);"MRY";47970
+GB;"Moyle";district council area (Northern Ireland);"MYL";47995
+GB;"Neath Port Talbot [Castell-nedd Port Talbot GB-CTL]";unitary authority (Wales);"NTL";47944
+GB;"Newcastle upon Tyne";metropolitan district;"NET";19290
+GB;"Newham";borough;"NWM";19291
+GB;"Newport [Casnewydd GB-CNW]";unitary authority (Wales);"NWP";47943
+GB;"Newry and Mourne";district council area (Northern Ireland);"NYM";47994
+GB;"Newtownabbey";district council area (Northern Ireland);"NTA";47993
+GB;"Norfolk";two-tier county;"NFK";48060
+GB;"North Ayrshire";council area (Scotland);"NAY";47969
+GB;"North Down";district council area (Northern Ireland);"NDN";47992
+GB;"North East Lincolnshire";unitary authority;"NEL";48059
+GB;"North Lanarkshire";council area (Scotland);"NLK";47968
+GB;"North Lincolnshire";unitary authority;"NLN";48058
+GB;"North Somerset";unitary authority;"NSM";48057
+GB;"North Tyneside";metropolitan district;"NTY";19302
+GB;"North Yorkshire";two-tier county;"NYK";48056
+GB;"Northamptonshire";two-tier county;"NTH";48055
+GB;"Northumberland";unitary authority;"NBL";48054
+GB;"Nottingham";unitary authority;"NGM";48053
+GB;"Nottinghamshire";two-tier county;"NTT";48052
+GB;"Oldham";metropolitan district;"OLD";19308
+GB;"Omagh";district council area (Northern Ireland);"OMH";47991
+GB;"Orkney Islands";council area (Scotland);"ORK";47967
+GB;"Oxfordshire";two-tier county;"OXF";48051
+GB;"Pembrokeshire [Sir Benfro GB-BNF]";unitary authority (Wales);"PEM";47942
+GB;"Perth and Kinross";council area (Scotland);"PKN";47966
+GB;"Peterborough";unitary authority;"PTE";48050
+GB;"Plymouth";unitary authority;"PLY";48049
+GB;"Poole";unitary authority;"POL";48048
+GB;"Portsmouth";unitary authority;"POR";48047
+GB;"Powys";unitary authority (Wales);"POW";47941
+GB;"Reading";unitary authority;"RDG";48046
+GB;"Redbridge";borough;"RDB";19320
+GB;"Redcar and Cleveland";unitary authority;"RCC";48045
+GB;"Renfrewshire";council area (Scotland);"RFW";47965
+GB;"Cynon Rhondda";unitary authority (Wales);"RCT";47940
+GB;"Richmond upon Thames";borough;"RIC";19324
+GB;"Rochdale";metropolitan district;"RCH";19325
+GB;"Rotherham";metropolitan district;"ROT";19326
+GB;"Rutland";unitary authority;"RUT";48044
+GB;"Salford";metropolitan district;"SLF";19328
+GB;"Sandwell";metropolitan district;"SAW";19329
+GB;"The Scottish Borders";council area (Scotland);"SCB";47964
+GB;"Sefton";metropolitan district;"SFT";19331
+GB;"Sheffield";metropolitan district;"SHF";19332
+GB;"Shetland Islands";council area (Scotland);"ZET";47963
+GB;"Shropshire";unitary authority;"SHR";48043
+GB;"Slough";unitary authority;"SLG";48042
+GB;"Solihull";metropolitan district;"SOL";19336
+GB;"Somerset";two-tier county;"SOM";48041
+GB;"South Ayrshire";council area (Scotland);"SAY";47962
+GB;"South Gloucestershire";unitary authority;"SGC";48040
+GB;"South Lanarkshire";council area (Scotland);"SLK";47961
+GB;"South Tyneside";metropolitan district;"STY";19341
+GB;"Southampton";unitary authority;"STH";48038
+GB;"Southend-on-Sea";unitary authority;"SOS";48037
+GB;"Southwark";borough;"SWK";19344
+GB;"St. Helens";metropolitan district;"SHN";19345
+GB;"Staffordshire";two-tier county;"STS";48036
+GB;"Stirling";council area (Scotland);"STG";47960
+GB;"Stockport";metropolitan district;"SKP";19348
+GB;"Stockton-on-Tees";unitary authority;"STT";48035
+GB;"Stoke-on-Trent";unitary authority;"STE";48034
+GB;"Strabane";district council area (Northern Ireland);"STB";47990
+GB;"Suffolk";two-tier county;"SFK";48033
+GB;"Sunderland";metropolitan district;"SND";19353
+GB;"Surrey";two-tier county;"SRY";48032
+GB;"Sutton";borough;"STN";19355
+GB;"Swansea [Abertawe GB-ATA]";unitary authority (Wales);"SWA";47939
+GB;"Swindon";unitary authority;"SWD";48031
+GB;"Tameside";metropolitan district;"TAM";19358
+GB;"Telford and Wrekin";unitary authority;"TFW";48030
+GB;"Thurrock";unitary authority;"THR";48029
+GB;"Torbay";unitary authority;"TOB";48028
+GB;"Torfaen [Tor-faen]";unitary authority (Wales);"TOF";47938
+GB;"Tower Hamlets";borough;"TWH";19363
+GB;"Trafford";metropolitan district;"TRF";19364
+GB;"The [Bro Morgannwg GB-BMG] Vale of Glamorgan";unitary authority (Wales);"VGL";47937
+GB;"Wakefield";metropolitan district;"WKF";19366
+GB;"Walsall";metropolitan district;"WLL";19367
+GB;"Waltham Forest";borough;"WFT";19368
+GB;"Wandsworth";borough;"WND";19369
+GB;"Warrington";unitary authority;"WRT";48026
+GB;"Warwickshire";two-tier county;"WAR";48025
+GB;"West Berkshire";unitary authority;"WBK";48024
+GB;"West Dunbartonshire";council area (Scotland);"WDU";47959
+GB;"West Lothian";council area (Scotland);"WLN";47958
+GB;"West Sussex";two-tier county;"WSX";48022
+GB;"Westminster";borough;"WSM";19376
+GB;"Wigan";metropolitan district;"WGN";19377
+GB;"Wiltshire";unitary authority;"WIL";48020
+GB;"Windsor and Maidenhead";unitary authority;"WNM";48019
+GB;"Wirral";metropolitan district;"WRL";19380
+GB;"Wokingham";unitary authority;"WOK";48018
+GB;"Wolverhampton";metropolitan district;"WLV";19382
+GB;"Worcestershire";two-tier county;"WOR";48017
+GB;"Wrexham [Wrecsam GB-WRC]";unitary authority (Wales);"WRX";47936
+GB;"York";unitary authority;"YOR";48016
+US;"Alabama";state;"AL";18655
+US;"Alaska";state;"AK";18683
+US;"American Samoa (see also separate entry under AS)";outlying area;"AS";19386
+US;"Arizona";state;"AZ";18656
+US;"Arkansas";state;"AR";18684
+US;"California";state;"CA";18657
+US;"Colorado";state;"CO";18685
+US;"Connecticut";state;"CT";18658
+US;"Delaware";state;"DE";18686
+US;"District of Columbia";district;"DC";18659
+US;"Florida";state;"FL";18687
+US;"Georgia";state;"GA";18660
+US;"Guam (see also separate entry under GU)";outlying area;"GU";19388
+US;"Hawaii";state;"HI";18688
+US;"Idaho";state;"ID";18661
+US;"Illinois";state;"IL";18674
+US;"Indiana";state;"IN";18662
+US;"Iowa";state;"IA";18663
+US;"Kansas";state;"KS";18675
+US;"Kentucky";state;"KY";18664
+US;"Louisiana";state;"LA";18676
+US;"Maine";state;"ME";18665
+US;"Maryland";state;"MD";18677
+US;"Massachusetts";state;"MA";18666
+US;"Michigan";state;"MI";18678
+US;"Minnesota";state;"MN";18646
+US;"Mississippi";state;"MS";18679
+US;"Missouri";state;"MO";18647
+US;"Montana";state;"MT";18648
+US;"Nebraska";state;"NE";18680
+US;"Nevada";state;"NV";18649
+US;"New Hampshire";state;"NH";18681
+US;"New Jersey";state;"NJ";18650
+US;"New Mexico";state;"NM";18682
+US;"New York";state;"NY";18651
+US;"North Carolina";state;"NC";18645
+US;"North Dakota";state;"ND";18652
+US;"Northern Mariana Islands (see also separate entry under MP)";outlying area;"MP";19390
+US;"Ohio";state;"OH";18689
+US;"Oklahoma";state;"OK";18653
+US;"Oregon";state;"OR";18654
+US;"Pennsylvania";state;"PA";18644
+US;"Puerto Rico (see also separate entry under PR)";outlying area;"PR";19591
+US;"Rhode Island";state;"RI";18667
+US;"South Carolina";state;"SC";18690
+US;"South Dakota";state;"SD";18668
+US;"Tennessee";state;"TN";18643
+US;"Texas";state;"TX";18669
+US;"United States Minor Outlying Islands (see also separate entry under UM)";outlying area;"UM";19597
+US;"Utah";state;"UT";18642
+US;"Vermont";state;"VT";18670
+US;"U.S. (see also separate entry under VI) Virgin Islands";outlying area;"VI";19593
+US;"Virginia";state;"VA";18641
+US;"Washington";state;"WA";18671
+US;"West Virginia";state;"WV";18640
+US;"Wisconsin";state;"WI";18672
+US;"Wyoming";state;"WY";18673
+UM;"Baker Island";Territory;"81";18637
+UM;"Howland Island";Territory;"84";18636
+UM;"Jarvis Island";Territory;"86";18638
+UM;"Johnston Atoll";Territory;"67";18635
+UM;"Kingman Reef";Territory;"89";18639
+UM;"Midway Islands";Territory;"71";18634
+UM;"Navassa Island";Territory;"76";18633
+UM;"Palmyra Atoll";Territory;"95";18632
+UM;"Wake Island";Territory;"79";18631
+UY;"Artigas";Department;"AR";18696
+UY;"Durazno";Department;"DU";18699
+UY;"Flores";Department;"FS";18695
+UY;"Florida";Department;"FD";18700
+UY;"Lavalleja";Department;"LA";18709
+UY;"Maldonado";Department;"MA";18701
+UY;"Montevideo";Department;"MO";18702
+UY;"Paysandú";Department;"PA";18694
+UY;"Rivera";Department;"RV";18693
+UY;"Rocha";Department;"RO";18704
+UY;"Río Negro";Department;"RN";18703
+UY;"Salto";Department;"SA";18705
+UY;"San José";Department;"SJ";18692
+UY;"Soriano";Department;"SO";18706
+UY;"Tacuarembó";Department;"TA";18691
+UY;"Treinta y Tres";Department;"TT";18707
+UY;"";Department;"X1~";18697
+UY;"";Department;"X2~";18708
+UY;"";Department;"X3~";18698
+UZ;"Andijon";region;"AN";18715
+UZ;"Buxoro";region;"BU";18717
+UZ;"Farg‘ona";region;"FA";18714
+UZ;"Jizzax";region;"JI";18723
+UZ;"Namangan";region;"NG";18719
+UZ;"Navoiy";region;"NW";18712
+UZ;"Qashqadaryo";region;"QA";18718
+UZ;"Qoraqalpog‘iston Respublikasi";republic;"QR";18713
+UZ;"Samarqand";region;"SA";18720
+UZ;"Sirdaryo";region;"SI";18711
+UZ;"Surxondaryo";region;"SU";18710
+UZ;"Toshkent";region;"TO";18721
+UZ;"Toshkent City";city;"TK";20580
+UZ;"Xorazm";region;"XO";18724
+VU;"Malampa";Province;"MAP";18726
+VU;"Pénama";Province;"PAM";18728
+VU;"Sanma";Province;"SAM";18730
+VU;"Shéfa";Province;"SEE";18727
+VU;"Taféa";Province;"TAE";18725
+VU;"Torba";Province;"TOB";18729
+VE;"Amazonas";state;"Z";18735
+VE;"Anzoátegui";state;"B";18745
+VE;"Apure";state;"C";18746
+VE;"Aragua";state;"D";18736
+VE;"Barinas";state;"E";18747
+VE;"Bolívar";state;"F";18737
+VE;"Carabobo";state;"G";18748
+VE;"Cojedes";state;"H";18749
+VE;"Delta Amacuro";state;"Y";18738
+VE;"Dependencias Federales";federal dependency;"W";18750
+VE;"Distrito Federal";federal district;"A";18739
+VE;"Falcón";state;"I";18751
+VE;"Guárico";state;"J";18740
+VE;"Lara";state;"K";18741
+VE;"Miranda";state;"M";18743
+VE;"Monagas";state;"N";18744
+VE;"Mérida";state;"L";18742
+VE;"Nueva Esparta";state;"O";18734
+VE;"Portuguesa";state;"P";18752
+VE;"Sucre";state;"R";18733
+VE;"Trujillo";state;"T";20682
+VE;"Táchira";state;"S";20681
+VE;"Vargas";state;"X";20683
+VE;"Yaracuy";state;"U";20680
+VE;"Zulia";state;"V";20684
+VN;"An Giang";Province;"44";18753
+VN;"Ba Ria-Vung Tau";Province;"43";18756
+VN;"Bac Can";Province;"53";18755
+VN;"Bac Giang";Province;"54";18754
+VN;"Bac Lieu";Province;"55";18732
+VN;"Bac Ninh";Province;"56";20625
+VN;"Ben Tre";Province;"50";20622
+VN;"Binh Dinh";Province;"31";20607
+VN;"Binh Duong";Province;"57";20626
+VN;"Binh Phuoc";Province;"58";20627
+VN;"Binh Thuan";Province;"40";20615
+VN;"Ca Mau";Province;"59";20628
+VN;"Can Tho";municipality;"CT";48708
+VN;"Can Tho";Province;"48";20620
+VN;"Cao Bang";Province;"04";20587
+VN;"Da Nang";municipality;"DN";48892
+VN;"thanh pho Da Nang";Province;"60";20629
+VN;"Dac Lac";Province;"33";20609
+VN;"Dak Nong";Province;"72";20640
+VN;"Dien Bien";Province;"71";20639
+VN;"Dong Nai";Province;"39";20614
+VN;"Dong Thap";Province;"45";20617
+VN;"Gia Lai";Province;"30";20606
+VN;"Ha Giang";Province;"03";20586
+VN;"Ha Nam";Province;"63";20632
+VN;"Ha Noi";municipality;"HN";48893
+VN;"thu do Ha Noi";Province;"64";20633
+VN;"Ha Tay";Province;"15";20594
+VN;"Ha Tinh";Province;"23";20599
+VN;"Hai Duong";Province;"61";20630
+VN;"Hai Phong";municipality;"HP";48894
+VN;"thanh pho Hai Phong";Province;"62";20631
+VN;"Hau Giang";Province;"73";20641
+VN;"Ho Chi Minh [Sai Gon]";municipality;"SG";48895
+VN;"thanh pho [Sai Gon] Ho Chi Minh";Province;"65";20634
+VN;"Hoa Binh";Province;"14";20593
+VN;"Hung Yen";Province;"66";20635
+VN;"Khanh Hoa";Province;"34";20610
+VN;"Kien Giang";Province;"47";20619
+VN;"Kon Tum";Province;"28";20604
+VN;"Lai Chau";Province;"01";20584
+VN;"Lam Dong";Province;"35";20611
+VN;"Lang Son";Province;"09";20591
+VN;"Lao Cai";Province;"02";20585
+VN;"Long An";Province;"41";20616
+VN;"Nam Dinh";Province;"67";20636
+VN;"Nghe An";Province;"22";20598
+VN;"Ninh Binh";Province;"18";20595
+VN;"Ninh Thuan";Province;"36";20612
+VN;"Phu Tho";Province;"68";20637
+VN;"Phu Yen";Province;"32";20608
+VN;"Quang Binh";Province;"24";20600
+VN;"Quang Nam";Province;"27";20603
+VN;"Quang Ngai";Province;"29";20605
+VN;"Quang Ninh";Province;"13";20592
+VN;"Quang Tri";Province;"25";20601
+VN;"Soc Trang";Province;"52";20624
+VN;"Son La";Province;"05";20588
+VN;"Tay Ninh";Province;"37";20613
+VN;"Thai Binh";Province;"20";20596
+VN;"Thai Nguyen";Province;"69";18763
+VN;"Thanh Hoa";Province;"21";20597
+VN;"Thua Thien-Hue";Province;"26";20602
+VN;"Tien Giang";Province;"46";20618
+VN;"Tra Vinh";Province;"51";20623
+VN;"Tuyen Quang";Province;"07";20590
+VN;"Vinh Long";Province;"49";20621
+VN;"Vinh Phuc";Province;"70";20638
+VN;"Yen Bai";Province;"06";20589
+EH;"Boujdour";Province;"BOD";18775
+EH;"Es Semara";Province;"ESM";18777
+EH;"Laayoune";Province;"LAA";18773
+EH;"Oued el Dahab";Province;"OUD";18774
+YE;"'Amran";Governorate;"AM";20660
+YE;"Abyan";Governorate;"AB";18787
+YE;"Ad Dāli‘";Governorate;"DA";20662
+YE;"Al ?udaydah";Governorate;"HU";18790
+YE;"Al Bay?a'";Governorate;"BA";18784
+YE;"Al Jawf";Governorate;"JA";18792
+YE;"Al Mahrah";Governorate;"MR";18793
+YE;"Al Mahwit";Governorate;"MW";18781
+YE;"Dhamar";Governorate;"DH";18789
+YE;"Hadramawt";Governorate;"HD";18785
+YE;"Hajjah";Governorate;"HJ";18786
+YE;"Ibb";Governorate;"IB";18791
+YE;"La?ij";Governorate;"LA";18782
+YE;"Ma'rib";Governorate;"MA";18794
+YE;"Raymah";Governorate;"RA";42618
+YE;"Sa`dah";Governorate;"SD";18795
+YE;"Sanʿā";Governorate;"SN";18779
+YE;"Shabwah";Governorate;"SH";18780
+YE;"Taʿizz";Governorate;"TA";18778
+YE;"Şan‘ā";municipality;"SA";48214
+YE;"ʿAdan";Governorate;"AD";18783
+ZM;"Central";Province;"02";20690
+ZM;"Copperbelt";Province;"08";18800
+ZM;"Eastern";Province;"03";21381
+ZM;"Luapula";Province;"04";18803
+ZM;"Lusaka";Province;"09";18801
+ZM;"North-Western";Province;"06";18804
+ZM;"Northern";Province;"05";18798
+ZM;"Southern";Province;"07";18802
+ZM;"Western";Province;"01";18796
+ZW;"Bulawayo";City;"BU";21380
+ZW;"Harare";City;"HA";21379
+ZW;"Manicaland";Province;"MA";21280
+ZW;"Mashonaland Central";Province;"MC";21282
+ZW;"Mashonaland East";Province;"ME";21283
+ZW;"Mashonaland West";Province;"MW";21284
+ZW;"Masvingo";Province;"MV";21287
+ZW;"Matabeleland North";Province;"MN";21285
+ZW;"Matabeleland South";Province;"MS";21286
+ZW;"Midlands";Province;"MI";21281

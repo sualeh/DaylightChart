@@ -1,55 +1,31 @@
 /*
- *
  * Daylight Chart
  * http://sualeh.github.io/DaylightChart
- * Copyright (c) 2007-2016, Sualeh Fatehi.
- *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
+ * Copyright (c) 2007-2026, Sualeh Fatehi <sualeh@hotmail.com>.
+ * All rights reserved.
+ * SPDX-License-Identifier: EPL-2.0
  */
+
 package daylightchart.gui.actions;
-
-
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.KeyStroke;
 
 import daylightchart.gui.DaylightChartGui;
 import daylightchart.gui.Messages;
 import daylightchart.gui.OptionsDialog;
 import daylightchart.gui.util.GuiAction;
 import daylightchart.options.Options;
-import daylightchart.options.UserPreferences;
+import daylightchart.options.service.UserPreferencesService;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.Serial;
+import javax.swing.KeyStroke;
 
-/**
- * Shows options.
- *
- * @author sfatehi
- */
-public final class OptionsAction
-  extends GuiAction
-{
+/** Shows options. */
+public final class OptionsAction extends GuiAction {
 
-  private static final class GuiActionListener
-    implements ActionListener
-  {
+  private static final class GuiActionListener implements ActionListener {
     private final DaylightChartGui mainWindow;
 
-    private GuiActionListener(final DaylightChartGui mainWindow)
-    {
+    private GuiActionListener(final DaylightChartGui mainWindow) {
       this.mainWindow = mainWindow;
     }
 
@@ -59,30 +35,27 @@ public final class OptionsAction
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
     @Override
-    public void actionPerformed(final ActionEvent actionevent)
-    {
-      Options options = UserPreferences.optionsFile().getData();
+    public void actionPerformed(final ActionEvent actionevent) {
+      Options options = UserPreferencesService.preferences().loadOptions();
       options = OptionsDialog.showOptionsDialog(mainWindow, options);
-      UserPreferences.optionsFile().save(options);
+      UserPreferencesService.preferences().saveOptions(options);
       mainWindow.sortLocations();
     }
   }
 
-  private static final long serialVersionUID = 4002590686393404496L;
+  @Serial private static final long serialVersionUID = 4002590686393404496L;
 
   /**
    * Shows Help-About.
    *
-   * @param mainWindow
-   *        Main window.
+   * @param mainWindow Main window.
    */
-  public OptionsAction(final DaylightChartGui mainWindow)
-  {
-    super(Messages.getString("DaylightChartGui.Menu.Options.Options"), //$NON-NLS-1$
-          "/icons/options.gif" //$NON-NLS-1$
-    );
+  public OptionsAction(final DaylightChartGui mainWindow) {
+    super(
+        Messages.getString("DaylightChartGui.Menu.Options.Options"), // $NON-NLS-1$
+        "/icons/options.gif" //$NON-NLS-1$
+        );
     setShortcutKey(KeyStroke.getKeyStroke("control alt O"));
     addActionListener(new GuiActionListener(mainWindow));
   }
-
 }

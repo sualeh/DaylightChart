@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>DaylightChart</name>
-	<comment>Daylight Chart shows sunrise and sunset times in an attractive chart, for any location in the world. The effect of daylight savings time is also displayed. Charts can be exported to image files.</comment>
+	<name>daylightchart</name>
+	<comment></comment>
 	<projects>
 	</projects>
 	<buildSpec>

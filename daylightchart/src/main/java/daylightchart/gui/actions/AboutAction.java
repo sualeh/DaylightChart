@@ -1,53 +1,29 @@
 /*
- *
  * Daylight Chart
  * http://sualeh.github.io/DaylightChart
- * Copyright (c) 2007-2016, Sualeh Fatehi.
- *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
+ * Copyright (c) 2007-2026, Sualeh Fatehi <sualeh@hotmail.com>.
+ * All rights reserved.
+ * SPDX-License-Identifier: EPL-2.0
  */
+
 package daylightchart.gui.actions;
-
-
-import java.awt.Component;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.JOptionPane;
 
 import daylightchart.Version;
 import daylightchart.gui.Messages;
 import daylightchart.gui.util.GuiAction;
+import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.Serial;
+import javax.swing.JOptionPane;
 
-/**
- * Shows Help-About.
- *
- * @author sfatehi
- */
-public final class AboutAction
-  extends GuiAction
-{
+/** Shows Help-About. */
+public final class AboutAction extends GuiAction {
 
-  private static final class GuiActionListener
-    implements ActionListener
-  {
+  private static final class GuiActionListener implements ActionListener {
     private final Component parent;
 
-    private GuiActionListener(final Component parent)
-    {
+    private GuiActionListener(final Component parent) {
       this.parent = parent;
     }
 
@@ -57,28 +33,24 @@ public final class AboutAction
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
     @Override
-    public void actionPerformed(final ActionEvent actionevent)
-    {
-      JOptionPane.showMessageDialog(parent,
-                                    Version.about(),
-                                    Version.getProductName(),
-                                    JOptionPane.PLAIN_MESSAGE);
+    public void actionPerformed(final ActionEvent actionevent) {
+      JOptionPane.showMessageDialog(
+          parent, Version.about(), Version.getProductName(), JOptionPane.PLAIN_MESSAGE);
     }
   }
 
-  private static final long serialVersionUID = 4002590686393404496L;
+  @Serial private static final long serialVersionUID = 4002590686393404496L;
 
   /**
    * Shows Help-About.
    *
-   * @param parent
-   *        Main window.
+   * @param parent Main window.
    */
-  public AboutAction(final Component parent)
-  {
-    super(Messages.getString("DaylightChartGui.Menu.Help.About"), //$NON-NLS-1$
-          "/icons/help_about.gif" //$NON-NLS-1$
-    );
+  public AboutAction(final Component parent) {
+    super(
+        Messages.getString("DaylightChartGui.Menu.Help.About"), // $NON-NLS-1$
+        "/icons/help_about.gif" //$NON-NLS-1$
+        );
     addActionListener(new GuiActionListener(parent));
   }
 }

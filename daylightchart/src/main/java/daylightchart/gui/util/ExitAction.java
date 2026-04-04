@@ -1,66 +1,42 @@
 /*
- *
  * Daylight Chart
  * http://sualeh.github.io/DaylightChart
- * Copyright (c) 2007-2016, Sualeh Fatehi.
- *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
+ * Copyright (c) 2007-2026, Sualeh Fatehi <sualeh@hotmail.com>.
+ * All rights reserved.
+ * SPDX-License-Identifier: EPL-2.0
  */
-package daylightchart.gui.util;
 
+package daylightchart.gui.util;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import java.io.Serial;
 import javax.swing.JFrame;
 import javax.swing.KeyStroke;
 
-/**
- * Exits an application.
- *
- * @author sfatehi
- */
-public final class ExitAction
-  extends GuiAction
-{
+/** Exits an application. */
+public final class ExitAction extends GuiAction {
 
-  private static final long serialVersionUID = 5749903957626188378L;
+  @Serial private static final long serialVersionUID = 5749903957626188378L;
 
   /**
    * Exits an application
    *
-   * @param frame
-   *        Main window
-   * @param text
-   *        Text for the action
+   * @param frame Main window
+   * @param text Text for the action
    */
-  public ExitAction(final JFrame frame, final String text)
-  {
-    super(text, "/icons/exit.gif" //$NON-NLS-1$
-    );
+  public ExitAction(final JFrame frame, final String text) {
+    super(
+        text, "/icons/exit.gif" // $NON-NLS-1$
+        );
     setShortcutKey(KeyStroke.getKeyStroke("control Q"));
-    addActionListener(new ActionListener()
-    {
-      @Override
-      public void actionPerformed(final ActionEvent actionevent)
-      {
-        frame.dispose();
-        System.exit(0);
-      }
-    });
+    addActionListener(
+        new ActionListener() {
+          @Override
+          public void actionPerformed(final ActionEvent actionevent) {
+            frame.dispose();
+            System.exit(0);
+          }
+        });
   }
-
 }

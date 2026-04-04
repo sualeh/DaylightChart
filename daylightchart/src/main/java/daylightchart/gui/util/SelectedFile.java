@@ -1,29 +1,29 @@
+/*
+ * Daylight Chart
+ * http://sualeh.github.io/DaylightChart
+ * Copyright (c) 2007-2026, Sualeh Fatehi <sualeh@hotmail.com>.
+ * All rights reserved.
+ * SPDX-License-Identifier: EPL-2.0
+ */
+
 package daylightchart.gui.util;
 
-
+import daylightchart.options.persistence.BaseTypedFile;
+import daylightchart.options.persistence.FileType;
 import java.nio.file.Path;
-
-import daylightchart.options.BaseTypedFile;
-import daylightchart.options.FileType;
 
 /**
  * Selected file.
  *
- * @author Sualeh Fatehi
- * @param <T>
- *        File type
+ * @param <T> File type
  */
-public final class SelectedFile<T extends FileType>
-  extends BaseTypedFile<T>
-{
+public final class SelectedFile<T extends FileType> extends BaseTypedFile<T> {
 
-  SelectedFile()
-  {
+  SelectedFile() {
     super();
   }
 
-  SelectedFile(final Path file, final ExtensionFileFilter<T> fileFilter)
-  {
+  SelectedFile(final Path file, final ExtensionFileFilter<T> fileFilter) {
     super(file, fileFilter.getFileType());
   }
 
@@ -32,9 +32,7 @@ public final class SelectedFile<T extends FileType>
    *
    * @return Whether the file was selected
    */
-  public boolean isSelected()
-  {
+  public boolean isSelected() {
     return hasFile();
   }
-
 }

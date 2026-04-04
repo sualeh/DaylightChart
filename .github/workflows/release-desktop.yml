@@ -1,0 +1,62 @@
+name: Build and Package Desktop Application
+
+on:
+  workflow_dispatch:
+  push:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  DESKTOP_MODULE: daylightchart
+  DESKTOP_ARTIFACT: daylightchart/target/daylightchart-*-distrib.zip
+  ARTIFACT_NAME: daylight-chart-desktop
+
+jobs:
+  build:
+    name: Build and Package Desktop Application
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+
+# VALIDATE TAGS
+    - id: validate-semver
+      name: Validate tag against semantic versioning
+      if: startsWith(github.ref, 'refs/tags/')
+      shell: bash
+      run: |
+        SEMVER_PATTERN="^refs/tags/v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)(-[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?(\+[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?$"
+        if [[ ! $GITHUB_REF =~ $SEMVER_PATTERN ]]
+          then
+            echo "Tag $GITHUB_REF does not follow semantic versioning"
+            exit 1
+          fi
+
+# SETUP BUILD ENVIRONMENT
+    - id: prepare-maven-build
+      name: Prepare Maven build
+      uses: sualeh/prepare-maven-build@v1.7.2
+      with:
+        java-version: 21
+
+# BUILD AND PACKAGE DESKTOP APPLICATION
+    - id: build-desktop
+      name: Build and package desktop application
+      shell: bash
+      run: |
+        mvn \
+          --no-transfer-progress \
+          --batch-mode \
+          -pl ${{ env.DESKTOP_MODULE }} -am \
+          -DskipTests \
+          package
+
+    - id: upload-artifact
+      name: Upload desktop application zip
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ env.ARTIFACT_NAME }}
+        path: ${{ env.DESKTOP_ARTIFACT }}
+        if-no-files-found: error

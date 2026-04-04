@@ -5,13 +5,13 @@
   <parent>
     <groupId>daylightchart</groupId>
     <artifactId>daylightchart-all</artifactId>
-    <version>4.1.1</version>
+    <version>5.0.2</version>
   </parent>
   <groupId>geoname</groupId>
   <artifactId>geoname</artifactId>
   <name>Geographical Names</name>
   <description>
-	Geographical Names is an LGPL licensed Java library that can parse geographical data files.
+	Geographical Names parses geographical data files.
   </description>
   <licenses>
     <license>
@@ -23,31 +23,12 @@
     <dependency>
       <groupId>us.fatehi</groupId>
       <artifactId>pointlocation6709</artifactId>
-      <version>4.1</version>
+      <version>5.0.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-csv</artifactId>
+      <version>1.14.1</version>
     </dependency>
   </dependencies>
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-assembly-plugin</artifactId>
-        <version>2.5.5</version>
-        <executions>
-          <execution>
-            <id>assembly</id>
-            <phase>package</phase>
-            <goals>
-              <goal>attached</goal>
-            </goals>
-            <configuration>
-              <descriptorRefs>
-                <descriptorRef>src</descriptorRef>
-                <descriptorRef>bin</descriptorRef>
-              </descriptorRefs>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
-  </build>
 </project>

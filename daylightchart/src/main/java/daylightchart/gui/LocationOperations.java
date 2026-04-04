@@ -1,24 +1,24 @@
-package daylightchart.gui;
+/*
+ * Daylight Chart
+ * http://sualeh.github.io/DaylightChart
+ * Copyright (c) 2007-2026, Sualeh Fatehi <sualeh@hotmail.com>.
+ * All rights reserved.
+ * SPDX-License-Identifier: EPL-2.0
+ */
 
+package daylightchart.gui;
 
 import java.util.Collection;
 import java.util.List;
-
 import org.geoname.data.Location;
 
-/**
- * User interface operations on the list of locations.
- *
- * @author Sualeh Fatehi
- */
-public interface LocationOperations
-{
+/** User interface operations on the list of locations. */
+public interface LocationOperations {
 
   /**
    * Add a location to the list, in sorted order.
    *
-   * @param location
-   *        Location to add
+   * @param location Location to add
    */
   void addLocation(final Location location);
 
@@ -39,32 +39,25 @@ public interface LocationOperations
   /**
    * Removes the specified location.
    *
-   * @param location
-   *        Location
+   * @param location Location
    */
   void removeLocation(final Location location);
 
   /**
    * Replaces a location on the list with another.
    *
-   * @param location
-   *        Location to replace
-   * @param newLocation
-   *        New location
+   * @param location Location to replace
+   * @param newLocation New location
    */
   void replaceLocation(final Location location, final Location newLocation);
 
   /**
    * Set the locations list.
    *
-   * @param locations
-   *        Locations list.
+   * @param locations Locations list.
    */
   void setLocations(final Collection<Location> locations);
 
-  /**
-   * Sort the locations in the list.
-   */
+  /** Sort the locations in the list. */
   void sortLocations();
-
 }

@@ -12,7 +12,7 @@ Daylight Chart is a program to display sunrise and sunset charts for a
 
 The steps for running Daylight Chart are:
 
-- Download and install [Java 8](http://www.java.com/en/download/index.jsp) on your computer, if you do not already have it. 
+- Download and install Java 21 on your computer, if you do not already have it.
 - Download [Daylight Chart](https://github.com/sualeh/DaylightChart/releases). Just one download file is needed.
 - Unzip the downloaded zip file into any folder on your computer, keeping the internal folder structure intact.
 - Run the "daylightchart" command.
