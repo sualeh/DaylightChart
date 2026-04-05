@@ -1,8 +1,13 @@
-name: Build and Package Desktop Application
+name: Create Release
+
+permissions:
+  contents: write
 
 on:
   workflow_dispatch:
   push:
+    tags:
+      - 'v*'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -14,11 +19,11 @@ env:
   ARTIFACT_NAME: daylight-chart-desktop
 
 jobs:
-  build:
-    name: Build and Package Desktop Application
+  release:
+    name: Create Release
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write # Required to create a new tag
     steps:
 
 # VALIDATE TAGS
@@ -41,11 +46,12 @@ jobs:
       with:
         java-version: 21
 
-# BUILD AND PACKAGE DESKTOP APPLICATION
-    - id: build-desktop
-      name: Build and package desktop application
+# BUILD FOR DISTRIBUTION
+    - id: build
+      name: Build and test for distribution
       shell: bash
       run: |
+        # Build
         mvn \
           --no-transfer-progress \
           --batch-mode \
@@ -53,6 +59,20 @@ jobs:
           -DskipTests \
           package
 
+# CREATE GITHUB RELEASE AND ADD ASSETS
+    - id: create-release
+      name: Create GitHub release
+      uses: softprops/action-gh-release@v2
+      if: startsWith(github.ref, 'refs/tags/')
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        name: ${{ github.ref_name }}
+        draft: false
+        prerelease: false
+        body: |
+          Daylight Chart ${{ github.event.release.tag_name }} release at last commit ${{ github.sha }}
+
+# UPLOAD DISTRIBUTION
     - id: upload-artifact
       name: Upload desktop application zip
       uses: actions/upload-artifact@v7
