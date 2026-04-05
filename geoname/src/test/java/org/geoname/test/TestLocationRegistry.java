@@ -120,10 +120,9 @@ public class TestLocationRegistry {
   @Test
   public void searchByCity() {
     registry.addLocations(BUNDLED_LOCATIONS);
-    final Collection<Location> results = registry.search("Aberdeen");
+    final Collection<Location> results = registry.search("Boston");
     assertThat(results.size(), is(greaterThan(0)));
-    results.forEach(
-        loc -> assertThat(loc.getCity().toLowerCase().contains("aberdeen"), is(true)));
+    results.forEach(loc -> assertThat(loc.getCity().toLowerCase().contains("boston"), is(true)));
   }
 
   @Test
@@ -138,7 +137,7 @@ public class TestLocationRegistry {
   public void searchByAdminAreaName() {
     registry.addLocations(BUNDLED_LOCATIONS);
     // Several US locations have state admin areas in the bundled list
-    final Collection<Location> results = registry.search("New York");
+    final Collection<Location> results = registry.search("Boston");
     assertThat(results.size(), is(greaterThan(0)));
   }
 

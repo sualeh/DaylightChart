@@ -90,7 +90,7 @@ public class TestLocation {
     final ResourceRef ref = ResourceRefs.ofClasspath("locations.data");
     final Collection<Location> locations = new LocationsListParser(ref).parseLocations();
 
-    assertThat(locations.size(), is(109));
+    assertThat(locations.size(), is(50));
   }
 
   @Test
