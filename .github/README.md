@@ -1,5 +1,4 @@
-[![Quick Build](https://github.com/sualeh/daylight-chart/actions/workflows/quick-build.yml/badge.svg)](https://github.com/sualeh/daylight-chart/actions/workflows/quick-build.yml)
-[![Release Desktop](https://github.com/sualeh/daylight-chart/actions/workflows/release-desktop.yml/badge.svg)](https://github.com/sualeh/daylight-chart/actions/workflows/release-desktop.yml)
+[![Quick Build](https://github.com/sualeh/DaylightChart/actions/workflows/quick-build.yml/badge.svg)](https://github.com/sualeh/DaylightChart/actions/workflows/quick-build.yml)
 
 
 # ![DaylightChart](https://github.com/sualeh/DaylightChart/blob/main/daylightchart/src/site/resources/images/daylightchart_logo.png?raw=true) Daylight Chart
