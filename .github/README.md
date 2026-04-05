@@ -9,7 +9,7 @@ Daylight Chart shows sunrise and sunset times in an attractive chart, for any lo
 
 ## Web Application
 
-![DaylightChart Wev](https://github.com/sualeh/DaylightChart/blob/main/daylightchart/src/site/resources/screenshot-browser.jpg?raw=true)
+![DaylightChart Web](https://github.com/sualeh/DaylightChart/blob/main/daylightchart/src/site/resources/screenshot-browser.jpg?raw=true)
 
 ### Running with Docker
 
