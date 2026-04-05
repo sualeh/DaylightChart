@@ -1,6 +1,6 @@
 project:
   name: daylight-chart
-  version: 5.0.2
+  version: 5.0.3
   description: Daylight Chart shows sunrise and sunset times in an attractive chart, for any location in the world.
   longDescription: |
     Daylight Chart shows sunrise and sunset times in an attractive chart,

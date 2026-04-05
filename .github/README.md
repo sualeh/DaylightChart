@@ -12,7 +12,7 @@ Daylight Chart shows sunrise and sunset times in an attractive chart, for any lo
 Pull and start the web application using Docker:
 
 ```bash
-docker run --rm -p 8080:8080 ghcr.io/sualeh/daylight-chart:latest
+docker run --rm -p 8080:8080 sualeh/daylight-chart:latest
 ```
 
 Then open your browser and navigate to:
@@ -26,13 +26,13 @@ http://localhost:8080
 To run on a different host port (e.g., 9090), change the host-side of the port mapping:
 
 ```bash
-docker run --rm -p 9090:8080 ghcr.io/sualeh/daylight-chart:latest
+docker run --rm -p 9090:8080 sualeh/daylight-chart:latest
 ```
 
-Alternatively, Spring Boot supports changing the server port via the `SERVER_PORT` environment variable. In that case, update both the environment variable and the port mapping to match:
+To change the server port for the container, set the `SERVER_PORT` environment variable. In that case, update both the environment variable and the port mapping to match:
 
 ```bash
-docker run --rm -e SERVER_PORT=9090 -p 9090:9090 ghcr.io/sualeh/daylight-chart:latest
+docker run --rm -e SERVER_PORT=9090 -p 9090:9090 sualeh/daylight-chart:latest
 ```
 
 Then access the app at `http://localhost:9090`.
