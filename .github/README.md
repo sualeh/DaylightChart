@@ -7,7 +7,11 @@
 Daylight Chart shows sunrise and sunset times in an attractive chart, for any location in the world. The effect of daylight savings time is also displayed. Charts can be exported to image files.
 
 
-## Running with Docker
+## Web Application
+
+![DaylightChart Wev](https://github.com/sualeh/DaylightChart/blob/main/daylightchart/src/site/resources/screenshot-browser.jpg?raw=true)
+
+### Running with Docker
 
 Pull and start the web application using Docker:
 
@@ -40,7 +44,7 @@ Then access the app at `http://localhost:9090`.
 
 ## Desktop Application
 
-![DaylightChart Screenshot](https://github.com/sualeh/DaylightChart/blob/main/daylightchart/src/site/resources/screenshot.jpg?raw=true)
+![DaylightChart Desktop](https://github.com/sualeh/DaylightChart/blob/main/daylightchart/src/site/resources/screenshot.jpg?raw=true)
 
 ### Prerequisites
 
