@@ -53,7 +53,7 @@ public final class DaylightChartGui extends JFrame implements LocationOperations
   /** Creates a new instance of a Daylight Chart main window. */
   public DaylightChartGui() {
     setIconImage(
-        new ImageIcon(DaylightChartGui.class.getResource("/daylightchart.png")) // $NON-NLS-1$
+        new ImageIcon(DaylightChartGui.class.getResource("/META-INF/resources/logo.png")) // $NON-NLS-1$
             .getImage());
 
     setTitle("Daylight Chart"); // $NON-NLS-1$

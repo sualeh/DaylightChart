@@ -24,13 +24,6 @@
 			</includes>
 		</fileSet>
 		<fileSet>
-			<directory>src/main/resources</directory>
-			<outputDirectory></outputDirectory>
-			<includes>
-				<include>daylightchart.*</include>
-			</includes>
-		</fileSet>
-		<fileSet>
 			<directory>src/main/launcher</directory>
 			<outputDirectory></outputDirectory>
 			<includes>
@@ -39,4 +32,11 @@
 			</includes>
 		</fileSet>
 	</fileSets>
+	<files>
+		<file>
+			<source>../daylightchart-chart/src/main/resources/META-INF/resources/logo.ico</source>
+			<destName>daylightchart.ico</destName>
+			<outputDirectory></outputDirectory>
+		</file>
+	</files>
 </assembly>
