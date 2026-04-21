@@ -14,8 +14,8 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  DESKTOP_MODULE: daylightchart
-  DESKTOP_ARTIFACT: daylightchart/target/daylightchart-*-distrib.zip
+  DESKTOP_MODULE: daylightchart-desktop
+  DESKTOP_ARTIFACT: daylightchart-desktop/target/daylightchart-desktop-*-distrib.zip
   ARTIFACT_NAME: daylight-chart-desktop
 
 jobs:
