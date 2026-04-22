@@ -30,7 +30,7 @@ public final class ChartConfiguration {
   public static final Color twilightColor = new Color(0xFF, 0xFF, 0xFF, 60);
 
   /** Default night color for the chart. */
-  public static final Color nightColor = new Color(75, 11, 91, 190);
+  public static final Color nightColor = new Color(74, 21, 81, 190);
 
   /** Default font for the chart. */
   public static final Font chartFont = new Font("Helvetica", Font.PLAIN, 12);

@@ -8,6 +8,9 @@
 
 package daylightchart.gui;
 
+import com.github.weisj.jsvg.SVGDocument;
+import com.github.weisj.jsvg.parser.SVGLoader;
+import com.github.weisj.jsvg.view.ViewBox;
 import daylightchart.chart.options.ChartOptions;
 import daylightchart.chart.options.ChartOptionsService;
 import daylightchart.chart.report.DaylightChartReport;
@@ -30,10 +33,13 @@ import daylightchart.gui.util.GuiAction;
 import daylightchart.options.Options;
 import daylightchart.options.service.UserPreferencesService;
 import java.awt.BorderLayout;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.image.BaseMultiResolutionImage;
+import java.awt.image.BufferedImage;
 import java.io.Serial;
 import java.util.Collection;
 import java.util.List;
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -52,9 +58,17 @@ public final class DaylightChartGui extends JFrame implements LocationOperations
 
   /** Creates a new instance of a Daylight Chart main window. */
   public DaylightChartGui() {
-    setIconImage(
-        new ImageIcon(DaylightChartGui.class.getResource("/META-INF/resources/logo.png")) // $NON-NLS-1$
-            .getImage());
+    final SVGDocument svgDocument =
+        new SVGLoader()
+            .load(
+                DaylightChartGui.class.getResource("/META-INF/resources/logo.svg")); // $NON-NLS-1$
+    setIconImages(
+        List.of(
+            new BaseMultiResolutionImage(
+                renderSvg(svgDocument, 16),
+                renderSvg(svgDocument, 32),
+                renderSvg(svgDocument, 48),
+                renderSvg(svgDocument, 256))));
 
     setTitle("Daylight Chart"); // $NON-NLS-1$
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -279,5 +293,14 @@ public final class DaylightChartGui extends JFrame implements LocationOperations
 
     toolBar.add(options);
     toolBar.addSeparator();
+  }
+
+  private static BufferedImage renderSvg(final SVGDocument svgDocument, final int size) {
+    final BufferedImage image = new BufferedImage(size, size, BufferedImage.TYPE_INT_ARGB);
+    final Graphics2D g = image.createGraphics();
+    g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+    svgDocument.render(null, g, new ViewBox(0, 0, size, size));
+    g.dispose();
+    return image;
   }
 }
