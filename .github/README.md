@@ -1,14 +1,14 @@
 [![Quick Build](https://github.com/sualeh/DaylightChart/actions/workflows/quick-build.yml/badge.svg)](https://github.com/sualeh/DaylightChart/actions/workflows/quick-build.yml)
 
 
-# ![DaylightChart](https://github.com/sualeh/DaylightChart/blob/main/daylightchart-chart/src/main/resources/META-INF/resources/logo.png?raw=true) Daylight Chart
+# <img src="https://github.com/sualeh/DaylightChart/blob/main/daylightchart-chart/src/main/resources/META-INF/resources/logo.png?raw=true" width="48" height="48" alt="DaylightChart"> Daylight Chart
 
 Daylight Chart shows sunrise and sunset times in an attractive chart, for any location in the world. The effect of daylight savings time is also displayed. Charts can be exported to image files.
 
 
 ## Web Application
 
-![DaylightChart Web](https://github.com/sualeh/DaylightChart/blob/main/daylightchart/src/site/resources/screenshot-browser.jpg?raw=true)
+![DaylightChart Web](https://github.com/sualeh/DaylightChart/blob/main/daylightchart-desktop/src/site/resources/screenshot-browser.jpg?raw=true)
 
 ### Running with Docker
 
@@ -43,7 +43,7 @@ Then access the app at `http://localhost:9090`.
 
 ## Desktop Application
 
-![DaylightChart Desktop](https://github.com/sualeh/DaylightChart/blob/main/daylightchart/src/site/resources/screenshot.jpg?raw=true)
+![DaylightChart Desktop](https://github.com/sualeh/DaylightChart/blob/main/daylightchart-desktop/src/site/resources/screenshot.jpg?raw=true)
 
 ### Prerequisites
 
