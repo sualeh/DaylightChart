@@ -24,4 +24,4 @@ distributions:
   daylight-chart:
     type: JAVA_BINARY
     artifacts:
-      - path: daylightchart/target/daylightchart-{{projectVersion}}-distrib.zip
+      - path: daylightchart-desktop/target/daylightchart-desktop-{{projectVersion}}-distrib.zip

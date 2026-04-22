@@ -36,7 +36,7 @@
     <module>geoname</module>
     <module>daylightchart-options</module>
     <module>daylightchart-chart</module>
-    <module>daylightchart</module>
+    <module>daylightchart-desktop</module>
     <module>daylightchart-web</module>
   </modules>
   <repositories>

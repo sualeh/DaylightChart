@@ -1,7 +1,7 @@
 [![Quick Build](https://github.com/sualeh/DaylightChart/actions/workflows/quick-build.yml/badge.svg)](https://github.com/sualeh/DaylightChart/actions/workflows/quick-build.yml)
 
 
-# ![DaylightChart](https://github.com/sualeh/DaylightChart/blob/main/daylightchart/src/site/resources/images/daylightchart_logo.png?raw=true) Daylight Chart
+# ![DaylightChart](https://github.com/sualeh/DaylightChart/blob/main/daylightchart-chart/src/main/resources/META-INF/resources/logo.png?raw=true) Daylight Chart
 
 Daylight Chart shows sunrise and sunset times in an attractive chart, for any location in the world. The effect of daylight savings time is also displayed. Charts can be exported to image files.
 

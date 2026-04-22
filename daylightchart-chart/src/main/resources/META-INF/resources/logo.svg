@@ -1,0 +1,30 @@
+<svg width="256" height="256"
+     viewBox="0 0 256 256"
+     xmlns="http://www.w3.org/2000/svg">
+
+  <circle
+    id="SUN"
+    cx="154"
+    cy="108"
+    r="74"
+    fill="#E7E28A"
+    stroke="#F4B400"
+    stroke-width="6"/>
+
+  <polygon
+    id="BIG_MOUNTAIN"
+    points="
+      0,256
+      71,0
+      180,256"
+    fill="#6A1E74"/>
+
+  <polygon
+    id="SMALL_MOUNTAIN"
+    points="
+      79,256
+      174,113
+      254,256"
+    fill="#6A1E74"/>
+
+</svg>

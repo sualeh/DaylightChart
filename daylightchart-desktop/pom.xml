@@ -8,8 +8,8 @@
     <version>5.0.4</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
-  <artifactId>daylightchart</artifactId>
-  <name>Daylight Chart</name>
+  <artifactId>daylightchart-desktop</artifactId>
+  <name>Daylight Chart - Desktop</name>
   <build>
     <plugins>
       <plugin>
@@ -52,6 +52,11 @@
     </plugins>
   </build>
   <dependencies>
+    <dependency>
+      <groupId>com.github.weisj</groupId>
+      <artifactId>jsvg</artifactId>
+      <version>2.0.0</version>
+    </dependency>
     <dependency>
       <groupId>daylightchart</groupId>
       <artifactId>daylightchart-options</artifactId>
