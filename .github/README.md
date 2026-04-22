@@ -8,7 +8,7 @@ Daylight Chart shows sunrise and sunset times in an attractive chart, for any lo
 
 ## Web Application
 
-![DaylightChart Web](https://github.com/sualeh/DaylightChart/blob/main/daylightchart-desktop/src/site/resources/screenshot-browser.jpg?raw=true)
+![DaylightChart Web](screenshots/screenshot-browser.jpg)
 
 ### Running with Docker
 
@@ -43,7 +43,7 @@ Then access the app at `http://localhost:9090`.
 
 ## Desktop Application
 
-![DaylightChart Desktop](https://github.com/sualeh/DaylightChart/blob/main/daylightchart-desktop/src/site/resources/screenshot.jpg?raw=true)
+![DaylightChart Desktop](screenshots/screenshot.jpg)
 
 ### Prerequisites
 
