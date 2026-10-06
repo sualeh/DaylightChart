@@ -12,6 +12,7 @@ import daylightchart.options.Options;
 import daylightchart.options.TimeZoneOption;
 import daylightchart.options.TwilightType;
 import java.time.Duration;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -19,8 +20,7 @@ import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import net.e175.klaus.solarpositioning.DeltaT;
-import net.e175.klaus.solarpositioning.SPA;
-import net.e175.klaus.solarpositioning.SunriseResult;
+import net.e175.klaus.solarpositioning.SolarEvents;
 import org.geoname.data.Location;
 import org.geoname.timezones.DefaultTimezones;
 
@@ -234,33 +234,86 @@ public final class RiseSetUtility {
       latitude = location.getPointLocation().getLatitude().getDegrees();
       longitude = location.getPointLocation().getLongitude().getDegrees();
     }
-    final SunriseResult sunriseResult =
-        SPA.calculateSunriseTransitSet(
-            dayStart, latitude, longitude, DeltaT.estimate(date), toHorizon(twilight));
+    final double deltaT = DeltaT.estimate(date);
+    final SolarEvents solarEvents = SolarEvents.spa();
+    final Instant transit =
+        solarEvents
+            .nextTransit(
+                dayStart.toInstant().minus(Duration.ofDays(1)),
+                dayStart.toInstant().plus(Duration.ofDays(1)),
+                longitude,
+                deltaT)
+            .orElseThrow();
+    final Instant sunrise =
+        solarEvents
+            .nextRise(
+                transit.minus(Duration.ofDays(1)),
+                transit,
+                latitude,
+                longitude,
+                deltaT,
+                toHorizon(twilight))
+            .orElse(null);
+    final Instant sunset =
+        solarEvents
+            .nextSet(
+                transit,
+                transit.plus(Duration.ofDays(1)),
+                latitude,
+                longitude,
+                deltaT,
+                toHorizon(twilight))
+            .orElse(null);
 
     final boolean usesDaylightSavings = !zoneId.getRules().getTransitionRules().isEmpty();
-    if (sunriseResult instanceof final SunriseResult.RegularDay regularDay) {
+    if (sunrise != null && sunset != null) {
       return new RawRiseSet(
           location,
           date,
           usesDaylightSavings && inDaylightSavings,
-          toHour(dayStart, regularDay.sunrise()),
-          toHour(dayStart, regularDay.sunset()));
+          toHour(dayStart, sunrise.atZone(zoneId)),
+          toHour(dayStart, sunset.atZone(zoneId)));
     }
-    if (sunriseResult instanceof SunriseResult.AllDay) {
+    if (sunrise == null && sunset == null) {
+      final SolarEvents.Day solarDay =
+          solarEvents.forDate(date, zoneId, latitude, longitude, deltaT, toHorizon(twilight));
+      if (solarDay.alwaysAbove()) {
+        return new RawRiseSet(
+            location,
+            date,
+            usesDaylightSavings && inDaylightSavings,
+            Double.POSITIVE_INFINITY,
+            Double.POSITIVE_INFINITY);
+      }
+      if (solarDay.alwaysBelow()) {
+        return new RawRiseSet(
+            location,
+            date,
+            usesDaylightSavings && inDaylightSavings,
+            Double.NEGATIVE_INFINITY,
+            Double.NEGATIVE_INFINITY);
+      }
       return new RawRiseSet(
           location,
           date,
           usesDaylightSavings && inDaylightSavings,
-          Double.POSITIVE_INFINITY,
-          Double.POSITIVE_INFINITY);
+          solarDay.stateAtStart() == SolarEvents.HorizonState.ABOVE
+              ? Double.POSITIVE_INFINITY
+              : Double.NEGATIVE_INFINITY,
+          solarDay.stateAtStart() == SolarEvents.HorizonState.ABOVE
+              ? Double.POSITIVE_INFINITY
+              : Double.NEGATIVE_INFINITY);
     }
     return new RawRiseSet(
         location,
         date,
         usesDaylightSavings && inDaylightSavings,
-        Double.NEGATIVE_INFINITY,
-        Double.NEGATIVE_INFINITY);
+        sunrise == null
+            ? Double.NEGATIVE_INFINITY
+            : toHour(dayStart, sunrise.atZone(zoneId)),
+        sunset == null
+            ? Double.POSITIVE_INFINITY
+            : toHour(dayStart, sunset.atZone(zoneId)));
   }
 
   private static List<LocalDate> getYearsDates(final int year) {
@@ -273,15 +326,15 @@ public final class RiseSetUtility {
     return dates;
   }
 
-  private static SPA.Horizon toHorizon(final TwilightType twilight) {
+  private static SolarEvents.Horizon toHorizon(final TwilightType twilight) {
     if (twilight == null || twilight == TwilightType.NO) {
-      return SPA.Horizon.SUNRISE_SUNSET;
+      return SolarEvents.Horizon.SUNRISE_SUNSET;
     }
     return switch (twilight) {
-      case ASTRONOMICAL -> SPA.Horizon.ASTRONOMICAL_TWILIGHT;
-      case NAUTICAL -> SPA.Horizon.NAUTICAL_TWILIGHT;
-      case CIVIL -> SPA.Horizon.CIVIL_TWILIGHT;
-      default -> SPA.Horizon.CIVIL_TWILIGHT;
+      case ASTRONOMICAL -> SolarEvents.Horizon.ASTRONOMICAL_TWILIGHT;
+      case NAUTICAL -> SolarEvents.Horizon.NAUTICAL_TWILIGHT;
+      case CIVIL -> SolarEvents.Horizon.CIVIL_TWILIGHT;
+      default -> SolarEvents.Horizon.CIVIL_TWILIGHT;
     };
   }
 
