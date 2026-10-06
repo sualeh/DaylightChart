@@ -113,6 +113,23 @@ public class RiseSetUtilityTest {
         LocalTime.of(15, 29, 58));
   }
 
+  @Test
+  public void shouldHandlePolarDayAndNight() throws ParserException {
+    final Location location =
+        LocationsListParser.parseLocation("Longyearbyen;;NO;Arctic/Longyearbyen;+7813+01533/");
+    final RiseSetYearData riseSetYear =
+        RiseSetUtility.createRiseSetYear(location, 2024, new Options());
+
+    assertThat(hasDaylightBandFor(riseSetYear, LocalDate.of(2024, 6, 21)), is(true));
+    assertThat(hasDaylightBandFor(riseSetYear, LocalDate.of(2024, 12, 21)), is(false));
+  }
+
+  private boolean hasDaylightBandFor(final RiseSetYearData riseSetYear, final LocalDate date) {
+    return riseSetYear.getBands().stream()
+        .flatMap(band -> band.getRiseSets().stream())
+        .anyMatch(riseSet -> date.equals(riseSet.getDate()));
+  }
+
   private void assertRiseAndSet(
       final String locationString,
       final LocalDate date,
