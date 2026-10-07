@@ -9,10 +9,15 @@
 package daylightchart.test.chart.data;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.lessThan;
 import static org.hamcrest.Matchers.lessThanOrEqualTo;
 import static org.hamcrest.Matchers.notNullValue;
 
+import daylightchart.chart.data.DaylightBandType;
+import daylightchart.chart.data.RiseSet;
 import daylightchart.chart.data.RiseSetData;
 import daylightchart.chart.data.RiseSetUtility;
 import daylightchart.chart.data.RiseSetYearData;
@@ -29,6 +34,168 @@ import org.junit.jupiter.api.Test;
 public class RiseSetUtilityTest {
 
   private static final int TOLERANCE_MINUTES = 5;
+
+  @Test
+  public void shouldPreserveCairoClockTimesAcrossDstStart() throws ParserException {
+    final RiseSetYearData year = createCairoYear();
+    final List<RiseSet> days = getTransitionDays(year, DaylightBandType.with_clock_shift);
+    final LocalTime[] expectedSunrises = {
+      LocalTime.of(5, 20), LocalTime.of(6, 19), LocalTime.of(6, 18)
+    };
+    final LocalTime[] expectedSunsets = {
+      LocalTime.of(18, 27), LocalTime.of(19, 28), LocalTime.of(19, 29)
+    };
+    assertClockTimes(days, expectedSunrises, expectedSunsets);
+  }
+
+  private void assertClockTimes(
+      final List<RiseSet> days,
+      final LocalTime[] expectedSunrises,
+      final LocalTime[] expectedSunsets) {
+    for (int i = 0; i < days.size(); i++) {
+      final RiseSet day = days.get(i);
+      assertThat(
+          day.getDate() + " sunrise",
+          Math.abs(
+              Duration.between(expectedSunrises[i], day.getSunrise().toLocalTime()).getSeconds()),
+          lessThanOrEqualTo(60L));
+      assertThat(
+          day.getDate() + " sunset",
+          Math.abs(
+              Duration.between(expectedSunsets[i], day.getSunset().toLocalTime()).getSeconds()),
+          lessThanOrEqualTo(60L));
+    }
+  }
+
+  @Test
+  public void shouldRetainCairoDstClockShift() throws ParserException {
+    final List<RiseSet> days =
+        getTransitionDays(createCairoYear(), DaylightBandType.with_clock_shift);
+    assertThat(
+        Duration.between(
+                days.get(0).getSunrise().toLocalTime(), days.get(1).getSunrise().toLocalTime())
+            .getSeconds(),
+        allOf(greaterThanOrEqualTo(55 * 60L), lessThanOrEqualTo(65 * 60L)));
+    assertThat(
+        Duration.between(
+                days.get(0).getSunset().toLocalTime(), days.get(1).getSunset().toLocalTime())
+            .getSeconds(),
+        allOf(greaterThanOrEqualTo(55 * 60L), lessThanOrEqualTo(65 * 60L)));
+  }
+
+  @Test
+  public void shouldKeepCairoReferenceBandsSmoothAcrossDstStart() throws ParserException {
+    final List<RiseSet> days =
+        getTransitionDays(createCairoYear(), DaylightBandType.without_clock_shift);
+    assertSmoothReferenceBands(days);
+  }
+
+  private void assertSmoothReferenceBands(final List<RiseSet> days) {
+    for (int i = 1; i < days.size(); i++) {
+      assertThat(
+          days.get(i).getDate() + " reference sunrise change",
+          Math.abs(
+              Duration.between(
+                      days.get(i - 1).getSunrise().toLocalTime(),
+                      days.get(i).getSunrise().toLocalTime())
+                  .getSeconds()),
+          lessThan(5 * 60L));
+      assertThat(
+          days.get(i).getDate() + " reference sunset change",
+          Math.abs(
+              Duration.between(
+                      days.get(i - 1).getSunset().toLocalTime(),
+                      days.get(i).getSunset().toLocalTime())
+                  .getSeconds()),
+          lessThan(5 * 60L));
+    }
+  }
+
+  private RiseSetYearData createCairoYear() throws ParserException {
+    final Location location =
+        LocationsListParser.parseLocation("Cairo;;EG;Africa/Cairo;+30.0444+031.2357/");
+    return RiseSetUtility.createRiseSetYear(location, 2026, new Options());
+  }
+
+  private List<RiseSet> getTransitionDays(
+      final RiseSetYearData year, final DaylightBandType bandType) {
+    return getTransitionDays(year, bandType, LocalDate.of(2026, 4, 23));
+  }
+
+  private List<RiseSet> getTransitionDays(
+      final RiseSetYearData year, final DaylightBandType bandType, final LocalDate firstDate) {
+    final List<RiseSet> days =
+        year.getBands().stream()
+            .filter(band -> band.getDaylightBandType() == bandType)
+            .flatMap(band -> band.getRiseSets().stream())
+            .filter(
+                day ->
+                    !day.getDate().isBefore(firstDate)
+                        && !day.getDate().isAfter(firstDate.plusDays(2)))
+            .sorted()
+            .toList();
+    assertThat(
+        days.stream().map(RiseSet::getDate).toList(),
+        is(List.of(firstDate, firstDate.plusDays(1), firstDate.plusDays(2))));
+    return days;
+  }
+
+  @Test
+  public void shouldPreserveBostonBandsAcrossDstStart() throws ParserException {
+    assertBostonTransition(
+        LocalDate.of(2026, 3, 7),
+        new LocalTime[] {LocalTime.of(6, 10), LocalTime.of(7, 8), LocalTime.of(7, 6)},
+        new LocalTime[] {LocalTime.of(17, 41), LocalTime.of(18, 43), LocalTime.of(18, 44)},
+        1);
+  }
+
+  @Test
+  public void shouldPreserveBostonBandsAcrossDstEnd() throws ParserException {
+    assertBostonTransition(
+        LocalDate.of(2026, 10, 31),
+        new LocalTime[] {LocalTime.of(7, 16), LocalTime.of(6, 18), LocalTime.of(6, 19)},
+        new LocalTime[] {LocalTime.of(17, 39), LocalTime.of(16, 37), LocalTime.of(16, 36)},
+        -1);
+  }
+
+  @Test
+  public void shouldMarkBostonDstOnTransitionDates() throws ParserException {
+    final RiseSetYearData year = createBostonYear();
+    assertThat(year.getDstStartDate(), is(LocalDate.of(2026, 3, 8)));
+    assertThat(year.getDstEndDate(), is(LocalDate.of(2026, 11, 1)));
+  }
+
+  private RiseSetYearData createBostonYear() throws ParserException {
+    final Location location =
+        LocationsListParser.parseLocation("Boston;US-MA;US;America/New_York;+42.357-071.064/");
+    return RiseSetUtility.createRiseSetYear(location, 2026, new Options());
+  }
+
+  private void assertBostonTransition(
+      final LocalDate firstDate,
+      final LocalTime[] expectedSunrises,
+      final LocalTime[] expectedSunsets,
+      final int shiftDirection)
+      throws ParserException {
+    final RiseSetYearData year = createBostonYear();
+    final List<RiseSet> days =
+        getTransitionDays(year, DaylightBandType.with_clock_shift, firstDate);
+    assertClockTimes(days, expectedSunrises, expectedSunsets);
+    assertThat(
+        shiftDirection
+            * Duration.between(
+                    days.get(0).getSunrise().toLocalTime(), days.get(1).getSunrise().toLocalTime())
+                .getSeconds(),
+        allOf(greaterThanOrEqualTo(55 * 60L), lessThanOrEqualTo(65 * 60L)));
+    assertThat(
+        shiftDirection
+            * Duration.between(
+                    days.get(0).getSunset().toLocalTime(), days.get(1).getSunset().toLocalTime())
+                .getSeconds(),
+        allOf(greaterThanOrEqualTo(55 * 60L), lessThanOrEqualTo(65 * 60L)));
+    assertSmoothReferenceBands(
+        getTransitionDays(year, DaylightBandType.without_clock_shift, firstDate));
+  }
 
   @Test
   public void shouldMatchBaselineRiseAndSetAcrossWorldLocations() throws ParserException {

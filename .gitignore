@@ -1,6 +1,11 @@
 # Created by https://www.toptal.com/developers/gitignore/api/java,maven,eclipse,intellij+all
 # Edit at https://www.toptal.com/developers/gitignore?templates=java,maven,eclipse,intellij+all
 
+graphify-out/
+openspec/
+.github/prompts/
+.github/skills/
+
 ### Eclipse ###
 .metadata
 bin/

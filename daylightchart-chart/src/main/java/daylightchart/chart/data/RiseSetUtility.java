@@ -60,8 +60,8 @@ public final class RiseSetUtility {
     final RiseSetYearData riseSetYear = new RiseSetYearData(location, twilight, year);
     riseSetYear.setUsesDaylightTime(useDaylightTime);
     for (final LocalDate date : getYearsDates(year)) {
-      final boolean inDaylightSavings =
-          zoneId.getRules().isDaylightSavings(date.atStartOfDay().atZone(zoneId).toInstant());
+      final Instant transit = calculateTransit(location, date, zoneId);
+      final boolean inDaylightSavings = zoneId.getRules().isDaylightSavings(transit);
       if (wasDaylightSavings != inDaylightSavings) {
         if (!wasDaylightSavings) {
           riseSetYear.setDstStart(date);
@@ -72,12 +72,12 @@ public final class RiseSetUtility {
       wasDaylightSavings = inDaylightSavings;
 
       final RawRiseSet riseSet =
-          calculateRiseSet(location, date, zoneId, inDaylightSavings, TwilightType.NO);
+          calculateRiseSet(location, date, zoneId, transit, inDaylightSavings, TwilightType.NO);
       riseSetYear.addRiseSet(riseSet);
 
       if (twilight != null) {
         final RawRiseSet twilights =
-            calculateRiseSet(location, date, zoneId, inDaylightSavings, twilight);
+            calculateRiseSet(location, date, zoneId, transit, inDaylightSavings, twilight);
         riseSetYear.addTwilight(twilights);
       }
     }
@@ -218,13 +218,26 @@ public final class RiseSetUtility {
     return new RiseSet[] {riseSet};
   }
 
+  private static Instant calculateTransit(
+      final Location location, final LocalDate date, final ZoneId zoneId) {
+    final double longitude =
+        location == null ? 0D : location.getPointLocation().getLongitude().getDegrees();
+    return SolarEvents.spa()
+        .nextTransit(
+            date.atStartOfDay(zoneId).toInstant(),
+            date.plusDays(1).atStartOfDay(zoneId).toInstant(),
+            longitude,
+            DeltaT.estimate(date))
+        .orElseThrow();
+  }
+
   private static RawRiseSet calculateRiseSet(
       final Location location,
       final LocalDate date,
       final ZoneId zoneId,
+      final Instant transit,
       final boolean inDaylightSavings,
       final TwilightType twilight) {
-    final ZonedDateTime dayStart = date.atStartOfDay(zoneId);
     final double latitude;
     final double longitude;
     if (location == null) {
@@ -236,14 +249,6 @@ public final class RiseSetUtility {
     }
     final double deltaT = DeltaT.estimate(date);
     final SolarEvents solarEvents = SolarEvents.spa();
-    final Instant transit =
-        solarEvents
-            .nextTransit(
-                dayStart.toInstant().minus(Duration.ofDays(1)),
-                dayStart.toInstant().plus(Duration.ofDays(1)),
-                longitude,
-                deltaT)
-            .orElseThrow();
     final Instant sunrise =
         solarEvents
             .nextRise(
@@ -271,8 +276,8 @@ public final class RiseSetUtility {
           location,
           date,
           usesDaylightSavings && inDaylightSavings,
-          toHour(dayStart, sunrise.atZone(zoneId)),
-          toHour(dayStart, sunset.atZone(zoneId)));
+          toHour(sunrise.atZone(zoneId)),
+          toHour(sunset.atZone(zoneId)));
     }
     if (sunrise == null && sunset == null) {
       final SolarEvents.Day solarDay =
@@ -308,12 +313,8 @@ public final class RiseSetUtility {
         location,
         date,
         usesDaylightSavings && inDaylightSavings,
-        sunrise == null
-            ? Double.NEGATIVE_INFINITY
-            : toHour(dayStart, sunrise.atZone(zoneId)),
-        sunset == null
-            ? Double.POSITIVE_INFINITY
-            : toHour(dayStart, sunset.atZone(zoneId)));
+        sunrise == null ? Double.NEGATIVE_INFINITY : toHour(sunrise.atZone(zoneId)),
+        sunset == null ? Double.POSITIVE_INFINITY : toHour(sunset.atZone(zoneId)));
   }
 
   private static List<LocalDate> getYearsDates(final int year) {
@@ -338,8 +339,8 @@ public final class RiseSetUtility {
     };
   }
 
-  private static double toHour(final ZonedDateTime dayStart, final ZonedDateTime eventTime) {
-    return Duration.between(dayStart, eventTime).getSeconds() / 3600D;
+  private static double toHour(final ZonedDateTime eventTime) {
+    return eventTime.toLocalTime().toSecondOfDay() / 3600D;
   }
 
   private RiseSetUtility() {
