@@ -10,6 +10,7 @@
   <modelVersion>4.0.0</modelVersion>
   <artifactId>daylightchart-chart</artifactId>
   <name>Daylight Chart Rendering</name>
+  
   <dependencies>
     <dependency>
       <groupId>daylightchart</groupId>
@@ -29,12 +30,10 @@
     <dependency>
       <groupId>tools.jackson.core</groupId>
       <artifactId>jackson-databind</artifactId>
-      <version>3.2.4</version>
     </dependency>
     <dependency>
       <groupId>tools.jackson.dataformat</groupId>
       <artifactId>jackson-dataformat-yaml</artifactId>
-      <version>3.2.4</version>
     </dependency>
     <dependency>
       <groupId>net.e175.klaus</groupId>
