@@ -120,7 +120,7 @@
             <configuration>
               <rules>
                 <requireMavenVersion>
-                  <version>[3.10.0,)</version>
+                  <version>[3.9.15,)</version>
                 </requireMavenVersion>
                 <dependencyConvergence/>
               </rules>
